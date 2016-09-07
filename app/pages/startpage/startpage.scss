@@ -1,0 +1,41 @@
+.startpage {
+    margin:0 auto;
+    padding:0 auto;
+    box-sizing: border-box;
+    background-image: url('../../images/depression1.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.loginblock{
+    margin: 10% 0 0 44%;
+}
+.pos{
+    margin-left: 42%;
+}
+.takthetourblock{
+    margin-left: 44%;
+    margin-top: 2%;
+}
+#btn1{
+    width: 160px;
+}
+@media screen and (max-width:768px){
+    .loginblock{
+        margin: 50% 0 0 23%;
+    }
+    .takthetourblock{
+        margin-left: 23%;
+        margin-top: 4%;
+    }
+    .pos{
+        width: 75px;
+        margin-left: 30%;
+    }
+    #btn2{
+        width: 180px;
+        color: black;
+    }
+    #btn1{
+        width: 180px;
+    }
+}

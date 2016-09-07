@@ -1,0 +1,32 @@
+
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Log in</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <form [formGroup]="logform" (ngSubmit)="signin(logform.value)">
+        <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="email"  formControlName="email"></ion-input>
+        </ion-item>                                     
+        <ion-item >
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" formControlName="password" ></ion-input>
+        </ion-item>
+        <div class="loginblock1">
+            <button type="submit" id="btn1" secondary round   [disabled]="!logform.valid">Login</button>
+            <p style="width:180px;text-align: center;">
+            <ion-spinner *ngIf="spin"></ion-spinner>
+            </p>
+        </div>
+    </form>
+    <div class='dont'>
+        <h5 align='center'>Don't have an account?</h5>
+        <button class='freesign' large (click)="gotoreg()">SIGN UP FOR FREE</button>
+    </div>
+</ion-content>
