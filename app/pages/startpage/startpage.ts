@@ -14,8 +14,8 @@ export class StartPage implements OnInit {
     expiry: any;
     local: any;
     constructor(private navCtrl: NavController) {
-        this.innerHeight = window.innerHeight;
-        console.log(this.innerHeight);
+//        this.innerHeight = window.innerHeight;
+//        console.log(this.innerHeight);
         this.local = new Storage(LocalStorage);
     }
     ngOnInit() {
@@ -26,7 +26,7 @@ export class StartPage implements OnInit {
     }
     checkCredentials() {
         if (localStorage.getItem("firstname") != null && localStorage.getItem('access_token') != null) {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.push(HomePage);
         } else {
             //            this.firstname = localStorage.getItem('firstname');
             //            this.lastname = localStorage.getItem('lastname');

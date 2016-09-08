@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController} from 'ionic-angular';
+import { NavController, MenuController, PopoverController} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
 import {LoginPage} from './../login/login';
 import { Data } from './../../components/data/data';
+import {PopoverPage} from './../../components/popover/popover'
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers: [FormService]
@@ -10,15 +11,16 @@ import { Data } from './../../components/data/data';
 export class HomePage implements OnInit {
     lists: any;
     public data: Data[];
-    constructor(private navCtrl: NavController, private menuCtrl: MenuController, private _formService: FormService) {
-        
+    constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
+
     }
     ngOnInit() {
         var path = { "parent_id": "1", "type": "full" }
         this._formService.api("category/categorylist/", path).subscribe((res) => {
             if (res) {
-                this.lists = res.children;
+                this.lists = res.data.children;
                 localStorage.setItem('lists', JSON.stringify(this.lists));
+
             }
         },
             (err) => {
@@ -32,6 +34,7 @@ export class HomePage implements OnInit {
     openMenu() {
         this.menuCtrl.open();
     }
+
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
@@ -41,12 +44,11 @@ export class HomePage implements OnInit {
             data.icon = 'ios-remove-circle-outline';
         }
     }
-    logout() {
-        localStorage.removeItem('firstname');
-        localStorage.removeItem('lastname');
-        localStorage.removeItem('expiry');
-        localStorage.removeItem('access_token');
-        this.navCtrl.setRoot(LoginPage);
+    presentPopover(myEvent) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent
+        });
     }
-   
+
 }
