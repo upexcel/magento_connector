@@ -18,9 +18,12 @@
     margin: 10% 0 0 2%;
 }
 .freesign{
-    background-color: black;
+    background-color: #32DB64;
     border-radius: 0px;
     margin-left: 41.5%;
+}
+.freesign:hover{
+    background-color: #32DB64;
 }
 @media screen and (max-width:768px){
     .loginblock1{

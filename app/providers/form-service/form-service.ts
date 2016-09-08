@@ -29,7 +29,7 @@ export class FormService {
         return body;
     }
     private _handleError(error: any) {
-        console.error('An error occurred', error);
+        console.error('An error occurred', error);        
         return Observable.throw(error.message || error);
     }
 }

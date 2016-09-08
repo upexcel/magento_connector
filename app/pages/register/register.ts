@@ -30,8 +30,7 @@ export class RegisterPage {
             (err) => {
 
                 if (err.status == 500) {
-                    console.log(err);
-                    this.presentToast(err);
+                    this.presentToast(err._body);
                 }
 
             })
@@ -39,7 +38,7 @@ export class RegisterPage {
     presentToast(message: string) {
         let toast = this.toastCtrl.create({
             message: message,
-            duration: 1000,
+            duration: 3000,
             position: 'top'
         });
         toast.present();
