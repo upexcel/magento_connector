@@ -46,6 +46,7 @@ export class HomePage implements OnInit {
         localStorage.removeItem('lastname');
         localStorage.removeItem('expiry');
         localStorage.removeItem('access_token');
+        localStorage.removeItem('lists');
         this.navCtrl.push(LoginPage);
     }
    

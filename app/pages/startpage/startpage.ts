@@ -14,8 +14,8 @@ export class StartPage implements OnInit  {
     expiry: any;
     local:any;
     constructor(private navCtrl: NavController) {
-        this.innerHeight = window.innerHeight;
-        console.log(this.innerHeight);
+//        this.innerHeight = window.innerHeight;
+//        console.log(this.innerHeight);
         this.local = new Storage(LocalStorage);
     }
     ngOnInit() {
