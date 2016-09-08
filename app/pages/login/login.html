@@ -9,7 +9,8 @@
 
 
 <ion-content>
-    <form [formGroup]="logform" (ngSubmit)="signin(logform.value)">
+    <form [formGroup]="logform">
+
         <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input type="email"  formControlName="email"></ion-input>
@@ -19,7 +20,7 @@
             <ion-input type="password" formControlName="password" ></ion-input>
         </ion-item>
         <div class="loginblock1">
-            <button type="submit" id="btn1" secondary round   [disabled]="!logform.valid">Login</button>
+            <button type="submit" id="btn1" secondary round   [disabled]="!logform.valid" (click)="signin(logform.value)">Login</button>
             <p style="width:180px;text-align: center;">
             <ion-spinner *ngIf="spin"></ion-spinner>
             </p>

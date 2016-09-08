@@ -33,7 +33,8 @@ export class LoginPage {
             this.local.set('access_token', res.access_token);
             this.local.set('expiry', res.expiry);
             this.spin = false;
-            this.navCtrl.push(HomePage);
+            this.navCtrl.setRoot(HomePage);
+
         },
             (err) => {
                 if (err.status == 500) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, MenuController} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
-import {LoginPage} from './../login/login'
+import {LoginPage} from './../login/login';
 import { Data } from './../../components/data/data';
 @Component({
     templateUrl: 'build/pages/home/home.html',
@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
         localStorage.removeItem('lastname');
         localStorage.removeItem('expiry');
         localStorage.removeItem('access_token');
-        this.navCtrl.push(LoginPage);
+        this.navCtrl.setRoot(LoginPage);
     }
    
 }

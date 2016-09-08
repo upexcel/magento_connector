@@ -5,14 +5,14 @@ import {HomePage} from '../home/home'
 @Component({
     templateUrl: 'build/pages/startpage/startpage.html'
 })
-export class StartPage implements OnInit  {
+export class StartPage implements OnInit {
     innerHeight: number;
     height: string;
     firstname: any;
     lastname: any;
     access_token: any;
     expiry: any;
-    local:any;
+    local: any;
     constructor(private navCtrl: NavController) {
         this.innerHeight = window.innerHeight;
         console.log(this.innerHeight);
@@ -22,19 +22,17 @@ export class StartPage implements OnInit  {
         this.checkCredentials();
     }
     gotologin() {
-        this.navCtrl.push(LoginPage);
+        this.navCtrl.setRoot(LoginPage);
     }
     checkCredentials() {
-        if (localStorage.getItem("firstname")!= null && localStorage.getItem('access_token')!=null) {
-            console.log('hello')
-            this.navCtrl.push(HomePage);
+        if (localStorage.getItem("firstname") != null && localStorage.getItem('access_token') != null) {
+            this.navCtrl.setRoot(HomePage);
         } else {
-//            this.firstname = localStorage.getItem('firstname');
-//            this.lastname = localStorage.getItem('lastname');
-//            this.access_token = localStorage.getItem('access_token');
-//            this.expiry = localStorage.getItem('expiry')
-//            this.navCtrl.push(HomePage);
-            console.log('bye')
+            //            this.firstname = localStorage.getItem('firstname');
+            //            this.lastname = localStorage.getItem('lastname');
+            //            this.access_token = localStorage.getItem('access_token');
+            //            this.expiry = localStorage.getItem('expiry')
+            //            this.navCtrl.push(HomePage);
         }
     }
 }
