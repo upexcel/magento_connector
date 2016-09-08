@@ -23,7 +23,7 @@ export class RegisterPage {
     signup(regvalue: any) {
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
             if (res) {
-            this.presentToast(res.message);
+                this.presentToast(res.message);
                 this.navCtrl.setRoot(LoginPage);
             }
         },
@@ -31,7 +31,7 @@ export class RegisterPage {
 
                 if (err.status == 500) {
                     console.log(err);
-                     this.presentToast(err);
+                    this.presentToast(err);
                 }
 
             })
@@ -44,5 +44,4 @@ export class RegisterPage {
         });
         toast.present();
     }
-
 }

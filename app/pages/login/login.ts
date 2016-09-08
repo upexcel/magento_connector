@@ -34,6 +34,7 @@ export class LoginPage {
             this.local.set('expiry', res.expiry);
             this.spin = false;
             this.navCtrl.setRoot(HomePage);
+
         },
             (err) => {
                 if (err.status == 500) {
