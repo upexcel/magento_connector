@@ -1,8 +1,11 @@
 .login {
  overflow: hidden;
 }
-.loginblock1{
-    margin: 5% 0 0 44%;
+
+
+.loginblock1 {
+    margin: 16% 0 0 44%;
+
 }
 #btn1{
     background-color: #22c064;
@@ -18,9 +21,8 @@
 }
 @media screen and (max-width:768px){
     .loginblock1{
-        margin: 15% 0 0 23%;
+        margin: 15% 0 0 28%;
     }
-
     #btn1{
         width: 180px;
     }
@@ -28,6 +30,6 @@
         margin-top: 50%;
     }
     .freesign{
-        margin-left: 15%;
+        margin-left: 21%;
     }
 }

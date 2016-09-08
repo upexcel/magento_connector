@@ -5,7 +5,8 @@ import {StartPage} from './pages/startpage/startpage';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav><loading-modal id="loading"></loading-modal>',
+  template: `<ion-nav [root]="rootPage"></ion-nav>
+    <loading-modal id="loading"></loading-modal>`,
   directives:[LoadingModal]
 })
 export class MyApp {
@@ -16,8 +17,6 @@ export class MyApp {
     this.rootPage = StartPage;
 
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
     });
   }

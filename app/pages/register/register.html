@@ -1,4 +1,5 @@
-<ion-header>
+
+<ion-header style="margin-bottom: 20px;">
 
     <ion-navbar>
         <ion-title>Signup</ion-title>
@@ -7,9 +8,8 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="regForm" (ngSubmit)="signup(regForm.value)">
-        <div style="margin-top: 20px;">
-            <ion-item>
+    <form [formGroup]="regForm">
+             <ion-item>
                 <ion-label stacked></ion-label>
                 <ion-input type="text" placeholder="First Name"  formControlName="firstname"></ion-input>
             </ion-item>  
@@ -21,7 +21,7 @@
                 <ion-label stacked></ion-label>
                 <ion-input type="email"  placeholder="Email" formControlName="email"></ion-input>
             </ion-item>
-            <ion-item >
+            <ion-item>
                 <ion-label stacked></ion-label>
                 <ion-input type="password"  placeholder="Password" formControlName="password" ></ion-input>
             </ion-item>
@@ -30,9 +30,9 @@
                 <ion-toggle dark checked="false"></ion-toggle>
             </ion-item>
             <div class="loginblock1">
-                <button type="submit" id="btn1" secondary round   [disabled]="!regForm.valid">SIGN UP</button>
+                <button type="submit" id="btn1" secondary round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
             </div>
-        </div>
+
     </form>
     <p align="center" style="padding: 44px;">By Clicking Sign Up you are agreeing to the <a href="#" style="text-decoration: none;">Terms and use</a> and <a href="#" style="text-decoration: none;">Privacy policy</a></p>
 </ion-content>

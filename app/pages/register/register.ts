@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import {FORM_DIRECTIVES} from '@angular/common';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormService } from './../../providers/form-service/form-service';
+import {LoginPage} from './../login/login';
+import { ToastController } from 'ionic-angular';
 @Component({
     templateUrl: 'build/pages/register/register.html',
     directives: [FORM_DIRECTIVES],
@@ -10,7 +12,7 @@ import {FormService } from './../../providers/form-service/form-service';
 })
 export class RegisterPage {
     regForm: FormGroup;
-    constructor(private navCtrl: NavController, private fb: FormBuilder,private _formService: FormService) {
+    constructor(private navCtrl: NavController, private fb: FormBuilder, private _formService: FormService, public toastCtrl: ToastController) {
         this.regForm = this.fb.group({
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
@@ -19,19 +21,27 @@ export class RegisterPage {
         })
     }
     signup(regvalue: any) {
-        console.log(regvalue);
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
             if (res) {
-                console.log(res);
+                this.presentToast(res.message);
+                this.navCtrl.setRoot(LoginPage);
             }
         },
             (err) => {
 
                 if (err.status == 500) {
-                   console.log(err);
+                    console.log(err);
+                    this.presentToast(err);
                 }
 
             })
     }
-
+    presentToast(message: string) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: 1000,
+            position: 'top'
+        });
+        toast.present();
+    }
 }

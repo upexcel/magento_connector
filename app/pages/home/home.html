@@ -13,9 +13,8 @@
         </ion-title>
 
         <ion-buttons end>
-            <button (click)="logout()">
-                <!--<ion-icon name="more"></ion-icon>-->
-                Logout
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>
@@ -27,6 +26,10 @@
         <ion-title>Categories</ion-title>
     </ion-toolbar>
     <ion-content >
+<!--        <ion-list>
+            <button ion-item>Women</button>
+            <button ion-item>Men</button>
+        </ion-list>-->
         <ion-list no-lines *ngFor="let list of lists">
             <button  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
                  {{list1.name}}
@@ -36,11 +39,6 @@
                         {{glist.name}}
                     </ion-item>
                 </ion-list>
-<!--                <div *ngIf="list1.showDetails" text-wrap>
-                    <ul >
-                        <li *ngFor="let glist of list1.children"><a  style="cursor: pointer;">{{glist.name}}</a></li>
-                    </ul>    
-                </div>-->
             </button>
 
         </ion-list>
@@ -48,7 +46,7 @@
     </ion-content>
 </ion-menu>
 
-<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+<ion-nav id="nav" #content [root]="rootPage" ></ion-nav>
 <ion-content padding class="home">
     <ion-card>
         <img src="../../images/shirt3.jpg"/>

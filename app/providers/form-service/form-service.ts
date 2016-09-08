@@ -26,7 +26,7 @@ export class FormService {
             throw new Error('Bad response status: ' + res.status);
         }
         let body = res.json();
-        return body.data;
+        return body;
     }
     private _handleError(error: any) {
         console.error('An error occurred', error);
