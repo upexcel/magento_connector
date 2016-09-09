@@ -2,44 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, MenuController, Storage, LocalStorage} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
 import {LoginPage} from './../login/login';
-import {HomePage1} from '../home1/home1';
 import { Data } from './../../components/data/data';
 @Component({
-    templateUrl: 'build/pages/home/home.html',
+    templateUrl: 'build/pages/home1/home1.html',
     providers: [FormService],
-    directives: []
+    directives:[]
 })
-export class HomePage implements OnInit {
+export class HomePage1  {
     lists: any;
-    rootPage: any;
     public data: Data[];
     local: any;
-    showList: boolean = false;
+    showList:boolean=false;
     constructor(private navCtrl: NavController, private menuCtrl: MenuController, private _formService: FormService) {
-       
+        this.local = new Storage(LocalStorage);
     }
-    ngOnInit() {
-       this.local = new Storage(LocalStorage);
-       this.rootPage=HomePage1;
-
-            var path = { "parent_id": "1", "type": "full" }
-            this._formService.api("category/categorylist/", path).subscribe((res) => {
-                if (res) {
-                    this.lists = res.data.children;
-                    this.local.set('lists', JSON.stringify(this.lists));
-                }
-            },
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-
-                })
-        
-    }
+    
     openMenu() {
-        this.showList = true;
-        console.log("nav");
+        console.log("nav1");
         this.menuCtrl.open();
     }
     toggle(data: Data) {

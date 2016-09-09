@@ -4,3 +4,9 @@
 @import "../pages/register/register.scss";
 @import "../components/loading-modal/loading-modal";
 @import "../pages/home/home.scss";
+@import "../pages/takeTour/tour.scss";
+.popover-content{
+    left:10px !important;
+    top:10px !important;
+   bottom: 10px !important;
+}

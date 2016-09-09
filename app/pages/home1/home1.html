@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+        <button menuToggle (click)="openMenu()">
+                <ion-icon name="menu"></ion-icon>
+        </button>
+
+        <ion-title>
+            Home
+        </ion-title>
+
+        <ion-buttons end>
+            <button (click)="logout()">
+                <ion-icon name="more"></ion-icon>
+                Logout
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding class="home">
+    <ion-card>
+        <img src="../../images/shirt3.jpg"/>
+        <ion-card-content>
+            <ion-card-title>
+                Nine Inch Nails Live
+            </ion-card-title>
+            <p>
+                The most popular industrial group ever, and largely
+                responsible for bringing the music to a mass audience.
+            </p>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

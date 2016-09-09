@@ -4,7 +4,7 @@ import {FORM_DIRECTIVES} from '@angular/common';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register'
 import {FormService } from './../../providers/form-service/form-service';
-import {HomePage} from './../home/home';
+import {HomePage1} from './../home1/home1';
 @Component({
     templateUrl: 'build/pages/login/login.html',
     directives: [FORM_DIRECTIVES],
@@ -28,12 +28,12 @@ export class LoginPage {
     signin(logvalue: any) {
         this.spin = true;
         this._formService.api('customer/login/', logvalue).subscribe((res) => {
-            this.local.set('firstname', res.firstname);
-            this.local.set('lastname', res.lastname);
-            this.local.set('access_token', res.access_token);
-            this.local.set('expiry', res.expiry);
+            this.local.set('firstname', res.data.firstname);
+            this.local.set('lastname', res.data.lastname);
+            this.local.set('access_token', res.data.access_token);
+            this.local.set('expiry', res.data.expiry);
             this.spin = false;
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(HomePage1);
 
         },
             (err) => {

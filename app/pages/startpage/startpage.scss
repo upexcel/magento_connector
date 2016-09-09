@@ -19,6 +19,23 @@
 #btn1{
     width: 160px;
 }
+/*
+*/
+.popover-content {
+     width: 94%; 
+     min-width: 0; 
+     min-height: 0; 
+    max-height: 95%;
+    border-radius: 10px;
+    color: #000;
+    background: #fff;
+}
+
+.format{
+    left:10px;
+    top:10px;
+}
+
 @media screen and (max-width:768px){
     .loginblock{
         margin: 50% 0 0 23%;

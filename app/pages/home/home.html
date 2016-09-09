@@ -1,60 +1,24 @@
-<!--
-(click)="openModal()"
-</ion-header>-->
-<ion-header>
-
-    <ion-toolbar>
-        <button menuToggle (click)="openMenu()">
-                <ion-icon name="menu"></ion-icon>
-        </button>
-
-        <ion-title>
-            Home
-        </ion-title>
-
-        <ion-buttons end>
-            <button (click)="logout()">
-                <!--<ion-icon name="more"></ion-icon>-->
-                Logout
-            </button>
-        </ion-buttons>
-    </ion-toolbar>
-
-</ion-header>
 
 <ion-menu [content]="content">
     <ion-toolbar>
         <ion-title>Categories</ion-title>
     </ion-toolbar>
     <ion-content >
-        <ion-list *ngFor="let list of lists">
-            <button  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
+        <ion-list nolines *ngFor="let list of lists">
+            <ion-item  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
                  {{list1.name}}
                  <ion-icon primary item-right [name]="list1.icon"></ion-icon>                
-                <div *ngIf="list1.showDetails" text-wrap>
-                    <ul >
-                        <li *ngFor="let glist of list1.children"><a  style="cursor: pointer;">{{glist.name}}</a></li>
-                    </ul>    
-                </div>
-            </button>
+                <ion-list *ngIf="list1.showDetails" text-wrap>
+                    <ion-item *ngFor="let glist of list1.children">
+                       {{glist.name}}
+                    </ion-item>    
+                </ion-list>
+            </ion-item>
 
         </ion-list>
 
     </ion-content>
 </ion-menu>
 
-<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
-<ion-content padding class="home">
-    <ion-card>
-        <img src="../../images/shirt3.jpg"/>
-        <ion-card-content>
-            <ion-card-title>
-                Nine Inch Nails Live
-            </ion-card-title>
-            <p>
-                The most popular industrial group ever, and largely
-                responsible for bringing the music to a mass audience.
-            </p>
-        </ion-card-content>
-    </ion-card>
-</ion-content>
+<ion-nav id="nav" #content [root]="rootPage"> </ion-nav>
+
