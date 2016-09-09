@@ -3,7 +3,7 @@
 </ion-header>-->
 <ion-header>
 
-    <ion-toolbar>
+    <ion-toolbar primary>
         <button menuToggle (click)="openMenu()">
                 <ion-icon name="menu"></ion-icon>
         </button>
@@ -22,42 +22,43 @@
 </ion-header>
 
 <ion-menu [content]="content">
-    <ion-toolbar>
+    <ion-toolbar primary>
         <ion-title>Categories</ion-title>
     </ion-toolbar>
-    <ion-content >
-<!--        <ion-list>
-            <button ion-item>Women</button>
-            <button ion-item>Men</button>
-        </ion-list>-->
-        <ion-list no-lines *ngFor="let list of lists">
-            <button  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
-                 {{list1.name}}
-                 <ion-icon primary item-right fixed [name]="list1.icon"></ion-icon>   
-                <ion-list *ngIf="list1.showDetails" text-wrap>
-                    <ion-item *ngFor="let glist of list1.children">
-                        {{glist.name}}
-                    </ion-item>
-                </ion-list>
-            </button>
-
-        </ion-list>
-
-    </ion-content>
+    <ion-list  no-lines *ngFor="let list of lists">
+               
+               <ion-list-header *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" style="cursor:pointer">
+            {{list1.name}}
+    </ion-list-header>
+    <ion-item  ion-item *ngFor="let glist of list1" (click)="con(glist.name)">
+               {{glist.name}}
+        <!--<ion-icon primary item-right top [name]="list1.icon"></ion-icon>-->   
+<!--        <ion-list *ngIf="list1.showDetails" text-wrap>
+            <ion-item *ngFor="let glist of list1.children" (click)="con(glist.name)">
+                {{glist.name}}
+        </ion-item>
+    </ion-list>-->
+</ion-item>
+</ion-list>
 </ion-menu>
 
-<ion-nav id="nav" #content [root]="rootPage" ></ion-nav>
+<ion-nav id="nav"  #content [root]="rootPage" >
+
+</ion-nav>
 <ion-content padding class="home">
-    <ion-card>
-        <img src="../../images/shirt3.jpg"/>
-        <ion-card-content>
-            <ion-card-title>
-                Nine Inch Nails Live
-            </ion-card-title>
-            <p>
-                The most popular industrial group ever, and largely
-                responsible for bringing the music to a mass audience.
-            </p>
-        </ion-card-content>
-    </ion-card>
+    <ion-grid>
+        <ion-row center>
+            <ion-col class="center">
+                <ion-card>
+                    <img src="../../images/shirt3.jpg"/>
+                    <ion-card-content>
+                        <ion-card-title>
+                            Nine Inch Nails Live
+                        </ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 </ion-content>

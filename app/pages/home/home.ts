@@ -12,7 +12,7 @@ export class HomePage implements OnInit {
     lists: any;
     public data: Data[];
     constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
-
+       // console.clear();
     }
     ngOnInit() {
         var path = { "parent_id": "1", "type": "full" }
@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
             if (res) {
                 this.lists = res.data.children;
                 localStorage.setItem('lists', JSON.stringify(this.lists));
-
+               
             }
         },
             (err) => {
@@ -38,17 +38,19 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-            data.icon = 'ios-add-circle-outline';
+         //   data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-            data.icon = 'ios-remove-circle-outline';
+          //  data.icon = 'ios-remove-circle-outline';
         }
     }
-    presentPopover(myEvent) {
+    presentPopover(myEvent:any) {
         let popover = this.popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent
         });
     }
-
+    con(gchild:any){
+        console.log(gchild);
+    }
 }

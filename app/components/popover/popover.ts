@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {ViewController, NavController} from 'ionic-angular'
-import {LoginPage} from './../../pages/login/login'
+//import {LoginPage} from './../../pages/login/login'
+import {StartPage} from './../../pages/startpage/startpage'
 @Component({
     template: `
-    <ion-list>
+    <ion-list no-lines>
+ <ion-list-header>Profile</ion-list-header>
       <button ion-item >My Account</button>
       <button ion-item (click)="logout()">Logout</button>
     </ion-list>
@@ -22,7 +24,7 @@ export class PopoverPage {
         localStorage.removeItem('expiry');
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
-        this.navCtrl.setRoot(LoginPage);
+        this.navCtrl.setRoot(StartPage);
     }
 }
 
