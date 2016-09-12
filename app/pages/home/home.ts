@@ -4,6 +4,7 @@ import {FormService } from './../../providers/form-service/form-service';
 import {HomePage1} from '../home1/home1';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
+import { productpage } from '../product/product'
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers: [FormService],
@@ -66,6 +67,11 @@ export class HomePage implements OnInit {
 //            data.icon = 'ios-remove-circle-outline';
         }
     }
+     gotoproduct(product){
+       this.navCtrl.push(productpage,{
+           id:product
+       }); 
+    }
     con(gchild: any) {
          this.menuCtrl.close();
         console.log(gchild)
@@ -81,8 +87,7 @@ export class HomePage implements OnInit {
                 this.products = res.data;
                 console.log(res.data);
             }
-
-
+            
         })
     }
 }

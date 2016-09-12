@@ -77,8 +77,8 @@
     </ion-grid>
     <ion-spinner *ngIf="spin" style="margin-left: 50%"></ion-spinner>
     <ion-grid *ngIf="clickshow">
-        <ion-row responsive-sm responsive-md  >
-            <ion-col *ngFor="let product of products" width-25>
+        <ion-row  wrap responsive-sm responsive-md  >
+            <ion-col *ngFor="let product of products" width-25 (click)="gotoproduct(product.data.sku)">
                 <ion-card>
                     <img src="{{product.data.media_images}}" alt="..." width="100%">
                     <ion-card-content>
