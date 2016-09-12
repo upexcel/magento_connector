@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="home">
     <ion-navbar primary>
         <button menuToggle (click)="openMenu()">
                 <ion-icon name="menu"></ion-icon>
@@ -36,56 +36,56 @@
 <ion-nav id="nav"  #content [root]="rootPage" >
 
 </ion-nav>
-<ion-content padding class="home1">
+<ion-content padding class="home">
     <ion-grid>
         <ion-row center>
-            <ion-col class="center">
+            <ion-col>
                 <ion-slides [options]="mySlideOptions">
                     <ion-slide>
-                        <ion-card>
+<!--                        <ion-card>-->
                             <img src="../../images/shirt3.jpg"/>
-                            <ion-card-content>
+<!--                            <ion-card-content>
                                 <ion-card-title>
                                     Nine Inch Nails Live
                                 </ion-card-title>
                             </ion-card-content>
-                        </ion-card>
+                        </ion-card>-->
                     </ion-slide>
                     <ion-slide>
-                        <ion-card>
+                        <!--<ion-card>-->
                             <img src="../../images/shirt.jpg"/>
-                            <ion-card-content>
+<!--                            <ion-card-content>
                                 <ion-card-title>
                                     Nine Inch Nails Live
                                 </ion-card-title>
-                            </ion-card-content>
-                        </ion-card>
+                            </ion-card-content>-->
+                        <!--</ion-card>-->
                     </ion-slide>
                     <ion-slide>
-                        <ion-card>
+                        <!--<ion-card>-->
                             <img src="../../images/shirt7.jpg"/>
-                            <ion-card-content>
+<!--                            <ion-card-content>
                                 <ion-card-title>
                                     Nine Inch Nails Live
                                 </ion-card-title>
                             </ion-card-content>
-                        </ion-card>
+                        </ion-card>-->
                     </ion-slide>
                 </ion-slides>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-spinner *ngIf="spin" style="margin-left: 50%"></ion-spinner>
+    <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
     <ion-grid *ngIf="clickshow">
-        <ion-row responsive-sm responsive-md  >
-            <ion-col *ngFor="let product of products" width-25>
-                <ion-card>
-                    <img src="{{product.data.media_images}}" alt="..." width="100%">
+        <ion-row wrap responsive-sm  >
+            <ion-col  width-25 *ngFor="let product of products">
+                      <ion-card>
+                    <img src="{{product.data.media_images}}" alt="...">
                     <ion-card-content>
-                        <ion-card-title>
+                        <ion-card-title style="font-size: 12px;">
                             {{product.data.name}}
-                             <a href="#" class="price" role="button">{{product.data.display_price}}</a>
                         </ion-card-title>
+                        <p> <a href="#" class="price" role="button">{{product.data.display_price}}</a></p>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
