@@ -14,8 +14,7 @@ export class MyApp {
   private rootPage: any;
 
   constructor(private platform: Platform) {
-    this.rootPage = productpage;
-
+    this.rootPage = StartPage;
     platform.ready().then(() => {
       StatusBar.styleDefault();
     });

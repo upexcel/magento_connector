@@ -1,7 +1,8 @@
 import { Component} from '@angular/core';
 import { cartpage } from '../cart/cart';
-import { NavController, Storage, LocalStorage} from 'ionic-angular';
+import { NavController,NavParams, Storage, LocalStorage} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
+import { LoadingController } from 'ionic-angular';
 @Component({
     templateUrl: 'build/pages/product/product.html',
     providers: [FormService]
@@ -9,24 +10,28 @@ import {FormService } from './../../providers/form-service/form-service';
 export class productpage {
     quantity: number = 1;
     response:any ;
-    activeSize:boolean;
-    activeColor:boolean;
+    activeSize:boolean=false;
+    activeColor:boolean=false;
     itemSize:string;
     itemColor:string;
-    constructor(private navCtrl: NavController , private _formService: FormService ) {
-                let path = { sku: "msj000", "product_data_type": "large_data" };
+    selectSize:string;
+    selectColor:string;
+    constructor(public loadingCtrl: LoadingController, private navCtrl: NavController ,private navParams: NavParams, private _formService: FormService ) {
+         let id = navParams.get('id');
+         this.presentLoading();
+                let path = { sku: id, "product_data_type": "large_data" };
         //api for get selected item
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
                 this.response = res;
-                if(this.response.associated_products){
-                if (this.response.associated_products.attributes['180'].label == "Size") {
+                if(this.response.data.associated_products){
+                if (this.response.data.associated_products.attributes['180'].label == "Size") {
                     this.activeSize = true;
-                    this.itemSize = this.response.associated_products.attributes['180'].options['0'].label;
+                    this.itemSize = this.response.data.associated_products.attributes['180'].options['0'].label;
                 } 
-                if (this.response.associated_products.attributes['92'].label == "Color") {
+                if (this.response.data.associated_products.attributes['92'].label == "Color") {
                     this.activeColor = true;
-                    this.itemColor = this.response.associated_products.attributes['92'].options['0'].label;
+                    this.itemColor = this.response.data.associated_products.attributes['92'].options['0'].label;
                     console.log(this.itemColor);
                 }
                 }
@@ -45,11 +50,12 @@ export class productpage {
             this.quantity--;
     }
     add() {
+        if(this.quantity < this.response.data.data.qty){
         this.quantity++;
+        }
     }
     gotocart() {
         this.navCtrl.push(cartpage);
-        console.log("gotocart");
     }
     addcart(response){
 //        var sku = response.sku;
@@ -70,5 +76,12 @@ export class productpage {
 //            });
 //        }); 
     }
+     presentLoading(){
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 2000
+    });
+    loader.present();
+  }
 }
 
