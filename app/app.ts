@@ -3,7 +3,7 @@ import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {StartPage} from './pages/startpage/startpage';
 import {LoadingModal} from './components/loading-modal/loading-modal';
-
+import {productpage} from './pages/product/product';
 @Component({
   template: `<ion-nav [root]="rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`,
@@ -14,7 +14,7 @@ export class MyApp {
   private rootPage: any;
 
   constructor(private platform: Platform) {
-    this.rootPage = StartPage;
+    this.rootPage = productpage;
 
     platform.ready().then(() => {
       StatusBar.styleDefault();

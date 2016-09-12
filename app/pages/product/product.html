@@ -1,0 +1,78 @@
+<ion-header>
+
+    <ion-toolbar primary>
+
+        <ion-title>
+            Product
+        </ion-title>
+
+        <ion-buttons end>
+            <button (click)= " gotocart()">
+                <ion-icon name="cart"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+<ion-content >
+    <ion-grid *ngIf="response">
+        <ion-row center>
+            <ion-col>
+                <ion-card>
+                    <img src="{{response.data.data.media_images}}" style="min-height: 140px;"/>
+                    <ion-card-content>
+                        <ion-row >
+                            <ion-col>
+                                <h2>{{response.data.data.name}}</h2>
+                            </ion-col>
+                            <p style="padding-top: 8px;">{{response.data.data.display_price}}</p>
+                        </ion-row>
+                        <p style="text-align: center; font-size: 13px; ">{{response.data.data.short_description}}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-item>
+            <ion-row>
+                <ion-col width-33 style="padding-top: 0px;">
+                    <button ng-reflect-clear="" class="disable-hover button button-clear button-icon-left" clear="" (click)="remove()"><span class="button-inner">
+                            <ion-icon ng-reflect-name="remove" aria-label="remove" class="remove" role="img" name="remove" is-active="false"></ion-icon>
+
+                        </span><ion-button-effect></ion-button-effect></button>      
+                </ion-col>
+
+                <ion-col width-33 style="text-align: center; padding-top: 10px;">
+                    <ion-title> {{quantity}} </ion-title>
+                </ion-col>
+                <ion-col width-33 style="text-align: right;padding-top: 0px;">
+                    <button ng-reflect-clear="" class="disable-hover button button-clear button-icon-left" clear="" (click)="add()"><span class="button-inner">
+                            <ion-icon ng-reflect-name="add" aria-label="add" class="add" role="img" name="add" is-active="false"></ion-icon>
+                        </span><ion-button-effect></ion-button-effect>
+
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="activeSize==true" >
+            <ion-label>Select {{response.associated_products.attributes['92'].label}}</ion-label>
+            <ion-select [(ngModel)]="size">
+                <ion-option *ngFor= "let obj of response.associated_products.attributes['92'].options" [value]="obj.label" >
+                    {{obj.label}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="activeColor==true">
+            <ion-label>Select {{response.associated_products.attributes['180'].label}}</ion-label>
+            <ion-select [(ngModel)]="color">
+             <ion-option *ngFor= "let obj of response.associated_products.attributes['180'].options" [value]="obj.label" >
+                    {{obj.label}}</ion-option>
+                
+            </ion-select>
+        </ion-item>
+        
+        <button full (click)=" addcart(response.data)">ADD CART</button>
+    </ion-grid>
+</ion-content>
