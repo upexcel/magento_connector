@@ -1,0 +1,36 @@
+<ion-header>
+
+    <ion-toolbar primary>
+        <button menuToggle (click)="openMenu()">
+                <ion-icon name="menu"></ion-icon>
+        </button>
+
+        <ion-title>
+            Home
+        </ion-title>
+
+        <ion-buttons end>
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+<ion-content padding class="home">
+    <ion-grid>
+        <ion-row center>
+            <ion-col class="center">
+                <ion-card>
+                    <img src="../../images/shirt3.jpg"/>
+                    <ion-card-content>
+                        <ion-card-title>
+                            Nine Inch Nails Live
+                        </ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

@@ -3,8 +3,9 @@ import { NavController } from 'ionic-angular';
 import {FORM_DIRECTIVES} from '@angular/common';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormService } from './../../providers/form-service/form-service';
-import {LoginPage} from './../login/login';
+import {StartPage} from '../startpage/startpage';
 import { ToastController } from 'ionic-angular';
+
 @Component({
     templateUrl: 'build/pages/register/register.html',
     directives: [FORM_DIRECTIVES],
@@ -25,13 +26,12 @@ export class RegisterPage {
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
             if (res) {
                 this.presentToast(res.message);
-                this.navCtrl.setRoot(LoginPage);
+                this.navCtrl.setRoot(StartPage);
             }
         },
             (err) => {
 
                 if (err.status == 500) {
-                    console.log(JSON.parse(err._body).message);
                     this.presentToast(JSON.parse(err._body).message);
                 }
 
@@ -40,7 +40,7 @@ export class RegisterPage {
     presentToast(message: string) {
         let toast = this.toastCtrl.create({
             message: message,
-            duration: 1000,
+            duration: 3000,
             position: 'top'
         });
         toast.present();
