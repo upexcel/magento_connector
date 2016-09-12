@@ -26,19 +26,15 @@
         <ion-title>Categories</ion-title>
     </ion-toolbar>
     <ion-list  no-lines *ngFor="let list of lists">
-               
-               <ion-list-header *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" style="cursor:pointer">
-            {{list1.name}}
-    </ion-list-header>
-    <ion-item  ion-item *ngFor="let glist of list1" (click)="con(glist.name)">
-               {{glist.name}}
-        <!--<ion-icon primary item-right top [name]="list1.icon"></ion-icon>-->   
-<!--        <ion-list *ngIf="list1.showDetails" text-wrap>
-            <ion-item *ngFor="let glist of list1.children" (click)="con(glist.name)">
-                {{glist.name}}
-        </ion-item>
-    </ion-list>-->
-</ion-item>
+               <ion-item  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" style="cursor:pointer">
+               {{list1.name}}
+               <!--<ion-icon primary item-right top [name]="list1.icon"></ion-icon>-->   
+               <ion-list *ngIf="list1.showDetails" text-wrap>
+                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.name)">
+                    {{glist.name}}
+            </ion-item>
+        </ion-list>
+    </ion-item>
 </ion-list>
 </ion-menu>
 
@@ -49,14 +45,38 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <ion-card>
-                    <img src="../../images/shirt3.jpg"/>
-                    <ion-card-content>
-                        <ion-card-title>
-                            Nine Inch Nails Live
-                        </ion-card-title>
-                    </ion-card-content>
-                </ion-card>
+                <ion-slides [options]="mySlideOptions">
+                    <ion-slide>
+                        <!--<ion-card>-->
+                            <img src="../../images/shirt3.jpg"/>
+<!--                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>-->
+                        <!--</ion-card>-->
+                    </ion-slide>
+                    <ion-slide>
+                        <!--<ion-card>-->
+                            <img src="../../images/shirt.jpg"/>
+<!--                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>-->
+                    </ion-slide>
+                    <ion-slide>
+                        <!--<ion-card>-->
+                            <img src="../../images/shirt7.jpg"/>
+<!--                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>-->
+                    </ion-slide>
+                </ion-slides>
             </ion-col>
         </ion-row>
     </ion-grid>
