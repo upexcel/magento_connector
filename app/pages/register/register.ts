@@ -20,6 +20,7 @@ export class RegisterPage {
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
         })
+         console.clear();
     }
     signup(regvalue: any) {
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
@@ -31,7 +32,7 @@ export class RegisterPage {
             (err) => {
 
                 if (err.status == 500) {
-                    this.presentToast(err._body);
+                    this.presentToast(JSON.parse(err._body).message);
                 }
 
             })

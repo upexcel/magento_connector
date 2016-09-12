@@ -5,6 +5,7 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register'
 import {FormService } from './../../providers/form-service/form-service';
 import {HomePage1} from './../home1/home1';
+import {ForgotPage} from './../forgot/forgot'
 @Component({
     templateUrl: 'build/pages/login/login.html',
     directives: [FORM_DIRECTIVES],
@@ -16,6 +17,7 @@ export class LoginPage {
     response: string;
     local: any;
     constructor(private navCtrl: NavController, private fb: FormBuilder, private _formService: FormService, public toastCtrl: ToastController) {
+        console.clear();
         this.logform = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
@@ -54,5 +56,9 @@ export class LoginPage {
         });
 
         toast.present(toast);
+    }
+    gotofor() {
+        //forgot page
+        this.navCtrl.push(ForgotPage);
     }
 }

@@ -7,24 +7,24 @@ import {HomePage} from '../home/home'
 @Component({
     templateUrl: 'build/pages/startpage/startpage.html'
 })
-export class StartPage {
-    innerHeight: number;
-    height: string;
+
+export class StartPage implements OnInit {
+
     firstname: any;
     lastname: any;
     access_token: any;
     expiry: any;
     local: any;
-    constructor(private navCtrl: NavController, private popoverCtrl: PopoverController) {
-        console.log("start page");
-        this.innerHeight = window.innerHeight;
-        console.log(this.innerHeight);
+    constructor(private navCtrl: NavController , private popoverCtrl: PopoverController) {
         this.local = new Storage(LocalStorage);
+         console.clear();
+    }
+    ngOnInit() {
         this.checkCredentials();
     }
 
     gotologin() {
-        this.navCtrl.setRoot(LoginPage);
+        this.navCtrl.push(LoginPage);
     }
     presentPopover(myEvent) {
         var data = true;

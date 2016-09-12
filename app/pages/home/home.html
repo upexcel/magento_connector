@@ -1,24 +1,22 @@
 
-<ion-menu [content]="content">
-    <ion-toolbar>
-        <ion-title>Categories</ion-title>
-    </ion-toolbar>
-    <ion-content >
+ <ion-menu [content]="content">
+     <ion-toolbar>
+         <ion-title>Categories</ion-title>
+     </ion-toolbar>
+     <ion-content >
         <ion-list nolines *ngFor="let list of lists">
             <ion-item  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
-                 {{list1.name}}
-                 <ion-icon primary item-right [name]="list1.icon"></ion-icon>                
+                  {{list1.name}}
+                  <ion-icon primary item-right [name]="list1.icon"></ion-icon>                
                 <ion-list *ngIf="list1.showDetails" text-wrap>
                     <ion-item *ngFor="let glist of list1.children">
                        {{glist.name}}
                     </ion-item>    
                 </ion-list>
             </ion-item>
-
-        </ion-list>
-
-    </ion-content>
-</ion-menu>
-
+ 
+         </ion-list>
+ 
+     </ion-content>
+ </ion-menu>
 <ion-nav id="nav" #content [root]="rootPage"> </ion-nav>
-
