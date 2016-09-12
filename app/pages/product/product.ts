@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import { cartpage } from '../cart/cart';
+import { ToastController } from 'ionic-angular';
 import { NavController,NavParams, Storage, LocalStorage} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
 import { LoadingController } from 'ionic-angular';
@@ -16,7 +17,7 @@ export class productpage {
     itemColor:string;
     selectSize:string;
     selectColor:string;
-    constructor(public loadingCtrl: LoadingController, private navCtrl: NavController ,private navParams: NavParams, private _formService: FormService ) {
+    constructor(public toastCtrl: ToastController,public loadingCtrl: LoadingController, private navCtrl: NavController ,private navParams: NavParams, private _formService: FormService ) {
          let id = navParams.get('id');
          this.presentLoading();
                 let path = { sku: id, "product_data_type": "large_data" };
@@ -58,6 +59,7 @@ export class productpage {
         this.navCtrl.push(cartpage);
     }
     addcart(response){
+       this.presentToast("item inserted successfully")
 //        var sku = response.sku;
 //        var img = response.media_images;
 //        var price = response.display_price;
@@ -83,5 +85,14 @@ export class productpage {
     });
     loader.present();
   }
+      presentToast(message: string) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    }
+
 }
 

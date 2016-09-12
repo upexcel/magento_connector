@@ -5,6 +5,8 @@ import {HomePage1} from '../home1/home1';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { productpage } from '../product/product'
+//import {LoginPage} from './../../pages/login/login'
+import {StartPage} from './../../pages/startpage/startpage'
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers: [FormService],
@@ -18,40 +20,44 @@ export class HomePage implements OnInit {
     showList: boolean = false;
     clickshow: boolean = false;
     products: any;
-    spin:boolean;
-    constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController,  private _formService: FormService) {
+    spin: boolean;
+    constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
 
     }
     ngOnInit() {
         this.local = new Storage(LocalStorage);
-       // this.rootPage = HomePage1;
-
-        var path = { "parent_id": "1", "type": "full" }
-        this._formService.api("category/categorylist/", path).subscribe((res) => {
-            if (res) {
-                this.lists = res.data.children;
-                this.local.set('lists', JSON.stringify(this.lists));
-            }
-        },
-            (err) => {
-                if (err) {
-                    console.log(err);
+        // this.rootPage = HomePage1;
+        if (localStorage.getItem('lists') === null) {
+            var path = { "parent_id": "1", "type": "full" }
+            this._formService.api("category/categorylist/", path).subscribe((res) => {
+                if (res) {
+                    this.lists = res.data.children;
+                    this.local.set('lists', JSON.stringify(this.lists));
                 }
-            })
+            },
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                })
+        } else {
+            this.lists = JSON.parse(localStorage.getItem('lists'));
+        }
 
     }
-     mySlideOptions = {
+    mySlideOptions = {
         autoplay: 3000,
         initialSlide: 1,
         loop: true,
-//        pager: true
+        //        pager: true
     };
 
     openMenu() {
         console.log("nav");
         this.menuCtrl.open();
     }
-     presentPopover(myEvent: any) {
+    presentPopover(myEvent: any) {
         let popover = this.popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent,
@@ -61,10 +67,10 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-//            data.icon = 'ios-add-circle-outline';
+            //            data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-//            data.icon = 'ios-remove-circle-outline';
+            //            data.icon = 'ios-remove-circle-outline';
         }
     }
      gotoproduct(product){
@@ -73,21 +79,25 @@ export class HomePage implements OnInit {
        }); 
     }
     con(gchild: any) {
-         this.menuCtrl.close();
-        console.log(gchild)
-         this.spin = true;
+        this.menuCtrl.close();
+        this.spin = true;
         this.clickshow = true;
-        //   this.show = false;
         var path = { "id": gchild, "page": "1", "limit": "10" };
         this._formService.api("category/products/", path).subscribe((res) => {
 
             if (res) {
-                this.spin = false;
-                //    this.success = true;               
+                this.spin = false;              
                 this.products = res.data;
-                console.log(res.data);
             }
             
         })
+    }
+     logout() {
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('expiry');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('lists');
+        this.navCtrl.setRoot(StartPage);
     }
 }
