@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+
     <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>First Name</ion-label>
@@ -32,7 +33,7 @@
         <ion-grid >
             <ion-row center >
                 <ion-col class="center">
-                   <button type="submit" id="btn1" secondary round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
+                   <button type="submit" id="btn1" primary round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
                 </ion-col>
             </ion-row>
         </ion-grid> 

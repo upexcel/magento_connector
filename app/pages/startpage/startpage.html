@@ -11,14 +11,14 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <button secondary round (click)="gotologin()">Login</button>
+                <button primary round (click)="gotologin()">Login</button>
             </ion-col>          
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <button light outline round>TAKE THE TOUR</button>
+                <button light outline round (click)=" presentPopover($event)">TAKE THE TOUR</button>
             </ion-col>
         </ion-row>
     </ion-grid>    
