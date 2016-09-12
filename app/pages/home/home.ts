@@ -4,6 +4,9 @@ import {FormService } from './../../providers/form-service/form-service';
 import {HomePage1} from '../home1/home1';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
+import { productpage } from '../product/product'
+//import {LoginPage} from './../../pages/login/login'
+import {StartPage} from './../../pages/startpage/startpage'
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers: [FormService],
@@ -70,6 +73,11 @@ export class HomePage implements OnInit {
             //            data.icon = 'ios-remove-circle-outline';
         }
     }
+     gotoproduct(product){
+       this.navCtrl.push(productpage,{
+           id:product
+       }); 
+    }
     con(gchild: any) {
         this.menuCtrl.close();
         this.spin = true;
@@ -81,8 +89,15 @@ export class HomePage implements OnInit {
                 this.spin = false;              
                 this.products = res.data;
             }
-
-
+            
         })
+    }
+     logout() {
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('expiry');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('lists');
+        this.navCtrl.setRoot(StartPage);
     }
 }
