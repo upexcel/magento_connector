@@ -1,22 +1,95 @@
+<ion-header>
+    <ion-navbar primary>
+        <button menuToggle (click)="openMenu()">
+                <ion-icon name="menu"></ion-icon>
+        </button>
 
- <ion-menu [content]="content">
-     <ion-toolbar>
-         <ion-title>Categories</ion-title>
-     </ion-toolbar>
-     <ion-content >
-        <ion-list nolines *ngFor="let list of lists">
-            <ion-item  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)">
-                  {{list1.name}}
-                  <ion-icon primary item-right [name]="list1.icon"></ion-icon>                
-                <ion-list *ngIf="list1.showDetails" text-wrap>
-                    <ion-item *ngFor="let glist of list1.children">
-                       {{glist.name}}
-                    </ion-item>    
-                </ion-list>
+        <ion-title>
+            Home
+        </ion-title>
+
+        <ion-buttons end>
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+<ion-menu type="overlay"  [content]="content">
+    <ion-toolbar primary>
+        <ion-title>Categories</ion-title>
+    </ion-toolbar>
+    <ion-list  no-lines *ngFor="let list of lists">
+               <ion-item  ion-item *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" style="cursor:pointer">
+               {{list1.name}}
+               <ion-icon primary item-right top [name]="list1.icon"></ion-icon>   
+            <ion-list *ngIf="list1.showDetails" text-wrap>
+                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id)">
+                    {{glist.name}}
             </ion-item>
- 
-         </ion-list>
- 
-     </ion-content>
- </ion-menu>
-<ion-nav id="nav" #content [root]="rootPage"> </ion-nav>
+        </ion-list>
+    </ion-item>
+</ion-list>
+</ion-menu>
+
+<ion-nav id="nav"  #content [root]="rootPage" >
+
+</ion-nav>
+<ion-content padding class="home1">
+    <ion-grid>
+        <ion-row center>
+            <ion-col class="center">
+                <ion-slides [options]="mySlideOptions">
+                    <ion-slide>
+                        <ion-card>
+                            <img src="../../images/shirt3.jpg"/>
+                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-card>
+                            <img src="../../images/shirt.jpg"/>
+                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-card>
+                            <img src="../../images/shirt7.jpg"/>
+                            <ion-card-content>
+                                <ion-card-title>
+                                    Nine Inch Nails Live
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-spinner *ngIf="spin" style="margin-left: 50%"></ion-spinner>
+    <ion-grid *ngIf="clickshow">
+        <ion-row responsive-sm responsive-md  >
+            <ion-col *ngFor="let product of products" width-25>
+                <ion-card>
+                    <img src="{{product.data.media_images}}" alt="..." width="100%">
+                    <ion-card-content>
+                        <ion-card-title>
+                            {{product.data.name}}
+                             <a href="#" class="price" role="button">{{product.data.display_price}}</a>
+                        </ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>
