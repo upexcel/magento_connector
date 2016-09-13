@@ -1,75 +1,102 @@
 <ion-header>
-    <ion-navbar primary>
-        <ion-toolbar primary>
-            <ion-title start>  Product
+    <ion-navbar>
+        <ion-toolbar  style="text-align: center;">
+            <ion-title start>  {{ product }}
             </ion-title>
             <ion-buttons end>
-                <button (click)= " gotocart()">
-                    <ion-icon name="cart"></ion-icon>
+                <button>
+                    <ion-icon name="add"></ion-icon>
                 </button>
             </ion-buttons>
         </ion-toolbar>
     </ion-navbar>
 </ion-header>
 <ion-content >
-    <ion-grid *ngIf="response">
+    <ion-grid *ngIf="response" style='padding: 0px;'>
         <ion-row  responsive-lg>
-            <ion-col width-33 ></ion-col>
-            <ion-col width-33 >
+            <ion-col width-33 style='padding: 0px;'></ion-col>
+            <ion-col width-33 style='padding: 0px;'>
                 <ion-card>
-                    <img src="{{response.data.data.media_images}}" style="min-height: 140px; cursor: pointer;"/>
+                    <div style="height: 350px; width:100%">
+                     <img src="{{images}}" style="min-height: 140px; max-height: 350px; width: 90%; cursor: pointer;"/>
+                    </div>
                     <ion-card-content>
+                         <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="response.data.data">
+
+           <ion-slide>
+                        <ion-row>
+           <ion-col *ngFor = "let img of response.data.data.media_images" (click)="slideClick(img)">
+      <img src="{{img}}" style="max-height: 100px; max-height: 100px; cursor: pointer;"/>                             
+          </ion-col>
+
+                        </ion-row>
+                             </ion-slide>
+                    </ion-slides>
                         <ion-row >
                             <ion-col>
                                 <h2>{{response.data.data.name}}</h2>
                             </ion-col>
-                            <p style="padding-top: 8px;">{{response.data.data.display_price}}</p>
                         </ion-row>
-                        <p style="text-align: center; font-size: 13px; ">{{response.data.data.short_description}}</p>
+                        <ion-row> 
+                            <ion-col> 
+                                <p style="font-size: 0.9rem;">{{response.data.data.display_price}}</p>
+                            </ion-col>
+                        </ion-row>
+
+
+
+                        <!--        <ion-item  >
+                                    <ion-label>Select {{response.data.associated_products.attributes['180'].label}}</ion-label>
+                                    <ion-select [(ngModel)]="selectSize">
+                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['180'].options" [value]="obj.label" >
+                                            {{obj.label}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                        
+                                <ion-item *ngIf="activeColor==true">
+                                    <ion-label>Select {{response.data.associated_products.attributes['92'].label}}</ion-label>
+                                    <ion-select [(ngModel)]="selectColor">
+                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['92'].options" [value]="obj.label" >
+                                            <label>{{obj.label}}</label></ion-option>
+                        
+                                    </ion-select>-->
+                        <ion-row>
+                            <ion-col width-50>
+                                <ion-item class="selectlist" *ngIf="activeSize==true && response.data">
+                                    <ion-label class="lable">{{response.data.associated_products.attributes['180'].label}}</ion-label>
+               
+                                    <ion-select [(ngModel)]="selectSize">
+                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['180'].options" [value]="obj.label" >
+                                            <label>{{obj.label}}</label></ion-option>
+
+                                    </ion-select>
+                                </ion-item >
+                            </ion-col>
+                            <ion-col width-50 selectlist>
+                                <ion-item class="selectlist" *ngIf="activeColor==true">
+                                   <ion-label class="lable">{{response.data.associated_products.attributes['92'].label}}</ion-label>
+               
+                                    <ion-select [(ngModel)]="selectSize" class='ion-input-select--large'><ion-icon name="ios-clock"></ion-icon>
+                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['92'].options" [value]="obj.label" >
+                                            <label>{{obj.label}}</label></ion-option>
+
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <!--        </ion-item>       -->
+
+                        <p style="font-size: 13px; ">{{response.data.data.short_description}}</p>
+                        <ion-row center >
+                            <ion-col class="center">
+                                <button  primary round  (click)=" addcart(response.data)" >ADD CART</button>
+
+                            </ion-col>
+                        </ion-row>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
         </ion-row>
-
-
-        <ion-item>
-            <ion-row>
-                <ion-col width-33 style="padding-top: 0px;">
-                    <button ng-reflect-clear="" class="disable-hover button button-clear button-icon-left" clear="" (click)="remove()" style="padding-right 40px;">
-                        <span class="button-inner">
-                            <ion-icon ng-reflect-name="remove" aria-label="remove" class="remove" role="img" name="remove" is-active="false"></ion-icon>
-
-                        </span><ion-button-effect></ion-button-effect></button>      
-                </ion-col>
-
-                <ion-col width-33 style="text-align: center; padding-top: 10px;">
-                    <ion-title> {{quantity}} </ion-title>
-                </ion-col>
-                <ion-col width-33 style="text-align: right;padding-top: 0px;">
-                    <button ng-reflect-clear="" class="disable-hover button button-clear button-icon-left" clear="" (click)="add()" style="padding-left: 40px;"><span class="button-inner">
-                            <ion-icon ng-reflect-name="add" aria-label="add" class="add" role="img" name="add" is-active="false"></ion-icon>
-                        </span><ion-button-effect></ion-button-effect>
-                    </button>
-                </ion-col>
-            </ion-row>
-        </ion-item>
-
-        <ion-item *ngIf="activeSize==true && response.data" >
-            <ion-label>Select {{response.data.associated_products.attributes['180'].label}}</ion-label>
-            <ion-select [(ngModel)]="selectSize">
-                <ion-option *ngFor= "let obj of response.data.associated_products.attributes['180'].options" [value]="obj.label" >
-                    {{obj.label}}</ion-option>
-            </ion-select>
-        </ion-item>
-
-        <ion-item *ngIf="activeColor==true">
-            <ion-label>Select {{response.data.associated_products.attributes['92'].label}}</ion-label>
-            <ion-select [(ngModel)]="selectColor">
-                <ion-option *ngFor= "let obj of response.data.associated_products.attributes['92'].options" [value]="obj.label" >
-                    <label>{{obj.label}}</label></ion-option>
-
-            </ion-select>
-        </ion-item>       
-        <button full (click)=" addcart(response.data)">ADD CART</button>
     </ion-grid>
 </ion-content>

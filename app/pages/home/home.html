@@ -80,7 +80,7 @@
         <ion-row  wrap responsive-sm responsive-md  >
             <ion-col *ngFor="let product of products" width-25 (click)="gotoproduct(product.data.sku)">
                 <ion-card>
-                    <img src="{{product.data.media_images}}" alt="..." width="100%">
+                    <img src="{{product.data.media_images[0]}}" alt="..." width="100%">
                     <ion-card-content>
                         <ion-card-title>
                             {{product.data.name}}
