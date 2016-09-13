@@ -17,7 +17,7 @@ export class StartPage implements OnInit {
     local: any;
     constructor(private navCtrl: NavController , private popoverCtrl: PopoverController) {
         this.local = new Storage(LocalStorage);
-         console.clear();
+        // console.clear();
     }
     ngOnInit() {
         this.checkCredentials();

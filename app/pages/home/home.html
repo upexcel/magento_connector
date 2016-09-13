@@ -27,7 +27,7 @@
                {{list1.name}}
                <ion-icon primary item-right top [name]="list1.icon"></ion-icon>   
             <ion-list *ngIf="list1.showDetails" text-wrap>
-                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id)">
+                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
                     {{glist.name}}
             </ion-item>
         </ion-list>
@@ -38,56 +38,45 @@
 <ion-nav id="nav"  #content [root]="rootPage" >
 
 </ion-nav>
-<ion-content padding class="home">
-    <ion-grid>
-        <ion-row center>
-            <ion-col>
-                <ion-slides [options]="mySlideOptions">
-                    <ion-slide>
-                        <!--                        <ion-card>-->
-                        <img src="../../images/shirt3.jpg"/>
-                        <!--                            <ion-card-content>
-                                                        <ion-card-title>
-                                                            Nine Inch Nails Live
-                                                        </ion-card-title>
-                                                    </ion-card-content>
-                                                </ion-card>-->
-                    </ion-slide>
-                    <ion-slide>
-                        <!--<ion-card>-->
-                        <img src="../../images/shirt.jpg"/>
-                        <!--                            <ion-card-content>
-                                                        <ion-card-title>
-                                                            Nine Inch Nails Live
-                                                        </ion-card-title>
-                                                    </ion-card-content>-->
-                        <!--</ion-card>-->
-                    </ion-slide>
-                    <ion-slide>
-                        <!--<ion-card>-->
-                        <img src="../../images/shirt7.jpg"/>
-                        <!--                            <ion-card-content>
-                                                        <ion-card-title>
-                                                            Nine Inch Nails Live
-                                                        </ion-card-title>
-                                                    </ion-card-content>
-                                                </ion-card>-->
+
+<ion-content class="home">
+    <ion-grid style='padding: 0px;'>
+        <ion-row style='padding: 0px;height: auto;max-height: 220px;'>
+            <ion-col style='padding: 0px;'>
+                <ion-slides  [options]="mySlideOptions">
+                    <ion-slide *ngFor="let images of img">
+                        <img src="{{images}}" style="width: 100%;margin-top: -10px;height: 50%"/>                      
                     </ion-slide>
                 </ion-slides>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
-    <ion-grid *ngIf="clickshow">
-        <ion-row  wrap responsive-sm responsive-md  >
-            <ion-col *ngFor="let product of products" width-25 style="cursor:pointer" >
-                <ion-card (click)="gotoproduct(product.data.sku)">
-                    <img src="{{product.data.media_images}}" alt="..." width="100%">
+
+    <ion-grid showWhen="landscape"> 
+        <ion-row wrap>
+            <ion-col width-25 *ngFor="let feat_prod of feature_products">
+                <ion-card (click)="gotoproduct(feat_prod.data.sku)" style="cursor: pointer">
+                    <img src="{{feat_prod.data.media_images}}" style="height: 200px;width: 200px;"/>
                     <ion-card-content>
-                        <ion-card-title style="font-size: 12px;">
-                            {{product.data.name}}
+                        <ion-card-title style='font-size: 14px;text-align: center;'>
+                           {{feat_prod.data.name}}
                         </ion-card-title>
-                        <p> <a href="#" class="price" role="button">{{product.data.display_price}}</a></p>
+                        <p style='text-align: center'>Price:{{feat_prod.data.display_price}}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+     <ion-grid showWhen="mobile"> 
+        <ion-row wrap>
+            <ion-col width-50 *ngFor="let feat_prod of feature_products">
+                <ion-card (click)="gotoproduct(feat_prod.data.sku)" style="cursor: pointer">
+                   <img src="{{feat_prod.data.media_images}}" style="height: 120px;width: 200px;"/>
+                    <ion-card-content>
+                        <ion-card-title style='font-size: 12px;text-align: center;'>
+                          {{feat_prod.data.name}}
+                        </ion-card-title>
+                         <p style='text-align: center'>Price:{{feat_prod.data.display_price}}</p>
                     </ion-card-content>
                 </ion-card>
             </ion-col>

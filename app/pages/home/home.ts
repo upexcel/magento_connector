@@ -21,11 +21,15 @@ export class HomePage implements OnInit {
     clickshow: boolean = false;
     products: any;
     spin: boolean;
+    img: any;
+    feature_products: any;
     constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
 
     }
     ngOnInit() {
         this.local = new Storage(LocalStorage);
+        this.slider();
+        this.home_products();
         // this.rootPage = HomePage1;
         if (localStorage.getItem('lists') === null) {
             var path = { "parent_id": "1", "type": "full" }
@@ -50,11 +54,10 @@ export class HomePage implements OnInit {
         autoplay: 3000,
         initialSlide: 1,
         loop: true,
-        //        pager: true
+        pager: true
     };
 
     openMenu() {
-        console.log("nav");
         this.menuCtrl.open();
     }
     presentPopover(myEvent: any) {
@@ -73,31 +76,38 @@ export class HomePage implements OnInit {
             //            data.icon = 'ios-remove-circle-outline';
         }
     }
-     gotoproduct(product){
-       this.navCtrl.push(productpage,{
-           id:product
-       }); 
+    gotoproduct(product) {
+        this.navCtrl.push(productpage, {
+            id: product
+        });
     }
-    con(gchild: any) {
-        this.menuCtrl.close();
-        this.spin = true;
-        this.clickshow = true;
-        var path = { "id": gchild, "page": "1", "limit": "10" };
-        this._formService.api("category/products/", path).subscribe((res) => {
-
-            if (res) {
-                this.spin = false;              
-                this.products = res.data;
-            }
-            
-        })
+    con(gchild_id: any, gchild_name: any) {
+        this.menuCtrl.close;
+        this.navCtrl.push(HomePage1, { "id": gchild_id, "name": gchild_name });
     }
-     logout() {
+    logout() {
         localStorage.removeItem('firstname');
         localStorage.removeItem('lastname');
         localStorage.removeItem('expiry');
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
         this.navCtrl.setRoot(StartPage);
+    }
+
+    slider() {
+        this._formService.api("home/slider", '').subscribe((res) => {
+            if (res) {
+                this.img = res.data;
+            }
+
+        })
+    }
+    home_products() {
+        this._formService.api("home/products", '').subscribe((res) => {
+            if (res) {
+                this.feature_products = res.data;
+            }
+
+        })
     }
 }
