@@ -4,7 +4,7 @@ import {ViewController, NavController} from 'ionic-angular'
 import {StartPage} from './../../pages/startpage/startpage'
 @Component({
     template: `
-    <ion-list no-lines>
+    <ion-list  no-lines>
  <ion-list-header>Profile</ion-list-header>
       <button ion-item >My Account</button>
       <button ion-item (click)="logout()">Logout</button>

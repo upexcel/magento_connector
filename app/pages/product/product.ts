@@ -27,6 +27,19 @@ export class productpage {
         let id = navParams.get('id');
         this.presentLoading();
         let path = { sku: id, "product_data_type": "large_data" };
+
+//    response:any ;
+//    activeSize:boolean=false;
+//    activeColor:boolean=false;
+//    itemSize:string;
+//    itemColor:string;
+//    selectSize:string;
+//    selectColor:string;
+//    constructor(public toastCtrl: ToastController,public loadingCtrl: LoadingController, private navCtrl: NavController ,private navParams: NavParams, private _formService: FormService ) {
+//         let id = navParams.get('id');
+//         this.presentLoading();
+//                let path = { sku: id, "product_data_type": "large_data" };
+
         //api for get selected item
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
@@ -96,5 +109,12 @@ export class productpage {
     slideClick(img){
         this.images=img;
     }
+      onChange(val: any) {
+    // onChange used when there is not an formControlName
+    let myDiv = document.getElementById('color');
+    myDiv.style.color = val;
+    console.log(val);
+  }
+
 }
 

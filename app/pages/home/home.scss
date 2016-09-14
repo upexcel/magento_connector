@@ -1,3 +1,10 @@
 .home {
-
+    .swiper-container-horizontal > .swiper-pagination {
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+    } 
+    .swiper-pagination-bullet {
+        background: #1c57ff;
+    }
 }
