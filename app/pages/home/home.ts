@@ -82,17 +82,17 @@ export class HomePage implements OnInit {
         });
     }
     con(gchild_id: any, gchild_name: any) {
-        this.menuCtrl.close;
+        this.menuCtrl.close();
         this.navCtrl.push(HomePage1, { "id": gchild_id, "name": gchild_name });
     }
-    logout() {
-        localStorage.removeItem('firstname');
-        localStorage.removeItem('lastname');
-        localStorage.removeItem('expiry');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('lists');
-        this.navCtrl.setRoot(StartPage);
-    }
+//    logout() {
+//        localStorage.removeItem('firstname');
+//        localStorage.removeItem('lastname');
+//        localStorage.removeItem('expiry');
+//        localStorage.removeItem('access_token');
+//        localStorage.removeItem('lists');
+//        this.navCtrl.setRoot(StartPage);
+//    }
 
     slider() {
         this._formService.api("home/slider", '').subscribe((res) => {

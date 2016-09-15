@@ -45,20 +45,14 @@ export class HomePage1 implements OnInit {
             id: product
         });
     }
-    //    mySlideOptions = {
-    //        autoplay: 3000,
-    //        initialSlide: 1,
-    //        loop: true,
-    //        pager: true
-    //    };
     openMenu() {
         console.log("nav");
         this.menuCtrl.open();
     }
-    //    presentPopover(myEvent: any) {
-    //        let popover = this.popoverCtrl.create(PopoverPage);
-    //        popover.present({
-    //            ev: myEvent,
-    //        });
-    //    }
+    presentPopover(myEvent: any) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent,
+        });
+    }
 }

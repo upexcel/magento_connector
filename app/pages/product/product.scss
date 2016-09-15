@@ -2,7 +2,6 @@
     max-width: 264px;
     border-radius: 10px;
 }
-
 .selectlist{
     border-style: solid;
     border-width: 1px;
@@ -31,10 +30,12 @@ ion-card p {
     line-height: 1.5;
     color: #222;
 }
-
 ion-select {
     padding: 0px !important;
     font-size: 12px;
+}
+.line{
+    text-decoration: line-through;   
 }
 /*@media (max-width: 1023px)
 [responsive-lg] ion-col[width-10], [responsive-lg] ion-col[width-20], [responsive-lg] ion-col[width-25], [responsive-lg] ion-col[width-33], [responsive-lg] ion-col[width-34], [responsive-lg] ion-col[width-50], [responsive-lg] ion-col[width-66], [responsive-lg] ion-col[width-67], [responsive-lg] ion-col[width-75], [responsive-lg] ion-col[width-80], [responsive-lg] ion-col[width-90] {

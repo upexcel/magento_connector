@@ -7,4 +7,21 @@
     .swiper-pagination-bullet {
         background: #1c57ff;
     }
+    .popover-content {
+        width: 250px;
+        min-width: 0;
+        min-height: 0;
+        max-height: 90%;
+        border-radius: 2px;
+        color: #000;
+        background: #fafafa;
+        box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.3);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+    }
+
+    .popover-content scroll-content {
+        position: relative;
+        overflow: auto;
+    }
 }

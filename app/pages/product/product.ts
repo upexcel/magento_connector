@@ -15,35 +15,24 @@ export class productpage {
     activeSize: boolean = false;
     activeColor: boolean = false;
     quantityUpdate: boolean = false;
+    condition:boolean =true;
     itemSize: string;
     itemColor: string;
     selectSize: string;
     selectColor: string;
     storage;
     product;
+    price;
     images: any;
     constructor(public toastCtrl: ToastController, public loadingCtrl: LoadingController, private navCtrl: NavController, private navParams: NavParams, private _formService: FormService) {
         this.product = "Product";
         let id = navParams.get('id');
         this.presentLoading();
-        let path = { sku: id, "product_data_type": "large_data" };
-
-//    response:any ;
-//    activeSize:boolean=false;
-//    activeColor:boolean=false;
-//    itemSize:string;
-//    itemColor:string;
-//    selectSize:string;
-//    selectColor:string;
-//    constructor(public toastCtrl: ToastController,public loadingCtrl: LoadingController, private navCtrl: NavController ,private navParams: NavParams, private _formService: FormService ) {
-//         let id = navParams.get('id');
-//         this.presentLoading();
-//                let path = { sku: id, "product_data_type": "large_data" };
-
-        //api for get selected item
+        let path = { sku: id };
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
                 this.response = res;
+                this.price=this.response.data.data.display_price;
                 this.images=this.response.data.data.media_images[0];
                 this.product = this.response.data.data.name;
                 if (this.response.data.data.qty > 0) {
@@ -63,11 +52,9 @@ export class productpage {
             }
         },
             (err) => {
-
                 if (err) {
                     console.log(err);
                 }
-
             })
             
     }
@@ -81,7 +68,6 @@ export class productpage {
         var price = response.display_price;
         var name = response.name;
         let data = { id: sku, no: this.quantity, img: img, name: name, price: price, size: this.itemSize, qty: this.quantity };
-
         this.storage = JSON.parse(localStorage.getItem('item'));
         //        this._total.getTotal(this.array1).then((response) => {
         //            this.total = response;
@@ -115,6 +101,7 @@ export class productpage {
     myDiv.style.color = val;
     console.log(val);
   }
-
+  onChangeSize(size:any , item:any){
+      console.log(size, item);
+  }
 }
-

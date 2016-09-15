@@ -1,25 +1,31 @@
-.heading{
-    padding: 0 12px;
-    font-size: 2rem;
-    font-weight: 300;
-    color: #424242;
-}
-.swiper-slide {
-    font-size: 1.5rem;
-    font-weight: 300;
-}
-.align{
-    margin: 0px auto;
-    width:75%;
-    margin-bottom: 5%;
-    padding: 15px;
-}
-.swiper-pagination-bullet {
-    background: #00631D;
+.tour{
+    .heading{
+        padding: 0 12px;
+        font-size: 2rem;
+        font-weight: 300;
+        color: #424242;
+    }
+    .swiper-slide {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+    .align{
+        margin: 0px auto;
+        width:75%;
+        margin-bottom: 5%;
+        padding: 15px;
+    }
+    .swiper-pagination-bullet {
+        background: #00631D;
+    }
+
+    .swiper-container-horizontal > .swiper-pagination {
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+    }
 }
 
-.swiper-container-horizontal > .swiper-pagination {
-    bottom: 0px;
-    left: 0;
-    width: 100%;
+scroll-content {
+    overflow-y: auto;
 }
