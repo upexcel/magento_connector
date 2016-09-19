@@ -22,7 +22,7 @@ export class productpage {
     quantityUpdate: boolean = false;
     condition: boolean = false;
     sp_priceShow: boolean = false;
-    selectshow:boolean=true;
+    selectshow: boolean = true;
     itemSize: string;
     itemColor: string;
     selectSize: string;
@@ -45,7 +45,7 @@ export class productpage {
 
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
-                this.response = res;
+                this.response = JSON.parse(res.data.body);
                 this.backupResponse = this.response;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
@@ -104,8 +104,7 @@ export class productpage {
     }
 
     onChange(res, key) {
-        console.log(res[key], key);
-        var res111=res[key];
+        var res111 = res[key];
         _.forEach(this.response.data.associated_products.attributes, function(res1, key1) {
             if (key != key1) {
                 _.forEach(res1.options, function(res2, key2) {
@@ -122,16 +121,15 @@ export class productpage {
 
                 })
             }
-            else{
-                 _.forEach(res1.options, function(res2, key2) {
+            else {
+                _.forEach(res1.options, function(res2, key2) {
                     res2.shown = true;
-                    });
+                });
             }
         })
-                this.selectshow=false;
-                      if(key=="92")  {   
-                    let myDiv = document.getElementById('color');
-                    myDiv.style.color = res[key].label;
-                      }
+        this.selectshow = false;
+        let myDiv = document.getElementById('color');
+        myDiv.style.color = res[key].label;
+
     }
 }

@@ -35,7 +35,7 @@ export class HomePage1 implements OnInit {
         this._formService.api("category/products/", path).subscribe((res) => {
             if (res) {
                 this.spin = false;
-                this.products = res.data;
+                this.products = JSON.parse(res.data.body).data;
             }
 
         })
@@ -54,5 +54,15 @@ export class HomePage1 implements OnInit {
         popover.present({
             ev: myEvent,
         });
+    }
+    doRefresh(refresher) {
+        this.show_products(this.product_id);
+        console.log(this.product_id)
+        console.log('Begin async operation', refresher);
+
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            refresher.complete();
+        }, 2000);
     }
 }

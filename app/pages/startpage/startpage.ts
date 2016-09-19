@@ -20,7 +20,6 @@ export class StartPage implements OnInit {
         // console.clear();
     }
     ngOnInit() {
-        this.checkCredentials();
     }
 
     gotologin() {
@@ -39,21 +38,5 @@ export class StartPage implements OnInit {
         let profileModal = this.modalCtrl.create(tourPage);
         profileModal.present();
     }
-    checkCredentials() {
-        let name = this.local.get('firstname');
-        let access_token;
-        this.local.get('access_token').then((res) => {
-            access_token = res;
-            if (access_token != null) {
-                this.navCtrl.setRoot(HomePage);
-            } else {
-                //            this.firstname = localStorage.getItem('firstname');
-                //            this.lastname = localStorage.getItem('lastname');
-                //            this.access_token = localStorage.getItem('access_token');
-                //            this.expiry = localStorage.getItem('expiry')
-                //            this.navCtrl.push(HomePage);
-            }
-        });
 
-    }
 }

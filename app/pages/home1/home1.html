@@ -4,21 +4,30 @@
                 <ion-icon name="menu"></ion-icon>
         </button>
 
-        <ion-title>
+        <ion-title text-center>
             {{title}}
         </ion-title>
 
         <ion-buttons end>
             <button (click)="presentPopover($event)">
-            <ion-icon name="more"></ion-icon>
-<!--            <button (click)="logout()">
-                Logout
-            --></button>
+                <ion-icon name="more"></ion-icon>
+                <!--            <button (click)="logout()">
+                                Logout
+                --></button>
         </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 <ion-content class="home1">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+
+        </ion-refresher-content>
+    </ion-refresher>
     <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
     <ion-grid *ngIf="clickshow" showWhen="landscape">
         <ion-row  wrap>

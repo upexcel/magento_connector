@@ -1,38 +1,51 @@
 <ion-header>
 
     <ion-navbar primary>
-        <ion-title>Profile</ion-title>
-        <ion-buttons end>
-            <button>
-                <ion-icon name="create" item-left></ion-icon>Edit</button>
-        </ion-buttons>
+        <ion-title>My Account</ion-title>
     </ion-navbar>
-
 </ion-header>
 
 
 
 <ion-content  class="myaccount">
     <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
-    <ion-list inset  >
-        <ion-item>
-            Name:
-        </ion-item>
-        <ion-item>
-            Name:
-        </ion-item>
-        <ion-item>
-            Name:
-        </ion-item>
-        <ion-item>
-            Name:
-        </ion-item>
-        <ion-item>
-            Name:
-        </ion-item>
-        <ion-item>
-            Name:
-        </ion-item>
-
-    </ion-list>
+    <form [formGroup]="updateform" *ngIf="user_add">
+        <ion-list inset style="padding-bottom:60px" >
+            <ion-item>
+                <ion-label stacked>Name</ion-label>
+                <ion-input formControlName="fullname" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>City</ion-label>
+                <ion-input formControlName="city" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Company</ion-label> 
+                <ion-input  formControlName="company" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Telephone</ion-label>
+                <ion-input  formControlName="telephone" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <!--            <ion-item *ngFor="let street of name.street">
+                            <ion-label stacked>Address</ion-label>
+                            <ion-input [value]="street"  formControlName="street" autocorrect autocomplete clearInput></ion-input>
+                        </ion-item>-->
+            <ion-item>
+                <ion-label stacked>Region</ion-label>
+                <ion-input  formControlName="region" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Pin Code</ion-label> 
+                <ion-input  formControlName="zip" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Country</ion-label> 
+                <ion-input formControlName="country" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>           
+            <ion-buttons class="center" padding>
+                <button primary medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button>
+            </ion-buttons>   
+        </ion-list>
+    </form>
 </ion-content>

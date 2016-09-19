@@ -6,6 +6,7 @@ import {RegisterPage} from '../register/register'
 import {FormService } from './../../providers/form-service/form-service';
 import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot'
+//import * as _ from 'lodash'
 @Component({
     templateUrl: 'build/pages/login/login.html',
     directives: [FORM_DIRECTIVES],
@@ -30,18 +31,25 @@ export class LoginPage {
     signin(logvalue: any) {
         this.spin = true;
         this._formService.api('customer/login/', logvalue).subscribe((res) => {
-            this.local.set('firstname', res.data.firstname);
-            this.local.set('lastname', res.data.lastname);
-            this.local.set('access_token', res.data.access_token);
-            this.local.set('expiry', res.data.expiry);
+            console.log(res)
             this.spin = false;
-            this.navCtrl.setRoot(HomePage);
-
+            if (res.status == 1) {
+                this.local.set('firstname', JSON.parse(res.body).data.firstname);
+                this.local.set('lastname', JSON.parse(res.body).data.lastname);
+                this.local.set('access_token', JSON.parse(res.body).data.access_token);
+                this.local.set('expiry', JSON.parse(res.body).data.expiry);
+                //this.spin = false;
+                this.navCtrl.setRoot(HomePage);
+            } else {
+                this.response = res.msg;
+                this.showToast("top");
+            }
         },
             (err) => {
-                if (err.status == 500) {
+                if (err.status == 0) {
+                    console.log(err)
                     this.spin = false;
-                    this.response = JSON.parse(err._body).message;
+                    this.response = err.msg;
                     this.showToast("top");
                 }
 
