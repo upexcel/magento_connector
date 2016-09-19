@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar primary>
-        <ion-toolbar  style="text-align: center;">
+        <ion-toolbar >
             <ion-title start>  {{ product }}
             </ion-title>
             <ion-buttons end>
@@ -39,45 +39,28 @@
                         </ion-row>
                         <ion-row> 
                             <ion-col style='padding: 0px;'> 
-                                <p style="font-size: 0.7em; width: auto;width: auto;float: left; margin-right: 8px;line-height: 2;" [ngClass]="{'line': condition==true}">{{price}}</p>
-                                <p style="font-size: 0.9em;font-weight: 400" [ngClass]="{'line': condition=='true'}">{{price}}</p>
+                                <p [ngClass]="{'line': condition==true}" style="font-size: 0.7em; width: auto; width: auto; float: left; margin-right: 8px;line-height: 2;">{{price}}</p>
+                                <p  *ngIf="sp_priceShow == true" style="font-size: 0.9em; font-weight: 400">{{s_price}}</p>
                             </ion-col>
                         </ion-row>
-
-                        <ion-row>
-                            <ion-col width-50>
-                                <ion-item class="selectlist" *ngIf="activeSize==true && response.data">
-                                          <ion-label class="lable">{{response.data.associated_products.attributes['180'].label}}</ion-label>
-
-                                    <ion-select [(ngModel)]="selectSize"  [placeholder]="0"  (ngModelChange)="onChangeSize(selectColor,obj)">
-                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['180'].options" [value]="obj.label" >
-                                            <ion-label class="lable">{{obj.label}}</ion-label></ion-option>
-
-                                    </ion-select>
-                                </ion-item >
-                            </ion-col>
-                            <ion-col width-50 selectlist>
-                                <ion-item class="selectlist" *ngIf="activeColor==true">
-                                    <ion-label class="lable">
-                                        {{response.data.associated_products.attributes['92'].label}}
-                                    </ion-label>
-                                    <ion-label class="lable">
-                                        <ion-buttons end>
-                                            <ion-icon name="radio-button-on" style="color:black;" id='color'></ion-icon>
+                        <ion-row wrap>
+                            <ion-col width-50 *ngFor="let key of keys">
+                                     <ion-item class="selectlist">
+                                    <ion-label class="lable">{{response.data.associated_products.attributes[key].label}}</ion-label>
+                                    <ion-label class="lable" *ngIf="response.data.associated_products.attributes[key].label=='Color'">
+                                        <ion-buttons style='text-align: right;'>
+                                            <ion-icon name="radio-button-on" style="color:black;" id="color"></ion-icon>
                                         </ion-buttons>
                                     </ion-label>
-                                    <ion-select [(ngModel)]="selectColor"  (ngModelChange)="onChange(selectColor)">
-
-                                        <ion-option *ngFor= "let obj of response.data.associated_products.attributes['92'].options" [value]="obj.label" >
-                                            <ion-label class="lable">{{obj.label}}</ion-label>
-                                        </ion-option>
-                                    </ion-select>
+                                    <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
+                                        <span *ngFor= "let obj of response.data.associated_products.attributes[key].options">
+                                        <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                            <ion-label class="lable">{{obj.label}}</ion-label></ion-option>
+                                   </span>
+                                     </ion-select>
                                 </ion-item>
-                            </ion-col>
+                            </ion-col>                         
                         </ion-row>
-
-                        <!--        </ion-item>       -->
-
                         <p style="font-size: 13px; ">{{response.data.data.short_description}}</p>
                         <ion-row center >
                             <ion-col class="center">
