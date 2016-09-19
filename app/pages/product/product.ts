@@ -16,14 +16,13 @@ export class productpage {
     res: {} = {};
     quantity: number = 1;
     response: any;
-    backupResponse: any;
     activeSize: boolean = false;
     activeColor: boolean = false;
     quantityUpdate: boolean = false;
     condition: boolean = false;
     sp_priceShow: boolean = false;
     selectshow: boolean = true;
-    spin: boolean=true;
+    spin: boolean = true;
     itemSize: string;
     itemColor: string;
     selectSize: string;
@@ -45,10 +44,9 @@ export class productpage {
         let path = { sku: id };
 
         this._formService.product_api("product/get/", path).subscribe((res) => {
-            if (res) {
+             if (res) {
                 this.response = res;
-                this.spin=false;
-                this.backupResponse = this.response;
+                 this.spin = false;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
                 this.final_price = this.price;
@@ -63,7 +61,7 @@ export class productpage {
                     var list = this.response.data.associated_products.attributes;
                     this.keys = _.keys(list);
                 }
-            }
+             }
         },
             (err) => {
                 if (err) {
@@ -105,22 +103,19 @@ export class productpage {
         this.images = img;
     }
 
-    onChange(res, key) {
-        var res111 = res[key];
-        _.forEach(this.response.data.associated_products.attributes, function(res1, key1) {
-            if (key != key1) {
-                _.forEach(res1.options, function(res2, key2) {
-                    res2.shown = false;
-                    _.forEach(res111.products, function(res4, key4) {
-                        _.forEach(res2.products, function(res3, key3) {
-                            if (res4 == res3) {
-                                res2.shown = true;
-                            }
-                        })
-
-
-                    })
-
+   onChange(res, key) {
+       var res111 = res[key];
+       _.forEach(this.response.data.associated_products.attributes, function(res1, key1) {
+           if (key != key1) {
+               _.forEach(res1.options, function(res2, key2) {
+                   res2.shown = false;
+                   _.forEach(res111.products, function(res4, key4) {
+                       _.forEach(res2.products, function(res3, key3) {
+                           if (res4 == res3) {
+                               res2.shown = true;
+                           }
+                       })
+                   })
                 })
             }
             else {
