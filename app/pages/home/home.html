@@ -51,11 +51,11 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-grid style='padding: 0px;'>
-        <ion-row style='padding: 0px;height: auto;max-height: 220px;'>
+        <ion-row style="padding: 0px;height: auto; max-height: 220px;">
             <ion-col style='padding: 0px;'>
                 <ion-slides  [options]="mySlideOptions">
                     <ion-slide *ngFor="let images of img">
-                        <img src="{{images}}" style="width: 100%;margin-top: -10px;height: 50%"/>                      
+                        <img src="{{images}}" style="width: 100%;margin-top: -10px;max-height: 220px;"/>                      
                     </ion-slide>
                 </ion-slides>
             </ion-col>

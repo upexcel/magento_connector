@@ -11,7 +11,7 @@
     <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="user_add">
         <ion-list inset style="padding-bottom:60px" >
-                  <ion-item>
+            <ion-item>
                 <ion-label stacked>Name</ion-label>
                 <ion-input formControlName="fullname" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
@@ -27,10 +27,10 @@
                 <ion-label stacked>Telephone</ion-label>
                 <ion-input  formControlName="telephone" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
-<!--            <ion-item *ngFor="let street of name.street">
-                <ion-label stacked>Address</ion-label>
-                <ion-input [value]="street"  formControlName="street" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>-->
+            <!--            <ion-item *ngFor="let street of name.street">
+                            <ion-label stacked>Address</ion-label>
+                            <ion-input [value]="street"  formControlName="street" autocorrect autocomplete clearInput></ion-input>
+                        </ion-item>-->
             <ion-item>
                 <ion-label stacked>Region</ion-label>
                 <ion-input  formControlName="region" autocorrect autocomplete clearInput></ion-input>
@@ -44,7 +44,7 @@
                 <ion-input formControlName="country" autocorrect autocomplete clearInput></ion-input>
             </ion-item>           
             <ion-buttons class="center" padding>
-                 <button primary medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button>
+                <button primary medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button>
             </ion-buttons>   
         </ion-list>
     </form>

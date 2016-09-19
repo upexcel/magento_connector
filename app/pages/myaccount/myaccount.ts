@@ -18,6 +18,7 @@ export class MyaccountPage implements OnInit {
     access_token:any
     constructor(private navCtrl: NavController, public fb: FormBuilder, private _formService: FormService) {
         this.access_token=localStorage.getItem("access_token");  
+
     }
     ngOnInit() {
         this.getuser_details();
@@ -46,5 +47,13 @@ export class MyaccountPage implements OnInit {
     }
     update(value: any) {
         console.log(value)
+//        this.spin=true;
+//        var body = { "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" }
+//        this._formService.api('account/address/', body).subscribe((res) => {
+//            this.got=true
+//            this.spin = false
+//            this.user_add = res.data;
+//            console.log(this.user_add)
+//        })
     }
 }

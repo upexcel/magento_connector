@@ -55,9 +55,9 @@ export class HomePage1 implements OnInit {
             ev: myEvent,
         });
     }
-     doRefresh(refresher) {
-         this.show_products(this.product_id);
-         console.log(this.product_id)
+    doRefresh(refresher) {
+        this.show_products(this.product_id);
+        console.log(this.product_id)
         console.log('Begin async operation', refresher);
 
         setTimeout(() => {

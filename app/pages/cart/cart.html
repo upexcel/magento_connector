@@ -4,7 +4,11 @@
          <ion-title text-center>
             Cart
         </ion-title>
-
+            <ion-buttons end>
+                <button>
+                    <ion-label> Edit </ion-label>
+                </button>
+            </ion-buttons>
     </ion-toolbar>
 
  </ion-navbar>
@@ -14,18 +18,41 @@
         <ion-row center>
             <ion-col>
                 <ion-card>
-                    <img src="../../images/shirt3.jpg" style="min-height: 140px;"/>
-                    <ion-card-content>
-                        <ion-row >
-                            <ion-col>
-                                <p>name</p>
-                            </ion-col>
-                            <p>Price 400$</p>
-                        </ion-row>
-                        <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-                    </ion-card-content>
+                    <img src="{{img}}" style="min-height: 140px;"/>
                 </ion-card>
-            </ion-col>
+                </ion-col>
+                <ion-col>
+                    <ion-row>
+                        <ion-col width-33>
+                            <ion-label>Name</ion-label>
+                        </ion-col>
+                        <ion-col width-66 style="text-align: right;">
+                            <p> Price <p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <p> Size s <p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row style="background: #E4E4E4;">
+                        <ion-col width-33>
+                            <ion-buttons>
+                              <ion-icon name="add"></ion-icon>
+                              </ion-buttons>
+                        </ion-col>
+                        <ion-col width-33 style="text-align: center;">
+                            2
+                        </ion-col>
+                        <ion-col width-33 style=" text-align: right;" >
+                            <ion-buttons>
+                             <ion-icon name="remove"></ion-icon>
+                                 </ion-buttons>
+                        </ion-col>
+                    </ion-row>
+                    
+                </ion-col>
+            
         </ion-row>
     </ion-grid>
 </ion-content>

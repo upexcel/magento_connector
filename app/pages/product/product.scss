@@ -34,14 +34,14 @@ ion-select {
     padding: 0px !important;
     font-size: 12px;
 }
-/*@media (max-width: 1023px)
-[responsive-lg] ion-col[width-10], [responsive-lg] ion-col[width-20], [responsive-lg] ion-col[width-25], [responsive-lg] ion-col[width-33], [responsive-lg] ion-col[width-34], [responsive-lg] ion-col[width-50], [responsive-lg] ion-col[width-66], [responsive-lg] ion-col[width-67], [responsive-lg] ion-col[width-75], [responsive-lg] ion-col[width-80], [responsive-lg] ion-col[width-90] {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    margin-bottom: 0px;
-    margin-left: 0;
-    width: 100%;
-    max-width: 100%;
-}*/
+
+.line{
+    text-decoration: line-through;   
+}
+ion-item.selectlist.item.item-select {
+    min-height: 3rem;
+    padding-left: 2px;
+}
+.hidden{
+    display: none;
+}
