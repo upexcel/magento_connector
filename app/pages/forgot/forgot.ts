@@ -19,17 +19,16 @@ export class ForgotPage {
         console.clear();
     }
     forgot(value: any) {
-        console.log(value);
         this.spin = true;
         this._formService.api('customer/forgot/', value).subscribe((res) => {
             this.spin = false;
-            this.response=res.message;
+            this.response=JSON.parse(res.body).message;
              this.showToast("top");
         },
             (err) => {
                 if (err.status == 500) {
                     this.spin = false;
-                    this.response = JSON.parse(err._body).message;
+                    this.response = JSON.parse(err.body).message;
                     this.showToast("top");
                 }
 

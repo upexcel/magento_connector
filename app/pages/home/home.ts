@@ -30,12 +30,12 @@ export class HomePage implements OnInit {
         this.local = new Storage(LocalStorage);
         this.slider();
         this.home_products();
-        // this.rootPage = HomePage1;
+        //  this.rootPage = HomePage1;
         if (localStorage.getItem('lists') === null) {
             var path = { "parent_id": "1", "type": "full" }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
-                    this.lists = res.data.children;
+                    this.lists = JSON.parse(res.data.body).data.children;
                     this.local.set('lists', JSON.stringify(this.lists));
                 }
             },
@@ -70,10 +70,10 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-            //            data.icon = 'ios-add-circle-outline';
+                        data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-            //            data.icon = 'ios-remove-circle-outline';
+                        data.icon = 'ios-remove-circle-outline';
         }
     }
     gotoproduct(product) {
@@ -82,32 +82,36 @@ export class HomePage implements OnInit {
         });
     }
     con(gchild_id: any, gchild_name: any) {
-        this.menuCtrl.close;
+        this.menuCtrl.close();
         this.navCtrl.push(HomePage1, { "id": gchild_id, "name": gchild_name });
-    }
-    logout() {
-        localStorage.removeItem('firstname');
-        localStorage.removeItem('lastname');
-        localStorage.removeItem('expiry');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('lists');
-        this.navCtrl.setRoot(StartPage);
     }
 
     slider() {
-        this._formService.api("home/slider", '').subscribe((res) => {
+        let body: any;
+        this._formService.api("home/slider", body).subscribe((res) => {
             if (res) {
-                this.img = res.data;
+                this.img = JSON.parse(res.data.body).data;
             }
 
         })
     }
     home_products() {
-        this._formService.api("home/products", '').subscribe((res) => {
+        var body = { "type": "large_data" }
+        this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
-                this.feature_products = res.data;
+                this.feature_products = JSON.parse(res.data.body).data;
             }
 
         })
+    }
+    doRefresh(refresher) {
+        this.slider();
+        this.home_products();
+        console.log('Begin async operation', refresher);
+
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            refresher.complete();
+        }, 2000);
     }
 }

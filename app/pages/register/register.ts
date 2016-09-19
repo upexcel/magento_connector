@@ -24,18 +24,21 @@ export class RegisterPage {
     }
     signup(regvalue: any) {
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
-            if (res) {
-                this.presentToast(res.message);
+            if (res.status==1) {
+                console.log(res)
+                this.presentToast(JSON.parse(res.body).message);
                 this.navCtrl.setRoot(StartPage);
+            }else{
+                 this.presentToast(JSON.parse(res.body).message);
             }
-        },
-            (err) => {
-
-                if (err.status == 500) {
-                    this.presentToast(JSON.parse(err._body).message);
-                }
-
-            })
+        }
+//        ,
+//            (err) => {
+//                 console.log(err)
+//                    this.presentToast(JSON.parse(err.body).message);
+//
+//            }
+        )
     }
     presentToast(message: string) {
         let toast = this.toastCtrl.create({

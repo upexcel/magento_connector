@@ -35,7 +35,7 @@ export class HomePage1 implements OnInit {
         this._formService.api("category/products/", path).subscribe((res) => {
             if (res) {
                 this.spin = false;
-                this.products = res.data;
+                this.products = JSON.parse(res.data.body).data;
             }
 
         })
@@ -45,20 +45,24 @@ export class HomePage1 implements OnInit {
             id: product
         });
     }
-    //    mySlideOptions = {
-    //        autoplay: 3000,
-    //        initialSlide: 1,
-    //        loop: true,
-    //        pager: true
-    //    };
     openMenu() {
         console.log("nav");
         this.menuCtrl.open();
     }
-    //    presentPopover(myEvent: any) {
-    //        let popover = this.popoverCtrl.create(PopoverPage);
-    //        popover.present({
-    //            ev: myEvent,
-    //        });
-    //    }
+    presentPopover(myEvent: any) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent,
+        });
+    }
+     doRefresh(refresher) {
+         this.show_products(this.product_id);
+         console.log(this.product_id)
+        console.log('Begin async operation', refresher);
+
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            refresher.complete();
+        }, 2000);
+    }
 }
