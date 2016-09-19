@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, Storage, LocalStorage} from 'ionic-angular';
+import { ModalController, NavController, Storage, LocalStorage} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import { tourPage } from '../takeTour/tour';
 import { PopoverController } from 'ionic-angular';
@@ -15,7 +15,7 @@ export class StartPage implements OnInit {
     access_token: any;
     expiry: any;
     local: any;
-    constructor(private navCtrl: NavController , private popoverCtrl: PopoverController) {
+    constructor(private navCtrl: NavController, private popoverCtrl: PopoverController, public modalCtrl: ModalController) {
         this.local = new Storage(LocalStorage);
         // console.clear();
     }
@@ -26,14 +26,18 @@ export class StartPage implements OnInit {
     gotologin() {
         this.navCtrl.push(LoginPage);
     }
-    presentPopover(myEvent) {
-        var data = true;
-        let popover = this.popoverCtrl.create(tourPage, {
-            enableBackdropDismiss:true
-        });
-        popover.present({
-            ev: myEvent
-        });
+    //    presentPopover(myEvent) {
+    //        var data = true;
+    //        let popover = this.popoverCtrl.create(tourPage, {
+    //            enableBackdropDismiss:true
+    //        });
+    //        popover.present({
+    //            ev: myEvent
+    //        });
+    //    }
+    presentProfileModal() {
+        let profileModal = this.modalCtrl.create(tourPage);
+        profileModal.present();
     }
     checkCredentials() {
         let name = this.local.get('firstname');

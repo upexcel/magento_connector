@@ -2,10 +2,45 @@
     max-width: 264px;
     border-radius: 10px;
 }
-
-
-/*.size{
-    min-height: 140px;
-    max-height: 500px;
-    width: 30%;
-}*/
+.selectlist{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+.toolbar-title {
+    padding: 0 12px;
+    font-size: 1.5em;
+    font-weight: 300;
+    color: #424242;
+}
+ion-item.selectlist.item.item-select{
+    min-height: 3rem;
+}
+.select-icon {
+height: auto;
+}
+.lable{
+    margin: 0px;
+    font-size: 12px;
+}
+ion-card p {
+    margin: 0 0 2px;
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #222;
+}
+ion-select {
+    padding: 0px !important;
+    font-size: 12px;
+}
+.line{
+    text-decoration: line-through;   
+}
+ion-item.selectlist.item.item-select {
+    min-height: 3rem;
+    padding-left: 2px;
+}
+.hidden{
+    display: none;
+}
