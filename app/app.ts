@@ -17,7 +17,6 @@ export class MyApp {
     constructor(private platform: Platform) {
         this.local = new Storage(LocalStorage);
         this.checkCredentials();
-//         this.rootPage = OrderlistPage;
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });
@@ -28,8 +27,10 @@ export class MyApp {
         this.local.get('access_token').then((res) => {
             access_token = res;
             if (access_token != null) {
+                console.log("Homepage")
                 this.rootPage = HomePage;
             } else {
+               console.log("Startpage")
                this.rootPage = StartPage;
             }
         });

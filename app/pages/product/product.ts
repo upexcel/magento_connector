@@ -43,10 +43,10 @@ export class productpage {
         this.presentLoading();
         let path = { sku: id };
 
-        this._formService.product_api("product/get/", path).subscribe((res) => {
+        this._formService.api("product/get/", path).subscribe((res) => {
              if (res) {
-                this.response = res;
-                 this.spin = false;
+                this.response = JSON.parse(res.data);
+                this.spin = false;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
                 this.final_price = this.price;
