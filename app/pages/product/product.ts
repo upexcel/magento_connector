@@ -16,7 +16,6 @@ export class productpage {
     res: {} = {};
     quantity: number = 1;
     response: any;
-    backupResponse: any;
     activeSize: boolean = false;
     activeColor: boolean = false;
     quantityUpdate: boolean = false;
@@ -46,7 +45,6 @@ export class productpage {
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
                 this.response = JSON.parse(res.data.body);
-                this.backupResponse = this.response;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
                 this.final_price = this.price;
@@ -103,33 +101,5 @@ export class productpage {
         this.images = img;
     }
 
-    onChange(res, key) {
-        var res111 = res[key];
-        _.forEach(this.response.data.associated_products.attributes, function(res1, key1) {
-            if (key != key1) {
-                _.forEach(res1.options, function(res2, key2) {
-                    res2.shown = false;
-                    _.forEach(res111.products, function(res4, key4) {
-                        _.forEach(res2.products, function(res3, key3) {
-                            if (res4 == res3) {
-                                res2.shown = true;
-                            }
-                        })
 
-
-                    })
-
-                })
-            }
-            else {
-                _.forEach(res1.options, function(res2, key2) {
-                    res2.shown = true;
-                });
-            }
-        })
-        this.selectshow = false;
-        let myDiv = document.getElementById('color');
-        myDiv.style.color = res[key].label;
-
-    }
 }
