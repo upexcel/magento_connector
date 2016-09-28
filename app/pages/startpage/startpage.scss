@@ -5,54 +5,13 @@
     background-image: url('../../images/depression1.png');
     background-repeat: no-repeat;
     background-size:cover;
+
+.imgbox{
+    padding-bottom: 140px;
+    padding-top: 100px;
+}
+.img{
+    width:100px;
 }
 
-.center{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-direction: normal;
-    -moz-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
 }
-/*.popover-content {
-    width: 94%; 
-    min-width: 0; 
-    min-height: 0; 
-    max-height: 95%;
-    border-radius: 10px;
-    color: #000;
-    background: #fff;
-    left:10px !important;
-    top:10px !important;
-    bottom: 10px !important;
-    overflow :auto;
-}
-
-.popover-content scroll-content {
-    position: relative;
-    overflow: auto;
-}
-*/

@@ -1,80 +1,59 @@
 import { Injectable }    from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from '@angular/http';
+import { Storage, LocalStorage } from 'ionic-angular';
 import * as _ from 'lodash';
-
-import {Observable}     from 'rxjs/Observable';
-import { config } from './../config/config'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/toPromise';
-
 @Injectable()
-export class TotalService {
+export class cartService {
+    local:any;
     constructor() {
+    this.local = new Storage(LocalStorage);
     }
-
-    getTotal(data: any) {
-        var total = 0;
-        _.forEach(data, function(value1, key) {
-            let v = _.replace(value1.price, '$', ' ');
-            total = parseInt(value1.no) * parseInt(v) + total;
-        });
-        return Promise.resolve(total);
-    }
-    qetQuentity(data, value) {
-        var cartData = [];
-        var v;
-        cartData = JSON.parse(localStorage.getItem('item'));
-        if (cartData && cartData.length > 0) {
-            _.forEach(cartData, function(value, key) {
-                //increse count in cartitem for that item only
-                if (data.sku == value.id) {
-                    v = parseInt(data.qty) - value.no;
-                }
-            });
-            if (v > 0) {
-                return Promise.resolve(v);
-            }
-            else {
-                v = 0;
-                return Promise.resolve(v);
-            }
-
-        }
-
-        else {
-            cartData = [];
-            return Promise.resolve(data.qty);
-        }
-    }
-
-    addCart(data) {
+    addCart(data , keyGrop) {
         var cartData = [];
         var count = 0;
+        var keyDataCheck:boolean;
+        console.log(keyGrop);
         cartData = JSON.parse(localStorage.getItem('item'));
+//        console.log(cartData);
         //if local saved data found
         if (cartData) {
             //local/cartdata is not null
             if (cartData && cartData.length > 0) {
                 //iterate cartdata and if ned aded item has same id and size
                 _.forEach(cartData, function(value, key) {
+                    keyDataCheck=true;
                     //increse count in cartitem for that item only
-                    if (data.id == value.id && data.size == value.size) {
-                        value.no = parseInt(value.no) + parseInt(data.no);
-                        count = 1;
+                    if (data.type == "configurable") {
+                        for (var i = 0; i < keyGrop.length; i++) {
+                            var keyNo=keyGrop[i];
+                            if(value[keyNo]!="undefined"){
+                                if (data.id == value.id && data[keyNo] == value[keyNo]) {
+                                    console.log(data[keyNo]); console.log(value[keyNo]);
+                                    keyDataCheck=true && keyDataCheck;
+                                }  
+                                else{
+                                   console.log(data[keyNo]); console.log(value[keyNo]);
+                                   keyDataCheck=false && keyDataCheck; 
+                                }
+                            }
+                        }
+                        console.log(keyDataCheck); 
+                        if (keyDataCheck == true) {
+                            value.quantity = value.quantity + data.quantity;
+                            count = 1;
+                        }                       
                     }
-                    //else push has new item 
-                    else {
-                        //                        count = 1;
-                    }
+                    else if (data.type == "simple") {
+                        if (data.id == value.id && data.type == value.type) {
+                            value.quantity = value.quantity + data.quantity;
+                            count = 1;
+                        }
+                        //else push has new item 
+                        else {
+                        }
+                    }   
                 });
                 if (count != 1) {
-                    if (data.no == 0) {
-
-                    } else {
-                        cartData.push(data);
-                    }
+                cartData.unshift(data);
                 }
                 else {
 
@@ -82,24 +61,16 @@ export class TotalService {
             }
             //if local is set to null
             else {
-                if (data.no == 0) {
-
-                } else {
-                    cartData.push(data);
-                }
+                    cartData.unshift(data);
             }
         }
         //if no pre saved data
         else {
             cartData = [];
-            if (data.no == 0) {
-
-            } else {
-                cartData.push(data);
-            }
+                cartData.unshift(data);
+            
         }
-
-        localStorage.setItem('item', JSON.stringify(cartData));
+        this.local.set('item', JSON.stringify(cartData));
         return Promise.resolve(cartData);
     }
 

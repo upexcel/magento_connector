@@ -24,7 +24,14 @@
         left: 0;
         width: 100%;
     }
-}
-    scroll-content {
+    .margBot20{
+        margin-bottom: 20px;
+    }
+    .scroll-content {
         overflow-y: auto;
     }
+    .img{
+        max-width: 100px; 
+        margin: 40px;
+    }
+}

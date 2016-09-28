@@ -1,58 +1,108 @@
  <ion-header> 
       <ion-navbar primary>
-     <ion-toolbar primary>
-         <ion-title text-center>
-            Cart
-        </ion-title>
+           <ion-title text-center>  Cart
+           </ion-title>
             <ion-buttons end>
                 <button>
                     <ion-label> Edit </ion-label>
                 </button>
             </ion-buttons>
-    </ion-toolbar>
-
  </ion-navbar>
   </ion-header>
 <ion-content>
-    <ion-grid>
-        <ion-row center>
-            <ion-col>
-                <ion-card>
-                    <img src="{{img}}" style="min-height: 140px;"/>
-                </ion-card>
-                </ion-col>
-                <ion-col>
+    <ion-list *ngFor="let data of res ">
+  <ion-item-sliding>
+    <ion-item>
+        <ion-grid style="padding: 0px;">
+            <ion-row center>
+                <ion-col width-33 style="text-align: center">
+                    <img src="{{data.img}}" alt="" style="max-height: 100px;"/>
+                </ion-col> 
+                <ion-col width-67>
                     <ion-row>
-                        <ion-col width-33>
-                            <ion-label>Name</ion-label>
+                        <ion-col width-50 class="size">
+                            {{data.name}}
                         </ion-col>
-                        <ion-col width-66 style="text-align: right;">
-                            <p> Price <p>
-                        </ion-col>
+                        <ion-col width-50 style="text-align: right;">
+                            <p style=" font-size: 10px;">{{data.price}}</p>
+                        </ion-col>                        
                     </ion-row>
                     <ion-row>
-                        <ion-col>
-                            <p> Size s <p>
-                        </ion-col>
+                        <ion-col *ngFor="let list of lists" >
+                            <p>{{data[list]}}</p>
+                        </ion-col>                      
                     </ion-row>
-                    <ion-row style="background: #E4E4E4;">
-                        <ion-col width-33>
-                            <ion-buttons>
-                              <ion-icon name="add"></ion-icon>
-                              </ion-buttons>
-                        </ion-col>
+                    <ion-row style="background: #f3f3f3;">
+                        <ion-col width-33 >
+                            <ion-button (click)=remove(data) *ngIf="data.quantity>1">   
+                                <ion-icon name="remove"></ion-icon>
+                            </ion-button>
+                        </ion-col> 
                         <ion-col width-33 style="text-align: center;">
-                            2
+                            <p style="font-size: 20px;">{{data.quantity}}</p>
                         </ion-col>
-                        <ion-col width-33 style=" text-align: right;" >
-                            <ion-buttons>
-                             <ion-icon name="remove"></ion-icon>
-                                 </ion-buttons>
-                        </ion-col>
-                    </ion-row>
-                    
+                        <ion-col width-33 style="text-align: right;" (click)=add(data)>
+                            <ion-button>
+                                <ion-icon name="add"></ion-icon>
+                            </ion-button>
+                        </ion-col>                        
+                    </ion-row>                    
                 </ion-col>
-            
-        </ion-row>
-    </ion-grid>
+            </ion-row> 
+        </ion-grid>
+        </ion-item>
+    <ion-item-options side="right">
+      <button primary (click)=delete(data)>
+          <ion-icon name="trash"></ion-icon>
+        Delete
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>   
+        <ion-grid>
+            <ion-row>
+                <ion-col width-33>SHIPPING</ion-col>
+                <ion-col width-33><p>33 $</p></ion-col>
+                 <ion-col width-33>
+                 <ion-item class="selectlist"> 
+                         <ion-label class="lable"></ion-label>
+                         <ion-select [(ngModel)]="res"  [placeholder]="0">
+                                 <ion-option [value]="obj" >
+                                     <ion-label class="lable"></ion-label></ion-option>
+                         </ion-select>
+                     <ion-label class="lable">
+                         <ion-buttons style='text-align: right;'>
+                             <ion-icon name="arrow-forward"></ion-icon>
+                         </ion-buttons>
+                     </ion-label>
+                 </ion-item>
+                 </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col width-50>PAYMENT METHOD</ion-col>
+                <ion-col width-50>
+                    <ion-item class="selectlist">
+                        <ion-label class="lable"></ion-label>
+                        <ion-label class="lable">
+                            <ion-buttons style='text-align: right;'>
+                               <ion-icon name="arrow-forward"></ion-icon>
+                            </ion-buttons>
+                        </ion-label>
+                          <ion-select [(ngModel)]="res1"  [placeholder]="0">
+                                 <ion-option [value]="obj" >
+                                     <ion-label class="lable"></ion-label></ion-option>
+                         </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col style="text-align: center;">TOTAL</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <button full>PLACE ORDER</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
 </ion-content>

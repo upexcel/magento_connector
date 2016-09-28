@@ -1,17 +1,18 @@
 <ion-header>
     <ion-navbar primary>
-        <ion-toolbar >
-            <ion-title start>  {{ product }}
+
+             <ion-title text-center> {{ product }}
             </ion-title>
             <ion-buttons end>
-                <button>
-                    <ion-icon name="add"></ion-icon>
+                <button (click)="gotocart()">
+                   <ion-icon name="cart"></ion-icon>
                 </button>
             </ion-buttons>
-        </ion-toolbar>
+
     </ion-navbar>
 </ion-header>
 <ion-content>
+     <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
     <ion-grid *ngIf="response" style='padding: 0px;'>
         <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col width-100 style='padding: 0px;'>
@@ -43,11 +44,31 @@
                                 <p  *ngIf="sp_priceShow == true" style="font-size: 0.9em; font-weight: 400">{{s_price}}</p>
                             </ion-col>
                         </ion-row>
+<<<<<<< HEAD
+                         <ion-row wrap>
+                             <ion-col width-50 *ngFor="let key of keys">
+                                      <ion-item class="selectlist">
+                                     <ion-label class="lable">{{response.data.associated_products.attributes[key].label}}</ion-label>
+                                     <ion-label class="lable" *ngIf="response.data.associated_products.attributes[key].label=='Color'">
+                                         <ion-buttons style='text-align: right;'>
+                                             <ion-icon name="radio-button-on" style="color:black;" id="color"></ion-icon>
+                                         </ion-buttons>
+                                     </ion-label>
+                                     <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
+                                         <span *ngFor= "let obj of response.data.associated_products.attributes[key].options">
+                                             <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                                 <ion-label class="lable">{{obj.label}}</ion-label></ion-option>
+                                         </span>
+                                     </ion-select>
+                                </ion-item>
+                            </ion-col>                         
+                         </ion-row>
+=======
+>>>>>>> 3b3f1ac2a7bfa1c73dea250bb6fa02435f820c5d
                         <p style="font-size: 13px; ">{{response.data.data.short_description}}</p>
                         <ion-row center >
                             <ion-col class="center">
-                                <button  primary round  (click)=" addcart(response.data)" >ADD CART</button>
-
+                                <button  primary round  (click)="addcart(response.data)" [disabled]=disable>ADD CART</button>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

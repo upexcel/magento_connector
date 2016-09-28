@@ -4,12 +4,8 @@ import * as _ from 'lodash';
 
 export class filter implements PipeTransform {
     transform(obj: any , attribute: any): any { 
-//        console.log(attribute.length);
-//        if(attribute.length>0){
-//        return attribute;
-//        }
-//        else{
-//           return obj; 
-//        }
-    }
+//        console.log(obj);
+//        console.log(attribute);
+           return obj; 
+           }
 }
