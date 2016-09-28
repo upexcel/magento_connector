@@ -1,14 +1,14 @@
 <ion-header>
     <ion-navbar primary>
-        <ion-toolbar >
-            <ion-title start>  {{ product }}
+
+             <ion-title text-center> {{ product }}
             </ion-title>
             <ion-buttons end>
-                <button>
-                    <ion-icon name="add"></ion-icon>
+                <button (click)="gotocart()">
+                   <ion-icon name="cart"></ion-icon>
                 </button>
             </ion-buttons>
-        </ion-toolbar>
+
     </ion-navbar>
 </ion-header>
 <ion-content>
@@ -65,7 +65,7 @@
                         <p style="font-size: 13px; ">{{response.data.data.short_description}}</p>
                         <ion-row center >
                             <ion-col class="center">
-                                <button  primary round  (click)=" addcart(response.data)" >ADD CART</button>
+                                <button  primary round  (click)="addcart(response.data)" [disabled]=disable>ADD CART</button>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
