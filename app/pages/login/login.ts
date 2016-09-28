@@ -21,7 +21,8 @@ export class LoginPage {
         console.clear();
         this.logform = this.fb.group({
             email: ['', Validators.required],
-            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+            website_id:["1"]
         });
         this.local = new Storage(LocalStorage);
     }
