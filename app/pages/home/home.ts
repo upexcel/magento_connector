@@ -35,8 +35,8 @@ export class HomePage implements OnInit {
             var path = { "parent_id": "1", "type": "full" }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
-                    
-                    this.lists = JSON.parse(res.data.body).data.children;
+
+                    this.lists = JSON.parse(res.body.body).data.children
                     this.local.set('lists', JSON.stringify(this.lists));
                 }
             },
@@ -71,10 +71,10 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-                        data.icon = 'ios-add-circle-outline';
+            data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-                        data.icon = 'ios-remove-circle-outline';
+            data.icon = 'ios-remove-circle-outline';
         }
     }
     gotoproduct(product) {
@@ -91,18 +91,21 @@ export class HomePage implements OnInit {
         let body: any;
         this._formService.api("home/slider", body).subscribe((res) => {
             if (res) {
-                this.img = JSON.parse(res.data.body).data;
+                this.img = JSON.parse(res.body.body).data;
             }
 
         })
     }
     home_products() {
-        this.spin=true;
+        this.spin = true;
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
-                this.spin=false;
-                this.feature_products = JSON.parse(res.data).data;
+                console.log(JSON.parse(res.body.data).data)
+                this.spin = false;
+                this.feature_products = JSON.parse(res.body.data).data;
+
+
             }
 
         })

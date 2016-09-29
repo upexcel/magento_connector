@@ -5,7 +5,28 @@
         width: 100%;
     } 
     .swiper-pagination-bullet {
-        background: #1c57ff;
+        background: $darkBlue;
+    }
+    .detail{
+        position:absolute;
+        margin-left:-28px;
+    }
+    .slideOption{
+        height: auto;
+        max-height: 220px;
+    }
+    .img{
+        width: 100%;
+        margin-top: -10px;
+        max-height: 220px;
+    }
+    .imgLandscape{
+        height: 200px;
+        width: 200px;
+    }
+    .imgMobile{
+        height: 120px;
+        width: 200px;
     }
     ion-label{
         margin: 0;
