@@ -3,7 +3,6 @@
         padding: 0 12px;
         font-size: 2rem;
         font-weight: 300;
-        color: #424242;
     }
     .swiper-slide {
         font-size: 1.5rem;
@@ -16,7 +15,7 @@
         padding: 15px;
     }
     .swiper-pagination-bullet {
-        background: #00631D;
+        background: $grean;
     }
 
     .swiper-container-horizontal > .swiper-pagination {
