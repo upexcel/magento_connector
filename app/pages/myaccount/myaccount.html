@@ -8,9 +8,9 @@
 
 
 <ion-content  class="myaccount">
-    <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
+    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="user_add">
-        <ion-list inset style="padding-bottom:60px" >
+        <ion-list inset class="padd60" >
             <ion-item>
                 <ion-label stacked>Name</ion-label>
                 <ion-input formControlName="fullname" autocorrect autocomplete clearInput></ion-input>
