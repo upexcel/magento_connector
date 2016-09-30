@@ -1,7 +1,11 @@
 <ion-header>
-
     <ion-navbar primary>
         <ion-title>My Account</ion-title>
+        <ion-buttons end>
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -12,8 +16,12 @@
     <form [formGroup]="updateform" *ngIf="user_add">
         <ion-list inset style="padding-bottom:60px" >
             <ion-item>
-                <ion-label stacked>Name</ion-label>
-                <ion-input formControlName="fullname" autocorrect autocomplete clearInput></ion-input>
+                <ion-label stacked>First Name</ion-label>
+                <ion-input formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Last Name</ion-label>
+                <ion-input formControlName="lastname" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>City</ion-label>
@@ -25,15 +33,11 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Telephone</ion-label>
-                <ion-input  formControlName="telephone" autocorrect autocomplete clearInput></ion-input>
+                <ion-input  formControlName="teliphone" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
-            <!--            <ion-item *ngFor="let street of name.street">
-                            <ion-label stacked>Address</ion-label>
-                            <ion-input [value]="street"  formControlName="street" autocorrect autocomplete clearInput></ion-input>
-                        </ion-item>-->
             <ion-item>
-                <ion-label stacked>Region</ion-label>
-                <ion-input  formControlName="region" autocorrect autocomplete clearInput></ion-input>
+                <ion-label stacked>Address</ion-label>
+                <ion-input  formControlName="street" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Pin Code</ion-label> 
@@ -41,10 +45,10 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Country</ion-label> 
-                <ion-input formControlName="country" autocorrect autocomplete clearInput></ion-input>
+                <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
             </ion-item>           
             <ion-buttons class="center" padding>
-                <button primary medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button>
+                <button primary medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button><ion-spinner  *ngIf="upd_spin"></ion-spinner>
             </ion-buttons>   
         </ion-list>
     </form>

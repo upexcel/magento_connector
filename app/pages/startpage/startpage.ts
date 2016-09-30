@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { ModalController, NavController, Storage, LocalStorage} from 'ionic-angular';
+import { ModalController, NavController, Storage, LocalStorage, NavParams} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import { tourPage } from '../takeTour/tour';
 import { PopoverController } from 'ionic-angular';
@@ -15,8 +15,10 @@ export class StartPage implements OnInit {
     access_token: any;
     expiry: any;
     local: any;
-    constructor(private navCtrl: NavController, private popoverCtrl: PopoverController, public modalCtrl: ModalController) {
+    messsage_expired: any;
+    constructor(private navCtrl: NavController, private navparam: NavParams, private popoverCtrl: PopoverController, public modalCtrl: ModalController) {
         this.local = new Storage(LocalStorage);
+        this.messsage_expired = this.navparam.get("message")
         // console.clear();
     }
     ngOnInit() {

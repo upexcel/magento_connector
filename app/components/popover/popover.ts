@@ -24,11 +24,10 @@ export class PopoverPage {
         this.viewCtrl.dismiss();
     }
     gotomyaccount() {
-        this.close();
         this.navCtrl.push(MyaccountPage);
     }
     gotopass(){
-        this.navCtrl.push(ChangepasswordPage)
+        this.navCtrl.push(ChangepasswordPage);
     }
     gotoorders(){
         this.navCtrl.push(OrderlistPage);
@@ -39,6 +38,7 @@ export class PopoverPage {
         localStorage.removeItem('expiry');
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
+        localStorage.removeItem('email');
         this.navCtrl.setRoot(StartPage);
     }
 }

@@ -5,6 +5,7 @@ import {StartPage} from './pages/startpage/startpage';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 import {HomePage} from './pages/home/home';
 import {OrderlistPage} from './pages/orderlist/orderlist'
+import {OrderModalPage} from './pages/orderid-detail/orderid-detail'
 @Component({
     template: `<ion-nav [root]="rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`,

@@ -1,0 +1,115 @@
+<ion-header >
+
+    <ion-navbar primary>
+        <ion-title text-center> #{{order_id}}</ion-title>
+        <ion-buttons end>
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="orderid-detail">
+    <ion-scroll scrollY="true">  
+        <ion-list >
+            <ion-list-header>                
+                Status: {{status}}
+            </ion-list-header>
+            <ion-item *ngFor="let item of items">
+                <ion-thumbnail item-left>
+                    <img src="{{item.value.image}}">
+                </ion-thumbnail>
+                <h2>{{item.value.item_name}}<span id="item_price">{{item.value.price}}$</span></h2>
+                <p>Size: {{item.value.Size}}</p>
+                <p>Quantity: {{item.value.qty_ordered}} </p> 
+                <p>Color: {{item.value.Color}} </p> 
+            </ion-item>
+            <ion-item>
+                <h3>Purchased Date</h3>
+                <div class="order_sum"> 
+                    <p>{{purchased_on | date: 'dd/MM/yyyy hh:mm'}}</p>
+                </div>
+            </ion-item>
+            <ion-item >         
+                <h3> Order Summary </h3> 
+                <div class="order_sum"> 
+                    <p>TOTAL QUANTITY:<span id="order_sum_content" >{{total_qty}}</span></p>
+                    <p >SUBTOTAL:<span id="order_sum_content" >${{sub_total}}</span></p>
+                    <p >TAX:<span id="order_sum_content" >${{tax}}</span></p>
+                    <p >DELIVERY:<span id="order_sum_content">${{shipping_amount}}</span></p>
+                    <hr>
+                    <p>TOTAL:<span id="order_sum_content">${{grand_total}}</span></p>
+                </div>
+                <hr>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+
+            <ion-list-header primary>
+                Billing Information
+            </ion-list-header>
+
+            <ion-item>
+                <h3>Billing</h3>
+                <div class="order_sum" > 
+                    <p >Name: {{bill_fname+" "+bill_lname}}</p>
+                    <p>Telephone:{{bill_telephone}} </p>
+                    <p >Street:<span *ngFor="let street of bill_street">{{bill_street}}</span></p>
+                    <p>City: {{bill_city}}</p>
+                    <p>Region: {{bill_street}}</p>
+                    <p>Pin code: {{bill_postcode}}</p>
+                    <p>Country: {{bill_country}}</p>
+                </div>
+                <hr>
+            </ion-item>
+
+
+        </ion-list>
+        <ion-list no-lines>
+
+            <ion-list-header primary>
+                Shipping Information
+            </ion-list-header>
+
+            <ion-item>
+                <h3>Shipping</h3>
+                <div class="order_sum" > 
+                    <p >Name: {{ship_fname+" "+ship_lname}}</p>
+                    <p>Telephone:{{ship_telephone}} </p>
+                    <p >Street:<span *ngFor="let street of ship_street">{{bill_street}}</span></p>
+                    <p>City: {{ship_city}}</p>
+                    <p>Region: {{ship_street}}</p>
+                    <p>Pin code: {{ship_postcode}}</p>
+                    <p>Country: {{ship_country}}</p>
+                </div>
+                <hr>
+            </ion-item>
+            <ion-item>
+                <h3>Shipping method</h3>
+                <div class="order_sum"> 
+                    <p>{{shipping_method}}</p>
+                </div>
+            </ion-item>
+             <ion-item>
+                <h3>Shipping Description</h3>
+                <div class="order_sum"> 
+                    <p>{{shipping_description}}</p>
+                </div>
+            </ion-item>
+            <ion-item style="min-height: 2rem">
+                <h3>Payment method</h3>
+                <div class="order_sum"> 
+                    <p>{{payment_method}}</p>
+                </div>
+            </ion-item>
+            <button full>Track</button>
+        </ion-list>
+        <!--<h3> Orders </h3>
+        <h2 *ngFor="let item of item ; let i=index">{{i+1}}.{{item.item_name}}</h2>
+        -->
+
+    </ion-scroll>
+
+</ion-content>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {FormService} from './../../providers/form-service/form-service'
 import {FORM_DIRECTIVES} from '@angular/common';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {PopoverPage} from './../../components/popover/popover';
 @Component({
     templateUrl: 'build/pages/changepassword/changepassword.html',
     directives: [FORM_DIRECTIVES],
@@ -12,28 +13,30 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ChangepasswordPage {
     changepassform: any
     response: any
-    constructor(private navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
-        let access_token: any = localStorage.getItem("access_token");
+    email: any;
+    access_token:any
+    spin:boolean=false;
+    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, private toastCtrl: ToastController, public fb: FormBuilder, private _formService: FormService) {
+        this.access_token= localStorage.getItem("access_token");
+        this.email = localStorage.getItem("email");
         this.changepassform = this.fb.group({
-            username: ['', Validators.required],
             password: ['', Validators.required],
             newPassword: ['', Validators.required],
             secret: ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY'],
-            access_token: [access_token]
-            //            cnewpass: ['', Validators.required]
+            access_token: [this.access_token]
         });
     }
-    //    gotohome() {
-    //        this.navCtrl.setRoot(HomePage);
-    //    }
     changepassword(value: any) {
         console.log(value)
+        this.spin=true;
         this._formService.api("account/changepassword/", value).subscribe((res) => {
+            this.spin=false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
-            } else {
-                console.log(res)
-                this.response = JSON.parse(res.body).data
+            }
+            else {
+                this.response = JSON.parse(res.body).data;
+                this.navCtrl.setRoot(HomePage)
             }
             this.showToast("top")
         })
@@ -54,5 +57,11 @@ export class ChangepasswordPage {
             console.log('Async operation has ended');
             refresher.complete();
         }, 2000);
+    }
+    presentPopover(myEvent: any) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent,
+        });
     }
 }

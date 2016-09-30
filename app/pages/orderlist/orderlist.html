@@ -1,97 +1,70 @@
-<ion-header>
+<ion-header >
 
     <ion-navbar primary>
         <ion-title text-center>Order List</ion-title>
+        <ion-buttons end>
+            <button (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
-    <ion-toolbar class="orderlist">
-          <ion-list no-lines>
-            <ion-item>
-                <ion-avatar item-left>
-                    <img src="./../../images/grey.jpg">
-                </ion-avatar>
-                <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
-            </ion-item>
-        </ion-list>
-        <ion-segment dark  style="background: black;padding: 10px;" [(ngModel)]="orders">
-            <ion-segment-button value="total_orders" style="border-right: 1px solid #666;" (ionSelect)="selectedTotal_orders()">
-                Total Orders
-            </ion-segment-button>
-            <ion-segment-button value="total_amount" style="border-right: 1px solid #666;" (ionSelect)="selectedTotal_amount()">
-                Total Amount
-            </ion-segment-button>
-            <ion-segment-button value="order_details" (ionSelect)="selectedOrder_details()">
-                Order details
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
+
 </ion-header>
-
-
 <ion-content class="orderlist">
     <ion-scroll scrollY="true">
-        <div [ngSwitch]="orders">
-            <ion-list *ngSwitchCase="'total_orders'">
+        <div> 
+            <ion-list no-lines class="avt">
                 <ion-item>
-                    <ion-card>
-                        <ion-card-header>
-                            Total Orders
-                        </ion-card-header>
-                        <ion-card-content>
-                            <h2> 4</h2>
-                        </ion-card-content>
-                    </ion-card>
+                    <ion-avatar item-left>
+                        <img src="./../../images/grey.jpg">
+                    </ion-avatar>
+                    <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
                 </ion-item>
             </ion-list>
-
-            <ion-list *ngSwitchCase="'total_amount'">
-                <ion-item>
-                    <ion-card>
-                        <ion-card-header>
-                            Total Amount
-                        </ion-card-header>
-                        <ion-card-content>
-                            <h2> Rs.2000</h2>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-item>
-
-            </ion-list>
-            <ion-list no-lines *ngSwitchCase="'order_details'">
-                      <div >
+            <ion-grid class="seg">
+                <ion-row  *ngIf="ttl_show">
+                    <ion-col style="border-right: 1px solid grey;">TOTAL ORDERS <h6>{{totalOrders}}</h6></ion-col>
+                    <ion-col>TOTAL AMOUNT<h6> &#8377;{{totalAmount}}</h6></ion-col>
+                </ion-row>
+            </ion-grid>
+<!--            <ion-list no-lines>
+                <form>
                     <ion-item>
-                        <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
-                                 <div>
-                                <ion-list-header text-right><span style="float: left;">{{data.value.created_at| date: 'dd/MM/yyyy'}}</span>{{data.value.created_at| date: 'hh:mm:ss'}}</ion-list-header>
-                                
-                                <!----if order is holded-->
-                                <div class="cd-timeline-block" *ngIf="data.value.status=='holded'">
-                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'red'}">
-                                           <ion-icon name="pause" danger></ion-icon>
-                                    </div>
-                                    <!-- cd-timeline-img -->
-                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'red'}">
-                                        <h2 >Order ID:{{data.key}}</h2>
-                                        <h2>Amount:&#8377; {{data.value.grand_total}}</h2>
-                                        <h2 text-capitalize>Status:{{data.value.status}}</h2>
-                                    </div>
-                                </div>
+                        <ion-label>From Date</ion-label>
+                        <ion-datetime displayFormat="YYYY MMM DD" [(ngModel)]="event.timeStarts" name="dateStart" required></ion-datetime>
+                    </ion-item>
 
-                                <!----if order is pending-->
-                                <div class="cd-timeline-block" *ngIf="data.value.status=='pending'">
-                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'#8a6d3b'}">
-                                          <ion-icon name="alert" warning ></ion-icon>
-                                    </div>
-                                    <!-- cd-timeline-img -->
-                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'#8a6d3b'}">
-                                        <h2 >Order ID:{{data.key}}</h2>
-                                        <h2>Amount:&#8377; {{data.value.grand_total}}</h2>
-                                        <h2 text-capitalize>Status:{{data.value.status}}</h2>
-                                    </div>
+                    <ion-item>
+                        <ion-label>To Date</ion-label>
+                        <ion-datetime displayFormat="YYYY MMM DD" [(ngModel)]="event.timeEnds" name="dateEnds" required></ion-datetime>
+                    </ion-item>
+                    <button type="submit" full (click)="get_orders()">Get Orders</button>
+                </form>
+            </ion-list>-->
+
+            <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
+            <ion-list no-lines *ngFor="let date of dates">
+                      <ion-list-header>{{date| date: 'dd/MM/yyyy'}}</ion-list-header>
+                <ion-item class="orders">
+                    <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
+                             <div class="cd-timeline-block" *ngIf="(date| date: 'dd/MM/yyyy')==(data.value.created_at| date: 'dd/MM/yyyy')">
+                         <div class="cd-timeline-icon">
+                                <ion-icon *ngIf="data.value.status=='holded'" name="close-circle" danger></ion-icon> 
+                                <ion-icon *ngIf="data.value.status=='pending'" name="alert" warning></ion-icon> 
+                            </div>   
+                            <div (click)="presentModal(data.key)">
+                                <span style="margin-left: 37px;">#{{data.key}}</span>
+                                <span style="float: right;color: #858585">{{data.value.created_at | date: 'hh:mm'}}</span>
+                                <div class="cd-timeline-content">
+                                    <h2>Amount: &#8377;{{data.value.grand_total}}</h2>
+                                    <h2 text-capitalize>Status: {{data.value.status}}</h2>
+                                    <hr>
                                 </div>
                             </div>
-                        </section>
-                    </ion-item>
-                </div>
+
+                        </div>
+                    </section>
+                </ion-item>
             </ion-list>
         </div>
     </ion-scroll>

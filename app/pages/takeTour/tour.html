@@ -8,43 +8,25 @@
         </ion-row>
         <ion-row style="margin-bottom: 20px;">
             <ion-col style="text-align: center;">
-                <img src="../../images/checkmark.png" style="max-width: 100px; margin: 40px;"/>
+                <img src="{{logo}}" alt="{{logo_alt}}" style="max-width: 100px; margin: 40px;"/>
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>
-                <ion-slides #mySlider [options]="mySlideOptions">
+            <ion-col >
+                <ion-slides #mySlider [options]="mySlideOptions" >
 
-                    <ion-slide>
+                    <ion-slide *ngFor="let desc of descriptions;let i=index">
                         <ion-row>
                             <ion-col>
-                               <p class="heading">  Title </p>
-
+                               <p class="heading">  {{desc.title}} </p>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col>
-                                <p class="align"> Thus much i thought proper to tell you in relation to your self and to the truth I respond to you </p>
-
+                                <p class="align"> {{desc.description}}</p>
                             </ion-col>
                         </ion-row>
-                    </ion-slide>
-                    <ion-slide>
-                        <ion-row>
-                            <ion-col>
-                               <p class="heading">  Title </p>
-
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col>
-                                <p class="align"> Thus much i thought proper to tell you in relation to your self and to the truth I respond to you </p>
-
-                            </ion-col>
-                        </ion-row>
-                    </ion-slide>
-                                                                    
-                    
+                    </ion-slide>   
 
                 </ion-slides>
             </ion-col>

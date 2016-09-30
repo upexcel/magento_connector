@@ -45,7 +45,8 @@ export class productpage {
 
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
-                this.response = JSON.parse(res.data.body);
+                this.response = JSON.parse(res.data);
+                console.log(res.msg)
                 this.backupResponse = this.response;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
