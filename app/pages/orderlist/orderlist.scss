@@ -1,6 +1,6 @@
 .orderlist {
     ion-segment[dark] .segment-button {
-        color: white;        
+        color: $white;        
     }
     .segment-button {
         border-width: 0;
@@ -23,7 +23,7 @@
         border-bottom: none;
         padding-left: 0;
         margin-left: 62px;
-        background: #f3f3f3;
+        background: $cream;
         width: 85%;
     }
     .cd-container {
@@ -37,7 +37,10 @@
         display: table;
         clear: both;
     }
-
+    .order{
+    background: $blacky;
+    padding: 10px;
+    }
 
     /* -------------------------------- 
     
@@ -51,11 +54,11 @@
 
     .timelineIcon {
         font-size: 25px;
-        color: white;
+        color: $white;
     }
 
     .cd-author {
-        color: gray;
+        color:$gray;
     }
 
     #cd-timeline {
@@ -70,7 +73,7 @@
         left: 18px;
         height: 100%;
         width: 4px;
-        background: gray;
+        background: $gray;
     }
 
     .cd-timeline-block {
@@ -98,7 +101,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        border-color: #BDDFB3;
+        border-color: $lightGrean;
         border-style: solid;
         border-width: 2px;
         padding-top:2px;
@@ -108,7 +111,7 @@
     }
 
     .cd-timeline-icon i {
-        color: #4a87ee;
+        color: $blue;
     }
 
     .cd-timeline-content {
@@ -116,7 +119,7 @@
         margin-left: 60px;
         background: white;
         border-radius: 0.25em;
-        border-color: #BDDFB3;
+        border-color: $lightGrean;
         border-style: solid;
         border-width: 2px;
         margin-bottom: 10px;
@@ -130,7 +133,7 @@
     }
 
     .cd-timeline-content h2 {
-        color: #303e49;
+        color: $bluesGray;
     }
 
     .cd-timeline-content p,

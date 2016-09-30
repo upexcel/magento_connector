@@ -1,47 +1,73 @@
-.alert-wrapper {
-    max-width: 264px;
-    border-radius: 10px;
-}
-.selectlist{
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-}
-.toolbar-title {
-    padding: 0 12px;
-    font-size: 1.5em;
-    font-weight: 300;
-    color: #424242;
-}
-ion-item.selectlist.item.item-select{
-    min-height: 3rem;
-}
-.select-icon {
-height: auto;
-}
-.lable{
-    margin: 0px;
-    font-size: 12px;
-}
-ion-card p {
-    margin: 0 0 2px;
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1.5;
-    color: #222;
-}
-ion-select {
-    padding: 0px !important;
-    font-size: 12px;
-}
+.product{
+    .alert-wrapper {
+        max-width: 264px;
+        border-radius: 10px;
+    }
+    .selectlist{
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
+    }
+    .toolbar-title {
+        padding: 0 12px;
+        font-size: 1.5em;
+        font-weight: 300;
+        color: $gray;
+    }
+    ion-item.selectlist.item.item-select{
+        min-height: 3rem;
+    }
+    .select-icon {
+        height: auto;
+    }
+    ion-card p {
+        margin: 0 0 2px;
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.5;
+        color: $blacky;
+    }
+    ion-select {
+        padding: 0px !important;
+        font-size: 12px;
+    }
 
-.line{
-    text-decoration: line-through;   
-}
-ion-item.selectlist.item.item-select {
-    min-height: 3rem;
-    padding-left: 2px;
-}
-.hidden{
-    display: none;
+    .line{
+        text-decoration: line-through;   
+    }
+    ion-item.selectlist.item.item-select {
+        min-height: 3rem;
+        padding-left: 2px;
+    }
+    .hidden{
+        display: none;
+    }
+    .sPrice{
+        font-size: 0.9em;
+        font-weight: 400
+    }
+    .price{
+        font-size: 0.7em;
+        width: auto; 
+        float: left;
+        margin-right: 8px;
+        line-height: 2;
+    }
+    .maxHt{
+        max-height: 100px;
+    }
+    .maxWT{
+        max-width: 85px;
+    }
+    .img{
+        min-height: 140px; 
+        max-height: 270px;
+        height: auto;
+        max-width: 250px;
+        margin: 0px auto;
+    }
+    .imgbox{
+        height: 270px;
+        width:100%
+    }
 }

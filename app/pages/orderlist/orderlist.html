@@ -12,11 +12,11 @@
                 <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
             </ion-item>
         </ion-list>
-        <ion-segment dark  style="background: black;padding: 10px;" [(ngModel)]="orders">
-            <ion-segment-button value="total_orders" style="border-right: 1px solid #666;" (ionSelect)="selectedTotal_orders()">
+        <ion-segment dark  class="order" [(ngModel)]="orders">
+            <ion-segment-button value="total_orders" class="borderRt1" (ionSelect)="selectedTotal_orders()">
                 Total Orders
             </ion-segment-button>
-            <ion-segment-button value="total_amount" style="border-right: 1px solid #666;" (ionSelect)="selectedTotal_amount()">
+            <ion-segment-button value="total_amount" class="borderRt1" (ionSelect)="selectedTotal_amount()">
                 Total Amount
             </ion-segment-button>
             <ion-segment-button value="order_details" (ionSelect)="selectedOrder_details()">
@@ -61,15 +61,15 @@
                     <ion-item>
                         <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
                                  <div>
-                                <ion-list-header text-right><span style="float: left;">{{data.value.created_at| date: 'dd/MM/yyyy'}}</span>{{data.value.created_at| date: 'hh:mm:ss'}}</ion-list-header>
+                                <ion-list-header text-right><span class="floatLeft">{{data.value.created_at| date: 'dd/MM/yyyy'}}</span>{{data.value.created_at| date: 'hh:mm:ss'}}</ion-list-header>
                                 
                                 <!----if order is holded-->
                                 <div class="cd-timeline-block" *ngIf="data.value.status=='holded'">
-                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'red'}">
+                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'$red'}">
                                            <ion-icon name="pause" danger></ion-icon>
                                     </div>
                                     <!-- cd-timeline-img -->
-                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'red'}">
+                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'$red'}">
                                         <h2 >Order ID:{{data.key}}</h2>
                                         <h2>Amount:&#8377; {{data.value.grand_total}}</h2>
                                         <h2 text-capitalize>Status:{{data.value.status}}</h2>
@@ -78,11 +78,11 @@
 
                                 <!----if order is pending-->
                                 <div class="cd-timeline-block" *ngIf="data.value.status=='pending'">
-                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'#8a6d3b'}">
+                                    <div class="cd-timeline-icon" [ngStyle]="{'border-color':'$olive'}">
                                           <ion-icon name="alert" warning ></ion-icon>
                                     </div>
                                     <!-- cd-timeline-img -->
-                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'#8a6d3b'}">
+                                    <div class="cd-timeline-content" [ngStyle]="{'border-color':'$olive'}">
                                         <h2 >Order ID:{{data.key}}</h2>
                                         <h2>Amount:&#8377; {{data.value.grand_total}}</h2>
                                         <h2 text-capitalize>Status:{{data.value.status}}</h2>
