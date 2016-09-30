@@ -49,7 +49,8 @@ export class productpage {
         this.local = new Storage(LocalStorage);
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
-                this.response = JSON.parse(res.data);
+                this.response = JSON.parse(res.body.data);
+                console.log(this.response);
                 this.spin = false;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];

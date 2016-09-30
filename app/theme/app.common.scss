@@ -16,15 +16,20 @@
 .cursorPointer{
     cursor:pointer;
 }
+.font20{
+    font-size: 20px;
+}
 .font14{
     font-size: 14px;
 }
 .font12{
     font-size: 12px;
 }
-#magLeft50{
-    margin-left: 50% !important;
-
+.font13{
+    font-size: 13px;
+}
+.font10{
+     font-size: 10px;
 }
 .center{
     display: -webkit-box;
@@ -56,3 +61,11 @@
     -ms-flex-align: center;
     align-items: center;
 }
+#magLeft50{
+    margin-left: 50% !important;
+
+}
+#marLeft20{
+    margin-left: 20px;
+}
+

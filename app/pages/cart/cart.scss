@@ -1,7 +1,8 @@
+.cart{
 ion-label {
     margin: 0px;
 }
-ion-item.selectlist.item.item-select {
+.item.item-select {
     min-height: 3rem;
     padding-left: 2px;
     border-style: none;
@@ -11,4 +12,19 @@ ion-item.selectlist.item.item-select {
 }
 .select-icon {
     display: none;
+}
+.maxht{
+    max-height: 100px;
+}
+.qtyborder{
+    background: $hafeWite;
+}
+.marBot10{
+    margin-bottom: 10px;
+}
+.border{
+   border-bottom-style: solid;
+    border-width: 1px;
+    border-bottom-color: $lightGray;
+}
 }
