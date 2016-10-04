@@ -1,15 +1,13 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, PopoverController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, PopoverController} from 'ionic-angular';
 import {FormService} from './../../providers/form-service/form-service'
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from './../orderid-detail/orderid-detail'
+import {StartPage} from './../../pages/startpage/startpage'
 import * as _ from 'lodash'
-import * as moment from 'moment';
-import {CalendarPipe, DateFormatPipe, TimeAgoPipe} from 'angular2-moment'
 @Component({
     templateUrl: 'build/pages/orderlist/orderlist.html',
-    providers: [FormService],
-    pipes: [CalendarPipe, DateFormatPipe, TimeAgoPipe]
+    providers: [FormService]
 })
 export class OrderlistPage implements OnInit {
     firstname: any;
@@ -19,40 +17,37 @@ export class OrderlistPage implements OnInit {
     ttl_show: boolean = false;
     res: any;
     values: any;
-    color_name: any;
     dates: any = [];
-    datess: any = [];
     orders_error: any;
     secret: any;
     access_token: any;
     no_orders: boolean = false;
-    currentDateMoment: any;
-    dates_values: any;
-    todays_date: any;
-    public event = {
-        timeStarts: '',
-        timeEnds: ''
-    }
-    constructor(public alertCtrl: AlertController, public modalCtrl: ModalController, private navCtrl: NavController, public popoverCtrl: PopoverController, private _formService: FormService) {
+    itemsValue = [];
+    itemsDate = [];
+    spin: boolean = false;
+    startArray: any = 0;
+    endArray: any = 4;
+    startDateArray: any = 0;
+    endDateArray: any = 2;
+    constructor(private navCtrl: NavController, public popoverCtrl: PopoverController, private _formService: FormService) {
         this.firstname = localStorage.getItem('firstname');
         this.lastname = localStorage.getItem('lastname');
         this.secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY";
-    }
-    ngOnInit() {
-        this.selectedOrder_details();
-        this.total_orders();
-    }
-    get_orders() {
 
         this.selectedOrder_details();
     }
+    ngOnInit() {
+        this.total_orders();
+    }
     selectedOrder_details() {
-//        console.log(this.event.timeStarts + " " + this.event.timeEnds)
+        this.spin = true;
+        var res_data: any = [];
         var date: any = [];
         var body = { "secret": this.secret }
         this._formService.api("order/alllist", body).subscribe((res) => {
-            if (res.status == 0) {
-                this.showAlert();
+            this.spin = false;
+            if (res.statuscode == 500) {
+                this.logout();
             }
             if (JSON.parse(res.body).data == 0) {
                 this.no_orders = true;
@@ -60,8 +55,6 @@ export class OrderlistPage implements OnInit {
 
             } else {
                 this.res = JSON.parse(res.body).data;
-                console.log(this.res)
-                var res_data: any = [];
                 _.forEach(this.res, function(value, key) {
                     date.push(value.created_at.split(" ", 1));
                     var datas = {
@@ -70,15 +63,29 @@ export class OrderlistPage implements OnInit {
                     };
                     res_data.push(datas);
                 });
-                this.values = _.reverse(_.clone(res_data));
-                this.dates = _.reverse(_.uniq(_.flattenDeep(date)));
+                this.itemsValue = _.reverse(_.clone(res_data));
+                this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
+                this.itemsDate = _.reverse(_.uniq(_.flattenDeep(date)));
+                this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
             }
         })
     }
+    doInfinite(infiniteScroll: any) {
+        this.endArray += 4;
+        this.endDateArray += 2;
+        setTimeout(() => {
+            this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
+            this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+            infiniteScroll.complete();
+        }, 1000);
+    }
+
     total_orders() {
         var body = { "secret": this.secret }
-        console.log(body)
         this._formService.api("order/totalorder", body).subscribe((res) => {
+            if (res.statuscode == 500) {
+                this.logout();
+            }
             if (JSON.parse(res.body).data != 0) {
                 this.ttl_show = true;
                 this.totalOrders = JSON.parse(res.body).data.total_order;
@@ -95,17 +102,19 @@ export class OrderlistPage implements OnInit {
             ev: myEvent,
         });
     }
-
     presentModal(id: any) {
-        console.log(id)
         this.navCtrl.push(OrderModalPage, { "order_id": id });
     }
-    showAlert() {
-        let alert = this.alertCtrl.create({
-            title: 'Warning',
-            subTitle: 'Select Start Date or End Date to get orders details',
-            buttons: ['OK']
-        });
-        alert.present();
+    goback() {
+        this.navCtrl.pop();
+    }
+    logout() {
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('expiry');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('lists');
+        localStorage.removeItem('email');
+        this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
     }
 }

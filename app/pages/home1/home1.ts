@@ -35,7 +35,7 @@ export class HomePage1 implements OnInit {
         this._formService.api("category/products/", path).subscribe((res) => {
             if (res) {
                 this.spin = false;
-                this.products = JSON.parse(res.body.body).data;
+                this.products = JSON.parse(res.body).data;
             }
 
         })

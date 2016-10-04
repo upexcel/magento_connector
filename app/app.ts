@@ -18,7 +18,7 @@ export class MyApp {
     constructor(private platform: Platform) {
         this.local = new Storage(LocalStorage);
         this.checkCredentials();
-//         this.rootPage = OrderlistPage;
+//        this.rootPage = OrderlistPage;
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });

@@ -13,7 +13,7 @@ export class tourPage implements OnInit {
     desc: any;
     descriptions: any;
     mySlideOptions = {
-        autoplay: 1000,
+        autoplay:3000,
         initialSlide: 1,
         loop: true,
         pager: true

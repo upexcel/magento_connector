@@ -1,5 +1,5 @@
 
-<ion-header style="margin-bottom: 20px;">
+<ion-header class="register margen">
 
     <ion-navbar primary>
         <ion-title text-center>Signup</ion-title>
@@ -7,7 +7,7 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content class="register">
 
     <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
@@ -26,18 +26,18 @@
             <ion-label floating>Password</ion-label>
             <ion-input type="password"  formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
-        <ion-item style="padding:36px;">
+        <ion-item class="padd36">
             <ion-label> <b>RECEIVE NEWSLETTERS</b></ion-label>
             <ion-toggle dark checked="false"></ion-toggle>
         </ion-item>
         <ion-grid >
             <ion-row center >
                 <ion-col class="center">
-                   <button type="submit" id="btn1" primary round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
+                    <button type="submit" id="btn1" primary round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
                 </ion-col>
             </ion-row>
         </ion-grid> 
 
     </form>
-    <p align="center" style="padding: 44px;">By Clicking Sign Up you are agreeing to the <a href="#" style="text-decoration: none;">Terms and use</a> and <a href="#" style="text-decoration: none;">Privacy policy</a></p>
+    <p align="center" class="padd44">By Clicking Sign Up you are agreeing to the <a href="#" class="textDecoretion">Terms and use</a> and <a href="#" class="textDecoretion">Privacy policy</a></p>
 </ion-content>

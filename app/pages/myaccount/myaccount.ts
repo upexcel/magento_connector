@@ -20,7 +20,8 @@ export class MyaccountPage {
     edit_res: any;
     upd_spin: boolean = false;
     firstname: any;
-    lastname: any
+    lastname: any;
+    msg:any;
     constructor(private toastCtrl: ToastController, private navCtrl: NavController, public popoverCtrl: PopoverController, public fb: FormBuilder, private _formService: FormService) {
         this.access_token = localStorage.getItem("access_token");
         this.firstname = localStorage.getItem("firstname");
@@ -51,12 +52,12 @@ export class MyaccountPage {
                     this.updateform = this.fb.group({
                         firstname: [this.firstname],
                         lastname: [this.lastname],
-                        city: [''],
-                        company: [''],
-                        teliphone: [''],
-                        street: [''],
-                        zip: [''],
-                        countryid: [''],
+                        city: [' '],
+                        company: [' '],
+                        teliphone: [' '],
+                        street: [' '],
+                        zip: [' '],
+                        countryid: [' '],
                         secret: [secret],
                         access_token: [this.access_token]
                     })
@@ -82,17 +83,21 @@ export class MyaccountPage {
 
     }
     update(value: any) {
-        console.log(value)
         this.upd_spin = true;
         this._formService.api('address/edit', value).subscribe((res) => {
             this.upd_spin = false;
-            console.log(res)
-            this.showToast("top");
+            if (res.status == 0) {
+                this.msg=JSON.parse(res.body).message;
+                this.showToast("top");
+            } else {
+                this.msg="Successfully updated"
+                this.showToast("top");
+            }
         })
     }
     showToast(position: string) {
         let toast = this.toastCtrl.create({
-            message: "Successfully updated",
+            message: this.msg,
             duration: 2000,
             position: position
         });
@@ -120,6 +125,6 @@ export class MyaccountPage {
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
         localStorage.removeItem('email');
-        this.navCtrl.setRoot(StartPage,{"message":"your Session expired"});
+        this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
     }
 }

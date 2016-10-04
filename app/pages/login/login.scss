@@ -1,3 +1,17 @@
 .login {
- overflow: hidden;
+    overflow: hidden;
+    .magTop60{
+        margin-top: 60px;
+    }
+    .forgot{
+        cursor: pointer;
+        width:30%; 
+        margin: auto   
+    }
+    .marTop100{
+        margin-top: 100px;
+    }
+    scroll-content {
+        overflow-y: hidden;
+    }
 }

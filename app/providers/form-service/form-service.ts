@@ -11,31 +11,9 @@ import 'rxjs/add/operator/toPromise';
 export class FormService {
     constructor(private _http: Http) { }
      access_token = localStorage.getItem('access_token');
-//
-//    api(url: any, body: any) {
-//        let api_url = config + url   //complete api url 
-//       // console.log(this.access_token)
-//        //
-//        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr','Authorization': this.access_token });
-//        let options = new RequestOptions({ headers: headers });
-//        return this._http.post(api_url, JSON.stringify(body),options)
-//            .map(this._extractData)
-//            .catch(this._handleError);
-//    }
+
      api(url: any, body: any) {
         let api_url = config2 + url   //complete api url 
-       // console.log(this.access_token)
-        //, 'APP_ID': 'com.tethr','Authorization': this.access_token
-        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr','Authorization': this.access_token});
-        let options = new RequestOptions({ headers: headers });
-        return this._http.post(api_url, JSON.stringify(body),options)
-            .map(this._extractData)
-            .catch(this._handleError);
-    }
-   getorderdetails(url: any, body: any) {
-        let api_url = config + url   //complete api url 
-       // console.log(this.access_token)
-        //, 'APP_ID': 'com.tethr','Authorization': this.access_token
         let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr','Authorization': this.access_token});
         let options = new RequestOptions({ headers: headers });
         return this._http.post(api_url, JSON.stringify(body),options)

@@ -12,19 +12,19 @@
 
 
 <ion-content  class="myaccount">
-    <ion-spinner *ngIf="spin" style="margin-left: 50%;"></ion-spinner>
+    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="user_add">
-        <ion-list inset style="padding-bottom:60px" >
+        <ion-list inset class="padd60" >
             <ion-item>
-                <ion-label stacked>First Name</ion-label>
+                <ion-label stacked>First Name <span style="color: red;">*</span></ion-label>
                 <ion-input formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Last Name</ion-label>
+                <ion-label stacked>Last Name <span style="color: red;">*</span></ion-label>
                 <ion-input formControlName="lastname" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>City</ion-label>
+                <ion-label stacked>City <span style="color: red;">*</span></ion-label>
                 <ion-input formControlName="city" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
@@ -32,19 +32,19 @@
                 <ion-input  formControlName="company" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Telephone</ion-label>
+                <ion-label stacked>Telephone <span style="color: red;">*</span></ion-label>
                 <ion-input  formControlName="teliphone" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Address</ion-label>
+                <ion-label stacked>Address <span style="color: red;">*</span></ion-label>
                 <ion-input  formControlName="street" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Pin Code</ion-label> 
+                <ion-label stacked>Pin Code <span style="color: red;">*</span></ion-label> 
                 <ion-input  formControlName="zip" autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Country</ion-label> 
+                <ion-label stacked>Country <span style="color: red;">*</span></ion-label> 
                 <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
             </ion-item>           
             <ion-buttons class="center" padding>

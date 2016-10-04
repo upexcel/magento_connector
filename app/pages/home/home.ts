@@ -75,7 +75,8 @@ export class HomePage implements OnInit {
         } else {
             data.showDetails = true;
 //            data.icon = 'ios-remove-circle-outline';
-        }
+            data.icon = 'ios-add-circle-outline';
+        } 
     }
     gotoproduct(product) {
         this.navCtrl.push(productpage, {
@@ -97,9 +98,12 @@ export class HomePage implements OnInit {
         })
     }
     home_products() {
+        this.spin = true;
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
+                this.feature_products = JSON.parse(res.body.data).data;
+                this.spin = false;
                 this.feature_products = JSON.parse(res.body.data).data;
             }
 

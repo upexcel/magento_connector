@@ -61,7 +61,6 @@ export class OrderModalPage implements OnInit {
             order_id: order_id, secret: this.secret
         }
         this._formService.api("order/get/", body).subscribe((res) => {
-            console.log(JSON.parse(res.body))
             this.status = JSON.parse(res.body).data.status;
             this.grand_total = JSON.parse(res.body).data.grand_total;
             this.purchased_on = JSON.parse(res.body).data.purchased_on;

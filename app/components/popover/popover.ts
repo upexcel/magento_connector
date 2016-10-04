@@ -30,7 +30,7 @@ export class PopoverPage {
         this.navCtrl.push(ChangepasswordPage);
     }
     gotoorders(){
-        this.navCtrl.push(OrderlistPage);
+        this.navCtrl.setRoot(OrderlistPage);
     }
     logout() {
         localStorage.removeItem('firstname');
