@@ -21,7 +21,7 @@
         margin-top: 3px;
     }
     ion-list-header {
-        background: #f3f3f3;
+        background: $list_heade_order_grey;
         /*color: white;*/
     }
     .cust_info{
@@ -38,5 +38,8 @@
     #item_price{
         float: right;
         margin-right: 30px;
+    }
+    #pay_meth{
+        min-height: 2rem;
     }
 }

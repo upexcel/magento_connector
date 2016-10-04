@@ -27,15 +27,6 @@ export class StartPage implements OnInit {
     gotologin() {
         this.navCtrl.push(LoginPage);
     }
-    //    presentPopover(myEvent) {
-    //        var data = true;
-    //        let popover = this.popoverCtrl.create(tourPage, {
-    //            enableBackdropDismiss:true
-    //        });
-    //        popover.present({
-    //            ev: myEvent
-    //        });
-    //    }
     presentProfileModal() {
         let profileModal = this.modalCtrl.create(tourPage);
         profileModal.present();

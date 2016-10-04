@@ -29,7 +29,7 @@
         <ion-spinner *ngIf="spin"></ion-spinner>
         <ion-grid class="seg">
             <ion-row  *ngIf="ttl_show">
-                <ion-col style="border-right: 1px solid grey;">TOTAL ORDERS <h6>{{totalOrders}}</h6></ion-col>
+                <ion-col id="total_orders">TOTAL ORDERS <h6>{{totalOrders}}</h6></ion-col>
                 <ion-col>TOTAL AMOUNT<h6> &#8377;{{totalAmount}}</h6></ion-col>
             </ion-row>
         </ion-grid>
@@ -44,8 +44,8 @@
                             <ion-icon *ngIf="data.value.status=='pending'" name="alert" warning></ion-icon> 
                         </div>   
                         <div (click)="presentModal(data.key)">
-                            <span style="margin-left: 37px;">#{{data.key}}</span>
-                            <span style="float: right;color: #858585">{{data.value.created_at | date: 'hh:mm'}}</span>
+                            <span class="order_key">#{{data.key}}</span>
+                            <span class="date_creation">{{data.value.created_at | date: 'hh:mm'}}</span>
                             <div class="cd-timeline-content">
                                 <h2>Amount: &#8377;{{data.value.grand_total}}</h2>
                                 <h2 text-capitalize>Status: {{data.value.status}}</h2>

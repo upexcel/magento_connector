@@ -34,11 +34,28 @@ export class OrderlistPage implements OnInit {
         this.lastname = localStorage.getItem('lastname');
         this.secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY";
 
-        this.selectedOrder_details();
     }
     ngOnInit() {
         this.total_orders();
+        this.selectedOrder_details();
     }
+    total_orders() {
+        var body = { "secret": this.secret }
+        this._formService.api("order/totalorder", body).subscribe((res) => {
+            if (res.statuscode == 500) {
+                this.logout();
+            }
+            if (JSON.parse(res.body).data != 0) {
+                this.ttl_show = true;
+                this.totalOrders = JSON.parse(res.body).data.total_order;
+                this.totalAmount = JSON.parse(res.body).data.total_amount;
+            } else {
+                console.log(JSON.parse(res.body).data)
+            }
+
+        })
+    }
+    
     selectedOrder_details() {
         this.spin = true;
         var res_data: any = [];
@@ -80,22 +97,7 @@ export class OrderlistPage implements OnInit {
         }, 1000);
     }
 
-    total_orders() {
-        var body = { "secret": this.secret }
-        this._formService.api("order/totalorder", body).subscribe((res) => {
-            if (res.statuscode == 500) {
-                this.logout();
-            }
-            if (JSON.parse(res.body).data != 0) {
-                this.ttl_show = true;
-                this.totalOrders = JSON.parse(res.body).data.total_order;
-                this.totalAmount = JSON.parse(res.body).data.total_amount;
-            } else {
-                console.log(JSON.parse(res.body).data)
-            }
-
-        })
-    }
+    
     presentPopover(myEvent: any) {
         let popover = this.popoverCtrl.create(PopoverPage);
         popover.present({
