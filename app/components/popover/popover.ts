@@ -39,6 +39,7 @@ export class PopoverPage {
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
         localStorage.removeItem('email');
+        localStorage.removeItem('secret');
         this.navCtrl.setRoot(StartPage);
     }
 }

@@ -13,11 +13,11 @@
         /*#333333*/
     }
     .avt h1{
-        color:$avt_h1_order;
+        color:$avt_h1_order_black;
         font-family: "Comic Sans MS", cursive, sans-serif;
     }
     ion-list-header{
-        background: $list_heade_order;
+        background: $list_heade_order_grey;
     }
     .orders{
         padding: 0;
@@ -121,7 +121,7 @@
         padding: 0;
     }
     hr{
-        background: $hrline_order;
+        background: $hrline_order_grey;
     }
     h6{
         font-size: 20px;
@@ -139,7 +139,7 @@
     }
     .date_creation{
         float: right;
-        color: $date_creat_order;
+        color: $date_creat_order_dark_grey;
     }
     .order_key{
         margin-left: 37px;

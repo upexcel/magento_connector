@@ -39,6 +39,7 @@ export class LoginPage {
                 this.local.set('access_token', JSON.parse(res.body).data.access_token);
                 this.local.set('expiry', JSON.parse(res.body).data.expiry);
                 this.local.set('email', JSON.parse(res.body).data.email);
+                this.local.set('secret',JSON.parse(res.body).data.secret)
                 //this.spin = false;
                 this.navCtrl.setRoot(HomePage);
             } else {

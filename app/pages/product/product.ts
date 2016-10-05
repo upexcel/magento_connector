@@ -10,7 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 @Component({
     templateUrl: 'build/pages/product/product.html',
-    providers: [FormService,cartService]
+    providers: [FormService, cartService]
 })
 export class productpage {
     res: {} = {};
@@ -30,34 +30,35 @@ export class productpage {
     attribute: any = [];
     selectedList: any = [];
     storage;
-    disable:boolean=true;
+    disable: boolean = true;
     product;
     price;
     s_price;
     shown;
-    local: any;
     images: any;
     final_price;
     rest;
     item;
     keys: any = [];
+    secret: any;
+    access_token: any;
     constructor(public toastCtrl: ToastController, public loadingCtrl: LoadingController, private navCtrl: NavController, private navParams: NavParams, private _cartService: cartService, private _formService: FormService) {
         this.product = "Product";
+        this.secret = localStorage.getItem('secret');
+        this.access_token = localStorage.getItem('access_token');
         let id = navParams.get('id');
         this.presentLoading();
         let path = { sku: id };
-        this.local = new Storage(LocalStorage);
         this._formService.api("product/get/", path).subscribe((res) => {
             if (res) {
-                console.log(JSON.parse(res.data));
                 this.response = JSON.parse(res.data);
                 this.spin = false;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
                 this.final_price = this.price;
-                 if (this.response.data.data.type != "configurable") {
-                     this.disable=false;
-                 }
+                if (this.response.data.data.type != "configurable") {
+                    this.disable = false;
+                }
                 if (this.response.data.data.special_price > 0) {
                     this.condition = true;
                     this.sp_priceShow = true;
@@ -82,7 +83,7 @@ export class productpage {
         this.navCtrl.push(cartpage);
     }
     onChange(res, key) {
-        var count=0;
+        var count = 0;
         //take current selected item
         var res111 = res[key];
         //cloneing for use checked list in add cart function
@@ -149,43 +150,42 @@ export class productpage {
         var path: any;
         var data: any;
         var check;
-        var count=0;
+        var count = 0;
         //gather data for send in add cart servive
         var sku = response.data.sku;
         var img = response.data.media_images[0];
         var price = response.data.display_price;
         var name = response.data.name;
-        var type= this.response.data.data.type;
-        var access_token = localStorage.getItem('access_token');
+        var type = this.response.data.data.type;
         var productid = this.response.data.data.entity_id;
-        data = { id: sku, img: img, name: name, price: price ,type:type,quantity:1};
+        data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
         other = data;
         //check type of data for send data in cart api
         if (type == "simple") {
-            path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" };
+            path = { "productid": productid, "access_token": this.access_token, "secret": this.secret };
         }
         if (type == "configurable") {
             _.forEach(this.selectedList, function(listdata, key) {
                 array[key] = listdata.id;
             });
             selectedItem = (array);
-            path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" };
+            path = { "productid": productid, "options": selectedItem, "access_token": this.access_token, "secret": this.secret };
             var other = _.merge(data, selectedItem);
         }
         //cart api
         this._formService.api("cart/cart", path).subscribe((res) => {
             if (res) {
                 //add to cart service
-            this._cartService.addCart(other,this.keys).then((response) => {
-            this.item = response;
-            this.presentToast("item inserted ");
-            this.navCtrl.push(cartpage);
-        });
+                this._cartService.addCart(other, this.keys).then((response) => {
+                    this.item = response;
+                    this.presentToast("item inserted ");
+                    this.navCtrl.push(cartpage);
+                });
             }
         },
             (err) => {
                 if (err) {
-                   this.presentToast(err);
+                    this.presentToast(err);
                     console.log(err);
                 }
             });

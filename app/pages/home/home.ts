@@ -36,7 +36,7 @@ export class HomePage implements OnInit {
             var path = { "parent_id": "1", "type": "full","store_id":"1" }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
-                    this.lists = JSON.parse(res.body.body).data.children
+                    this.lists = JSON.parse(res.body).data.children;
                     this.local.set('lists', JSON.stringify(this.lists));
                 }
             },
@@ -102,9 +102,8 @@ export class HomePage implements OnInit {
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
-                this.feature_products = JSON.parse(res.body.data).data;
+                this.feature_products = JSON.parse(res.data).data;
                 this.spin = false;
-                this.feature_products = JSON.parse(res.body.data).data;
             }
 
         })

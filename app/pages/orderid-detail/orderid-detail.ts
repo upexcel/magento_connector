@@ -47,7 +47,7 @@ export class OrderModalPage implements OnInit {
     constructor(public navparam: NavParams, public popoverCtrl: PopoverController, private viewCtrl: ViewController, private _formService: FormService) {
         //        this.order_no = navparam.get("order_no");
         this.order_id = navparam.get("order_id");
-        this.secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY";
+        this.secret = localStorage.getItem("secret");
 
     }
     ngOnInit() {

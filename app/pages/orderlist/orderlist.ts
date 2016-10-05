@@ -32,7 +32,7 @@ export class OrderlistPage implements OnInit {
     constructor(private navCtrl: NavController, public popoverCtrl: PopoverController, private _formService: FormService) {
         this.firstname = localStorage.getItem('firstname');
         this.lastname = localStorage.getItem('lastname');
-        this.secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY";
+        this.secret = localStorage.getItem('secret');
 
     }
     ngOnInit() {
@@ -117,6 +117,7 @@ export class OrderlistPage implements OnInit {
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
         localStorage.removeItem('email');
+        localStorage.removeItem('secret');
         this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
     }
 }
