@@ -11,10 +11,11 @@ import {FormService } from './../../providers/form-service/form-service';
 export class ForgotPage {
     forgotform: any;
     spin: boolean;
-    response:any;
+    response: any;
     constructor(private navCtrl: NavController, private fb: FormBuilder, private _formService: FormService, public toastCtrl: ToastController) {
         this.forgotform = this.fb.group({
-            email: ['', Validators.required]
+            email: ['', Validators.required],
+            website_id: ["1"]
         });
         console.clear();
     }
@@ -22,8 +23,8 @@ export class ForgotPage {
         this.spin = true;
         this._formService.api('customer/forgot/', value).subscribe((res) => {
             this.spin = false;
-            this.response=JSON.parse(res.body).message;
-             this.showToast("top");
+            this.response = JSON.parse(res.body).message;
+            this.showToast("top");
         },
             (err) => {
                 if (err.status == 500) {

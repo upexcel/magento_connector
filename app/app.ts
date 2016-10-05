@@ -4,7 +4,8 @@ import {StatusBar} from 'ionic-native';
 import {StartPage} from './pages/startpage/startpage';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 import {HomePage} from './pages/home/home';
-import {OrderlistPage} from './pages/orderlist/orderlist';
+import {OrderlistPage} from './pages/orderlist/orderlist'
+import {OrderModalPage} from './pages/orderid-detail/orderid-detail'
 @Component({
     template: `<ion-nav [root]="rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`,
@@ -17,6 +18,7 @@ export class MyApp {
     constructor(private platform: Platform) {
         this.local = new Storage(LocalStorage);
         this.checkCredentials();
+//        this.rootPage = OrderlistPage;
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });
@@ -27,10 +29,8 @@ export class MyApp {
         this.local.get('access_token').then((res) => {
             access_token = res;
             if (access_token != null) {
-                console.log("Homepage")
                 this.rootPage = HomePage;
             } else {
-               console.log("Startpage")
                this.rootPage = StartPage;
             }
         });

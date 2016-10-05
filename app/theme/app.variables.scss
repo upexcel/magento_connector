@@ -35,10 +35,11 @@ favorite:   #69BB7B,
 warning:    #8a6d3b,
 gray:       #424242,
 );
-
+/*
 scroll-content {
     overflow: hidden;
-}
+    overflow-y: auto;
+}*/
 $grean      :#00631D;
 $darkBlue  :#1c57ff;
 $hafeWite  :#f3f3f3;
@@ -53,3 +54,7 @@ $lightGrean:#BDDFB3;
 $blue      :#4a87ee;
 $bluesGray :#303E49;
 $white     :#fbfbfb;
+$hrline_order_grey:#d1d1d1;
+$avt_h1_order_black:#333333;
+$list_heade_order_grey: #f3f3f3;
+$date_creat_order_dark_grey:#858585;

@@ -22,7 +22,7 @@ export class LoginPage {
         this.logform = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-            website_id:["1"]
+            website_id:["1"] 
         });
         this.local = new Storage(LocalStorage);
     }
@@ -32,17 +32,17 @@ export class LoginPage {
     signin(logvalue: any) {
         this.spin = true;
         this._formService.api('customer/login/', logvalue).subscribe((res) => {
-            console.log(res)
             this.spin = false;
             if (res.status == 1) {
                 this.local.set('firstname', JSON.parse(res.body).data.firstname);
                 this.local.set('lastname', JSON.parse(res.body).data.lastname);
                 this.local.set('access_token', JSON.parse(res.body).data.access_token);
                 this.local.set('expiry', JSON.parse(res.body).data.expiry);
+                this.local.set('email', JSON.parse(res.body).data.email);
                 //this.spin = false;
                 this.navCtrl.setRoot(HomePage);
             } else {
-                this.response = res.msg;
+                this.response = "Invalid email and password";
                 this.showToast("top");
             }
         },

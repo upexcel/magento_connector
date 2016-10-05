@@ -18,26 +18,27 @@ export class RegisterPage {
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
             email: ['', Validators.required],
-            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+            website_id: ["1"]
         })
-         console.clear();
+        console.clear();
     }
     signup(regvalue: any) {
         this._formService.api("customer/register/", regvalue).subscribe((res) => {
-            if (res.status==1) {
+            if (res.status == 1) {
                 console.log(res)
                 this.presentToast(JSON.parse(res.body).message);
                 this.navCtrl.setRoot(StartPage);
-            }else{
-                 this.presentToast(JSON.parse(res.body).message);
+            } else {
+                this.presentToast(JSON.parse(res.body).message);
             }
         }
-//        ,
-//            (err) => {
-//                 console.log(err)
-//                    this.presentToast(JSON.parse(err.body).message);
-//
-//            }
+            //        ,
+            //            (err) => {
+            //                 console.log(err)
+            //                    this.presentToast(JSON.parse(err.body).message);
+            //
+            //            }
         )
     }
     presentToast(message: string) {

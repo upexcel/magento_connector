@@ -7,6 +7,7 @@ import {PopoverPage} from './../../components/popover/popover';
 import { productpage } from '../product/product'
 //import {LoginPage} from './../../pages/login/login'
 import {StartPage} from './../../pages/startpage/startpage'
+import * as _ from 'lodash'
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers: [FormService],
@@ -24,7 +25,7 @@ export class HomePage implements OnInit {
     img: any;
     feature_products: any;
     constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
-
+               
     }
     ngOnInit() {
         this.local = new Storage(LocalStorage);
@@ -32,10 +33,9 @@ export class HomePage implements OnInit {
         this.home_products();
         //  this.rootPage = HomePage1;
         if (localStorage.getItem('lists') === null) {
-            var path = { "parent_id": "1", "type": "full" }
+            var path = { "parent_id": "1", "type": "full","store_id":"1" }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
-
                     this.lists = JSON.parse(res.body.body).data.children
                     this.local.set('lists', JSON.stringify(this.lists));
                 }
@@ -71,11 +71,12 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-            data.icon = 'ios-add-circle-outline';
+//            data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-            data.icon = 'ios-remove-circle-outline';
-        }
+//            data.icon = 'ios-remove-circle-outline';
+            data.icon = 'ios-add-circle-outline';
+        } 
     }
     gotoproduct(product) {
         this.navCtrl.push(productpage, {
@@ -101,11 +102,9 @@ export class HomePage implements OnInit {
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
-                console.log(JSON.parse(res.body.data).data)
+                this.feature_products = JSON.parse(res.body.data).data;
                 this.spin = false;
                 this.feature_products = JSON.parse(res.body.data).data;
-
-
             }
 
         })

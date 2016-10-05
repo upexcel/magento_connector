@@ -26,11 +26,15 @@
     .margBot20{
         margin-bottom: 20px;
     }
-    .scroll-content {
-        overflow-y: auto;
+    scroll-content {
+        overflow-y: hidden;
     }
     .img{
         max-width: 100px; 
+        margin: 40px;
+    }
+    .logo{
+        max-width: 100px;
         margin: 40px;
     }
 }
