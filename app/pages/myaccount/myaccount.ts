@@ -21,9 +21,11 @@ export class MyaccountPage {
     upd_spin: boolean = false;
     firstname: any;
     lastname: any;
-    msg:any;
+    msg: any;
+    secret: any;
     constructor(private toastCtrl: ToastController, private navCtrl: NavController, public popoverCtrl: PopoverController, public fb: FormBuilder, private _formService: FormService) {
         this.access_token = localStorage.getItem("access_token");
+        this.secret = localStorage.getItem("secret");
         this.firstname = localStorage.getItem("firstname");
         this.lastname = localStorage.getItem("lastname")
         if (this.access_token != null) {
@@ -37,9 +39,7 @@ export class MyaccountPage {
     //    }
 
     getuser_details() {
-        this.spin = true;
-        let secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY"
-        var body = { "access_token": this.access_token, "secret": secret }
+        this.spin = true; var body = { "access_token": this.access_token, "secret": this.secret }
         this._formService.api('account/address/', body).subscribe((res) => {
             if (res.error == 500) {
                 this.logout();
@@ -58,7 +58,7 @@ export class MyaccountPage {
                         street: [' '],
                         zip: [' '],
                         countryid: [' '],
-                        secret: [secret],
+                        secret: [this.secret],
                         access_token: [this.access_token]
                     })
                 } else {
@@ -74,7 +74,7 @@ export class MyaccountPage {
                         street: [this.user_add[0].street],
                         zip: [this.user_add[0].postcode],
                         countryid: [this.user_add[0].country_id],
-                        secret: [secret],
+                        secret: [this.secret],
                         access_token: [this.access_token]
                     })
                 }
@@ -87,10 +87,10 @@ export class MyaccountPage {
         this._formService.api('address/edit', value).subscribe((res) => {
             this.upd_spin = false;
             if (res.status == 0) {
-                this.msg=JSON.parse(res.body).message;
+                this.msg = JSON.parse(res.body).message;
                 this.showToast("top");
             } else {
-                this.msg="Successfully updated"
+                this.msg = "Successfully updated"
                 this.showToast("top");
             }
         })
@@ -125,6 +125,7 @@ export class MyaccountPage {
         localStorage.removeItem('access_token');
         localStorage.removeItem('lists');
         localStorage.removeItem('email');
+        localStorage.removeItem('secret');
         this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
     }
 }

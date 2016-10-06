@@ -16,13 +16,15 @@ export class ChangepasswordPage {
     email: any;
     access_token:any
     spin:boolean=false;
+    secret:any;
     constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, private toastCtrl: ToastController, public fb: FormBuilder, private _formService: FormService) {
         this.access_token= localStorage.getItem("access_token");
         this.email = localStorage.getItem("email");
+        this.secret = localStorage.getItem("secret");
         this.changepassform = this.fb.group({
             password: ['', Validators.required],
             newPassword: ['', Validators.required],
-            secret: ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY'],
+            secret: [this.secret],
             access_token: [this.access_token]
         });
     }
