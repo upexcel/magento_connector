@@ -6,7 +6,6 @@ import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { productpage } from '../product/product'
 //import {LoginPage} from './../../pages/login/login'
-import {StartPage} from './../../pages/startpage/startpage'
 import * as _ from 'lodash'
 @Component({
     templateUrl: 'build/pages/home/home.html',
@@ -24,16 +23,20 @@ export class HomePage implements OnInit {
     spin: boolean;
     img: any;
     feature_products: any;
+    start: any = 0;
+    end: any = 4;
+    dataArray: any;
+    store_id: any;
     constructor(private navCtrl: NavController, private menuCtrl: MenuController, private popoverCtrl: PopoverController, private _formService: FormService) {
-               
+
     }
     ngOnInit() {
         this.local = new Storage(LocalStorage);
+        this.store_id = localStorage.getItem('store_id');
         this.slider();
         this.home_products();
-        //  this.rootPage = HomePage1;
         if (localStorage.getItem('lists') === null) {
-            var path = { "parent_id": "1", "type": "full","store_id":"1" }
+            var path = { "parent_id": "1", "type": "full", "store_id": this.store_id }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
                     this.lists = JSON.parse(res.body).data.children;
@@ -71,12 +74,12 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-//            data.icon = 'ios-add-circle-outline';
+            //            data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-//            data.icon = 'ios-remove-circle-outline';
+            //            data.icon = 'ios-remove-circle-outline';
             data.icon = 'ios-add-circle-outline';
-        } 
+        }
     }
     gotoproduct(product) {
         this.navCtrl.push(productpage, {
@@ -99,22 +102,57 @@ export class HomePage implements OnInit {
     }
     home_products() {
         this.spin = true;
+        var data = [];
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
-                this.feature_products = JSON.parse(res.data).data;
+                this.dataArray = JSON.parse(res.data).data
+                this.feature_products = _.slice(this.dataArray, this.start, this.end);
                 this.spin = false;
             }
-
         })
+    }
+    doInfinite(infiniteScroll) {
+
+        if (this.dataArray.length % 2 == 0) {
+            if (this.dataArray.length > this.end) {
+                //                console.log("if1")
+                setTimeout(() => {
+                    this.end += 4;
+                    //                    console.log(this.end);
+                    this.feature_products = _.slice(this.dataArray, this.start, this.end);
+                    infiniteScroll.complete();
+                }, 2000);
+            } else {
+                infiniteScroll.complete();
+            }
+        }
+        else {
+            var check = this.dataArray.length + 1;
+            if (check >= this.end) {
+
+                if (check == this.end) {
+                    infiniteScroll.complete();
+                }
+                else {
+                    setTimeout(() => {
+                        this.end += 4;
+                        //                        console.log("esle" + this.end);
+                        this.feature_products = _.slice(this.dataArray, this.start, this.end);
+                        infiniteScroll.complete();
+                    }, 2000);
+                }
+            }
+            else {
+                infiniteScroll.complete();
+            }
+        }
+
     }
     doRefresh(refresher) {
         this.slider();
         this.home_products();
-        console.log('Begin async operation', refresher);
-
         setTimeout(() => {
-            console.log('Async operation has ended');
             refresher.complete();
         }, 2000);
     }

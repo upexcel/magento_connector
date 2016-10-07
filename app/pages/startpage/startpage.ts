@@ -3,9 +3,10 @@ import { ModalController, NavController, Storage, LocalStorage, NavParams} from 
 import {LoginPage} from '../login/login';
 import { tourPage } from '../takeTour/tour';
 import { PopoverController } from 'ionic-angular';
-import {HomePage} from '../home/home'
+import {FormService } from './../../providers/form-service/form-service';
 @Component({
-    templateUrl: 'build/pages/startpage/startpage.html'
+    templateUrl: 'build/pages/startpage/startpage.html',
+    providers: [FormService]
 })
 
 export class StartPage implements OnInit {
@@ -16,12 +17,18 @@ export class StartPage implements OnInit {
     expiry: any;
     local: any;
     messsage_expired: any;
-    constructor(private navCtrl: NavController, private navparam: NavParams, private popoverCtrl: PopoverController, public modalCtrl: ModalController) {
+    logo: any;
+    logo_alt: any;
+    website_id: any;
+    store_id: any;
+    background_image: any;
+    constructor(private navCtrl: NavController, private navparam: NavParams, public modalCtrl: ModalController, private _formService: FormService) {
         this.local = new Storage(LocalStorage);
         this.messsage_expired = this.navparam.get("message")
-        // console.clear();
+         console.clear();
     }
     ngOnInit() {
+        this.getlogo();
     }
 
     gotologin() {
@@ -30,6 +37,18 @@ export class StartPage implements OnInit {
     presentProfileModal() {
         let profileModal = this.modalCtrl.create(tourPage);
         profileModal.present();
+    }
+    getlogo() {
+        var body = {};
+        this._formService.api("web/config", body).subscribe((res) => {
+            this.logo = JSON.parse(res.body).data.logo_url;
+            this.background_image = JSON.parse(res.body).data.background_image;
+            this.logo_alt = JSON.parse(res.body).data.logo_alt;
+            this.website_id = JSON.parse(res.body).data.website_id;
+            this.store_id = JSON.parse(res.body).data.store_id;
+            this.local.set("website_id", this.website_id);
+            this.local.set("store_id", this.store_id);
+        })
     }
 
 }
