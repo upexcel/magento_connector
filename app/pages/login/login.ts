@@ -17,14 +17,17 @@ export class LoginPage {
     spin: boolean;
     response: string;
     local: any;
+    website_id: any;
     constructor(private navCtrl: NavController, private fb: FormBuilder, private _formService: FormService, public toastCtrl: ToastController) {
         console.clear();
+        this.local = new Storage(LocalStorage);
+        this.website_id = localStorage.getItem('website_id');
         this.logform = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-            website_id:["1"] 
+            website_id: [this.website_id]
         });
-        this.local = new Storage(LocalStorage);
+
     }
     gotoreg() {
         this.navCtrl.push(RegisterPage);
@@ -39,7 +42,7 @@ export class LoginPage {
                 this.local.set('access_token', JSON.parse(res.body).data.access_token);
                 this.local.set('expiry', JSON.parse(res.body).data.expiry);
                 this.local.set('email', JSON.parse(res.body).data.email);
-                this.local.set('secret',JSON.parse(res.body).data.secret)
+                this.local.set('secret', JSON.parse(res.body).data.secret)
                 //this.spin = false;
                 this.navCtrl.setRoot(HomePage);
             } else {

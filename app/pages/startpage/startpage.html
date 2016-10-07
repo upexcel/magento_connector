@@ -1,10 +1,10 @@
-<ion-content class="startpage">    
+<ion-content [ngStyle]="{'background-image': 'url('+background_image+')'}" class="startpage">    
     <p align="center">{{messsage_expired}}</p>
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
                 <div  class="imgbox">
-                    <img src="../../images/logo.png" class="img" />
+                    <img src="{{logo}}" class="img" alt="{{logo_alt}}" />
                 </div>
             </ion-col>
         </ion-row>

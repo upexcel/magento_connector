@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, provide} from '@angular/core';
 import {Platform, ionicBootstrap, LocalStorage, Storage} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {StartPage} from './pages/startpage/startpage';
@@ -12,13 +12,13 @@ import {OrderModalPage} from './pages/orderid-detail/orderid-detail'
     directives: [LoadingModal]
 })
 export class MyApp {
-    local:any
+    local: any
     private rootPage: any;
 
     constructor(private platform: Platform) {
         this.local = new Storage(LocalStorage);
         this.checkCredentials();
-//        this.rootPage = OrderlistPage;
+        //        this.rootPage = OrderlistPage;
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });
@@ -31,7 +31,7 @@ export class MyApp {
             if (access_token != null) {
                 this.rootPage = HomePage;
             } else {
-               this.rootPage = StartPage;
+                this.rootPage = StartPage;
             }
         });
 
