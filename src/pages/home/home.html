@@ -1,0 +1,98 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle icon-left (click)="openMenu()">
+                <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title text-center>
+            Home
+        </ion-title>
+        <button ion-button (click)="presentPopover($event)">
+  <ion-icon name="more"></ion-icon>
+</button>
+<!--        <button ion-button  (click)=" logout()">
+            <ion-icon name="more"></ion-icon>
+            Logout
+        </button>-->
+    </ion-navbar>
+
+</ion-header>
+<ion-menu type="overlay"  [content]="content">
+    <ion-toolbar color="primary">
+        <ion-title>Categories</ion-title>
+    </ion-toolbar>
+    <ion-list  no-lines *ngFor="let list of lists">
+               <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
+               {{list1.name}}
+               <ion-icon color="primary" item-right top class="detail" [name]="list1.icon"  ></ion-icon>   
+            <ion-list *ngIf="list1.showDetails" text-wrap>
+                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
+                    {{glist.name}}
+            </ion-item>
+        </ion-list>
+    </ion-item>
+</ion-list>
+</ion-menu>
+
+<ion-nav id="nav"  #content [root]="rootPage" >
+
+</ion-nav>
+
+<ion-content class="home">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-grid no-padding >
+        <ion-row no-padding class="slideOption" >
+            <ion-col no-padding>
+                <ion-slides  [options]="mySlideOptions">
+                    <ion-slide *ngFor="let images of img">
+                        <img src="{{images}}" class="img"/>                      
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!---- desktop display feature products-->
+
+    <ion-grid showWhen="landscape"> 
+        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+        <ion-row wrap>
+            <ion-col width-25 *ngFor="let feat_prod of feature_products">
+                     <ion-card (click)="gotoproduct(feat_prod.data.sku)" class="cursorPointer">
+                    <img src="{{feat_prod.data.media_images}}" class="imgLandscape"/>
+                    <ion-card-content>
+                        <ion-card-title class="aligncenter font14">
+                            {{feat_prod.data.name}}
+                        </ion-card-title>
+                        <p class="aligncenter">Price:{{feat_prod.data.display_price}}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!---- mobile display feature products-->
+    <ion-grid showWhen="mobile"> 
+        <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+        <ion-row wrap>
+            <ion-col width-50 *ngFor="let feat_prod of feature_products">
+                     <ion-card (click)="gotoproduct(feat_prod.data.sku)" class="cursorPointer">
+                    <img src="{{feat_prod.data.media_images}}" class="imgMobile"/>
+                    <ion-card-content>
+                        <ion-card-title class="aligncenter font12">
+                            {{feat_prod.data.name}}
+                        </ion-card-title>
+                        <p class="aligncenter">Price:{{feat_prod.data.display_price}}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

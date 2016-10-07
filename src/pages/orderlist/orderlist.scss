@@ -1,0 +1,136 @@
+.orderlist {
+    ion-avatar {
+        min-width: 4rem;
+        min-height: 4rem;
+    }
+    ion-avatar img {
+        max-width: 6rem;
+        max-height: 6rem;
+        border-radius: 3rem;
+    }
+    .avt{
+        margin: 0;
+    }
+    .avt h1{
+        color:$avt_h1_order_black;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+    ion-list-header{
+        background: $list_heade_order_grey;
+    }
+    .orders{
+        padding: 0;
+    }
+    .status_icon{
+        color: $blacky;
+        border-bottom: none;
+        padding-left: 0;
+        margin-left: 62px;
+        background: $cream;
+        width: 85%;
+    }
+    .cd-container {
+        margin: 0 auto;
+    }
+    .cd-container::after {
+        /* clearfix */
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .order{
+        background: $blacky;
+        padding: 10px;
+    }
+    #cd-timeline {
+        position: relative;
+    }
+    #cd-timeline::before {
+        /* this is the vertical line */
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 18px;
+        height: 100%;
+        width: 1px;
+        background: $gray;
+        opacity: 0.4;
+    }
+    .cd-timeline-block:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .cd-timeline-block:first-child {
+        margin-top: 0;
+    }
+    .cd-timeline-block:last-child {
+        margin-bottom: 0;
+    }
+    .cd-timeline-icon {
+        position: absolute;
+        top: 1px;
+        left: 0;
+        width: 37px;    
+        background: $white;
+        text-align: center;
+        font-size: 14px;
+        height: 13px;
+    }
+    .cd-timeline-icon i {
+        color: $blue;
+    }
+    .cd-timeline-content {
+        margin-left: 32px;
+        background: $white;
+        margin-bottom: 10px;
+        padding: 5px 0 0 0;
+    }
+    .cd-timeline-content:after {
+        /*content: "";*/
+        display: table;
+        clear: both;
+    }
+    .cd-timeline-content h2 {
+        margin: 0 7px;
+        color: $bluesGray;
+    }
+    .cd-timeline-content::before {
+        /*content: '';*/
+        position: absolute;
+        right: 100%;
+        height: 0;
+        width: 0;
+    }
+    .seg{
+        background: $blacky;
+        color: $white;
+        text-align: center;
+        padding: 0;
+    }
+    hr{
+        background: $hrline_order_grey;
+    }
+    h6{
+        font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 0;
+        font-weight: bolder;
+        line-height: 1.2;
+    }
+    ion-spinner{
+        display: flex;
+        margin: auto;
+    }
+    #total_orders{
+        border-right: 1px solid $gray;
+    }
+    .date_creation{
+        float: right;
+        color: $date_creat_order_dark_grey;
+    }
+    .order_key{
+        margin-left: 37px;
+    }
+}
+

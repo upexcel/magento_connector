@@ -1,0 +1,43 @@
+
+<ion-header >
+
+    <ion-navbar color="primary">
+        <ion-title text-center>Signup</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="register">
+
+    <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <ion-item>
+            <ion-label floating>First Name</ion-label>
+            <ion-input type="text"  formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+        </ion-item>  
+        <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input type="text"  formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password"  formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+        </ion-item>
+        <ion-item class="padd36">
+            <ion-label> <b>RECEIVE NEWSLETTERS</b></ion-label>
+            <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+        <ion-grid >
+            <ion-row center >
+                <ion-col class="center">
+                    <button type="submit" id="btn1" ion-button color="primary" round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid> 
+
+    </form>
+    <p align="center" class="padd44">By Clicking Sign Up you are agreeing to the <a href="#" class="textDecoretion">Terms and use</a> and <a href="#" class="textDecoretion">Privacy policy</a></p>
+</ion-content>

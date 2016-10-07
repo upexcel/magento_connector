@@ -1,0 +1,55 @@
+<ion-content class="tour">
+
+    <ion-grid>
+        <ion-row >
+            <ion-col class="alignright">
+                <ion-icon name="close" (click)="close()" ></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row >
+            <ion-col class="aligncenter">
+                <img src="../../assets/image/checkmark.png" class="img"/>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-slides #mySlider [options]="mySlideOptions">
+
+                    <ion-slide>
+                        <ion-row>
+                            <ion-col>
+                                <p color="gray" class="heading">  Title </p>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p class="align"> Thus much i thought proper to tell you in relation to your self and to the truth I respond to you </p>
+
+                            </ion-col>
+                        </ion-row>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-row>
+                            <ion-col>
+                                <p color="gray" class="heading">  Title </p>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p class="align"> Thus much i thought proper to tell you in relation to your self and to the truth I respond to you </p>
+
+                            </ion-col>
+                        </ion-row>
+                    </ion-slide>
+
+
+
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>
