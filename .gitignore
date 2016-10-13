@@ -19,6 +19,7 @@ npm-debug.log*
 .versions/
 coverage/
 dist/
+lbackupinvisionionicionic_invisionmaster/*.json
 node_modules/
 tmp/
 temp/
