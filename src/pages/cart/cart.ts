@@ -14,7 +14,6 @@ export class cartpage {
     constructor(public local: Storage, public navCtrl: NavController, public navParams: NavParams) {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
-            console.log(this.res);
             var tempObj = [];
             _.forEach(this.res, function(value, key) {
                 _.forEach(value, function(value1, key) {
@@ -22,7 +21,6 @@ export class cartpage {
                 });
             });
             this.lists = _.uniq(_.pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
-            console.log(this.lists);
             this.entery=true;
         });
     }
@@ -90,8 +88,6 @@ export class cartpage {
                 for (i = 0; i < keys.length; i++) {
                     r[allKey[i]] = iterate[i];
                 };
-                console.log(r);
-                console.log(val);
                 var f = _.findIndex(val, r);
                 output = _.difference(val, val.splice(f, 1));
                 this.local.set('item', JSON.stringify(output));

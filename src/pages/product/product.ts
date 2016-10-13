@@ -183,12 +183,10 @@ export class productpage {
                 this._cartService.addCart(other, this.keys).then((response:any) => {
                     if(response != "undefined"){
                     this.item = response;
-                    console.log(this.item);
                     this.presentToast("item inserted ");
                     this.navCtrl.push(cartpage);
                     }
                     else{
-                        console.log("lol");
                     }
                 });
             }

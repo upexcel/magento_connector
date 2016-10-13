@@ -38,7 +38,6 @@ export class LoginPage {
     signin(logvalue: any) {
         this.spin = true;
         this._formService.api('customer/login/', logvalue).subscribe((res) => {
-            console.log(res);
             this.spin = false;
             if (res.status === 1) {
                 var body = JSON.parse(res.body);

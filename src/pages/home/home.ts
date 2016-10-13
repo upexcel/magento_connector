@@ -32,7 +32,6 @@ export class HomePage implements OnInit {
     ngOnInit() {
         this.local.get('store_id').then((value: any) => {
             this.store_id = value;
-            console.log(value);
         this.slider();
         this.home_products();
         this.local.get('lists').then((value: any) => {
@@ -120,10 +119,8 @@ export class HomePage implements OnInit {
 
         if (this.dataArray.length % 2 == 0) {
             if (this.dataArray.length > this.end) {
-                //                console.log("if1")
                 setTimeout(() => {
                     this.end += 4;
-                    //                    console.log(this.end);
                     this.feature_products = _.slice(this.dataArray, this.start, this.end);
                     infiniteScroll.complete();
                 }, 2000);
@@ -141,7 +138,6 @@ export class HomePage implements OnInit {
                 else {
                     setTimeout(() => {
                         this.end += 4;
-                        //                        console.log("esle" + this.end);
                         this.feature_products = _.slice(this.dataArray, this.start, this.end);
                         infiniteScroll.complete();
                     }, 2000);
@@ -161,7 +157,6 @@ export class HomePage implements OnInit {
         }, 2000);
     }
     logout() {
-        console.log("hello")
         this.local.remove('firstname');
         this.local.remove('lastname');
         this.local.remove('expiry');

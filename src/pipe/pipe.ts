@@ -11,13 +11,9 @@
         this.local.get('search').then((value: any) => {
             this.lists = _.uniq(value);
             _.forEach(this.lists , function(value, key) {
-                console.log(key);
-                console.log(value);
-                console.log(obj);
+
             });
         });
-//        console.log(obj);
-//        console.log(attribute);
            return obj; 
            }
  }

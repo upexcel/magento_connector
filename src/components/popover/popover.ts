@@ -32,8 +32,6 @@ export class PopoverPage {
         this.local.remove('expiry');
         this.local.remove('access_token');
         this.local.remove('lists');
-        console.log("logout");
-       
     }
 }
 

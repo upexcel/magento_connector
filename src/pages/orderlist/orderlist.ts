@@ -54,7 +54,6 @@ export class OrderlistPage {
                 this.totalOrders = JSON.parse(res.body).data.total_order;
                 this.totalAmount = JSON.parse(res.body).data.total_amount;
             } else {
-                console.log(JSON.parse(res.body).data)
             }
         })
     }

@@ -13,25 +13,12 @@ export class FormService {
     access_token;
     constructor(public local: Storage, private _http: Http) {
     }
-
-
-    //    product_api(url: any, body: any) {
-    //        let api_url = config + url   //complete api url 
-    //       // console.log(this.access_token)
-    //        //
-    //        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr','Authorization': this.access_token });
-    //        let options = new RequestOptions({ headers: headers });
-    //        return this._http.post(api_url, JSON.stringify(body),options)
-    //            .map(this._extractData)
-    //            .catch(this._handleError);
-    //    }
     api(url: any, body: any) {
         this.local.get('access_token').then((value: any) => {
             this.access_token = value;
         });
         let api_url = config2 + url; 
         //complete api url 
-        // console.log(this.access_token)
         //, 'APP_ID': 'com.tethr','Authorization': this.access_token
         let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr', 'Authorization': this.access_token });
         let options = new RequestOptions({ headers: headers });

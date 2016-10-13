@@ -39,7 +39,6 @@ export class HomePage1 {
                     res_data.push(product);
                 }
                 this.products = _.clone(res_data);
-                console.log(this.products.length);
             }
         });
     }

@@ -21,8 +21,6 @@ import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { filter } from '../pipe/pipe';
- // import {FORM_DIRECTIVES} from '@angular/common';
- // import {IONIC_DIRECTIVES} from 'ionic-angular';
 @NgModule({
     declarations: [
         MyApp,
@@ -43,7 +41,6 @@ import { filter } from '../pipe/pipe';
         LoadingModal,
         PopoverPage,
         filter
-        //        IONIC_DIRECTIVES
     ],
     imports: [
         IonicModule.forRoot(MyApp)

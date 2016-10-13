@@ -33,7 +33,6 @@ export class ChangepasswordPage {
         });
     }
     changepassword(value: any) {
-        console.log(value)
         this.spin=true;
         this._formService.api("account/changepassword/", value).subscribe((res) => {
             this.spin=false;
