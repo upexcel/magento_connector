@@ -10,13 +10,21 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class FormService {
     constructor(private _http: Http) { }
-     access_token = localStorage.getItem('access_token');
+    access_token = localStorage.getItem('access_token');
 
-     api(url: any, body: any) {
+    api(url: any, body: any) {
         let api_url = config2 + url   //complete api url 
-        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr','Authorization': this.access_token});
+        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr', 'Authorization': this.access_token });
         let options = new RequestOptions({ headers: headers });
-        return this._http.post(api_url, JSON.stringify(body),options)
+        return this._http.post(api_url, JSON.stringify(body), options)
+            .map(this._extractData)
+            .catch(this._handleError);
+    }
+    social_auth(url: any, body: any) {
+        let api_url = config + url   //complete api url 
+        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': 'com.tethr', 'Authorization': this.access_token });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.post(api_url, JSON.stringify(body), options)
             .map(this._extractData)
             .catch(this._handleError);
     }
@@ -28,7 +36,7 @@ export class FormService {
         return body;
     }
     private _handleError(error: any) {
-        console.error('An error occurred', error);        
+        console.error('An error occurred', error);
         return Observable.throw(error.message || error);
     }
 }

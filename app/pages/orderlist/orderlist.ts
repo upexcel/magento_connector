@@ -55,7 +55,7 @@ export class OrderlistPage implements OnInit {
 
         })
     }
-    
+
     selectedOrder_details() {
         this.spin = true;
         var res_data: any = [];
@@ -88,16 +88,44 @@ export class OrderlistPage implements OnInit {
         })
     }
     doInfinite(infiniteScroll: any) {
-        this.endArray += 4;
-        this.endDateArray += 2;
-        setTimeout(() => {
-            this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
-            this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
-            infiniteScroll.complete();
-        }, 1000);
+        if (this.values.length % 2 == 0 || this.dates.length % 2 == 0) {
+            if (this.values.length >= this.endArray || this.dates.length >= this.endDateArray) {
+                setTimeout(() => {
+                    this.endArray += 4;
+                    this.endDateArray += 2;
+                    this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
+                    this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                    infiniteScroll.complete();
+                }, 2000);
+            } else {
+                infiniteScroll.complete();
+            }
+        }
+        else {
+            var checkValue = this.values.length + 1;
+            var checkDate = this.dates.length + 1;
+            if (checkValue >= this.endArray || checkDate >= this.endDateArray) {
+
+                if (checkValue == this.endArray || checkDate == this.endDateArray) {
+                    infiniteScroll.complete();
+                }
+                else {
+                    setTimeout(() => {
+                        this.endArray += 4;
+                        this.endDateArray += 2;
+                        this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
+                        this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                        infiniteScroll.complete();
+                    }, 2000);
+                }
+            }
+            else {
+                infiniteScroll.complete();
+            }
+        }
     }
 
-    
+
     presentPopover(myEvent: any) {
         let popover = this.popoverCtrl.create(PopoverPage);
         popover.present({

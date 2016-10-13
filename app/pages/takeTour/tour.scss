@@ -37,4 +37,8 @@
         max-width: 100px;
         margin: 40px;
     }
+    .button-clear-dark.activated{
+        color: $blacky;
+        background-color: $white;
+    }
 }

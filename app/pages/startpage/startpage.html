@@ -9,7 +9,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid id="margin_grid_top">
+    <ion-grid >
         <ion-row center>
             <ion-col class="center">
                 <button primary round (click)="gotologin()">Login</button>
@@ -22,5 +22,22 @@
                 <button light outline round (click)=" presentProfileModal()">TAKE THE TOUR</button>
             </ion-col>
         </ion-row>
-    </ion-grid>    
+    </ion-grid> 
+    <ion-grid >
+        <ion-row center >
+            <ion-col class="center">
+                <button (click)="onFacebookLoginClick()">  <ion-icon name="logo-facebook"></ion-icon>
+                    Login with Facebook</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
+    <ion-grid >
+        <ion-row center >
+            <ion-col class="center">
+
+                <button (click)="google_login()" danger>  <ion-icon name="logo-google"></ion-icon>
+                    Login with Google</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
 </ion-content>

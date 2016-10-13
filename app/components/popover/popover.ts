@@ -5,6 +5,7 @@ import {StartPage} from './../../pages/startpage/startpage'
 import {MyaccountPage} from './../../pages/myaccount/myaccount'
 import {ChangepasswordPage} from './../../pages/changepassword/changepassword'
 import {OrderlistPage} from './../../pages/orderlist/orderlist'
+import {GooglePlus, Facebook, SpinnerDialog} from 'ionic-native'
 @Component({
     template: `
     <ion-list  no-lines>
@@ -26,10 +27,10 @@ export class PopoverPage {
     gotomyaccount() {
         this.navCtrl.push(MyaccountPage);
     }
-    gotopass(){
+    gotopass() {
         this.navCtrl.push(ChangepasswordPage);
     }
-    gotoorders(){
+    gotoorders() {
         this.navCtrl.setRoot(OrderlistPage);
     }
     logout() {
@@ -40,6 +41,7 @@ export class PopoverPage {
         localStorage.removeItem('lists');
         localStorage.removeItem('email');
         localStorage.removeItem('secret');
+        GooglePlus.logout();
         this.navCtrl.setRoot(StartPage);
     }
 }

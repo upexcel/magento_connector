@@ -45,7 +45,6 @@ export class OrderModalPage implements OnInit {
     ship_postcode: any;
     shipping_description: any;
     constructor(public navparam: NavParams, public popoverCtrl: PopoverController, private viewCtrl: ViewController, private _formService: FormService) {
-        //        this.order_no = navparam.get("order_no");
         this.order_id = navparam.get("order_id");
         this.secret = localStorage.getItem("secret");
 

@@ -2,8 +2,10 @@
 
     <ion-grid>
         <ion-row >
-            <ion-col class="alignright">
-                <ion-icon name="close" (click)="close()" ></ion-icon>
+            <ion-col >
+                <button (click)="close()" clear dark>                    
+                <ion-icon name="close-circle"></ion-icon>
+                </button>
             </ion-col>
         </ion-row>
         <ion-row class="margBot20">
@@ -19,7 +21,7 @@
                     <ion-slide *ngFor="let desc of descriptions;let i=index">
                         <ion-row>
                             <ion-col>
-                               <p class="heading">  {{desc.title}} </p>
+                                <p class="heading">  {{desc.title}} </p>
                             </ion-col>
                         </ion-row>                      
                         <ion-row>
@@ -27,6 +29,13 @@
                                 <p class="align"> {{desc.description}}</p>
                             </ion-col>
                         </ion-row>
+                    </ion-slide>   
+                    <ion-slide *ngIf="getStarted_show">
+                        <ion-row>
+                            <ion-col>
+                                <button (click)="gotologin()" full> Get Started now!!</button>
+                            </ion-col>
+                        </ion-row> 
                     </ion-slide>   
                 </ion-slides>
             </ion-col>
