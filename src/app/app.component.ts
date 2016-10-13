@@ -21,6 +21,7 @@ export class MyApp {
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });
+                console.clear();
     }
     checkCredentials() {
         this.storage.get('firstname').then((value: any) => {

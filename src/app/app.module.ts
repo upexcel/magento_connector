@@ -19,6 +19,8 @@ import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
+import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
+import { filter } from '../pipe/pipe';
  // import {FORM_DIRECTIVES} from '@angular/common';
  // import {IONIC_DIRECTIVES} from 'ionic-angular';
 @NgModule({
@@ -34,11 +36,13 @@ import { Storage } from '@ionic/storage';
         ForgotPage,
         HomePage,
         HomePage1,
+        OrderModalPage,
         MyaccountPage,
         LoginPage,
         Data,
         LoadingModal,
-        PopoverPage
+        PopoverPage,
+        filter
         //        IONIC_DIRECTIVES
     ],
     imports: [
@@ -53,6 +57,7 @@ import { Storage } from '@ionic/storage';
         RegisterPage,
         productpage,
         OrderlistPage,
+        OrderModalPage,
         ChangepasswordPage,
         ForgotPage,
         HomePage,

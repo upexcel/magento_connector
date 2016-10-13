@@ -6,8 +6,7 @@ import {FormService } from './../../providers/form-service/form-service';
 import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
 import { Storage } from '@ionic/storage';
-
-//import * as _ from 'lodash'
+import _ from 'lodash';
 @Component({
     templateUrl: 'login.html'
 })
@@ -15,12 +14,22 @@ export class LoginPage {
     logform: FormGroup;
     spin: boolean;
     response: string;
+    website_id: any;
+    clear: boolean = false;
     constructor(public local: Storage, public navCtrl: NavController, public fb: FormBuilder, public _formService: FormService, public toastCtrl: ToastController) {
         console.clear();
+        this.local.get('website_id').then((value: any) => {
+            this.website_id = value;
+            this.clear = true;
+            this.fb_coll(value);
+        });
+        console.clear();
+    }
+    fb_coll(value) {
         this.logform = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-            website_id: ['1']
+            website_id: [value]
         });
     }
     gotoreg() {
@@ -38,37 +47,37 @@ export class LoginPage {
                 var access_token = body.data.access_token;
                 var expiry = body.data.expiry;
                 var secret = body.data.secret;
+                var email = body.data.email;
                 this.local.set('firstname', firstname);
                 this.local.set('lastname', lastname);
                 this.local.set('access_token', access_token);
                 this.local.set('expiry', expiry);
                 this.local.set('secret', secret);
+                this.local.set('email', email);
                 // this.spin = false;
                 this.navCtrl.setRoot(HomePage);
-            } else {
-                this.response = res.msg;
-                this.showToast('top');
+            }
+            else {
+                this.presentToast(res.msg);
             }
         },
             (err) => {
                 if (err.status === 0) {
                     console.log(err)
                     this.spin = false;
-                    this.response = err.msg;
-                    this.showToast("top");
+                    this.presentToast(err.msg);
                 }
 
             }
         )
-    };
-    showToast(position: string) {
+    }
+    presentToast(message: string) {
         let toast = this.toastCtrl.create({
-            message: this.response,
+            message: message,
             duration: 3000,
-            position: position
+            position: 'top'
         });
-
-        toast.present(toast);
+        toast.present();
     }
     gotofor() {
         //forgot page

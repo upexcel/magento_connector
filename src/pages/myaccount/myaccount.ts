@@ -33,7 +33,7 @@ export class MyaccountPage {
                         if (this.access_token != null) {
                             this.getuser_details();
                         } else {
-                            console.log("your session expired")
+                            console.log("your session expired");
                         }
                     });
                 });
@@ -49,7 +49,7 @@ export class MyaccountPage {
             var condition=JSON.parse(res.body).data;
                 if (condition.length == 0) {
                     console.log(JSON.parse(res.body).data)
-                    //                this.got = true
+                                    this.got = true
                     this.spin = false
                     this.user_add = JSON.parse(res.body).data;
                     this.updateform = this.fb.group({

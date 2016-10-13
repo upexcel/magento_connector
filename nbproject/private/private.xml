@@ -5,7 +5,8 @@
         <group>
             <file>file:/var/www/html/backupInvisionIonic/ionic_invision-master/src/providers/form-service/cartService.ts</file>
             <file>file:/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/cart/cart.ts</file>
-            <file>file:/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/cart/cart.html</file>
+            <file>file:/var/www/html/backupInvisionIonic/ionic_invision-master/src/pipe/pipe.ts</file>
+            <file>file:/var/www/html/backupInvisionIonic/ionic_invision-master/src/app/app.module.ts</file>
         </group>
     </open-files>
 </project-private>

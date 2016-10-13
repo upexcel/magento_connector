@@ -1,41 +1,48 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {FormService} from './../../providers/form-service/form-service'
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-
+import {PopoverPage} from './../../components/popover/popover';
 @Component({
     templateUrl: 'changepassword.html'
 })
 export class ChangepasswordPage {
-    changepassform: any
-    response: any
-    constructor(public local : Storage ,public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
-        let access_token;
-                this.local.get('access_token').then((value: any) => {
-            access_token = value;
-        });
-        this.changepassform = this.fb.group({
-            username: ['', Validators.required],
+    changepassform: any;
+    response: any;
+        email: any;
+    access_token:any
+    spin:boolean=false;
+    secret:any;
+    constructor(public local : Storage , public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
+                this.local.get('secret').then((value: any) => {
+                    this.secret = value;
+             this.local.get('access_token').then((value: any) => {
+                 this.access_token = value;
+                 this.local.get('email').then((value: any) => {
+                     this.email=value;
+                             this.changepassform = this.fb.group({
             password: ['', Validators.required],
             newPassword: ['', Validators.required],
-            secret: ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY'],
-            access_token: [access_token]
-            //            cnewpass: ['', Validators.required]
+            secret: [this.secret],
+            access_token: [this.access_token]
+        });
+                 });
+             });
         });
     }
-    //    gotohome() {
-    //        this.navCtrl.setRoot(HomePage);
-    //    }
     changepassword(value: any) {
         console.log(value)
+        this.spin=true;
         this._formService.api("account/changepassword/", value).subscribe((res) => {
+            this.spin=false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
-            } else {
-                console.log(res)
-                this.response = JSON.parse(res.body).data
+            }
+            else {
+                this.response = JSON.parse(res.body).data;
+                this.navCtrl.setRoot(HomePage)
             }
             this.showToast("top")
         })
@@ -56,5 +63,11 @@ export class ChangepasswordPage {
             console.log('Async operation has ended');
             refresher.complete();
         }, 2000);
+    }
+    presentPopover(myEvent: any) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent,
+        });
     }
 }

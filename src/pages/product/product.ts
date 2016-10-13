@@ -40,6 +40,7 @@ export class productpage {
     rest;
     item;
     keys: any = [];
+    search=[];
     constructor(public local: Storage, public _cartService: cartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
         this.product = "Product";
         let id = navParams.get('id');
@@ -157,8 +158,6 @@ export class productpage {
         var productid = this.response.data.data.entity_id;
         this.local.get('access_token').then((value: any) => {
             access_token = value;
-             });
-             console.log(access_token);
             data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
             other = data;
             //check type of data for send data in cart api
@@ -172,19 +171,25 @@ export class productpage {
                 selectedItem = (array);
                 path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" };
                 var other = _.merge(data, selectedItem);
-
+                var ser = this.response.data.associated_products.attributes;
+                this.search.push(ser);
+                this.local.set('search', this.search);
             }
-       
 
         //cart api
         this._formService.api("cart/cart", path).subscribe((res) => {
             if (res) {
                 //add to cart service
-                this._cartService.addCart(other, this.keys).then((response) => {
+                this._cartService.addCart(other, this.keys).then((response:any) => {
+                    if(response != "undefined"){
                     this.item = response;
                     console.log(this.item);
                     this.presentToast("item inserted ");
                     this.navCtrl.push(cartpage);
+                    }
+                    else{
+                        console.log("lol");
+                    }
                 });
             }
         },
@@ -194,8 +199,6 @@ export class productpage {
                     console.log(err);
                 }
             });
-
-
+                });
     }
 }
-

@@ -622,10 +622,10 @@
   "\u0000commonjs-proxy:/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/rxjs/operator/toPromise.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/rxjs/add/operator/toPromise.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/providers/form-service/form-service.js",
-  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/register/register.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/myaccount/myaccount.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/changepassword/changepassword.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/lodash.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/orderid-detail/orderid-detail.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/orderlist/orderlist.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/popover/popover.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/cart/cart.js",
@@ -633,6 +633,7 @@
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/product/product.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/home1/home1.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/home/home.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/register/register.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/forgot/forgot.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/login/login.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/takeTour/tour.js",
@@ -640,6 +641,7 @@
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/app.component.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/data/data.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/loading-modal/loading-modal.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pipe/pipe.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/app.module.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/main.dev.js"
 ]

@@ -6,11 +6,10 @@
         <ion-title text-center>
             Home
         </ion-title>
-<button ion-button (click)="presentPopover($event)">
-  <ion-icon name="more"></ion-icon>
-</button>
+        <button class="right" ion-button (click)="presentPopover($event)" end>
+                 <ion-icon name="more"></ion-icon>
+        </button>
     </ion-navbar>
-
 </ion-header>
 <ion-content class="home1">
     <ion-refresher (ionRefresh)="doRefresh($event)">
@@ -22,11 +21,10 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-spinner id="magLeft50" *ngIf="spin" ></ion-spinner>
     <ion-grid *ngIf="clickshow" showWhen="landscape">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of products" width-20 >
-                <ion-card (click)="gotoproduct(product.data.sku)">
+                     <ion-card (click)="gotoproduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..." height="225px">
                     <ion-card-content>
                         <ion-card-title class="font12">
@@ -41,7 +39,7 @@
     <ion-grid *ngIf="clickshow" showWhen="mobile">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of products" width-50 >
-                <ion-card (click)="gotoproduct(product.data.sku)">
+                     <ion-card (click)="gotoproduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..."  height="150px">
                     <ion-card-content>
                         <ion-card-title class="font12">
@@ -53,4 +51,10 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

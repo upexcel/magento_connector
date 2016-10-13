@@ -2,8 +2,8 @@
     <ion-navbar color ="primary">
         <ion-title text-center>  Cart
         </ion-title>
-        <button ion-button end >
-            <ion-label> Edit </ion-label>
+        <button class="right" ion-button >
+                <ion-label> Edit </ion-label>
         </button>
     </ion-navbar>
 </ion-header>
@@ -25,9 +25,9 @@
                                     <p class="font10">{{data.price}}</p>
                                 </ion-col>                        
                             </ion-row>
-                            <ion-row>
+                            <ion-row *ngIf="entery==true">
                                 <ion-col width-50 *ngFor="let list of lists" >
-                                         <p>{{data[list]}}</p>
+                                         <p>{{data[list] | filter}}</p>
                                 </ion-col>                      
                             </ion-row>
                             <ion-row class="qtyborder">

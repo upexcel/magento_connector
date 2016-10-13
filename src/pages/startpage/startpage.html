@@ -1,14 +1,15 @@
-<ion-content class="startpage">
+<ion-content [ngStyle]="{'background-image': 'url('+background_image+')'}" class="startpage" *ngIf="check==true">    
+    <p align="center">{{messsage_expired}}</p>
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
                 <div  class="imgbox">
-                    <img src="../../assets/image/logo.png" alt="" class="img"/>
+                    <img src="{{logo}}" class="img" alt="{{logo_alt}}" />
                 </div>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid>
+    <ion-grid id="margin_grid_top">
         <ion-row center>
             <ion-col class="center">
                 <button ion-button color="primary" round (click)="gotologin()">Login</button>
@@ -16,11 +17,10 @@
         </ion-row>
     </ion-grid>
     <ion-grid >
-        <ion-row center >
+        <ion-row center>
             <ion-col class="center">
                 <button ion-button color="light" outline round (click)=" presentProfileModal()">TAKE THE TOUR</button>
             </ion-col>
         </ion-row>
     </ion-grid>    
-
 </ion-content>

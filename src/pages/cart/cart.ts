@@ -2,28 +2,29 @@ import { Component} from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 import _ from 'lodash';
 import { Storage } from '@ionic/storage';
-//import {filter} from '../pipe/pipe';
+import {filter} from '../../pipe/pipe';
 @Component({
     templateUrl: 'cart.html'
-    //    pipes: [filter]
+//        pipes: [filter]
 })
 export class cartpage {
     res: any = [];
     lists = [];
+    entery:boolean=false;
     constructor(public local: Storage, public navCtrl: NavController, public navParams: NavParams) {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
             console.log(this.res);
-        });
-
-        var tempObj = [];
-        _.forEach(this.res, function(value, key) {
-            _.forEach(value, function(value1, key) {
-                tempObj.push(key);
+            var tempObj = [];
+            _.forEach(this.res, function(value, key) {
+                _.forEach(value, function(value1, key) {
+                    tempObj.push(key);
+                });
             });
+            this.lists = _.uniq(_.pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
+            console.log(this.lists);
+            this.entery=true;
         });
-        this.lists = _.uniq(_.pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
-        console.log(this.res);
     }
     add(data) {
         var cartData = [];
@@ -62,7 +63,6 @@ export class cartpage {
             }
         });
         this.local.set('item', JSON.stringify(UpdatecartData));
-
     }
     delete(data) {
         var cartData = [];
@@ -75,7 +75,6 @@ export class cartpage {
         var val;
         this.local.get('item').then((value: any) => {
             val = JSON.parse(value);
-            
             var output;
             var r = {};
 
@@ -93,9 +92,10 @@ export class cartpage {
                 };
                 console.log(r);
                 console.log(val);
-                var f = _.findIndex(val,r);
+                var f = _.findIndex(val, r);
                 output = _.difference(val, val.splice(f, 1));
                 this.local.set('item', JSON.stringify(output));
+                this.res = output;
             }
             else {
                 var f = _.findIndex(val, { 'id': data.id, 'type': data.type });

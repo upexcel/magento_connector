@@ -7,6 +7,7 @@ import {PopoverPage} from './../../components/popover/popover';
 import { productpage } from '../product/product';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
+import  _ from 'lodash';
 @Component({
     templateUrl: 'home.html'
 })
@@ -20,17 +21,24 @@ export class HomePage implements OnInit {
     spin: boolean;
     img: any;
     feature_products: any;
+    start: any = 0;
+    end: any = 4;
+    dataArray: any;
+    store_id: any;
     listCheck;
     constructor(public popoverCtrl: PopoverController,public navParams: NavParams, public local: Storage, public navCtrl: NavController, public menuCtrl: MenuController, public _formService: FormService) {
+            console.clear();
     }
     ngOnInit() {
+        this.local.get('store_id').then((value: any) => {
+            this.store_id = value;
+            console.log(value);
         this.slider();
         this.home_products();
         this.local.get('lists').then((value: any) => {
             this.listCheck = value;
-        });
         if (this.listCheck == null) {
-            var path = { "parent_id": "1", "type": "full", "store_id": "1" }
+            var path = { "parent_id": "1", "type": "full", "store_id": this.store_id  }
             this._formService.api("category/categorylist/", path).subscribe((res) => {
                 if (res) {
                     this.lists = JSON.parse(res.body).data.children;
@@ -48,7 +56,7 @@ export class HomePage implements OnInit {
                 this.lists = JSON.parse(value);
             });
         }
-
+        });        });
     }
     mySlideOptions = {
         autoplay: 3000,
@@ -70,10 +78,11 @@ export class HomePage implements OnInit {
     toggle(data: Data) {
         if (data.showDetails) {
             data.showDetails = false;
-            data.icon = 'ios-add-circle-outline';
+            //            data.icon = 'ios-add-circle-outline';
         } else {
             data.showDetails = true;
-            data.icon = 'ios-remove-circle-outline';
+            //            data.icon = 'ios-remove-circle-outline';
+            data.icon = 'ios-add-circle-outline';
         }
     }
     gotoproduct(product) {
@@ -97,22 +106,57 @@ export class HomePage implements OnInit {
     }
     home_products() {
         this.spin = true;
+        var data = [];
         var body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
+                this.dataArray = JSON.parse(res.data).data
+                this.feature_products = _.slice(this.dataArray, this.start, this.end);
                 this.spin = false;
-                this.feature_products = JSON.parse(res.data).data;
             }
+        })
+    }
+    doInfinite(infiniteScroll) {
 
-        });
+        if (this.dataArray.length % 2 == 0) {
+            if (this.dataArray.length > this.end) {
+                //                console.log("if1")
+                setTimeout(() => {
+                    this.end += 4;
+                    //                    console.log(this.end);
+                    this.feature_products = _.slice(this.dataArray, this.start, this.end);
+                    infiniteScroll.complete();
+                }, 2000);
+            } else {
+                infiniteScroll.complete();
+            }
+        }
+        else {
+            var check = this.dataArray.length + 1;
+            if (check >= this.end) {
+
+                if (check == this.end) {
+                    infiniteScroll.complete();
+                }
+                else {
+                    setTimeout(() => {
+                        this.end += 4;
+                        //                        console.log("esle" + this.end);
+                        this.feature_products = _.slice(this.dataArray, this.start, this.end);
+                        infiniteScroll.complete();
+                    }, 2000);
+                }
+            }
+            else {
+                infiniteScroll.complete();
+            }
+        }
+
     }
     doRefresh(refresher) {
         this.slider();
         this.home_products();
-        console.log('Begin async operation', refresher);
-
         setTimeout(() => {
-            console.log('Async operation has ended');
             refresher.complete();
         }, 2000);
     }

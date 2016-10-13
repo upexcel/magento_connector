@@ -4,8 +4,7 @@
         <ion-title text-center>Sign in</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content class="login">
-
+<ion-content class="login" *ngIf="clear">
     <form [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>Email</ion-label>

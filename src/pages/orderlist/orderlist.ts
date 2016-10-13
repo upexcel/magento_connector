@@ -1,16 +1,16 @@
 
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, PopoverController} from 'ionic-angular';
 import {FormService} from './../../providers/form-service/form-service';
 import {PopoverPage} from './../../components/popover/popover';
-//import {OrderModalPage} from './../orderid-detail/orderid-detail';
+import {OrderModalPage} from './../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import _ from 'lodash';
 @Component({
     templateUrl: 'orderlist.html'
 })
-export class OrderlistPage implements OnInit {
+export class OrderlistPage {
     firstname: any;
     lastname: any;
     totalOrders: any;
@@ -42,8 +42,6 @@ export class OrderlistPage implements OnInit {
                 });
             });
         });
-    }
-    ngOnInit() {
     }
     total_orders() {
         var body = { "secret": this.secret }
@@ -108,7 +106,7 @@ export class OrderlistPage implements OnInit {
         });
     }
     presentModal(id: any) {
-//        this.navCtrl.push(OrderModalPage, { "order_id": id });
+        this.navCtrl.push(OrderModalPage, { "order_id": id });
     }
     goback() {
         this.navCtrl.pop();
