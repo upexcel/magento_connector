@@ -1,0 +1,33 @@
+<ion-content class="tour">
+    <ion-grid>
+        <ion-row>
+            <ion-col class="alignright">
+                <ion-icon name="close" (click)="close()" ></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row class="margBot20">
+            <ion-col class="center">
+                <img src="{{logo}}" alt="{{logo_alt}}" class="logo"/>
+
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col >
+                <ion-slides #mySlider [options]="mySlideOptions" >
+                    <ion-slide *ngFor="let desc of descriptions;let i=index">
+                        <ion-row>
+                            <ion-col>
+                               <p color="gray" class="heading">  {{desc.title}} </p>
+                            </ion-col>
+                        </ion-row>                      
+                        <ion-row>
+                            <ion-col>
+                                <p class="align"> {{desc.description}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-slide>   
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title text-center>
+            {{ product }}
+        </ion-title>
+        <button class="right" ion-button end (click)="gotocart()">
+                <ion-icon name="cart"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content class="product">
+    <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+    <ion-grid no-padding *ngIf="response">
+              <ion-row  responsive-lg responsive-md responsive-sm>
+            <ion-col no-padding width-100 >
+                <ion-card>
+                    <div class="imgbox">
+                        <img src="{{images}}" class=" img cursorPointer"/>
+                    </div>
+                    <ion-card-content>
+                        <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="response.data.data">
+                                    <ion-slide>
+                                <ion-row class="center">
+                                    <ion-col class="maxWT" *ngFor = "let img of response.data.data.media_images" (click)="slideClick(img)" >
+                                             <img src="{{img}}" class="cursorPointer maxHt"/>                             
+                                    </ion-col>
+                                </ion-row>
+                            </ion-slide>
+                        </ion-slides>
+                        <ion-row>
+                            <ion-col>
+                                <h2>{{response.data.data.name}}</h2>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row> 
+                            <ion-col no-padding> 
+                                <p [ngClass]="{'line': condition==true}" class="price">{{price}}</p>
+                                <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row wrap>
+                            <ion-col width-50 *ngFor="let key of keys">
+                                     <ion-item class="selectlist">
+                                    <ion-label no-margin class="font12">{{response.data.associated_products.attributes[key].label}}</ion-label>
+                                    <ion-label no-margin class="font12" *ngIf="response.data.associated_products.attributes[key].label=='Color'">
+                                        <ion-buttons class="alignright">
+                                            <ion-icon name="radio-button-on" dark id="color"></ion-icon>
+                                        </ion-buttons>
+                                    </ion-label>
+                                    <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
+                                        <span *ngFor= "let obj of response.data.associated_products.attributes[key].options">
+                                            <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                                <ion-label no-margin class="font12">{{obj.label}}</ion-label></ion-option>
+                                        </span>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>                         
+                        </ion-row>
+                        <p class="font13">{{response.data.data.short_description}}</p>
+                        <ion-row center >
+                            <ion-col class="center">
+                                <button  ion-button color="primary" round  (click)="addcart(response.data)" [disabled]=disable>ADD CART</button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
