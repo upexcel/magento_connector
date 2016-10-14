@@ -39,11 +39,11 @@ export class ProductPage {
     item: any;
     keys: any = [];
     search: any = [];
-    path:any;
+    path: any;
     constructor(public local: Storage, public _cartService: CartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
-            let id = navParams.get('id');
-            this.path = { sku: id };
-             }
+        let id = navParams.get('id');
+        this.path = { sku: id };
+    }
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();

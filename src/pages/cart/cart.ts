@@ -1,11 +1,11 @@
-import { Component , OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 import _ from 'lodash';
 import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'cart.html'
 })
-export class CartPage implements OnInit{
+export class CartPage implements OnInit {
     res: any = [];
     lists = [];
     entery: boolean = false;
@@ -25,111 +25,111 @@ export class CartPage implements OnInit{
     }
 
     add(data) {
-       this.local.get('item').then((value: any) => {
-       let cartData = [];
-       let UpdatecartData = [];
-       let keyDataCheck: boolean;
-           cartData = JSON.parse(value);
-          data.quantity++;
-               if (data.type == "configurable") {
-                 let  keyGrop= _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
-                   _.forEach(cartData, function(value, key) {
-                       keyDataCheck = true;
-                       for (let i = 0; i < keyGrop.length; i++) {
-                           let keyNo = keyGrop[i];
-                           if (value[keyNo] != "undefined") {
-                               if (data.id == value.id && data[keyNo] == value[keyNo]) {
-                                   keyDataCheck = true && keyDataCheck;
-                               }
-                               else {
-                                   keyDataCheck = false && keyDataCheck;
-                               }
-                           }
-                       }
-                       if (keyDataCheck == true) {
-                           UpdatecartData.push(data);;
+        this.local.get('item').then((value: any) => {
+            let cartData = [];
+            let UpdatecartData = [];
+            let keyDataCheck: boolean = false;
+            cartData = JSON.parse(value);
+            data.quantity++;
+            if (data.type == "configurable") {
+                let keyGrop = _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                _.forEach(cartData, function(value, key) {
+                    keyDataCheck = true;
+                    for (let i = 0; i < keyGrop.length; i++) {
+                        let keyNo = keyGrop[i];
+                        if (value[keyNo] != "undefined") {
+                            if (data.id == value.id && data[keyNo] == value[keyNo]) {
+                                keyDataCheck = true && keyDataCheck;
+                            }
+                            else {
+                                keyDataCheck = false && keyDataCheck;
+                            }
+                        }
+                    }
+                    if (keyDataCheck == true) {
+                        UpdatecartData.push(data);;
 
-                       }
-                       else {
-                           UpdatecartData.push(value);
-                       }
-                   
-           });
-            this.local.set('item', JSON.stringify(UpdatecartData));
-           }
-            
-           
-           else {
-     
-           _.forEach(cartData, function(value, key) {
-               //push has new item 
-               if (data.id == value.id && data.type == value.type) {
-                   UpdatecartData.push(data);
-               }
-               //else push has old item 
-               else {
-                   UpdatecartData.push(value);
-               }
-           });
-           this.local.set('item', JSON.stringify(UpdatecartData));
+                    }
+                    else {
+                        UpdatecartData.push(value);
+                    }
+
+                });
+                this.local.set('item', JSON.stringify(UpdatecartData));
+            }
 
 
-       }
-});
-       }
-           remove(data) {
-       this.local.get('item').then((value: any) => {
-       let cartData = [];
-       let UpdatecartData = [];
-       let keyDataCheck: boolean;
-           cartData = JSON.parse(value);
-          data.quantity--;
-               if (data.type == "configurable") {
-                 let  keyGrop= _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
-                   _.forEach(cartData, function(value, key) {
-                       keyDataCheck = true;
-                       for (let i = 0; i < keyGrop.length; i++) {
-                           let keyNo = keyGrop[i];
-                           if (value[keyNo] != "undefined") {
-                               if (data.id == value.id && data[keyNo] == value[keyNo]) {
-                                   keyDataCheck = true && keyDataCheck;
-                               }
-                               else {
-                                   keyDataCheck = false && keyDataCheck;
-                               }
-                           }
-                       }
-                       if (keyDataCheck == true) {
-                           UpdatecartData.push(data);;
+            else {
 
-                       }
-                       else {
-                           UpdatecartData.push(value);
-                       }
-                   
-           });
-            this.local.set('item', JSON.stringify(UpdatecartData));
-           }
-            
-           
-           else {
-     
-           _.forEach(cartData, function(value, key) {
-               //push has new item 
-               if (data.id == value.id && data.type == value.type) {
-                   UpdatecartData.push(data);
-               }
-               //else push has old item 
-               else {
-                   UpdatecartData.push(value);
-               }
-           });
-           this.local.set('item', JSON.stringify(UpdatecartData));
+                _.forEach(cartData, function(value, key) {
+                    //push has new item 
+                    if (data.id == value.id && data.type == value.type) {
+                        UpdatecartData.push(data);
+                    }
+                    //else push has old item 
+                    else {
+                        UpdatecartData.push(value);
+                    }
+                });
+                this.local.set('item', JSON.stringify(UpdatecartData));
 
 
-       }
-});
-       }
+            }
+        });
+    }
+    remove(data) {
+        this.local.get('item').then((value: any) => {
+            let cartData = [];
+            let UpdatecartData = [];
+            let keyDataCheck: boolean = false;
+            cartData = JSON.parse(value);
+            data.quantity--;
+            if (data.type == "configurable") {
+                let keyGrop = _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                _.forEach(cartData, function(value, key) {
+                    keyDataCheck = true;
+                    for (let i = 0; i < keyGrop.length; i++) {
+                        let keyNo = keyGrop[i];
+                        if (value[keyNo] != "undefined") {
+                            if (data.id == value.id && data[keyNo] == value[keyNo]) {
+                                keyDataCheck = true && keyDataCheck;
+                            }
+                            else {
+                                keyDataCheck = false && keyDataCheck;
+                            }
+                        }
+                    }
+                    if (keyDataCheck == true) {
+                        UpdatecartData.push(data);;
+
+                    }
+                    else {
+                        UpdatecartData.push(value);
+                    }
+
+                });
+                this.local.set('item', JSON.stringify(UpdatecartData));
+            }
+
+
+            else {
+
+                _.forEach(cartData, function(value, key) {
+                    //push has new item 
+                    if (data.id == value.id && data.type == value.type) {
+                        UpdatecartData.push(data);
+                    }
+                    //else push has old item 
+                    else {
+                        UpdatecartData.push(value);
+                    }
+                });
+                this.local.set('item', JSON.stringify(UpdatecartData));
+
+
+            }
+        });
+    }
 
     delete(data) {
         let cartData = [];

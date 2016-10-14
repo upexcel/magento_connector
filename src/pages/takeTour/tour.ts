@@ -19,7 +19,7 @@ export class TourPage implements OnInit {
         loop: false,
         pager: true
     };
-    getStarted_show: boolean;
+    getStarted_show: boolean=false;
     constructor(public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) {
         console.clear();
     }

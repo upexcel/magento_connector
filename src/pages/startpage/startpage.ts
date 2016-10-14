@@ -27,7 +27,7 @@ export class StartPage implements OnInit {
     store_id: string;
     background_image: string;
     check: boolean = false;
-    options:any= {};
+    options: any = {};
     constructor(public local: Storage, public loadingCtrl: LoadingController, public fbProvider: FbProvider,
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
