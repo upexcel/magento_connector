@@ -19,15 +19,16 @@
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="light" outline round (click)=" presentProfileModal()">TAKE THE TOUR</button>
+                <button ion-button color="light" outline round (click)=" presentProfileModal()" id="takeTour">TAKE THE TOUR</button>
             </ion-col>
         </ion-row>
     </ion-grid> 
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <button ion-button color='primary'(click)="onFacebookLoginClick()" >  <ion-icon name="logo-facebook"></ion-icon>
-                    Login with Facebook</button>
+                <button ion-button color='primary' (click)="onFacebookLoginClick()" id="social"> 
+                 <ion-icon name="logo-facebook"></ion-icon>Login with Facebook
+                 </button>
             </ion-col>
         </ion-row>
     </ion-grid> 
@@ -35,8 +36,9 @@
         <ion-row center >
             <ion-col class="center">
 
-                <button ion-button color='danger' (click)="google_login()" >  <ion-icon name="logo-google"></ion-icon>
-                    Login with Google</button>
+                <button ion-button color='danger' (click)="google_login()" id="social">  
+                <ion-icon name="logo-google"></ion-icon> Login with Google          
+                </button>
             </ion-col>
         </ion-row>
     </ion-grid> 
