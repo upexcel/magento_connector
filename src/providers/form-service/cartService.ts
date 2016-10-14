@@ -12,6 +12,7 @@ export class cartService {
     constructor(public local: Storage) {
     }
     addCart(data, keyGrop): any {
+        console.log(data);
         this.local.get('item').then((value: any) => {
             var count = 0;
             var keyDataCheck: boolean;

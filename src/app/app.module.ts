@@ -21,6 +21,7 @@ import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
+import { NextOnEnter} from '../directives/nextonenter';
 import { filter } from '../pipe/pipe';
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { filter } from '../pipe/pipe';
         Data,
         LoadingModal,
         PopoverPage,
+        NextOnEnter,
         filter
     ],
     imports: [

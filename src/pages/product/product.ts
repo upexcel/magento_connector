@@ -155,11 +155,13 @@ export class productpage {
         var name = response.data.name;
         var type = this.response.data.data.type;
         var access_token;
+        var store_id;
         var productid = this.response.data.data.entity_id;
         this.local.get('access_token').then((value: any) => {
             access_token = value;
-            this.local.get('store_id').then((value: any) => {
-                var store_id=value;
+
+        this.local.get('store_id').then((store_idval: any) => { 
+            store_id=store_idval;
             data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
             other = data;
             //check type of data for send data in cart api
@@ -169,20 +171,23 @@ export class productpage {
                     array[key] = listdata.id;
                 });
                 selectedItem = (array);
-                path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" ,"store_id":store_id};
+
+                path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY","store_id":store_id };
                 var other = _.merge(data, selectedItem);
                 var ser = this.response.data.associated_products.attributes;
                 this.search.push(ser);
                 this.local.set('search', this.search);
             }
-            else{
-                path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY" ,"store_id":store_id };
+             else {
+                path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY","store_id":store_id };
             }
+
         //cart api
         this._formService.api("cart/cart", path).subscribe((res) => {
             if (res) {
                 //add to cart service
                 this._cartService.addCart(other, this.keys).then((response:any) => {
+                    console.log("response");
                     if(response != "undefined"){
                     this.item = response;
                     this.presentToast("item inserted ");
@@ -199,6 +204,8 @@ export class productpage {
                     console.log(err);
                 }
             });
-                });});
+
+                });
+    });
     }
 }

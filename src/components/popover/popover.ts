@@ -6,13 +6,14 @@ import {ChangepasswordPage} from './../../pages/changepassword/changepassword';
 import {OrderlistPage} from './../../pages/orderlist/orderlist';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
+import {GooglePlus} from 'ionic-native'
 @Component({
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
-    @ViewChild(Nav) nav: Nav;
-    constructor(public events: Events, public local: Storage, public viewCtrl: ViewController, public navCtrl: NavController) {
-
+    localRemove: any;
+    constructor(public local: Storage, public viewCtrl: ViewController, public navCtrl: NavController) {
+        this.localRemove = local;
     }
 
     close() {
@@ -28,18 +29,11 @@ export class PopoverPage {
         this.navCtrl.push(OrderlistPage);
     }
     logout() {
-        this.local.remove('firstname');
-        this.local.remove('lastname');
-        this.local.remove('expiry');
-        this.local.remove('access_token');
-        this.local.remove('lists');
-         this.navCtrl.push(StartPage);
-
+                this.local.clear().then(() => {
+                    this.navCtrl.push(StartPage);
+                });
+                GooglePlus.logout();
     }
-//    function createUser(user) {
-//    console.log('User created!')
-//    events.publish('user:created', user);
-//}
 
 }
 

@@ -11,33 +11,33 @@ import {PopoverPage} from './../../components/popover/popover';
 export class ChangepasswordPage {
     changepassform: any;
     response: any;
-        email: any;
-    access_token:any
-    spin:boolean=false;
-    secret:any;
+    email: any;
+    access_token: any
+    spin: boolean = false;
+    secret: any;
     changeActive:boolean=false;
-    constructor(public local : Storage , public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
-                this.local.get('secret').then((value: any) => {
-                    this.secret = value;
-             this.local.get('access_token').then((value: any) => {
-                 this.access_token = value;
-                 this.local.get('email').then((value: any) => {
-                     this.email=value;
-                             this.changepassform = this.fb.group({
-            password: ['', Validators.required],
-            newPassword: ['', Validators.required],
-            secret: [this.secret],
-            access_token: [this.access_token]
-        });
-        this.changeActive=true;
-                 });
-             });
+    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
+        this.local.get('secret').then((value: any) => {
+            this.secret = value;
+            this.local.get('access_token').then((value: any) => {
+                this.access_token = value;
+                this.local.get('email').then((value: any) => {
+                    this.email = value;
+                    this.changepassform = this.fb.group({
+                        password: ['', Validators.required],
+                        newPassword: ['', Validators.required],
+                        secret: [this.secret],
+                        access_token: [this.access_token]
+                    });
+                    this.changeActive=true;
+                });
+            });
         });
     }
     changepassword(value: any) {
-        this.spin=true;
+        this.spin = true;
         this._formService.api("account/changepassword/", value).subscribe((res) => {
-            this.spin=false;
+            this.spin = false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
             }
