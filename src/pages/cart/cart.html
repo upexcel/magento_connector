@@ -1,0 +1,112 @@
+<ion-header> 
+    <ion-navbar color ="primary">
+        <ion-title text-center>  Cart
+        </ion-title>
+        <ion-buttons end>
+            <button  ion-button >
+                <ion-label> Edit </ion-label>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content class="cart">
+    <ion-list *ngFor="let data of res ">
+        <ion-item-sliding>
+            <ion-item>
+                <ion-grid no-padding>
+                    <ion-row center>
+                        <ion-col class="aligncenter" width-33>
+                            <img src="{{data.img}}" alt="" class="maxht"/>
+                        </ion-col> 
+                        <ion-col width-67>
+                            <ion-row>
+                                <ion-col width-50 class="size">
+                                    {{data.name}}
+                                </ion-col>
+                                <ion-col width-50 class="alignright">
+                                    <p class="font10">{{data.price}}</p>
+                                </ion-col>                        
+                            </ion-row>
+                            <ion-row *ngIf="entery==true">
+                                <ion-col width-50 *ngFor="let list of lists" >
+                                         <p>{{data[list]}}</p>
+                                </ion-col>                      
+                            </ion-row>
+                            <ion-row class="qtyborder">
+                                <ion-col width-33 >
+                                    <ion-buttons>
+                                        <button ion-button icon-only (click)=remove(data) *ngIf="data.quantity>1" >
+                                                <ion-icon name="remove">
+                                            </ion-icon>
+                                        </button> 
+                                    </ion-buttons>
+                                </ion-col> 
+                                <ion-col class="aligncenter" width-33>
+                                    <p class="font20" id="marLeft20">{{data.quantity}}</p>
+                                </ion-col>
+                                <ion-col width-33 class="alignright" (click)=add(data)>
+                                    <ion-buttons>
+                                        <button  ion-button icon-only>
+                                            <ion-icon name="add">
+                                            </ion-icon>
+                                        </button>
+                                    </ion-buttons>
+                                </ion-col>                        
+                            </ion-row>                    
+                        </ion-col>
+                    </ion-row> 
+                </ion-grid>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)=delete(data)>
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>  
+
+    <ion-grid>
+        <ion-row class="border">
+            <ion-col width-50>SHIPPING &nbsp; 33$</ion-col>
+            <ion-col width-50 >
+                <ion-item class="selectlist" no-lines> 
+                    <ion-label class="lable"></ion-label>
+                    <ion-select [(ngModel)]="res"  [placeholder]="0">
+                        <ion-option [value]="obj" >
+                            <ion-label class="lable">dsf</ion-label></ion-option>
+                    </ion-select>
+                    <ion-label class="lable">
+                        <ion-buttons class="alignright">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                        </ion-buttons>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row class="border">
+            <ion-col width-50>PAYMENT METHOD</ion-col>
+            <ion-col width-50 >
+                <ion-item class="selectlist" no-lines> 
+                    <ion-label class="lable">
+                        <ion-buttons class="alignright">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                        </ion-buttons>
+                    </ion-label>
+                    <ion-select [(ngModel)]="res1"  [placeholder]="0">
+                        <ion-option [value]="obj" >
+                            <ion-label class="lable"></ion-label></ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="aligncenter">TOTAL</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <button ion-button full>PLACE ORDER</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,28 @@
+.startpage {
+    margin:0 auto;
+    padding:0 auto;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center center ;    
+    button{
+        width: 180px;
+    }
+    #margin_grid_top{
+        margin-top: 87px;
+    }
+    scroll-content {
+        overflow-y: hidden;
+    }
+/*    .button-outline-light.activated{
+      background-color: blue;
+    }*/
+}
+
+.imgbox{
+    padding-bottom: 140px;
+    padding-top: 50px;
+}
+.img{
+    width:100px;
+}
