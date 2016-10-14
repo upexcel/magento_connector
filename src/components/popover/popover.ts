@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
-import {ViewController, NavController} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {ViewController, NavController, Nav} from 'ionic-angular';
 import {StartPage} from './../../pages/startpage/startpage';
 import {MyaccountPage} from './../../pages/myaccount/myaccount';
 import {ChangepasswordPage} from './../../pages/changepassword/changepassword';
 import {OrderlistPage} from './../../pages/orderlist/orderlist';
 import { Storage } from '@ionic/storage';
+import { Events } from 'ionic-angular';
 import {GooglePlus} from 'ionic-native'
 @Component({
     templateUrl: 'popover.html'
@@ -32,15 +33,8 @@ export class PopoverPage {
                     this.navCtrl.push(StartPage);
                 });
                 GooglePlus.logout();
-        //        this.local.remove('firstname');
-        //        this.local.remove('lastname');
-        //        this.local.remove('expiry');
-        //        this.local.remove('access_token');
-        //        this.local.remove('lists');
-        //        this.local.remove('email');
-//        this.local.clear();
-//        this.navCtrl.push(StartPage);
     }
+
 }
 
 

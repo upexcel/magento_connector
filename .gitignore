@@ -32,6 +32,8 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 nbproject/
+nbproject/private/
+nbproject/private/private.xml
 varwwwhtmldeploy2invisionionic/
 varwwwhtmldeploy2invisionionic/*.json
 bower_components/

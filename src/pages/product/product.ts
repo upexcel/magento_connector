@@ -159,17 +159,19 @@ export class productpage {
         var productid = this.response.data.data.entity_id;
         this.local.get('access_token').then((value: any) => {
             access_token = value;
+
         this.local.get('store_id').then((store_idval: any) => { 
             store_id=store_idval;
             data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
             other = data;
             //check type of data for send data in cart api
-  
+
             if (type == "configurable") {
                 _.forEach(this.selectedList, function(listdata, key) {
                     array[key] = listdata.id;
                 });
                 selectedItem = (array);
+
                 path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY","store_id":store_id };
                 var other = _.merge(data, selectedItem);
                 var ser = this.response.data.associated_products.attributes;
@@ -202,6 +204,7 @@ export class productpage {
                     console.log(err);
                 }
             });
+
                 });
     });
     }
