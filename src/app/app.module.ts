@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { tourPage } from '../pages/takeTour/tour';
+import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
 import { RegisterPage } from '../pages/register/register';
-import { cartpage } from '../pages/cart/cart';
-import { productpage } from '../pages/product/product';
+import { CartPage } from '../pages/cart/cart';
+import { ProductPage } from '../pages/product/product';
 import { OrderlistPage } from '../pages/orderlist/orderlist';
 import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { HomePage1 } from '../pages/home1/home1';
-import { MyaccountPage } from '../pages/myaccount/myaccount';
+import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
- import { cartService } from '../providers/form-service/cartService';
+ import { CartService } from '../providers/form-service/cartService';
 import { FormService } from '../providers/form-service/form-service';
 import { FbProvider } from '../providers/fb-service/fb-service';
 import { Data } from '../components/data/data';
@@ -22,28 +22,28 @@ import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
-import { filter } from '../pipe/pipe';
+import { Filter } from '../pipe/pipe';
 @NgModule({
     declarations: [
         MyApp,
-        cartpage,
-        tourPage,
+        CartPage,
+        TourPage,
         StartPage,
         RegisterPage,
-        productpage,
+        ProductPage,
         OrderlistPage,
         ChangepasswordPage,
         ForgotPage,
         HomePage,
         HomePage1,
         OrderModalPage,
-        MyaccountPage,
+        MyAccountPage,
         LoginPage,
         Data,
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        filter
+        Filter
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -51,22 +51,21 @@ import { filter } from '../pipe/pipe';
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        cartpage,
-        tourPage,
+        CartPage,
+        TourPage,
         StartPage,
         RegisterPage,
-        productpage,
+        ProductPage,
         OrderlistPage,
-        OrderModalPage,
         ChangepasswordPage,
         ForgotPage,
         HomePage,
         HomePage1,
-        MyaccountPage,
+        MyAccountPage,
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService,cartService,FbProvider]
+    providers: [Storage, FormService,CartService,FbProvider]
 })
 export class AppModule {
 

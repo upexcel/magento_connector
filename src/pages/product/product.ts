@@ -1,8 +1,8 @@
-import { Component} from '@angular/core';
-import { cartpage } from '../cart/cart';
-import { NavController, NavParams} from 'ionic-angular';
-import {FormService} from './../../providers/form-service/form-service';
-import { cartService } from './../../providers/form-service/cartService';
+import { Component, OnInit} from '@angular/core';
+import { CartPage } from '../cart/cart';
+import { NavController, NavParams } from 'ionic-angular';
+import { FormService } from './../../providers/form-service/form-service';
+import { CartService } from './../../providers/form-service/cartService';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
@@ -12,7 +12,7 @@ import _ from 'lodash';
 @Component({
     templateUrl: 'product.html'
 })
-export class productpage {
+export class ProductPage {
     res: {} = {};
     quantity: number;
     response: any;
@@ -26,27 +26,28 @@ export class productpage {
     itemSize: string;
     itemColor: string;
     selectSize: string;
-    selectColor: any;
+    selectColor: string;
     attribute: any = [];
     selectedList: any = [];
-    storage;
     disable: boolean = true;
-    product;
-    price;
-    s_price;
-    shown;
-    images: any;
-    final_price;
-    rest;
-    item;
+    product: string;
+    price: number;
+    s_price: number;
+    shown: boolean;
+    images: string;
+    final_price: number;
+    item: any;
     keys: any = [];
-    search=[];
-    constructor(public local: Storage, public _cartService: cartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
-        this.product = "Product";
+    search: any = [];
+    path: any;
+    constructor(public local: Storage, public _cartService: CartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
         let id = navParams.get('id');
+        this.path = { sku: id };
+    }
+    ngOnInit() {
+        this.product = "Product";
         this.presentLoading();
-        let path = { sku: id };
-        this._formService.api("product/get/", path).subscribe((res) => {
+        this._formService.api("product/get/", this.path).subscribe((res) => {
             if (res) {
                 this.response = JSON.parse(res.data);
                 this.spin = false;
@@ -64,7 +65,7 @@ export class productpage {
                 }
                 this.product = this.response.data.data.name;
                 if (this.response.data.associated_products) {
-                    var list = this.response.data.associated_products.attributes;
+                    let list: string = this.response.data.associated_products.attributes;
                     this.keys = _.keys(list);
                 }
             }
@@ -74,15 +75,15 @@ export class productpage {
                     console.log(err);
                 }
             })
-
     }
-    gotocart() {
-        this.navCtrl.push(cartpage);
+
+    gotoCart() {
+        this.navCtrl.push(CartPage);
     }
     onChange(res, key) {
-        var count = 0;
+        let count = 0;
         //take current selected item
-        var res111 = res[key];
+        let res111 = res[key];
         //cloneing for use checked list in add cart function
         this.selectedList = _.clone(res);
         //        mapping between select list
@@ -141,71 +142,68 @@ export class productpage {
     slideClick(img) {
         this.images = img;
     }
-    addcart(response) {
-        var selectedItem: any;
-        var array = {};
-        var path: any;
-        var data: any;
-        var check;
-        var count = 0;
+    addCart(response) {
+        let selectedItem: string;
+        let array: any = {};
+        let path: any;
+        let data: any;
+        let check;
         //gather data for send in add cart servive
-        var sku = response.data.sku;
-        var img = response.data.media_images[0];
-        var price = response.data.display_price;
-        var name = response.data.name;
-        var type = this.response.data.data.type;
-        var access_token;
-        var store_id;
-        var productid = this.response.data.data.entity_id;
+        let sku: string = response.data.sku;
+        let img: string = response.data.media_images[0];
+        let price: number = response.data.display_price;
+        let name: string = response.data.name;
+        let type: string = this.response.data.data.type;
+        let access_token: string;
+        let store_id: string;
+        let productid: string = this.response.data.data.entity_id;
         this.local.get('access_token').then((value: any) => {
             access_token = value;
 
-        this.local.get('store_id').then((store_idval: any) => { 
-            store_id=store_idval;
-            data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-            other = data;
-            //check type of data for send data in cart api
-
-            if (type == "configurable") {
-                _.forEach(this.selectedList, function(listdata, key) {
-                    array[key] = listdata.id;
-                });
-                selectedItem = (array);
-
-                path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY","store_id":store_id };
-                var other = _.merge(data, selectedItem);
-                var ser = this.response.data.associated_products.attributes;
-                this.search.push(ser);
-                this.local.set('search', this.search);
-            }
-             else {
-                path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY","store_id":store_id };
-            }
-
-        //cart api
-        this._formService.api("cart/cart", path).subscribe((res) => {
-            if (res) {
-                //add to cart service
-                this._cartService.addCart(other, this.keys).then((response:any) => {
-                    console.log("response");
-                    if(response != "undefined"){
-                    this.item = response;
-                    this.presentToast("item inserted ");
-                    this.navCtrl.push(cartpage);
-                    }
-                    else{
-                    }
-                });
-            }
-        },
-            (err) => {
-                if (err) {
-                    this.presentToast(err);
-                    console.log(err);
+            this.local.get('store_id').then((store_idval: any) => {
+                store_id = store_idval;
+                data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
+                let other = data;
+                //check type of data for send data in cart api
+                if (type == "configurable") {
+                    _.forEach(this.selectedList, function(listdata, key) {
+                        array[key] = listdata.id;
+                    });
+                    selectedItem = (array);
+                    path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
+                    let other = _.merge(data, selectedItem);
+                    let ser = this.response.data.associated_products.attributes;
+                    this.search.push(ser);
+                    this.local.set('search', this.search);
                 }
-            });
+                else {
+                    path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
+                }
 
-                });
-    });
+                //cart api
+                this._formService.api("cart/cart", path).subscribe((res) => {
+                    if (res) {
+                        //add to cart service
+                        this._cartService.addCart(other, this.keys).then((response: any) => {
+                            console.log("response");
+                            if (response != "undefined") {
+                                this.item = response;
+                                this.presentToast("item inserted ");
+                                this.navCtrl.push(CartPage);
+                            }
+                            else {
+                            }
+                        });
+                    }
+                },
+                    (err) => {
+                        if (err) {
+                            this.presentToast(err);
+                            console.log(err);
+                        }
+                    });
+
+            });
+        });
     }
 }
