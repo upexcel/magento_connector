@@ -6,7 +6,7 @@ import { PopoverController } from 'ionic-angular';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {FormService } from './../../providers/form-service/form-service';
-import {FbProvider} from '../../providers/fb-service/fb-service'
+import {SocialService} from '../../providers/social-service/social-service'
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -31,7 +31,7 @@ export class StartPage implements OnInit {
     check: boolean = false;
     options: {};
     //    local: any;
-    constructor(public local: Storage, public loadingCtrl: LoadingController, public fbProvider: FbProvider,
+    constructor(public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
         this.local = local;
@@ -69,8 +69,8 @@ export class StartPage implements OnInit {
         });
     }
     onFacebookLoginClick() {
-        this.fbProvider.login().then((res) => {
-            this.fbProvider.getCurrentUserProfile().then(
+        this.socialProvider.login().then((res) => {
+            this.socialProvider.getCurrentUserProfile().then(
                 (profileData) => {
                     this.fb_firstname = profileData.first_name;
                     this.fb_lastname = profileData.last_name;
@@ -91,7 +91,7 @@ export class StartPage implements OnInit {
     }
     google_login() {
         this.presentLoading();
-        this.fbProvider.google_login(this.options).then((res) => {
+        this.socialProvider.google_login(this.options).then((res) => {
             console.log(res);
             this.google_firstname = res.givenName;
             this.google_lastname = res.familyName;
