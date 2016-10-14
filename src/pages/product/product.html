@@ -4,7 +4,7 @@
             {{ product }}
         </ion-title>
         <ion-buttons end>
-            <button  ion-button icon-only (click)="gotocart()">
+            <button  ion-button icon-only (click)="gotoCart()">
                      <ion-icon name="cart"></ion-icon>
             </button>
         </ion-buttons>
@@ -61,7 +61,7 @@
                         <p class="font13">{{response.data.data.short_description}}</p>
                         <ion-row center >
                             <ion-col class="center">
-                                <button  ion-button color="primary" round  (click)="addcart(response.data)" [disabled]=disable>ADD CART</button>
+                                <button  ion-button color="primary" round  (click)="addCart(response.data)" [disabled]=disable>ADD CART</button>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

@@ -5,18 +5,18 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import _ from 'lodash';
-declare var Promise: any;
+declare let Promise: any;
 @Injectable()
-export class cartService {
+export class CartService {
     done: boolean;
     constructor(public local: Storage) {
     }
     addCart(data, keyGrop): any {
         console.log(data);
         this.local.get('item').then((value: any) => {
-            var count = 0;
-            var keyDataCheck: boolean;
-            var cartData: any = [];
+            let count = 0;
+            let keyDataCheck: boolean;
+            let cartData: any = [];
             cartData = JSON.parse(value);
             if (value) {
                 //local/cartdata is not null
@@ -26,8 +26,8 @@ export class cartService {
                         keyDataCheck = true;
                         //increse count in cartitem for that item only
                         if (data.type == "configurable") {
-                            for (var i = 0; i < keyGrop.length; i++) {
-                                var keyNo = keyGrop[i];
+                            for (let i = 0; i < keyGrop.length; i++) {
+                                let keyNo = keyGrop[i];
                                 if (value[keyNo] != "undefined") {
                                     if (data.id == value.id && data[keyNo] == value[keyNo]) {
                                         keyDataCheck = true && keyDataCheck;
