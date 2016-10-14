@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
@@ -15,8 +15,9 @@ export class TourPage implements OnInit {
     desc: string;
     descriptions: string;
     mySlideOptions = {
-        initialSlide: 1,
-        loop: false,
+        initialSlide: 0,
+        autoplay:2000,
+        loop: true,
         pager: true
     };
     getStarted_show: boolean=false;

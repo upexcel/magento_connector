@@ -10,7 +10,6 @@ import { Storage } from '@ionic/storage';
 })
 export class MyApp {
     private rootPage: any;
-
     constructor(private platform: PlatForm, public storage: Storage) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -39,4 +38,3 @@ export class MyApp {
 
     }
 }
-
