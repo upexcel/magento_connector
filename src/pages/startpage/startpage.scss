@@ -14,9 +14,17 @@
     scroll-content {
         overflow-y: hidden;
     }
-/*    .button-outline-light.activated{
-      background-color: blue;
-    }*/
+    #takeTour.activated{
+        background-color: white;
+        color:black;
+    }
+    #social{
+         width:230px;
+    }
+    ion-icon {
+        font-size: 17px;
+        margin-right: 20px;
+    }
 }
 
 .imgbox{

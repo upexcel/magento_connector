@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
@@ -15,20 +15,22 @@ export class tourPage implements OnInit {
     desc: any;
     descriptions: any;
     mySlideOptions = {
-        initialSlide: 1,
-        loop: false,
+        initialSlide: 0,
+        autoplay:2000,
+        loop: true,
         pager: true
     };
     getStarted_show: boolean;
-
     constructor(public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) {
         console.clear();
         this.local.get('store_id').then((value: any) => {
             this.store_id = JSON.parse(value);
         });
     }
+
     ngOnInit() {
         this.getTour();
+
     }
     close() {
         this.viewCtrl.dismiss();

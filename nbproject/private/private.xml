@@ -3,7 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/deploy2/invisionionic/src/directives/nextonenter.ts</file>
+            <file>file:/var/www/html/deploy2/invisionionic/src/pages/home/home.html</file>
+            <file>file:/var/www/html/deploy2/invisionionic/src/pages/home/home.ts</file>
         </group>
     </open-files>
 </project-private>

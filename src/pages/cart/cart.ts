@@ -149,25 +149,7 @@ export class cartpage {
        }
 });
        }
-    // remove(data) {
-    //     var cartData = [];
-    //     var UpdatecartData = [];
-    //     data.quantity--;
-    //     this.local.get('item').then((value: any) => {
-    //         cartData = JSON.parse(value);
-    //     });
-    //     _.forEach(cartData, function(value, key) {
-    //         //push has new item 
-    //         if (data.id == value.id && data.type == value.type) {
-    //             UpdatecartData.push(data);
-    //         }
-    //         //else push has old item 
-    //         else {
-    //             UpdatecartData.push(value);
-    //         }
-    //     });
-    //     this.local.set('item', JSON.stringify(UpdatecartData));
-    // }
+
     delete(data) {
         var cartData = [];
         var tempObj = [];

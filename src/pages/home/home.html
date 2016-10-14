@@ -21,7 +21,7 @@
     <ion-list  no-lines *ngFor="let list of lists">
                <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
                {{list1.name}}
-               <ion-icon color="primary" item-right top class="detail" [name]="list1.icon"  ></ion-icon>   
+               <!--<ion-icon color="primary" item-right top class="detail" [name]="list1.icon"  ></ion-icon>-->   
             <ion-list *ngIf="list1.showDetails" text-wrap>
                 <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
                     {{glist.name}}

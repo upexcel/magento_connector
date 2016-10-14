@@ -39,3 +39,7 @@ package.json.1083437870
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+resources/
+resources/android/icon/*.png
+resources/android/splash/*.png
+nbproject/private/private.xml
