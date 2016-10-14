@@ -2,9 +2,11 @@
 
     <ion-navbar color="primary">
         <ion-title text-center>Order List</ion-title>
-        <button class="right" ion-button (click)="presentPopover($event)" end>
-                <ion-icon name="more"></ion-icon>
-        </button>
+        <ion-buttons end>
+            <button  ion-button icon-only (click)="presentPopover($event)">
+                     <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 
@@ -32,10 +34,10 @@
         <ion-item class="orders">
             <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
                      <div class="cd-timeline-block" *ngIf="(date| date: 'dd/MM/yyyy')==(data.value.created_at| date: 'dd/MM/yyyy')">
-                          <div class="cd-timeline-icon">
+                 <div class="cd-timeline-icon">
                         <!--<button icon-left">-->
-                                <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon> 
-                            <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon> 
+                        <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon> 
+                        <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon> 
                         <!--</button>-->
                     </div>   
                     <div (click)="presentModal(data.key)">

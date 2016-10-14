@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'data',
-  templateUrl: 'data.html'
+  template:''
 })
 export class Data {
   text: string;

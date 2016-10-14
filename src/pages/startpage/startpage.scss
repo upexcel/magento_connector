@@ -11,11 +11,17 @@
     #margin_grid_top{
         margin-top: 87px;
     }
+    scroll-content {
+        overflow-y: hidden;
+    }
+/*    .button-outline-light.activated{
+      background-color: blue;
+    }*/
 }
 
 .imgbox{
     padding-bottom: 140px;
-    padding-top: 100px;
+    padding-top: 50px;
 }
 .img{
     width:100px;

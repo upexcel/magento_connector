@@ -1,19 +1,19 @@
- import { Pipe, PipeTransform } from '@angular/core';
- import  _ from 'lodash';
- import { Storage } from '@ionic/storage';
- @Pipe({ name: 'filter' })
- export class filter implements PipeTransform {
-     lists:any;
-      constructor(public local: Storage){
-          
-      }
-    transform(obj: any ): any { 
-        this.local.get('search').then((value: any) => {
-            this.lists = _.uniq(value);
-            _.forEach(this.lists , function(value, key) {
-
-            });
-        });
-           return obj; 
-           }
- }
+// import { Pipe, PipeTransform } from '@angular/core';
+// import  _ from 'lodash';
+// import { Storage } from '@ionic/storage';
+// @Pipe({ name: 'filter' })
+// export class filter implements PipeTransform {
+//     lists:any;
+//      constructor(public local: Storage){
+//          
+//      }
+//    transform(obj: any ): any { 
+//        this.local.get('search').then((value: any) => {
+//            this.lists = _.uniq(value);
+//            _.forEach(this.lists , function(value, key) {
+//
+//            });
+//        });
+//           return obj; 
+//           }
+// }

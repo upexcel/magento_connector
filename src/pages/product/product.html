@@ -3,9 +3,11 @@
         <ion-title text-center>
             {{ product }}
         </ion-title>
-        <button class="right" ion-button end (click)="gotocart()">
-                <ion-icon name="cart"></ion-icon>
-        </button>
+        <ion-buttons end>
+            <button  ion-button icon-only (click)="gotocart()">
+                     <ion-icon name="cart"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content class="product">

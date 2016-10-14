@@ -20,7 +20,9 @@ import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
-import { filter } from '../pipe/pipe';
+import { NextOnEnter} from '../directives/nextonenter';
+//import { filter } from '../pipe/pipe';
+import {FbProvider} from '../providers/fb-service/fb-service'
 @NgModule({
     declarations: [
         MyApp,
@@ -40,7 +42,8 @@ import { filter } from '../pipe/pipe';
         Data,
         LoadingModal,
         PopoverPage,
-        filter
+        NextOnEnter
+//        filter
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -63,7 +66,7 @@ import { filter } from '../pipe/pipe';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService,cartService]
+    providers: [Storage, FormService,cartService,FbProvider]
 })
 export class AppModule {
 

@@ -31,7 +31,11 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
-
+nbproject/
+varwwwhtmldeploy2invisionionic/
+varwwwhtmldeploy2invisionionic/*.json
+bower_components/
+package.json.1083437870
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate

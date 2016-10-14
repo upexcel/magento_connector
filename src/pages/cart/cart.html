@@ -2,9 +2,11 @@
     <ion-navbar color ="primary">
         <ion-title text-center>  Cart
         </ion-title>
-        <button class="right" ion-button >
+        <ion-buttons end>
+            <button  ion-button >
                 <ion-label> Edit </ion-label>
-        </button>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content class="cart">
@@ -27,24 +29,28 @@
                             </ion-row>
                             <ion-row *ngIf="entery==true">
                                 <ion-col width-50 *ngFor="let list of lists" >
-                                         <p>{{data[list] | filter}}</p>
+                                         <p>{{data[list]}}</p>
                                 </ion-col>                      
                             </ion-row>
                             <ion-row class="qtyborder">
                                 <ion-col width-33 >
-                                    <button (click)=remove(data) *ngIf="data.quantity>1" >
-                                        <ion-icon name="remove">
-                                        </ion-icon>
-                                    </button>                                    
+                                    <ion-buttons>
+                                        <button ion-button icon-only (click)=remove(data) *ngIf="data.quantity>1" >
+                                                <ion-icon name="remove">
+                                            </ion-icon>
+                                        </button> 
+                                    </ion-buttons>
                                 </ion-col> 
                                 <ion-col class="aligncenter" width-33>
                                     <p class="font20" id="marLeft20">{{data.quantity}}</p>
                                 </ion-col>
                                 <ion-col width-33 class="alignright" (click)=add(data)>
-                                    <button  >
-                                        <ion-icon name="add">
-                                        </ion-icon>
-                                    </button>
+                                    <ion-buttons>
+                                        <button  ion-button icon-only>
+                                            <ion-icon name="add">
+                                            </ion-icon>
+                                        </button>
+                                    </ion-buttons>
                                 </ion-col>                        
                             </ion-row>                    
                         </ion-col>

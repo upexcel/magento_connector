@@ -1,13 +1,15 @@
 <ion-header>
     <ion-navbar color= "primary">
         <ion-title>My Account</ion-title>
-        <button class="right" ion-button  (click)="presentPopover($event)">
-                <ion-icon name="more"></ion-icon>
-        </button>
+        <ion-buttons end>
+            <button  ion-button icon-only (click)="presentPopover($event)">
+                     <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content  class="myaccount">
-    <ion-scroll scrollY="true">
+    <!-- <ion-scroll scrollY="true"> -->
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <form [formGroup]="updateform" *ngIf="user_add">
             <ion-list inset class="padd60">
@@ -48,5 +50,5 @@
                 </ion-buttons>   
             </ion-list>
         </form>
-    </ion-scroll>
+    <!-- </ion-scroll> -->
 </ion-content>

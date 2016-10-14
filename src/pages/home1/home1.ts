@@ -63,6 +63,7 @@ export class HomePage1 {
                     infiniteScroll.complete();
                 }, 2000);
             }
+            else{}
         }
         else {
             infiniteScroll.complete();

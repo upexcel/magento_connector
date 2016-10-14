@@ -21,16 +21,16 @@ export class MyApp {
         platform.ready().then(() => {
             StatusBar.styleDefault();
         });
-                console.clear();
     }
     checkCredentials() {
+        var name;
         this.storage.get('firstname').then((value: any) => {
-            let name = value;
+             name = value;
         });
         let access_token;
         this.storage.get('access_token').then((res) => {
             access_token = res;
-            if (access_token != null) {
+            if (access_token != null || name !=null) {
                 this.rootPage = HomePage;
             } else {
                 this.rootPage = StartPage;

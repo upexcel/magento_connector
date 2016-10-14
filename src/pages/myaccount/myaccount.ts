@@ -6,6 +6,7 @@ import {HomePage} from './../home/home';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
+import {GooglePlus} from 'ionic-native'
 @Component({
     templateUrl: 'myaccount.html'
 })
@@ -87,14 +88,15 @@ export class MyaccountPage {
             this.upd_spin = false;
             if (res.status == 0) {
                 this.msg = JSON.parse(res.body).message;
-                this.showToast(this.msg);
+                this.showToast("bottom");
             } else {
                 this.msg = "Successfully updated"
-                this.showToast(this.msg);
+                this.showToast("bottom");
             }
         })
     }
     showToast(position: string) {
+        console.log(this.msg)
         let toast = this.toastCtrl.create({
             message: this.msg,
             duration: 2000,
@@ -124,6 +126,7 @@ export class MyaccountPage {
         this.local.remove('lists');
         this.local.remove('email');
         this.local.remove('secret');
+         GooglePlus.logout();
         this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
     }
 }
