@@ -15,6 +15,7 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
  import { cartService } from '../providers/form-service/cartService';
 import { FormService } from '../providers/form-service/form-service';
+import { FbProvider } from '../providers/fb-service/fb-service';
 import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -63,7 +64,7 @@ import { filter } from '../pipe/pipe';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService,cartService]
+    providers: [Storage, FormService,cartService,FbProvider]
 })
 export class AppModule {
 

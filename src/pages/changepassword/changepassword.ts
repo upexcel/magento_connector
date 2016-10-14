@@ -15,6 +15,7 @@ export class ChangepasswordPage {
     access_token:any
     spin:boolean=false;
     secret:any;
+    changeActive:boolean=false;
     constructor(public local : Storage , public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
                 this.local.get('secret').then((value: any) => {
                     this.secret = value;
@@ -28,6 +29,7 @@ export class ChangepasswordPage {
             secret: [this.secret],
             access_token: [this.access_token]
         });
+        this.changeActive=true;
                  });
              });
         });

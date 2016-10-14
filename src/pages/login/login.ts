@@ -3,6 +3,7 @@ import { NavController, ToastController} from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register';
 import {FormService } from './../../providers/form-service/form-service';
+import { FbProvider } from '../../providers/fb-service/fb-service';
 import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
 import { Storage } from '@ionic/storage';
@@ -71,6 +72,7 @@ export class LoginPage {
         )
     }
     presentToast(message: string) {
+        console.log(message);
         let toast = this.toastCtrl.create({
             message: message,
             duration: 3000,
