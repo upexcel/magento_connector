@@ -9,7 +9,6 @@ export class Filter implements PipeTransform {
         let data: any = [];
         let filterData: any = [];
         this.local.get('search').then((value: any) => {
-                        console.log(value);
             for (let i = 0; i < obj.length; i++) {
                 _.forEach(attr, function(value, key) {
                     if (key == obj[i]) {
@@ -17,7 +16,7 @@ export class Filter implements PipeTransform {
                     }
                 });
             }
-            let uniqdata=_.uniqWith(value, _.isEqual);
+            let uniqdata = _.uniqWith(value, _.isEqual);
             for (let i = 0; i < data.length; i++) {
                 _.forEach(uniqdata, function(value1, key) {
                     _.forEach(value1, function(value2, key) {
