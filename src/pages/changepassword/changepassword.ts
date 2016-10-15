@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {FormService} from './../../providers/form-service/form-service'
@@ -8,15 +8,16 @@ import {PopoverPage} from './../../components/popover/popover';
 @Component({
     templateUrl: 'changepassword.html'
 })
-export class ChangepasswordPage {
+export class ChangepasswordPage implements OnInit {
     changepassform: any;
     response: any;
-    email: any;
-    access_token: any
+    email: string;
+    access_token: string;
     spin: boolean = false;
-    secret: any;
-    changeActive:boolean=false;
-    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
+    secret: string;
+    changeActive: boolean = false;
+    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) { }
+    ngOnInit() {
         this.local.get('secret').then((value: any) => {
             this.secret = value;
             this.local.get('access_token').then((value: any) => {
@@ -29,7 +30,7 @@ export class ChangepasswordPage {
                         secret: [this.secret],
                         access_token: [this.access_token]
                     });
-                    this.changeActive=true;
+                    this.changeActive = true;
                 });
             });
         });
@@ -54,7 +55,6 @@ export class ChangepasswordPage {
             duration: 2000,
             position: position
         });
-
         toast.present(toast);
     }
     doRefresh(refresher) {
