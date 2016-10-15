@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ViewController, NavController, Nav} from 'ionic-angular';
 import {StartPage} from './../../pages/startpage/startpage';
-import {MyaccountPage} from './../../pages/myaccount/myaccount';
+import {MyAccountPage} from './../../pages/myaccount/myaccount';
 import {ChangepasswordPage} from './../../pages/changepassword/changepassword';
 import {OrderlistPage} from './../../pages/orderlist/orderlist';
 import { Storage } from '@ionic/storage';
@@ -20,7 +20,7 @@ export class PopoverPage {
         this.viewCtrl.dismiss();
     }
     gotomyaccount() {
-        this.navCtrl.push(MyaccountPage);
+        this.navCtrl.push(MyAccountPage);
     }
     gotopass() {
         this.navCtrl.push(ChangepasswordPage);

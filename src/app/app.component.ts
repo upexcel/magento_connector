@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {PlatForm} from 'ionic-angular';
+import {Platform} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
@@ -10,12 +10,7 @@ import { Storage } from '@ionic/storage';
 })
 export class MyApp {
     private rootPage: any;
-    constructor(private platform: PlatForm, public storage: Storage) {
-        platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
-        });
+    constructor(private platform: Platform, public storage: Storage) {
         this.checkCredentials();
         platform.ready().then(() => {
             StatusBar.styleDefault();
