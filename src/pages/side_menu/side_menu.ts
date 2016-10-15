@@ -4,7 +4,7 @@ import {FormService } from './../../providers/form-service/form-service';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
-import _ from 'lodash';
+import  _ from 'lodash';
 @Component({
     templateUrl: 'side_menu.html'
 })

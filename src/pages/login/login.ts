@@ -1,30 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController} from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register';
 import {FormService } from './../../providers/form-service/form-service';
-import { FbProvider } from '../../providers/fb-service/fb-service';
 import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
 import { Storage } from '@ionic/storage';
-import _ from 'lodash';
 @Component({
     templateUrl: 'login.html'
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
     logform: FormGroup;
     spin: boolean;
     response: string;
     website_id: any;
-    clear: boolean = false;
-    constructor(public local: Storage, public navCtrl: NavController, public fb: FormBuilder, public _formService: FormService, public toastCtrl: ToastController) {
-        console.clear();
+    show_form: boolean = false;
+    constructor(public local: Storage, public navCtrl: NavController, public fb: FormBuilder, public _formService: FormService, public toastCtrl: ToastController) { }
+    ngOnInit() {
         this.local.get('website_id').then((value: any) => {
             this.website_id = value;
-            this.clear = true;
+            this.show_form = true;
             this.fb_coll(value);
         });
-        console.clear();
     }
     fb_coll(value) {
         this.logform = this.fb.group({
@@ -41,24 +38,23 @@ export class LoginPage {
         this._formService.api('customer/login/', logvalue).subscribe((res) => {
             this.spin = false;
             if (res.status === 1) {
-                var body = JSON.parse(res.body);
-                var firstname = body.data.firstname;
-                var lastname = body.data.lastname;
-                var access_token = body.data.access_token;
-                var expiry = body.data.expiry;
-                var secret = body.data.secret;
-                var email = body.data.email;
+                let body = JSON.parse(res.body);
+                let firstname = body.data.firstname;
+                let lastname = body.data.lastname;
+                let access_token = body.data.access_token;
+                let expiry = body.data.expiry;
+                let secret = body.data.secret;
+                let email = body.data.email;
                 this.local.set('firstname', firstname);
                 this.local.set('lastname', lastname);
                 this.local.set('access_token', access_token);
                 this.local.set('expiry', expiry);
                 this.local.set('secret', secret);
                 this.local.set('email', email);
-                // this.spin = false;
                 this.navCtrl.setRoot(HomePage);
             }
             else {
-                this.presentToast(res.msg);
+                this.presentToast(JSON.parse(res.body).message);
             }
         },
             (err) => {
@@ -72,7 +68,6 @@ export class LoginPage {
         )
     }
     presentToast(message: string) {
-        console.log(message);
         let toast = this.toastCtrl.create({
             message: message,
             duration: 3000,
@@ -80,8 +75,7 @@ export class LoginPage {
         });
         toast.present();
     }
-    gotofor() {
-        //forgot page
+    gotoforgotPage() {
         this.navCtrl.push(ForgotPage);
     }
 }

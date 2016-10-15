@@ -2,7 +2,7 @@ import { Platform} from 'ionic-angular';
 import {Injectable} from '@angular/core';
 import {GooglePlus, Facebook, SpinnerDialog} from 'ionic-native'
 @Injectable()
-export class FbProvider {
+export class SocialService {
     platform: any;
     //    p: any;
     constructor(platform: Platform) {
