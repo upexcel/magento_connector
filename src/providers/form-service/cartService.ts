@@ -12,7 +12,7 @@ export class CartService {
     }
     addCart(data, keyGrop): any {
         console.log(data);
-        this.local.get('item').then((value: any) => {
+        return this.local.get('item').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
