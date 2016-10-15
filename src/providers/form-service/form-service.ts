@@ -11,14 +11,13 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class FormService {
     access_token: string;
-    constructor(public local: Storage, private _http: Http) {
-    }
+    constructor(private _local: Storage, private _http: Http) { }
     api(path: any, body: any) {
-        this.local.get('access_token').then((value: any) => {
+        this._local.get('access_token').then((value: any) => {
             this.access_token = value;
         });
         let api_url = config.api_Url + path;
-        let headers = new Headers({ 'Content-Type': 'application/json', 'APP_ID': config.APP_ID, 'Authorization': this.access_token });
+        let headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': this.access_token });
         let options = new RequestOptions({ headers: headers });
         return this._http.post(api_url, JSON.stringify(body), options)
             .map(this._extractData)
