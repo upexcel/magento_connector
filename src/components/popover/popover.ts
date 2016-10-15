@@ -26,7 +26,7 @@ export class PopoverPage {
     }
     logout() {
                 this.local.clear().then(() => {
-                    this.navCtrl.push(StartPage);
+                    this.navCtrl.setRoot(StartPage);
                 });
                 GooglePlus.logout();
     }

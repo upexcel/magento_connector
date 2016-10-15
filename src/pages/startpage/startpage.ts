@@ -28,7 +28,6 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    //    local: any;
     constructor(public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
