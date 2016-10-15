@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {FormService} from './../../providers/form-service/form-service'
@@ -8,29 +8,27 @@ import {PopoverPage} from './../../components/popover/popover';
 @Component({
     templateUrl: 'changepassword.html'
 })
-export class ChangepasswordPage {
+export class ChangepasswordPage implements OnInit {
     changepassform: any;
     response: any;
     email: any;
     access_token: any
     spin: boolean = false;
     secret: any;
-    changeActive:boolean=false;
-    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) {
+    changeActive: boolean = false;
+    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) { }
+    ngOnInit() {
         this.local.get('secret').then((value: any) => {
             this.secret = value;
             this.local.get('access_token').then((value: any) => {
                 this.access_token = value;
-                this.local.get('email').then((value: any) => {
-                    this.email = value;
-                    this.changepassform = this.fb.group({
-                        password: ['', Validators.required],
-                        newPassword: ['', Validators.required],
-                        secret: [this.secret],
-                        access_token: [this.access_token]
-                    });
-                    this.changeActive=true;
+                this.changepassform = this.fb.group({
+                    password: ['', Validators.required],
+                    newPassword: ['', Validators.required],
+                    secret: [this.secret],
+                    access_token: [this.access_token]
                 });
+                this.changeActive = true;
             });
         });
     }
@@ -40,12 +38,13 @@ export class ChangepasswordPage {
             this.spin = false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
+                this.showToast("top")
             }
             else {
                 this.response = JSON.parse(res.body).data;
+                this.showToast("top")
                 this.navCtrl.setRoot(HomePage)
             }
-            this.showToast("top")
         })
     }
     showToast(position: string) {

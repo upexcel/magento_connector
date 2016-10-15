@@ -46,7 +46,7 @@
                     <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>           
                 <ion-buttons class="center" padding>
-                    <button ion-button color="primary" medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update</button><ion-spinner  *ngIf="upd_spin"></ion-spinner>
+                    <button ion-button color="primary" medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
                 </ion-buttons>   
             </ion-list>
         </form>

@@ -29,10 +29,10 @@ export class PopoverPage {
         this.navCtrl.push(OrderlistPage);
     }
     logout() {
-                this.local.clear().then(() => {
-                    this.navCtrl.push(StartPage);
-                });
-                GooglePlus.logout();
+        this.local.clear().then(() => {
+            this.navCtrl.push(StartPage);
+        });
+        GooglePlus.logout();
     }
 
 }
