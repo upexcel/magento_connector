@@ -55,7 +55,6 @@ export class CartService {
                         cartData.unshift(data);
                     }
                     else {
-
                     }
                 }
                 //            //if local is set to null
