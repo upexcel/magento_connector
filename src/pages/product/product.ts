@@ -12,7 +12,7 @@ import _ from 'lodash';
 @Component({
     templateUrl: 'product.html'
 })
-export class ProductPage {
+export class ProductPage implements OnInit{
     res: {} = {};
     quantity: number;
     response: any;
