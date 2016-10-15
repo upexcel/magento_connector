@@ -196,7 +196,6 @@ export class ProductPage implements OnInit{
                     if (res) {
                         //add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
-                            console.log("response");
                             if (response != "undefined") {
                                 this.item = response;
                                 this.presentToast("item inserted ");
