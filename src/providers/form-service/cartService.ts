@@ -5,18 +5,17 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import _ from 'lodash';
-declare var Promise: any;
+declare let Promise: any;
 @Injectable()
-export class cartService {
-    done: boolean;
+export class CartService {
     constructor(public local: Storage) {
     }
     addCart(data, keyGrop): any {
         console.log(data);
         this.local.get('item').then((value: any) => {
-            var count = 0;
-            var keyDataCheck: boolean;
-            var cartData: any = [];
+            let count = 0;
+            let keyDataCheck: boolean = false;
+            let cartData: any = [];
             cartData = JSON.parse(value);
             if (value) {
                 //local/cartdata is not null
@@ -26,8 +25,8 @@ export class cartService {
                         keyDataCheck = true;
                         //increse count in cartitem for that item only
                         if (data.type == "configurable") {
-                            for (var i = 0; i < keyGrop.length; i++) {
-                                var keyNo = keyGrop[i];
+                            for (let i = 0; i < keyGrop.length; i++) {
+                                let keyNo = keyGrop[i];
                                 if (value[keyNo] != "undefined") {
                                     if (data.id == value.id && data[keyNo] == value[keyNo]) {
                                         keyDataCheck = true && keyDataCheck;
@@ -51,12 +50,6 @@ export class cartService {
                             else {
                             }
                         }
-//                        else {
-//                            if (data.id == value.id && data.type == value.type) {
-//                                value.quantity = value.quantity + data.quantity;
-//                                count = 1;
-//                            }
-//                        }
                     });
                     if (count != 1) {
                         cartData.unshift(data);
@@ -75,9 +68,9 @@ export class cartService {
                 cartData = [];
                 cartData.unshift(data);
             }
-            if(cartData != "undefined"){
-            this.local.set('item', JSON.stringify(cartData));
-            return new Promise((resolve: any, reject: any) => resolve(cartData));
+            if (cartData != "undefined") {
+                this.local.set('item', JSON.stringify(cartData));
+                return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });
     }

@@ -1,8 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ModalController, NavController, LoadingController, NavParams} from 'ionic-angular';
 import {LoginPage} from '../login/login';
-import { tourPage } from '../takeTour/tour';
-import { PopoverController } from 'ionic-angular';
+import { TourPage } from '../takeTour/tour';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {FormService } from './../../providers/form-service/form-service';
@@ -10,24 +9,23 @@ import {SocialService} from '../../providers/social-service/social-service'
 @Component({
     templateUrl: 'startpage.html'
 })
-
 export class StartPage implements OnInit {
-    fb_firstname: any;
-    fb_lastname: any;
-    fb_email: any;
-    fb_profilepic: any;
-    google_firstname: any;
-    google_lastname: any;
-    google_email: any;
-    google_profilepic: any;
-    google_accesstoken: any;
-    google_idToken: any;
-    messsage_expired: any;
-    logo: any;
-    logo_alt: any;
-    website_id: any;
-    store_id: any;
-    background_image: any;
+    fb_firstname: string;
+    fb_lastname: string;
+    fb_email: string;
+    fb_profilepic: string;
+    google_firstname: string;
+    google_lastname: string;
+    google_email: string;
+    google_profilepic: string;
+    google_accesstoken: string;
+    google_idToken: string;
+    messsage_expired: string;
+    logo: string;
+    logo_alt: string;
+    website_id: string;
+    store_id: string;
+    background_image: string;
     check: boolean = false;
     options: {};
     //    local: any;
@@ -35,15 +33,14 @@ export class StartPage implements OnInit {
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
         this.local = local;
+        console.clear();
+    }
+    ngOnInit() {
         this.getlogo();
         this.messsage_expired = this.navparam.get("message")
         this.options = {
             clientid: '1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com'
         }
-        //        console.clear();
-    }
-    ngOnInit() {
-
     }
 
     gotologin() {
@@ -51,13 +48,13 @@ export class StartPage implements OnInit {
     }
 
     presentProfileModal() {
-        let profileModal = this.modalCtrl.create(tourPage);
+        let profileModal = this.modalCtrl.create(TourPage);
         profileModal.present();
     }
     getlogo() {
-        var body = {};
+        let body = {};
         this._formService.api("web/config", body).subscribe((res) => {
-            var parse = JSON.parse(res.body);
+            let parse = JSON.parse(res.body);
             this.logo = parse.data.logo_url;
             this.background_image = parse.data.background_image;
             this.logo_alt = parse.data.logo_alt;
@@ -76,15 +73,12 @@ export class StartPage implements OnInit {
                     this.fb_lastname = profileData.last_name;
                     this.fb_email = profileData.email;
                     this.fb_profilepic = profileData.picture.data.url;
-                    var body = { firstname: this.fb_firstname, lastname: this.fb_lastname, email: this.fb_email, picture: this.fb_profilepic };
+                    let body = { firstname: this.fb_firstname, lastname: this.fb_lastname, email: this.fb_email, picture: this.fb_profilepic };
                     this.local.set("firstname", this.fb_firstname);
                     this.local.set("lastname", this.fb_lastname);
                     this.local.set("email", this.fb_email);
                     this.local.set("access_token", this.fb_profilepic);
                     this.navCtrl.setRoot(HomePage);
-                    //                    this._formService.social_auth("customer/social_account", body).subscribe((res) => {
-                    //                        console.log(res);
-                    //                    })
                 }
             );
         });
@@ -98,7 +92,7 @@ export class StartPage implements OnInit {
             this.google_email = res.email;
             this.google_profilepic = res.imageUrl;
             this.google_accesstoken = res.accessToken;
-            var body = { firstname: this.google_firstname, lastname: this.google_lastname, email: this.google_email, picture: this.google_profilepic };
+            let body = { firstname: this.google_firstname, lastname: this.google_lastname, email: this.google_email, picture: this.google_profilepic };
             this.local.set("firstname", this.google_firstname);
             this.local.set("lastname", this.google_lastname);
             this.local.set("email", this.google_email);

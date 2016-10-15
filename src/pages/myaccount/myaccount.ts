@@ -10,7 +10,7 @@ import {GooglePlus} from 'ionic-native'
 @Component({
     templateUrl: 'myaccount.html'
 })
-export class MyaccountPage {
+export class MyAccountPage {
     spin: boolean;
     got: boolean = false;
     user_add: any;

@@ -10,8 +10,7 @@ import { Storage } from '@ionic/storage';
 })
 export class MyApp {
     private rootPage: any;
-
-    constructor(private platform: Platform, public storage: Storage) {       
+    constructor(private platform: Platform, public storage: Storage) {
         this.checkCredentials();
         platform.ready().then(() => {
             StatusBar.styleDefault();

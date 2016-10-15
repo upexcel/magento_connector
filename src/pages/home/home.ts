@@ -4,7 +4,7 @@ import {FormService } from './../../providers/form-service/form-service';
 import {HomePage1} from '../home1/home1';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
-import { productpage } from '../product/product';
+import { ProductPage } from '../product/product';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import  _ from 'lodash';
@@ -21,11 +21,11 @@ export class HomePage implements OnInit {
     spin: boolean;
     img: any;
     feature_products: any;
-    start: any = 0;
-    end: any = 4;
+    start: number = 0;
+    end: number = 4;
     dataArray: any;
-    store_id: any;
-    listCheck;
+    store_id: string;
+    listCheck: string;
     constructor(public popoverCtrl: PopoverController,public navParams: NavParams, public local: Storage, public navCtrl: NavController, public menuCtrl: MenuController, public _formService: FormService) {
             console.clear();
     }
@@ -85,7 +85,7 @@ export class HomePage implements OnInit {
         }
     }
     gotoproduct(product) {
-        this.navCtrl.push(productpage, {
+        this.navCtrl.push(ProductPage, {
             id: product
         });
     }

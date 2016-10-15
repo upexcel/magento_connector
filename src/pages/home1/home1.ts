@@ -3,7 +3,7 @@ import { NavController, MenuController, PopoverController, NavParams,LoadingCont
 import {FormService } from './../../providers/form-service/form-service';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
-import { productpage } from '../product/product';
+import { ProductPage } from '../product/product';
 import  _ from 'lodash';
 @Component({
     templateUrl: 'home1.html'
@@ -70,7 +70,7 @@ export class HomePage1 {
         }
     }
     gotoproduct(product) {
-        this.navCtrl.push(productpage, {
+        this.navCtrl.push(ProductPage, {
             id: product
         });
     }
