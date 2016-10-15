@@ -17,7 +17,7 @@ export class MyApp {
         });
     }
     checkCredentials() {
-        var name;
+        var name:string;
         this.storage.get('firstname').then((value: any) => {
              name = value;
         });

@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 })
 export class CartPage implements OnInit {
     res: any = [];
-    lists = [];
+    lists: any = [];
     entery: boolean = false;
     constructor(public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
@@ -26,7 +26,7 @@ export class CartPage implements OnInit {
 
     add(data) {
         this.local.get('item').then((value: any) => {
-            let cartData = [];
+            let cartData:any = [];
             let UpdatecartData = [];
             let keyDataCheck: boolean = false;
             cartData = JSON.parse(value);

@@ -4,7 +4,7 @@
                 <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title text-center>
-            Home
+           {{title}}
         </ion-title>
         <ion-buttons end>
             <button  ion-button icon-only (click)="presentPopover($event)">
@@ -26,7 +26,7 @@
     <ion-grid *ngIf="clickshow" showWhen="landscape">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of products" width-20 >
-                     <ion-card (click)="gotoproduct(product.data.sku)">
+                     <ion-card (click)="gotoProduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..." height="225px">
                     <ion-card-content>
                         <ion-card-title class="font12">
@@ -41,7 +41,7 @@
     <ion-grid *ngIf="clickshow" showWhen="mobile">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of products" width-50 >
-                     <ion-card (click)="gotoproduct(product.data.sku)">
+                     <ion-card (click)="gotoProduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..."  height="150px">
                     <ion-card-content>
                         <ion-card-title class="font12">

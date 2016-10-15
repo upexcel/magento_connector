@@ -5,27 +5,23 @@ import {MyAccountPage} from './../../pages/myaccount/myaccount';
 import {ChangepasswordPage} from './../../pages/changepassword/changepassword';
 import {OrderlistPage} from './../../pages/orderlist/orderlist';
 import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular';
-import {GooglePlus} from 'ionic-native'
+import {GooglePlus} from 'ionic-native';
 @Component({
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
-    localRemove: any;
     constructor(public local: Storage, public viewCtrl: ViewController, public navCtrl: NavController) {
-        this.localRemove = local;
     }
-
     close() {
         this.viewCtrl.dismiss();
     }
-    gotomyaccount() {
+    gotoMyAccount() {
         this.navCtrl.push(MyAccountPage);
     }
-    gotopass() {
+    gotoPass() {
         this.navCtrl.push(ChangepasswordPage);
     }
-    gotoorders() {
+    gotoOrders() {
         this.navCtrl.push(OrderlistPage);
     }
     logout() {
@@ -34,7 +30,6 @@ export class PopoverPage {
         });
         GooglePlus.logout();
     }
-
 }
 
 

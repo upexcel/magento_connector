@@ -10,10 +10,10 @@ import { OrderlistPage } from '../pages/orderlist/orderlist';
 import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
-import { HomePage1 } from '../pages/home1/home1';
+import { SideMenu } from '../pages/side_menu/side_menu';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
- import { CartService } from '../providers/form-service/cartService';
+import { CartService } from '../providers/form-service/cartService';
 import { FormService } from '../providers/form-service/form-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { Data } from '../components/data/data';
@@ -35,7 +35,7 @@ import { Filter } from '../pipe/pipe';
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        HomePage1,
+        SideMenu,
         OrderModalPage,
         MyAccountPage,
         LoginPage,
@@ -60,12 +60,12 @@ import { Filter } from '../pipe/pipe';
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        HomePage1,
+        SideMenu,
         MyAccountPage,
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService,CartService,SocialService]
+    providers: [Storage, FormService, CartService, SocialService]
 })
 export class AppModule {
 

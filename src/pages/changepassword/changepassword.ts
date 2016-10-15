@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit} from '@angular/core';
 import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {FormService} from './../../providers/form-service/form-service'
@@ -11,10 +12,10 @@ import {PopoverPage} from './../../components/popover/popover';
 export class ChangepasswordPage implements OnInit {
     changepassform: any;
     response: any;
-    email: any;
-    access_token: any
+    email: string;
+    access_token: string;
     spin: boolean = false;
-    secret: any;
+    secret: string;
     changeActive: boolean = false;
     constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) { }
     ngOnInit() {
@@ -38,23 +39,22 @@ export class ChangepasswordPage implements OnInit {
             this.spin = false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
-                this.showToast("top")
+                this.showToast(this.response)
             }
             else {
                 this.response = JSON.parse(res.body).data;
-                this.showToast("top")
-                this.navCtrl.setRoot(HomePage)
+                this.showToast(this.response);
+                this.navCtrl.setRoot(HomePage);
             }
         })
     }
-    showToast(position: string) {
+    showToast(message: string) {
         let toast = this.toastCtrl.create({
-            message: this.response,
+            message: message,
             duration: 2000,
-            position: position
+            position: 'top'
         });
-
-        toast.present(toast);
+        toast.present();
     }
     doRefresh(refresher) {
         console.log('Begin async operation', refresher);

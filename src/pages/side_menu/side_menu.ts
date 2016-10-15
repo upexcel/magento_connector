@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, MenuController, PopoverController, NavParams,LoadingController} from 'ionic-angular';
+import { Component, OnInit} from '@angular/core';
+import { NavController, MenuController, PopoverController, NavParams, LoadingController} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import  _ from 'lodash';
 @Component({
-    templateUrl: 'home1.html'
+    templateUrl: 'side_menu.html'
 })
-export class HomePage1 {
+export class SideMenu implements OnInit {
     lists: any;
     public data: Data[];
     showList: boolean = false;
@@ -20,17 +20,19 @@ export class HomePage1 {
     limit: number = 10;
     page: number = 1;
     pro: any;
-    constructor(public loadingCtrl: LoadingController,public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public _formService: FormService) {
+    constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public _formService: FormService) {
         this.product_id = navParams.get('id');
         this.title = navParams.get('name');
         menuCtrl.enable(true);
-         this.presentLoading();
-        this.show_products(this.product_id , this.page, this.limit);
+    }
+    ngOnInit() {
+        this.presentLoading();
+        this.show_products(this.product_id, this.page, this.limit);
     }
     show_products(product_id: any, page: any, limit: any) {
         //        this.spin = true;
         this.clickshow = true;
-                 var path = { "id": product_id, "page": page, "limit": limit };       
+        var path = { "id": product_id, "page": page, "limit": limit };
         this._formService.api("category/products/", path).subscribe((res) => {
             var res_data = [];
             if (res) {
@@ -63,13 +65,13 @@ export class HomePage1 {
                     infiniteScroll.complete();
                 }, 2000);
             }
-            else{}
+            else { }
         }
         else {
             infiniteScroll.complete();
         }
     }
-    gotoproduct(product) {
+    gotoProduct(product) {
         this.navCtrl.push(ProductPage, {
             id: product
         });
