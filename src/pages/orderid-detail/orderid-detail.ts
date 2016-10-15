@@ -3,67 +3,64 @@ import {NavParams, ViewController, PopoverController} from 'ionic-angular';
 import {FormService} from './../../providers/form-service/form-service';
 import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
-import  _ from 'lodash';
+import _ from 'lodash';
 @Component({
     templateUrl: 'orderid-detail.html'
 })
 
 export class OrderModalPage implements OnInit {
-    order_no: any;
-    order_id: any;
+    order_no: number;
+    order_id: number;
     secret: any;
-    customer_name: any;
-    customer_email: any;
+    customer_name: string;
+    customer_email: string;
     purchased_on: any;
-    grand_total: any;
+    grand_total: number;
     item: any;
-    status: any;
-    shipping_method: any;
-    payment_method: any;
-    state: any;
-    total_qty: any;
+    status: string;
+    shipping_method: string;
+    payment_method: string;
+    state: string;
+    total_qty: number;
     sub_total: number;
     orders: string = "order_id";
     items: any = [];
     tax: number;
     shipping_amount: number;
-    bill_fname: any;
-    bill_lname: any;
-    bill_telephone: any;
-    bill_city: any;
-    bill_region: any;
-    bill_street: any;
-    bill_country: any;
-    bill_postcode: any;
-    ship_fname: any;
-    ship_lname: any;
-    ship_telephone: any;
-    ship_city: any;
-    ship_region: any;
-    ship_street: any;
-    ship_country: any;
-    ship_postcode: any;
-    shipping_description: any;
-    constructor(public local: Storage, public navparam: NavParams, public popoverCtrl: PopoverController, private viewCtrl: ViewController, private _formService: FormService) {
-        //        this.order_no = navparam.get("order_no");
-        this.order_id = navparam.get("order_id");
-         this.local.get('secret').then((value: any) => {
-         this.secret =  value;
-         this.getOrderDetails(this.order_id);
-         });
-    }
+    bill_fname: string;
+    bill_lname: string;
+    bill_telephone: number;
+    bill_city: string;
+    bill_region: string;
+    bill_street: string;
+    bill_country: string;
+    bill_postcode: number;
+    ship_fname: string;
+    ship_lname: string;
+    ship_telephone: number;
+    ship_city: string;
+    ship_region: string;
+    ship_street: string;
+    ship_country: string;
+    ship_postcode: number;
+    shipping_description: string;
+    constructor(public local: Storage, public navparam: NavParams, public popoverCtrl: PopoverController, private viewCtrl: ViewController, private _formService: FormService) { }
     ngOnInit() {
-        
+        this.order_id = this.navparam.get("order_id");
+        this.local.get('secret').then((value: any) => {
+            this.secret = value;
+            this.getOrderDetails(this.order_id);
+        });
     }
     close() {
         this.viewCtrl.dismiss();
     }
     getOrderDetails(order_id: any) {
-        var body = {
+        let body = {
             order_id: order_id, secret: this.secret
         }
         this._formService.api("order/get/", body).subscribe((res) => {
-            var parse=JSON.parse(res.body);
+            let parse = JSON.parse(res.body);
             this.status = parse.data.status;
             this.grand_total = parse.data.grand_total;
             this.purchased_on = parse.data.purchased_on;
@@ -82,7 +79,7 @@ export class OrderModalPage implements OnInit {
             this.sub_total = parse.data.base_grand_total;
             this.tax = parse.data.tax_amount;
             this.shipping_amount = parse.data.shipping_amount;
-            this.bill_fname =parse.data.billing_address.name;
+            this.bill_fname = parse.data.billing_address.name;
             this.bill_lname = parse.data.billing_address.lastname;
             this.bill_telephone = parse.data.billing_address.telephone;
             this.bill_city = parse.data.billing_address.city;

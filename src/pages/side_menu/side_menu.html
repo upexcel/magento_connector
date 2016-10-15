@@ -4,7 +4,7 @@
                 <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title text-center>
-            Home
+           {{title}}
         </ion-title>
         <ion-buttons end>
             <button  ion-button icon-only (click)="presentPopover($event)">
@@ -54,9 +54,7 @@
         </ion-row>
     </ion-grid>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
+        <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
