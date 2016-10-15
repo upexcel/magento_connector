@@ -10,7 +10,7 @@ import {GooglePlus} from 'ionic-native'
 @Component({
     templateUrl: 'myaccount.html'
 })
-export class MyAccountPage {
+export class MyAccountPage implements OnInit {
     spin: boolean;
     got: boolean = false;
     user_add: any;
@@ -22,7 +22,8 @@ export class MyAccountPage {
     lastname: any;
     msg: any;
     secret: any;
-    constructor(public local: Storage, public toastCtrl: ToastController, public navCtrl: NavController, public popoverCtrl: PopoverController, public fb: FormBuilder, public _formService: FormService) {
+    constructor(public local: Storage, private toastCtrl: ToastController, public navCtrl: NavController, public popoverCtrl: PopoverController, public fb: FormBuilder, public _formService: FormService) { }
+    ngOnInit() {
         this.local.get('secret').then((value: any) => {
             this.secret = value;
             this.local.get('access_token').then((value: any) => {
@@ -43,7 +44,7 @@ export class MyAccountPage {
     getuser_details() {
         this.spin = true; var body = { "access_token": this.access_token, "secret": this.secret }
         this._formService.api('account/address/', body).subscribe((res) => {
-            if (res.error == 500) {
+            if (res.statuscode == 500) {
                 this.logout();
             } else {
                 var condition = JSON.parse(res.body).data;
@@ -86,31 +87,22 @@ export class MyAccountPage {
         this.upd_spin = true;
         this._formService.api('address/edit', value).subscribe((res) => {
             this.upd_spin = false;
-            if (res.status == 0) {
+            if (res.status === 0) {
                 this.msg = JSON.parse(res.body).message;
-                this.showToast("bottom");
             } else {
-                this.msg = "Successfully updated"
-                this.showToast("bottom");
+                this.msg = "Successfully updated";
             }
+            this.presentToast(this.msg);
+            console.log(this.presentToast(this.msg));
         })
     }
-    showToast(position: string) {
-        console.log(this.msg)
+    presentToast(message: string) {
         let toast = this.toastCtrl.create({
-            message: this.msg,
-            duration: 2000,
-            position: position
-        });
-        toast.present(toast);
-    }
-    logoutToast(message: string) {
-        let outtoast = this.toastCtrl.create({
             message: message,
-            duration: 5000,
+            duration: 3000,
             position: 'top'
         });
-        outtoast.present(outtoast);
+        toast.present();
     }
     presentPopover(myEvent: any) {
         let popover = this.popoverCtrl.create(PopoverPage);
@@ -126,7 +118,7 @@ export class MyAccountPage {
         this.local.remove('lists');
         this.local.remove('email');
         this.local.remove('secret');
-         GooglePlus.logout();
-        this.navCtrl.setRoot(StartPage, { "message": "your Session expired" });
+        GooglePlus.logout();
+        this.navCtrl.setRoot(StartPage, { "message": "Token expired" });
     }
 }

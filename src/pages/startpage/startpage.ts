@@ -33,7 +33,6 @@ export class StartPage implements OnInit {
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
         this.local = local;
-        console.clear();
     }
     ngOnInit() {
         this.getlogo();

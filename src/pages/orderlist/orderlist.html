@@ -15,9 +15,9 @@
 <ion-content class="orderlist" scroll="true">
     <ion-list no-lines class="avt">
         <ion-item>
-            <ion-avatar item-left>
+<!--            <ion-avatar item-left>
                 <img src="../../assets/image/grey.jpg">
-            </ion-avatar>
+            </ion-avatar>-->
             <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
         </ion-item>
     </ion-list>            
@@ -55,9 +55,7 @@
         </ion-item>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
+        <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

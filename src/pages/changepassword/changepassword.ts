@@ -1,3 +1,4 @@
+
 import { Component, OnInit} from '@angular/core';
 import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
@@ -22,16 +23,13 @@ export class ChangepasswordPage implements OnInit {
             this.secret = value;
             this.local.get('access_token').then((value: any) => {
                 this.access_token = value;
-                this.local.get('email').then((value: any) => {
-                    this.email = value;
-                    this.changepassform = this.fb.group({
-                        password: ['', Validators.required],
-                        newPassword: ['', Validators.required],
-                        secret: [this.secret],
-                        access_token: [this.access_token]
-                    });
-                    this.changeActive = true;
+                this.changepassform = this.fb.group({
+                    password: ['', Validators.required],
+                    newPassword: ['', Validators.required],
+                    secret: [this.secret],
+                    access_token: [this.access_token]
                 });
+                this.changeActive = true;
             });
         });
     }
@@ -41,21 +39,22 @@ export class ChangepasswordPage implements OnInit {
             this.spin = false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
+                this.showToast(this.response)
             }
             else {
                 this.response = JSON.parse(res.body).data;
-                this.navCtrl.setRoot(HomePage)
+                this.showToast(this.response);
+                this.navCtrl.setRoot(HomePage);
             }
-            this.showToast("top")
         })
     }
-    showToast(position: string) {
+    showToast(message: string) {
         let toast = this.toastCtrl.create({
-            message: this.response,
+            message: message,
             duration: 2000,
-            position: position
+            position: 'top'
         });
-        toast.present(toast);
+        toast.present();
     }
     doRefresh(refresher) {
         console.log('Begin async operation', refresher);
