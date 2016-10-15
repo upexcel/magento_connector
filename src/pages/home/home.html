@@ -63,7 +63,7 @@
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-row wrap>
             <ion-col width-25 *ngFor="let feat_prod of feature_products">
-                     <ion-card (click)="gotoproduct(feat_prod.data.sku)" class="cursorPointer">
+                     <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
                     <img src="{{feat_prod.data.media_images}}" class="imgLandscape"/>
                     <ion-card-content>
                         <ion-card-title class="aligncenter font14">
@@ -81,7 +81,7 @@
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
         <ion-row wrap>
             <ion-col width-50 *ngFor="let feat_prod of feature_products">
-                     <ion-card (click)="gotoproduct(feat_prod.data.sku)" class="cursorPointer">
+                     <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
                     <img src="{{feat_prod.data.media_images}}" class="imgMobile"/>
                     <ion-card-content>
                         <ion-card-title class="aligncenter font12">

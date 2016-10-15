@@ -39,6 +39,7 @@ export class ProductPage {
     item: any;
     keys: any = [];
     search: any = [];
+    searchTransformation: any = [];
     path: any;
     constructor(public local: Storage, public _cartService: CartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
         let id = navParams.get('id');
@@ -173,8 +174,18 @@ export class ProductPage {
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
                     let other = _.merge(data, selectedItem);
                     let ser = this.response.data.associated_products.attributes;
-                    this.search.push(ser);
-                    this.local.set('search', this.search);
+                    this.local.get('search').then((search: any) => {
+                        if (search) {
+                            this.search=search;
+                            this.search.push(ser);
+                            this.local.set('search', _.uniqWith(this.search, _.isEqual));
+                        }
+                        else {
+                            this.search.push(ser);
+                            this.local.set('search', _.uniqWith(this.search, _.isEqual));
+                        }
+
+                    }
                 }
                 else {
                     path = { "productid": productid, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };

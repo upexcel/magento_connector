@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {App, PopoverController, MenuController, NavController, Content, NavParams} from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
-import {HomePage1} from '../home1/home1';
+import {SideMenu} from '../side_menu/side_menu';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
-import  _ from 'lodash';
+import _ from 'lodash';
 @Component({
     templateUrl: 'home.html'
 })
@@ -17,45 +17,44 @@ export class HomePage implements OnInit {
     public data: Data[];
     showList: boolean = false;
     clickshow: boolean = false;
-    products: any;
-    spin: boolean;
-    img: any;
+    spin: boolean = true;
+    img: string;
     feature_products: any;
     start: number = 0;
     end: number = 4;
     dataArray: any;
     store_id: string;
     listCheck: string;
-    constructor(public popoverCtrl: PopoverController,public navParams: NavParams, public local: Storage, public navCtrl: NavController, public menuCtrl: MenuController, public _formService: FormService) {
-            console.clear();
+    constructor(public popoverCtrl: PopoverController, public navParams: NavParams, public local: Storage, public navCtrl: NavController, public menuCtrl: MenuController, public _formService: FormService) {
+        console.clear();
     }
     ngOnInit() {
         this.local.get('store_id').then((value: any) => {
             this.store_id = value;
-        this.slider();
-        this.home_products();
-        this.local.get('lists').then((value: any) => {
-            this.listCheck = value;
-        if (this.listCheck == null) {
-            var path = { "parent_id": "1", "type": "full", "store_id": this.store_id  }
-            this._formService.api("category/categorylist/", path).subscribe((res) => {
-                if (res) {
-                    this.lists = JSON.parse(res.body).data.children;
-                    this.local.set('lists', JSON.stringify(this.lists));
-                }
-            },
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-
-                });
-        } else {
+            this.slider();
+            this.home_products();
             this.local.get('lists').then((value: any) => {
-                this.lists = JSON.parse(value);
+                this.listCheck = value;
+                if (this.listCheck == null) {
+                    let path = { "parent_id": "1", "type": "full", "store_id": this.store_id }
+                    this._formService.api("category/categorylist/", path).subscribe((res) => {
+                        if (res) {
+                            this.lists = JSON.parse(res.body).data.children;
+                            this.local.set('lists', JSON.stringify(this.lists));
+                        }
+                    },
+                        (err) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                } else {
+                    this.local.get('lists').then((value: any) => {
+                        this.lists = JSON.parse(value);
+                    });
+                }
             });
-        }
-        });        });
+        });
     }
     mySlideOptions = {
         autoplay: 3000,
@@ -67,11 +66,11 @@ export class HomePage implements OnInit {
     openMenu() {
         this.menuCtrl.open();
     }
-      presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverPage);
-    popover.present({
-      ev: myEvent
-    });
+    presentPopover(myEvent) {
+        let popover = this.popoverCtrl.create(PopoverPage);
+        popover.present({
+            ev: myEvent
+        });
     }
 
     toggle(data: Data) {
@@ -84,14 +83,14 @@ export class HomePage implements OnInit {
             data.icon = 'ios-add-circle-outline';
         }
     }
-    gotoproduct(product) {
+    gotoProduct(product) {
         this.navCtrl.push(ProductPage, {
             id: product
         });
     }
     con(gchild_id: any, gchild_name: any) {
         this.menuCtrl.close();
-        this.navCtrl.push(HomePage1, { "id": gchild_id, "name": gchild_name });
+        this.navCtrl.push(SideMenu, { "id": gchild_id, "name": gchild_name });
     }
 
     slider() {
@@ -105,8 +104,8 @@ export class HomePage implements OnInit {
     }
     home_products() {
         this.spin = true;
-        var data = [];
-        var body = { "type": "large_data" }
+        let data = [];
+        let body = { "type": "large_data" }
         this._formService.api("home/products", body).subscribe((res) => {
             if (res) {
                 this.dataArray = JSON.parse(res.data).data
@@ -129,7 +128,7 @@ export class HomePage implements OnInit {
             }
         }
         else {
-            var check = this.dataArray.length + 1;
+            let check = this.dataArray.length + 1;
             if (check >= this.end) {
 
                 if (check == this.end) {
@@ -157,11 +156,9 @@ export class HomePage implements OnInit {
         }, 2000);
     }
     logout() {
-        this.local.remove('firstname');
-        this.local.remove('lastname');
-        this.local.remove('expiry');
-        this.local.remove('access_token');
-        this.local.remove('lists');
-        this.navCtrl.setRoot(StartPage);
+        this.local.clear().then(() => {
+            this.navCtrl.push(StartPage);
+        });
+
     }
 }

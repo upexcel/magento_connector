@@ -37,7 +37,6 @@ export class ForgotPage implements OnInit {
                     this.response = JSON.parse(err.body).message;
                     this.presentToast(this.response);
                 }
-
             }
         )
     }
