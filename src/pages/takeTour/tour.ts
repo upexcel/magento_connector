@@ -2,19 +2,22 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
 import {FormService } from './../../providers/form-service/form-service';
+import {TourService} from '../../providers/tour-service/tourService';
 import {LoginPage} from './../login/login';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
+import keys from 'lodash/keys';
 import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'tour.html'
 })
 export class TourPage implements OnInit {
-    store_id: string;
-    logo: string;
-    logo_alt: string;
-    desc: string;
-    descriptions: string;
+    data = {
+        logo: "",
+        logo_alt: "",
+        desc: "",
+        descriptions: ""
+    };
     mySlideOptions = {
         initialSlide: 0,
         autoplay: 2000,
@@ -22,35 +25,40 @@ export class TourPage implements OnInit {
         pager: true
     };
     getStarted_show: boolean = false;
-    constructor(public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) { }
-
+    constructor(private _tourService: TourService, public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) { }
     ngOnInit() {
-        this.local.get('store_id').then((value: any) => {
-            this.store_id = JSON.parse(value);
-        });
-        this.getTour();
+        let res = this._tourService.setData();
+        if (keys(res).length > 0) {
+            console.log(res);
+            this.getTour(res);
+        }
+        else {
+            this._tourService.setData().then((res) => {
+                this.getTour(res);
+            })
 
+        }
     }
     close() {
         this.viewCtrl.dismiss();
     }
-    getTour() {
+    getTour(res) {
         let res_data: any = [];
-        let body = { store_id: this.store_id };
-        this._formService.api("web/config", body).subscribe((res) => {
-            this.getStarted_show = true;
-            let body = JSON.parse(res.body).data;
-            this.logo = body.tour_logo;
-            this.logo_alt = body.logo_alt;
-            this.desc = body.tour_slider;
-            forEach(this.desc, function(value, key) {
-                res_data.push(value);
-            })
-            this.descriptions = clone(res_data);
+        console.log(res.tour_logo);
+        this.getStarted_show = true;
+        this.data.logo = res.tour_logo;
+        this.data.logo_alt = res.logo_alt;
+        this.data.desc = res.tour_slider;
+        forEach(this.data.desc, function(value, key) {
+            res_data.push(value);
         })
+        this.data.descriptions = clone(res_data);
     }
-    gotologin() {
+    gotoLogin() {
         this.navCtrl.push(LoginPage);
+    }
+    onSlideChanged(){
+        
     }
 }
 

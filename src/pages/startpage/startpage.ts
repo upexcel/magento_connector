@@ -5,7 +5,8 @@ import { TourPage } from '../takeTour/tour';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {FormService } from './../../providers/form-service/form-service';
-import {SocialService} from '../../providers/social-service/social-service'
+import {SocialService} from '../../providers/social-service/social-service';
+import {TourService} from '../../providers/tour-service/tourService';
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -28,7 +29,7 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    constructor(public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
+    constructor(private _tourService:TourService, public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
         this.local = local;
@@ -39,12 +40,11 @@ export class StartPage implements OnInit {
         this.options = {
             clientid: '1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com'
         }
+        this._tourService.getData();
     }
-
     gotologin() {
         this.navCtrl.push(LoginPage);
     }
-
     presentProfileModal() {
         let profileModal = this.modalCtrl.create(TourPage);
         profileModal.present();

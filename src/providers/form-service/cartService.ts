@@ -1,14 +1,11 @@
-import { Injectable }    from '@angular/core';
+import { Injectable}    from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
-//import _ from 'lodash';
 declare let Promise: any;
-//import forEach = require('lodash/foreach');
-//var foreach=require('lodash/forEach');
 @Injectable()
 
 export class CartService {
