@@ -19,9 +19,9 @@ export class ApiService {
             let headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': value });
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
-                .subscribe((res:Response) => {
-                    self._extractData(res,subject)
-                },self._handleError)
+                .subscribe((res: Response) => {
+                    self._extractData(res, subject)
+                }, self._handleError)
         })
         return subject;
 
@@ -32,12 +32,11 @@ export class ApiService {
             throw new Error('Bad response status: ' + res.status);
         }
         let body = res.json();
-        subject.next(body)
+        subject.next(body);
         return body;
     }
     private _handleError(error: any) {
-        let subject = new Subject();
         console.error('An error occurred', error);
-        return subject.catch(error.message || error);
+        return Observable.throw(error.message || error);
     }
 }
