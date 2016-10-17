@@ -6,8 +6,13 @@ import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from './../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
-import _ from 'lodash';
 import {GooglePlus} from 'ionic-native';
+import forEach from 'lodash/forEach';
+import slice from 'lodash/slice';
+import uniq from 'lodash/uniq';
+import flattenDeep from 'lodash/flattenDeep';
+import clone from 'lodash/clone';
+import reverse from 'lodash/reverse';
 @Component({
     templateUrl: 'orderlist.html'
 })
@@ -76,7 +81,7 @@ export class OrderlistPage implements OnInit {
                 this.orders_error = "You have no orders";
             } else {
                 this.res = JSON.parse(res.body).data;
-                _.forEach(this.res, function(value, key) {
+                forEach(this.res, function(value, key) {
                     date.push(value.created_at.split(" ", 1));
                     datas = {
                         value: value,
@@ -84,10 +89,10 @@ export class OrderlistPage implements OnInit {
                     };
                     res_data.push(datas);
                 });
-                this.itemsValue = _.reverse(_.clone(res_data));
-                this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
-                this.itemsDate = _.reverse(_.uniq(_.flattenDeep(date)));
-                this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                this.itemsValue = reverse(clone(res_data));
+                this.values = slice(this.itemsValue, this.startArray, this.endArray);
+                this.itemsDate = reverse(uniq(flattenDeep(date)));
+                this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
             }
         })
     }
@@ -97,8 +102,8 @@ export class OrderlistPage implements OnInit {
                 setTimeout(() => {
                     this.endArray += 4;
                     this.endDateArray += 2;
-                    this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
-                    this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                    this.values = slice(this.itemsValue, this.startArray, this.endArray);
+                    this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
                     infiniteScroll.complete();
                 }, 2000);
             } else {
@@ -117,8 +122,8 @@ export class OrderlistPage implements OnInit {
                     setTimeout(() => {
                         this.endArray += 4;
                         this.endDateArray += 2;
-                        this.values = _.slice(this.itemsValue, this.startArray, this.endArray);
-                        this.dates = _.slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                        this.values = slice(this.itemsValue, this.startArray, this.endArray);
+                        this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
                         infiniteScroll.complete();
                     }, 2000);
                 }

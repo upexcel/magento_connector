@@ -3,7 +3,8 @@ import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
 import {ApiService } from './../../providers/api-service/api-service';
 import {LoginPage} from './../login/login';
-import _ from 'lodash';
+import forEach from 'lodash/forEach';
+import clone from 'lodash/clone';
 import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'tour.html'
@@ -42,10 +43,10 @@ export class TourPage implements OnInit {
             this.logo = body.tour_logo;
             this.logo_alt = body.logo_alt;
             this.desc = body.tour_slider;
-            _.forEach(this.desc, function(value, key) {
+            forEach(this.desc, function(value, key) {
                 res_data.push(value);
             })
-            this.descriptions = _.clone(res_data);
+            this.descriptions = clone(res_data);
         })
     }
     gotologin() {

@@ -8,7 +8,12 @@ import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-import _ from 'lodash';
+import forEach from 'lodash/forEach';
+import uniqWith from 'lodash/uniqWith';
+import keys from 'lodash/keys';
+import clone from 'lodash/clone';
+import merge from 'lodash/merge';
+import isEqual from 'lodash/isEqual';
 @Component({
     templateUrl: 'product.html'
 })
@@ -67,7 +72,7 @@ export class ProductPage implements OnInit {
                 this.product = this.response.data.data.name;
                 if (this.response.data.associated_products) {
                     let list: string = this.response.data.associated_products.attributes;
-                    this.keys = _.keys(list);
+                    this.keys = keys(list);
                 }
             }
         },
@@ -86,14 +91,14 @@ export class ProductPage implements OnInit {
         //take current selected item
         let res111 = res[key];
         //cloneing for use checked list in add cart function
-        this.selectedList = _.clone(res);
+        this.selectedList = clone(res);
         //        mapping between select list
-        _.forEach(this.response.data.associated_products.attributes, function(res1, key1) {
+        forEach(this.response.data.associated_products.attributes, function(res1, key1) {
             if (key != key1) {
-                _.forEach(res1.options, function(res2) {
+                forEach(res1.options, function(res2) {
                     res2.shown = false;
-                    _.forEach(res111.products, function(res4) {
-                        _.forEach(res2.products, function(res3) {
+                    forEach(res111.products, function(res4) {
+                        forEach(res2.products, function(res3) {
                             if (res4 == res3) {
                                 res2.shown = true;
                             }
@@ -102,7 +107,7 @@ export class ProductPage implements OnInit {
                 })
             }
             else {
-                _.forEach(res1.options, function(res2) {
+                forEach(res1.options, function(res2) {
                     res2.shown = true;
                 });
             }
@@ -113,7 +118,7 @@ export class ProductPage implements OnInit {
         myDiv.style.color = res[key].label;
         //disable button when select list is not checked
         if (typeof res != "undefined") {
-            _.forEach(res, function(value) {
+            forEach(res, function(value) {
                 count++;
             });
             if (this.keys.length == count) {
@@ -167,22 +172,22 @@ export class ProductPage implements OnInit {
                 let other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
-                    _.forEach(this.selectedList, function(listdata, key) {
+                    forEach(this.selectedList, function(listdata, key) {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
-                    let other = _.merge(data, selectedItem);
+                    let other = merge(data, selectedItem);
                     let ser = this.response.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
                             this.search = search;
                             this.search.push(ser);
-                            this._local.set('search', _.uniqWith(this.search, _.isEqual));
+                            this._local.set('search', uniqWith(this.search, isEqual));
                         }
                         else {
                             this.search.push(ser);
-                            this._local.set('search', _.uniqWith(this.search, _.isEqual));
+                            this._local.set('search', uniqWith(this.search, isEqual));
                         }
 
                     });
