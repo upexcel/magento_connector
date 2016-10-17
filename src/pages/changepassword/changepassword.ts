@@ -2,7 +2,7 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, ToastController, PopoverController } from 'ionic-angular';
 import {HomePage} from './../home/home'
-import {FormService} from './../../providers/form-service/form-service'
+import {ApiService} from './../../providers/api-service/api-service'
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import {PopoverPage} from './../../components/popover/popover';
@@ -17,13 +17,13 @@ export class ChangepasswordPage implements OnInit {
     spin: boolean = false;
     secret: string;
     changeActive: boolean = false;
-    constructor(public local: Storage, public popoverCtrl: PopoverController, public navCtrl: NavController, private toastCtrl: ToastController, private fb: FormBuilder, private _formService: FormService) { }
+    constructor(private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _toastCtrl: ToastController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
-        this.local.get('secret').then((value: any) => {
+        this._local.get('secret').then((value: any) => {
             this.secret = value;
-            this.local.get('access_token').then((value: any) => {
+            this._local.get('access_token').then((value: any) => {
                 this.access_token = value;
-                this.changepassform = this.fb.group({
+                this.changepassform = this._fb.group({
                     password: ['', Validators.required],
                     newPassword: ['', Validators.required],
                     secret: [this.secret],
@@ -35,7 +35,7 @@ export class ChangepasswordPage implements OnInit {
     }
     changepassword(value: any) {
         this.spin = true;
-        this._formService.api("account/changepassword/", value).subscribe((res) => {
+        this._apiService.api("account/changepassword/", value).subscribe((res) => {
             this.spin = false;
             if (res.status == 0) {
                 this.response = "Invalid email address";
@@ -44,12 +44,12 @@ export class ChangepasswordPage implements OnInit {
             else {
                 this.response = JSON.parse(res.body).data;
                 this.showToast(this.response);
-                this.navCtrl.setRoot(HomePage);
+                this._navCtrl.setRoot(HomePage);
             }
         })
     }
     showToast(message: string) {
-        let toast = this.toastCtrl.create({
+        let toast = this._toastCtrl.create({
             message: message,
             duration: 2000,
             position: 'top'
@@ -65,7 +65,7 @@ export class ChangepasswordPage implements OnInit {
         }, 2000);
     }
     presentPopover(myEvent: any) {
-        let popover = this.popoverCtrl.create(PopoverPage);
+        let popover = this._popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent,
         });

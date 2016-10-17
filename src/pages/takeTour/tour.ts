@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
-import {FormService } from './../../providers/form-service/form-service';
+import {ApiService } from './../../providers/api-service/api-service';
 import {LoginPage} from './../login/login';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
@@ -22,22 +22,22 @@ export class TourPage implements OnInit {
         pager: true
     };
     getStarted_show: boolean = false;
-    constructor(public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) { }
+    constructor(private _local: Storage, private _navCtrl: NavController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
 
     ngOnInit() {
-        this.local.get('store_id').then((value: any) => {
+        this._local.get('store_id').then((value: any) => {
             this.store_id = JSON.parse(value);
         });
         this.getTour();
 
     }
     close() {
-        this.viewCtrl.dismiss();
+        this._viewCtrl.dismiss();
     }
     getTour() {
         let res_data: any = [];
         let body = { store_id: this.store_id };
-        this._formService.api("web/config", body).subscribe((res) => {
+        this._apiService.api("web/config", body).subscribe((res) => {
             this.getStarted_show = true;
             let body = JSON.parse(res.body).data;
             this.logo = body.tour_logo;
@@ -50,7 +50,7 @@ export class TourPage implements OnInit {
         })
     }
     gotologin() {
-        this.navCtrl.push(LoginPage);
+        this._navCtrl.push(LoginPage);
     }
 }
 

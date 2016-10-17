@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, MenuController, PopoverController, NavParams, LoadingController} from 'ionic-angular';
-import {FormService } from './../../providers/form-service/form-service';
+import {ApiService } from './../../providers/api-service/api-service';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
@@ -20,10 +20,10 @@ export class CategoryProduct implements OnInit {
     limit: number = 10;
     page: number = 1;
     pro: any;
-    constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public _formService: FormService) {
-        this.product_id = navParams.get('id');
-        this.title = navParams.get('name');
-        menuCtrl.enable(true);
+    constructor(private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {
+        this.product_id = _navParams.get('id');
+        this.title = _navParams.get('name');
+        _menuCtrl.enable(true);
     }
     ngOnInit() {
         this.presentLoading();
@@ -33,7 +33,7 @@ export class CategoryProduct implements OnInit {
         //        this.spin = true;
         this.clickshow = true;
         var path = { "id": product_id, "page": page, "limit": limit };
-        this._formService.api("category/products/", path).subscribe((res) => {
+        this._apiService.api("category/products/", path).subscribe((res) => {
             var res_data = [];
             if (res) {
                 this.pro = JSON.parse(res.body).data;
@@ -72,21 +72,21 @@ export class CategoryProduct implements OnInit {
         }
     }
     gotoProduct(product) {
-        this.navCtrl.push(ProductPage, {
+        this._navCtrl.push(ProductPage, {
             id: product
         });
     }
     openMenu() {
-        this.menuCtrl.open();
+        this._menuCtrl.open();
     }
     presentPopover(myEvent: any) {
-        let popover = this.popoverCtrl.create(PopoverPage);
+        let popover = this._popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent,
         });
     }
     presentLoading() {
-        let loader = this.loadingCtrl.create({
+        let loader = this._loadingCtrl.create({
             content: "Loading...",
             duration: 2000
         });

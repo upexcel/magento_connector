@@ -12,7 +12,7 @@ declare let Promise: any;
 @Injectable()
 
 export class CartService {
-    constructor(public _local: Storage) {
+    constructor(private _local: Storage) {
     }
     addCart(data, keyGrop): any {
         return this._local.get('item').then((value: any) => {
