@@ -1,0 +1,39 @@
+{
+  "name": "ionic-app-base",
+  "author": "Ionic Framework",
+  "homepage": "http://ionicframework.com/",
+  "private": true,
+  "scripts": {
+    "build": "ionic-app-scripts build",
+    "watch": "ionic-app-scripts watch",
+    "serve:before": "watch",
+    "emulate:before": "build",
+    "deploy:before": "build",
+    "build:before": "build",
+    "run:before": "build"
+  },
+  "dependencies": {
+    "@ionic/storage": "1.1.2",
+    "ionic-angular": "^2.0.0-rc.0",
+    "ionic-native": "^2.0.3",
+    "ionicons": "^3.0.0",
+    "lodash": "^4.16.3",
+    "lodash.foreach": "^4.5.0"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "latest",
+    "@types/lodash": "4.14.36",
+    "@types/node": "^6.0.45",
+    "typescript": "^2.0.3"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-console",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-device",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-splashscreen"
+  ],
+  "cordovaPlatforms": [],
+  "description": "myionic_invesion: An Ionic project"
+}

@@ -6,7 +6,6 @@
 *.log
 *.tmp
 *.tmp.*
-*.json
 log.txt
 *.sublime-project
 *.sublime-workspace
