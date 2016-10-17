@@ -13,8 +13,8 @@ import { HomePage } from '../pages/home/home';
 import { SideMenu } from '../pages/side_menu/side_menu';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
-import { CartService } from '../providers/form-service/cartService';
-import { FormService } from '../providers/form-service/form-service';
+import { CartService } from '../providers/api-service/cartService';
+import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -65,7 +65,7 @@ import { Filter } from '../pipe/pipe';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService, CartService, SocialService]
+    providers: [Storage, ApiService, CartService, SocialService]
 })
 export class AppModule {
 

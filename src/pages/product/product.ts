@@ -1,8 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams } from 'ionic-angular';
-import { FormService } from './../../providers/form-service/form-service';
-import { CartService } from './../../providers/form-service/cartService';
+import { ApiService } from './../../providers/api-service/api-service';
+import { CartService } from './../../providers/api-service/cartService';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
@@ -12,7 +12,7 @@ import _ from 'lodash';
 @Component({
     templateUrl: 'product.html'
 })
-export class ProductPage implements OnInit{
+export class ProductPage implements OnInit {
     res: {} = {};
     quantity: number;
     response: any;
@@ -41,14 +41,14 @@ export class ProductPage implements OnInit{
     search: any = [];
     searchTransformation: any = [];
     path: any;
-    constructor(public local: Storage, public _cartService: CartService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public _formService: FormService) {
-        let id = navParams.get('id');
+    constructor(private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+        let id = _navParams.get('id');
         this.path = { sku: id };
     }
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();
-        this._formService.api("product/get/", this.path).subscribe((res) => {
+        this._apiService.api("product/get/", this.path).subscribe((res) => {
             if (res) {
                 this.response = JSON.parse(res.data);
                 this.spin = false;
@@ -79,7 +79,7 @@ export class ProductPage implements OnInit{
     }
 
     gotoCart() {
-        this.navCtrl.push(CartPage);
+        this._navCtrl.push(CartPage);
     }
     onChange(res, key) {
         let count = 0;
@@ -126,14 +126,14 @@ export class ProductPage implements OnInit{
 
     }
     presentLoading() {
-        let loader = this.loadingCtrl.create({
+        let loader = this._loadingCtrl.create({
             content: "Please wait...",
             duration: 2000
         });
         loader.present();
     }
     presentToast(message: string) {
-        let toast = this.toastCtrl.create({
+        let toast = this._toastCtrl.create({
             message: message,
             duration: 3000,
             position: 'top'
@@ -158,10 +158,10 @@ export class ProductPage implements OnInit{
         let access_token: string;
         let store_id: string;
         let productid: string = this.response.data.data.entity_id;
-        this.local.get('access_token').then((value: any) => {
+        this._local.get('access_token').then((value: any) => {
             access_token = value;
 
-            this.local.get('store_id').then((store_idval: any) => {
+            this._local.get('store_id').then((store_idval: any) => {
                 store_id = store_idval;
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
                 let other = data;
@@ -174,15 +174,15 @@ export class ProductPage implements OnInit{
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
                     let other = _.merge(data, selectedItem);
                     let ser = this.response.data.associated_products.attributes;
-                    this.local.get('search').then((search: any) => {
+                    this._local.get('search').then((search: any) => {
                         if (search) {
-                            this.search=search;
+                            this.search = search;
                             this.search.push(ser);
-                            this.local.set('search', _.uniqWith(this.search, _.isEqual));
+                            this._local.set('search', _.uniqWith(this.search, _.isEqual));
                         }
                         else {
                             this.search.push(ser);
-                            this.local.set('search', _.uniqWith(this.search, _.isEqual));
+                            this._local.set('search', _.uniqWith(this.search, _.isEqual));
                         }
 
                     });
@@ -192,14 +192,14 @@ export class ProductPage implements OnInit{
                 }
 
                 //cart api
-                this._formService.api("cart/cart", path).subscribe((res) => {
+                this._apiService.api("cart/cart", path).subscribe((res) => {
                     if (res) {
                         //add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
                             if (response != "undefined") {
                                 this.item = response;
                                 this.presentToast("item inserted ");
-                                this.navCtrl.push(CartPage);
+                                this._navCtrl.push(CartPage);
                             }
                             else {
                             }

@@ -1,7 +1,7 @@
 
 import { Component, OnInit} from '@angular/core';
 import { NavController, PopoverController} from 'ionic-angular';
-import {FormService} from './../../providers/form-service/form-service';
+import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from './../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
@@ -31,13 +31,13 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(public local: Storage, public navCtrl: NavController, public popoverCtrl: PopoverController, public _formService: FormService) { }
+    constructor(private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
-        this.local.get('secret').then((value: any) => {
+        this._local.get('secret').then((value: any) => {
             this.secret = value;
-            this.local.get('firstname').then((value: any) => {
+            this._local.get('firstname').then((value: any) => {
                 this.firstname = value;
-                this.local.get('lastname').then((value: any) => {
+                this._local.get('lastname').then((value: any) => {
                     this.lastname = value;
                     this.total_orders();
                     this.selectedOrder_details();
@@ -47,7 +47,7 @@ export class OrderlistPage implements OnInit {
     }
     total_orders() {
         var body = { "secret": this.secret }
-        this._formService.api("order/totalorder", body).subscribe((res) => {
+        this._apiService.api("order/totalorder", body).subscribe((res) => {
             if (res.statuscode == 500) {
                 this.logout();
             }
@@ -66,7 +66,7 @@ export class OrderlistPage implements OnInit {
         let date: any = [];
         let body = { "secret": this.secret }
         let datas: any;
-        this._formService.api("order/alllist", body).subscribe((res) => {
+        this._apiService.api("order/alllist", body).subscribe((res) => {
             this.spin = false;
             if (res.statuscode == 500) {
                 this.logout();
@@ -130,27 +130,27 @@ export class OrderlistPage implements OnInit {
     }
 
     presentPopover(myEvent: any) {
-        let popover = this.popoverCtrl.create(PopoverPage);
+        let popover = this._popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent,
         });
     }
     presentModal(id: any) {
-        this.navCtrl.push(OrderModalPage, { "order_id": id });
+        this._navCtrl.push(OrderModalPage, { "order_id": id });
     }
     goback() {
-        this.navCtrl.pop();
+        this._navCtrl.pop();
     }
     logout() {
-        this.local.remove('firstname');
-        this.local.remove('lastname');
-        this.local.remove('expiry');
-        this.local.remove('access_token');
-        this.local.remove('lists');
-        this.local.remove('email');
-        this.local.remove('secret');
+        this._local.remove('firstname');
+        this._local.remove('lastname');
+        this._local.remove('expiry');
+        this._local.remove('access_token');
+        this._local.remove('lists');
+        this._local.remove('email');
+        this._local.remove('secret');
         GooglePlus.logout();
-        this.navCtrl.setRoot(StartPage, { "message": "Token expired" });
+        this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
     }
 }
 

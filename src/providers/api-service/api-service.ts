@@ -9,13 +9,14 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class FormService {
+export class ApiService {
     access_token: string;
-    constructor(private _local: Storage, private _http: Http) { }
-    api(path: any, body: any) {
+    constructor(private _local: Storage, private _http: Http) {
         this._local.get('access_token').then((value: any) => {
             this.access_token = value;
         });
+    }
+    api(path: any, body: any) {
         let api_url = config.api_Url + path;
         let headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': this.access_token });
         let options = new RequestOptions({ headers: headers });

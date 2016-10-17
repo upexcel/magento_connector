@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavParams, ViewController, PopoverController} from 'ionic-angular';
-import {FormService} from './../../providers/form-service/form-service';
+import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import _ from 'lodash';
@@ -44,22 +44,22 @@ export class OrderModalPage implements OnInit {
     ship_country: string;
     ship_postcode: number;
     shipping_description: string;
-    constructor(public local: Storage, public navparam: NavParams, public popoverCtrl: PopoverController, private viewCtrl: ViewController, private _formService: FormService) { }
+    constructor(private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
-        this.order_id = this.navparam.get("order_id");
-        this.local.get('secret').then((value: any) => {
+        this.order_id = this._navparam.get("order_id");
+        this._local.get('secret').then((value: any) => {
             this.secret = value;
             this.getOrderDetails(this.order_id);
         });
     }
     close() {
-        this.viewCtrl.dismiss();
+        this._viewCtrl.dismiss();
     }
     getOrderDetails(order_id: any) {
         let body = {
             order_id: order_id, secret: this.secret
         }
-        this._formService.api("order/get/", body).subscribe((res) => {
+        this._apiService.api("order/get/", body).subscribe((res) => {
             let parse = JSON.parse(res.body);
             this.status = parse.data.status;
             this.grand_total = parse.data.grand_total;
@@ -101,7 +101,7 @@ export class OrderModalPage implements OnInit {
     }
 
     presentPopover(myEvent: any) {
-        let popover = this.popoverCtrl.create(PopoverPage);
+        let popover = this._popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent,
         });

@@ -8,10 +8,10 @@ import _ from 'lodash';
 declare let Promise: any;
 @Injectable()
 export class CartService {
-    constructor(public local: Storage) {
+    constructor(private _local: Storage) {
     }
     addCart(data, keyGrop): any {
-        return this.local.get('item').then((value: any) => {
+        return this._local.get('item').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
@@ -67,7 +67,7 @@ export class CartService {
                 cartData.unshift(data);
             }
             if (cartData != "undefined") {
-                this.local.set('item', JSON.stringify(cartData));
+                this._local.set('item', JSON.stringify(cartData));
                 return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });
