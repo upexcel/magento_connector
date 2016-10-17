@@ -4,11 +4,11 @@ import {FormService } from './../../providers/form-service/form-service';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
-import  _ from 'lodash';
+import clone from 'lodash/clone';
 @Component({
-    templateUrl: 'side_menu.html'
+    templateUrl: 'categoryProduct.html'
 })
-export class SideMenu implements OnInit {
+export class CategoryProduct implements OnInit {
     lists: any;
     public data: Data[];
     showList: boolean = false;
@@ -40,7 +40,7 @@ export class SideMenu implements OnInit {
                 for (var product of this.pro) {
                     res_data.push(product);
                 }
-                this.products = _.clone(res_data);
+                this.products = clone(res_data);
             }
         });
     }

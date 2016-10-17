@@ -3,7 +3,8 @@ import {NavParams, ViewController, PopoverController} from 'ionic-angular';
 import {FormService} from './../../providers/form-service/form-service';
 import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
-import _ from 'lodash';
+import forEach from 'lodash/forEach';
+import clone from 'lodash/clone';
 @Component({
     templateUrl: 'orderid-detail.html'
 })
@@ -67,14 +68,14 @@ export class OrderModalPage implements OnInit {
             this.item = parse.data.items;
             this.payment_method = parse.data.payment_method;
             var res_data: any = [];
-            _.forEach(this.item, function(value, key) {
+            forEach(this.item, function(value, key) {
                 var datas = {
                     value: value,
                     key: key
                 };
                 res_data.push(datas);
             })
-            this.items = _.clone(res_data);
+            this.items = clone(res_data);
             this.total_qty = parse.data.total_qty_ordered;
             this.sub_total = parse.data.base_grand_total;
             this.tax = parse.data.tax_amount;
