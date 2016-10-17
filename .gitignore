@@ -12,16 +12,12 @@ log.txt
 *.sublime-workspace
 .vscode/
 npm-debug.log*
-
 .idea/
 .sass-cache/
 .tmp/
 .versions/
 coverage/
 dist/
-lbackupinvisionionicionic_invisionmaster/
-lbackupinvisionionicionic_invisionmaster/*.json
-lbackupinvisionionicionic_invisionmaster/modulepaths.json
 node_modules/
 tmp/
 temp/
