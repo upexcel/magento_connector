@@ -9,7 +9,6 @@ import keys from 'lodash/keys';
 @Injectable()
 export class TourService implements OnInit {
     data: any= { };
-    body: any;
     store_id: string;
     constructor(public local: Storage, public _formService: FormService) { }
 

@@ -8,35 +8,30 @@ import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
 import keys from 'lodash/keys';
 import { Storage } from '@ionic/storage';
+import { TourDataType } from './../data/tourDataType';
+import { config } from './../../providers/config/config';
 @Component({
     templateUrl: 'tour.html'
 })
 export class TourPage implements OnInit {
-    data = {
+    data : TourDataType = {
         logo: "",
         logo_alt: "",
         desc: "",
         descriptions: ""
     };
-    mySlideOptions = {
-        initialSlide: 0,
-        autoplay: 2000,
-        loop: true,
-        pager: true
-    };
+    mySlideOptions = config.mySlideOptions;  
     getStarted_show: boolean = false;
     constructor(private _tourService: TourService, public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) { }
     ngOnInit() {
         let res = this._tourService.setData();
         if (keys(res).length > 0) {
-            console.log(res);
             this.getTour(res);
         }
         else {
             this._tourService.setData().then((res) => {
                 this.getTour(res);
             })
-
         }
     }
     close() {
@@ -44,7 +39,6 @@ export class TourPage implements OnInit {
     }
     getTour(res) {
         let res_data: any = [];
-        console.log(res.tour_logo);
         this.getStarted_show = true;
         this.data.logo = res.tour_logo;
         this.data.logo_alt = res.logo_alt;
@@ -57,8 +51,6 @@ export class TourPage implements OnInit {
     gotoLogin() {
         this.navCtrl.push(LoginPage);
     }
-    onSlideChanged(){
-        
-    }
+
 }
 

@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import {FormService } from './../../providers/form-service/form-service';
 import {SocialService} from '../../providers/social-service/social-service';
 import {TourService} from '../../providers/tour-service/tourService';
+import { config } from './../../providers/config/config';
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -38,7 +39,7 @@ export class StartPage implements OnInit {
         this.getlogo();
         this.messsage_expired = this.navparam.get("message")
         this.options = {
-            clientid: '1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com'
+            clientid: config.clientid
         }
         this._tourService.getData();
     }
