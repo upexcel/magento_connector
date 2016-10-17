@@ -4,14 +4,18 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
-import _ from 'lodash';
+import forEach from 'lodash/forEach';
+//import _ from 'lodash';
 declare let Promise: any;
+//import forEach = require('lodash/foreach');
+//var foreach=require('lodash/forEach');
 @Injectable()
+
 export class CartService {
-    constructor(public local: Storage) {
+    constructor(public _local: Storage) {
     }
     addCart(data, keyGrop): any {
-        return this.local.get('item').then((value: any) => {
+        return this._local.get('item').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
@@ -20,7 +24,7 @@ export class CartService {
                 //local/cartdata is not null
                 if (value && cartData.length > 0) {
                     //iterate cartdata and if ned aded item has same id and size
-                    _.forEach(cartData, function(value, key) {
+                    forEach(cartData, function(value, key) {
                         keyDataCheck = true;
                         //increse count in cartitem for that item only
                         if (data.type == "configurable") {
@@ -67,7 +71,7 @@ export class CartService {
                 cartData.unshift(data);
             }
             if (cartData != "undefined") {
-                this.local.set('item', JSON.stringify(cartData));
+                this._local.set('item', JSON.stringify(cartData));
                 return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });

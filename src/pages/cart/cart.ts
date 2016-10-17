@@ -1,7 +1,13 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
-import _ from 'lodash';
 import { Storage } from '@ionic/storage';
+import forEach from 'lodash/forEach';
+import uniq from 'lodash/uniq';
+import keys from 'lodash/keys';
+import findIndex from 'lodash/findIndex';
+import difference from 'lodash/difference';
+import pullAll from 'lodash/pullAll';
+
 @Component({
     templateUrl: 'cart.html'
 })
@@ -14,12 +20,12 @@ export class CartPage implements OnInit {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
             let tempObj = [];
-            _.forEach(this.res, function(value, key) {
-                _.forEach(value, function(value1, key) {
+            forEach(this.res, function(value, key) {
+                forEach(value, function(value1, key) {
                     tempObj.push(key);
                 });
             });
-            this.lists = _.uniq(_.pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
+            this.lists = uniq(pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
             this.entery = true;
         });
     }
@@ -32,8 +38,8 @@ export class CartPage implements OnInit {
             cartData = JSON.parse(value);
             data.quantity++;
             if (data.type == "configurable") {
-                let keyGrop = _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
-                _.forEach(cartData, function(value, key) {
+                let keyGrop = uniq(pullAll(keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                forEach(cartData, function(value, key) {
                     keyDataCheck = true;
                     for (let i = 0; i < keyGrop.length; i++) {
                         let keyNo = keyGrop[i];
@@ -61,7 +67,7 @@ export class CartPage implements OnInit {
 
             else {
 
-                _.forEach(cartData, function(value, key) {
+                forEach(cartData, function(value, key) {
                     //push has new item 
                     if (data.id == value.id && data.type == value.type) {
                         UpdatecartData.push(data);
@@ -85,8 +91,8 @@ export class CartPage implements OnInit {
             cartData = JSON.parse(value);
             data.quantity--;
             if (data.type == "configurable") {
-                let keyGrop = _.uniq(_.pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
-                _.forEach(cartData, function(value, key) {
+                let keyGrop = uniq(pullAll(keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                forEach(cartData, function(value, key) {
                     keyDataCheck = true;
                     for (let i = 0; i < keyGrop.length; i++) {
                         let keyNo = keyGrop[i];
@@ -114,7 +120,7 @@ export class CartPage implements OnInit {
 
             else {
 
-                _.forEach(cartData, function(value, key) {
+                forEach(cartData, function(value, key) {
                     //push has new item 
                     if (data.id == value.id && data.type == value.type) {
                         UpdatecartData.push(data);
@@ -147,9 +153,9 @@ export class CartPage implements OnInit {
 
             if (data.type == "configurable") {
                 let dubData = data;
-                key = _.uniq(_.pullAll(_.keys(dubData), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                key = uniq(pullAll(keys(dubData), ['id', 'name', 'img', 'price', 'type', 'quantity']));
 
-                allKey = _.uniq(_.pullAll(_.keys(data), ['name', 'img', 'price', 'quantity']));
+                allKey = uniq(pullAll(keys(data), ['name', 'img', 'price', 'quantity']));
                 for (var i = 0; i < allKey.length; i++) {
                     var keys = allKey[i];
                     iterate.push(data[keys]);
@@ -157,14 +163,14 @@ export class CartPage implements OnInit {
                 for (i = 0; i < keys.length; i++) {
                     r[allKey[i]] = iterate[i];
                 };
-                let f = _.findIndex(val, r);
-                output = _.difference(val, val.splice(f, 1));
+                let f = findIndex(val, r);
+                output = difference(val, val.splice(f, 1));
                 this.local.set('item', JSON.stringify(output));
                 this.res = output;
             }
             else {
-                let f = _.findIndex(val, { 'id': data.id, 'type': data.type });
-                output = _.difference(val, val.splice(f, 1));
+                let f = findIndex(val, { 'id': data.id, 'type': data.type });
+                output = difference(val, val.splice(f, 1));
                 this.local.set('item', JSON.stringify(output));
                 this.res = output;
             }
