@@ -7,8 +7,8 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import keys from 'lodash/keys';
 @Injectable()
-export class TourService implements OnInit {
-    data: any= { };
+export class AppConfig implements OnInit {
+    data: any = {};
     store_id: string;
     constructor(public local: Storage, public _formService: FormService) { }
 
@@ -17,19 +17,19 @@ export class TourService implements OnInit {
             this.store_id = JSON.parse(value);
         });
     }
-    getData() {
+    setData(): any {
         let body = { store_id: this.store_id };
         this._formService.api("web/config", body).subscribe((res) => {
             this.data = JSON.parse(res.body).data;
             return new Promise((resolve: any, reject: any) => resolve(this.data));
         })
     }
-    setData() {
-    if((keys(this.data).length>0) && (this.data != undefined)){
-        return this.data;
-    }
-    else{
-        return "";
-    }
+    getAppConfig() {
+        if ((keys(this.data).length > 0) && (this.data != undefined)) {
+            return this.data;
+        }
+        else {
+            return "";
+        }
     }
 }

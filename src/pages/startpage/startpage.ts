@@ -6,7 +6,7 @@ import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {FormService } from './../../providers/form-service/form-service';
 import {SocialService} from '../../providers/social-service/social-service';
-import {TourService} from '../../providers/tour-service/tourService';
+import {AppConfig} from '../../providers/appConfig/appConfig';
 import { config } from './../../providers/config/config';
 @Component({
     templateUrl: 'startpage.html'
@@ -30,18 +30,17 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    constructor(private _tourService:TourService, public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
+    constructor(private _tourService: AppConfig, public local: Storage, public loadingCtrl: LoadingController, public socialProvider: SocialService,
         private navCtrl: NavController, private navparam: NavParams,
         public modalCtrl: ModalController, private _formService: FormService) {
-        this.local = local;
     }
     ngOnInit() {
         this.getlogo();
         this.messsage_expired = this.navparam.get("message")
         this.options = {
-            clientid: config.clientid
+            clientid: config.google_clientid
         }
-        this._tourService.getData();
+        this._tourService.setData();
     }
     gotologin() {
         this.navCtrl.push(LoginPage);
