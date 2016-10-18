@@ -23,19 +23,19 @@ export class FacebookComponent {
     }
     getFacebookData() {
         var self = this;
-        this.userfbLogin.emit(
-            this._socialProvider.login().then((res) => {
-                this._socialProvider.getCurrentUserProfile().then(
-                    (profileData) => {
-                        this.fb_data.fb_firstname = profileData.first_name;
-                        this.fb_data.fb_lastname = profileData.last_name;
-                        this.fb_data.fb_email = profileData.email;
-                        this.fb_data.fb_profilepic = profileData.picture.data.url;
-                        let body = { firstname: this.fb_data.fb_firstname, lastname: this.fb_data.fb_lastname, email: this.fb_data.fb_email, picture: this.fb_data.fb_profilepic };
-                        this._local.set("fbProfileDate", body);
-                        self._navCtrl.setRoot(HomePage);
-                    })
-            }));
+        this._socialProvider.fbLogin().then((res) => {
+            this._socialProvider.getFbCurrentUserProfile().then(
+                (profileData) => {
+                    this.fb_data.fb_firstname = profileData.first_name;
+                    this.fb_data.fb_lastname = profileData.last_name;
+                    this.fb_data.fb_email = profileData.email;
+                    this.fb_data.fb_profilepic = profileData.picture.data.url;
+                    let body = { firstname: this.fb_data.fb_firstname, lastname: this.fb_data.fb_lastname, email: this.fb_data.fb_email, picture: this.fb_data.fb_profilepic };
+                    this._local.set("fbProfileDate", body);
+                    self._navCtrl.setRoot(HomePage);
+                    this.userfbLogin.emit(body);
+                })            
+        });
     }
 
 }
