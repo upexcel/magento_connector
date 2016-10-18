@@ -11,7 +11,6 @@ export class AppConfig implements OnInit {
     data: any = {};
     store_id: string;
     constructor(public local: Storage, public _formService: FormService) { }
-
     ngOnInit() {
         this.local.get('store_id').then((value: any) => {
             this.store_id = JSON.parse(value);
@@ -21,8 +20,11 @@ export class AppConfig implements OnInit {
         let body = { store_id: this.store_id };
         this._formService.api("web/config", body).subscribe((res) => {
             this.data = JSON.parse(res.body).data;
-            return new Promise((resolve: any, reject: any) => resolve(this.data));
-        })
+        },
+            (err) => {
+                this.setData();
+            }
+        )
     }
     getAppConfig() {
         if ((keys(this.data).length > 0) && (this.data != undefined)) {
