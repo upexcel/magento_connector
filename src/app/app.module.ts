@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
@@ -23,6 +23,8 @@ import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
 import { Filter } from '../pipe/pipe';
+import { FacebookService } from '../providers/social-service/FacebookService';
+import { GoogleService } from '../providers/social-service/googleService';
 @NgModule({
     declarations: [
         MyApp,
@@ -65,7 +67,7 @@ import { Filter } from '../pipe/pipe';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, ApiService, CartService, SocialService]
+    providers: [Storage, ApiService, CartService, , FacebookService, GoogleService, SocialService, NavController]
 })
 export class AppModule {
 

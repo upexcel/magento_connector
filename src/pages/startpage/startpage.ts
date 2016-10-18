@@ -5,21 +5,13 @@ import { TourPage } from '../takeTour/tour';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {ApiService } from './../../providers/api-service/api-service';
-import {SocialService} from '../../providers/social-service/social-service'
+import {SocialService} from '../../providers/social-service/social-service';
+import {FacebookService} from '../../providers/social-service/FacebookService';
+import {GoogleService} from '../../providers/social-service/googleService';
 @Component({
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
-    fb_firstname: string;
-    fb_lastname: string;
-    fb_email: string;
-    fb_profilepic: string;
-    google_firstname: string;
-    google_lastname: string;
-    google_email: string;
-    google_profilepic: string;
-    google_accesstoken: string;
-    google_idToken: string;
     messsage_expired: string;
     logo: string;
     logo_alt: string;
@@ -28,9 +20,7 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    constructor(private _local: Storage, private _loadingCtrl: LoadingController, private _socialProvider: SocialService,
-        private _navCtrl: NavController, private _navparam: NavParams,
-        public _modalCtrl: ModalController, private _apiService: ApiService) { }
+    constructor(private _local: Storage, private _loadingCtrl: LoadingController, private _socialProvider: SocialService, private _navCtrl: NavController, private _navparam: NavParams, private _modalCtrl: ModalController, private _apiService: ApiService, private _fbservice: FacebookService, private _googleservice: GoogleService) { }
     ngOnInit() {
         this.getlogo();
         this.messsage_expired = this._navparam.get("message")
@@ -62,38 +52,10 @@ export class StartPage implements OnInit {
         });
     }
     onFacebookLoginClick() {
-        this._socialProvider.login().then((res) => {
-            this._socialProvider.getCurrentUserProfile().then(
-                (profileData) => {
-                    this.fb_firstname = profileData.first_name;
-                    this.fb_lastname = profileData.last_name;
-                    this.fb_email = profileData.email;
-                    this.fb_profilepic = profileData.picture.data.url;
-                    let body = { firstname: this.fb_firstname, lastname: this.fb_lastname, email: this.fb_email, picture: this.fb_profilepic };
-                    this._local.set("firstname", this.fb_firstname);
-                    this._local.set("lastname", this.fb_lastname);
-                    this._local.set("email", this.fb_email);
-                    this._local.set("access_token", this.fb_profilepic);
-                    this._navCtrl.setRoot(HomePage);
-                }
-            );
-        });
+        this._fbservice.getFacebookData().;
     }
-    google_login() {
-        this.presentLoading();
-        this._socialProvider.google_login(this.options).then((res) => {
-            this.google_firstname = res.givenName;
-            this.google_lastname = res.familyName;
-            this.google_email = res.email;
-            this.google_profilepic = res.imageUrl;
-            this.google_accesstoken = res.accessToken;
-            let body = { firstname: this.google_firstname, lastname: this.google_lastname, email: this.google_email, picture: this.google_profilepic };
-            this._local.set("firstname", this.google_firstname);
-            this._local.set("lastname", this.google_lastname);
-            this._local.set("email", this.google_email);
-            this._local.set("access_token", this.google_accesstoken);
-            this._navCtrl.setRoot(HomePage);
-        })
+    googleLogin() {
+        this._googleservice.getGoogleData(this.options);
     }
     presentLoading() {
         let loader = this._loadingCtrl.create({
