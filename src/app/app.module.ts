@@ -23,8 +23,8 @@ import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
 import { Filter } from '../pipe/pipe';
-import { FacebookService } from '../providers/social-service/FacebookService';
-import { GoogleService } from '../providers/social-service/googleService';
+import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
+import { GoogleComponent } from '../components/googleLogin/googleComponent';
 @NgModule({
     declarations: [
         MyApp,
@@ -45,7 +45,9 @@ import { GoogleService } from '../providers/social-service/googleService';
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        Filter
+        Filter,
+        GoogleComponent,
+        FacebookComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -67,7 +69,7 @@ import { GoogleService } from '../providers/social-service/googleService';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, ApiService, CartService, , FacebookService, GoogleService, SocialService, NavController]
+    providers: [Storage, ApiService, CartService, SocialService]
 })
 export class AppModule {
 

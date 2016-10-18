@@ -26,19 +26,14 @@
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <button ion-button color='primary' (click)="onFacebookLoginClick()" id="social"> 
-                 <ion-icon name="logo-facebook"></ion-icon>Login with Facebook
-                 </button>
+                 <facebook-login (userfbLogin)="userfbLogin($event)"></facebook-login>
             </ion-col>
         </ion-row>
     </ion-grid> 
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-
-                <button ion-button color='danger' (click)="googleLogin()" id="social">  
-                <ion-icon name="logo-google"></ion-icon> Login with Google          
-                </button>
+                <google-login (usergoogleLogin)="usergoogleLogin($event)"></google-login>
             </ion-col>
         </ion-row>
     </ion-grid> 

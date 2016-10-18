@@ -1,13 +1,17 @@
 import { Platform} from 'ionic-angular';
 import {Injectable} from '@angular/core';
-import {GooglePlus, Facebook, SpinnerDialog} from 'ionic-native'
+import {GooglePlus, Facebook} from 'ionic-native'
+import { config} from './../config/config';
 @Injectable()
 export class SocialService {
     platform: any;
-    //    p: any;
+    options:any;
     constructor(platform: Platform) {
         this.platform = platform;
         Facebook.browserInit(1785639755024591, 'v2.8');
+        this.options = {
+            clientid: config.google_clientid
+        }
     }
 
     login() {
@@ -35,11 +39,11 @@ export class SocialService {
         });
         return p;
     }
-    google_login(options: any) {
+    google_login() {
         let p: any;
         p = new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
-                GooglePlus.login(options).then((success) => {
+                GooglePlus.login(this.options).then((success) => {
                     resolve(success);
                     console.log(success);
                 })

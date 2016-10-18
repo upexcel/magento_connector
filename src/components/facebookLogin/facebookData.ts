@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-export class FacebookLogin {
+export class FacebookData {
     fb_firstname: string;
     fb_lastname: string;
     fb_email: string;

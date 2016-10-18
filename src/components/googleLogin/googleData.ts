@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 
-export class GoogleLogin {
+export class GoogleData {
     google_firstname: string;
     google_lastname: string;
     google_email: string;
