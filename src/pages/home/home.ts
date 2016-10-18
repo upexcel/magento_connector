@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {App, PopoverController, MenuController, NavController, Content, NavParams} from 'ionic-angular';
-import {FormService } from './../../providers/form-service/form-service';
+import { PopoverController, MenuController, NavController, NavParams} from 'ionic-angular';
+import {ApiService } from './../../providers/api-service/api-service';
 import { CategoryProduct } from '../categoryProduct/categoryProduct';
 import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
@@ -25,22 +25,20 @@ export class HomePage implements OnInit {
     dataArray: any;
     store_id: string;
     listCheck: string;
-    constructor(public popoverCtrl: PopoverController, public navParams: NavParams, public local: Storage, public navCtrl: NavController, public menuCtrl: MenuController, public _formService: FormService) {
-        console.clear();
-    }
+    constructor(private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     ngOnInit() {
-        this.local.get('store_id').then((value: any) => {
+        this._local.get('store_id').then((value: any) => {
             this.store_id = value;
             this.slider();
             this.home_products();
-            this.local.get('lists').then((value: any) => {
+            this._local.get('lists').then((value: any) => {
                 this.listCheck = value;
                 if (this.listCheck == null) {
                     let path = { "parent_id": "1", "type": "full", "store_id": this.store_id }
-                    this._formService.api("category/categorylist/", path).subscribe((res) => {
+                    this._apiService.api("category/categorylist/", path).subscribe((res) => {
                         if (res) {
                             this.lists = JSON.parse(res.body).data.children;
-                            this.local.set('lists', JSON.stringify(this.lists));
+                            this._local.set('lists', JSON.stringify(this.lists));
                         }
                     },
                         (err) => {
@@ -49,7 +47,7 @@ export class HomePage implements OnInit {
                             }
                         });
                 } else {
-                    this.local.get('lists').then((value: any) => {
+                    this._local.get('lists').then((value: any) => {
                         this.lists = JSON.parse(value);
                     });
                 }
@@ -64,10 +62,10 @@ export class HomePage implements OnInit {
     };
 
     openMenu() {
-        this.menuCtrl.open();
+        this._menuCtrl.open();
     }
     presentPopover(myEvent) {
-        let popover = this.popoverCtrl.create(PopoverPage);
+        let popover = this._popoverCtrl.create(PopoverPage);
         popover.present({
             ev: myEvent
         });
@@ -84,18 +82,18 @@ export class HomePage implements OnInit {
         }
     }
     gotoProduct(product) {
-        this.navCtrl.push(ProductPage, {
+        this._navCtrl.push(ProductPage, {
             id: product
         });
     }
     con(gchild_id: any, gchild_name: any) {
-        this.menuCtrl.close();
-        this.navCtrl.push(CategoryProduct, { "id": gchild_id, "name": gchild_name });
+        this._menuCtrl.close();
+        this._navCtrl.push(CategoryProduct, { "id": gchild_id, "name": gchild_name });
     }
 
     slider() {
         let body: any;
-        this._formService.api("home/slider", body).subscribe((res) => {
+        this._apiService.api("home/slider", body).subscribe((res) => {
             if (res) {
                 this.img = JSON.parse(res.body.body).data;
             }
@@ -106,7 +104,7 @@ export class HomePage implements OnInit {
         this.spin = true;
         let data = [];
         let body = { "type": "large_data" }
-        this._formService.api("home/products", body).subscribe((res) => {
+        this._apiService.api("home/products", body).subscribe((res) => {
             if (res) {
                 this.dataArray = JSON.parse(res.data).data
                 this.feature_products = slice(this.dataArray, this.start, this.end);
@@ -156,8 +154,8 @@ export class HomePage implements OnInit {
         }, 2000);
     }
     logout() {
-        this.local.clear().then(() => {
-            this.navCtrl.push(StartPage);
+        this._local.clear().then(() => {
+            this._navCtrl.push(StartPage);
         });
 
     }

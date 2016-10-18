@@ -13,9 +13,9 @@ import { HomePage } from '../pages/home/home';
 import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
-import { CartService } from '../providers/form-service/cartService';
-import { FormService } from '../providers/form-service/form-service';
 import { AppConfig } from '../providers/appConfig/appConfig';
+import { CartService } from '../providers/api-service/cartService';
+import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -66,7 +66,8 @@ import { Filter } from '../pipe/pipe';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage, FormService, CartService, SocialService,AppConfig]
+
+    providers: [Storage, ApiService, CartService, SocialService, AppConfig]
 })
 export class AppModule {
 

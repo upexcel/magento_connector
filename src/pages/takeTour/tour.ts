@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
-import {FormService } from './../../providers/form-service/form-service';
 import {AppConfig} from '../../providers/appConfig/appConfig';
 import {LoginPage} from './../login/login';
 import forEach from 'lodash/forEach';
@@ -21,7 +20,7 @@ export class TourPage implements OnInit {
     };
     descriptions: string;
     mySlideOptions = config.tourPageSliderOptions;
-    constructor(private _appConfig: AppConfig, public local: Storage, public navCtrl: NavController, public viewCtrl: ViewController, public _formService: FormService) { }
+    constructor(private _appConfig: AppConfig, public _local: Storage, public _navCtrl: NavController, public _viewCtrl: ViewController) { }
     ngOnInit() {
         let res = this._appConfig.getAppConfig();
         if (res) {
@@ -34,10 +33,10 @@ export class TourPage implements OnInit {
         }
     }
     close() {
-        this.viewCtrl.dismiss();
+        this._viewCtrl.dismiss();
     }
     gotoLogin() {
-        this.navCtrl.push(LoginPage);
+        this._navCtrl.push(LoginPage);
     }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable, OnInit}    from '@angular/core';
-import {FormService } from './../form-service/form-service';
+import {ApiService } from './../../providers/api-service/api-service';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -10,7 +10,7 @@ import keys from 'lodash/keys';
 export class AppConfig implements OnInit {
     data: any = {};
     store_id: string;
-    constructor(public local: Storage, public _formService: FormService) { }
+    constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() {
         this.local.get('store_id').then((value: any) => {
             this.store_id = JSON.parse(value);
@@ -18,7 +18,7 @@ export class AppConfig implements OnInit {
     }
     setData(): any {
         let body = { store_id: this.store_id };
-        this._formService.api("web/config", body).subscribe((res) => {
+        this._apiService.api("web/config", body).subscribe((res) => {
             this.data = JSON.parse(res.body).data;
         },
             (err) => {
