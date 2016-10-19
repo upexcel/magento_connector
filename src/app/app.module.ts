@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
@@ -23,6 +23,8 @@ import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
 import { Filter } from '../pipe/pipe';
+import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
+import { GoogleComponent } from '../components/googleLogin/googleComponent';
 @NgModule({
     declarations: [
         MyApp,
@@ -43,7 +45,9 @@ import { Filter } from '../pipe/pipe';
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        Filter
+        Filter,
+        GoogleComponent,
+        FacebookComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp)
