@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams} from 'ionic-angular';
 import {ApiService } from './../../providers/api-service/api-service';
 import { CategoryProduct } from '../categoryProduct/categoryProduct';
-import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
+import {config} from './../../providers/config/config';
+
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
     lists: any;
     rootPage: any;
-    public data: Data[];
     showList: boolean = false;
     clickshow: boolean = false;
     spin: boolean = true;
@@ -26,11 +26,12 @@ export class HomePage implements OnInit {
     store_id: string;
     listCheck: string;
     constructor(private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
+    mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
         this._local.get('store_id').then((value: any) => {
             this.store_id = value;
             this.slider();
-            this.home_products();
+            this.homeProducts();
             this._local.get('lists').then((value: any) => {
                 this.listCheck = value;
                 if (this.listCheck == null) {
@@ -54,12 +55,6 @@ export class HomePage implements OnInit {
             });
         });
     }
-    mySlideOptions = {
-        autoplay: 3000,
-        initialSlide: 1,
-        loop: true,
-        pager: true
-    };
 
     openMenu() {
         this._menuCtrl.open();
@@ -71,15 +66,14 @@ export class HomePage implements OnInit {
         });
     }
 
-    toggle(data: Data) {
-        if (data.showDetails) {
-            data.showDetails = false;
-            //            data.icon = 'ios-add-circle-outline';
-        } else {
-            data.showDetails = true;
-            //            data.icon = 'ios-remove-circle-outline';
-            data.icon = 'ios-add-circle-outline';
-        }
+    toggle(_toggleData) {
+       if (_toggleData.showDetails) {
+           _toggleData.showDetails = false;
+            _toggleData.icon = 'ios-add-circle-outline';
+       } else {
+          _toggleData.showDetails = true;
+           _toggleData.icon = 'ios-remove-circle-outline';
+       }
     }
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
@@ -100,7 +94,7 @@ export class HomePage implements OnInit {
 
         });
     }
-    home_products() {
+    homeProducts() {
         this.spin = true;
         let data = [];
         let body = { "type": "large_data" }
@@ -148,15 +142,9 @@ export class HomePage implements OnInit {
     }
     doRefresh(refresher) {
         this.slider();
-        this.home_products();
+        this.homeProducts();
         setTimeout(() => {
             refresher.complete();
         }, 2000);
-    }
-    logout() {
-        this._local.clear().then(() => {
-            this._navCtrl.push(StartPage);
-        });
-
     }
 }
