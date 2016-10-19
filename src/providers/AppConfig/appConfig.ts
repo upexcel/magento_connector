@@ -1,5 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
+import { ConfigDataType } from './../../pages/takeTour/configDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 declare let Promise: any;
@@ -7,10 +8,10 @@ declare let Promise: any;
 export class AppConfig implements OnInit {
     store_id: string;
     webConfig: string;
-    data:string;
+    data: string;
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
-    getAppConfig() {
+    getAppConfig(): Promise<ConfigDataType> {
         return this.local.get('web_config').then((value: any) => {
             this.webConfig = value;
             this.local.get('store_id').then((value: any) => {
