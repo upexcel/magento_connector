@@ -1,4 +1,4 @@
-import { NavController, AlertController} from 'ionic-angular';
+import { NavController} from 'ionic-angular';
 import { Component, Output, EventEmitter } from '@angular/core';
 import {SocialService} from '../../providers/social-service/social-service';
 import {GoogleData} from './googleData';
@@ -17,7 +17,8 @@ export class GoogleComponent {
         google_accesstoken: ''
     }
     @Output() usergoogleLogin: EventEmitter<any> = new EventEmitter();
-    constructor(private _socialProvider: SocialService, private _alertCtrl: AlertController) { }
+    @Output() usergoogleError: EventEmitter<any> = new EventEmitter();
+    constructor(private _socialProvider: SocialService) { }
     getGoogleData() {
         var self = this;
         this._socialProvider.googleLogin().then((res) => {
@@ -30,16 +31,8 @@ export class GoogleComponent {
             self.usergoogleLogin.emit(body);
         })
             .catch((err) => {
-                this.showGoogleAlert(err);
+                self.usergoogleError.emit(err);
             })
-    }
-    showGoogleAlert(error) {
-        let alert = this._alertCtrl.create({
-            title: 'Error',
-            subTitle: error,
-            buttons: ['OK']
-        });
-        alert.present();
     }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { ModalController, NavController, NavParams} from 'ionic-angular';
+import { ModalController, NavController, NavParams, AlertController} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import { Storage } from '@ionic/storage';
@@ -17,7 +17,7 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    constructor(private _local: Storage, private _navCtrl: NavController, private _navparam: NavParams, private _modalCtrl: ModalController, private _apiService: ApiService) { }
+    constructor(private _local: Storage, private _navCtrl: NavController, private _navparam: NavParams, private _modalCtrl: ModalController, private _apiService: ApiService, private _alertCtrl: AlertController) { }
     ngOnInit() {
         this.getlogo();
         this.messsage_expired = this._navparam.get("message")
@@ -52,5 +52,13 @@ export class StartPage implements OnInit {
     userGoogleLogin(body) {
         this._local.set("googleData", body);
         this._navCtrl.setRoot(HomePage);
+    }
+    showSocialLoginError(error) {
+        let alert = this._alertCtrl.create({
+            title: 'Error',
+            subTitle: error,
+            buttons: ['OK']
+        });
+        alert.present();
     }
 }

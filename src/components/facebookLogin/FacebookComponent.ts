@@ -1,4 +1,4 @@
-import { NavController, AlertController} from 'ionic-angular';
+import { NavController} from 'ionic-angular';
 import { Component, Output, EventEmitter } from '@angular/core';
 import {SocialService} from '../../providers/social-service/social-service';
 import {FacebookData} from './facebookData';
@@ -17,7 +17,8 @@ export class FacebookComponent {
         fb_accessToken: ''
     };
     @Output() userfbLogin: EventEmitter<any> = new EventEmitter();
-    constructor(private _socialProvider: SocialService, private _alertCtrl: AlertController) { }
+    @Output() userfbError: EventEmitter<any> = new EventEmitter();
+    constructor(private _socialProvider: SocialService) { }
     getFacebookData() {
         var self = this;
         this._socialProvider.fbLogin().then((res) => {
@@ -32,16 +33,8 @@ export class FacebookComponent {
                 })
         })
             .catch((err) => {
-                this.showFbAlert(err);
+                self.userfbError.emit(err);
             });
-    }
-    showFbAlert(error) {
-        let alert = this._alertCtrl.create({
-            title: 'Error',
-            subTitle: error,
-            buttons: ['OK']
-        });
-        alert.present();
     }
 }
 
