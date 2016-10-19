@@ -26,10 +26,11 @@ export class HomePage implements OnInit {
     store_id: string;
     listCheck: string;
     private _toggleData = {
-        showDetails: '',
+        showDetails: false,
+        icon:'ios-add-circle-outline'
     }
     constructor(private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
-    mySlideOptions = config.mySlideOptions;
+    mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
         this._local.get('store_id').then((value: any) => {
             this.store_id = value;
@@ -72,8 +73,10 @@ export class HomePage implements OnInit {
     toggle(_toggleData) {
        if (_toggleData.showDetails) {
            _toggleData.showDetails = false;
+            _toggleData.icon = 'ios-add-circle-outline';
        } else {
           _toggleData.showDetails = true;
+           _toggleData.icon = 'ios-remove-circle-outline';
        }
     }
     gotoProduct(product) {
