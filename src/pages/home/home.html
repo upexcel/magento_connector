@@ -21,12 +21,11 @@
     <ion-list  no-lines *ngFor="let list of lists">
                <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
                {{list1.name}}
-               <!--<ion-icon color="primary" item-right top class="detail" [name]="list1.icon"  ></ion-icon>-->   
-            <ion-list *ngIf="list1.showDetails" text-wrap>
-                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
-                    {{glist.name}}
-            </ion-item>
-        </ion-list>
+                <ion-list *ngIf="list1.showDetails" text-wrap>
+                    <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
+                        {{glist.name}}
+                </ion-item>
+            </ion-list>
     </ion-item>
 </ion-list>
 </ion-menu>
@@ -50,7 +49,7 @@
             <ion-col no-padding>
                 <ion-slides  [options]="mySlideOptions">
                     <ion-slide *ngFor="let images of img">
-                        <img src="{{images}}" class="img"/>                      
+                        <img src="{{images}}" class="img"/>
                     </ion-slide>
                 </ion-slides>
             </ion-col>
@@ -59,7 +58,7 @@
 
     <!---- desktop display feature products-->
 
-    <ion-grid showWhen="landscape"> 
+    <ion-grid showWhen="landscape">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-row wrap>
             <ion-col width-25 *ngFor="let feat_prod of feature_products">
@@ -77,7 +76,7 @@
     </ion-grid>
 
     <!---- mobile display feature products-->
-    <ion-grid showWhen="mobile"> 
+    <ion-grid showWhen="mobile">
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
         <ion-row wrap>
             <ion-col width-50 *ngFor="let feat_prod of feature_products">

@@ -16,7 +16,6 @@ import { LoginPage } from '../pages/login/login';
 import { CartService } from '../providers/api-service/cartService';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
-import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
@@ -41,7 +40,6 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         OrderModalPage,
         MyAccountPage,
         LoginPage,
-        Data,
         LoadingModal,
         PopoverPage,
         NextOnEnter,
