@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { ModalController, NavController, LoadingController, NavParams} from 'ionic-angular';
+import { ModalController, NavController, NavParams} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import { Storage } from '@ionic/storage';
@@ -45,11 +45,11 @@ export class StartPage implements OnInit {
             this.check = true;
         });
     }
-    userfbLogin1(body) {
+    userFbLogin(body) {
         this._local.set("fbProfileDate", body);
         this._navCtrl.setRoot(HomePage);
     }
-    usergoogleLogin(body) {
+    userGoogleLogin(body) {
         this._local.set("googleData", body);
         this._navCtrl.setRoot(HomePage);
     }

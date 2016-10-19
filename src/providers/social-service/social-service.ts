@@ -8,7 +8,7 @@ export class SocialService {
     options: any;
     constructor(platform: Platform) {
         this.platform = platform;
-        Facebook.browserInit(1785639755024591, 'v2.8');
+        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
         this.options = {
             clientid: config.google_clientid
         }
@@ -21,7 +21,6 @@ export class SocialService {
                     resolve(success);
                 })
             } else {
-                console.log("Please run me on a device");
                 reject('Please run me on a device');
             }
         });
@@ -44,14 +43,10 @@ export class SocialService {
                     resolve(success);
                 })
             } else {
-                console.log("Please run me on a device");
                 reject('Please run me on a device');
             }
         });
         return p;
-    }
-    google_logout() {
-        GooglePlus.logout();
     }
 }
 
