@@ -6,29 +6,32 @@ import keys from 'lodash/keys';
 declare let Promise: any;
 @Injectable()
 export class AppConfig implements OnInit {
-    store_id: string;
-    webConfig: string;
-    data: string;
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
+
     getAppConfig(): Promise<ConfigDataType> {
-        return this.local.get('web_config').then((value: any) => {
-            this.webConfig = value;
-            this.local.get('store_id').then((value: any) => {
-                this.store_id = JSON.parse(value);
+        let local = this.local;
+        let apiservice = this._apiService;
+        return new Promise(function(resolve, reject) {
+            local.get('web_config').then((web_config: string) => {
+                local.get('store_id').then((store_id: any) => {
+                    let data = { store_id: JSON.parse(store_id) };
+                    if (keys(web_config).length > 0) {
+                        resolve(web_config);
+                    }
+                    else {
+                        apiservice.api("web/confi", data).subscribe((res) => {
+                            let data = JSON.parse(res.body).data;
+                            local.set('web_config', data);
+                            resolve(data);
+                        })
+                    }
+                });
             });
-        }).then(() => {
-            if (keys(this.webConfig).length > 0) {
-                return new Promise((resolve: any, reject: any) => resolve(this.webConfig));
-            }
-            else {
-                let data = { store_id: this.store_id };
-                return this._apiService.api("web/config", data).subscribe((res) => {
-                    this.data = JSON.parse(res.body).data;
-                    this.local.set('web_config', this.data);
-                    return new Promise((resolve: any, reject: any) => resolve(this.data));
-                })
-            }
-        })
+        }).catch(function(reason) {
+            // not called
+        }, function(reason) {
+            console.log(reason); 
+        });
     }
 } 
