@@ -34,9 +34,7 @@ export class GoogleComponent implements OnInit {
             this.google_data.google_profilepic = res.imageUrl;
             this.google_data.google_accesstoken = res.accessToken;
             let body = { firstname: this.google_data.google_firstname, lastname: this.google_data.google_lastname, email: this.google_data.google_email, picture: this.google_data.google_profilepic };
-            this._local.set("googleData", body);
-            self._navCtrl.setRoot(HomePage);
-            this.usergoogleLogin.emit(body);
+            self.usergoogleLogin.emit(body);
         })
     }
 

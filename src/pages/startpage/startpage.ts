@@ -4,6 +4,7 @@ import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import { Storage } from '@ionic/storage';
 import {ApiService } from './../../providers/api-service/api-service';
+import {HomePage} from '../../pages/home/home';
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -43,5 +44,13 @@ export class StartPage implements OnInit {
             this._local.set('store_id', this.store_id);
             this.check = true;
         });
+    }
+    userfbLogin1(body) {
+        this._local.set("fbProfileDate", body);
+        this._navCtrl.setRoot(HomePage);
+    }
+    usergoogleLogin(body) {
+        this._local.set("googleData", body);
+        this._navCtrl.setRoot(HomePage);
     }
 }
