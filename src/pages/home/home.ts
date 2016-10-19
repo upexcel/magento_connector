@@ -25,10 +25,6 @@ export class HomePage implements OnInit {
     dataArray: any;
     store_id: string;
     listCheck: string;
-    private _toggleData = {
-        showDetails: false,
-        icon:'ios-add-circle-outline'
-    }
     constructor(private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
