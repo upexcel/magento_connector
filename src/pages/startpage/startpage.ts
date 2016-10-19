@@ -4,10 +4,10 @@ import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
-import {AppConfig} from '../../providers/appConfig/appConfig';
+import {AppConfig} from '../../providers/AppConfig/appConfig';
 import { config } from './../../providers/config/config';
 import {ApiService } from './../../providers/api-service/api-service';
-import {SocialService} from '../../providers/social-service/social-service'
+import {SocialService} from '../../providers/social-service/social-service';
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -30,17 +30,19 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-
-    constructor(private _tourService: AppConfig, private _local: Storage, private _loadingCtrl: LoadingController, private _socialProvider: SocialService,
+    constructor(private _appConfig: AppConfig, public _local: Storage, public _loadingCtrl: LoadingController, public _socialProvider: SocialService,
         private _navCtrl: NavController, private _navparam: NavParams,
-        public _modalCtrl: ModalController, private _apiService: ApiService) { }
+        public _modalCtrl: ModalController, private _apiService: ApiService) {
+    }
+
     ngOnInit() {
         this.getlogo();
         this.messsage_expired = this._navparam.get("message")
         this.options = {
             clientid: config.google_clientid
         }
-        this._tourService.setData();
+        this._appConfig.getAppConfig().then((res)=>{  
+        });
     }
     gotologin() {
         this._navCtrl.push(LoginPage);
