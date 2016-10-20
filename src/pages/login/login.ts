@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController} from 'ionic-angular';
+import { NavController, ToastController, AlertController} from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register';
 import {ApiService } from './../../providers/api-service/api-service';
@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
     response: string;
     website_id: any;
     show_form: boolean = false;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController,private _alertCtrl: AlertController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.website_id = value;
@@ -58,10 +58,9 @@ export class LoginPage implements OnInit {
             }
         },
             (err) => {
-                if (err.status === 0) {
-                    console.log(err)
+                if (err.status === 500) {
                     this.spin = false;
-                    this.presentToast(err.msg);
+                    this.showLoginError(err);
                 }
             }
         )
@@ -76,5 +75,13 @@ export class LoginPage implements OnInit {
     }
     gotoforgotPage() {
         this._navCtrl.push(ForgotPage);
+    }
+    showLoginError(error) {
+        let alert = this._alertCtrl.create({
+            title: 'Error',
+            subTitle: error,
+            buttons: ['OK']
+        });
+        alert.present();
     }
 }
