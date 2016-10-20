@@ -22,7 +22,7 @@ import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
-import { Convert } from '../pipe/code-to-name.pile';
+import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
 @NgModule({
@@ -44,7 +44,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        Convert,
+        ConvertCodeToName,
         GoogleComponent,
         FacebookComponent
     ],

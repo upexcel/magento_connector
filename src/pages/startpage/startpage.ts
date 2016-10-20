@@ -13,8 +13,9 @@ import { ConfigDataType } from '../takeTour/configDataType';
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
-        data: ConfigDataType = {
+    data: ConfigDataType = {
         tour_logo: "",
+        logo_url: "",
         logo_alt: "",
         tour_slider: "",
         background_image: "",
@@ -34,10 +35,10 @@ export class StartPage implements OnInit {
         this.options = {
             clientid: config.google_clientid
         }
-        this._appConfig.getAppConfig().then((res)=>{  
-        this.data = res;
-        this._local.set('website_id', this.data.website_id);
-        this._local.set('store_id', this.data.store_id);
+        this._appConfig.getAppConfig().then((res) => {
+            this.data = res;
+            this._local.set('website_id', this.data.website_id);
+            this._local.set('store_id', this.data.store_id);
             this.check = true;
         });
 
