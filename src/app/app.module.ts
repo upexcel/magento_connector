@@ -14,7 +14,7 @@ import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
 import { AppConfig } from '../providers/appConfig/appConfig';
-import { CartService } from '../providers/api-service/cartService';
+import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -22,7 +22,7 @@ import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
-import { Filter } from '../pipe/pipe';
+import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
 @NgModule({
@@ -44,7 +44,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        Filter,
+        ConvertCodeToName,
         GoogleComponent,
         FacebookComponent
     ],

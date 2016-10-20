@@ -32,7 +32,7 @@ export class CartPage implements OnInit {
 
     add(data) {
         this.local.get('item').then((value: any) => {
-            let cartData:any = [];
+            let cartData: any = [];
             let UpdatecartData = [];
             let keyDataCheck: boolean = false;
             cartData = JSON.parse(value);
