@@ -1,56 +1,43 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
+import {AppConfig} from '../../providers/appConfig/appConfig';
 import {ApiService } from './../../providers/api-service/api-service';
 import {LoginPage} from './../login/login';
+import { Storage } from '@ionic/storage';
+import { ConfigDataType } from './configDataType';
+import { config } from './../../providers/config/config';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
-import { Storage } from '@ionic/storage';
+import keys from 'lodash/keys';
 @Component({
     templateUrl: 'tour.html'
 })
 export class TourPage implements OnInit {
-    store_id: string;
-    logo: string;
-    logo_alt: string;
-    desc: string;
-    descriptions: string;
-    mySlideOptions = {
-        initialSlide: 0,
-        autoplay: 2000,
-        loop: true,
-        pager: true
+    data: ConfigDataType = {
+        tour_logo: "",
+        logo_alt: "",
+        tour_slider: ""
     };
-    getStarted_show: boolean = false;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
-
+    descriptions: string;
+    mySlideOptions = config.tourPageSliderOptions;
+    constructor(private _appConfig: AppConfig, public _local: Storage, public _navCtrl: NavController, public _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
-        this._local.get('store_id').then((value: any) => {
-            this.store_id = JSON.parse(value);
+        this._appConfig.getAppConfig().then((res)=>{
+            let res_data: any = [];
+            this.data = res;
+            forEach(this.data.tour_slider, function(value, key) {
+                res_data.push(value);
+            })
+            this.descriptions = clone(res_data);            
         });
-        this.getTour();
-
     }
     close() {
         this._viewCtrl.dismiss();
     }
-    getTour() {
-        let res_data: any = [];
-        let body = { store_id: this.store_id };
-        this._apiService.api("web/config", body).subscribe((res) => {
-            this.getStarted_show = true;
-            let body = JSON.parse(res.body).data;
-            this.logo = body.tour_logo;
-            this.logo_alt = body.logo_alt;
-            this.desc = body.tour_slider;
-            forEach(this.desc, function(value, key) {
-                res_data.push(value);
-            })
-            this.descriptions = clone(res_data);
-        })
-    }
-    gotologin() {
+    gotoLogin() {
         this._navCtrl.push(LoginPage);
     }
+
 }
 
