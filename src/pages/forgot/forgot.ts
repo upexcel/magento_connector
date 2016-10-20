@@ -28,7 +28,7 @@ export class ForgotPage implements OnInit {
         this.spin = true;
         this._apiService.api('customer/forgot/', value).subscribe((res) => {
             this.spin = false;
-            this.response = JSON.parse(res.body).message;
+            this.response = res.message;
             this.presentToast(this.response);
         },
             (err) => {
