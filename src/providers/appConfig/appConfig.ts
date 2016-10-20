@@ -21,7 +21,7 @@ export class AppConfig implements OnInit {
                 else {
                     local.get('store_id').then((store_id: any) => {
                         let data = { store_id: JSON.parse(store_id) };
-                        apiservice.api("web/confi", data).subscribe((res) => {
+                        apiservice.api("web/config", data).subscribe((res) => {
                             let data = JSON.parse(res.body).data;
                             local.set('web_config', data);
                             resolve(data);
