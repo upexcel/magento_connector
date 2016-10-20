@@ -38,7 +38,7 @@ export class RegisterPage implements OnInit {
             if (res.status == 1) {
                 this.signin(regvalue);
             } else {
-                this.presentToast(JSON.parse(res.body).message);
+                this.presentToast(res.message);
             }
         }
         );
@@ -48,13 +48,13 @@ export class RegisterPage implements OnInit {
         this._apiService.api('customer/login/', logvalue).subscribe((res) => {
             this.spin = false;
             if (res.status == 1) {
-                let body = JSON.parse(res.body);
-                let firstname = body.data.firstname;
-                let lastname = body.data.lastname;
-                let access_token = body.data.access_token;
-                let expiry = body.data.expiry;
-                let secret = body.data.secret;
-                let email = body.data.email;
+                let body = res.data;
+                let firstname = body.firstname;
+                let lastname = body.lastname;
+                let access_token = body.access_token;
+                let expiry = body.expiry;
+                let secret = body.secret;
+                let email = body.email;
                 this._local.set('firstname', firstname);
                 this._local.set('lastname', lastname);
                 this._local.set('access_token', access_token);

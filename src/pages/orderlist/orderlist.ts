@@ -3,7 +3,7 @@ import { Component, OnInit} from '@angular/core';
 import { NavController, PopoverController} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
-import {OrderModalPage} from './../orderid-detail/orderid-detail';
+import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
@@ -56,10 +56,10 @@ export class OrderlistPage implements OnInit {
             if (res.statuscode == 500) {
                 this.logout();
             }
-            if (JSON.parse(res.body).data != 0) {
+            if (res.data != 0) {
                 this.ttl_show = true;
-                this.totalOrders = JSON.parse(res.body).data.total_order;
-                this.totalAmount = JSON.parse(res.body).data.total_amount;
+                this.totalOrders = res.data.total_order;
+                this.totalAmount = res.data.total_amount;
             } else {
             }
         })
@@ -76,11 +76,11 @@ export class OrderlistPage implements OnInit {
             if (res.statuscode == 500) {
                 this.logout();
             }
-            if (JSON.parse(res.body).data == 0) {
+            if (res.data == 0) {
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
             } else {
-                this.res = JSON.parse(res.body).data;
+                this.res = res.data;
                 forEach(this.res, function(value, key) {
                     date.push(value.created_at.split(" ", 1));
                     datas = {
@@ -96,7 +96,7 @@ export class OrderlistPage implements OnInit {
             }
         })
     }
-    doInfinite(infiniteScroll: any) {
+    doInfinite(infiniteScroll) {
         if (this.values.length % 2 == 0 || this.dates.length % 2 == 0) {
             if (this.values.length >= this.endArray || this.dates.length >= this.endDateArray) {
                 setTimeout(() => {
@@ -140,8 +140,8 @@ export class OrderlistPage implements OnInit {
             ev: myEvent,
         });
     }
-    presentModal(id: any) {
-        this._navCtrl.push(OrderModalPage, { "order_id": id });
+    gotoOrderDetail(order_id) {
+        this._navCtrl.push(OrderModalPage, { "order_id": order_id });
     }
     goback() {
         this._navCtrl.pop();
@@ -158,4 +158,3 @@ export class OrderlistPage implements OnInit {
         this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
     }
 }
-

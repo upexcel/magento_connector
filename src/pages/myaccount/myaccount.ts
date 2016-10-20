@@ -48,11 +48,11 @@ export class MyAccountPage implements OnInit {
             if (res.statuscode == 500) {
                 this.logout();
             } else {
-                var condition = JSON.parse(res.body).data;
+                var condition = res.data;
                 if (condition.length == 0) {
                     this.got = true
                     this.spin = false
-                    this.user_add = JSON.parse(res.body).data;
+                    this.user_add = res.data;
                     this.updateform = this._fb.group({
                         firstname: [this.firstname],
                         lastname: [this.lastname],
@@ -67,7 +67,7 @@ export class MyAccountPage implements OnInit {
                     })
                 } else {
                     this.spin = false;
-                    this.user_add = JSON.parse(res.body).data;
+                    this.user_add = res.data;
                     this.updateform = this._fb.group({
                         firstname: [this.user_add[0].firstname],
                         lastname: [this.user_add[0].lastname],
@@ -89,7 +89,7 @@ export class MyAccountPage implements OnInit {
         this._apiService.api('address/edit', value).subscribe((res) => {
             this.upd_spin = false;
             if (res.status === 0) {
-                this.msg = JSON.parse(res.body).message;
+                this.msg = res.message;
             } else {
                 this.msg = "Successfully updated";
             }

@@ -37,15 +37,9 @@ export class ChangepasswordPage implements OnInit {
         this.spin = true;
         this._apiService.api("account/changepassword/", value).subscribe((res) => {
             this.spin = false;
-            if (res.status == 0) {
-                this.response = "Invalid email address";
-                this.showToast(this.response)
-            }
-            else {
-                this.response = JSON.parse(res.body).data;
+                this.response = res.data;
                 this.showToast(this.response);
                 this._navCtrl.setRoot(HomePage);
-            }
         })
     }
     showToast(message: string) {
@@ -57,10 +51,7 @@ export class ChangepasswordPage implements OnInit {
         toast.present();
     }
     doRefresh(refresher) {
-        console.log('Begin async operation', refresher);
-
         setTimeout(() => {
-            console.log('Async operation has ended');
             refresher.complete();
         }, 2000);
     }

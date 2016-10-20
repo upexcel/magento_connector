@@ -12,7 +12,6 @@ import clone from 'lodash/clone';
 export class OrderModalPage implements OnInit {
     order_no: number;
     order_id: number;
-    secret: any;
     customer_name: string;
     customer_email: string;
     purchased_on: any;
@@ -49,19 +48,18 @@ export class OrderModalPage implements OnInit {
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this._local.get('secret').then((value: any) => {
-            this.secret = value;
-            this.getOrderDetails(this.order_id);
+            this.getOrderDetails(this.order_id,value);
         });
     }
     close() {
         this._viewCtrl.dismiss();
     }
-    getOrderDetails(order_id: any) {
+    getOrderDetails(order_id,secret) {
         let body = {
-            order_id: order_id, secret: this.secret
+            order_id: order_id, secret: secret
         }
         this._apiService.api("order/get/", body).subscribe((res) => {
-            let parse = JSON.parse(res.body);
+            let parse = res;
             this.status = parse.data.status;
             this.grand_total = parse.data.grand_total;
             this.purchased_on = parse.data.purchased_on;

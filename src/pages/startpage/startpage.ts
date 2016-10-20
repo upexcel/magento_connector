@@ -32,7 +32,7 @@ export class StartPage implements OnInit {
         this.options = {
             clientid: config.google_clientid
         }
-        this._appConfig.getAppConfig().then((res)=>{  
+        this._appConfig.getAppConfig().then((res)=>{
         });
 
     }
@@ -46,12 +46,11 @@ export class StartPage implements OnInit {
     getlogo() {
         let body = {};
         this._apiService.api("web/config", body).subscribe((res) => {
-            let parse = JSON.parse(res.body);
-            this.logo = parse.data.logo_url;
-            this.background_image = parse.data.background_image;
-            this.logo_alt = parse.data.logo_alt;
-            this.website_id = parse.data.website_id;
-            this.store_id = parse.data.store_id;
+            this.logo = res.data.logo_url;
+            this.background_image = res.data.background_image;
+            this.logo_alt = res.data.logo_alt;
+            this.website_id = res.data.website_id;
+            this.store_id = res.data.store_id;
             this._local.set('website_id', this.website_id);
             this._local.set('store_id', this.store_id);
             this.check = true;

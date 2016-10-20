@@ -36,7 +36,7 @@ export class CategoryProduct implements OnInit {
         this._apiService.api("category/products/", path).subscribe((res) => {
             var res_data = [];
             if (res) {
-                this.pro = JSON.parse(res.body).data;
+                this.pro = res.data;
                 for (var product of this.pro) {
                     res_data.push(product);
                 }

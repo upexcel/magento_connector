@@ -60,6 +60,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         RegisterPage,
         ProductPage,
         OrderlistPage,
+        OrderModalPage,
         ChangepasswordPage,
         ForgotPage,
         HomePage,
