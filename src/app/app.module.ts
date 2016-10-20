@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
@@ -17,13 +17,14 @@ import { AppConfig } from '../providers/appConfig/appConfig';
 import { CartService } from '../providers/api-service/cartService';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
-import { Data } from '../components/data/data';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
 import { Filter } from '../pipe/pipe';
+import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
+import { GoogleComponent } from '../components/googleLogin/googleComponent';
 @NgModule({
     declarations: [
         MyApp,
@@ -40,11 +41,12 @@ import { Filter } from '../pipe/pipe';
         OrderModalPage,
         MyAccountPage,
         LoginPage,
-        Data,
         LoadingModal,
         PopoverPage,
         NextOnEnter,
-        Filter
+        Filter,
+        GoogleComponent,
+        FacebookComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp)

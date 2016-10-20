@@ -1,27 +1,18 @@
 import { Component, OnInit} from '@angular/core';
-import { ModalController, NavController, LoadingController, NavParams} from 'ionic-angular';
+import { ModalController, NavController, NavParams, AlertController} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
-import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import {AppConfig} from '../../providers/appConfig/appConfig';
 import { config } from './../../providers/config/config';
 import {ApiService } from './../../providers/api-service/api-service';
 import {SocialService} from '../../providers/social-service/social-service';
+import {HomePage} from '../../pages/home/home';
+
 @Component({
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
-    fb_firstname: string;
-    fb_lastname: string;
-    fb_email: string;
-    fb_profilepic: string;
-    google_firstname: string;
-    google_lastname: string;
-    google_email: string;
-    google_profilepic: string;
-    google_accesstoken: string;
-    google_idToken: string;
     messsage_expired: string;
     logo: string;
     logo_alt: string;
@@ -30,7 +21,7 @@ export class StartPage implements OnInit {
     background_image: string;
     check: boolean = false;
     options: {};
-    constructor(private _appConfig: AppConfig, public _local: Storage, public _loadingCtrl: LoadingController, public _socialProvider: SocialService,
+    constructor(private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
         public _modalCtrl: ModalController, private _apiService: ApiService) {
     }
@@ -43,6 +34,7 @@ export class StartPage implements OnInit {
         }
         this._appConfig.getAppConfig().then((res)=>{  
         });
+
     }
     gotologin() {
         this._navCtrl.push(LoginPage);
@@ -65,45 +57,20 @@ export class StartPage implements OnInit {
             this.check = true;
         });
     }
-    onFacebookLoginClick() {
-        this._socialProvider.login().then((res) => {
-            this._socialProvider.getCurrentUserProfile().then(
-                (profileData) => {
-                    this.fb_firstname = profileData.first_name;
-                    this.fb_lastname = profileData.last_name;
-                    this.fb_email = profileData.email;
-                    this.fb_profilepic = profileData.picture.data.url;
-                    let body = { firstname: this.fb_firstname, lastname: this.fb_lastname, email: this.fb_email, picture: this.fb_profilepic };
-                    this._local.set("firstname", this.fb_firstname);
-                    this._local.set("lastname", this.fb_lastname);
-                    this._local.set("email", this.fb_email);
-                    this._local.set("access_token", this.fb_profilepic);
-                    this._navCtrl.setRoot(HomePage);
-                }
-            );
-        });
+    userFbLogin(body) {
+        this._local.set("fbProfileDate", body);
+        this._navCtrl.setRoot(HomePage);
     }
-    google_login() {
-        this.presentLoading();
-        this._socialProvider.google_login(this.options).then((res) => {
-            this.google_firstname = res.givenName;
-            this.google_lastname = res.familyName;
-            this.google_email = res.email;
-            this.google_profilepic = res.imageUrl;
-            this.google_accesstoken = res.accessToken;
-            let body = { firstname: this.google_firstname, lastname: this.google_lastname, email: this.google_email, picture: this.google_profilepic };
-            this._local.set("firstname", this.google_firstname);
-            this._local.set("lastname", this.google_lastname);
-            this._local.set("email", this.google_email);
-            this._local.set("access_token", this.google_accesstoken);
-            this._navCtrl.setRoot(HomePage);
-        })
+    userGoogleLogin(body) {
+        this._local.set("googleData", body);
+        this._navCtrl.setRoot(HomePage);
     }
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Loading...",
-            duration: 3000
+    showSocialLoginError(error) {
+        let alert = this._alertCtrl.create({
+            title: 'Error',
+            subTitle: error,
+            buttons: ['OK']
         });
-        loader.present();
+        alert.present();
     }
 }

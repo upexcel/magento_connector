@@ -1,33 +1,34 @@
 import { Platform} from 'ionic-angular';
 import {Injectable} from '@angular/core';
-import {GooglePlus, Facebook, SpinnerDialog} from 'ionic-native'
+import {GooglePlus, Facebook} from 'ionic-native'
+import { config} from './../config/config';
 @Injectable()
 export class SocialService {
     platform: any;
-    //    p: any;
+    options: any;
     constructor(platform: Platform) {
         this.platform = platform;
-        Facebook.browserInit(1785639755024591, 'v2.8');
+        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
+        this.options = {
+            clientid: config.google_clientid
+        }
     }
 
-    login() {
-        let p: any;
-        p = new Promise((resolve, reject) => {
+    fbLogin() {
+        let p = new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
                 Facebook.login(['email']).then((success) => {
                     resolve(success);
                 })
             } else {
-                console.log("Please run me on a device");
                 reject('Please run me on a device');
             }
         });
         return p;
     }
 
-    getCurrentUserProfile() {
-        let p: any;
-        p = new Promise((resolve, reject) => {
+    getFbCurrentUserProfile() {
+        let p = new Promise((resolve, reject) => {
             Facebook.api('/me?fields=id,first_name,last_name,email,picture.width(150).height(150)', null).then(
                 (profileData) => {
                     resolve(profileData);
@@ -35,23 +36,17 @@ export class SocialService {
         });
         return p;
     }
-    google_login(options: any) {
-        let p: any;
-        p = new Promise((resolve, reject) => {
+    googleLogin() {
+        let p = new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
-                GooglePlus.login(options).then((success) => {
+                GooglePlus.login(this.options).then((success) => {
                     resolve(success);
-                    console.log(success);
                 })
             } else {
-                console.log("Please run me on a device");
                 reject('Please run me on a device');
             }
         });
         return p;
-    }
-    google_logout() {
-        GooglePlus.logout();
     }
 }
 

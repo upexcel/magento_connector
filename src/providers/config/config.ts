@@ -9,6 +9,13 @@ export const config = {
         autoplay: 2000,
         loop: true,
         pager: true
+    },
+    "facebook_clientid": 1785639755024591,
+    "facebook_version": "v2.8",
+    "homePageSliderOptions": {
+        "autoplay": 3000,
+        "initialSlide": 1,
+        "loop": true,
+        "pager": true
     }
-
 }
