@@ -8,17 +8,20 @@ import { config } from './../../providers/config/config';
 import {ApiService } from './../../providers/api-service/api-service';
 import {SocialService} from '../../providers/social-service/social-service';
 import {HomePage} from '../../pages/home/home';
-
+import { ConfigDataType } from '../takeTour/configDataType';
 @Component({
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
+        data: ConfigDataType = {
+        tour_logo: "",
+        logo_alt: "",
+        tour_slider: "",
+        background_image: "",
+        website_id: "",
+        store_id: ""
+    };
     messsage_expired: string;
-    logo: string;
-    logo_alt: string;
-    website_id: string;
-    store_id: string;
-    background_image: string;
     check: boolean = false;
     options: {};
     constructor(private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
@@ -27,12 +30,15 @@ export class StartPage implements OnInit {
     }
 
     ngOnInit() {
-        this.getlogo();
         this.messsage_expired = this._navparam.get("message");
         this.options = {
             clientid: config.google_clientid
         }
         this._appConfig.getAppConfig().then((res)=>{  
+        this.data = res;
+        this._local.set('website_id', this.data.website_id);
+        this._local.set('store_id', this.data.store_id);
+            this.check = true;
         });
 
     }
@@ -42,20 +48,6 @@ export class StartPage implements OnInit {
     presentProfileModal() {
         let profileModal = this._modalCtrl.create(TourPage);
         profileModal.present();
-    }
-    getlogo() {
-        let body = {};
-        this._apiService.api("web/config", body).subscribe((res) => {
-            let parse = JSON.parse(res.body);
-            this.logo = parse.data.logo_url;
-            this.background_image = parse.data.background_image;
-            this.logo_alt = parse.data.logo_alt;
-            this.website_id = parse.data.website_id;
-            this.store_id = parse.data.store_id;
-            this._local.set('website_id', this.website_id);
-            this._local.set('store_id', this.store_id);
-            this.check = true;
-        });
     }
     userFbLogin(body) {
         this._local.set("fbProfileDate", body);

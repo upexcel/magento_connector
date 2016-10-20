@@ -16,20 +16,24 @@ import keys from 'lodash/keys';
 export class TourPage implements OnInit {
     data: ConfigDataType = {
         tour_logo: "",
+        logo_url: "",
         logo_alt: "",
-        tour_slider: ""
+        tour_slider: "",
+        background_image: "",
+        website_id: "",
+        store_id: ""
     };
     descriptions: string;
     mySlideOptions = config.tourPageSliderOptions;
     constructor(private _appConfig: AppConfig, public _local: Storage, public _navCtrl: NavController, public _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
-        this._appConfig.getAppConfig().then((res)=>{
+        this._appConfig.getAppConfig().then((res) => {
             let res_data: any = [];
             this.data = res;
             forEach(this.data.tour_slider, function(value, key) {
                 res_data.push(value);
             })
-            this.descriptions = clone(res_data);            
+            this.descriptions = clone(res_data);
         });
     }
     close() {
