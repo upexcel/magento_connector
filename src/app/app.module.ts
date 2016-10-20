@@ -13,7 +13,7 @@ import { HomePage } from '../pages/home/home';
 import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
-import { AppConfig } from '../providers/AppConfig/appConfig';
+import { AppConfig } from '../providers/appConfig/appConfig';
 import { CartService } from '../providers/api-service/cartService';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';

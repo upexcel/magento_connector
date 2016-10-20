@@ -12,26 +12,26 @@ export class AppConfig implements OnInit {
     getAppConfig(): Promise<ConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
+
         return new Promise(function(resolve, reject) {
             local.get('web_config').then((web_config: string) => {
-                local.get('store_id').then((store_id: any) => {
-                    let data = { store_id: JSON.parse(store_id) };
-                    if (keys(web_config).length > 0) {
-                        resolve(web_config);
-                    }
-                    else {
+                if (keys(web_config).length > 0) {
+                    resolve(web_config);
+                }
+                else {
+                    local.get('store_id').then((store_id: any) => {
+                        let data = { store_id: JSON.parse(store_id) };
                         apiservice.api("web/confi", data).subscribe((res) => {
                             let data = JSON.parse(res.body).data;
                             local.set('web_config', data);
                             resolve(data);
-                        })
-                    }
-                });
+                        }, (err) => {
+                            reject(err);
+                        });
+                    });
+                }
+
             });
-        }).catch(function(reason) {
-            // not called
-        }, function(reason) {
-            console.log(reason); 
         });
     }
 } 

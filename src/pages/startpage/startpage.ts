@@ -4,7 +4,7 @@ import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
-import {AppConfig} from '../../providers/AppConfig/appConfig';
+import {AppConfig} from '../../providers/appConfig/appConfig';
 import { config } from './../../providers/config/config';
 import {ApiService } from './../../providers/api-service/api-service';
 import {SocialService} from '../../providers/social-service/social-service';
