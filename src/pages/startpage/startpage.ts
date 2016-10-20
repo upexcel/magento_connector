@@ -35,6 +35,7 @@ export class StartPage implements OnInit {
         this.options = {
             clientid: config.google_clientid
         }
+
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
             this._local.set('website_id', this.data.website_id);

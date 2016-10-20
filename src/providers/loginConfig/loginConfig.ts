@@ -22,7 +22,7 @@ export class LoginConfig implements OnInit {
     }
 } 
 
-
+//
 //            (err) => {
 //                if (err.status === 0) {
 //                    console.log(err)

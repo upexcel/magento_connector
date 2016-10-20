@@ -22,7 +22,7 @@ export class AppConfig implements OnInit {
                     local.get('store_id').then((store_id: any) => {
                         let data = { store_id: JSON.parse(store_id) };
                         apiservice.api("web/config", data).subscribe((res) => {
-                            let data = JSON.parse(res.body).data;
+                            let data = res.data;
                             local.set('web_config', data);
                             resolve(data);
                         }, (err) => {
@@ -34,4 +34,4 @@ export class AppConfig implements OnInit {
             });
         });
     }
-} 
+}

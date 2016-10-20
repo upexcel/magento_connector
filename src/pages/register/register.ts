@@ -6,6 +6,8 @@ import { StartPage } from '../startpage/startpage';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
+import { RegisterConfig } from '../../providers/registerConfig/registerConfig';
+
 @Component({
     templateUrl: 'register.html'
 })
@@ -14,7 +16,7 @@ export class RegisterPage implements OnInit {
     spin: boolean;
     website_id: any;
     clear: boolean = false;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _registerConfig:RegisterConfig ,private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.website_id = value;
@@ -33,12 +35,12 @@ export class RegisterPage implements OnInit {
     }
     signup(regvalue: any) {
         this.spin = true;
-        this._apiService.api("customer/register/", regvalue).subscribe((res) => {
+        this._registerConfig.getregisterConfig(regvalue).then((res) => {
             this.spin = false;
             if (res.status == 1) {
                 this.signin(regvalue);
             } else {
-                this.presentToast(JSON.parse(res.body).message);
+                this.presentToast(res.message);
             }
         }
         );
@@ -48,13 +50,13 @@ export class RegisterPage implements OnInit {
         this._apiService.api('customer/login/', logvalue).subscribe((res) => {
             this.spin = false;
             if (res.status == 1) {
-                let body = JSON.parse(res.body);
-                let firstname = body.data.firstname;
-                let lastname = body.data.lastname;
-                let access_token = body.data.access_token;
-                let expiry = body.data.expiry;
-                let secret = body.data.secret;
-                let email = body.data.email;
+                let body = res.data;
+                let firstname = body.firstname;
+                let lastname = body.lastname;
+                let access_token = body.access_token;
+                let expiry = body.expiry;
+                let secret = body.secret;
+                let email = body.email;
                 this._local.set('firstname', firstname);
                 this._local.set('lastname', lastname);
                 this._local.set('access_token', access_token);

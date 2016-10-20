@@ -31,7 +31,7 @@ export class ApiService {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
         }
-        let body = res.json();
+        let body = JSON.parse(res.json().body);
         subject.next(body);
         return body;
     }

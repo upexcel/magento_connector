@@ -15,12 +15,12 @@
 <ion-content class="orderlist" scroll="true">
     <ion-list no-lines class="avt">
         <ion-item>
-<!--            <ion-avatar item-left>
+           <ion-avatar item-left>
                 <img src="../../assets/image/grey.jpg">
-            </ion-avatar>-->
+            </ion-avatar>
             <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
         </ion-item>
-    </ion-list>            
+    </ion-list>
     <ion-spinner *ngIf="spin"></ion-spinner>
     <ion-grid class="seg">
         <ion-row  *ngIf="ttl_show">
@@ -35,13 +35,10 @@
             <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
                      <div class="cd-timeline-block" *ngIf="(date| date: 'dd/MM/yyyy')==(data.value.created_at| date: 'dd/MM/yyyy')">
                  <div class="cd-timeline-icon">
-                        <!--<button icon-left">-->
-                        <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon> 
-                        <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon> 
-                        <!--</button>-->
-                    </div>   
-                    <div (click)="presentModal(data.key)">
-
+                        <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon>
+                        <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon>
+                    </div>
+                    <div (click)="gotoOrderDetail(data.key)">
                         <span class="order_key">#{{data.key}}</span>
                         <span class="date_creation">{{data.value.created_at | date: 'hh:mm'}}</span>
                         <div class="cd-timeline-content">
@@ -55,7 +52,6 @@
         </ion-item>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content>
-        </ion-infinite-scroll-content>
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
