@@ -3,8 +3,8 @@ import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
 import { Storage } from '@ionic/storage';
-@Pipe({ name: 'filter' })
-export class Filter implements PipeTransform {
+@Pipe({ name: 'convert' })
+export class Convert implements PipeTransform {
     constructor(public local: Storage) { }
     transform(obj: any, attr: any): any {
         let lists;

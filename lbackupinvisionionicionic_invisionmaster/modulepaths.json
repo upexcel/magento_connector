@@ -1596,7 +1596,7 @@
   "\u0000commonjs-proxy:/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/_basePullAll.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/pullAll.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/cart/cart.js",
-  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/providers/api-service/cartService.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/providers/cart-service/cart-service.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/uniqWith.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/_assignMergeValue.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/node_modules/lodash/_nativeKeysIn.js",
@@ -1629,10 +1629,11 @@
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/providers/social-service/social-service.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pages/startpage/startpage.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/app.component.js",
-  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/data/data.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/loading-modal/loading-modal.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/directives/nextonenter.js",
-  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pipe/pipe.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/pipe/code-to-name.pile.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/facebookLogin/FacebookComponent.js",
+  "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/components/googleLogin/googleComponent.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/app.module.js",
   "/var/www/html/backupInvisionIonic/ionic_invision-master/.tmp/app/main.dev.js"
 ]

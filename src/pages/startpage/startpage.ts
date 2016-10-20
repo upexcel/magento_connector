@@ -28,7 +28,7 @@ export class StartPage implements OnInit {
 
     ngOnInit() {
         this.getlogo();
-        this.messsage_expired = this._navparam.get("message")
+        this.messsage_expired = this._navparam.get("message");
         this.options = {
             clientid: config.google_clientid
         }
