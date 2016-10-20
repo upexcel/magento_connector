@@ -11,13 +11,12 @@
         </ion-row>
         <ion-row class="margBot20">
             <ion-col class="center">
-                <img src="{{logo}}" alt="{{logo_alt}}" class="logo"/>
-
+                <img src="{{data.tour_logo}}" alt="{{data.logo_alt}}" class="logo"/>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col >
-                <ion-slides #mySlider [options]="mySlideOptions">
+                <ion-slides #mySlider [options]="mySlideOptions" >
                     <ion-slide *ngFor="let desc of descriptions;let i=index">
                         <ion-row>
                             <ion-col>
@@ -36,10 +35,10 @@
         </ion-row>
         <ion-row>
             <ion-col>                
-                <ion-buttons *ngIf="getStarted_show">
-                     <button ion-button color='primary' (click)="gotologin()" full>
-                         Get Started now!!
-                     </button>
+                <ion-buttons >
+                    <button ion-button color='primary' (click)="gotoLogin()" full>
+                        Get Started now!!
+                    </button>
                 </ion-buttons>
             </ion-col>
         </ion-row>

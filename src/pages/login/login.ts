@@ -63,7 +63,6 @@ export class LoginPage implements OnInit {
                     this.spin = false;
                     this.presentToast(err.msg);
                 }
-
             }
         )
     }
