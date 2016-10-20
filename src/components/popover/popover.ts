@@ -5,7 +5,6 @@ import {MyAccountPage} from './../../pages/myaccount/myaccount';
 import {ChangepasswordPage} from './../../pages/changepassword/changepassword';
 import {OrderlistPage} from './../../pages/orderlist/orderlist';
 import { Storage } from '@ionic/storage';
-import {GooglePlus} from 'ionic-native';
 @Component({
     templateUrl: 'popover.html'
 })
@@ -28,6 +27,5 @@ export class PopoverPage {
         this._local.clear().then(() => {
             this._navCtrl.push(StartPage);
         });
-        GooglePlus.logout();
     }
 }
