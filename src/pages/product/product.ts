@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
-import { CartService } from './../../providers/api-service/cartService';
+import { CartService } from './../../providers/cart-service/cart-service';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';

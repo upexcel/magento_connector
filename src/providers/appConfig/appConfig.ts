@@ -34,4 +34,4 @@ export class AppConfig implements OnInit {
             });
         });
     }
-} 
+}
