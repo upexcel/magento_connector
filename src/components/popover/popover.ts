@@ -10,27 +10,24 @@ import {GooglePlus} from 'ionic-native';
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
-    constructor(public local: Storage, public viewCtrl: ViewController, public navCtrl: NavController) {
+    constructor(private _local: Storage, private _viewCtrl: ViewController, private _navCtrl: NavController) {
     }
     close() {
-        this.viewCtrl.dismiss();
+        this._viewCtrl.dismiss();
     }
     gotoMyAccount() {
-        this.navCtrl.push(MyAccountPage);
+        this._navCtrl.push(MyAccountPage);
     }
     gotoPass() {
-        this.navCtrl.push(ChangepasswordPage);
+        this._navCtrl.push(ChangepasswordPage);
     }
     gotoOrders() {
-        this.navCtrl.push(OrderlistPage);
+        this._navCtrl.push(OrderlistPage);
     }
     logout() {
-        this.local.clear().then(() => {
-            this.navCtrl.push(StartPage);
+        this._local.clear().then(() => {
+            this._navCtrl.push(StartPage);
         });
         GooglePlus.logout();
     }
 }
-
-
-
