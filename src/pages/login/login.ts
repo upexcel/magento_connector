@@ -30,17 +30,16 @@ export class LoginPage implements OnInit {
     };
     constructor(private _loginConfig: LoginConfig, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController,private _alertCtrl: AlertController) { }
     ngOnInit() {
-        this._local.get('website_id').then((value: any) => {
-            this.website_id = value;
+        this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
-            this.fb_coll(value);
+            this.fb_coll(website_id);
         });
     }
-    fb_coll(value) {
+    fb_coll(website_id) {
         this.logform = this._fb.group({
             email: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-            website_id: [value]
+            website_id: [website_id]
         });
     }
     gotoreg() {
