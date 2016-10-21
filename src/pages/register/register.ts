@@ -7,7 +7,8 @@ import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
 import { RegisterConfig } from '../../providers/registerConfig/registerConfig';
-
+import {LoginConfig} from '../../providers/loginConfig/loginConfig';
+import { LoginConfigDataType } from '../login/loginConfigDataType';
 @Component({
     templateUrl: 'register.html'
 })
@@ -16,7 +17,18 @@ export class RegisterPage implements OnInit {
     spin: boolean;
     website_id: any;
     clear: boolean = false;
-    constructor(private _registerConfig:RegisterConfig ,private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+        data: LoginConfigDataType = {
+        data: {
+            firstname: "",
+            lastname: "",
+            access_token: "",
+            expiry: "",
+            secret: "",
+            email: "",
+            store_id: ""
+        }
+    };
+    constructor(private _loginConfig: LoginConfig,private _registerConfig:RegisterConfig ,private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.website_id = value;
@@ -47,25 +59,20 @@ export class RegisterPage implements OnInit {
     }
     signin(logvalue: any) {
         this.spin = true;
-        this._apiService.api('customer/login/', logvalue).subscribe((res) => {
+        this._loginConfig.getLoginConfig(logvalue).then((res) => {
             this.spin = false;
-            if (res.status == 1) {
-                let body = res.data;
-                let firstname = body.firstname;
-                let lastname = body.lastname;
-                let access_token = body.access_token;
-                let expiry = body.expiry;
-                let secret = body.secret;
-                let email = body.email;
-                this._local.set('firstname', firstname);
-                this._local.set('lastname', lastname);
-                this._local.set('access_token', access_token);
-                this._local.set('expiry', expiry);
-                this._local.set('secret', secret);
-                this._local.set('email', email);
+            if (res.status === 1) {
+                this.data = res;
+                console.log(this.data.data.firstname); 
+                this._local.set('firstname', this.data.data.firstname);
+                this._local.set('lastname', this.data.data.lastname);
+                this._local.set('access_token', this.data.data.access_token);
+                this._local.set('expiry', this.data.data.expiry);
+                this._local.set('secret', this.data.data.secret);
+                this._local.set('email', this.data.data.email);
                 this._navCtrl.setRoot(HomePage);
-            }
-        })
+            }                
+        });
     }
     presentToast(message: string) {
         let toast = this._toastCtrl.create({
