@@ -15,13 +15,15 @@ import keys from 'lodash/keys';
 })
 export class TourPage implements OnInit {
     data: ConfigDataType = {
-        tour_logo: "",
-        logo_url: "",
-        logo_alt: "",
-        tour_slider: "",
-        background_image: "",
-        website_id: "",
-        store_id: ""
+        data: {
+            tour_logo: "",
+            logo_url: "",
+            logo_alt: "",
+            tour_slider: "",
+            background_image: "",
+            website_id: "",
+            store_id: ""
+        }
     };
     descriptions: string;
     mySlideOptions = config.tourPageSliderOptions;
@@ -30,7 +32,7 @@ export class TourPage implements OnInit {
         this._appConfig.getAppConfig().then((res) => {
             let res_data: any = [];
             this.data = res;
-            forEach(this.data.tour_slider, function(value, key) {
+            forEach(this.data.data.tour_slider, function(value, key) {
                 res_data.push(value);
             })
             this.descriptions = clone(res_data);

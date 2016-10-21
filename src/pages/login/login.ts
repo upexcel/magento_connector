@@ -17,7 +17,6 @@ export class LoginPage implements OnInit {
     response: string;
     website_id: any;
     show_form: boolean = false;
-<<<<<<< HEAD
     data: LoginConfigDataType = {
         data: {
             firstname: "",
@@ -53,7 +52,6 @@ export class LoginPage implements OnInit {
             this.spin = false;
             if (res.status === 1) {
                 this.data = res;
-                console.log(this.data.data.firstname); 
                 this._local.set('firstname', this.data.data.firstname);
                 this._local.set('lastname', this.data.data.lastname);
                 this._local.set('access_token', this.data.data.access_token);
@@ -65,6 +63,9 @@ export class LoginPage implements OnInit {
             else {
                 this.presentToast(res.message);
             }
+        })
+        .catch(err=>{
+            this.showLoginError(err);
         })
     }
     presentToast(message: string) {
