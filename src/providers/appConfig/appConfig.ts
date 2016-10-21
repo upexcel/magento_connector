@@ -19,14 +19,11 @@ export class AppConfig implements OnInit {
                     resolve(web_config);
                 }
                 else {
-                    local.get('store_id').then((store_id: any) => {
-                        let data = { store_id: JSON.parse(store_id) };
-                        apiservice.api("web/config", data).subscribe((res) => {
-                            local.set('web_config', res);
-                            resolve(data);
-                        }, (err) => {
-                            reject(err);
-                        });
+                    apiservice.api("web/config", {}).subscribe((res) => {
+                        local.set('web_config', res);
+                        resolve(res);
+                    }, (err) => {
+                        reject(err);
                     });
                 }
 

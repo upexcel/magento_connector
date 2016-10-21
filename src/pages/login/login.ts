@@ -32,7 +32,6 @@ export class LoginPage implements OnInit {
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
-            console.log(website_id);
             this.logform = this._fb.group({
                 email: ['', Validators.required],
                 password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
