@@ -38,7 +38,6 @@ export class HomePage implements OnInit {
         this.homeProducts();
         this._categorylistConfig.getCategorylistConfig().then((res) => {
             if (res) {
-                console.log(res);
                 this.lists = res.data.children;
                 this._local.set('lists', JSON.stringify(this.lists));
             }
