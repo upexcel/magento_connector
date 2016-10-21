@@ -6,6 +6,8 @@ import { StartPage } from '../startpage/startpage';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
+import { RegisterConfig } from '../../providers/registerConfig/registerConfig';
+
 @Component({
     templateUrl: 'register.html'
 })
@@ -14,7 +16,7 @@ export class RegisterPage implements OnInit {
     spin: boolean;
     website_id: any;
     clear: boolean = false;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _registerConfig:RegisterConfig ,private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.website_id = value;
@@ -33,7 +35,7 @@ export class RegisterPage implements OnInit {
     }
     signup(regvalue: any) {
         this.spin = true;
-        this._apiService.api("customer/register/", regvalue).subscribe((res) => {
+        this._registerConfig.getregisterConfig(regvalue).then((res) => {
             this.spin = false;
             if (res.status == 1) {
                 this.signin(regvalue);
