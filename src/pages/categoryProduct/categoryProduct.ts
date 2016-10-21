@@ -16,9 +16,9 @@ export class CategoryProduct implements OnInit {
     limit: number = 10;
     page: number = 1;
     data: CategoryConfigDataType = {
-        data: {
-            data: []
-        }
+          data:{
+              data: []
+            }
     }
     constructor(private _categoryConfig: CategoryProductConfig, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
@@ -33,21 +33,14 @@ export class CategoryProduct implements OnInit {
         this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
         this._categoryConfig.getCategoryProductConfig(body).then((res) => {
-//            let res_data = [];
             this.data.data=res;
-            if (res) {
-                for (let product of res.data) {
-                this.data.data.data.push(product);
-                }
-                this.products = clone(this.data.data.data);
-            }
         })
             .catch((err) => {
                 console.log(err);
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.products.length;
+        var prod_length = this.data.data.data.length;
         var limit = this.limit;
         if (prod_length % 2 == 0) {
             if (prod_length < limit) {

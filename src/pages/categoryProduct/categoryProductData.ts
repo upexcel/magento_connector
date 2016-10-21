@@ -3,5 +3,3 @@ export class CategoryConfigDataType {
         data: Array<string>
     }
 }
-
-
