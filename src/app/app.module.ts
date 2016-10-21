@@ -31,6 +31,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
 import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
+import { CategoryProductConfig } from '../providers/categoryProductConfig/categoryProductConfig';
 @NgModule({
     declarations: [
         MyApp,
@@ -75,10 +76,10 @@ import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
         LoginPage,
         PopoverPage
     ],
-
-    providers: [Storage ,AppConfig, ApiService, 
+    providers: [Storage ,AppConfig, ApiService,
     CartService, SocialService ,LoginConfig,
-    RegisterConfig,CategoryListConfig,SliderConfig,
+    RegisterConfig,CategoryListConfig,ForgotConfig,
+    SliderConfig,CategoryProductConfig,
     HomeProductsConfig]
 
 })
