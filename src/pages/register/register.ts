@@ -60,10 +60,6 @@ export class RegisterPage implements OnInit {
             this.spin = false;
             if (res.status === 1) {
                 this.data = res;
-<<<<<<< HEAD
-                console.log(this.data.data.firstname);
-=======
->>>>>>> 72f1736e8c695b431ecf18b04c27c0c5c50ba4dc
                 this._local.set('firstname', this.data.data.firstname);
                 this._local.set('lastname', this.data.data.lastname);
                 this._local.set('access_token', this.data.data.access_token);
