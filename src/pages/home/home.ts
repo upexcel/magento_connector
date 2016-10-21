@@ -77,8 +77,7 @@ export class HomePage implements OnInit {
         let body: any;
         this._apiService.api("home/slider", body).subscribe((res) => {
             if (res) {
-                console.log(res);
-                this.img = JSON.parse(res.body.body).data;
+                this.img = res.data;
             }
 
         });
@@ -88,8 +87,7 @@ export class HomePage implements OnInit {
         let body = { "type": "large_data" }
         this._apiService.api("home/products", body).subscribe((res) => {
             if (res) {
-                console.log(res);
-                this.dataArray = JSON.parse(res.data).data
+                this.dataArray = res.data;
                 this.feature_products = slice(this.dataArray, this.start, this.end);
                 this.spin = false;
             }

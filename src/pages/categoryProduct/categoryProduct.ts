@@ -1,26 +1,26 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, MenuController, PopoverController, NavParams, LoadingController} from 'ionic-angular';
-import {ApiService } from './../../providers/api-service/api-service';
-import { Data } from './../../components/data/data';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import clone from 'lodash/clone';
+import { CategoryProductConfig } from './../../providers/categoryProductConfig/categoryProductConfig';
+import {CategoryConfigDataType} from './categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
 export class CategoryProduct implements OnInit {
-    lists: any;
-    public data: Data[];
-    showList: boolean = false;
     clickshow: boolean = false;
     products: any;
     product_id: any;
-    spin: boolean;
     title: any;
     limit: number = 10;
     page: number = 1;
-    pro: any;
-    constructor(private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {
+    data: CategoryConfigDataType = {
+        data: {
+            data: []
+        }
+    }
+    constructor(private _categoryConfig: CategoryProductConfig, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
@@ -30,19 +30,21 @@ export class CategoryProduct implements OnInit {
         this.show_products(this.product_id, this.page, this.limit);
     }
     show_products(product_id: any, page: any, limit: any) {
-        //        this.spin = true;
         this.clickshow = true;
-        var path = { "id": product_id, "page": page, "limit": limit };
-        this._apiService.api("category/products/", path).subscribe((res) => {
-            var res_data = [];
+        let body = { "id": product_id, "page": page, "limit": limit };
+        this._categoryConfig.getCategoryProductConfig(body).then((res) => {
+//            let res_data = [];
+            this.data.data=res;
             if (res) {
-                this.pro = res.data;
-                for (var product of this.pro) {
-                    res_data.push(product);
+                for (let product of res.data) {
+                this.data.data.data.push(product);
                 }
-                this.products = clone(res_data);
+                this.products = clone(this.data.data.data);
             }
-        });
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
     doInfinite(infiniteScroll) {
         var prod_length = this.products.length;
