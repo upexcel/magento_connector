@@ -1,6 +1,5 @@
 import { Injectable }    from '@angular/core';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
 import { config} from './../config/config';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
@@ -21,10 +20,12 @@ export class ApiService {
             self._http.post(api_url, JSON.stringify(body), options)
                 .subscribe((res: Response) => {
                     self._extractData(res, subject)
-                }, self._handleError)
-        })
+                },
+                (error)=>{
+                     self._handleError(error,subject)
+                })
+        });
         return subject;
-
     }
 
     private _extractData(res, subject) {
@@ -35,8 +36,7 @@ export class ApiService {
         subject.next(body);
         return body;
     }
-    private _handleError(error: any) {
-        console.error('An error occurred', error);
-        return Observable.throw(error.message || error);
+    private _handleError(error,subject) {
+        return subject.error(error.message || error);
     }
 }

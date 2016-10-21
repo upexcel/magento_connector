@@ -5,7 +5,6 @@ import { TourPage } from '../takeTour/tour';
 import { Storage } from '@ionic/storage';
 import {AppConfig} from '../../providers/appConfig/appConfig';
 import { config } from './../../providers/config/config';
-import {ApiService } from './../../providers/api-service/api-service';
 import {SocialService} from '../../providers/social-service/social-service';
 import {HomePage} from '../../pages/home/home';
 import { ConfigDataType } from '../takeTour/configDataType';
@@ -27,7 +26,7 @@ export class StartPage implements OnInit {
     options: {};
     constructor(private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
-        public _modalCtrl: ModalController, private _apiService: ApiService) {
+        private _modalCtrl: ModalController) {
     }
 
     ngOnInit() {
@@ -41,6 +40,9 @@ export class StartPage implements OnInit {
             this._local.set('website_id', this.data.website_id);
             this._local.set('store_id', this.data.store_id);
             this.check = true;
+        })
+        .catch((err)=>{
+            this.showSocialLoginError(err);
         });
 
     }
