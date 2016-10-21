@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-export class CategorylistConfigDataType {
+export class CategoryListConfigDataType {
     data: {
         children: {}
     }

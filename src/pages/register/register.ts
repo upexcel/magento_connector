@@ -17,7 +17,7 @@ export class RegisterPage implements OnInit {
     spin: boolean;
     website_id: any;
     clear: boolean = false;
-        data: LoginConfigDataType = {
+    data: LoginConfigDataType = {
         data: {
             firstname: "",
             lastname: "",
@@ -28,23 +28,20 @@ export class RegisterPage implements OnInit {
             store_id: ""
         }
     };
-    constructor(private _loginConfig: LoginConfig,private _registerConfig:RegisterConfig ,private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _loginConfig: LoginConfig, private _registerConfig: RegisterConfig, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
-        this._local.get('website_id').then((value: any) => {
-            this.website_id = value;
+        this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
-            this.fb_coll(value);
+            this.regForm = this._fb.group({
+                firstname: ['', Validators.required],
+                lastname: ['', Validators.required],
+                email: ['', Validators.required],
+                password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+                website_id: [website_id]
+            });
         });
     }
-    fb_coll(value) {
-        this.regForm = this._fb.group({
-            firstname: ['', Validators.required],
-            lastname: ['', Validators.required],
-            email: ['', Validators.required],
-            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-            website_id: [value]
-        });
-    }
+
     signup(regvalue: any) {
         this.spin = true;
         this._registerConfig.getregisterConfig(regvalue).then((res) => {
@@ -63,6 +60,10 @@ export class RegisterPage implements OnInit {
             this.spin = false;
             if (res.status === 1) {
                 this.data = res;
+<<<<<<< HEAD
+                console.log(this.data.data.firstname);
+=======
+>>>>>>> 72f1736e8c695b431ecf18b04c27c0c5c50ba4dc
                 this._local.set('firstname', this.data.data.firstname);
                 this._local.set('lastname', this.data.data.lastname);
                 this._local.set('access_token', this.data.data.access_token);
@@ -70,7 +71,7 @@ export class RegisterPage implements OnInit {
                 this._local.set('secret', this.data.data.secret);
                 this._local.set('email', this.data.data.email);
                 this._navCtrl.setRoot(HomePage);
-            }                
+            }
         });
     }
     presentToast(message: string) {
