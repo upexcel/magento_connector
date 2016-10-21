@@ -9,7 +9,7 @@ export class CategorylistConfig implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getAppConfig(data): Promise<CategorylistConfigDataType> {
+    getCategorylistConfig(): Promise<CategorylistConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
 
@@ -19,12 +19,15 @@ export class CategorylistConfig implements OnInit {
                     resolve(categorylist);
                 }
                 else {
+                    this._local.get('store_id').then((store_id: any) => {
+                        let data = { "parent_id": "1", "type": "full", "store_id": store_id }
                         apiservice.api("category/categorylist/", data).subscribe((res) => {
                             local.set('categorylist', res);
                             resolve(data);
                         }, (err) => {
                             reject(err);
                         });
+                    });
                 }
             });
         });
