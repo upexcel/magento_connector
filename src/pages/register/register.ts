@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from './../../providers/api-service/api-service';
-import { StartPage } from '../startpage/startpage';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
@@ -15,7 +14,6 @@ import { LoginConfigDataType } from '../login/loginConfigDataType';
 export class RegisterPage implements OnInit {
     regForm: FormGroup;
     spin: boolean;
-    website_id: any;
     clear: boolean = false;
     data: LoginConfigDataType = {
         data: {

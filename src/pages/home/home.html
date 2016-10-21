@@ -18,15 +18,15 @@
     <ion-toolbar color="primary">
         <ion-title>Categories</ion-title>
     </ion-toolbar>
-    <ion-list  no-lines *ngFor="let list of lists">
+    <ion-list  no-lines *ngFor="let list of data.data.children">
                <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
                {{list1.name}}
                <ion-icon color="primary" id="iconShow"  [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
-                <ion-list *ngIf="list1.showDetails" text-wrap>
-                    <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
-                        {{glist.name}}
-                </ion-item>
-            </ion-list>
+            <ion-list *ngIf="list1.showDetails" text-wrap>
+                <ion-item *ngFor="let glist of list1.children" (click)="con(glist.id,glist.name)">
+                    {{glist.name}}
+            </ion-item>
+        </ion-list>
     </ion-item>
 </ion-list>
 </ion-menu>
@@ -46,18 +46,18 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-grid no-padding >
-        <ion-row no-padding class="slideOption" >
+<!--        <ion-row no-padding class="slideOption" >
             <ion-col no-padding>
                 <ion-slides  [options]="mySlideOptions">
-                    <ion-slide *ngFor="let images of img">
+                    <ion-slide *ngFor="let images of img.data">
                         <img src="{{images}}" class="img"/>
                     </ion-slide>
                 </ion-slides>
             </ion-col>
-        </ion-row>
+        </ion-row>-->
     </ion-grid>
 
-    <!---- desktop display feature products-->
+    <!-- desktop display feature products -->
 
     <ion-grid showWhen="landscape">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
@@ -76,7 +76,7 @@
         </ion-row>
     </ion-grid>
 
-    <!---- mobile display feature products-->
+    <!--  mobile display feature products -->
     <ion-grid showWhen="mobile">
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
         <ion-row wrap>
