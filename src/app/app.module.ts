@@ -28,6 +28,7 @@ import { NextOnEnter} from '../directives/nextonenter';
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
+import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
 @NgModule({
     declarations: [
         MyApp,
@@ -73,7 +74,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         PopoverPage
     ],
 
-    providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig,CategorylistConfig]
+    providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig,CategorylistConfig,ForgotConfig]
 })
 export class AppModule {
 

@@ -13,13 +13,15 @@ import { ConfigDataType } from '../takeTour/configDataType';
 })
 export class StartPage implements OnInit {
     data: ConfigDataType = {
-        tour_logo: "",
-        logo_url: "",
-        logo_alt: "",
-        tour_slider: "",
-        background_image: "",
-        website_id: "",
-        store_id: ""
+        data: {
+            tour_logo: "",
+            logo_url: "",
+            logo_alt: "",
+            tour_slider: "",
+            background_image: "",
+            website_id: "",
+            store_id: ""
+        }
     };
     messsage_expired: string;
     check: boolean = false;
@@ -37,13 +39,13 @@ export class StartPage implements OnInit {
 
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
-            this._local.set('website_id', this.data.website_id);
-            this._local.set('store_id', this.data.store_id);
+            this._local.set('website_id', res.data.website_id);
+            this._local.set('store_id', res.data.store_id);
             this.check = true;
         })
-        .catch((err)=>{
-            this.showSocialLoginError(err);
-        });
+            .catch((err) => {
+                this.showSocialLoginError(err);
+            });
 
     }
     gotologin() {
