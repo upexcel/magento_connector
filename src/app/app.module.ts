@@ -17,6 +17,8 @@ import { AppConfig } from '../providers/appConfig/appConfig';
 import { LoginConfig } from '../providers/loginConfig/loginConfig';
 import { RegisterConfig } from '../providers/registerConfig/registerConfig';
 import { CategoryListConfig } from '../providers/homeConfig/categoryListConfig';
+import { HomeProductsConfig } from '../providers/homeConfig/homeProductsConfig';
+import { SliderConfig } from '../providers/homeConfig/sliderConfig';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -74,7 +76,10 @@ import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
         PopoverPage
     ],
 
-    providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig,CategoryListConfig]
+    providers: [Storage ,AppConfig, ApiService, 
+    CartService, SocialService ,LoginConfig,
+    RegisterConfig,CategoryListConfig,SliderConfig,
+    HomeProductsConfig]
 
 })
 export class AppModule {

@@ -10,36 +10,44 @@ import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import { CategoryListConfigDataType } from './categorylistconfigDataType';
 import { CategoryListConfig } from '../../providers/homeConfig/categoryListConfig';
+import {HomeProductsConfigDataType  } from './homeProductsConfigDataType';
+import { HomeProductsConfig } from '../../providers/homeConfig/homeProductsConfig'
+import { SliderConfig } from '../../providers/homeConfig/sliderConfig';
+import { SliderConfigDataType } from './sliderConfigDataType';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
     data: CategoryListConfigDataType = {
         data: {
-            children: ""
+            children: []
         }
     }
-    lists: any;
+    homeProduct: HomeProductsConfigDataType = {
+        data: {
+            sku: "",
+            media_image: "",
+            name: "",
+            display_price: ""
+        }
+    }
+    img: SliderConfigDataType = {
+        data: []
+    }
     rootPage: any;
-    showList: boolean = false;
-    clickshow: boolean = false;
     spin: boolean = true;
-    img: string;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    dataArray: any;
-    store_id: string;
-    listCheck: string;
-    constructor(private _categoryListConfig:CategoryListConfig ,private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
+    dataArray;
+    constructor(private _homeProductsConfig:HomeProductsConfig,private _sliderConfig: SliderConfig, private _categoryListConfig: CategoryListConfig, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
         this.slider();
         this.homeProducts();
         this._categoryListConfig.getCategoryListConfig().then((res) => {
             if (res) {
-                this.lists = res.data.children;
-                this._local.set('lists', JSON.stringify(this.lists));
+                this.data = res;
             }
         });
     }
@@ -74,33 +82,29 @@ export class HomePage implements OnInit {
     }
 
     slider() {
-        let body: any;
-        this._apiService.api("home/slider", body).subscribe((res) => {
+        this._sliderConfig.getSliderConfig().then((res) => {
             if (res) {
-                console.log(res);
-                this.img = JSON.parse(res.body.body).data;
+                this.img = res;
             }
-
         });
     }
     homeProducts() {
         this.spin = true;
         let body = { "type": "large_data" }
-        this._apiService.api("home/products", body).subscribe((res) => {
+         this._homeProductsConfig.getHomeProductsConfig().then((res) => {
             if (res) {
-                console.log(res);
-                this.dataArray = JSON.parse(res.data).data
-                this.feature_products = slice(this.dataArray, this.start, this.end);
+                this.homeProduct = res;
+                this.feature_products = slice(this.homeProduct.data, this.start, this.end);
                 this.spin = false;
             }
         })
     }
     doInfinite(infiniteScroll) {
-        if (this.dataArray.length % 2 == 0) {
-            if (this.dataArray.length > this.end) {
+        if (this.homeProduct.data.length % 2 == 0) {
+            if (this.homeProduct.data.length > this.end) {
                 setTimeout(() => {
                     this.end += 4;
-                    this.feature_products = slice(this.dataArray, this.start, this.end);
+                    this.feature_products = slice(this.homeProduct.data, this.start, this.end);
                     infiniteScroll.complete();
                 }, 2000);
             } else {
@@ -108,7 +112,7 @@ export class HomePage implements OnInit {
             }
         }
         else {
-            let check = this.dataArray.length + 1;
+            let check = this.homeProduct.data.length + 1;
             if (check >= this.end) {
 
                 if (check == this.end) {
@@ -117,7 +121,7 @@ export class HomePage implements OnInit {
                 else {
                     setTimeout(() => {
                         this.end += 4;
-                        this.feature_products = slice(this.dataArray, this.start, this.end);
+                        this.feature_products = slice(this.homeProduct.data, this.start, this.end);
                         infiniteScroll.complete();
                     }, 2000);
                 }
