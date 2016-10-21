@@ -20,13 +20,3 @@ export class LoginConfig implements OnInit {
         });
     }
 } 
-
-//
-//            (err) => {
-//                if (err.status === 0) {
-//                    console.log(err)
-//                    this.spin = false;
-//                    this.presentToast(err.msg);
-//                }
-//            }
-//        )  

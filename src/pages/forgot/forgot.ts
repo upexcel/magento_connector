@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import {FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {ApiService } from './../../providers/api-service/api-service';
+import { ToastController } from 'ionic-angular';
+import {FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
+import { ForgotConfig } from '../../providers/forgotConfig/forgotConfig';
 @Component({
     templateUrl: 'forgot.html'
 })
@@ -11,7 +11,7 @@ export class ForgotPage implements OnInit {
     spin: boolean;
     response: any;
     show_form: boolean = false;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _forgotConfig: ForgotConfig, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
@@ -26,24 +26,20 @@ export class ForgotPage implements OnInit {
     }
     forgot(value: any) {
         this.spin = true;
-        this._apiService.api('customer/forgot/', value).subscribe((res) => {
+        this._forgotConfig.getForgotConfig(value).then((res) => {
             this.spin = false;
-            this.response = res.message;
-            this.presentToast(this.response);
-        },
-            (err) => {
-                if (err.status == 500) {
-                    this.spin = false;
-                    this.response = JSON.parse(err.body).message;
-                    this.presentToast(this.response);
+            this.presentToast(res.message);
+        })
+            .catch(err => {
+                if (err.status === 500) {
+                    console.log(err);
                 }
-            }
-        )
+            });
     }
     presentToast(message: string) {
         let toast = this._toastCtrl.create({
             message: message,
-            duration: 3000,
+            duration: 2000,
             position: 'top'
         });
         toast.present();

@@ -1,10 +1,10 @@
-<ion-content [ngStyle]="{'background-image': 'url('+data.background_image+')'}" class="startpage" *ngIf="check==true">    
+<ion-content [ngStyle]="{'background-image': 'url('+data.data.background_image+')'}" class="startpage" *ngIf="check==true">    
     <p align="center">{{messsage_expired}}</p>
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
                 <div  class="imgbox">
-                    <img src="{{data.logo_url}}" class="img" alt="{{data.logo_alt}}" />
+                    <img src="{{data.data.logo_url}}" class="img" alt="{{data.data.logo_alt}}" />
                 </div>
             </ion-col>
         </ion-row>
@@ -26,7 +26,7 @@
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                 <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
+                <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
             </ion-col>
         </ion-row>
     </ion-grid> 

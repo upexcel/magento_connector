@@ -28,6 +28,7 @@ import { NextOnEnter} from '../directives/nextonenter';
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
+import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
 @NgModule({
     declarations: [
         MyApp,
@@ -74,6 +75,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
     ],
 
     providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig,CategoryListConfig]
+
 })
 export class AppModule {
 

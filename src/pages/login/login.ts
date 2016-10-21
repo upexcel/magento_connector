@@ -61,6 +61,9 @@ export class LoginPage implements OnInit {
                 this.presentToast(res.message);
             }
         })
+        .catch(err=>{
+            this.showLoginError(err);
+        })
     }
     presentToast(message: string) {
         let toast = this._toastCtrl.create({
