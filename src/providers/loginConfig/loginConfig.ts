@@ -13,7 +13,6 @@ export class LoginConfig implements OnInit {
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
             apiservice.api('customer/login/', data).subscribe((res) => {
-                local.set('login_customer', res);
                 resolve(res);
             }, (err) => {
                 reject(err);
