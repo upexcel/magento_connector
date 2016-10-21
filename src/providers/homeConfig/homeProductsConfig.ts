@@ -1,36 +1,34 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { ConfigDataType } from './../../pages/takeTour/configDataType';
+import {HomeProductsConfigDataType  } from './../../pages/home/homeProductsConfigDataType';
 import { Storage } from '@ionic/storage';
-import keys from 'lodash/keys';
 declare let Promise: any;
 @Injectable()
-export class AppConfig implements OnInit {
+export class HomeProductsConfig implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getAppConfig(): Promise<ConfigDataType> {
+    getHomeProductsConfig(): Promise<HomeProductsConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
-
         return new Promise(function(resolve, reject) {
-            local.get('web_config').then((web_config: string) => {
-                if (keys(web_config).length > 0) {
-                    resolve(web_config);
+            local.get('homeProducts').then((homeProducts: string) => {
+                if (homeProducts != null && homeProducts != undefined){
+                    resolve(homeProducts);
                 }
                 else {
-                    local.get('store_id').then((store_id: any) => {
-                        let data = { store_id: JSON.parse(store_id) };
-                        apiservice.api("web/config", data).subscribe((res) => {
-                            local.set('web_config', res);
+                        let data = { "type": "large_data" }
+                        apiservice.api("home/products", data).subscribe((res) => {
+                            local.set('homeProducts', res);
                             resolve(res);
                         }, (err) => {
                             reject(err);
                         });
-                    });
                 }
-
             });
         });
     }
 }
+
+
+

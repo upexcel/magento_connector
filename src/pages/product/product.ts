@@ -55,7 +55,7 @@ export class ProductPage implements OnInit {
         this.presentLoading();
         this._apiService.api("product/get/", this.path).subscribe((res) => {
             if (res) {
-                this.response = JSON.parse(res.data);
+                this.response = res;
                 this.spin = false;
                 this.price = this.response.data.data.display_price;
                 this.images = this.response.data.data.media_images[0];
