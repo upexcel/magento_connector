@@ -1,15 +1,15 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {CategorylistConfigDataType  } from './../../pages/home/categorylistconfigDataType';
+import {CategoryListConfigDataType  } from './../../pages/home/categorylistconfigDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 declare let Promise: any;
 @Injectable()
-export class CategorylistConfig implements OnInit {
+export class CategoryListConfig implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getCategorylistConfig(): Promise<CategorylistConfigDataType> {
+    getCategoryListConfig(): Promise<CategoryListConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
 

@@ -8,13 +8,13 @@ import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
-import { CategorylistConfigDataType } from './categorylistconfigDataType';
-import { CategorylistConfig } from '../../providers/homeConfig/categorylistConfig';
+import { CategoryListConfigDataType } from './categorylistconfigDataType';
+import { CategoryListConfig } from '../../providers/homeConfig/categoryListConfig';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategorylistConfigDataType = {
+    data: CategoryListConfigDataType = {
         data: {
             children: ""
         }
@@ -31,12 +31,12 @@ export class HomePage implements OnInit {
     dataArray: any;
     store_id: string;
     listCheck: string;
-    constructor(private _categorylistConfig:CategorylistConfig ,private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
+    constructor(private _categoryListConfig:CategoryListConfig ,private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
         this.slider();
         this.homeProducts();
-        this._categorylistConfig.getCategorylistConfig().then((res) => {
+        this._categoryListConfig.getCategoryListConfig().then((res) => {
             if (res) {
                 this.lists = res.data.children;
                 this._local.set('lists', JSON.stringify(this.lists));
