@@ -1,13 +1,34 @@
-//import { Component } from '@angular/core';
-//
-//export class ConfigDataType {
-//    data: {
-//        tour_logo: string;
-//        logo_alt: string;
-//        logo_url: string;
-//        tour_slider: string;
-//        background_image: string;
-//        website_id: string;
-//        store_id: string;
-//    }
-//}
+import { Component } from '@angular/core';
+
+export class ConfigDataType {
+    data: {
+        data:
+        {
+            "entity_id": string;
+            "qty": string;
+            "name": string;
+            "type": "string";
+            "sku": "abc";
+            "weight": string;
+            "price": string;
+            "display_price": string;
+            "group_price": string;
+            "special_price": string;
+            "display_special_price": string;
+            "tier_price": Array<any>;
+            "short_description": string;
+            "long_description": string;
+            "media_images": Array<string>;
+            "additional_information": {
+                color:boolean;
+                gender:string;
+                size:boolean;
+            };
+            "in_stock": string;
+            associated_products: {}
+        }
+    }
+    status: number;
+    message: string;
+}
+

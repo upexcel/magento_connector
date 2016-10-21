@@ -7,7 +7,7 @@ import keys from 'lodash/keys';
 import findIndex from 'lodash/findIndex';
 import difference from 'lodash/difference';
 import pullAll from 'lodash/pullAll';
-
+import _ from 'lodash';
 @Component({
     templateUrl: 'cart.html'
 })
@@ -91,7 +91,7 @@ export class CartPage implements OnInit {
             cartData = JSON.parse(value);
             data.quantity--;
             if (data.type == "configurable") {
-                let keyGrop = uniq(pullAll(keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                let keyGrop = uniq(pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
                 forEach(cartData, function(value, key) {
                     keyDataCheck = true;
                     for (let i = 0; i < keyGrop.length; i++) {
@@ -152,10 +152,8 @@ export class CartPage implements OnInit {
             let r = {};
 
             if (data.type == "configurable") {
-                let dubData = data;
-                key = uniq(pullAll(keys(dubData), ['id', 'name', 'img', 'price', 'type', 'quantity']));
-
-                allKey = uniq(pullAll(keys(data), ['name', 'img', 'price', 'quantity']));
+                allKey = uniq(pullAll(_.keys(data), ['name', 'img', 'price', 'quantity']));
+                
                 for (var i = 0; i < allKey.length; i++) {
                     var keys = allKey[i];
                     iterate.push(data[keys]);
