@@ -1,35 +1,31 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { ConfigDataType } from './../../pages/takeTour/configDataType';
+import {CategorylistConfigDataType  } from './../../pages/home/categorylistconfigDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 declare let Promise: any;
 @Injectable()
-export class AppConfig implements OnInit {
+export class CategorylistConfig implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getAppConfig(): Promise<ConfigDataType> {
+    getAppConfig(data): Promise<CategorylistConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
 
         return new Promise(function(resolve, reject) {
-            local.get('web_config').then((web_config: string) => {
-                if (keys(web_config).length > 0) {
-                    resolve(web_config);
+            local.get('categorylist').then((categorylist: string) => {
+                if (keys(categorylist).length > 0) {
+                    resolve(categorylist);
                 }
                 else {
-                    local.get('store_id').then((store_id: any) => {
-                        let data = { store_id: JSON.parse(store_id) };
-                        apiservice.api("web/config", data).subscribe((res) => {
-                            local.set('web_config', res);
+                        apiservice.api("category/categorylist/", data).subscribe((res) => {
+                            local.set('categorylist', res);
                             resolve(data);
                         }, (err) => {
                             reject(err);
                         });
-                    });
                 }
-
             });
         });
     }

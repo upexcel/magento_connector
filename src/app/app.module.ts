@@ -16,6 +16,7 @@ import { LoginPage } from '../pages/login/login';
 import { AppConfig } from '../providers/appConfig/appConfig';
 import { LoginConfig } from '../providers/loginConfig/loginConfig';
 import { RegisterConfig } from '../providers/registerConfig/registerConfig';
+import { CategorylistConfig } from '../providers/homeConfig/categorylistConfig';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -72,7 +73,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
         PopoverPage
     ],
 
-    providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig]
+    providers: [Storage ,AppConfig, ApiService, CartService, SocialService ,LoginConfig,RegisterConfig,CategorylistConfig]
 })
 export class AppModule {
 

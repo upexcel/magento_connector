@@ -8,11 +8,16 @@ import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
-
+import { CategorylistConfigDataType } from './categorylistconfigDataType';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
+    data : CategorylistConfigDataType={
+                data: {
+            children: ""
+        }
+    }
     lists: any;
     rootPage: any;
     showList: boolean = false;
