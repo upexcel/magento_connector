@@ -37,6 +37,7 @@ import { Forgot } from '../modal/forgot/forgot';
 import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
 import {MyAccount} from '../modal/myaccount/myaccount';
 import {EditAccount} from '../modal/myaccount/editAccount';
+import {OrderIdDetail} from '../modal/orderid-detail/orderid-detail';
 @NgModule({
     declarations: [
         MyApp,
@@ -85,7 +86,7 @@ import {EditAccount} from '../modal/myaccount/editAccount';
         CartService, SocialService, Login,
         Register, CategoryList, Forgot,
         Slider, CategoryProduct,
-        HomeProducts, Product, Cart, ChangePwd, MyAccount, EditAccount]
+        HomeProducts, Product, Cart, ChangePwd, MyAccount, EditAccount, OrderIdDetail]
 
 })
 export class AppModule {
