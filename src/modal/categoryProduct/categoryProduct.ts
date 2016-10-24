@@ -4,7 +4,7 @@ import { CategoryProductDataType } from './categoryProductData';
 @Injectable()
 export class CategoryProduct {
     constructor(private _apiService: ApiService) { }
-    getCategoryProductConfig(data) {
+    getCategoryProduct(data) {
         let apiservice = this._apiService;
         return new Promise<CategoryProductDataType>(function(resolve, reject) {
             apiservice.api("category/products/", data).subscribe((res) => {

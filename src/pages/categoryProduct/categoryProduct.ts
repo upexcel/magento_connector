@@ -4,7 +4,7 @@ import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import clone from 'lodash/clone';
 import { CategoryProduct } from './../../modal/categoryProduct/categoryProduct';
-import {CategoryProductDataType} from './../../modal/categoryProductConfig/categoryProductData';
+import {CategoryProductDataType} from './../../modal/categoryProduct/categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -15,12 +15,15 @@ export class CategoryProductPage implements OnInit {
     title: any;
     limit: number = 10;
     page: number = 1;
-    data: CategoryProductDataType = {
+    categoryProduct: CategoryProductDataType = {
         data: {
-            data: []
+            sku: '',
+            media_images: '',
+            name: '',
+            display_price: ''
         }
     }
-    constructor(private _categoryConfig: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
@@ -32,15 +35,15 @@ export class CategoryProductPage implements OnInit {
     show_products(product_id: any, page: any, limit: any) {
         this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
-        this._categoryConfig.getCategoryProductConfig(body).then((res) => {
-            this.data.data = res;
+        this._category.getCategoryProduct(body).then((res) => {
+            this.categoryProduct.data = res;
         })
             .catch((err) => {
                 console.log(err);
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.data.data.data.length;
+        var prod_length = this.categoryProduct.data.length;
         var limit = this.limit;
         if (prod_length % 2 == 0) {
             if (prod_length < limit) {

@@ -13,12 +13,12 @@ import { HomePage } from '../pages/home/home';
 import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
-import { AppConfig } from '../providers/appConfig/appConfig';
-import { LoginConfig } from '../providers/loginConfig/loginConfig';
-import { RegisterConfig } from '../providers/registerConfig/registerConfig';
-import { CategoryListConfig } from '../providers/homeConfig/categoryListConfig';
-import { HomeProductsConfig } from '../providers/homeConfig/homeProductsConfig';
-import { SliderConfig } from '../providers/homeConfig/sliderConfig';
+import { AppConfig } from '../modal/appConfig/appConfig';
+import { Login } from '../modal/login/login';
+import { Register } from '../modal/register/register';
+import { CategoryList } from '../modal/home/categoryList';
+import { HomeProducts } from '../modal/home/homeProducts';
+import { Slider } from '../modal/home/slider';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -76,11 +76,11 @@ import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage ,AppConfig, ApiService,
-    CartService, SocialService ,LoginConfig,
-    RegisterConfig,CategoryListConfig,Forgot,
-    SliderConfig,CategoryProduct,
-    HomeProductsConfig]
+    providers: [Storage, AppConfig, ApiService,
+        CartService, SocialService, Login,
+        Register, CategoryList, Forgot,
+        Slider, CategoryProduct,
+        HomeProducts]
 
 })
 export class AppModule {

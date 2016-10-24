@@ -3,7 +3,7 @@ import { ModalController, NavController, NavParams, AlertController} from 'ionic
 import {LoginPage} from '../login/login';
 import { TourPage } from '../takeTour/tour';
 import { Storage } from '@ionic/storage';
-import {AppConfig} from '../../providers/appConfig/appConfig';
+import {AppConfig} from '../../modal/appConfig/appConfig';
 import { config } from './../../providers/config/config';
 import {SocialService} from '../../providers/social-service/social-service';
 import {HomePage} from '../../pages/home/home';

@@ -8,22 +8,22 @@ import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
-import { CategoryListConfigDataType } from './categorylistconfigDataType';
-import { CategoryListConfig } from '../../providers/homeConfig/categoryListConfig';
-import {HomeProductsConfigDataType  } from './homeProductsConfigDataType';
-import { HomeProductsConfig } from '../../providers/homeConfig/homeProductsConfig'
-import { SliderConfig } from '../../providers/homeConfig/sliderConfig';
-import { SliderConfigDataType } from './sliderConfigDataType';
+import { CategoryListDataType } from './categorylistDataType';
+import { CategoryList } from '../../modal/home/categoryList';
+import {HomeProductsDataType  } from './homeProductsDataType';
+import { HomeProducts } from '../../modal/home/homeProducts';
+import { Slider } from '../../modal/home/slider';
+import { SliderDataType } from './sliderDataType';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategoryListConfigDataType = {
+    data: CategoryListDataType = {
         data: {
             children: []
         }
     }
-    homeProduct: HomeProductsConfigDataType = {
+    homeProduct: HomeProductsDataType = {
         data: {
             sku: "",
             media_image: "",
@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
             display_price: ""
         }
     }
-    img: SliderConfigDataType = {
+    img: SliderDataType = {
         data: []
     }
     rootPage: any;
@@ -40,18 +40,17 @@ export class HomePage implements OnInit {
     start: number = 0;
     end: number = 4;
     dataArray;
-    constructor(private _homeProductsConfig:HomeProductsConfig,private _sliderConfig: SliderConfig, private _categoryListConfig: CategoryListConfig, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
+    constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
         this.slider();
         this.homeProducts();
-        this._categoryListConfig.getCategoryListConfig().then((res) => {
+        this._categoryListConfig.getCategoryList().then((res) => {
             if (res) {
                 this.data = res;
             }
         });
     }
-
     openMenu() {
         this._menuCtrl.open();
     }
@@ -82,7 +81,7 @@ export class HomePage implements OnInit {
     }
 
     slider() {
-        this._sliderConfig.getSliderConfig().then((res) => {
+        this._sliderConfig.getSlider().then((res) => {
             if (res) {
                 this.img = res;
             }
@@ -91,7 +90,7 @@ export class HomePage implements OnInit {
     homeProducts() {
         this.spin = true;
         let body = { "type": "large_data" }
-         this._homeProductsConfig.getHomeProductsConfig().then((res) => {
+         this._homeProductsConfig.getHomeProducts().then((res) => {
             if (res) {
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.data, this.start, this.end);

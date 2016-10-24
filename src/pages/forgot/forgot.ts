@@ -11,7 +11,8 @@ export class ForgotPage implements OnInit {
     spin: boolean;
     response: any;
     show_form: boolean = false;
-    constructor(private _forgotConfig: Forgot, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
+
+    constructor(private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
@@ -27,7 +28,7 @@ export class ForgotPage implements OnInit {
     forgot(value: any) {
         this.spin = true;
         let self = this;
-        this._forgotConfig.getForgotConfig(value).then((res) => {
+        this._forgot.getForgot(value).then((res) => {
             self.spin = false;
             self.presentToast(res.message);
         })

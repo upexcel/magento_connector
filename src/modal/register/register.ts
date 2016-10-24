@@ -3,11 +3,11 @@ import {ApiService } from './../../providers/api-service/api-service';
 import { Storage } from '@ionic/storage';
 declare let Promise: any;
 @Injectable()
-export class RegisterConfig implements OnInit {
+export class Register implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getregisterConfig(data){
+    getRegister(data) {
         let local = this.local;
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
