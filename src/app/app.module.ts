@@ -19,6 +19,7 @@ import { Register } from '../modal/register/register';
 import { CategoryList } from '../modal/home/categoryList';
 import { HomeProducts } from '../modal/home/homeProducts';
 import { Product } from '../modal/product/getProduct';
+import { Cart } from '../modal/product/cart';
 import { Slider } from '../modal/home/slider';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
@@ -81,7 +82,7 @@ import { CategoryProducts } from '../modal/categoryProduct/categoryProduct';
     CartService, SocialService ,Login,
     Register,CategoryList,Forgot,
     Slider,CategoryProducts,
-    HomeProducts,Product]
+    HomeProducts,Product,Cart]
 
 })
 export class AppModule {
