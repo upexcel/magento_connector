@@ -7,6 +7,8 @@ import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Product } from '../../modal/product/getProduct';
+import { Cart } from '../../modal/product/cart';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -45,15 +47,15 @@ export class ProductPage implements OnInit {
     keys: any = [];
     search: any = [];
     searchTransformation: any = [];
-    path: any;
-    constructor(private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    data: any;
+    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
-        this.path = { sku: id };
+        this.data = { sku: id };
     }
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();
-        this._apiService.api("product/get/", this.path).subscribe((res) => {
+        this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
                 this.response = res;
                 this.spin = false;
@@ -75,12 +77,8 @@ export class ProductPage implements OnInit {
                     this.keys = keys(list);
                 }
             }
-        },
-            (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            })
+        }).catch((err) => {
+        })
     }
 
     gotoCart() {
@@ -197,7 +195,7 @@ export class ProductPage implements OnInit {
                 }
 
                 //cart api
-                this._apiService.api("cart/cart", path).subscribe((res) => {
+                this._cart.getCart(path).then((res) => {
                     if (res) {
                         //add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
@@ -210,14 +208,9 @@ export class ProductPage implements OnInit {
                             }
                         });
                     }
-                },
-                    (err) => {
-                        if (err) {
-                            this.presentToast(err);
-                            console.log(err);
-                        }
-                    });
-
+                }).catch((err) => {
+                    this.presentToast(err);
+                })
             });
         });
     }

@@ -46,7 +46,6 @@ export class StartPage implements OnInit {
             .catch((err) => {
                 this.showSocialLoginError(err);
             });
-
     }
     gotologin() {
         this._navCtrl.push(LoginPage);
