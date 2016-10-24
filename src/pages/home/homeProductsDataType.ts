@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-export class HomeProductsConfigDataType {
+export class HomeProductsDataType {
     data: {
         sku: string;
         media_image: string;

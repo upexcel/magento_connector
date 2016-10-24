@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-export class ConfigDataType {
+export class productDataType {
     data: {
         data:
         {

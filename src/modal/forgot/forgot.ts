@@ -1,17 +1,16 @@
 import { Injectable, OnInit} from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { CategoryConfigDataType } from './../../pages/categoryProduct/categoryProductData';
 @Injectable()
-export class CategoryProductConfig {
+export class Forgot {
     constructor(private _apiService: ApiService) { }
-    getCategoryProductConfig(data) {
+    getForgot(data) {
         let apiservice = this._apiService;
-        return new Promise<CategoryConfigDataType>(function(resolve, reject) {
-            apiservice.api("category/products/", data).subscribe((res) => {
+        return new Promise(function(resolve, reject) {
+            apiservice.api("customer/forgot/", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
             });
         });
     }
-}
+} 

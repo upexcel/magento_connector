@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-export class LoginConfigDataType {
+export class LoginDataType {
     data: {
         firstname: string;
         lastname: string;

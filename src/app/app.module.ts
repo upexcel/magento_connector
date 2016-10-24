@@ -13,12 +13,12 @@ import { HomePage } from '../pages/home/home';
 import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
-import { AppConfig } from '../providers/appConfig/appConfig';
-import { LoginConfig } from '../providers/loginConfig/loginConfig';
-import { RegisterConfig } from '../providers/registerConfig/registerConfig';
-import { CategoryListConfig } from '../providers/homeConfig/categoryListConfig';
-import { HomeProductsConfig } from '../providers/homeConfig/homeProductsConfig';
-import { SliderConfig } from '../providers/homeConfig/sliderConfig';
+import { AppConfig } from '../modal/appConfig/appConfig';
+import { Login } from '../modal/login/login';
+import { Register } from '../modal/register/register';
+import { CategoryList } from '../modal/home/categoryList';
+import { HomeProducts } from '../modal/home/homeProducts';
+import { Slider } from '../modal/home/slider';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -30,8 +30,8 @@ import { NextOnEnter} from '../directives/nextonenter';
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
-import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
-import { CategoryProductConfig } from '../providers/categoryProductConfig/categoryProductConfig';
+import { Forgot } from '../modal/forgot/forgot';
+import { CategoryProducts } from '../modal/categoryProduct/categoryProduct';
 @NgModule({
     declarations: [
         MyApp,
@@ -77,10 +77,10 @@ import { CategoryProductConfig } from '../providers/categoryProductConfig/catego
         PopoverPage
     ],
     providers: [Storage ,AppConfig, ApiService,
-    CartService, SocialService ,LoginConfig,
-    RegisterConfig,CategoryListConfig,ForgotConfig,
-    SliderConfig,CategoryProductConfig,
-    HomeProductsConfig]
+    CartService, SocialService ,Login,
+    Register,CategoryList,Forgot,
+    Slider,CategoryProducts,
+    HomeProducts]
 
 })
 export class AppModule {

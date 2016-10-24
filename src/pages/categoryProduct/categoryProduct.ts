@@ -3,8 +3,8 @@ import { NavController, MenuController, PopoverController, NavParams, LoadingCon
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import clone from 'lodash/clone';
-import { CategoryProductConfig } from './../../providers/categoryProductConfig/categoryProductConfig';
-import {CategoryConfigDataType} from './categoryProductData';
+import { CategoryProducts } from './../../modal/categoryProduct/categoryProduct';
+import {CategoryDataType} from './categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -15,12 +15,12 @@ export class CategoryProduct implements OnInit {
     title: any;
     limit: number = 10;
     page: number = 1;
-    data: CategoryConfigDataType = {
-          data:{
-              data: []
-            }
+    data: CategoryDataType = {
+        data: {
+            data: []
+        }
     }
-    constructor(private _categoryConfig: CategoryProductConfig, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _category: CategoryProducts, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
@@ -32,8 +32,8 @@ export class CategoryProduct implements OnInit {
     show_products(product_id: any, page: any, limit: any) {
         this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
-        this._categoryConfig.getCategoryProductConfig(body).then((res) => {
-            this.data.data=res;
+        this._category.getCategoryProduct(body).then((res) => {
+            this.data.data = res;
         })
             .catch((err) => {
                 console.log(err);

@@ -1,14 +1,14 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {HomeProductsConfigDataType  } from './../../pages/home/homeProductsConfigDataType';
+import { HomeProductsDataType } from './../../pages/home/homeProductsDataType';
 import { Storage } from '@ionic/storage';
 declare let Promise: any;
 @Injectable()
-export class HomeProductsConfig implements OnInit {
+export class HomeProducts implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
 
-    getHomeProductsConfig(): Promise<HomeProductsConfigDataType> {
+    getHomeProducts(): Promise<HomeProductsDataType> {
         let local = this.local;
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {

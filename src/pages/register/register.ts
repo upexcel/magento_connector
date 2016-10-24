@@ -5,9 +5,9 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
-import { RegisterConfig } from '../../providers/registerConfig/registerConfig';
-import {LoginConfig} from '../../providers/loginConfig/loginConfig';
-import { LoginConfigDataType } from '../login/loginConfigDataType';
+import { Register } from '../../modal/register/register';
+import {Login} from '../../modal/login/login';
+import { LoginDataType } from '../login/loginDataType';
 @Component({
     templateUrl: 'register.html'
 })
@@ -15,7 +15,7 @@ export class RegisterPage implements OnInit {
     regForm: FormGroup;
     spin: boolean;
     clear: boolean = false;
-    data: LoginConfigDataType = {
+    data: LoginDataType = {
         data: {
             firstname: "",
             lastname: "",
@@ -26,7 +26,7 @@ export class RegisterPage implements OnInit {
             store_id: ""
         }
     };
-    constructor(private _loginConfig: LoginConfig, private _registerConfig: RegisterConfig, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit {
 
     signup(regvalue: any) {
         this.spin = true;
-        this._registerConfig.getregisterConfig(regvalue).then((res) => {
+        this._register.getRegister(regvalue).then((res) => {
             this.spin = false;
             if (res.status == 1) {
                 this.signin(regvalue);
@@ -54,7 +54,7 @@ export class RegisterPage implements OnInit {
     }
     signin(logvalue: any) {
         this.spin = true;
-        this._loginConfig.getLoginConfig(logvalue).then((res) => {
+        this._login.getLogin(logvalue).then((res) => {
             this.spin = false;
             if (res.status === 1) {
                 this.data = res;
