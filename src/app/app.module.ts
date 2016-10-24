@@ -10,7 +10,7 @@ import { OrderlistPage } from '../pages/orderlist/orderlist';
 import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
-import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
+import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
 import { AppConfig } from '../modal/appConfig/appConfig';
@@ -33,7 +33,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
 import { Forgot } from '../modal/forgot/forgot';
-import { CategoryProducts } from '../modal/categoryProduct/categoryProduct';
+import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
 @NgModule({
     declarations: [
         MyApp,
@@ -46,7 +46,7 @@ import { CategoryProducts } from '../modal/categoryProduct/categoryProduct';
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        CategoryProduct,
+        CategoryProductPage,
         OrderModalPage,
         MyAccountPage,
         LoginPage,
@@ -73,16 +73,16 @@ import { CategoryProducts } from '../modal/categoryProduct/categoryProduct';
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        CategoryProduct,
+        CategoryProductPage,
         MyAccountPage,
         LoginPage,
         PopoverPage
     ],
-    providers: [Storage ,AppConfig, ApiService,
-    CartService, SocialService ,Login,
-    Register,CategoryList,Forgot,
-    Slider,CategoryProducts,
-    HomeProducts,Product,Cart]
+    providers: [Storage, AppConfig, ApiService,
+        CartService, SocialService, Login,
+        Register, CategoryList, Forgot,
+        Slider, CategoryProduct,
+        HomeProducts,Product,Cart]
 
 })
 export class AppModule {

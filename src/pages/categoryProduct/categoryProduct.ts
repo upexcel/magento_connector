@@ -3,24 +3,27 @@ import { NavController, MenuController, PopoverController, NavParams, LoadingCon
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import clone from 'lodash/clone';
-import { CategoryProducts } from './../../modal/categoryProduct/categoryProduct';
-import {CategoryDataType} from './categoryProductData';
+import { CategoryProduct } from './../../modal/categoryProduct/categoryProduct';
+import {CategoryProductDataType} from './../../modal/categoryProduct/categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
-export class CategoryProduct implements OnInit {
+export class CategoryProductPage implements OnInit {
     clickshow: boolean = false;
     products: any;
     product_id: any;
     title: any;
     limit: number = 10;
     page: number = 1;
-    data: CategoryDataType = {
+    categoryProduct: CategoryProductDataType = {
         data: {
-            data: []
+            sku: '',
+            media_images: '',
+            name: '',
+            display_price: ''
         }
     }
-    constructor(private _category: CategoryProducts, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
@@ -33,14 +36,14 @@ export class CategoryProduct implements OnInit {
         this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
-            this.data.data = res;
+            this.categoryProduct.data = res;
         })
             .catch((err) => {
                 console.log(err);
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.data.data.data.length;
+        var prod_length = this.categoryProduct.data.length;
         var limit = this.limit;
         if (prod_length % 2 == 0) {
             if (prod_length < limit) {

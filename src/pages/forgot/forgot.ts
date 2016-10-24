@@ -11,6 +11,7 @@ export class ForgotPage implements OnInit {
     spin: boolean;
     response: any;
     show_form: boolean = false;
+
     constructor(private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
