@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams} from 'ionic-angular';
 import {ApiService } from './../../providers/api-service/api-service';
-import { CategoryProduct } from '../categoryProduct/categoryProduct';
+import { CategoryProductPage } from '../categoryProduct/categoryProduct';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import {StartPage} from './../../pages/startpage/startpage';
@@ -76,9 +76,9 @@ export class HomePage implements OnInit {
             id: product
         });
     }
-    con(gchild_id: any, gchild_name: any) {
+    gotoCategoryProduct(gchild_id: any, gchild_name: any) {
         this._menuCtrl.close();
-        this._navCtrl.push(CategoryProduct, { "id": gchild_id, "name": gchild_name });
+        this._navCtrl.push(CategoryProductPage, { "id": gchild_id, "name": gchild_name });
     }
 
     slider() {

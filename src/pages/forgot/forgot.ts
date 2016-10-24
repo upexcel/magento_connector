@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import {FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-import { ForgotConfig } from '../../providers/forgotConfig/forgotConfig';
+import { Forgot } from '../../modal/forgot/forgot';
 @Component({
     templateUrl: 'forgot.html'
 })
@@ -11,7 +11,7 @@ export class ForgotPage implements OnInit {
     spin: boolean;
     response: any;
     show_form: boolean = false;
-    constructor(private _forgotConfig: ForgotConfig, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
+    constructor(private _forgotConfig: Forgot, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;

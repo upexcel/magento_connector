@@ -1,7 +1,7 @@
-import { Injectable, OnInit} from '@angular/core';
+import { Injectable} from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
 @Injectable()
-export class ForgotConfig {
+export class Forgot {
     constructor(private _apiService: ApiService) { }
     getForgotConfig(data) {
         let apiservice = this._apiService;

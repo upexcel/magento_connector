@@ -10,7 +10,7 @@ import { OrderlistPage } from '../pages/orderlist/orderlist';
 import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
-import { CategoryProduct } from '../pages/categoryProduct/categoryProduct';
+import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
 import { MyAccountPage } from '../pages/myaccount/myaccount';
 import { LoginPage } from '../pages/login/login';
 import { AppConfig } from '../providers/appConfig/appConfig';
@@ -30,8 +30,8 @@ import { NextOnEnter} from '../directives/nextonenter';
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
-import { ForgotConfig } from '../providers/forgotConfig/forgotConfig';
-import { CategoryProductConfig } from '../providers/categoryProductConfig/categoryProductConfig';
+import { Forgot } from '../modal/forgot/forgot';
+import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
 @NgModule({
     declarations: [
         MyApp,
@@ -44,7 +44,7 @@ import { CategoryProductConfig } from '../providers/categoryProductConfig/catego
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        CategoryProduct,
+        CategoryProductPage,
         OrderModalPage,
         MyAccountPage,
         LoginPage,
@@ -71,15 +71,15 @@ import { CategoryProductConfig } from '../providers/categoryProductConfig/catego
         ChangepasswordPage,
         ForgotPage,
         HomePage,
-        CategoryProduct,
+        CategoryProductPage,
         MyAccountPage,
         LoginPage,
         PopoverPage
     ],
     providers: [Storage ,AppConfig, ApiService,
     CartService, SocialService ,LoginConfig,
-    RegisterConfig,CategoryListConfig,ForgotConfig,
-    SliderConfig,CategoryProductConfig,
+    RegisterConfig,CategoryListConfig,Forgot,
+    SliderConfig,CategoryProduct,
     HomeProductsConfig]
 
 })
