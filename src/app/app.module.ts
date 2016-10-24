@@ -31,7 +31,8 @@ import { ChangePwd } from '../modal/changePassword/accountChangePwd';
 import { Forgot } from '../modal/forgot/forgot';
 import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
 import { TotalOrder } from '../modal/orderList/totalOrder';
-
+import {MyAccount} from '../modal/myaccount/myaccount';
+import {EditAccount} from '../modal/myaccount/editAccount';
 
 //service
 import { CartService } from '../providers/cart-service/cart-service';
@@ -49,6 +50,9 @@ import { NextOnEnter} from '../directives/nextonenter';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
+
+
+
 
 @NgModule({
     declarations: [
@@ -108,7 +112,9 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         HomeProducts,
         Product, Cart,
         ChangePwd,
-        TotalOrder]
+        TotalOrder,
+        MyAccount,
+        EditAccount]
 
 })
 export class AppModule {
