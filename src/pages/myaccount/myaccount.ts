@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, PopoverController, ToastController } from 'ionic-angular';
 import {ApiService } from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
-import {HomePage} from './../home/home';
-import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {FormBuilder } from '@angular/forms';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
-import {GooglePlus} from 'ionic-native'
+import {GooglePlus} from 'ionic-native';
+import {MyAccount} from './../../modal/myaccount/myaccount';
+import {EditAccount} from './../../modal/myaccount/editAccount';
 @Component({
     templateUrl: 'myaccount.html'
 })
@@ -22,7 +23,7 @@ export class MyAccountPage implements OnInit {
     lastname: any;
     msg: any;
     secret: any;
-    constructor(private _local: Storage, private _toastCtrl: ToastController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder, private _apiService: ApiService) { }
+    constructor(private _myaccount: MyAccount, private _editaccount: EditAccount, private _local: Storage, private _toastCtrl: ToastController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -42,9 +43,9 @@ export class MyAccountPage implements OnInit {
         });
     }
     getuser_details() {
-        this.spin = true; 
-        let body = {"secret": this.secret }
-        this._apiService.api('account/address/', body).subscribe((res) => {
+        this.spin = true;
+        let body = { "secret": this.secret };
+        this._myaccount.getMyAccount(body).then((res) => {
             if (res.statuscode == 500) {
                 this.logout();
             } else {
@@ -83,10 +84,13 @@ export class MyAccountPage implements OnInit {
                 }
             }
         })
+            .catch(err => {
+                console.log(err);
+            })
     }
     update(value: any) {
         this.upd_spin = true;
-        this._apiService.api('address/edit', value).subscribe((res) => {
+        this._editaccount.updateAccount(value).then((res) => {
             this.upd_spin = false;
             if (res.status === 0) {
                 this.msg = res.message;
@@ -96,6 +100,9 @@ export class MyAccountPage implements OnInit {
             this.presentToast(this.msg);
             console.log(this.presentToast(this.msg));
         })
+            .catch(err => {
+                console.log(err);
+            })
     }
     presentToast(message: string) {
         let toast = this._toastCtrl.create({

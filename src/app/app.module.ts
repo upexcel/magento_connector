@@ -35,6 +35,8 @@ import { FacebookComponent } from '../components/facebookLogin/FacebookComponent
 import { GoogleComponent } from '../components/googleLogin/googleComponent';
 import { Forgot } from '../modal/forgot/forgot';
 import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
+import {MyAccount} from '../modal/myaccount/myaccount';
+import {EditAccount} from '../modal/myaccount/editAccount';
 @NgModule({
     declarations: [
         MyApp,
@@ -83,7 +85,7 @@ import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
         CartService, SocialService, Login,
         Register, CategoryList, Forgot,
         Slider, CategoryProduct,
-        HomeProducts,Product,Cart,ChangePwd]
+        HomeProducts, Product, Cart, ChangePwd, MyAccount, EditAccount]
 
 })
 export class AppModule {
