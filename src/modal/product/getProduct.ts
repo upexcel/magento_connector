@@ -4,7 +4,7 @@ import {productDataType  } from './../../pages/product/productDataType';
 declare let Promise: any;
 @Injectable()
 export class Product implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService) { }
+    constructor(private _apiService: ApiService) { }
     ngOnInit() { }
     getProduct(data): Promise<productDataType> {
         let apiservice = this._apiService;

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { Storage } from '@ionic/storage';
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
 import { RegisterPage } from '../pages/register/register';
@@ -27,7 +28,6 @@ import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
-import { Storage } from '@ionic/storage';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { NextOnEnter} from '../directives/nextonenter';
 import { ConvertCodeToName } from '../pipe/cart/attribute';

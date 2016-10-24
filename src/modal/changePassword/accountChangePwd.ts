@@ -4,7 +4,7 @@ import {ChangePwdDataType  } from './../../pages/changePassword/changePwdDataTyp
 declare let Promise: any;
 @Injectable()
 export class ChangePwd implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService) { }
+    constructor( private _apiService: ApiService) { }
     ngOnInit() { }
     getPwd(data): Promise<ChangePwdDataType> {
         let apiservice = this._apiService;
