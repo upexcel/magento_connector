@@ -5,6 +5,8 @@ import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
+import { TotalOrder } from '../../modal/orderList/totalOrder';
+import { totalOrderDataType } from './totalOrderDataType';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
 import forEach from 'lodash/forEach';
@@ -36,7 +38,7 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _product: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -52,7 +54,7 @@ export class OrderlistPage implements OnInit {
     }
     total_orders() {
         var body = { "secret": this.secret }
-        this._apiService.api("order/totalorder", body).subscribe((res) => {
+        this._product.getTotalOrder(body).this((res) => {
             if (res.statuscode == 500) {
                 this.logout();
             }
@@ -62,7 +64,7 @@ export class OrderlistPage implements OnInit {
                 this.totalAmount = res.data.total_amount;
             } else {
             }
-        })
+        });
     }
 
     selectedOrder_details() {

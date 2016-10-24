@@ -7,6 +7,7 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import {PopoverPage} from './../../components/popover/popover';
 import { ChangePwd } from '../../modal/changePassword/accountChangePwd';
+import { ChangePwdDataType } from './changePwdDataType';
 @Component({
     templateUrl: 'changepassword.html'
 })

@@ -38,7 +38,7 @@ export class CartPage implements OnInit {
             cartData = JSON.parse(value);
             data.quantity++;
             if (data.type == "configurable") {
-                let keyGrop = uniq(pullAll(keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
+                let keyGrop = uniq(pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
                 forEach(cartData, function(value, key) {
                     keyDataCheck = true;
                     for (let i = 0; i < keyGrop.length; i++) {
