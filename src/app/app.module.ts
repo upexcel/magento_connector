@@ -7,7 +7,7 @@ import { RegisterPage } from '../pages/register/register';
 import { CartPage } from '../pages/cart/cart';
 import { ProductPage } from '../pages/product/product';
 import { OrderlistPage } from '../pages/orderlist/orderlist';
-import { ChangepasswordPage } from '../pages/changepassword/changepassword';
+import { ChangepasswordPage } from '../pages/changePassword/changePassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
@@ -21,6 +21,7 @@ import { HomeProducts } from '../modal/home/homeProducts';
 import { Product } from '../modal/product/getProduct';
 import { Cart } from '../modal/product/cart';
 import { Slider } from '../modal/home/slider';
+import { ChangePwd } from '../modal/changePassword/accountChangePwd';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -82,7 +83,7 @@ import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
         CartService, SocialService, Login,
         Register, CategoryList, Forgot,
         Slider, CategoryProduct,
-        HomeProducts,Product,Cart]
+        HomeProducts,Product,Cart,ChangePwd]
 
 })
 export class AppModule {

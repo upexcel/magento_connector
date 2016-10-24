@@ -6,6 +6,7 @@ import {ApiService} from './../../providers/api-service/api-service'
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import {PopoverPage} from './../../components/popover/popover';
+import { ChangePwd } from '../../modal/changePassword/accountChangePwd';
 @Component({
     templateUrl: 'changepassword.html'
 })
@@ -17,7 +18,7 @@ export class ChangepasswordPage implements OnInit {
     spin: boolean = false;
     secret: string;
     changeActive: boolean = false;
-    constructor(private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _toastCtrl: ToastController, private _fb: FormBuilder, private _apiService: ApiService) { }
+    constructor(private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _toastCtrl: ToastController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -35,11 +36,11 @@ export class ChangepasswordPage implements OnInit {
     }
     changepassword(value: any) {
         this.spin = true;
-        this._apiService.api("account/changepassword/", value).subscribe((res) => {
+        this._changePwd.getPwd(value).this((res) => {
             this.spin = false;
-                this.response = res.data;
-                this.showToast(this.response);
-                this._navCtrl.setRoot(HomePage);
+            this.response = res.data;
+            this.showToast(this.response);
+            this._navCtrl.setRoot(HomePage);
         })
     }
     showToast(message: string) {
