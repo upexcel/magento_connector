@@ -3,7 +3,7 @@ import {ViewController, NavController, Nav} from 'ionic-angular';
 import {StartPage} from './../../pages/startpage/startpage';
 import {MyAccountPage} from './../../pages/myaccount/myaccount';
 import {ChangepasswordPage} from './../../pages/changePassword/changePassword';
-import {OrderlistPage} from './../../pages/orderlist/orderlist';
+import {OrderlistPage} from './../../pages/orderList/orderList';
 import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'popover.html'
