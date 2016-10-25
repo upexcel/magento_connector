@@ -46,15 +46,15 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-grid no-padding >
-<!--        <ion-row no-padding class="slideOption" >
+       <ion-row no-padding class="slideOption" >
             <ion-col no-padding>
                 <ion-slides  [options]="mySlideOptions">
-                    <ion-slide *ngFor="let images of img.data">
+                    <ion-slide *ngFor="let images of img.data.url">
                         <img src="{{images}}" class="img"/>
                     </ion-slide>
                 </ion-slides>
             </ion-col>
-        </ion-row>-->
+        </ion-row>
     </ion-grid>
 
     <!-- desktop display feature products -->

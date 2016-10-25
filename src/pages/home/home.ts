@@ -32,7 +32,9 @@ export class HomePage implements OnInit {
         }
     }
     img: SliderDataType = {
-        data: []
+      data: {
+          url:[]
+      }
     }
     rootPage: any;
     spin: boolean = true;
@@ -47,7 +49,6 @@ export class HomePage implements OnInit {
         this.homeProducts();
         this._categoryListConfig.getCategoryList().then((res) => {
             if (res) {
-                console.log(res);
                 this.data = res;
             }
         });
@@ -84,8 +85,7 @@ export class HomePage implements OnInit {
     slider() {
         this._sliderConfig.getSlider().then((res) => {
             if (res) {
-                console.log(JSON.stringify(res));
-                this.img = res;
+                this.img.data = res.data;
             }
         });
     }
@@ -94,7 +94,6 @@ export class HomePage implements OnInit {
         let body = { "type": "large_data" }
          this._homeProductsConfig.getHomeProducts().then((res) => {
             if (res) {
-                console.log(res);
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.data, this.start, this.end);
                 this.spin = false;
