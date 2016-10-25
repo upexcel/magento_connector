@@ -85,6 +85,7 @@ export class MyAccountPage implements OnInit {
             }
         })
             .catch(err => {
+              this.logout();
                 console.log(err);
             })
     }
