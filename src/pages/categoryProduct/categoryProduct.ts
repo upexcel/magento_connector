@@ -16,12 +16,24 @@ export class CategoryProductPage implements OnInit {
     limit: number = 10;
     page: number = 1;
     categoryProduct: CategoryProductDataType = {
-        data: {
-            sku: '',
-            media_images: '',
-            name: '',
-            display_price: ''
-        }
+        data: [{
+            data: {
+                name: '',
+                type: '',
+                sku: '',
+                weight: '',
+                price: '',
+                special_price: '',
+                tier_price: [],
+                short_description: '',
+                long_description: '',
+                media_images: '',
+                in_stock: ''
+            }
+        }],
+        status: '',
+        message: ''
+
     }
     constructor(private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
