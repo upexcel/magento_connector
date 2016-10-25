@@ -15,26 +15,7 @@ export class CategoryProductPage implements OnInit {
     title: any;
     limit: number = 10;
     page: number = 1;
-    categoryProduct: CategoryProductDataType = {
-        data: [{
-            data: {
-                name: '',
-                type: '',
-                sku: '',
-                weight: '',
-                price: '',
-                special_price: '',
-                tier_price: [],
-                short_description: '',
-                long_description: '',
-                media_images: '',
-                in_stock: ''
-            }
-        }],
-        status: '',
-        message: ''
-
-    }
+    categoryProduct: CategoryProductDataType;
     constructor(private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
@@ -48,14 +29,14 @@ export class CategoryProductPage implements OnInit {
         this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
-            this.categoryProduct.data = res;
+            this.categoryProduct = res.data;
         })
             .catch((err) => {
                 console.log(err);
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.categoryProduct.data.length;
+        var prod_length = this.categoryProduct.length;
         var limit = this.limit;
         if (prod_length % 2 == 0) {
             if (prod_length < limit) {
