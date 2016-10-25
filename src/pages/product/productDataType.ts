@@ -1,32 +1,33 @@
 export class productDataType {
     data: {
-        data:
-        {
-            "entity_id": string;
-            "qty": string;
-            "name": string;
-            "type": "string";
-            "sku": "abc";
-            "weight": string;
-            "price": string;
-            "display_price": string;
-            "group_price": string;
-            "special_price": string;
-            "display_special_price": string;
-            "tier_price": Array<any>;
-            "short_description": string;
-            "long_description": string;
-            "media_images": Array<string>;
-            "additional_information": {
-                color:boolean;
-                gender:string;
-                size:boolean;
-            };
-            "in_stock": string;
-            associated_products: {}
-        }
+        data: {
+            "entity_id": string,
+            "rating": boolean,
+            "qty": string,
+            "name": string,
+            "type": string,
+            "sku": string,
+            "weight": string,
+            "price": number,
+            "display_price": number,
+            "special_from_date": string,
+            "special_to_date": string,
+            "group_price": number,
+            "special_price": number,
+            "display_special_price": number,
+            "tier_price": Array<number>,
+            "short_description": string,
+            "long_description": string,
+            "media_images": Array<string>,
+            "additional_information"?: {},
+            "in_stock": string,
+        };
+
+        "associated_products"?: Array<any>,
+        "bundle_items":any,
+        "samples"?: string,
+        "links"?: Array<any>
     }
     status: number;
     message: string;
 }
-

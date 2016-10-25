@@ -6,7 +6,7 @@ declare let Promise: any;
 export class TotalOrder implements OnInit {
     constructor(private _apiService: ApiService) { }
     ngOnInit() { }
-    getTotalOrder(data): Promise<TotalOrderDataType> {
+    getTotalOrder(data): Promise <TotalOrderDataType> {
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
             apiservice.api("order/totalorder", data).subscribe((res) => {

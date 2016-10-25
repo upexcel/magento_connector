@@ -12,7 +12,7 @@
 </ion-header>
 <ion-content class="product">
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-    <ion-grid no-padding *ngIf="response">
+    <ion-grid no-padding *ngIf="spin==false">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
                 <ion-card>
@@ -20,10 +20,10 @@
                         <img src="{{images}}" class=" img cursorPointer"/>
                     </div>
                     <ion-card-content>
-                        <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="response.data.data">
+                        <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="visiable">
                                     <ion-slide>
                                 <ion-row class="center">
-                                    <ion-col class="maxWT" *ngFor = "let img of response.data.data.media_images" (click)="slideClick(img)" >
+                                    <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
                                              <img src="{{img}}" class="cursorPointer maxHt"/>                             
                                     </ion-col>
                                 </ion-row>
@@ -31,26 +31,26 @@
                         </ion-slides>
                         <ion-row>
                             <ion-col>
-                                <h2>{{response.data.data.name}}</h2>
+                                <h2>{{productData.data.data.name}}</h2>
                             </ion-col>
                         </ion-row>
                         <ion-row> 
                             <ion-col no-padding> 
-                                <p [ngClass]="{'line': condition==true}" class="price">{{price}}</p>
+                                <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
                                 <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
                             </ion-col>
                         </ion-row>
                         <ion-row wrap>
                             <ion-col width-50 *ngFor="let key of keys">
                                      <ion-item class="selectlist">
-                                    <ion-label no-margin class="font12">{{response.data.associated_products.attributes[key].label}}</ion-label>
-                                    <ion-label no-margin class="font12" *ngIf="response.data.associated_products.attributes[key].label=='Color'">
+                                    <ion-label no-margin class="font12">{{productData.data.associated_products.attributes[key].label}}</ion-label>
+                                    <ion-label no-margin class="font12" *ngIf="productData.data.associated_products.attributes[key].label=='Color'">
                                         <ion-buttons class="alignright">
                                             <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                         </ion-buttons>
                                     </ion-label>
                                     <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
-                                        <span *ngFor= "let obj of response.data.associated_products.attributes[key].options">
+                                        <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
                                             <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                                 <ion-label no-margin class="font12">{{obj.label}}</ion-label></ion-option>
                                         </span>
@@ -58,10 +58,10 @@
                                 </ion-item>
                             </ion-col>                         
                         </ion-row>
-                        <p class="font13">{{response.data.data.short_description}}</p>
+                        <p class="font13">{{productData.data.data.short_description}}</p>
                         <ion-row center >
                             <ion-col class="center">
-                                <button  ion-button color="primary" round  (click)="addCart(response.data)" [disabled]=disable>ADD CART</button>
+                                <button  ion-button color="primary" round  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
