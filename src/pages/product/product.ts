@@ -153,6 +153,7 @@ export class ProductPage implements OnInit {
         let type: string = this.productData.data.data.type;
         let access_token: string;
         let store_id: string;
+        let other;
         let productid: string = this.productData.data.data.entity_id;
         this._local.get('access_token').then((value: any) => {
             access_token = value;
@@ -160,7 +161,7 @@ export class ProductPage implements OnInit {
             this._local.get('store_id').then((store_idval: any) => {
                 store_id = store_idval;
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-                let other = data;
+                 other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
                     forEach(this.selectedList, function(listdata, key) {
@@ -168,12 +169,13 @@ export class ProductPage implements OnInit {
                     });
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
-                    let other = merge(data, selectedItem);
+                     other = merge(data, selectedItem);
                     let ser = this.productData.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
                             this.search = search;
                             this.search.push(ser);
+                            console.log(this.search);
                             this._local.set('search', uniqWith(this.search, isEqual));
                         }
                         else {
