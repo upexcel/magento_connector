@@ -42,6 +42,7 @@ export class ProductPage implements OnInit {
     item: any;
     keys: any = [];
     search: any = [];
+    res: {} = {};
     data: any;
     constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
@@ -49,7 +50,7 @@ export class ProductPage implements OnInit {
     }
     ngOnInit() {
         this.product = "Product";
-        //        this.presentLoading();
+                this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
                 this.visiable = true;
@@ -110,6 +111,7 @@ export class ProductPage implements OnInit {
             forEach(res, function(value) {
                 count++;
             });
+            
             if (this.keys.length == count) {
                 this.disable = false;
             }

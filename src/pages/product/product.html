@@ -52,7 +52,10 @@
                                     <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
                                         <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
                                             <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                                <ion-label no-margin class="font12">{{obj.label}}</ion-label></ion-option>
+                                                <ion-label no-margin class="font12">
+                                                    {{obj.label}}
+                                            </ion-label>
+                                        </ion-option>
                                         </span>
                                     </ion-select>
                                 </ion-item>

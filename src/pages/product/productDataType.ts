@@ -23,7 +23,22 @@ export class productDataType {
             "in_stock": string,
         };
 
-        "associated_products"?: Array<any>,
+        "associated_products"?: {
+            "attributes"?: any,
+            "template"?: any,
+            "basePrice"?: number,
+            "oldPrice"?: number,
+            "productId"?: number,
+            "chooseText"?: string,
+            "taxConfig"?: {
+                "includeTax"?: boolean,
+                "showIncludeTax"?: boolean,
+                "showBothPrices"?: boolean,
+                "defaultTax"?: number,
+                "currentTax"?: number,
+                "inclTaxTitle"?: string,
+            }
+        },
         "bundle_items":any,
         "samples"?: string,
         "links"?: Array<any>
