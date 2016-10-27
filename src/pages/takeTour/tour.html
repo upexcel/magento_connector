@@ -1,5 +1,5 @@
 <ion-content class="tour">
-    <ion-grid>
+    <ion-grid *ngIf="data">
         <ion-row >
             <ion-col >
                 <ion-buttons end>
@@ -16,8 +16,8 @@
         </ion-row>
         <ion-row>
             <ion-col >
-                <ion-slides #mySlider [options]="mySlideOptions" >
-                    <ion-slide *ngFor="let desc of descriptions;let i=index">
+                <ion-slides  #mySlider [options]="mySlideOptions" >
+                    <ion-slide *ngFor="let desc of data.data.tour_slider ">
                         <ion-row>
                             <ion-col>
                                 <p class="heading">  {{desc.title}}</p>

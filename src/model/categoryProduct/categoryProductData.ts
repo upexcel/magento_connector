@@ -1,5 +1,5 @@
 export class CategoryProductDataType {
-    data?: [{
+    data: [{
         data: {
             "entity_id": string,
             "rating": boolean,
@@ -19,7 +19,7 @@ export class CategoryProductDataType {
             "short_description": string,
             "long_description": string,
             "media_images": Array<string>,
-            "additional_information": {
+            "additional_information" ?: {
                 "color": string,
                 "occasion": string,
                 "apparel_type": string,
@@ -32,4 +32,6 @@ export class CategoryProductDataType {
             "in_stock": string
         }
     }]
+    status: number;
+    message: string;
 }

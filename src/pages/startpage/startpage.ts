@@ -12,17 +12,7 @@ import { ConfigDataType } from '../takeTour/configDataType';
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
-    data: ConfigDataType = {
-        data: {
-            tour_logo: "",
-            logo_url: "",
-            logo_alt: "",
-            tour_slider: "",
-            background_image: "",
-            website_id: "",
-            store_id: ""
-        }
-    };
+    data: ConfigDataType;
     messsage_expired: string;
     check: boolean = false;
     options: {};

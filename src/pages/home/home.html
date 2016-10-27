@@ -14,7 +14,7 @@
     </ion-navbar>
 
 </ion-header>
-<ion-menu type="overlay"  [content]="content">
+<ion-menu type="overlay"  [content]="content" *ngIf="data">
     <ion-toolbar color="primary">
         <ion-title>Categories</ion-title>
     </ion-toolbar>
@@ -48,8 +48,9 @@
     <ion-grid no-padding >
        <ion-row no-padding class="slideOption" >
             <ion-col no-padding>
-                <ion-slides  [options]="mySlideOptions">
-                    <ion-slide *ngFor="let images of img">
+                <ion-slides  [options]="mySlideOptions" *ngIf="img">
+                    <ion-slide *ngFor="let images of img.data.url">
+
                         <img src="{{images}}" class="img"/>
                     </ion-slide>
                 </ion-slides>
@@ -59,7 +60,7 @@
 
     <!-- desktop display feature products -->
 
-    <ion-grid showWhen="landscape">
+    <ion-grid showWhen="landscape" *ngIf="homeProduct">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-row wrap>
             <ion-col width-25 *ngFor="let feat_prod of feature_products">
@@ -77,9 +78,9 @@
     </ion-grid>
 
     <!--  mobile display feature products -->
-    <ion-grid showWhen="mobile">
+    <ion-grid showWhen="mobile" >
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-        <ion-row wrap>
+        <ion-row  wrap  *ngIf="homeProduct">
             <ion-col width-50 *ngFor="let feat_prod of feature_products">
                      <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
                     <img src="{{feat_prod.data.media_images}}" class="imgMobile"/>

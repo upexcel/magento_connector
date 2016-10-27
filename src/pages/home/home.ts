@@ -18,19 +18,13 @@ import { SliderDataType } from './../../model/home/sliderDataType';
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategoryListDataType = {
-        data: {
-            children: []
-        }
-    }
-    homeProduct: HomeProductsDataType ;
-    img: SliderDataType ;
-    rootPage: any;
+    data: CategoryListDataType;
+    homeProduct: HomeProductsDataType;
+    img: SliderDataType;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    dataArray;
     constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
@@ -74,7 +68,7 @@ export class HomePage implements OnInit {
     slider() {
         this._sliderConfig.getSlider().then((res) => {
             if (res) {
-                this.img = res.data.url;
+                this.img = res;
             }
         });
     }
