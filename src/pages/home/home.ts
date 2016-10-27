@@ -10,10 +10,10 @@ import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import { CategoryListDataType } from './categorylistDataType';
 import { CategoryList } from '../../model/home/categoryList';
-import {HomeProductsDataType  } from './homeProductsDataType';
+import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import { Slider } from '../../model/home/slider';
-import { SliderDataType } from './sliderDataType';
+import { SliderDataType } from './../../model/home/sliderDataType';
 @Component({
     templateUrl: 'home.html'
 })
@@ -23,19 +23,8 @@ export class HomePage implements OnInit {
             children: []
         }
     }
-    homeProduct: HomeProductsDataType = {
-        data: {
-            sku: "",
-            media_image: "",
-            name: "",
-            display_price: ""
-        }
-    }
-    img: SliderDataType = {
-      data: {
-          url:[]
-      }
-    }
+    homeProduct: HomeProductsDataType ;
+    img: SliderDataType ;
     rootPage: any;
     spin: boolean = true;
     feature_products: any;
@@ -85,7 +74,7 @@ export class HomePage implements OnInit {
     slider() {
         this._sliderConfig.getSlider().then((res) => {
             if (res) {
-                this.img.data = res.data;
+                this.img = res.data.url;
             }
         });
     }
