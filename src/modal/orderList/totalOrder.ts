@@ -1,10 +1,9 @@
-import { Injectable, OnInit}    from '@angular/core';
+import { Injectable}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {TotalOrderDataType  } from './../../pages/orderList/totalOrderDataType';
+import {TotalOrderDataType  } from './totalOrderDataType';
 @Injectable()
-export class TotalOrder implements OnInit {
+export class TotalOrder {
     constructor(private _apiService: ApiService) { }
-    ngOnInit() { }
     getTotalOrder(data) {
         let apiservice = this._apiService;
         return new Promise<TotalOrderDataType>(function(resolve, reject) {

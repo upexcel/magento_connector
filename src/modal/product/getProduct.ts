@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {productDataType  } from './../../pages/product/productDataType';
+import { productDataType  } from './../../pages/product/productDataType';
 declare let Promise: any;
 @Injectable()
 export class Product implements OnInit {

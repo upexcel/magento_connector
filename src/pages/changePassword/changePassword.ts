@@ -13,7 +13,7 @@ import { ChangePwdDataType } from './changePwdDataType';
 })
 export class ChangepasswordPage implements OnInit {
     changepassform: any;
-    response: any;
+    response: ChangePwdDataType;
     email: string;
     access_token: string;
     spin: boolean = false;
@@ -40,7 +40,7 @@ export class ChangepasswordPage implements OnInit {
         this._changePwd.getPwd(value).this((res) => {
             this.spin = false;
             this.response = res.data;
-            this.showToast(this.response);
+            this.showToast(this.response.body.message);
             this._navCtrl.setRoot(HomePage);
         })
     }
