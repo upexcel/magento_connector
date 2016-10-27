@@ -54,9 +54,6 @@ export class OrderlistPage implements OnInit {
     total_orders() {
         var body = { "secret": this.secret }
         this._order.getTotalOrder(body).then((res) => {
-            if (res.statuscode == 500) {
-                this.logout();
-            }
             if (res.data != 0) {
                 this.ttl_show = true;
                 this.totalOrders = res.data.total_order;
@@ -65,7 +62,7 @@ export class OrderlistPage implements OnInit {
             }
         })
         .catch(err=>{
-
+          this.logout();
         });
     }
 
@@ -77,9 +74,6 @@ export class OrderlistPage implements OnInit {
         let datas: any;
         this._order.getOrderList(body).then((res) => {
             this.spin = false;
-            if (res.statuscode == 500) {
-                this.logout();
-            }
             if (res.data == 0) {
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
@@ -99,7 +93,7 @@ export class OrderlistPage implements OnInit {
             }
         })
         .catch((err)=>{
-
+              this.logout();
         })
     }
     doInfinite(infiniteScroll) {

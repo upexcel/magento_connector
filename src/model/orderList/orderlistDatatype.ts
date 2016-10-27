@@ -7,5 +7,4 @@ export class OrderListDataType{
     };
   "status"?: number;
   "message"?: string;
-  "statuscode"?:number;
 }

@@ -46,9 +46,6 @@ export class MyAccountPage implements OnInit {
         this.spin = true;
         let body = { "secret": this.secret };
         this._myaccount.getMyAccount(body).then((res) => {
-            if (res.statuscode == 500) {
-                this.logout();
-            } else {
                 var condition = res.data;
                 if (condition.length == 0) {
                     this.got = true
@@ -82,11 +79,9 @@ export class MyAccountPage implements OnInit {
                         access_token: [this.access_token]
                     })
                 }
-            }
         })
             .catch(err => {
               this.logout();
-                console.log(err);
             })
     }
     update(value: any) {

@@ -12,21 +12,12 @@ export class OrderIdDetail {
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
             local.get('orderidDetail').then((orderidDetail: string) => {
-                if (orderidDetail != null && orderidDetail != undefined) {
-                    resolve(orderidDetail);
-                }
-                else {
                     apiservice.api("order/get/", data).subscribe((res) => {
-                        local.set('orderidDetail', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
                     });
-                }
             });
         });
     }
 }
-
-
-

@@ -18,5 +18,4 @@ export class MyAccountDataType{
 ];
 "status" : number;
 "message" : string;
-"statuscode":number;
 }
