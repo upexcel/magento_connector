@@ -6,7 +6,6 @@ import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
 import { TotalOrder } from '../../modal/orderList/totalOrder';
-import { totalOrderDataType } from './totalOrderDataType';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
 import forEach from 'lodash/forEach';
@@ -64,6 +63,9 @@ export class OrderlistPage implements OnInit {
                 this.totalAmount = res.data.total_amount;
             } else {
             }
+        })
+        .catch(err=>{
+
         });
     }
 
@@ -73,7 +75,7 @@ export class OrderlistPage implements OnInit {
         let date: any = [];
         let body = { "secret": this.secret }
         let datas: any;
-        this._apiService.api("order/alllist", body).subscribe((res) => {
+        this._product.getOrderList(body).then((res) => {
             this.spin = false;
             if (res.statuscode == 500) {
                 this.logout();
@@ -86,8 +88,7 @@ export class OrderlistPage implements OnInit {
                 forEach(this.res, function(value, key) {
                     date.push(value.created_at.split(" ", 1));
                     datas = {
-                        value: value,
-                        key: key
+                        value: value
                     };
                     res_data.push(datas);
                 });
@@ -96,6 +97,9 @@ export class OrderlistPage implements OnInit {
                 this.itemsDate = reverse(uniq(flattenDeep(date)));
                 this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
             }
+        })
+        .catch((err)=>{
+          
         })
     }
     doInfinite(infiniteScroll) {

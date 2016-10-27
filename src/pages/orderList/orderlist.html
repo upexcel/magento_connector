@@ -38,8 +38,8 @@
                         <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon>
                         <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon>
                     </div>
-                    <div (click)="gotoOrderDetail(data.key)">
-                        <span class="order_key">#{{data.key}}</span>
+                    <div (click)="gotoOrderDetail(data.value.order_id)">
+                        <span class="order_key">#{{data.value.order_id}}</span>
                         <span class="date_creation">{{data.value.created_at | date: 'hh:mm'}}</span>
                         <div class="cd-timeline-content">
                             <h2>Amount: &#8377;{{data.value.grand_total}}</h2>

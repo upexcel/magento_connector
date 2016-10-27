@@ -1,9 +1,9 @@
 export class TotalOrderDataType{
 "data": {
-  "total_order": number,
-  "total_amount": string
+  "total_order"?: number,
+  "total_amount"?: string
 };
-"status": number;
-"message": string;
-"statuscode":number;
+"status"?: number;
+"message"?: string;
+"statuscode"?:number;
 }
