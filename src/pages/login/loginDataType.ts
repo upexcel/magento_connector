@@ -10,8 +10,8 @@ export class LoginDataType {
         website_id: number,
         type: string,
     }
-    status: number
-    message: string
+    status: number;
+    message: string;
 }
 
 

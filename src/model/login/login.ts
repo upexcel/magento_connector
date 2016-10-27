@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { LoginDataType } from './../../pages/login/loginConfigDataType';
+import { LoginDataType } from './../../pages/login/loginDataType';
 declare let Promise: any;
 @Injectable()
 export class Login implements OnInit {

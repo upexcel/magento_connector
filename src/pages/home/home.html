@@ -50,6 +50,7 @@
             <ion-col no-padding>
                 <ion-slides  [options]="mySlideOptions" *ngIf="img">
                     <ion-slide *ngFor="let images of img.data.url">
+
                         <img src="{{images}}" class="img"/>
                     </ion-slide>
                 </ion-slides>

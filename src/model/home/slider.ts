@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {SliderDataType  } from './../../pages/home/sliderDataType';
+import {SliderDataType  } from './sliderDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 declare let Promise: any;

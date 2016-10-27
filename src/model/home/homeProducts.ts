@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { HomeProductsDataType } from './../../pages/home/homeProductsDataType';
+import { HomeProductsDataType } from './homeProductsDataType';
 import { Storage } from '@ionic/storage';
 declare let Promise: any;
 @Injectable()
@@ -29,6 +29,3 @@ export class HomeProducts implements OnInit {
         });
     }
 }
-
-
-

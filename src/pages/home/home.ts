@@ -10,10 +10,10 @@ import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import { CategoryListDataType } from './categorylistDataType';
 import { CategoryList } from '../../model/home/categoryList';
-import {HomeProductsDataType  } from './homeProductsDataType';
+import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import { Slider } from '../../model/home/slider';
-import { SliderDataType } from './sliderDataType';
+import { SliderDataType } from './../../model/home/sliderDataType';
 @Component({
     templateUrl: 'home.html'
 })
@@ -21,12 +21,10 @@ export class HomePage implements OnInit {
     data: CategoryListDataType;
     homeProduct: HomeProductsDataType;
     img: SliderDataType;
-    rootPage: any;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    dataArray;
     constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
