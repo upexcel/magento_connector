@@ -37,11 +37,11 @@ export class ChangepasswordPage implements OnInit {
     }
     changepassword(value: any) {
         this.spin = true;
-        this._changePwd.getPwd(value).this((res) => {
+        this._changePwd.getPwd(value).then((res) => {
             this.spin = false;
             this.response = res;
-            console.log(this.response.body.message);
-            this.showToast(this.response.body.message);
+            console.log(this.response.data);
+            this.showToast(this.response.data);
             this._navCtrl.setRoot(HomePage);
         })
     }

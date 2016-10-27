@@ -18,24 +18,9 @@ import { SliderDataType } from './sliderDataType';
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategoryListDataType = {
-        data: {
-            children: []
-        }
-    }
-    homeProduct: HomeProductsDataType = {
-        data: {
-            sku: "",
-            media_image: "",
-            name: "",
-            display_price: ""
-        }
-    }
-    img: SliderDataType = {
-      data: {
-          url:[]
-      }
-    }
+    data: CategoryListDataType;
+    homeProduct: HomeProductsDataType;
+    img: SliderDataType;
     rootPage: any;
     spin: boolean = true;
     feature_products: any;
@@ -85,7 +70,7 @@ export class HomePage implements OnInit {
     slider() {
         this._sliderConfig.getSlider().then((res) => {
             if (res) {
-                this.img.data = res.data;
+                this.img = res;
             }
         });
     }

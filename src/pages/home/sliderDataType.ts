@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-
 export class SliderDataType {
     data: {
-      url:Array<any>
+        url: Array<any>
     }
+    status: number;
+    message: string;
 }
