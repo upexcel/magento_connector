@@ -5,7 +5,7 @@ import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
-import {OrderIdDetail} from './../../modal/orderid-detail/orderid-detail';
+import {OrderIdDetail} from './../../model/orderid-detail/orderid-detail';
 @Component({
     templateUrl: 'orderid-detail.html'
 })

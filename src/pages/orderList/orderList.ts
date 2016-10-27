@@ -5,7 +5,7 @@ import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
-import { TotalOrder } from '../../modal/orderList/totalOrder';
+import { TotalOrder } from '../../model/orderList/totalOrder';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
 import forEach from 'lodash/forEach';
@@ -37,7 +37,7 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(private _product: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -53,7 +53,7 @@ export class OrderlistPage implements OnInit {
     }
     total_orders() {
         var body = { "secret": this.secret }
-        this._product.getTotalOrder(body).then((res) => {
+        this._order.getTotalOrder(body).then((res) => {
             if (res.statuscode == 500) {
                 this.logout();
             }
@@ -75,7 +75,7 @@ export class OrderlistPage implements OnInit {
         let date: any = [];
         let body = { "secret": this.secret }
         let datas: any;
-        this._product.getOrderList(body).then((res) => {
+        this._order.getOrderList(body).then((res) => {
             this.spin = false;
             if (res.statuscode == 500) {
                 this.logout();
@@ -99,7 +99,7 @@ export class OrderlistPage implements OnInit {
             }
         })
         .catch((err)=>{
-          
+
         })
     }
     doInfinite(infiniteScroll) {

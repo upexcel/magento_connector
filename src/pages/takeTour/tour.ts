@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
-import {AppConfig} from '../../modal/appConfig/appConfig';
+import {AppConfig} from '../../model/appConfig/appConfig';
 import {ApiService } from './../../providers/api-service/api-service';
 import {LoginPage} from './../login/login';
 import { Storage } from '@ionic/storage';

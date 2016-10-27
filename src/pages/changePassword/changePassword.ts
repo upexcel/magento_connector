@@ -6,7 +6,7 @@ import {ApiService} from './../../providers/api-service/api-service'
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import {PopoverPage} from './../../components/popover/popover';
-import { ChangePwd } from '../../modal/changePassword/accountChangePwd';
+import { ChangePwd } from '../../model/changePassword/accountChangePwd';
 import { ChangePwdDataType } from './changePwdDataType';
 @Component({
     templateUrl: 'changepassword.html'
@@ -39,7 +39,8 @@ export class ChangepasswordPage implements OnInit {
         this.spin = true;
         this._changePwd.getPwd(value).this((res) => {
             this.spin = false;
-            this.response = res.data;
+            this.response = res;
+            console.log(this.response.body.message);
             this.showToast(this.response.body.message);
             this._navCtrl.setRoot(HomePage);
         })

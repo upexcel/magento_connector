@@ -9,10 +9,10 @@ import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import { CategoryListDataType } from './categorylistDataType';
-import { CategoryList } from '../../modal/home/categoryList';
+import { CategoryList } from '../../model/home/categoryList';
 import {HomeProductsDataType  } from './homeProductsDataType';
-import { HomeProducts } from '../../modal/home/homeProducts';
-import { Slider } from '../../modal/home/slider';
+import { HomeProducts } from '../../model/home/homeProducts';
+import { Slider } from '../../model/home/slider';
 import { SliderDataType } from './sliderDataType';
 @Component({
     templateUrl: 'home.html'

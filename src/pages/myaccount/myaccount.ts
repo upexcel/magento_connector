@@ -6,8 +6,8 @@ import {FormBuilder } from '@angular/forms';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
-import {MyAccount} from './../../modal/myaccount/myaccount';
-import {EditAccount} from './../../modal/myaccount/editAccount';
+import {MyAccount} from './../../model/myaccount/myaccount';
+import {EditAccount} from './../../model/myaccount/editAccount';
 @Component({
     templateUrl: 'myaccount.html'
 })
