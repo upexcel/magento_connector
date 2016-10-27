@@ -54,7 +54,7 @@ export class OrderlistPage implements OnInit {
     }
     total_orders() {
         var body = { "secret": this.secret }
-        this._product.getTotalOrder(body).this((res) => {
+        this._product.getTotalOrder(body).then((res) => {
             if (res.statuscode == 500) {
                 this.logout();
             }
