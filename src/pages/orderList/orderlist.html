@@ -23,9 +23,9 @@
     </ion-list>
     <ion-spinner *ngIf="spin"></ion-spinner>
     <ion-grid class="seg">
-        <ion-row  *ngIf="ttl_show">
-            <ion-col id="total_orders">TOTAL ORDERS <h6>{{totalOrders}}</h6></ion-col>
-            <ion-col>TOTAL AMOUNT<h6> &#8377;{{totalAmount}}</h6></ion-col>
+        <ion-row  *ngIf="totalOrder">
+            <ion-col id="total_orders">TOTAL ORDERS <h6>{{totalOrder.data.total_order}}</h6></ion-col>
+            <ion-col>TOTAL AMOUNT<h6> &#8377;{{totalOrder.data.total_amount}}</h6></ion-col>
         </ion-row>
     </ion-grid>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
