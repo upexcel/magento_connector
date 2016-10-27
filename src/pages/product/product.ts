@@ -50,7 +50,7 @@ export class ProductPage implements OnInit {
     }
     ngOnInit() {
         this.product = "Product";
-                this.presentLoading();
+        this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
                 this.visiable = true;
@@ -111,7 +111,7 @@ export class ProductPage implements OnInit {
             forEach(res, function(value) {
                 count++;
             });
-            
+
             if (this.keys.length == count) {
                 this.disable = false;
             }
@@ -161,7 +161,7 @@ export class ProductPage implements OnInit {
             this._local.get('store_id').then((store_idval: any) => {
                 store_id = store_idval;
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-                 other = data;
+                other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
                     forEach(this.selectedList, function(listdata, key) {
@@ -169,7 +169,7 @@ export class ProductPage implements OnInit {
                     });
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
-                     other = merge(data, selectedItem);
+                    other = merge(data, selectedItem);
                     let ser = this.productData.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
