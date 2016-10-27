@@ -7,6 +7,9 @@ import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Product } from '../../modal/product/getProduct';
+import { productDataType  } from './../product/productDataType';
+import { Cart } from '../../modal/product/cart';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -18,14 +21,10 @@ import isEqual from 'lodash/isEqual';
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
-    res: {} = {};
+    productData: productDataType;
     quantity: number;
-    response: any;
-    activeSize: boolean = false;
-    activeColor: boolean = false;
-    quantityUpdate: boolean = false;
-    condition: boolean = false;
     sp_priceShow: boolean = false;
+    visiable: boolean = false;
     selectshow: boolean = true;
     spin: boolean = true;
     itemSize: string;
@@ -37,52 +36,43 @@ export class ProductPage implements OnInit {
     disable: boolean = true;
     product: string;
     price: number;
-    s_price: number;
     shown: boolean;
     images: string;
     final_price: number;
     item: any;
     keys: any = [];
     search: any = [];
-    searchTransformation: any = [];
-    path: any;
-    constructor(private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    res: {} = {};
+    data: any;
+    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
-        this.path = { sku: id };
+        this.data = { sku: id };
     }
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();
-        this._apiService.api("product/get/", this.path).subscribe((res) => {
+        this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
-                this.response = res;
+                this.visiable = true;
+                this.productData = res;
                 this.spin = false;
-                this.price = this.response.data.data.display_price;
-                this.images = this.response.data.data.media_images[0];
-                this.final_price = this.price;
-                if (this.response.data.data.type != "configurable") {
+                this.images = this.productData.data.data.media_images[0];
+                this.final_price = this.productData.data.data.display_price;
+                if (this.productData.data.data.type != "configurable") {
                     this.disable = false;
                 }
-                if (this.response.data.data.special_price > 0) {
-                    this.condition = true;
+                if (this.productData.data.data.special_price > 0) {
                     this.sp_priceShow = true;
-                    this.s_price = this.response.data.data.special_price;
-                    this.final_price = this.s_price;
+                    this.final_price = this.productData.data.data.special_price;
                 }
-                this.product = this.response.data.data.name;
-                if (this.response.data.associated_products) {
-                    let list: string = this.response.data.associated_products.attributes;
-                    this.keys = keys(list);
+                this.product = this.productData.data.data.name;
+                if (this.productData.data.associated_products) {
+                    this.keys = keys(this.productData.data.associated_products.attributes);
                 }
             }
-        },
-            (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            })
+        }).catch((err) => {
+        })
     }
-
     gotoCart() {
         this._navCtrl.push(CartPage);
     }
@@ -93,7 +83,7 @@ export class ProductPage implements OnInit {
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
         //        mapping between select list
-        forEach(this.response.data.associated_products.attributes, function(res1, key1) {
+        forEach(this.productData.data.associated_products.attributes, function(res1, key1) {
             if (key != key1) {
                 forEach(res1.options, function(res2) {
                     res2.shown = false;
@@ -121,6 +111,7 @@ export class ProductPage implements OnInit {
             forEach(res, function(value) {
                 count++;
             });
+
             if (this.keys.length == count) {
                 this.disable = false;
             }
@@ -159,17 +150,18 @@ export class ProductPage implements OnInit {
         let img: string = response.data.media_images[0];
         let price: number = response.data.display_price;
         let name: string = response.data.name;
-        let type: string = this.response.data.data.type;
+        let type: string = this.productData.data.data.type;
         let access_token: string;
         let store_id: string;
-        let productid: string = this.response.data.data.entity_id;
+        let other;
+        let productid: string = this.productData.data.data.entity_id;
         this._local.get('access_token').then((value: any) => {
             access_token = value;
 
             this._local.get('store_id').then((store_idval: any) => {
                 store_id = store_idval;
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-                let other = data;
+                other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
                     forEach(this.selectedList, function(listdata, key) {
@@ -177,12 +169,13 @@ export class ProductPage implements OnInit {
                     });
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcHAubWFnZW50by5leGNlbGxlbmNlIiwiYXVkIjoibW9iaWxlX2FwcCJ9.R4eQ8HCunGPktBEMAVpt6B5IDFGrvgTEuzCKnsykQEY", "store_id": store_id };
-                    let other = merge(data, selectedItem);
-                    let ser = this.response.data.associated_products.attributes;
+                    other = merge(data, selectedItem);
+                    let ser = this.productData.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
                             this.search = search;
                             this.search.push(ser);
+                            console.log(this.search);
                             this._local.set('search', uniqWith(this.search, isEqual));
                         }
                         else {
@@ -197,7 +190,7 @@ export class ProductPage implements OnInit {
                 }
 
                 //cart api
-                this._apiService.api("cart/cart", path).subscribe((res) => {
+                this._cart.getCart(path).then((res) => {
                     if (res) {
                         //add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
@@ -210,14 +203,9 @@ export class ProductPage implements OnInit {
                             }
                         });
                     }
-                },
-                    (err) => {
-                        if (err) {
-                            this.presentToast(err);
-                            console.log(err);
-                        }
-                    });
-
+                }).catch((err) => {
+                    this.presentToast(err);
+                })
             });
         });
     }

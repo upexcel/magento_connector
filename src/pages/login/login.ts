@@ -5,9 +5,9 @@ import {RegisterPage} from '../register/register';
 import {ApiService } from './../../providers/api-service/api-service';
 import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
-import { LoginConfigDataType } from './loginConfigDataType';
+import { LoginDataType } from './loginDataType';
 import { Storage } from '@ionic/storage';
-import {LoginConfig} from '../../providers/loginConfig/loginConfig';
+import {Login} from '../../modal/login/login';
 @Component({
     templateUrl: 'login.html'
 })
@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
     response: string;
     website_id: any;
     show_form: boolean = false;
-    data: LoginConfigDataType = {
+    data: LoginDataType = {
         data: {
             firstname: "",
             lastname: "",
@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
             store_id: ""
         }
     };
-    constructor(private _loginConfig: LoginConfig, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController, private _alertCtrl: AlertController) { }
+    constructor(private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController, private _alertCtrl: AlertController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
     }
     signin(logvalue: any) {
         this.spin = true;
-        this._loginConfig.getLoginConfig(logvalue).then((res) => {
+        this._login.getLogin(logvalue).then((res) => {
             this.spin = false;
             if (res.status === 1) {
                 this.data = res;

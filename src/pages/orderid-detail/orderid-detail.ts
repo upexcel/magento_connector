@@ -5,6 +5,7 @@ import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
+import {OrderIdDetail} from './../../modal/orderid-detail/orderid-detail';
 @Component({
     templateUrl: 'orderid-detail.html'
 })
@@ -44,21 +45,21 @@ export class OrderModalPage implements OnInit {
     ship_country: string;
     ship_postcode: number;
     shipping_description: string;
-    constructor(private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this._local.get('secret').then((value: any) => {
-            this.getOrderDetails(this.order_id,value);
+            this.getOrderDetails(this.order_id, value);
         });
     }
     close() {
         this._viewCtrl.dismiss();
     }
-    getOrderDetails(order_id,secret) {
+    getOrderDetails(order_id, secret) {
         let body = {
             order_id: order_id, secret: secret
         }
-        this._apiService.api("order/get/", body).subscribe((res) => {
+        this._orderdetail.getHomeProducts(body).then((res) => {
             let parse = res;
             this.status = parse.data.status;
             this.grand_total = parse.data.grand_total;

@@ -1,5 +1,3 @@
-import { Component } from '@angular/core';
-
 export class ConfigDataType {
     data: {
         tour_logo: string;
