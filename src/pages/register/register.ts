@@ -5,8 +5,8 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
-import { Register } from '../../modal/register/register';
-import {Login} from '../../modal/login/login';
+import { Register } from '../../model/register/register';
+import {Login} from '../../model/login/login';
 import { LoginDataType } from '../login/loginDataType';
 @Component({
     templateUrl: 'register.html'

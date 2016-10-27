@@ -3,8 +3,8 @@ import { NavController, MenuController, PopoverController, NavParams, LoadingCon
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import clone from 'lodash/clone';
-import { CategoryProduct } from './../../modal/categoryProduct/categoryProduct';
-import {CategoryProductDataType} from './../../modal/categoryProduct/categoryProductData';
+import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
+import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })

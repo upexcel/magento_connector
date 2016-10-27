@@ -7,7 +7,7 @@ import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
 import { LoginDataType } from './loginDataType';
 import { Storage } from '@ionic/storage';
-import {Login} from '../../modal/login/login';
+import {Login} from '../../model/login/login';
 @Component({
     templateUrl: 'login.html'
 })
