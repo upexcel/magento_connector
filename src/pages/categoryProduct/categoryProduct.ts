@@ -33,20 +33,19 @@ export class CategoryProductPage implements OnInit {
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.categoryProduct.data.length;
         var limit = this.limit;
-        if (prod_length % 2 == 0) {
-            if (prod_length < limit) {
+        if (this.categoryProduct.data.length % 2 == 0) {
+            if (this.categoryProduct.data.length < limit) {
                 infiniteScroll.complete();
             }
-            else if (prod_length >= limit) {
+            else if (this.categoryProduct.data.length >= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
                 }, 2000);
             }
-            else if (prod_length <= limit) {
+            else if (this.categoryProduct.data.length <= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);

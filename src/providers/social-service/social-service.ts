@@ -2,6 +2,7 @@ import { Platform} from 'ionic-angular';
 import {Injectable} from '@angular/core';
 import {GooglePlus, Facebook} from 'ionic-native'
 import { config} from './../config/config';
+declare let Promise: any;
 @Injectable()
 export class SocialService {
     platform: any;
@@ -15,7 +16,7 @@ export class SocialService {
     }
 
     fbLogin() {
-        let p = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
                 Facebook.login(['email']).then((success) => {
                     resolve(success);
@@ -24,20 +25,20 @@ export class SocialService {
                 reject('Please run me on a device');
             }
         });
-        return p;
+
     }
 
     getFbCurrentUserProfile() {
-        let p = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             Facebook.api('/me?fields=id,first_name,last_name,email,picture.width(150).height(150)', null).then(
                 (profileData) => {
                     resolve(profileData);
                 });
         });
-        return p;
+
     }
     googleLogin() {
-        let p = new Promise((resolve, reject) => {
+        return new Promise((resolve , reject) => {
             if (this.platform.is('cordova')) {
                 GooglePlus.login(this.options).then((success) => {
                     resolve(success);
@@ -46,7 +47,6 @@ export class SocialService {
                 reject('Please run me on a device');
             }
         });
-        return p;
     }
 }
 

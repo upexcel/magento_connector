@@ -7,13 +7,14 @@ import {StartPage} from './../../pages/startpage/startpage';
 import { TotalOrder } from '../../model/orderList/totalOrder';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
-import forEach from 'lodash/forEach';
+import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
+import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
 import slice from 'lodash/slice';
 import uniq from 'lodash/uniq';
 import flattenDeep from 'lodash/flattenDeep';
 import clone from 'lodash/clone';
-import {OrderListDataType} from './../../model/orderlist/orderlistDatatype';
-import {TotalOrderDataType} from './../../model/orderlist/totalOrderDataType';
+import forEach from 'lodash/forEach';
+
 @Component({
     templateUrl: 'orderlist.html'
 })
