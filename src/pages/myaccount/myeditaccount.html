@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color= "primary">
-        <ion-title>My Account</ion-title>
+        <ion-title>{{title}}</ion-title>
         <ion-buttons end>
             <button  ion-button icon-only (click)="presentPopover($event)">
                      <ion-icon name="more"></ion-icon>
@@ -11,7 +11,7 @@
 <ion-content  class="myaccount">
     <!-- <ion-scroll scrollY="true"> -->
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
-        <form [formGroup]="updateform" *ngIf="user_add">
+        <form [formGroup]="updateform" *ngIf="myaccount">
             <ion-list inset class="padd60">
                 <ion-item>
                     <ion-label stacked>First Name <span color="danger">*</span></ion-label>
@@ -26,7 +26,7 @@
                     <ion-input formControlName="city" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label stacked>Company</ion-label> 
+                    <ion-label stacked>Company</ion-label>
                     <ion-input  formControlName="company" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
@@ -38,16 +38,16 @@
                     <ion-input  formControlName="street" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label stacked>Pin Code <span color="danger">*</span></ion-label> 
+                    <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
                     <ion-input  formControlName="zip" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label stacked>Country <span color="danger">*</span></ion-label> 
+                    <ion-label stacked>Country <span color="danger">*</span></ion-label>
                     <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
-                </ion-item>           
+                </ion-item>
                 <ion-buttons class="center" padding>
                     <button ion-button color="primary" medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
-                </ion-buttons>   
+                </ion-buttons>
             </ion-list>
         </form>
     <!-- </ion-scroll> -->

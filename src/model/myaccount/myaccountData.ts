@@ -1,4 +1,4 @@
-export class MyAccountDataType{
+export class MyAccountAddressDataType{
 "data": [
   {
     "firstname": string,
@@ -8,10 +8,10 @@ export class MyAccountDataType{
     "country_id": string,
     "region": string,
     "postcode": number,
-    "telephone": number,
-    "fax": number,
-    "region_id": number,
-    "street": Array<string>,
+    "telephone": any,
+    "fax": any,
+    "region_id": any,
+    "street": Array<any>,
     "default_billing": number,
     "default_shipping": number
   }
