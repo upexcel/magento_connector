@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar color= "primary">
+        <ion-title>{{title}}</ion-title>
+        <ion-buttons end>
+            <button  ion-button icon-only (click)="presentPopover($event)">
+                     <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content  class="myaccount">
+    <ion-list *ngIf="myaccount">
+        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+        <ion-card *ngFor="let address of myaccount.data;let id=index" >
+
+            <ion-card-header>
+                <h2>{{address.firstname+" "+address.lastname}}</h2>
+            </ion-card-header>
+            <ion-card-content>
+                <p>City: {{address.city}}</p>
+                <p>Company: {{address.company}}</p>
+                <p>Street: {{address.street}}</p>
+                <p>Region: {{address.region}}</p>
+                <p>Region Id:{{address.region_id}}</p>
+                <p>Fax: {{address.fax}}</p>
+                <p>Post code: {{address.postcode}}</p>
+                <p>Country: {{address.country_id}}</p>
+                <p>Telephone: {{address.teliphone}}</p>
+            </ion-card-content>
+            <ion-row no-padding>
+                <ion-col>
+                    <button ion-button clear  color="primary" icon-left (click)="editAccount(id)">
+                        <ion-icon name='create'></ion-icon>Edit
+                    </button>
+                </ion-col>
+                <ion-col text-right>
+                    <button ion-button clear  color="primary" icon-left (click)="deleteAccount()">
+                        <ion-icon name='trash'></ion-icon>Delete
+                    </button>
+                </ion-col>
+            </ion-row>
+
+        </ion-card>
+        <button ion-button full class="add_address" (click)="addNewAddress()">Add New Address</button>
+    </ion-list>
+</ion-content>
