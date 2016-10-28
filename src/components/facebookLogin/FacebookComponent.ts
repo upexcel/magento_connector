@@ -9,13 +9,7 @@ import {FacebookData} from './facebookData';
                  </button>`
 })
 export class FacebookComponent {
-    fb_data: FacebookData = {
-        fb_firstname: '',
-        fb_lastname: '',
-        fb_email: '',
-        fb_profilepic: '',
-        fb_accessToken: ''
-    };
+    fb_data: FacebookData;
     @Output() userfbLogin: EventEmitter<any> = new EventEmitter();
     @Output() userfbError: EventEmitter<any> = new EventEmitter();
     constructor(private _socialProvider: SocialService) { }
@@ -24,11 +18,7 @@ export class FacebookComponent {
         this._socialProvider.fbLogin().then((res) => {
             this._socialProvider.getFbCurrentUserProfile().then(
                 (profileData) => {
-                    this.fb_data.fb_firstname = profileData.first_name;
-                    this.fb_data.fb_lastname = profileData.last_name;
-                    this.fb_data.fb_email = profileData.email;
-                    this.fb_data.fb_profilepic = profileData.picture.data.url;
-                    let body = { firstname: this.fb_data.fb_firstname, lastname: this.fb_data.fb_lastname, email: this.fb_data.fb_email, picture: this.fb_data.fb_profilepic };
+                    let body = { firstname: this.fb_data.first_name, lastname: this.fb_data.last_name, email: this.fb_data.email, picture: this.fb_data.picture.data.url };
                     self.userfbLogin.emit(body);
                 })
         })

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 
 export class FacebookData {
-    fb_firstname: string;
-    fb_lastname: string;
-    fb_email: string;
-    fb_profilepic: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    picture: any;
     fb_accessToken: string;
 }
 
