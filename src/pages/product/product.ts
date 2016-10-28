@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../../model/product/getProduct';
 import { productDataType  } from './../product/productDataType';
 import { Cart } from '../../model/product/cart';
+import {  cartDataType } from './../product/cartDataType';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -22,6 +23,7 @@ import isEqual from 'lodash/isEqual';
 })
 export class ProductPage implements OnInit {
     productData: productDataType;
+    cartData:cartDataType;
     quantity: number;
     sp_priceShow: boolean = false;
     visiable: boolean = false;
@@ -194,8 +196,9 @@ export class ProductPage implements OnInit {
                     if (res) {
                         //add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
-                            if (response != "undefined") {
-                                this.item = response;
+                        this.cartData=response;
+                            if (this.cartData != "undefined") {
+                                this.item = this.cartData;
                                 this.presentToast("item inserted ");
                                 this._navCtrl.push(CartPage);
                             }
