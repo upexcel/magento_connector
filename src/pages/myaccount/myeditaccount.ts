@@ -48,8 +48,7 @@ export class MyEditAccountPage implements OnInit {
                 street: [this.myaccount.data[id].street],
                 zip: [this.myaccount.data[id].postcode],
                 countryid: [this.myaccount.data[id].country_id],
-                secret: [secret],
-                access_token: [access_token]
+                secret: [secret]
             })
         })
             .catch(err => {
