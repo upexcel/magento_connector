@@ -45,7 +45,7 @@ export class StartPage implements OnInit {
         profileModal.present();
     }
     userFbLogin(body) {
-        this._local.set("fbProfileDate", body);
+        this._local.set("access_token", body.access_token);
         this._navCtrl.setRoot(HomePage);
     }
     userGoogleLogin(body) {

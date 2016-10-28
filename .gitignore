@@ -43,3 +43,4 @@ resources/
 resources/android/icon/*.png
 resources/android/splash/*.png
 nbproject/private/private.xml
+res/
