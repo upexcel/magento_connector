@@ -77,7 +77,6 @@ export class MyEditAccountPage implements OnInit {
             })
     }
     update(value: any) {
-      console.log(value);
         this.upd_spin = true;
         this._editaccount.updateAccount(value).then((res) => {
             this.upd_spin = false;
@@ -87,9 +86,7 @@ export class MyEditAccountPage implements OnInit {
                 this.presentUpdateToast(this.editaccount.message);
             } else {
                 this.presentUpdateToast("Successfully updated");
-                // this._navCtrl.pop();
-                // this._navCtrl.push(MySavedAddressPage);
-                this._events.publish('reloadPage1');
+                this._events.publish('savedaddress');
                   this._navCtrl.pop();
             }
 

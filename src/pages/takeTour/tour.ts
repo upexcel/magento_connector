@@ -3,13 +3,13 @@ import { Slides} from 'ionic-angular';
 import { ViewController, NavController } from 'ionic-angular';
 import {AppConfig} from '../../model/appConfig/appConfig';
 import {ApiService } from './../../providers/api-service/api-service';
-import {LoginPage} from './../login/login';
 import { Storage } from '@ionic/storage';
 import { ConfigDataType } from './configDataType';
 import { config } from './../../providers/config/config';
 import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
 import keys from 'lodash/keys';
+import {HomePage} from './../home/home';
 @Component({
     templateUrl: 'tour.html'
 })
@@ -26,9 +26,8 @@ export class TourPage implements OnInit {
     close() {
         this._viewCtrl.dismiss();
     }
-    gotoLogin() {
-        this._navCtrl.push(LoginPage);
+    gotoHome() {
+        this._navCtrl.setRoot(HomePage);
     }
 
 }
-

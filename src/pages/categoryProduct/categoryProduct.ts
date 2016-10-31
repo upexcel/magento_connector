@@ -4,6 +4,8 @@ import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
 import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
+import {LoginPage} from '../login/login';
+import {Storage} from '@ionic/storage';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -14,12 +16,22 @@ export class CategoryProductPage implements OnInit {
     limit: number = 10;
     page: number = 1;
     categoryProduct: CategoryProductDataType;
-    constructor(private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    access_token:string;
+    showPopOver:boolean=false;
+    constructor(private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
+        this.access_token=this._navParams.get("access_token");
+        this._local.get("access_token").then((access_token)=>{
+            if(this.access_token!=null || access_token!=null){
+              this.showPopOver=true;
+            }else{
+              this.showPopOver=false;
+            }
+        })
         this.presentLoading();
         this.show_products(this.product_id, this.page, this.limit);
     }
@@ -56,7 +68,7 @@ export class CategoryProductPage implements OnInit {
         else {
             infiniteScroll.complete();
         }
-    } 
+    }
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
             id: product
@@ -83,5 +95,8 @@ export class CategoryProductPage implements OnInit {
         setTimeout(() => {
             refresher.complete();
         }, 2000);
+    }
+    gotoLogin() {
+        this._navCtrl.push(LoginPage);
     }
 }

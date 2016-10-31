@@ -7,8 +7,11 @@
            {{title}}
         </ion-title>
         <ion-buttons end>
-            <button  ion-button icon-only (click)="presentPopover($event)">
+            <button  ion-button icon-only (click)="presentPopover($event)" *ngIf="showPopOver">
                      <ion-icon name="more"></ion-icon>
+            </button>
+            <button  ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false">
+                     <ion-icon name="contact"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
