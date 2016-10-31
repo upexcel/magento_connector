@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController, AlertController, NavParams} from 'ionic-angular';
+import { NavController, PopoverController, ToastController, NavParams,Events} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
 import {FormBuilder } from '@angular/forms';
 import {StartPage} from './../../pages/startpage/startpage';
@@ -9,6 +9,7 @@ import {MyAccount} from './../../model/myaccount/myaccount';
 import {EditAccount} from './../../model/myaccount/editAccount';
 import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
 import {EditAccountDataType} from './../../model/myaccount/editAccountData';
+import {MySavedAddressPage} from './savedAddress';
 @Component({
     templateUrl: 'myeditaccount.html'
 })
@@ -20,63 +21,90 @@ export class MyEditAccountPage implements OnInit {
     upd_spin: boolean = false
     title: string;
     id: any;
-    constructor(private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _alertCtrl: AlertController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    entity_id:any;
+    constructor(private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _toastCtrl: ToastController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
+        this.entity_id=this._navParams.get("entity_id");
         this._local.get('secret').then((secret: any) => {
             this._local.get('access_token').then((access_token: any) => {
                 if (access_token != null) {
-                    this.getuser_details(this.id, secret, access_token);
+                    this.getuser_details(this.id, this.entity_id, secret);
                 } else {
                 }
             });
         });
     }
-    getuser_details(id, secret, access_token) {
+    getuser_details(id, entity_id,secret) {
         this.spin = true;
         let body = { "secret": secret };
         this._myaccount.getMyAccount(body).then((res) => {
             this.myaccount = res;
             this.spin = false;
-            this.updateform = this._fb.group({
-                firstname: [this.myaccount.data[id].firstname],
-                lastname: [this.myaccount.data[id].lastname],
-                city: [this.myaccount.data[id].city],
-                company: [this.myaccount.data[id].company],
-                teliphone: [this.myaccount.data[id].telephone],
-                street: [this.myaccount.data[id].street],
-                zip: [this.myaccount.data[id].postcode],
-                countryid: [this.myaccount.data[id].country_id],
-                secret: [secret]
-            })
+            if(this.myaccount.data.length!=0 && entity_id!=null){
+              this.updateform = this._fb.group({
+                  firstname: [this.myaccount.data[id].firstname],
+                  lastname: [this.myaccount.data[id].lastname],
+                  city: [this.myaccount.data[id].city],
+                  company: [this.myaccount.data[id].company],
+                  telephone: [this.myaccount.data[id].telephone],
+                  fax: [this.myaccount.data[id].fax],
+                  street: [this.myaccount.data[id].street],
+                  zip: [this.myaccount.data[id].postcode],
+                  countryid: [this.myaccount.data[id].country_id],
+                  entity_id:[entity_id],
+                  secret: [secret]
+              })
+            }else{
+              this.updateform = this._fb.group({
+                         firstname: [''],
+                         lastname: [''],
+                         city: [''],
+                         company: [''],
+                         telephone: [''],
+                         fax: [''],
+                         street: [''],
+                         zip: [''],
+                         countryid: [''],
+                         entity_id:[''],
+                         secret: [secret]
+                     })
+            }
         })
             .catch(err => {
                 this.logout();
             })
     }
     update(value: any) {
+      console.log(value);
         this.upd_spin = true;
         this._editaccount.updateAccount(value).then((res) => {
             this.upd_spin = false;
             this.editaccount = res;
+                console.log(this.editaccount);
             if (this.editaccount.status === 0) {
-                this.presentUpdateAlert(this.editaccount.message);
+                this.presentUpdateToast(this.editaccount.message);
             } else {
-                this.presentUpdateAlert("Successfully updated");
+                this.presentUpdateToast("Successfully updated");
+                // this._navCtrl.pop();
+                // this._navCtrl.push(MySavedAddressPage);
+                this._events.publish('reloadPage1');
+                  this._navCtrl.pop();
             }
 
         })
             .catch(err => {
-                console.log(err);
+                console.log("ERROR: "+err);
             });
     }
-    presentUpdateAlert(message) {
-        let alert = this._alertCtrl.create({
-            title: message,
-            buttons: ['OK']
-        });
-        alert.present();
+    presentUpdateToast(message) {
+      let toast = this._toastCtrl.create({
+              message: message,
+              position:'top',
+              duration: 3000
+            });
+            toast.present();
     }
     presentPopover(myEvent: any) {
         let popover = this._popoverCtrl.create(PopoverPage);
@@ -85,14 +113,8 @@ export class MyEditAccountPage implements OnInit {
         });
     }
     logout() {
-        this._local.remove('firstname');
-        this._local.remove('lastname');
-        this._local.remove('expiry');
-        this._local.remove('access_token');
-        this._local.remove('lists');
-        this._local.remove('email');
-        this._local.remove('secret');
-        GooglePlus.logout();
+      this._local.clear().then(() => {
         this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
+      });
     }
 }
