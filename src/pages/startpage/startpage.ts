@@ -50,7 +50,6 @@ export class StartPage implements OnInit {
     userFbLogin(body) {
         this._socialAccount.getSocialAccount(body.data).then((res) => {
             this.socialData = res;
-            console.log(this.socialData);
             this._local.set("access_token", body.token.access_token);
             this._navCtrl.setRoot(HomePage);
         });
@@ -58,7 +57,6 @@ export class StartPage implements OnInit {
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res) => {
             this.socialData = res;
-            console.log(this.socialData);
             this._local.set("googleData", body);
             this._navCtrl.setRoot(HomePage);
         });

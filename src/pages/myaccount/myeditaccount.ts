@@ -68,7 +68,6 @@ export class MyEditAccountPage implements OnInit {
 
         })
             .catch(err => {
-                console.log(err);
             });
     }
     presentUpdateAlert(message) {

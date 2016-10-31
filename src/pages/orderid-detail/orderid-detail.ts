@@ -38,7 +38,6 @@ export class OrderModalPage implements OnInit {
             this.showOrderError=true;
           }else{
             this.showOrder=true;
-            console.log(this.orderid_detail.data.items)
               this.item =  this.orderid_detail.data.items;
               var res_data: any = [];
               forEach(this.item, function(value, key) {
@@ -51,7 +50,6 @@ export class OrderModalPage implements OnInit {
               this.items = clone(res_data);
           }
         }).catch((err)=>{
-          console.log(err);
         });
     }
 
