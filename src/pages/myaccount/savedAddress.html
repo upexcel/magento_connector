@@ -9,7 +9,11 @@
     </ion-navbar>
 </ion-header>
 <ion-content  class="myaccount">
-    <ion-list *ngIf="myaccount">
+  <ion-list *ngIf="showAddress==false">
+    <h2 text-center>You have no saved address</h2>
+    <button ion-button  full (click)="addNewAddress()">Add New Address</button>
+  </ion-list>
+    <ion-list *ngIf="showAddress">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-card *ngFor="let address of myaccount.data;let id=index" >
 
@@ -20,16 +24,16 @@
                 <p>City: {{address.city}}</p>
                 <p>Company: {{address.company}}</p>
                 <p>Street: {{address.street}}</p>
-                <p>Region: {{address.region}}</p>
-                <p>Region Id:{{address.region_id}}</p>
+                <!-- <p>Region: {{address.region}}</p>
+                <p>Region Id:{{address.region_id}}</p> -->
                 <p>Fax: {{address.fax}}</p>
-                <p>Post code: {{address.postcode}}</p>
+                <p>Pin Code: {{address.postcode}}</p>
                 <p>Country: {{address.country_id}}</p>
                 <p>Telephone: {{address.teliphone}}</p>
             </ion-card-content>
             <ion-row no-padding>
                 <ion-col>
-                    <button ion-button clear  color="primary" icon-left (click)="editAccount(id)">
+                    <button ion-button clear  color="primary" icon-left (click)="editAccount(id,address.entity_id)">
                         <ion-icon name='create'></ion-icon>Edit
                     </button>
                 </ion-col>

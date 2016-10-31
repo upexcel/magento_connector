@@ -1,21 +1,22 @@
 export class MyAccountAddressDataType{
-"data": [
+"data"?: [
   {
-    "firstname": string,
-    "lastname": string,
-    "company": string,
-    "city": string,
-    "country_id": string,
-    "region": string,
-    "postcode": number,
+    "entity_id"?: string,
+    "firstname"?: string,
+    "lastname"?: string,
+    "company"?: string,
+    "city"?: string,
+    "country_id"?: string,
+    "region"?: string,
+    "postcode"?: number,
     "telephone": any,
-    "fax": any,
-    "region_id": any,
-    "street": Array<any>,
-    "default_billing": number,
-    "default_shipping": number
+    "fax"?: any,
+    "region_id"?: any,
+    "street"?: Array<any>,
+    "default_billing"?: number,
+    "default_shipping"?: number
   }
 ];
-"status" : number;
-"message" : string;
+"status" ?: number;
+"message" ?: string;
 }

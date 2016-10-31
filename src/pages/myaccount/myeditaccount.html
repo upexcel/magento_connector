@@ -9,7 +9,6 @@
     </ion-navbar>
 </ion-header>
 <ion-content  class="myaccount">
-    <!-- <ion-scroll scrollY="true"> -->
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <form [formGroup]="updateform" *ngIf="myaccount">
             <ion-list inset class="padd60">
@@ -30,8 +29,12 @@
                     <ion-input  formControlName="company" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label stacked>Fax</ion-label>
+                    <ion-input  formControlName="fax" autocorrect autocomplete clearInput></ion-input>
+                </ion-item>
+                <ion-item>
                     <ion-label stacked>Telephone <span color="danger">*</span></ion-label>
-                    <ion-input  formControlName="teliphone" autocorrect autocomplete clearInput></ion-input>
+                    <ion-input  formControlName="telephone" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label stacked>Address <span color="danger">*</span></ion-label>
@@ -45,10 +48,7 @@
                     <ion-label stacked>Country <span color="danger">*</span></ion-label>
                     <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
-                <ion-buttons class="center" padding>
-                    <button ion-button color="primary" medium [disabled]="!updateform.valid" (click)="update(updateform.value)">Update<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
-                </ion-buttons>
+                <button ion-button full class="add_address" color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
             </ion-list>
         </form>
-    <!-- </ion-scroll> -->
 </ion-content>
