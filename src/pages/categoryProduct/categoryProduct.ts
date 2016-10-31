@@ -29,7 +29,6 @@ export class CategoryProductPage implements OnInit {
             this.categoryProduct = res;
         })
             .catch((err) => {
-                console.log(err);
             });
     }
     doInfinite(infiniteScroll) {

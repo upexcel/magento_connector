@@ -35,6 +35,7 @@ import { TotalOrder } from '../model/orderList/totalOrder';
 import {MyAccount} from '../model/myaccount/myaccount';
 import {EditAccount} from '../model/myaccount/editAccount';
 import {OrderIdDetail} from '../model/orderid-detail/orderid-detail';
+import { SocialAccount } from '../model/startPage/socialAccount';
 
 //service
 import { CartService } from '../providers/cart-service/cart-service';
@@ -117,6 +118,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         TotalOrder,
         MyAccount,
         EditAccount,
+        SocialAccount,
         OrderIdDetail]
 
 })

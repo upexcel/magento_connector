@@ -23,7 +23,7 @@ import isEqual from 'lodash/isEqual';
 })
 export class ProductPage implements OnInit {
     productData: productDataType;
-    cartData:cartDataType;
+    cartData: cartDataType;
     quantity: number;
     sp_priceShow: boolean = false;
     visiable: boolean = false;
@@ -156,56 +156,56 @@ export class ProductPage implements OnInit {
         let other;
         let productid: string = this.productData.data.data.entity_id;
         this._local.get('access_token').then((access_token: any) => {
-            this._local.get('secret').then((secret)=>{
-            this._local.get('store_id').then((store_id: any) => {
-                data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-                other = data;
-                //check type of data for send data in cart api
-                if (type == "configurable") {
-                    forEach(this.selectedList, function(listdata, key) {
-                        array[key] = listdata.id;
-                    });
-                    selectedItem = (array);
-                    path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": secret, "store_id": store_id };
-                    other = merge(data, selectedItem);
-                    let ser = this.productData.data.associated_products.attributes;
-                    this._local.get('search').then((search: any) => {
-                        if (search) {
-                            this.search = search;
-                            this.search.push(ser);
-                            this._local.set('search', uniqWith(this.search, isEqual));
-                        }
-                        else {
-                            this.search.push(ser);
-                            this._local.set('search', uniqWith(this.search, isEqual));
-                        }
-
-                    });
-                }
-                else {
-                    path = { "productid": productid, "access_token": access_token, "secret": secret, "store_id": store_id };
-                }
-
-                //cart api
-                this._cart.getCart(path).then((res) => {
-                    if (res) {
-                        //add to cart service
-                        this._cartService.addCart(other, this.keys).then((response: any) => {
-                        this.cartData=response;
-                            if (this.cartData != "undefined") {
-                                this.item = this.cartData;
-                                this.presentToast("item inserted ");
-                                this._navCtrl.push(CartPage);
+            this._local.get('secret').then((secret) => {
+                this._local.get('store_id').then((store_id: any) => {
+                    data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
+                    other = data;
+                    //check type of data for send data in cart api
+                    if (type == "configurable") {
+                        forEach(this.selectedList, function(listdata, key) {
+                            array[key] = listdata.id;
+                        });
+                        selectedItem = (array);
+                        path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": secret, "store_id": store_id };
+                        other = merge(data, selectedItem);
+                        let ser = this.productData.data.associated_products.attributes;
+                        this._local.get('search').then((search: any) => {
+                            if (search) {
+                                this.search = search;
+                                this.search.push(ser);
+                                this._local.set('search', uniqWith(this.search, isEqual));
                             }
                             else {
+                                this.search.push(ser);
+                                this._local.set('search', uniqWith(this.search, isEqual));
                             }
+
                         });
                     }
-                }).catch((err) => {
-                    this.presentToast(err);
-                })
+                    else {
+                        path = { "productid": productid, "access_token": access_token, "secret": secret, "store_id": store_id };
+                    }
+
+                    //cart api
+                    this._cart.getCart(path).then((res) => {
+                        if (res) {
+                            //add to cart service
+                            this._cartService.addCart(other, this.keys).then((response: any) => {
+                                this.cartData = response;
+                                if (this.cartData.data != "undefined") {
+                                    this.item = this.cartData;
+                                    this.presentToast("item inserted ");
+                                    this._navCtrl.push(CartPage);
+                                }
+                                else {
+                                }
+                            });
+                        }
+                    }).catch((err) => {
+                        this.presentToast(err);
+                    })
+                });
             });
         });
-      });
     }
 }

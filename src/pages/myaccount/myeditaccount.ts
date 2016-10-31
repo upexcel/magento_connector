@@ -95,7 +95,6 @@ export class MyEditAccountPage implements OnInit {
 
         })
             .catch(err => {
-                console.log("ERROR: "+err);
             });
     }
     presentUpdateToast(message) {

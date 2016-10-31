@@ -34,7 +34,6 @@ export class ForgotPage implements OnInit {
         })
             .catch(err => {
                 if (err.status === 500) {
-                    console.log(err);
                 }
             });
     }
