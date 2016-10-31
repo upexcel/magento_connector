@@ -2,8 +2,16 @@
     ion-scroll {
         position: initial;
     }
-         .scroll-content {
-     overflow: auto !important; 
-     
-}
+    .scroll-content {
+        overflow: auto !important;
+
+    }
+    .add_address{
+        bottom: 0;
+        position: fixed;
+        margin: 0;
+    }
+    ion-card{
+        padding-bottom: 20px;
+    }
 }

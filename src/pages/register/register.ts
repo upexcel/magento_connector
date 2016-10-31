@@ -5,8 +5,8 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
-import { Register } from '../../modal/register/register';
-import {Login} from '../../modal/login/login';
+import { Register } from '../../model/register/register';
+import {Login} from '../../model/login/login';
 import { LoginDataType } from '../login/loginDataType';
 @Component({
     templateUrl: 'register.html'
@@ -15,17 +15,7 @@ export class RegisterPage implements OnInit {
     regForm: FormGroup;
     spin: boolean;
     clear: boolean = false;
-    data: LoginDataType = {
-        data: {
-            firstname: "",
-            lastname: "",
-            access_token: "",
-            expiry: "",
-            secret: "",
-            email: "",
-            store_id: ""
-        }
-    };
+    data: LoginDataType;
     constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
@@ -56,7 +46,8 @@ export class RegisterPage implements OnInit {
         this.spin = true;
         this._login.getLogin(logvalue).then((res) => {
             this.spin = false;
-            if (res.status === 1) {
+            this.data=res;
+            if (this.data.status === 1) {
                 this.data = res;
                 this._local.set('firstname', this.data.data.firstname);
                 this._local.set('lastname', this.data.data.lastname);

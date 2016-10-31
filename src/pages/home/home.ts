@@ -9,39 +9,22 @@ import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import { CategoryListDataType } from './categorylistDataType';
-import { CategoryList } from '../../modal/home/categoryList';
-import {HomeProductsDataType  } from './homeProductsDataType';
-import { HomeProducts } from '../../modal/home/homeProducts';
-import { Slider } from '../../modal/home/slider';
-import { SliderDataType } from './sliderDataType';
+import { CategoryList } from '../../model/home/categoryList';
+import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
+import { HomeProducts } from '../../model/home/homeProducts';
+import { Slider } from '../../model/home/slider';
+import { SliderDataType } from './../../model/home/sliderDataType';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategoryListDataType = {
-        data: {
-            children: []
-        }
-    }
-    homeProduct: HomeProductsDataType = {
-        data: {
-            sku: "",
-            media_image: "",
-            name: "",
-            display_price: ""
-        }
-    }
-    img: SliderDataType = {
-      data: {
-          url:[]
-      }
-    }
-    rootPage: any;
+    data: CategoryListDataType;
+    homeProduct: HomeProductsDataType;
+    img: SliderDataType;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    dataArray;
     constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
@@ -85,7 +68,7 @@ export class HomePage implements OnInit {
     slider() {
         this._sliderConfig.getSlider().then((res) => {
             if (res) {
-                this.img.data = res.data;
+                this.img = res;
             }
         });
     }

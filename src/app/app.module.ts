@@ -14,26 +14,28 @@ import { ChangepasswordPage } from '../pages/changePassword/changePassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
-import { MyAccountPage } from '../pages/myaccount/myaccount';
+import { MyEditAccountPage } from '../pages/myaccount/myeditaccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
+import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 
-//modal
-import { AppConfig } from '../modal/appConfig/appConfig';
-import { Login } from '../modal/login/login';
-import { Register } from '../modal/register/register';
-import { CategoryList } from '../modal/home/categoryList';
-import { HomeProducts } from '../modal/home/homeProducts';
-import { Product } from '../modal/product/getProduct';
-import { Cart } from '../modal/product/cart';
-import { Slider } from '../modal/home/slider';
-import { ChangePwd } from '../modal/changePassword/accountChangePwd';
-import { Forgot } from '../modal/forgot/forgot';
-import { CategoryProduct } from '../modal/categoryProduct/categoryProduct';
-import { TotalOrder } from '../modal/orderList/totalOrder';
-import {MyAccount} from '../modal/myaccount/myaccount';
-import {EditAccount} from '../modal/myaccount/editAccount';
-import {OrderIdDetail} from '../modal/orderid-detail/orderid-detail';
+//model
+import { AppConfig } from '../model/appConfig/appConfig';
+import { Login } from '../model/login/login';
+import { Register } from '../model/register/register';
+import { CategoryList } from '../model/home/categoryList';
+import { HomeProducts } from '../model/home/homeProducts';
+import { Product } from '../model/product/getProduct';
+import { Cart } from '../model/product/cart';
+import { Slider } from '../model/home/slider';
+import { ChangePwd } from '../model/changePassword/accountChangePwd';
+import { Forgot } from '../model/forgot/forgot';
+import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
+import { TotalOrder } from '../model/orderList/totalOrder';
+import {MyAccount} from '../model/myaccount/myaccount';
+import {EditAccount} from '../model/myaccount/editAccount';
+import {OrderIdDetail} from '../model/orderid-detail/orderid-detail';
+import { SocialAccount } from '../model/startPage/socialAccount';
 
 //service
 import { CartService } from '../providers/cart-service/cart-service';
@@ -66,7 +68,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         HomePage,
         CategoryProductPage,
         OrderModalPage,
-        MyAccountPage,
+        MyEditAccountPage,
+        MySavedAddressPage,
         LoginPage,
         LoadingModal,
         PopoverPage,
@@ -92,7 +95,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         ForgotPage,
         HomePage,
         CategoryProductPage,
-        MyAccountPage,
+        MyEditAccountPage,
+        MySavedAddressPage,
         LoginPage,
         PopoverPage
     ],
@@ -108,12 +112,13 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         Slider,
         CategoryProduct,
         HomeProducts,
-        Product, 
+        Product,
         Cart,
         ChangePwd,
         TotalOrder,
         MyAccount,
         EditAccount,
+        SocialAccount,
         OrderIdDetail]
 
 })

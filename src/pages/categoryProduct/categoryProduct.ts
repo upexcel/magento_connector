@@ -2,14 +2,12 @@ import { Component, OnInit} from '@angular/core';
 import { NavController, MenuController, PopoverController, NavParams, LoadingController} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
-import clone from 'lodash/clone';
-import { CategoryProduct } from './../../modal/categoryProduct/categoryProduct';
-import {CategoryProductDataType} from './../../modal/categoryProduct/categoryProductData';
+import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
+import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
 export class CategoryProductPage implements OnInit {
-    clickshow: boolean = false;
     products: any;
     product_id: any;
     title: any;
@@ -26,30 +24,27 @@ export class CategoryProductPage implements OnInit {
         this.show_products(this.product_id, this.page, this.limit);
     }
     show_products(product_id: any, page: any, limit: any) {
-        this.clickshow = true;
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
-            this.categoryProduct = res.data;
+            this.categoryProduct = res;
         })
             .catch((err) => {
-                console.log(err);
             });
     }
     doInfinite(infiniteScroll) {
-        var prod_length = this.categoryProduct.length;
         var limit = this.limit;
-        if (prod_length % 2 == 0) {
-            if (prod_length < limit) {
+        if (this.categoryProduct.data.length % 2 == 0) {
+            if (this.categoryProduct.data.length < limit) {
                 infiniteScroll.complete();
             }
-            else if (prod_length >= limit) {
+            else if (this.categoryProduct.data.length >= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
                 }, 2000);
             }
-            else if (prod_length <= limit) {
+            else if (this.categoryProduct.data.length <= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
@@ -61,7 +56,7 @@ export class CategoryProductPage implements OnInit {
         else {
             infiniteScroll.complete();
         }
-    }
+    } 
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
             id: product

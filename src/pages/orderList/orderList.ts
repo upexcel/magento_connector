@@ -1,29 +1,28 @@
-
 import { Component, OnInit} from '@angular/core';
 import { NavController, PopoverController} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {StartPage} from './../../pages/startpage/startpage';
-import { TotalOrder } from '../../modal/orderList/totalOrder';
-import { totalOrderDataType } from './totalOrderDataType';
+import { TotalOrder } from '../../model/orderList/totalOrder';
 import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
-import forEach from 'lodash/forEach';
+import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
+import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
 import slice from 'lodash/slice';
 import uniq from 'lodash/uniq';
 import flattenDeep from 'lodash/flattenDeep';
 import clone from 'lodash/clone';
-import reverse from 'lodash/reverse';
+import forEach from 'lodash/forEach';
+
 @Component({
     templateUrl: 'orderlist.html'
 })
 export class OrderlistPage implements OnInit {
+    totalOrder:TotalOrderDataType;
+    totalOrderList:OrderListDataType;
     firstname: string;
     lastname: string;
-    totalOrders: any;
-    totalAmount: any;
-    ttl_show: boolean = false;
     res: any;
     values: any;
     dates: any = [];
@@ -38,7 +37,7 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(private _product: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -54,16 +53,11 @@ export class OrderlistPage implements OnInit {
     }
     total_orders() {
         var body = { "secret": this.secret }
-        this._product.getTotalOrder(body).then((res) => {
-            if (res.statuscode == 500) {
-                this.logout();
-            }
-            if (res.data != 0) {
-                this.ttl_show = true;
-                this.totalOrders = res.data.total_order;
-                this.totalAmount = res.data.total_amount;
-            } else {
-            }
+        this._order.getTotalOrder(body).then((res) => {
+                this.totalOrder=res;
+        })
+        .catch(err=>{
+          this.logout();
         });
     }
 
@@ -73,29 +67,28 @@ export class OrderlistPage implements OnInit {
         let date: any = [];
         let body = { "secret": this.secret }
         let datas: any;
-        this._apiService.api("order/alllist", body).subscribe((res) => {
+        this._order.getOrderList(body).then((res) => {
             this.spin = false;
-            if (res.statuscode == 500) {
-                this.logout();
-            }
-            if (res.data == 0) {
+            this.totalOrderList=res;
+            if (this.totalOrderList.data == 0) {
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
             } else {
-                this.res = res.data;
-                forEach(this.res, function(value, key) {
-                    date.push(value.created_at.split(" ", 1));
+                forEach(this.totalOrderList.data, function(value, key) {
+                    date.unshift(value.created_at.split(" ", 1));
                     datas = {
-                        value: value,
-                        key: key
+                        value: value
                     };
-                    res_data.push(datas);
+                    res_data.unshift(datas);
                 });
-                this.itemsValue = reverse(clone(res_data));
+                this.itemsValue = clone(res_data);
                 this.values = slice(this.itemsValue, this.startArray, this.endArray);
-                this.itemsDate = reverse(uniq(flattenDeep(date)));
+                this.itemsDate = uniq(flattenDeep(date));
                 this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
             }
+        })
+        .catch((err)=>{
+              this.logout();
         })
     }
     doInfinite(infiniteScroll) {

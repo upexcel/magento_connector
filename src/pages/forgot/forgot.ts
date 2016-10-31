@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import {FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-import { Forgot } from '../../modal/forgot/forgot';
+import { Forgot } from '../../model/forgot/forgot';
 @Component({
     templateUrl: 'forgot.html'
 })
@@ -34,7 +34,6 @@ export class ForgotPage implements OnInit {
         })
             .catch(err => {
                 if (err.status === 500) {
-                    console.log(err);
                 }
             });
     }

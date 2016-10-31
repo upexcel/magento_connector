@@ -23,9 +23,9 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-grid *ngIf="clickshow" showWhen="landscape">
+    <ion-grid *ngIf="categoryProduct" showWhen="landscape">
         <ion-row  wrap>
-            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct" width-20 >
+            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data " width-20 >
                      <ion-card (click)="gotoProduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..." height="225px">
                     <ion-card-content>
@@ -38,9 +38,9 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid *ngIf="clickshow" showWhen="mobile">
+    <ion-grid *ngIf="categoryProduct" showWhen="mobile">
         <ion-row  wrap>
-            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct" width-50 >
+            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data" width-50 >
                      <ion-card (click)="gotoProduct(product.data.sku)">
                     <img src="{{product.data.media_images[0]}}" alt="..."  height="150px">
                     <ion-card-content>
