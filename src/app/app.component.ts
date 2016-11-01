@@ -4,14 +4,13 @@ import {StatusBar} from 'ionic-native';
 import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
 import { Storage } from '@ionic/storage';
-import {AppConfig} from '../model/appConfig/appConfig';
 @Component({
     template: `<ion-nav [root]="_rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`
 })
 export class MyApp implements OnInit{
     private _rootPage: any;
-    constructor(private _platform: Platform, private _local: Storage,private _appConfig:AppConfig) {
+    constructor(private _platform: Platform, private _local: Storage) {
     }
     ngOnInit(){
         this.appCheckConfig();
@@ -20,21 +19,13 @@ export class MyApp implements OnInit{
         });
     }
     appCheckConfig(){
-      this._local.get("website_id").then((website_id)=>{
-        this._local.get("store_id").then((store_id)=>{
-          this._local.get("require_login").then((require_login)=>{
-            if(website_id==null && store_id==null && require_login==null){
-                      this._appConfig.getAppConfig().then((res) => {
-                          this._rootPage =StartPage;
-                        })
-                          .catch((err) => {
-                          });
+      this._local.get("web_config").then((web_config)=>{
+            if(web_config==null){
+                    this._rootPage =StartPage;
             }
             else{
               this._rootPage =HomePage;
             }
-          })
-        })
       })
     }
 }

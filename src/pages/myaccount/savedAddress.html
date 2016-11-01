@@ -1,13 +1,4 @@
-<ion-header>
-    <ion-navbar color= "primary">
-        <ion-title>My Address</ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="presentPopover($event)">
-                     <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content  class="myaccount">
   <ion-list *ngIf="showAddress==false">
     <h2 text-center>You have no saved address</h2>
@@ -24,8 +15,6 @@
                 <p>City: {{address.city}}</p>
                 <p>Company: {{address.company}}</p>
                 <p>Street: {{address.street}}</p>
-                <!-- <p>Region: {{address.region}}</p>
-                <p>Region Id:{{address.region_id}}</p> -->
                 <p>Fax: {{address.fax}}</p>
                 <p>Pin Code: {{address.postcode}}</p>
                 <p>Country: {{address.country_id}}</p>

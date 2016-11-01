@@ -50,6 +50,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
 
 //directives
 import { NextOnEnter} from '../directives/nextonenter';
+import { Headers} from '../directives/headers/headers';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -74,6 +75,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         LoadingModal,
         PopoverPage,
         NextOnEnter,
+        Headers,
         ConvertCodeToName,
         GoogleComponent,
         FacebookComponent

@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PopoverController, MenuController, NavController, NavParams} from 'ionic-angular';
-import {ApiService } from './../../providers/api-service/api-service';
+import { Component, OnInit,Input } from '@angular/core';
+import { MenuController, NavController} from 'ionic-angular';
 import { CategoryProductPage } from '../categoryProduct/categoryProduct';
-import {PopoverPage} from './../../components/popover/popover';
 import { ProductPage } from '../product/product';
-import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
@@ -14,7 +11,6 @@ import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import { Slider } from '../../model/home/slider';
 import { SliderDataType } from './../../model/home/sliderDataType';
-import {LoginPage} from '../login/login';
 @Component({
     templateUrl: 'home.html'
 })
@@ -26,19 +22,9 @@ export class HomePage implements OnInit {
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    showPopOver:boolean=false;
-    access_token:any;
-    constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _popoverCtrl: PopoverController, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController, private _apiService: ApiService) { }
+    constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
-      this.access_token=this._navParams.get("access_token");
-      this._local.get("access_token").then((access_token)=>{
-          if(this.access_token!=null || access_token!=null){
-            this.showPopOver=true;
-          }else{
-            this.showPopOver=false;
-          }
-      })
         this.slider();
         this.homeProducts();
         this._categoryListConfig.getCategoryList().then((res) => {
@@ -50,13 +36,6 @@ export class HomePage implements OnInit {
     openMenu() {
         this._menuCtrl.open();
     }
-    presentPopover(myEvent) {
-        let popover = this._popoverCtrl.create(PopoverPage);
-        popover.present({
-            ev: myEvent
-        });
-    }
-
     toggle(_toggleData) {
         if (_toggleData.showDetails) {
             _toggleData.showDetails = false;
@@ -133,8 +112,5 @@ export class HomePage implements OnInit {
         setTimeout(() => {
             refresher.complete();
         }, 2000);
-    }
-    gotoLogin() {
-        this._navCtrl.push(LoginPage);
     }
 }

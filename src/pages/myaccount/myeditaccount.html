@@ -1,13 +1,4 @@
-<ion-header>
-    <ion-navbar color= "primary">
-        <ion-title>{{title}}</ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="presentPopover($event)">
-                     <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content  class="myaccount">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <form [formGroup]="updateform" *ngIf="myaccount">
