@@ -1,19 +1,4 @@
-<ion-header no-margin>
-    <ion-navbar  color="primary">
-        <button ion-button menuToggle icon-right (click)="openMenu()">
-                <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title text-center>
-            Home
-        </ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="presentPopover($event)">
-                     <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-
-</ion-header>
+<header></header>
 <ion-menu type="overlay"  [content]="content" *ngIf="data">
     <ion-toolbar color="primary">
         <ion-title>Categories</ion-title>
@@ -21,7 +6,7 @@
     <ion-list  no-lines *ngFor="let list of data.data.children">
                <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
                {{list1.name}}
-               <ion-icon color="primary" id="iconShow"  [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
+               <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
             <ion-list *ngIf="list1.showDetails" text-wrap>
                 <ion-item *ngFor="let glist of list1.children" (click)="gotoCategoryProduct(glist.id,glist.name)">
                     {{glist.name}}

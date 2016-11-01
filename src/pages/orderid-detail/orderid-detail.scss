@@ -1,16 +1,17 @@
 .orderid-detail{
+    margin-top: 56px;
     ion-list {
         margin: -1px 0 0 0;
     }
     ion-scroll {
         position: initial;
-    } 
+    }
     ion-label {
         margin: 10px 0 0 0;
     }
     ion-thumbnail img {
         max-width: 11.6rem;
-        max-height:110px;; 
+        max-height:110px;;
     }
     .order_sum{
         margin-left: 142px;
@@ -26,7 +27,7 @@
     }
     .cust_info{
         float: right;
-        margin-top: -18px;        
+        margin-top: -18px;
     }
     h2{
         font-size: 14px;

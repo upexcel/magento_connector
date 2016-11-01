@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
                 this._local.set('expiry', this.data.data.expiry);
                 this._local.set('secret', this.data.data.secret);
                 this._local.set('email', this.data.data.email);
-                this._navCtrl.setRoot(HomePage);
+                this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
                 this.presentToast(res.message);
@@ -75,4 +75,3 @@ export class LoginPage implements OnInit {
         alert.present();
     }
 }
-

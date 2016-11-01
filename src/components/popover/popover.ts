@@ -16,16 +16,20 @@ export class PopoverPage {
     }
     gotoMyAccount() {
         this._navCtrl.push(MySavedAddressPage);
+          this.close();
     }
     gotoPass() {
         this._navCtrl.push(ChangepasswordPage);
+          this.close();
     }
     gotoOrders() {
         this._navCtrl.push(OrderlistPage);
+          this.close();
     }
     logout() {
         this._local.clear().then(() => {
             this._navCtrl.push(StartPage);
         });
+          this.close();
     }
 }
