@@ -62,12 +62,52 @@
     .img{
         min-height: 140px; 
         max-height: 270px;
-        height: auto;
         max-width: 250px;
-        margin: 0px auto;
+        width: auto;
+
     }
     .imgbox{
         height: 270px;
-        width:100%
+        width:100%;
+        padding-top: 0px; 
+        text-align: center;
     }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        text-transform: uppercase;
+    }
+    .rating-box {
+        height: 20px;
+        display: inherit;
+        overflow: hidden;
+    }
+    .nobr, .nowrap {
+        white-space: nowrap;
+    }
+    .color{
+        color: $cyan;
+    }
+
+    a {
+        color: $cyan;
+        text-decoration: none;
+    }   
+    .textarea{
+        padding-right: 10%;
+        padding-bottom: 5%;
+
+    }
+    .text{
+      padding-right: 10%;  
+       padding-bottom: 10px;;
+    }
+
 }

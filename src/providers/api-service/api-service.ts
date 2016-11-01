@@ -27,7 +27,6 @@ export class ApiService {
         });
         return subject;
     }
-
     private _extractData(res, subject) {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
