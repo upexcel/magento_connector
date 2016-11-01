@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,ToastController,Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from './../../providers/api-service/api-service';
-import { ToastController } from 'ionic-angular';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
 import { Register } from '../../model/register/register';
@@ -16,7 +14,7 @@ export class RegisterPage implements OnInit {
     spin: boolean;
     clear: boolean = false;
     data: LoginDataType;
-    constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController) { }
+    constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events, private _toastCtrl: ToastController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -29,7 +27,9 @@ export class RegisterPage implements OnInit {
             });
         });
     }
-
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"Signup"}); } , 0)
+    }
     signup(regvalue: any) {
         this.spin = true;
         this._register.getRegister(regvalue).then((res) => {

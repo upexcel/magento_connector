@@ -1,74 +1,247 @@
-<ion-header>
-    <ion-navbar color="primary">
-        <ion-title text-center>
-            {{ product }}
-        </ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="gotoCart()">
-                     <ion-icon name="cart"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="product">
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
     <ion-grid no-padding *ngIf="spin==false">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
-                <ion-card>
-                    <div class="imgbox">
-                        <img src="{{images}}" class=" img cursorPointer"/>
-                    </div>
-                    <ion-card-content>
-                        <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="visiable">
-                                    <ion-slide>
-                                <ion-row class="center">
-                                    <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
-                                             <img src="{{img}}" class="cursorPointer maxHt"/>                             
-                                    </ion-col>
-                                </ion-row>
-                            </ion-slide>
-                        </ion-slides>
-                        <ion-row>
-                            <ion-col>
-                                <h2>{{productData.data.data.name}}</h2>
+                <div class="imgbox">
+                    <img src="{{images}}" class=" img cursorPointer"/>
+                </div>
+                <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData">
+                            <ion-slide>
+                        <ion-row class="center">
+                            <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
+                                     <img src="{{img}}" class="cursorPointer maxHt"/>
                             </ion-col>
                         </ion-row>
-                        <ion-row> 
-                            <ion-col no-padding> 
-                                <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
-                                <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row wrap>
-                            <ion-col width-50 *ngFor="let key of keys">
-                                     <ion-item class="selectlist">
-                                    <ion-label no-margin class="font12">{{productData.data.associated_products.attributes[key].label}}</ion-label>
-                                    <ion-label no-margin class="font12" *ngIf="productData.data.associated_products.attributes[key].label=='Color'">
-                                        <ion-buttons class="alignright">
-                                            <ion-icon name="radio-button-on" dark id="color"></ion-icon>
-                                        </ion-buttons>
-                                    </ion-label>
-                                    <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
-                                        <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
-                                            <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                                <ion-label no-margin class="font12">
-                                                    {{obj.label}}
-                                            </ion-label>
-                                        </ion-option>
-                                        </span>
+                    </ion-slide>
+                </ion-slides>
+                <ion-row>
+                    <ion-col>
+                        <h2>{{productData.data.data.name}}</h2>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="reviewDisplay">
+                    <ion-col width-25>
+                        Price
+                    </ion-col>
+                    <ion-col  width-75>
+                        <p>{{productReview.data.rating_by_attribute.Price}}/100</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="reviewDisplay">
+                    <ion-col width-25>
+                        Value
+                    </ion-col>
+                    <ion-col  width-75>
+                        <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="reviewDisplay">
+                    <ion-col width-25>
+                        Quality
+                    </ion-col>
+                    <ion-col  width-75>
+                        <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="reviewShow">
+                    <ion-col class="rating-box" width-75>
+                        <ion-buttons class="alignright" *ngFor="let five of review">
+                                     <ion-icon name="star"  class="rating" ></ion-icon>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col no-margin *ngIf="reviewShow">
+                             <p (click)="reviewDetail()" class="color">{{noOfREView}} Review(s)</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col no-padding>
+                        <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
+                        <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row wrap>
+                    <ion-col width-50 *ngFor="let key of keys">
+                             <ion-item class="selectlist">
+                            <ion-label no-margin class="font12">{{productData.data.associated_products.attributes[key].label}}</ion-label>
+                            <ion-label no-margin class="font12" *ngIf="productData.data.associated_products.attributes[key].label=='Color'">
+                                <ion-buttons class="alignright">
+                                    <ion-icon name="radio-button-on" dark id="color"></ion-icon>
+                                </ion-buttons>
+                            </ion-label>
+                            <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
+                                <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
+                                    <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                        <ion-label no-margin class="font12">
+                                            {{obj.label}}
+                                        </ion-label>
+                                    </ion-option>
+                                </span>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <p class="font13">{{productData.data.data.short_description}}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row center >
+                    <ion-col class="center">
+                        <button  ion-button color="primary" round  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
+                    </ion-col>
+                </ion-row>
+                <div *ngIf="reviewDisplay">
+                    <ion-row>
+                        <ion-col width-67>
+                            <p class="color font13">Customer Review {{noOfREView}} Item</p>
+                        </ion-col>
+                        <ion-col width-33>
+                            <ion-list>
+                                <ion-item no-line>
+                                    <ion-label>Show</ion-label>
+                                    <ion-select [(ngModel)]="show">
+                                        <ion-option value="nes">5</ion-option>
+                                        <ion-option value="n64">10</ion-option>
                                     </ion-select>
                                 </ion-item>
-                            </ion-col>                         
-                        </ion-row>
-                        <p class="font13">{{productData.data.data.short_description}}</p>
-                        <ion-row center >
-                            <ion-col class="center">
-                                <button  ion-button color="primary" round  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row *ngIf="reviewDisplay">
+                        <ion-col width-25>
+                            Price
+                        </ion-col>
+                        <ion-col  width-75>
+                            <p>{{productReview.data.rating_by_attribute.Price}}/100</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="reviewDisplay">
+                        <ion-col width-25>
+                            Value
+                        </ion-col>
+                        <ion-col  width-75>
+                            <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="reviewDisplay">
+                        <ion-col width-25>
+                            Quality
+                        </ion-col>
+                        <ion-col  width-75>
+                            <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <p class="color">WRITE YOUR OWN REVIEW</p>
+
+                        </ion-col>
+                    </ion-row>
+                    <div *ngFor=" let data of productReview.data.reviews">
+                        <ion-row>
+                            <ion-col>
+                                <p class="color">REVIEW BY {{data.nickname}} / (POSTED ON {{data.created_at}})</p>
                             </ion-col>
                         </ion-row>
-                    </ion-card-content>
-                </ion-card>
+                        <ion-row>
+                            <ion-col>
+                                <div>YOU'RE REVIEWING <span class="color">{{data.nickname}}</span> </div>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <span >{{data.detail}}</span>
+
+                            </ion-col>
+                        </ion-row>
+                    </div>
+
+                    <ion-row>
+                        <ion-col >
+                            <p> HOW DO YOU RATE THIS PRODUCT?</p>
+
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col></ion-col>
+                        <ion-col class="rating-box">
+                            <ion-buttons class="alignright " >
+                                1<ion-icon name="star"  class="rating"></ion-icon>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col class="rating-box">
+                            <ion-buttons class="alignright " >
+                                2<ion-icon name="star"  class="rating"></ion-icon>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col class="rating-box">
+                            <ion-buttons class="alignright " >
+                                3 <ion-icon name="star"  class="rating"></ion-icon>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col class="rating-box">
+                            <ion-buttons class="alignright ">
+                                4 <ion-icon name="star"  class="rating"></ion-icon>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col class="rating-box">
+                            <ion-buttons class="alignright ">
+                                5 <ion-icon name="star"  class="rating"></ion-icon>
+                            </ion-buttons>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col width-20>
+                            PRICE &nbsp;&nbsp;
+                        </ion-col>
+                        <ion-col><ion-radio  value="price"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="price"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="price"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="price"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="price"></ion-radio></ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col width-20>
+                            VALUE &nbsp;&nbsp;
+                        </ion-col>
+                        <ion-col><ion-radio  value="value"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="value"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="value"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="value"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="value"></ion-radio></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col width-20>
+                            QUALITY
+                        </ion-col>
+                        <ion-col><ion-radio  value="qualty"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="qualty"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="qualty"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="qualty"></ion-radio></ion-col>
+                        <ion-col><ion-radio  value="qualty"></ion-radio></ion-col>
+                    </ion-row>
+
+                    <p>Let us know your thoughts</p>
+                    <textarea name="comment" form="usrform" class="textarea">Enter text here...</textarea>
+                    <p>Summary of Your Review</p>
+                    <input type="text" value="" class="text">
+                    <p>What's your nickname?</p>
+                    <input type="text" value="" class="text">
+                    <ion-row center >
+                        <ion-col class="center" class="text">
+                            <button  ion-button color="primary" round  (click)="addCart(productData.data)" [disabled]=disable>SUBMIT REVIEWS</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
             </ion-col>
         </ion-row>
     </ion-grid>

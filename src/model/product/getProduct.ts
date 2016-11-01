@@ -1,6 +1,7 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
 import { productDataType  } from './../../pages/product/productDataType';
+import { ProductReviewDataType } from './productReviewDataType';
 declare let Promise: any;
 @Injectable()
 export class Product implements OnInit {
@@ -16,4 +17,15 @@ export class Product implements OnInit {
             });
         });
     }
+    getProductReview(data): Promise<ProductReviewDataType> {
+        let apiservice = this._apiService;
+        return new Promise(function(resolve, reject) {
+            apiservice.api("product/review", data).subscribe((res) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });
+    }
+
 }

@@ -1,15 +1,13 @@
 import { Component, OnInit} from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,LoadingController,ToastController,Slides,Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { LoadingController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
-import { Slides } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../../model/product/getProduct';
 import { productDataType  } from './../product/productDataType';
 import { Cart } from '../../model/product/cart';
+import { ProductReviewDataType } from '../../model/product/productReviewDataType';
 import {  cartDataType } from './../product/cartDataType';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
@@ -24,29 +22,29 @@ import isEqual from 'lodash/isEqual';
 export class ProductPage implements OnInit {
     productData: productDataType;
     cartData: cartDataType;
+    productReview: ProductReviewDataType;
     quantity: number;
     sp_priceShow: boolean = false;
-    visiable: boolean = false;
     selectshow: boolean = true;
     spin: boolean = true;
     itemSize: string;
     itemColor: string;
     selectSize: string;
     selectColor: string;
-    attribute: any = [];
     selectedList: any = [];
     disable: boolean = true;
     product: string;
-    price: number;
-    shown: boolean;
     images: string;
     final_price: number;
-    item: any;
     keys: any = [];
     search: any = [];
     res: {} = {};
     data: any;
-    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    review: any = [1,2,3,4,5];
+    reviewDisplay:boolean=false;
+    noOfREView:any;
+    reviewShow:boolean=false;
+    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _events: Events) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -55,7 +53,14 @@ export class ProductPage implements OnInit {
         this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
-                this.visiable = true;
+                this._getProduct.getProductReview({"sku":this.data.sku,"pagesize":"5","pageno":"1"}).then((review) => {
+                this.productReview=review
+                this.noOfREView = this.productReview.data.reviews.length;
+                console.log(this.productReview.data.rating_by_attribute);
+                if(this.noOfREView!=0){
+                   this.reviewShow=true;
+                }
+                });
                 this.productData = res;
                 this.spin = false;
                 this.images = this.productData.data.data.media_images[0];
@@ -75,8 +80,8 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-    gotoCart() {
-        this._navCtrl.push(CartPage);
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
     }
     onChange(res, key) {
         let count = 0;
@@ -141,6 +146,9 @@ export class ProductPage implements OnInit {
     slideClick(img) {
         this.images = img;
     }
+    reviewDetail(){
+      this.reviewDisplay=true;
+    }
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
@@ -193,7 +201,6 @@ export class ProductPage implements OnInit {
                             this._cartService.addCart(other, this.keys).then((response: any) => {
                                 this.cartData = response;
                                 if (this.cartData.data != "undefined") {
-                                    this.item = this.cartData;
                                     this.presentToast("item inserted ");
                                     this._navCtrl.push(CartPage);
                                 }

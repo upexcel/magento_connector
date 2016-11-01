@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, PopoverController} from 'ionic-angular';
+import { NavController, PopoverController,Events} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
@@ -37,7 +37,7 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -51,6 +51,9 @@ export class OrderlistPage implements OnInit {
             });
         });
     }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"My Orders"}); } , 0)
+      }
     total_orders() {
         var body = { "secret": this.secret }
         this._order.getTotalOrder(body).then((res) => {

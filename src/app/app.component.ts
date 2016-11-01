@@ -13,20 +13,19 @@ export class MyApp implements OnInit{
     constructor(private _platform: Platform, private _local: Storage) {
     }
     ngOnInit(){
-        this.checkCredentials();
+        this.appCheckConfig();
         this._platform.ready().then(() => {
             StatusBar.styleDefault();
         });
     }
-    checkCredentials() {
-        let access_token;
-        this._local.get('access_token').then((res) => {
-            access_token = res;
-            if (access_token != null) {
-                this._rootPage = HomePage;
-            } else {
-                this._rootPage = StartPage;
+    appCheckConfig(){
+      this._local.get("web_config").then((web_config)=>{
+            if(web_config==null){
+                    this._rootPage =StartPage;
             }
-        });
+            else{
+              this._rootPage =HomePage;
+            }
+      })
     }
 }

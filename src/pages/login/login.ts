@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController, AlertController} from 'ionic-angular';
+import { NavController, ToastController, AlertController,Events} from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {RegisterPage} from '../register/register';
 import {ApiService } from './../../providers/api-service/api-service';
@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
     website_id: any;
     show_form: boolean = false;
     data: LoginDataType;
-    constructor(private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController, private _alertCtrl: AlertController) { }
+    constructor(private _events:Events,private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService, private _toastCtrl: ToastController, private _alertCtrl: AlertController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
@@ -28,6 +28,9 @@ export class LoginPage implements OnInit {
                 website_id: [website_id]
             });
         });
+    }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"SignIn"}); } , 0)
     }
     gotoreg() {
         this._navCtrl.push(RegisterPage);
@@ -45,7 +48,7 @@ export class LoginPage implements OnInit {
                 this._local.set('expiry', this.data.data.expiry);
                 this._local.set('secret', this.data.data.secret);
                 this._local.set('email', this.data.data.email);
-                this._navCtrl.setRoot(HomePage);
+                this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
                 this.presentToast(res.message);
@@ -75,4 +78,3 @@ export class LoginPage implements OnInit {
         alert.present();
     }
 }
-

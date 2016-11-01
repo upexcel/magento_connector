@@ -1,13 +1,4 @@
-<ion-header >
-    <ion-navbar color="primary">
-        <ion-title text-center> #{{order_id}}</ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="presentPopover($event)">
-                     <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="orderid-detail">
         <h2 class="center" *ngIf="showOrderError">Your Order is under process</h2>
     <ion-scroll scrollY="true" *ngIf="showOrder">
