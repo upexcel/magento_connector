@@ -60,7 +60,7 @@ export class ProductPage implements OnInit {
                 this.productReview=review
                 this.noOfREView = this.productReview.data.reviews.length;
                 console.log(this.productReview.data.rating_by_attribute);
-                if(this.productReview.data.rating==false){
+                if(this.noOfREView==0){
                    this.reviewShow=true; 
                 }
                 });
