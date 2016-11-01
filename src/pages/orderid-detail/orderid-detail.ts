@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavParams, ViewController, PopoverController} from 'ionic-angular';
+import {NavParams, ViewController, PopoverController,Events} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
@@ -18,13 +18,16 @@ export class OrderModalPage implements OnInit {
     items:any;
     showOrder:boolean=false;
     showOrderError:boolean=false;
-    constructor(private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _events:Events,private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this._local.get('secret').then((value: any) => {
             this.getOrderDetails(this.order_id, value);
         });
     }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title","My Orders"); } , 0)
+      }
     close() {
         this._viewCtrl.dismiss();
     }

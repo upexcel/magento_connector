@@ -25,7 +25,6 @@ export class HomePage implements OnInit {
     constructor(private _events:Events,private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
-        this._events.publish("title","Home");
         this.slider();
         this.homeProducts();
         this._categoryListConfig.getCategoryList().then((res) => {
@@ -34,6 +33,9 @@ export class HomePage implements OnInit {
             }
         });
     }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title","Home"); } , 0);
+      }
     openMenu() {
         this._menuCtrl.open();
     }

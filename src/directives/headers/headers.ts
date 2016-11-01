@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,AfterContentInit} from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams,Events} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {LoginPage} from '../../pages/login/login';
@@ -8,15 +8,15 @@ import {PopoverPage} from './../../components/popover/popover';
   templateUrl:'headers.html'
 })
 
-export class Headers implements OnInit{
+export class Headers implements AfterContentInit{
   showPopOver:boolean=false;
-  access_token:any;
-  title:any;
+  access_token:string;
+  title:string;
   constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){  }
-  ngOnInit(){
+  ngAfterContentInit(){
+    let self=this;
     this._events.subscribe('title', (title) => {
-    this.title=title;
-    console.log(title[0])
+      self.title=title[0];
     });
     this.access_token=this._navParams.get("access_token");
     this._local.get("access_token").then((access_token)=>{
