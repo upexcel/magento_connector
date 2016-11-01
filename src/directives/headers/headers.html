@@ -1,6 +1,6 @@
 <ion-header no-margin>
     <ion-navbar  color="primary">
-        <button ion-button menuToggle icon-right (click)="openMenu()">
+        <button ion-button menuToggle icon-right (click)="openMenu()" *ngIf="pagename=='home'">
                 <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title text-center>
@@ -12,6 +12,9 @@
             </button>
             <button  ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false">
                      <ion-icon name="contact"></ion-icon>
+            </button>
+            <button ion-button icon-only *ngIf="pagename=='product'" (click)="gotoCart()">
+              <ion-icon name="cart"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>

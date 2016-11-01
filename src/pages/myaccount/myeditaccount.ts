@@ -37,7 +37,7 @@ export class MyEditAccountPage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",this.title); } , 0)
+       setTimeout( () => {  this._events.publish("title",{title:this.title}); } , 0)
       }
     getuser_details(id, entity_id,secret) {
         this.spin = true;

@@ -1,11 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,LoadingController,ToastController,Slides,Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { LoadingController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
-import { Slides } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../../model/product/getProduct';
 import { productDataType  } from './../product/productDataType';
@@ -47,7 +44,7 @@ export class ProductPage implements OnInit {
     reviewDisplay:boolean=false;
     noOfREView:any;
     reviewShow:boolean=false;
-    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _events: Events) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -60,8 +57,8 @@ export class ProductPage implements OnInit {
                 this.productReview=review
                 this.noOfREView = this.productReview.data.reviews.length;
                 console.log(this.productReview.data.rating_by_attribute);
-                if(this.noOfREView==0){
-                   this.reviewShow=true; 
+                if(this.noOfREView!=0){
+                   this.reviewShow=true;
                 }
                 });
                 this.productData = res;
@@ -83,8 +80,8 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-    gotoCart() {
-        this._navCtrl.push(CartPage);
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
     }
     onChange(res, key) {
         let count = 0;
@@ -150,7 +147,7 @@ export class ProductPage implements OnInit {
         this.images = img;
     }
     reviewDetail(){
-      this.reviewDisplay=true;  
+      this.reviewDisplay=true;
     }
     addCart(response) {
         let selectedItem: string;

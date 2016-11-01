@@ -26,7 +26,7 @@ export class OrderModalPage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title","My Orders"); } , 0)
+       setTimeout( () => {  this._events.publish("title",{title:"My Orders"}); } , 0)
       }
     close() {
         this._viewCtrl.dismiss();

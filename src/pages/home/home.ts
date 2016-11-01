@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title","Home"); } , 0);
+       setTimeout( () => {  this._events.publish("title",{title:"Home",pagename:"home"}); } , 0);
       }
     openMenu() {
         this._menuCtrl.open();

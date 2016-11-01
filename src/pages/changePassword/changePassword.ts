@@ -36,7 +36,7 @@ export class ChangepasswordPage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title","Change Password"); } , 0)
+       setTimeout( () => {  this._events.publish("title",{title:"Change Password"}); } , 0)
       }
     changepassword(value: any) {
         this.spin = true;

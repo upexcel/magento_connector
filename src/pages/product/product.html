@@ -1,15 +1,4 @@
-<ion-header>
-    <ion-navbar color="primary">
-        <ion-title text-center>
-            {{ product }}
-        </ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="gotoCart()">
-                     <ion-icon name="cart"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="product">
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
     <ion-grid no-padding *ngIf="spin==false">
@@ -22,7 +11,7 @@
                             <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
-                                     <img src="{{img}}" class="cursorPointer maxHt"/>                             
+                                     <img src="{{img}}" class="cursorPointer maxHt"/>
                             </ion-col>
                         </ion-row>
                     </ion-slide>
@@ -36,7 +25,7 @@
                 <ion-row *ngIf="reviewDisplay">
                     <ion-col width-25>
                         Price
-                    </ion-col>  
+                    </ion-col>
                     <ion-col  width-75>
                         <p>{{productReview.data.rating_by_attribute.Price}}/100</p>
                     </ion-col>
@@ -44,7 +33,7 @@
                 <ion-row *ngIf="reviewDisplay">
                     <ion-col width-25>
                         Value
-                    </ion-col>  
+                    </ion-col>
                     <ion-col  width-75>
                         <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
                     </ion-col>
@@ -52,7 +41,7 @@
                 <ion-row *ngIf="reviewDisplay">
                     <ion-col width-25>
                         Quality
-                    </ion-col>  
+                    </ion-col>
                     <ion-col  width-75>
                         <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
                     </ion-col>
@@ -65,12 +54,12 @@
                     </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col no-margin *ngIf="reviewDisplay!=true">
+                    <ion-col no-margin *ngIf="reviewShow">
                              <p (click)="reviewDetail()" class="color">{{noOfREView}} Review(s)</p>
                     </ion-col>
                 </ion-row>
-                <ion-row> 
-                    <ion-col no-padding> 
+                <ion-row>
+                    <ion-col no-padding>
                         <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
                         <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
                     </ion-col>
@@ -94,7 +83,7 @@
                                 </span>
                             </ion-select>
                         </ion-item>
-                    </ion-col>                         
+                    </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
@@ -109,7 +98,7 @@
                 <div *ngIf="reviewDisplay">
                     <ion-row>
                         <ion-col width-67>
-                            <p class="color font13">Customer Review {{noOfREView}} Item</p> 
+                            <p class="color font13">Customer Review {{noOfREView}} Item</p>
                         </ion-col>
                         <ion-col width-33>
                             <ion-list>
@@ -120,14 +109,14 @@
                                         <ion-option value="n64">10</ion-option>
                                     </ion-select>
                                 </ion-item>
-                            </ion-list>                                    
+                            </ion-list>
                         </ion-col>
-                    </ion-row>     
+                    </ion-row>
 
                     <ion-row *ngIf="reviewDisplay">
                         <ion-col width-25>
                             Price
-                        </ion-col>  
+                        </ion-col>
                         <ion-col  width-75>
                             <p>{{productReview.data.rating_by_attribute.Price}}/100</p>
                         </ion-col>
@@ -135,7 +124,7 @@
                     <ion-row *ngIf="reviewDisplay">
                         <ion-col width-25>
                             Value
-                        </ion-col>  
+                        </ion-col>
                         <ion-col  width-75>
                             <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
                         </ion-col>
@@ -143,7 +132,7 @@
                     <ion-row *ngIf="reviewDisplay">
                         <ion-col width-25>
                             Quality
-                        </ion-col>  
+                        </ion-col>
                         <ion-col  width-75>
                             <p>{{productReview.data.rating_by_attribute.Value}}/100</p>
                         </ion-col>
@@ -168,7 +157,7 @@
                         </ion-row>
                         <ion-row>
                             <ion-col>
-                                <span >{{data.detail}}</span> 
+                                <span >{{data.detail}}</span>
 
                             </ion-col>
                         </ion-row>
