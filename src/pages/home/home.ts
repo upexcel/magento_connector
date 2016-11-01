@@ -1,5 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { MenuController, NavController} from 'ionic-angular';
+import { MenuController, NavController,Events} from 'ionic-angular';
 import { CategoryProductPage } from '../categoryProduct/categoryProduct';
 import { ProductPage } from '../product/product';
 import { Storage } from '@ionic/storage';
@@ -22,9 +22,10 @@ export class HomePage implements OnInit {
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController) { }
+    constructor(private _events:Events,private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
+        this._events.publish("title","Home");
         this.slider();
         this.homeProducts();
         this._categoryListConfig.getCategoryList().then((res) => {

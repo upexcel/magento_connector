@@ -22,6 +22,7 @@ export class MySavedAddressPage implements OnInit {
             });
      }
     ngOnInit() {
+      this._events.publish("title","My Address");;
           this._local.get('access_token').then((access_token: any) => {
               this._local.get('secret').then((secret: any) => {
                   if (access_token != null) {
