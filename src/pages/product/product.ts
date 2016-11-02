@@ -9,6 +9,7 @@ import { productDataType  } from './../product/productDataType';
 import { Cart } from '../../model/product/cart';
 import { ProductReviewDataType } from '../../model/product/productReviewDataType';
 import {  cartDataType } from './../product/cartDataType';
+import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -23,6 +24,7 @@ export class ProductPage implements OnInit {
     productData: productDataType;
     cartData: cartDataType;
     productReview: ProductReviewDataType;
+    submitReviewData: SubmitReviewDataType;
     quantity: number;
     sp_priceShow: boolean = false;
     selectshow: boolean = true;
@@ -36,15 +38,24 @@ export class ProductPage implements OnInit {
     product: string;
     images: string;
     final_price: number;
+    showReview: string;
     keys: any = [];
     search: any = [];
     res: {} = {};
     data: any;
-    review: any = [1,2,3,4,5];
-    reviewDisplay:boolean=false;
-    noOfREView:any;
-    reviewShow:boolean=false;
-    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _events: Events) {
+    review: any = [1, 2, 3, 4, 5];
+    reviewDisplay: boolean = false;
+    noOfREView: any;
+    reviewShow: boolean = false;
+    reviewDataPrice: string = "1";
+    reviewDataValue: string = "1";
+    reviewDataQualty: string = "1";
+    reviewDataDetails: string = "";
+    reviewDataTitle: string = "";
+    reviewDataNickname: string = "";
+
+
+    constructor(private _events:Events,private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -53,13 +64,12 @@ export class ProductPage implements OnInit {
         this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
-                this._getProduct.getProductReview({"sku":this.data.sku,"pagesize":"5","pageno":"1"}).then((review) => {
-                this.productReview=review
-                this.noOfREView = this.productReview.data.reviews.length;
-                console.log(this.productReview.data.rating_by_attribute);
-                if(this.noOfREView!=0){
-                   this.reviewShow=true;
-                }
+                this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": "5", "pageno": "1" }).then((review) => {
+                    this.productReview = review
+                    this.noOfREView = this.productReview.data.reviews.length;
+                    if (this.noOfREView != 0) {
+                        this.reviewShow = true;
+                    }
                 });
                 this.productData = res;
                 this.spin = false;
@@ -81,7 +91,7 @@ export class ProductPage implements OnInit {
         })
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
+       setTimeout( () => { this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
     }
     onChange(res, key) {
         let count = 0;
@@ -128,6 +138,36 @@ export class ProductPage implements OnInit {
         }
 
     }
+    submitReview() {
+        let data = {
+            sku: this.data.sku,
+            "store_id": "1",
+            "title": this.reviewDataTitle,
+            "details": this.reviewDataDetails,
+            "nickname": this.reviewDataNickname,
+            "rating_options": {
+                "1": this.reviewDataValue,
+                "2": this.reviewDataQualty,
+                "3": this.reviewDataPrice
+            }
+        };
+        this._getProduct.getSubmitReview(data).then((res) => {
+            this.submitReviewData = res;
+            if (this.submitReviewData) {
+                this.presentToast(this.submitReviewData.message);
+            }
+            console.log(this.submitReviewData);
+        })
+    }
+    reviewChange(pageno: string) {
+        this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": pageno, "pageno": "1" }).then((review) => {
+            this.productReview = review
+            this.noOfREView = this.productReview.data.reviews.length;
+            if (this.noOfREView != 0) {
+                this.reviewShow = true;
+            }
+        });
+    }
     presentLoading() {
         let loader = this._loadingCtrl.create({
             content: "Please wait...",
@@ -143,18 +183,17 @@ export class ProductPage implements OnInit {
         });
         toast.present();
     }
-    slideClick(img) {
+    slideClick(img: string) {
         this.images = img;
     }
-    reviewDetail(){
-      this.reviewDisplay=true;
+    reviewDetail() {
+        this.reviewDisplay = true;
     }
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
         let path: any;
         let data: any;
-        let check;
         //gather data for send in add cart servive
         let sku: string = response.data.sku;
         let img: string = response.data.media_images[0];
