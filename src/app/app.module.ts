@@ -51,6 +51,7 @@ import { GoogleComponent } from '../components/googleLogin/googleComponent';
 //directives
 import { NextOnEnter} from '../directives/nextonenter';
 import { Headers} from '../directives/headers/headers';
+import { SideMenu} from '../directives/sidemenu/sidemenu';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -76,6 +77,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         PopoverPage,
         NextOnEnter,
         Headers,
+        SideMenu,
         ConvertCodeToName,
         GoogleComponent,
         FacebookComponent

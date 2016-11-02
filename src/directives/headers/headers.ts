@@ -31,7 +31,9 @@ export class Headers implements AfterContentInit{
     })
   }
   openMenu() {
-      this._menuCtrl.open();
+    console.log("open");
+    console.log(this._menuCtrl.isOpen());
+      this._menuCtrl.toggle();
   }
   gotoLogin() {
       this._navCtrl.push(LoginPage);
