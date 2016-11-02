@@ -11,12 +11,12 @@ export class SideMenu implements OnInit{
   data:CategoryListDataType;
 constructor(private _categoryList:CategoryList,private _menuCtrl: MenuController,private _navCtrl:NavController){}
 ngOnInit(){
+  this._menuCtrl.enable(true);
   this.categoryList();
 }
 categoryList(){
   this._categoryList.getCategoryList().then((res) => {
       if (res) {
-        console.log("data");
           this.data = res;
       }
   });
