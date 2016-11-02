@@ -1,7 +1,7 @@
 
 export class ProductReviewDataType {
     data: {
-        reviews: [{
+        data: [{
                 review_id: string
                 created_at: string
                 entity_id: string
@@ -13,12 +13,8 @@ export class ProductReviewDataType {
                 nickname: string
                 customer_id: string
         }]
-        rating_by_attribute: {
-            Quality: number
-            Price: number
-            Value: number
-        }
-        rating: any
+        total_attribute_rating: any;
+        rating: string;
     }
     status: number;
     message: string;
