@@ -1,11 +1,4 @@
-
-<ion-header >
-
-    <ion-navbar color="primary">
-        <ion-title text-center>Signup</ion-title>
-    </ion-navbar>
-
-</ion-header>
+<header></header>
 
 <ion-content class="register" *ngIf="clear">
 
@@ -13,7 +6,7 @@
         <ion-item>
             <ion-label floating>First Name</ion-label>
             <ion-input type="text"  formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-        </ion-item>  
+        </ion-item>
         <ion-item>
             <ion-label floating>Last Name</ion-label>
             <ion-input type="text"  formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
@@ -36,7 +29,7 @@
                     <button type="submit" id="btn1" ion-button color="primary" round   [disabled]="!regForm.valid" (click)="signup(regForm.value)">SIGN UP</button>
                 </ion-col>
             </ion-row>
-        </ion-grid> 
+        </ion-grid>
 
     </form>
      <p align="center" *ngIf="spin"><ion-spinner ></ion-spinner></p>

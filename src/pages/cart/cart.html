@@ -1,14 +1,4 @@
-<ion-header> 
-    <ion-navbar color ="primary">
-        <ion-title text-center>  Cart
-        </ion-title>
-        <ion-buttons end>
-            <button  ion-button >
-                <ion-label> Edit </ion-label>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="cart">
     <ion-list *ngFor="let data of res ">
         <ion-item-sliding>
@@ -17,7 +7,7 @@
                     <ion-row center>
                         <ion-col class="aligncenter" width-33>
                             <img src="{{data.img}}" alt="" class="maxht"/>
-                        </ion-col> 
+                        </ion-col>
                         <ion-col width-67>
                             <ion-row>
                                 <ion-col width-50 class="size">
@@ -25,12 +15,12 @@
                                 </ion-col>
                                 <ion-col width-50 class="alignright">
                                     <p class="font10">{{data.price}}</p>
-                                </ion-col>                        
+                                </ion-col>
                             </ion-row>
                             <ion-row *ngIf="entery==true">
                                 <ion-col width-50 *ngFor="let list of lists | convertCodeToName : data" >
                                          <p>{{list}}</p>
-                                </ion-col>                      
+                                </ion-col>
                             </ion-row>
                             <ion-row class="qtyborder">
                                 <ion-col width-33 >
@@ -38,9 +28,9 @@
                                         <button ion-button icon-only (click)=remove(data) *ngIf="data.quantity>1" >
                                                 <ion-icon name="remove">
                                             </ion-icon>
-                                        </button> 
+                                        </button>
                                     </ion-buttons>
-                                </ion-col> 
+                                </ion-col>
                                 <ion-col class="aligncenter" width-33>
                                     <p class="font20" id="marLeft20">{{data.quantity}}</p>
                                 </ion-col>
@@ -51,10 +41,10 @@
                                             </ion-icon>
                                         </button>
                                     </ion-buttons>
-                                </ion-col>                        
-                            </ion-row>                    
+                                </ion-col>
+                            </ion-row>
                         </ion-col>
-                    </ion-row> 
+                    </ion-row>
                 </ion-grid>
             </ion-item>
             <ion-item-options side="right">
@@ -64,13 +54,13 @@
                 </button>
             </ion-item-options>
         </ion-item-sliding>
-    </ion-list>  
+    </ion-list>
 
     <ion-grid>
         <ion-row class="border">
             <ion-col width-50>SHIPPING &nbsp; 33$</ion-col>
             <ion-col width-50 >
-                <ion-item class="selectlist" no-lines> 
+                <ion-item class="selectlist" no-lines>
                     <ion-label class="lable"></ion-label>
                     <ion-select [(ngModel)]="res2"  [placeholder]="0">
                         <ion-option [value]="obj" >
@@ -87,7 +77,7 @@
         <ion-row class="border">
             <ion-col width-50>PAYMENT METHOD</ion-col>
             <ion-col width-50 >
-                <ion-item class="selectlist" no-lines> 
+                <ion-item class="selectlist" no-lines>
                     <ion-label class="lable">
                         <ion-buttons class="alignright">
                             <ion-icon name="arrow-forward"></ion-icon>

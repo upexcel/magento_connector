@@ -1,12 +1,9 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { MenuController, NavController,Events} from 'ionic-angular';
-import { CategoryProductPage } from '../categoryProduct/categoryProduct';
+import { NavController,Events} from 'ionic-angular';
 import { ProductPage } from '../product/product';
 import { Storage } from '@ionic/storage';
 import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
-import { CategoryListDataType } from './categorylistDataType';
-import { CategoryList } from '../../model/home/categoryList';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import { Slider } from '../../model/home/slider';
@@ -15,45 +12,25 @@ import { SliderDataType } from './../../model/home/sliderDataType';
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    data: CategoryListDataType;
     homeProduct: HomeProductsDataType;
     img: SliderDataType;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _events:Events,private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider, private _categoryListConfig: CategoryList, private _local: Storage, private _navCtrl: NavController, private _menuCtrl: MenuController) { }
+    constructor(private _events:Events,private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider,private _local: Storage, private _navCtrl: NavController) { }
     mySlideOptions = config.homePageSliderOptions;
     ngOnInit() {
-        this._events.publish("title","Home");
         this.slider();
         this.homeProducts();
-        this._categoryListConfig.getCategoryList().then((res) => {
-            if (res) {
-                this.data = res;
-            }
-        });
     }
-    openMenu() {
-        this._menuCtrl.open();
-    }
-    toggle(_toggleData) {
-        if (_toggleData.showDetails) {
-            _toggleData.showDetails = false;
-            _toggleData.icon = 'ios-add-circle-outline';
-        } else {
-            _toggleData.showDetails = true;
-            _toggleData.icon = 'ios-remove-circle-outline';
-        }
-    }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"Home",pagename:"home"}); } , 0);
+      }
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
             id: product
         });
-    }
-    gotoCategoryProduct(gchild_id: any, gchild_name: any) {
-        this._menuCtrl.close();
-        this._navCtrl.push(CategoryProductPage, { "id": gchild_id, "name": gchild_name });
     }
 
     slider() {

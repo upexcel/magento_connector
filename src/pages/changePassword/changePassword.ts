@@ -21,7 +21,6 @@ export class ChangepasswordPage implements OnInit {
     changeActive: boolean = false;
     constructor(private _events:Events,private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _toastCtrl: ToastController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
-      this._events.publish("title","Change Password");
         this._local.get('secret').then((value: any) => {
             this.secret = value;
             this._local.get('access_token').then((value: any) => {
@@ -36,6 +35,9 @@ export class ChangepasswordPage implements OnInit {
             });
         });
     }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"Change Password"}); } , 0)
+      }
     changepassword(value: any) {
         this.spin = true;
         this._changePwd.getPwd(value).then((res) => {

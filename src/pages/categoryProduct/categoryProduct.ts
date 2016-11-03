@@ -12,7 +12,7 @@ import {Storage} from '@ionic/storage';
 export class CategoryProductPage implements OnInit {
     products: any;
     product_id: any;
-    title: any;
+    title: string;
     limit: number = 10;
     page: number = 1;
     categoryProduct: CategoryProductDataType;
@@ -24,7 +24,6 @@ export class CategoryProductPage implements OnInit {
         _menuCtrl.enable(true);
     }
     ngOnInit() {
-      this._events.publish("title",this.title);
         this.access_token=this._navParams.get("access_token");
         this._local.get("access_token").then((access_token)=>{
             if(this.access_token!=null || access_token!=null){
@@ -35,6 +34,9 @@ export class CategoryProductPage implements OnInit {
         })
         this.presentLoading();
         this.show_products(this.product_id, this.page, this.limit);
+    }
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:this.title}); } , 0)
     }
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };

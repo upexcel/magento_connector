@@ -1,10 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,LoadingController,ToastController,Slides,Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { LoadingController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../../model/product/getProduct';
 import { productDataType  } from './../product/productDataType';
 import { Cart } from '../../model/product/cart';
@@ -62,7 +61,7 @@ export class ProductPage implements OnInit {
     reviewDataNickname: string = "";
     selectedRating: any = [];
 
-    constructor(private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _events:Events,private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -125,8 +124,8 @@ export class ProductPage implements OnInit {
 
         })
     }
-    gotoCart() {
-        this._navCtrl.push(CartPage);
+    ionViewDidEnter() {
+       setTimeout( () => { this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
     }
     onChange(res, key) {
         let count = 0;

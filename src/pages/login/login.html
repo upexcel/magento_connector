@@ -1,15 +1,10 @@
-
-<ion-header>
-    <ion-navbar color="primary">
-        <ion-title text-center>Sign in</ion-title>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="login" *ngIf="show_form">
     <form [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
-        </ion-item>                                     
+        </ion-item>
         <ion-item >
             <ion-label floating>Password</ion-label>
             <ion-input type="password" formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
@@ -20,14 +15,14 @@
                     <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">Login</button>
                 </ion-col>
             </ion-row>
-        </ion-grid>  
+        </ion-grid>
     </form>
     <p align="center" *ngIf="spin"><ion-spinner ></ion-spinner></p>
     <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
     <h5 align='center' class="marTop100">Don't have an account?</h5>
     <ion-grid >
         <ion-row center>
-            <ion-col class="center">               
+            <ion-col class="center">
                 <button ion-button color="primary" large  (click)="gotoreg()" >SIGN UP FOR FREE</button>
             </ion-col>
         </ion-row>

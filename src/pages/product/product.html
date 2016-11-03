@@ -1,18 +1,7 @@
-<ion-header>
-    <ion-navbar color="primary">
-        <ion-title text-center>
-            {{ product }}
-        </ion-title>
-        <ion-buttons end>
-            <button  ion-button icon-only (click)="gotoCart()">
-                     <ion-icon name="cart"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+<header></header>
 <ion-content class="product">
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-    <ion-grid no-padding *ngIf="spin==false">
+    <ion-grid class="pad56" no-padding *ngIf="spin==false">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
                 <div class="imgbox">
@@ -22,7 +11,7 @@
                             <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
-                                     <img src="{{img}}" class="cursorPointer maxHt"/>                             
+                                     <img src="{{img}}" class="cursorPointer maxHt"/>
                             </ion-col>
                         </ion-row>
                     </ion-slide>
@@ -44,6 +33,7 @@
                 </div>
                 <ion-row class="padLeft10" *ngIf="reviewShow" >
                     <ion-col class="rating-box no-margin" width-75 >
+
                         <ion-buttons class="alignright" *ngFor="let five of review">
                                      <ion-icon name="star"  class="rating" ></ion-icon>
                         </ion-buttons>
@@ -79,7 +69,7 @@
                                 </span>
                             </ion-select>
                         </ion-item>
-                    </ion-col>                         
+                    </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
@@ -105,15 +95,16 @@
                                     <ion-option value="10">10</ion-option>
                                 </ion-select>
                             </ion-item>                                
-                        </ion-col>
-                    </ion-row>     
 
+                        </ion-col>
+                    </ion-row>
                     <ion-row class="padLeft10" *ngFor="let review of TotalReview">
                         <ion-col width-25 class="no-margin">
                             <p class="margin-but"> {{review.title}}</p>
                         </ion-col>  
                         <ion-col  width-75 class="no-margin">
                             <p class="margin-but">{{review.value}}/{{productReview.data.rating}}</p>
+
                         </ion-col>
                     </ion-row>
 
@@ -123,7 +114,6 @@
 
                         </ion-col>
                     </ion-row>
-                    <div >
                         <ion-card *ngFor=" let data of productReview.data.data ;  let i = index; ">
 
                             <ion-card-header>
@@ -147,12 +137,7 @@
                                     </ion-col>
                                 </ion-row>
                             </ion-card-content>
-
                         </ion-card>
-
-
-                    </div>
-
                     <ion-row>
                         <ion-col >
                             <p class="uppercase padLeft10"> HOW DO YOU RATE THIS PRODUCT?</p>

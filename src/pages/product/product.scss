@@ -33,7 +33,7 @@
     }
 
     .line{
-        text-decoration: line-through;   
+        text-decoration: line-through;
     }
     ion-item.selectlist.item.item-select {
         min-height: 3rem;
@@ -48,7 +48,7 @@
     }
     .price{
         font-size: 0.7em;
-        width: auto; 
+        width: auto;
         float: left;
         margin-right: 8px;
         line-height: 2;
@@ -60,7 +60,7 @@
         max-width: 85px;
     }
     .img{
-        min-height: 140px; 
+        min-height: 140px;
         max-height: 270px;
         max-width: 250px;
         width: auto;
@@ -69,7 +69,7 @@
     .imgbox{
         height: 270px;
         width:100%;
-        padding-top: 0px; 
+        padding-top: 0px;
         text-align: center;
     }
 
@@ -99,7 +99,7 @@
     a {
         color: $cyan;
         text-decoration: none;
-    }   
+    }
     .textarea{
         width:90%;
         padding-bottom: 5%;
@@ -126,13 +126,8 @@
         padding-left: 10px;
     }
 
-
-
-
-
-element.style {
-}
 .item-md.item-block .item-inner {
      border-bottom: hidden; 
 }
 }
+

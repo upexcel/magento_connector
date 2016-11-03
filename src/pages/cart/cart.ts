@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams,Events} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniq from 'lodash/uniq';
@@ -15,7 +15,7 @@ export class CartPage implements OnInit {
     res: any = [];
     lists: any = [];
     entery: boolean = false;
-    constructor(public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
+    constructor(private _events:Events,public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
@@ -29,7 +29,9 @@ export class CartPage implements OnInit {
             this.entery = true;
         });
     }
-
+    ionViewDidEnter() {
+       setTimeout( () => {  this._events.publish("title",{title:"Cart",pagename:"product"}); } , 0)
+    }
     add(data) {
         this.local.get('item').then((value: any) => {
             let cartData: any = [];
@@ -68,11 +70,11 @@ export class CartPage implements OnInit {
             else {
 
                 forEach(cartData, function(value, key) {
-                    //push has new item 
+                    //push has new item
                     if (data.id == value.id && data.type == value.type) {
                         UpdatecartData.push(data);
                     }
-                    //else push has old item 
+                    //else push has old item
                     else {
                         UpdatecartData.push(value);
                     }
@@ -121,11 +123,11 @@ export class CartPage implements OnInit {
             else {
 
                 forEach(cartData, function(value, key) {
-                    //push has new item 
+                    //push has new item
                     if (data.id == value.id && data.type == value.type) {
                         UpdatecartData.push(data);
                     }
-                    //else push has old item 
+                    //else push has old item
                     else {
                         UpdatecartData.push(value);
                     }
@@ -153,7 +155,7 @@ export class CartPage implements OnInit {
 
             if (data.type == "configurable") {
                 allKey = uniq(pullAll(_.keys(data), ['name', 'img', 'price', 'quantity']));
-                
+
                 for (var i = 0; i < allKey.length; i++) {
                     var keys = allKey[i];
                     iterate.push(data[keys]);
@@ -174,4 +176,4 @@ export class CartPage implements OnInit {
             }
         });
     }
-}  
+}
