@@ -74,31 +74,33 @@ export class ProductPage implements OnInit {
         this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             if (res) {
-                this._getProduct.getReview(this.data).then((getReview) => {
-                    this.getRating = getReview;
-                    this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": "10", "pageno": "1" }).then((review) => {
-                        this.productReview = review;
-                        forEach(this.getRating.data, function(value, key) {
-                            forEach(value, function(title, key1) {
-                                reviewTitle.push(title);
-                                reviewKeys.push(key1);
-                                forEach(review.data.total_attribute_rating, function(data, ratingkey) {
-                                    forEach(data, function(reviewtitle, reviewkey1) {
-                                        if (reviewkey1 == key1) {
-                                            TotalReview.push({
-                                                title: title,
-                                                value: reviewkey1
-                                            });
-                                        }
+
+                this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": "10", "pageno": "1" }).then((review) => {
+                    this.productReview = review;
+                    this._getProduct.getReview(this.data).then((getReview) => {
+                        this.getRating = getReview;
+
+                        if (this.noOfREView != 0) {
+                            forEach(this.getRating.data, function(value, key) {
+                                forEach(value, function(title, key1) {
+                                    reviewTitle.push(title);
+                                    reviewKeys.push(key1);
+                                    forEach(review.data.total_attribute_rating, function(data, ratingkey) {
+                                        forEach(data, function(reviewtitle, reviewkey1) {
+                                            if (reviewkey1 == key1) {
+                                                TotalReview.push({
+                                                    title: title,
+                                                    value: reviewkey1
+                                                });
+                                            }
+                                        });
                                     });
                                 });
                             });
-                        });
-                        this.TotalReview = clone(TotalReview);
-                        this.reviewTitle = clone(reviewTitle);
-                        this.reviewKeys = clone(reviewKeys);
-                        this.noOfREView = this.productReview.data.data.length;
-                        if (this.noOfREView != 0) {
+                            this.TotalReview = clone(TotalReview);
+                            this.reviewTitle = clone(reviewTitle);
+                            this.reviewKeys = clone(reviewKeys);
+                            this.noOfREView = this.productReview.data.data.length;
                             this.reviewShow = true;
                         }
                     }).catch((err) => { });
