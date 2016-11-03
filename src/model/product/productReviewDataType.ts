@@ -12,6 +12,7 @@ export class ProductReviewDataType {
                 detail: string
                 nickname: string
                 customer_id: string
+                rating_percentage_by_attribute:any
         }]
         total_attribute_rating: any;
         rating: string;

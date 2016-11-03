@@ -19,6 +19,7 @@ import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
 import values from 'lodash/values';
+import slice from 'lodash/slice';
 @Component({
     templateUrl: 'product.html'
 })
@@ -52,15 +53,19 @@ export class ProductPage implements OnInit {
     TotalReview: any;
     totalAttributeRatingKey: any = [];
     data: any;
-    review: any = [1, 2, 3, 4, 5];
-    reviewDisplay: boolean = false;
+    review: any = [5, 4, 3, 2, 1];
+//    reviewDisplay: boolean = false;
     noOfREView: any;
     reviewShow: boolean = false;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
     selectedRating: any = [];
-
+    reviewTwo:any=[];
+    otherreview:any=[];
+    moreReviewShow:boolean=false;
+    writeReview:boolean=false;
+    price:number;
     constructor(private _events:Events,private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
@@ -72,6 +77,7 @@ export class ProductPage implements OnInit {
         let TotalReview = [];
         this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
+            this.productData = res;
             if (res) {
 
                 this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": "10", "pageno": "1" }).then((review) => {
@@ -80,16 +86,21 @@ export class ProductPage implements OnInit {
                         this.getRating = getReview;
 
                         if (this.noOfREView != 0) {
-                            forEach(this.getRating.data, function(value, key) {
+                            this.reviewTwo=slice(this.productReview.data.data, 0, 2);
+                            this.otherreview = slice(this.productReview.data.data, 2, this.productReview.data.data.length );
+                            console.log(this.reviewTwo);
+                            console.log(this.otherreview );
+                                forEach(this.getRating.data, function(value, key) {
                                 forEach(value, function(title, key1) {
                                     reviewTitle.push(title);
                                     reviewKeys.push(key1);
                                     forEach(review.data.total_attribute_rating, function(data, ratingkey) {
                                         forEach(data, function(reviewtitle, reviewkey1) {
+                                            
                                             if (reviewkey1 == key1) {
                                                 TotalReview.push({
                                                     title: title,
-                                                    value: reviewkey1
+                                                    value: reviewtitle
                                                 });
                                             }
                                         });
@@ -103,9 +114,10 @@ export class ProductPage implements OnInit {
                             this.reviewShow = true;
                         }
                     }).catch((err) => { });
-                    this.productData = res;
-                    this.spin = false;
+                }).catch((err) => { });
+                                    this.spin = false;
                     this.images = this.productData.data.data.media_images[0];
+                    this.price=this.productData.data.data.display_price;
                     this.final_price = this.productData.data.data.display_price;
                     if (this.productData.data.data.type != "configurable") {
                         this.disable = false;
@@ -118,7 +130,6 @@ export class ProductPage implements OnInit {
                     if (this.productData.data.associated_products) {
                         this.keys = keys(this.productData.data.associated_products.attributes);
                     }
-                }).catch((err) => { });
             }
         }).catch((err) => {
 
@@ -172,6 +183,9 @@ export class ProductPage implements OnInit {
         }
 
     }
+    moreReview(){
+        this.moreReviewShow=true;
+    }
     onSelectRatting(rating, title) {
         this.selectedRating = clone(rating);
         if (this.reviewTitle.length != rating.length) {
@@ -182,10 +196,8 @@ export class ProductPage implements OnInit {
         let valueOFReview = [];
         let json = {};
         this.presentToast("processing");
-        this.reviewDisplay = false;
         this.spinReview = true;
         valueOFReview = values(this.reviewData);
-        console.log(valueOFReview);
         for (let i = 0; i < this.reviewKeys.length; i++) {
             json[this.reviewKeys[i]] = valueOFReview[i];
         };
@@ -201,6 +213,7 @@ export class ProductPage implements OnInit {
         this._getProduct.getSubmitReview(data).then((res) => {
             this.submitReviewData = res;
             if (this.submitReviewData) {
+                this.writeReview=false;
                 this.spinReview = false;
                 this.presentToast(this.submitReviewData.message);
             }
@@ -214,6 +227,9 @@ export class ProductPage implements OnInit {
                 this.reviewShow = true;
             }
         });
+    }
+    addReview(){
+        this.writeReview=true;
     }
     presentLoading() {
         let loader = this._loadingCtrl.create({
@@ -232,9 +248,6 @@ export class ProductPage implements OnInit {
     }
     slideClick(img: string) {
         this.images = img;
-    }
-    reviewDetail() {
-        this.reviewDisplay = true;
     }
     addCart(response) {
         let selectedItem: string;

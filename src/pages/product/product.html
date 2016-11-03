@@ -21,33 +21,10 @@
                         <h2>{{productData.data.data.name}}</h2>
                     </ion-col>
                 </ion-row>
-                <div  *ngIf="reviewDisplay">
-                    <ion-row *ngFor="let review of TotalReview">
-                        <ion-col width-25 class="no-margin">
-                            <p class="margin-but"> {{review.title}}</p>
-                        </ion-col>  
-                        <ion-col  width-75 class="no-margin">
-                            <p class="margin-but">{{review.value}}/{{productReview.data.rating}}</p>
-                        </ion-col>
-                    </ion-row>
-                </div>
-                <ion-row class="padLeft10" *ngIf="reviewShow" >
-                    <ion-col class="rating-box no-margin" width-75 >
-
-                        <ion-buttons class="alignright" *ngFor="let five of review">
-                                     <ion-icon name="star"  class="rating" ></ion-icon>
-                        </ion-buttons>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="padLeft10">
-                    <ion-col no-margin *ngIf="reviewShow">
-                             <p (click)="reviewDetail()" class="color">{{noOfREView}} Review(s)</p>
-                    </ion-col>
-                </ion-row>
                 <ion-row class="padLeft10"> 
                     <ion-col no-padding> 
                         <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
-                        <p class="sPrice" *ngIf="sp_priceShow == true" >{{s_price}}</p>
+                        <p class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row wrap>
@@ -76,106 +53,101 @@
                         <p class="font13 padLeft10">{{productData.data.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
-                <ion-row center >
-                    <ion-col class="center">
-                        <button  ion-button color="primary" round  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
-                    </ion-col>
-                </ion-row>
-                <ion-spinner id="magLeft50" *ngIf="spinReview"></ion-spinner>
-                <div *ngIf="reviewDisplay">
-                    <ion-row class="border">
-                        <ion-col width-67 class="no-margin">
-                            <p class="color font13 padLeft10">Customer Review {{noOfREView}} Item</p> 
-                        </ion-col>
-                        <ion-col width-33 class="no-margin">
-                            <ion-item>
-                                <ion-label>Show</ion-label>
-                                <ion-select [(ngModel)]="showReview"  [placeholder]="10"  (ngModelChange)="reviewChange(showReview)">
-                                    <ion-option value="5">5</ion-option>
-                                    <ion-option value="10">10</ion-option>
-                                </ion-select>
-                            </ion-item>                                
+                <div *ngIf="reviewShow">
+                    <ion-card class="card" >
+                        <ion-card-content class="no-padding">
+                            <ion-row>
+                                <ion-col>
+                                    <ion-row>
+                                        <ion-col>
+                                            <p class="margin-but totalReviewAvg20">{{productReview.data.rating}}&nbsp;/&nbsp;5</p>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row >
+                                        <ion-col class="rating-box ">
+                                            <ion-buttons class="alignright" *ngFor="let number of review">
+                                                         <ion-icon name="star"  class="rating color" ></ion-icon>
+                                            </ion-buttons>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row class="margin-top15">
+                                        <ion-col>
+                                            <p class="gray">{{noOfREView}} Review(s)</p>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-buttons  *ngFor="let number of review">
+                                        <span>{{number}} </span> <ion-icon name="star" ></ion-icon> 
+                                    </ion-buttons>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="uppercase">
+                                <ion-col class="no-padding">
+                                    <button no-padding ion-button color="primary" full  (click)="addReview(productData.data)" >  <p class="white"> Rate and write a review </p></button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-content>
 
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="padLeft10" *ngFor="let review of TotalReview">
-                        <ion-col width-25 class="no-margin">
-                            <p class="margin-but"> {{review.title}}</p>
-                        </ion-col>  
-                        <ion-col  width-75 class="no-margin">
-                            <p class="margin-but">{{review.value}}/{{productReview.data.rating}}</p>
-
-                        </ion-col>
-                    </ion-row>
-
-                    <ion-row>
-                        <ion-col>
-                            <p class="color padLeft10">WRITE YOUR OWN REVIEW</p>
-
-                        </ion-col>
-                    </ion-row>
-                        <ion-card *ngFor=" let data of productReview.data.data ;  let i = index; ">
-
-                            <ion-card-header>
-                                <ion-row>
-                                    <ion-col>
-                                        <div><span> {{i+1}}). </span>REVIEW BY <span class="color uppercase">{{data.nickname}}</span> / (POSTED ON <span class="color">{{data.created_at}} </span>)</div>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col>
-                                        <div>YOU'RE REVIEWING <span class="color uppercase">{{data.nickname}}</span> </div>
-
-                                    </ion-col>
-                                </ion-row>  </ion-card-header>
-
-                            <ion-card-content>
-                                <ion-row>
-                                    <ion-col>
-                                        <span >{{data.detail}}</span> 
-
-                                    </ion-col>
-                                </ion-row>
-                            </ion-card-content>
-                        </ion-card>
-                    <ion-row>
-                        <ion-col >
-                            <p class="uppercase padLeft10"> HOW DO YOU RATE THIS PRODUCT?</p>
-
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="padLeft10">
-                        <ion-col></ion-col>
-                        <ion-col class="rating-box">
-                            <ion-buttons class="alignright " >
-                                1<ion-icon name="star"  class="rating"></ion-icon>
+                    </ion-card>
+                    <ion-list class="padLeft10">
+                        <ion-item *ngFor=" let data of reviewTwo ;  let i = index; ">
+                            <p color="dark">{{i+1}}).<span class="color">{{data.title}}</span></p>
+                            <p color="dark">{{data.detail}}</p>
+                            <p><span class="color" >by {{data.nickname}}</span><span> / (POSTED ON <span class="color">{{data.created_at}} </span>)</span></p>
+                        </ion-item>
+                        <div *ngIf="moreReviewShow">
+                            <ion-item *ngFor=" let data of otherreview;  let i = index; ">
+                                <p color="dark">{{i+3}}).<span class="color">{{data.title}}</span></p>
+                                <p color="dark">{{data.detail}}</p>
+                                <p><span class="color" >by {{data.nickname}}</span><span> / (POSTED ON <span class="color">{{data.created_at}} </span>)</span></p>
+                            </ion-item>
+                        </div>
+                        <ion-item  (click)="moreReview()">
+                            <ion-buttons >
+                                <span>All {{noOfREView}} Review </span> <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
                             </ion-buttons>
-                        </ion-col>
-                        <ion-col class="rating-box">
-                            <ion-buttons class="alignright " >
-                                2<ion-icon name="star"  class="rating"></ion-icon>
-                            </ion-buttons>
-                        </ion-col>
-                        <ion-col class="rating-box">
-                            <ion-buttons class="alignright " >
-                                3 <ion-icon name="star"  class="rating"></ion-icon>
-                            </ion-buttons>
-                        </ion-col>
-                        <ion-col class="rating-box">
-                            <ion-buttons class="alignright ">
-                                4 <ion-icon name="star"  class="rating"></ion-icon>
-                            </ion-buttons>
-                        </ion-col>
-                        <ion-col class="rating-box">
-                            <ion-buttons class="alignright ">
-                                5 <ion-icon name="star"  class="rating"></ion-icon>
-                            </ion-buttons>
-                        </ion-col>
-                    </ion-row>
-                    <div>
+                        </ion-item>
+                    </ion-list>
+                    <ion-spinner id="magLeft50" *ngIf="spinReview"></ion-spinner>
+                    <div *ngIf=writeReview>
+                        <ion-row>
+                            <ion-col >
+                                <p class="uppercase padLeft10"> HOW DO YOU RATE THIS PRODUCT?</p>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="padLeft10">
+                            <ion-col></ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    1<ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    2<ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    3 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright ">
+                                    4 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright ">
+                                    5 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                        </ion-row>
                         <ion-row class="padLeft10"  *ngFor="let title of reviewTitle" radio-group [(ngModel)]="reviewData[title]" (ngModelChange)="onSelectRatting(reviewData,title)">
-                            <ion-col width-20>
-                                {{title}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                 <ion-col width-20>
+                                     <p class="uppercase">  {{title}} </p>
                             </ion-col>
                             <ion-col><ion-radio  value="1"></ion-radio></ion-col>
                             <ion-col><ion-radio  value="2"></ion-radio></ion-col>
@@ -221,7 +193,95 @@
                             </ion-col>
                         </ion-row>
                     </div>
+                    <div *ngIf="wrireReview">
+                        <ion-row>
+                            <ion-col >
+                                <p class="uppercase padLeft10"> HOW DO YOU RATE THIS PRODUCT?</p>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="padLeft10">
+                            <ion-col></ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    1<ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    2<ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright " >
+                                    3 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright ">
+                                    4 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                            <ion-col class="rating-box">
+                                <ion-buttons class="alignright ">
+                                    5 <ion-icon name="star"  class="rating"></ion-icon>
+                                </ion-buttons>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="padLeft10"  *ngFor="let title of reviewTitle" radio-group [(ngModel)]="reviewData[title]" (ngModelChange)="onSelectRatting(reviewData,title)">
+                                 <ion-col width-20>
+                                <p class="uppercase">{{title}}</p>
+                            </ion-col>
+                            <ion-col><ion-radio  value="1"></ion-radio></ion-col>
+                            <ion-col><ion-radio  value="2"></ion-radio></ion-col>
+                            <ion-col><ion-radio  value="3"></ion-radio></ion-col>
+                            <ion-col><ion-radio  value="4"></ion-radio></ion-col>
+                            <ion-col><ion-radio  value="5"></ion-radio></ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p class="uppercase padLeft10">Let us know your thoughts</p>
+                            </ion-col>                      
+                        </ion-row>
+
+                        <ion-row class="padLeft10">
+                            <ion-col >
+                                <textarea name="comment" form="usrform" class="textarea"  required [(ngModel)]="reviewDataDetails">Enter text here...</textarea>
+
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p class="uppercase padLeft10">Summary of Your Review</p>
+                            </ion-col> 
+                        </ion-row >
+                        <ion-row class="padLeft10">
+                            <ion-col>
+                                <input type="text" value="" class="text " required [(ngModel)]="reviewDataTitle">
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row >
+                            <ion-col>
+                                <p class="uppercase padLeft10">What's your nickname?</p>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row class="padLeft10">
+                            <ion-col>
+                                <input type="text" value="" class="text"  required [(ngModel)]="reviewDataNickname">
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row center >
+                            <ion-col class="center  ">
+                                <button  ion-button color="primary" full  (click)="submitReview()">SUBMIT REVIEWS</button>
+                            </ion-col>
+                        </ion-row>
+                    </div>
                 </div>
+                <ion-row center class="uppercase" >
+                    <ion-col class="center">
+                        <button  ion-button color="primary" full  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
+                    </ion-col>
+                </ion-row>
             </ion-col>
         </ion-row>
     </ion-grid>

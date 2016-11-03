@@ -85,7 +85,7 @@
         text-transform: uppercase;
     }
     .rating-box {
-        height: 20px;
+        height: 23px;
         display: inherit;
         overflow: hidden;
     }
@@ -125,9 +125,35 @@
     .padLeft10{
         padding-left: 10px;
     }
+    .totalReviewAvg20{
+        font-size: 30px;
+        color: $gray;
+        font-weight: 500;
+    }
+    .margin-top15{
+        margin-top: 15px;
+    }
+    .gray{
+        color: $gray;
+    }
+    .no-padding{
+        padding: 0px !important;
+    }
+    
+.card {
+    box-shadow: none !important;
+}
+.white{
+    color: $white;
+}
+.floatRight{
+    float: right !important;
+}
+}
 
-.item-md.item-block .item-inner {
-     border-bottom: hidden; 
-}
-}
+/*.item-md.item-block .item-inner*/
+/* .borderHidd{
+    border-bottom: hidden !important; 
+}*/
+/*}*/
 
