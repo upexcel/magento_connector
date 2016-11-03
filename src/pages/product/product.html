@@ -91,18 +91,18 @@
 
                     </ion-card>
                     <ion-list class="padLeft10">
-                        <ion-item *ngFor=" let data of reviewTwo ;  let i = index; ">
+                        <ion-item *ngFor=" let data of productReview.data.data ;  let i = index; ">
                             <p color="dark">{{i+1}}).<span class="color">{{data.title}}</span></p>
                             <p color="dark">{{data.detail}}</p>
                             <p><span class="color" >by {{data.nickname}}</span><span> / (POSTED ON <span class="color">{{data.created_at}} </span>)</span></p>
                         </ion-item>
-                        <div *ngIf="moreReviewShow">
+<!--                        <div *ngIf="moreReviewShow">
                             <ion-item *ngFor=" let data of otherreview;  let i = index; ">
                                 <p color="dark">{{i+3}}).<span class="color">{{data.title}}</span></p>
                                 <p color="dark">{{data.detail}}</p>
                                 <p><span class="color" >by {{data.nickname}}</span><span> / (POSTED ON <span class="color">{{data.created_at}} </span>)</span></p>
                             </ion-item>
-                        </div>
+                        </div>-->
                         <ion-item  (click)="moreReview()">
                             <ion-buttons >
                                 <span>All {{noOfREView}} Review </span> <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
