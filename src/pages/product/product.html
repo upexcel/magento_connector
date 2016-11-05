@@ -1,13 +1,13 @@
 <header></header>
 <ion-content class="product">
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-    <ion-grid class="pad56" no-padding *ngIf="spin==false">
+    <ion-grid class="pad56" no-padding *ngIf="productData">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
                 <div class="imgbox">
                     <img src="{{images}}" class=" img cursorPointer"/>
                 </div>
-                <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData">
+                <ion-slides pager #mySlider [options]="mySlideOptions" >
                             <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
@@ -53,10 +53,8 @@
                         <p class="font13 padLeft10">{{productData.data.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
-                <productReview> loading..</productReview>
-                
-                <submitReview (submitReview)="activeSubmit($event)"> loading..</submitReview>
-                <ion-row center class="uppercase" >
+                <product-review [skuData]="data.sku"> loading..</product-review>               
+                <ion-row center class="uppercase">
                     <ion-col class="center">
                         <button  ion-button color="primary" full  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
                     </ion-col>

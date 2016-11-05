@@ -1,81 +1,64 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {ToastController} from 'ionic-angular';
 import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Product } from '../../model/product/getProduct';
+import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular'
-import clone from 'lodash/clone';
 import values from 'lodash/values';
 @Component({
-    selector: 'submitReview',
+    selector: 'submit-review',
     templateUrl: 'submitReview.html'
 })
 export class SubmitReview implements OnInit {
-    selectedRating: any = [];
+    @Input() skuValue: string;
+    @Input() title: string;
+    @Input() keys: string;
     spinReview: boolean = false;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
-    reviewData: any = [];
+    reviewData: Array<string> = [];
+    selectedRating: Array<string> = [];
     submitReviewData: SubmitReviewDataType;
-    reviewTitle: any = [];
-    reviewKeys: any = [];
-    sku: string;
     writeReview: boolean = false;
-    constructor(private _event: Events, private _getProduct: Product, private _local: Storage, private _toastCtrl: ToastController) {
-        this._event.subscribe('user:submitReview', (writeReview) => {
+    constructor(private _local: Storage, private _events: Events, private _getProduct: Product, private _toastCtrl: ToastController) {
+        this._events.subscribe('user:submitReview', (writeReview) => {
             this.writeReview = writeReview;
         });
     }
     ngOnInit() {
-        this._local.get('sku').then((sku: any) => {
-            this.sku = sku.sku;
-            this._local.get('reviewTitle').then((reviewTitle: any) => {
-                this.reviewTitle = reviewTitle;
-                this._local.get('reviewKeys').then((reviewKeys: any) => {
-                    this.reviewKeys = reviewKeys;
-                    console.log(this.reviewKeys);
-                    console.log(this.reviewTitle);
-                });
-            });
-        })
+
     }
     onSelectRatting(rating, title) {
-        this.selectedRating = clone(rating);
-        if (this.reviewTitle.length != rating.length) {
-            //button disabled
-        }
+        this.selectedRating = rating;
     }
     submitReview() {
         let valueOFReview = [];
-        let json = {};
+        let reviweDataJson = {};
         this.presentToast("processing");
         this.spinReview = true;
-        valueOFReview = values(this.reviewData);
-        for (let i = 0; i < this.reviewKeys.length; i++) {
-            json[this.reviewKeys[i]] = valueOFReview[i];
+        for (let i = 0; i < this.keys.length; i++) {
+            reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        let data = {
-            sku: this.sku,
-            "store_id": "1",
-            "title": this.reviewDataTitle,
-            "details": this.reviewDataDetails,
-            "nickname": this.reviewDataNickname,
-            "rating_options": json
-
-        };
-        this._getProduct.getSubmitReview(data).then((res) => {
-            this.submitReviewData = res;
-            if (this.submitReviewData) {
-                this.writeReview = false;
-                this.spinReview = false;
-                this.presentToast(this.submitReviewData.message);
-            }
+        this._local.get('store_id').then((store_id) => {
+            let data = {
+                sku: this.skuValue,
+                "store_id": store_id,
+                "title": this.reviewDataTitle,
+                "details": this.reviewDataDetails,
+                "nickname": this.reviewDataNickname,
+                "rating_options": reviweDataJson
+            };
+            this._getProduct.getSubmitReview(data).then((res) => {
+                this.submitReviewData = res;
+                if (this.submitReviewData) {
+                    this.writeReview = false;
+                    this.presentToast(this.submitReviewData.message);
+                }
+            })
         })
     }
-    activeSubmit(event: any) {
-        this.writeReview = event;
-    }
+
     presentToast(message: string) {
         let toast = this._toastCtrl.create({
             message: message,
@@ -84,5 +67,4 @@ export class SubmitReview implements OnInit {
         });
         toast.present();
     }
-
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, LoadingController, ToastController, Slides, Events} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
 import { productDataType  } from './../product/productDataType';
@@ -12,7 +12,6 @@ import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
 import clone from 'lodash/clone';
-import values from 'lodash/values';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
 
@@ -22,7 +21,6 @@ import isEqual from 'lodash/isEqual';
 export class ProductPage implements OnInit {
     productData: productDataType;
     cartData: cartDataType;
-
     quantity: number;
     sp_priceShow: boolean = false;
     selectshow: boolean = true;
@@ -31,25 +29,27 @@ export class ProductPage implements OnInit {
     itemColor: string;
     selectSize: string;
     selectColor: string;
-    selectedList: any = [];
+    selectedList: Array<any> = [];
     disable: boolean = true;
     product: string;
     images: string;
     final_price: number;
-    keys: any = [];
+    keys: Array<string> = [];
     search: any = [];
     res: {} = {};
     price: number;
     data: any;
+    reviewData = [];
 
-    constructor(private _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
-        this._local.set('sku',this.data);
     }
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();
+
+
         this._getProduct.getProduct(this.data).then((res) => {
             this.productData = res;
             if (res) {
@@ -139,6 +139,10 @@ export class ProductPage implements OnInit {
     }
     slideClick(img: string) {
         this.images = img;
+    }
+    userUpdated(event) {
+        console.log(event);
+        this.reviewData = event;
     }
     addCart(response) {
         let selectedItem: string;

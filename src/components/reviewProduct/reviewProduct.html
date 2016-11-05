@@ -1,4 +1,4 @@
-<div *ngIf="reviewShow">
+<div *ngIf="reviewShow">    
     <ion-card class="card" >
         <ion-card-content class="no-padding">
             <ion-row>
@@ -10,7 +10,7 @@
                     </ion-row>
                     <ion-row >
                         <ion-col class="rating-box ">
-                            <ion-buttons class="alignright" *ngFor="let number of review">
+                            <ion-buttons class="alignright" *ngFor=" let number of [5, 4, 3, 2, 1]">
                                          <ion-icon name="star"  class="rating color" ></ion-icon>
                             </ion-buttons>
                         </ion-col>
@@ -22,7 +22,7 @@
                     </ion-row>
                 </ion-col>
                 <ion-col>
-                    <ion-buttons  *ngFor="let number of review">
+                    <ion-buttons  *ngFor="let number of [5,4,3,2,1]">
                         <span>{{number}} </span> <ion-icon name="star" ></ion-icon> 
                     </ion-buttons>
                 </ion-col>
@@ -46,6 +46,7 @@
                 <span>All {{noOfREView}} Review </span> <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
             </ion-buttons>
         </ion-item>
-    </ion-list>
-   
+    </ion-list> 
+    <submit-review [skuValue]="skuData" [title]="reviewTitle" [keys]="reviewKeys"> loading..</submit-review>
 </div>
+

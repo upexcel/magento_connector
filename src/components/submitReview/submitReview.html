@@ -1,4 +1,4 @@
-<ion-spinner id="magLeft50" *ngIf="spinReview"></ion-spinner>
+
 <div *ngIf="writeReview">
     <ion-row>
         <ion-col >
@@ -8,33 +8,13 @@
     </ion-row>
     <ion-row class="padLeft10">
         <ion-col></ion-col>
-        <ion-col class="rating-box">
-            <ion-buttons class="alignright " >
-                1<ion-icon name="star"  class="rating"></ion-icon>
-            </ion-buttons>
-        </ion-col>
-        <ion-col class="rating-box">
-            <ion-buttons class="alignright " >
-                2<ion-icon name="star"  class="rating"></ion-icon>
-            </ion-buttons>
-        </ion-col>
-        <ion-col class="rating-box">
-            <ion-buttons class="alignright " >
-                3 <ion-icon name="star"  class="rating"></ion-icon>
-            </ion-buttons>
-        </ion-col>
-        <ion-col class="rating-box">
-            <ion-buttons class="alignright ">
-                4 <ion-icon name="star"  class="rating"></ion-icon>
-            </ion-buttons>
-        </ion-col>
-        <ion-col class="rating-box">
-            <ion-buttons class="alignright ">
-                5 <ion-icon name="star"  class="rating"></ion-icon>
+        <ion-col class="rating-box" *ngFor=" let number of [1,2,3,4,5] " >
+                 <ion-buttons class="alignright " >
+                {{number}}<ion-icon name="star"  class="rating"></ion-icon>
             </ion-buttons>
         </ion-col>
     </ion-row>
-    <ion-row class="padLeft10"  *ngFor="let title of reviewTitle" radio-group [(ngModel)]="reviewData[title]" (ngModelChange)="onSelectRatting(reviewData,title)">
+    <ion-row class="padLeft10"  *ngFor="let title of title ; let i= index ; " radio-group [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
              <ion-col width-20>
             <p class="uppercase">{{title}}</p>
         </ion-col>
