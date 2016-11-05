@@ -13,7 +13,6 @@ export class ProductReview implements OnInit {
     productReview: ProductReviewDataType;
     getRating: GetRating;
     showReview: string;
-    moreReviewShow: boolean = false;
     totalAttributeRatingKey: Array<any>;
     noOfREView: any;
     reviewShow: boolean = false;
@@ -44,7 +43,6 @@ export class ProductReview implements OnInit {
         this.countReview = this.countReview + 5;
         this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
             this.productReview = review;
-            this.moreReviewShow = true;
             this.noOfREView = this.productReview.data.data.length;
             if (this.noOfREView != 0) {
                 this.reviewShow = true;
