@@ -9,7 +9,7 @@ import { Events } from 'ionic-angular';
     templateUrl: 'reviewProduct.html'
 })
 export class ProductReview implements OnInit {
-    @Input() skuData:string ;
+    @Input() skuData: string;
     productReview: ProductReviewDataType;
     getRating: GetRating;
     showReview: string;
@@ -18,12 +18,11 @@ export class ProductReview implements OnInit {
     noOfREView: any;
     reviewShow: boolean = false;
     countReview: number = 5;
-    dataToBeSend: any = [];
-    reviewTitle = [];
-    reviewKeys:Array<string>=[];
-    constructor(public _events: Events, private _getProduct: Product) {}
+    reviewTitle: Array<any> = [];
+    reviewKeys: Array<string> = [];
+    constructor(public _events: Events, private _getProduct: Product) { }
     ngOnInit() {
-        let self=this;
+        let self = this;
         this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
             this.productReview = review;
             this._getProduct.getReview({ "sku": this.skuData }).then((getReview) => {
