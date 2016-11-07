@@ -36,15 +36,53 @@
     font-size: 13px;
 }
 .font10{
-     font-size: 10px;
+    font-size: 10px;
 }
 .floatLeft{
     float: left;
 }
 .right{
-        position: absolute !important;
+    position: absolute !important;
     top: 10px;
     right: 0;
+}
+.marTop80{
+    margin-top: 60px;
+}
+.alignright{
+    text-align: center;
+}
+.marTop10{
+    margin-top: 10px;
+}
+.margin-top15{
+    margin-top: 15px;
+}
+.padTop10{
+    padding-top: 10px;
+}
+.no-margin{
+    margin: 0px !important;
+}  
+.uppercase{
+    text-transform: uppercase;
+}
+.margin-but{
+    margin-bottom: 0px !important;
+}
+.padLeft10{
+    padding-left: 10px;
+}
+
+.no-padding{
+    padding: 0px !important;
+}
+
+.card {
+    box-shadow: none !important;
+}
+.floatRight{
+    float: right !important;
 }
 .center{
     display: -webkit-box;
@@ -84,9 +122,9 @@
     margin-left: 20px;
 }
 #iconShow{
-  float: right;
+    float: right;
 }
 #sidemenuList{
-  border-left: 1px solid red;
-  padding-left: 5px;
+    border-left: 1px solid red;
+    padding-left: 5px;
 }

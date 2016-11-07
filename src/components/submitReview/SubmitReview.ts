@@ -1,18 +1,18 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NavParams } from 'ionic-angular';
 import {ToastController} from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
 import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Product } from '../../model/product/getProduct';
-import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import values from 'lodash/values';
 @Component({
     selector: 'submit-review',
     templateUrl: 'submitReview.html'
 })
 export class SubmitReview implements OnInit {
-    @Input() skuValue: string;
-    @Input() title: string;
-    @Input() keys: string;
+    skuValue: string;
+    title: string;
+    keys: string;
     spinReview: boolean = false;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
@@ -20,14 +20,16 @@ export class SubmitReview implements OnInit {
     reviewData: Array<string> = [];
     selectedRating: Array<string> = [];
     submitReviewData: SubmitReviewDataType;
-    writeReview: boolean = false;
-    constructor(private _local: Storage, private _events: Events, private _getProduct: Product, private _toastCtrl: ToastController) {
-        this._events.subscribe('user:submitReview', (writeReview) => {
-            this.writeReview = writeReview;
-        });
+    constructor(public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+        this.skuValue = _params.get('sku');
+        this.title = _params.get('title');
+        this.keys = _params.get('keys');
     }
     ngOnInit() {
 
+    }
+    close() {
+        this._viewCtrl.dismiss();
     }
     onSelectRatting(rating, title) {
         this.selectedRating = rating;
@@ -52,7 +54,7 @@ export class SubmitReview implements OnInit {
             this._getProduct.getSubmitReview(data).then((res) => {
                 this.submitReviewData = res;
                 if (this.submitReviewData) {
-                    this.writeReview = false;
+                    this._viewCtrl.dismiss();
                     this.presentToast(this.submitReviewData.message);
                 }
             })

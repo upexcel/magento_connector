@@ -14,8 +14,10 @@ export class ProductReviewDataType {
                 customer_id: string
                 rating_percentage_by_attribute:any
         }]
+        rating_by_star:any;
         total_attribute_rating: any;
         rating: string;
+        total_review:number;
     }
     status: number;
     message: string;

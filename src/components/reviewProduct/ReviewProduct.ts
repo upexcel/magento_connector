@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductReviewDataType } from '../../model/product/productReviewDataType';
 import { GetRating } from '../../model/product/getRatingDataType';
 import { Product } from '../../model/product/getProduct';
+import { ModalController, NavParams} from 'ionic-angular';
+import { SubmitReview } from '../submitReview/SubmitReview';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
 @Component({
@@ -19,7 +21,8 @@ export class ProductReview implements OnInit {
     countReview: number = 5;
     reviewTitle: Array<any> = [];
     reviewKeys: Array<string> = [];
-    constructor(public _events: Events, private _getProduct: Product) { }
+    AvgRating = [];
+    constructor(private _modalCtrl: ModalController, public _events: Events, private _getProduct: Product) { }
     ngOnInit() {
         let self = this;
         this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
@@ -27,11 +30,21 @@ export class ProductReview implements OnInit {
             this._getProduct.getReview({ "sku": this.skuData }).then((getReview) => {
                 this.getRating = getReview;
                 this.noOfREView = this.productReview.data.data.length;
-                if (this.noOfREView != 0) {
+                if (this.productReview.data.total_review != 0) {
                     forEach(this.getRating.data, function(value, key) {
                         forEach(value, function(title, key1) {
                             self.reviewTitle.push(title);
                             self.reviewKeys.push(key1);
+                            forEach(self.productReview.data.total_attribute_rating, function(raw, key) {
+                                forEach(raw, function(rating, key) {
+                                    if (key1 == key) {
+                                        self.AvgRating.push({
+                                            value: title,
+                                            key: rating
+                                        })
+                                    }
+                                });
+                            });
                         });
                     });
                     this.reviewShow = true;
@@ -44,12 +57,14 @@ export class ProductReview implements OnInit {
         this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
             this.productReview = review;
             this.noOfREView = this.productReview.data.data.length;
-            if (this.noOfREView != 0) {
+            if (this.productReview.data.total_review != 0) {
                 this.reviewShow = true;
             }
         });
     }
-    addReview() {
+    addReview(){
+        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData,title:this.reviewTitle,keys:this.reviewKeys });
+        profileModal.present();
         this._events.publish('user:submitReview', true);
     }
 
