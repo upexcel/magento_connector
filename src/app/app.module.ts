@@ -105,7 +105,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         MyEditAccountPage,
         MySavedAddressPage,
         LoginPage,
-        PopoverPage
+        PopoverPage,
+        SubmitReview
     ],
     providers: [Storage,
         AppConfig,

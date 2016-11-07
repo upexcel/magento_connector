@@ -48,8 +48,6 @@ export class ProductPage implements OnInit {
     ngOnInit() {
         this.product = "Product";
         this.presentLoading();
-
-
         this._getProduct.getProduct(this.data).then((res) => {
             this.productData = res;
             if (res) {

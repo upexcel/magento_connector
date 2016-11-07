@@ -1,4 +1,6 @@
 .product{
+    /*margin-top:57px;*/
+
     .alert-wrapper {
         max-width: 264px;
         border-radius: 10px;
@@ -72,88 +74,87 @@
         padding-top: 0px;
         text-align: center;
     }
-
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-
-    body {
-        font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
-        font-size: 14px;
-        line-height: 1.5;
-        text-transform: uppercase;
-    }
-    .rating-box {
-        height: 23px;
-        display: inherit;
-        overflow: hidden;
-    }
     .nobr, .nowrap {
         white-space: nowrap;
-    }
-    .color{
-        color: $cyan;
     }
 
     a {
         color: $cyan;
         text-decoration: none;
     }
-    .textarea{
-        width:90%;
-        padding-bottom: 5%;
-
+    .color{
+        color: $cyan;
     }
-    .text{
-        width:90%;  
-        padding-bottom: 10px;;
+    .writeButt{
+        background-color: $gray_light;
+    }
+    .gray{
+        color: $gray;
+    }
+    .white{
+        color: $white;
     }
     .border{
         border-top: 1px solid $lightGray;
         border-bottom: 1px solid $lightGray;
     }
-    .no-margin{
-        margin: 0px !important;
-    }
-    .uppercase{
-        text-transform: uppercase;
-    }
-    .margin-but{
-        margin-bottom: 0px !important;
-    }
-    .padLeft10{
-        padding-left: 10px;
-    }
+
     .totalReviewAvg20{
         font-size: 30px;
         color: $gray;
         font-weight: 500;
     }
-    .margin-top15{
-        margin-top: 15px;
+    .score {
+        display: inline-block;
+        font-size: 25px;
+        color: $gray_light;
+        position: relative;
     }
-    .gray{
-        color: $gray;
+    .score::before,
+    .score span::before{
+        content: "\2605\2605\2605\2605\2605";
+        display: block;
     }
-    .no-padding{
-        padding: 0px !important;
+    .score span {
+        color:  $cyan;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: !important hidden ;
     }
-    
-.card {
-    box-shadow: none !important;
-}
-.white{
-    color: $white;
-}
-.floatRight{
-    float: right !important;
-}
+    .whiteSpace{
+        white-space: normal !important;
+    } 
+    .overflow{
+        overflow: hidden;
+    }
+
+    progress[value] {
+        /* Reset the default appearance */
+        -webkit-appearance: none;
+        appearance: none;
+        height: 15px;
+    }
+    progress[value]::-webkit-progress-bar {
+        background-color: #eee;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+    }
+    progress[value]::-webkit-progress-value {
+        background-image:
+            -webkit-linear-gradient(-45deg, 
+            transparent 33%, rgba(0, 0, 0, .1) 33%, 
+            rgba(0,0, 0, .1) 66%, transparent 66%),
+            -webkit-linear-gradient(top, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)),
+            -webkit-linear-gradient(left, #09c, #f44);
+
+        border-radius: 2px; 
+        background-size: 35px 20px, 100% 100%, 100% 100%;
+    }
+
 }
 
-/*.item-md.item-block .item-inner*/
-/* .borderHidd{
-    border-bottom: hidden !important; 
-}*/
-/*}*/
+
 

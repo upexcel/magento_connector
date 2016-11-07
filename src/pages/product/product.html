@@ -1,6 +1,6 @@
 <header></header>
 <ion-content class="product">
-    <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+    <ion-spinner class="alignright mgLeft50 marTop80" *ngIf="spin"></ion-spinner>
     <ion-grid class="pad56" no-padding *ngIf="productData">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
@@ -23,7 +23,7 @@
                 </ion-row>
                 <ion-row class="padLeft10"> 
                     <ion-col no-padding> 
-                        <p [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</p>
+                        <h2 [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</h2>
                         <p class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</p>
                     </ion-col>
                 </ion-row>
@@ -54,8 +54,8 @@
                     </ion-col>
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               
-                <ion-row center class="uppercase">
-                    <ion-col class="center">
+                <ion-row center class="uppercase ">
+                    <ion-col>
                         <button  ion-button color="primary" full  (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
                     </ion-col>
                 </ion-row>
