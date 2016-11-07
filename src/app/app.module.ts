@@ -46,8 +46,9 @@ import { SocialService } from '../providers/social-service/social-service';
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
 import { FacebookComponent } from '../components/facebookLogin/FacebookComponent';
-import { GoogleComponent } from '../components/googleLogin/googleComponent';
-
+import { GoogleComponent } from '../components/googleLogin/GoogleComponent';
+import { ProductReview } from '../components/reviewProduct/ReviewProduct';
+import { SubmitReview } from '../components/submitReview/SubmitReview';
 //directives
 import { NextOnEnter} from '../directives/nextonenter';
 import { Headers} from '../directives/headers/headers';
@@ -80,7 +81,9 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SideMenu,
         ConvertCodeToName,
         GoogleComponent,
-        FacebookComponent
+        FacebookComponent,
+        ProductReview,
+        SubmitReview
     ],
     imports: [
         IonicModule.forRoot(MyApp)

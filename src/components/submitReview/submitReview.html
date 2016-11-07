@@ -1,0 +1,65 @@
+
+<div *ngIf="writeReview">
+    <ion-row>
+        <ion-col >
+            <p class="uppercase padLeft10"> HOW DO YOU RATE THIS PRODUCT?</p>
+
+        </ion-col>
+    </ion-row>
+    <ion-row class="padLeft10">
+        <ion-col></ion-col>
+        <ion-col class="rating-box" *ngFor=" let number of [1,2,3,4,5] " >
+                 <ion-buttons class="alignright " >
+                {{number}}<ion-icon name="star"  class="rating"></ion-icon>
+            </ion-buttons>
+        </ion-col>
+    </ion-row>
+    <ion-row class="padLeft10"  *ngFor="let title of title ; let i= index ; " radio-group [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
+             <ion-col width-20>
+            <p class="uppercase">{{title}}</p>
+        </ion-col>
+        <ion-col><p><ion-radio  value="1"></ion-radio></p></ion-col>
+        <ion-col><p><ion-radio  value="2"></ion-radio></p></ion-col>
+        <ion-col><p><ion-radio  value="3"></ion-radio></p></ion-col>
+        <ion-col><p><ion-radio  value="4"></ion-radio></p></ion-col>
+        <ion-col><p><ion-radio  value="5"></ion-radio></p></ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col>
+            <p class="uppercase padLeft10">Let us know your thoughts</p>
+        </ion-col>                      
+    </ion-row>
+
+    <ion-row class="padLeft10">
+        <ion-col >
+            <textarea name="comment" form="usrform" class="textarea"  required [(ngModel)]="reviewDataDetails">Enter text here...</textarea>
+
+        </ion-col> 
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <p class="uppercase padLeft10">Summary of Your Review</p>
+        </ion-col> 
+    </ion-row>
+    <ion-row class="padLeft10">
+        <ion-col>
+            <input type="text" value="" class="text " required [(ngModel)]="reviewDataTitle">
+        </ion-col> 
+    </ion-row>
+    <ion-row >
+        <ion-col>
+            <p class="uppercase padLeft10">What's your nickname?</p>
+        </ion-col> 
+    </ion-row>
+    <ion-row class="padLeft10">
+        <ion-col>
+            <input type="text" value="" class="text"  required [(ngModel)]="reviewDataNickname">
+        </ion-col> 
+    </ion-row>
+    <ion-row center >
+        <ion-col class="center">
+            <button  ion-button color="primary" full  (click)="submitReview()">SUBMIT REVIEWS</button>
+        </ion-col>
+    </ion-row>
+</div>

@@ -1,16 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams,LoadingController,ToastController,Slides,Events} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Product } from '../../model/product/getProduct';
 import { productDataType  } from './../product/productDataType';
+import { Product } from '../../model/product/getProduct';
 import { Cart } from '../../model/product/cart';
-import { ProductReviewDataType } from '../../model/product/productReviewDataType';
 import {  cartDataType } from './../product/cartDataType';
-import { SubmitReviewDataType } from '../../model/product/submitReview';
-import { GetRating } from '../../model/product/getRatingDataType';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -18,17 +14,13 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-import values from 'lodash/values';
-import slice from 'lodash/slice';
+
 @Component({
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
     productData: productDataType;
     cartData: cartDataType;
-    productReview: ProductReviewDataType;
-    submitReviewData: SubmitReviewDataType;
-    getRating: GetRating;
     quantity: number;
     sp_priceShow: boolean = false;
     selectshow: boolean = true;
@@ -37,106 +29,52 @@ export class ProductPage implements OnInit {
     itemColor: string;
     selectSize: string;
     selectColor: string;
-    selectedList: any = [];
+    selectedList: Array<any> = [];
     disable: boolean = true;
     product: string;
     images: string;
     final_price: number;
-    showReview: string;
-    spinReview: boolean = false;
-    reviewTitle: any = [];
-    reviewKeys: any = [];
-    keys: any = [];
+    keys: Array<string> = [];
     search: any = [];
     res: {} = {};
-    reviewData: any = [];
-    TotalReview: any;
-    totalAttributeRatingKey: any = [];
+    price: number;
     data: any;
-    review: any = [5, 4, 3, 2, 1];
-//    reviewDisplay: boolean = false;
-    noOfREView: any;
-    reviewShow: boolean = false;
-    reviewDataDetails: string = "";
-    reviewDataTitle: string = "";
-    reviewDataNickname: string = "";
-    selectedRating: any = [];
-    reviewTwo:any=[];
-    otherreview:any=[];
-    moreReviewShow:boolean=false;
-    writeReview:boolean=false;
-    price:number;
-    constructor(private _events:Events,private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    reviewData = [];
+
+    constructor(public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
     ngOnInit() {
         this.product = "Product";
-        let reviewTitle = [];
-        let reviewKeys = [];
-        let TotalReview = [];
         this.presentLoading();
+
+
         this._getProduct.getProduct(this.data).then((res) => {
             this.productData = res;
             if (res) {
-
-                this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": "10", "pageno": "1" }).then((review) => {
-                    this.productReview = review;
-                    this._getProduct.getReview(this.data).then((getReview) => {
-                        this.getRating = getReview;
-
-                        if (this.noOfREView != 0) {
-                            this.reviewTwo=slice(this.productReview.data.data, 0, 2);
-                            this.otherreview = slice(this.productReview.data.data, 2, this.productReview.data.data.length );
-                            console.log(this.reviewTwo);
-                            console.log(this.otherreview );
-                                forEach(this.getRating.data, function(value, key) {
-                                forEach(value, function(title, key1) {
-                                    reviewTitle.push(title);
-                                    reviewKeys.push(key1);
-                                    forEach(review.data.total_attribute_rating, function(data, ratingkey) {
-                                        forEach(data, function(reviewtitle, reviewkey1) {
-                                            
-                                            if (reviewkey1 == key1) {
-                                                TotalReview.push({
-                                                    title: title,
-                                                    value: reviewtitle
-                                                });
-                                            }
-                                        });
-                                    });
-                                });
-                            });
-                            this.TotalReview = clone(TotalReview);
-                            this.reviewTitle = clone(reviewTitle);
-                            this.reviewKeys = clone(reviewKeys);
-                            this.noOfREView = this.productReview.data.data.length;
-                            this.reviewShow = true;
-                        }
-                    }).catch((err) => { });
-                }).catch((err) => { });
-                                    this.spin = false;
-                    this.images = this.productData.data.data.media_images[0];
-                    this.price=this.productData.data.data.display_price;
-                    this.final_price = this.productData.data.data.display_price;
-                    if (this.productData.data.data.type != "configurable") {
-                        this.disable = false;
-                    }
-                    if (this.productData.data.data.special_price > 0) {
-                        this.sp_priceShow = true;
-                        this.final_price = this.productData.data.data.special_price;
-                    }
-                    this.product = this.productData.data.data.name;
-                    if (this.productData.data.associated_products) {
-                        this.keys = keys(this.productData.data.associated_products.attributes);
-                    }
+                this.spin = false;
+                this.images = this.productData.data.data.media_images[0];
+                this.price = this.productData.data.data.display_price;
+                this.final_price = this.productData.data.data.display_price;
+                if (this.productData.data.data.type != "configurable") {
+                    this.disable = false;
+                }
+                if (this.productData.data.data.special_price > 0) {
+                    this.sp_priceShow = true;
+                    this.final_price = this.productData.data.data.special_price;
+                }
+                this.product = this.productData.data.data.name;
+                if (this.productData.data.associated_products) {
+                    this.keys = keys(this.productData.data.associated_products.attributes);
+                }
             }
         }).catch((err) => {
 
         })
     }
     ionViewDidEnter() {
-       setTimeout( () => { this._events.publish("title",{title:this.product,pagename:"product"}); } , 0)
+        setTimeout(() => { this._events.publish("title", { title: this.product, pagename: "product" }); }, 0)
     }
     onChange(res, key) {
         let count = 0;
@@ -183,54 +121,7 @@ export class ProductPage implements OnInit {
         }
 
     }
-    moreReview(){
-        this.moreReviewShow=true;
-    }
-    onSelectRatting(rating, title) {
-        this.selectedRating = clone(rating);
-        if (this.reviewTitle.length != rating.length) {
-            //button disabled
-        }
-    }
-    submitReview() {
-        let valueOFReview = [];
-        let json = {};
-        this.presentToast("processing");
-        this.spinReview = true;
-        valueOFReview = values(this.reviewData);
-        for (let i = 0; i < this.reviewKeys.length; i++) {
-            json[this.reviewKeys[i]] = valueOFReview[i];
-        };
-        let data = {
-            sku: this.data.sku,
-            "store_id": "1",
-            "title": this.reviewDataTitle,
-            "details": this.reviewDataDetails,
-            "nickname": this.reviewDataNickname,
-            "rating_options": json
 
-        };
-        this._getProduct.getSubmitReview(data).then((res) => {
-            this.submitReviewData = res;
-            if (this.submitReviewData) {
-                this.writeReview=false;
-                this.spinReview = false;
-                this.presentToast(this.submitReviewData.message);
-            }
-        })
-    }
-    reviewChange(pageno: string) {
-        this._getProduct.getProductReview({ "sku": this.data.sku, "pagesize": pageno, "pageno": "1" }).then((review) => {
-            this.productReview = review
-            this.noOfREView = this.productReview.data.data.length;
-            if (this.noOfREView != 0) {
-                this.reviewShow = true;
-            }
-        });
-    }
-    addReview(){
-        this.writeReview=true;
-    }
     presentLoading() {
         let loader = this._loadingCtrl.create({
             content: "Please wait...",
@@ -248,6 +139,10 @@ export class ProductPage implements OnInit {
     }
     slideClick(img: string) {
         this.images = img;
+    }
+    userUpdated(event) {
+        console.log(event);
+        this.reviewData = event;
     }
     addCart(response) {
         let selectedItem: string;
