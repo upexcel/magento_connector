@@ -8,7 +8,7 @@
                             <p class="margin-but totalReviewAvg20">{{productReview.data.rating}}&nbsp;/&nbsp;5</p>
                         </ion-col>
                     </ion-row>
-                    <ion-row class="overflow">
+                    <ion-row class="overflow" *ngIf="productReview.data.rating">
                         <ion-col>
                             <span class="score"><span  [style.width]="productReview.data.rating * 20 + '%'" ></span></span>
                         </ion-col>
