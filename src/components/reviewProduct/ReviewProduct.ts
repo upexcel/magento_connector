@@ -22,6 +22,7 @@ export class ProductReview implements OnInit {
     reviewTitle: Array<any> = [];
     reviewKeys: Array<string> = [];
     AvgRating = [];
+    displayAvgRating:any;
     constructor(private _modalCtrl: ModalController, public _events: Events, private _getProduct: Product) { }
     ngOnInit() {
         let self = this;
@@ -31,7 +32,8 @@ export class ProductReview implements OnInit {
                 this.getRating = getReview;
                 this.noOfREView = this.productReview.data.data.length;
                 if (this.productReview.data.total_review != 0) {
-                    forEach(this.getRating.data, function(value, key) {
+                    this.displayAvgRating= parseInt(this.productReview.data.rating,10).toFixed(2);
+                    forEach(this.getRating.data.data, function(value, key) {
                         forEach(value, function(title, key1) {
                             self.reviewTitle.push(title);
                             self.reviewKeys.push(key1);
@@ -68,4 +70,3 @@ export class ProductReview implements OnInit {
         this._events.publish('user:submitReview', true);
     }
 
-}

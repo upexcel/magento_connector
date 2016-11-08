@@ -1,5 +1,7 @@
 export class SubmitReviewDataType {
-data : string
-status : number
-message : string
+    data: {
+        review_status: string
+    }
+    status: number
+    message: string
 }

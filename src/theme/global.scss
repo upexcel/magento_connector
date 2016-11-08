@@ -4,6 +4,9 @@
 .aligncenter{
     text-align: center;
 }
+.alignleft{
+    text-align: left;
+}
 .padd36{
     padding:36px;
 }
@@ -13,6 +16,12 @@
 .padd60{
     padding-bottom:60px;
 
+}
+.reviewSubmit{
+    background-color:#749C5C !important;
+}
+.rating-block .item-inner .input-wrapper{
+    display: inline-block !important;
 }
 .borderRt1{
     border-right: 1px solid gray;
@@ -117,6 +126,9 @@
 #magLeft50{
     margin-left: 50% !important;
 
+}
+#font13{
+    font-size: 13px;
 }
 #marLeft20{
     margin-left: 20px;
