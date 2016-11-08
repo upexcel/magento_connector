@@ -1,47 +1,45 @@
-<ion-content>
-    <ion-grid>
-        <ion-row >
-            <ion-col >
-                <ion-buttons end>
-                    <button ion-button clear color='dark' (click)="close()">
-                        <ion-icon name="close-circle"></ion-icon>
-                    </button>
-                </ion-buttons>
-            </ion-col>
-        </ion-row>
-        <ion-row class="padLeft10">
-            <ion-col>
-                <p class="uppercase"> HOW DO YOU RATE THIS PRODUCT?</p>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            RATE THIS PRODUCT
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="close()">
+                    <span color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-            </ion-col>
-        </ion-row>
-        <ion-item *ngFor="let title of title ; let i= index ; ">
-            <ion-label class="uppercase no-margin padTop10">{{title}}</ion-label>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <p class="uppercase"> HOW DO YOU RATE THIS PRODUCT?</p>  
+        </ion-item>       
+        <ion-item class="overflow rating-block" *ngFor="let name of title ; let i=index;  " >
+             <ion-label  class="uppercase">
+                {{name}}
+            </ion-label>
             <ion-range min="0" max="5" step="1" snaps="true" pin="true" color="primary" class="no-padding" [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
                 <ion-label range-left>0</ion-label>
                 <ion-label range-right>5</ion-label>
             </ion-range>
         </ion-item>
+        <ion-item>
+            <ion-label floating>Let us know your thoughts</ion-label>
+            <ion-input type="textarea" [(ngModel)]="reviewDataDetails"></ion-input>
+        </ion-item>
 
-        <ion-list>
-            <ion-item>
-                <ion-label floating>Let us know your thoughts</ion-label>
-                <ion-input type="textarea" [(ngModel)]="reviewDataDetails"></ion-input>
-            </ion-item>
+        <ion-item>
+            <ion-label floating>Summary of Your Review</ion-label>
+            <ion-input type="text"  [(ngModel)]="reviewDataTitle"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>What's your nickname?</ion-label>
+            <ion-input type="text" class="uppercase" [(ngModel)]="reviewDataNickname"></ion-input>
+        </ion-item>
 
-            <ion-item>
-                <ion-label floating>Summary of Your Review</ion-label>
-                <ion-input type="text"  [(ngModel)]="reviewDataTitle"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>What's your nickname?</ion-label>
-                <ion-input type="text" [(ngModel)]="reviewDataNickname"></ion-input>
-            </ion-item>
-        </ion-list>
-        <ion-row center >
-            <ion-col class="center">
-                <button  ion-button color="primary" full  (click)="submitReview()">SUBMIT REVIEWS</button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+        <button class="margin-top15 reviewSubmit" ion-button   full  (click)="submitReview()">SUBMIT REVIEWS</button>
+    </ion-list>
 </ion-content>

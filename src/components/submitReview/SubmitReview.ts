@@ -24,9 +24,18 @@ export class SubmitReview implements OnInit {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
+
     }
     ngOnInit() {
-
+        this._local.get("access_token").then((access_token) => {
+            if (access_token != null) {
+                this._local.get('firstname').then((firstname) => {
+                    this.reviewDataNickname = firstname;
+                })
+            } else {
+            this.reviewDataNickname="";
+            }
+        })
     }
     close() {
         this._viewCtrl.dismiss();
@@ -55,11 +64,18 @@ export class SubmitReview implements OnInit {
                 this.submitReviewData = res;
                 if (this.submitReviewData) {
                     this._viewCtrl.dismiss();
-                    this.presentToast(this.submitReviewData.message);
+                    console.log(this.submitReviewData.data.review_status);
+                    if (this.submitReviewData.data.review_status== "1"){
+                   this.presentToast("Your Rating Is Approved");   
+                    }
+                    else{
+                   this.presentToast("Your Rating Is Pendding");    
+                    }
                 }
             })
         })
     }
+
 
     presentToast(message: string) {
         let toast = this._toastCtrl.create({

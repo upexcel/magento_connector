@@ -1,5 +1,8 @@
 export class GetRating {
-        data: Array<any>
+       data :{
+         data: Array<any>
+        review_submit_status:string
+       }
         status: number
         message: string
 } 
