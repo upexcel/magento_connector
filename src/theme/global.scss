@@ -21,6 +21,10 @@
 }
 .reviewSubmit{
     background-color:#22C064 !important;
+    bottom: 0px !important;
+    position: absolute !important;
+    padding: 20px !important;
+    margin: 0px !important;
 }
 .rating-block .item-inner .input-wrapper{
     display: inline-block !important;
@@ -94,6 +98,11 @@
 }
 .floatRight{
     float: right !important;
+}
+.spin {
+    circle{
+    stroke: #fff !important;
+    }
 }
 .center{
     display: -webkit-box;

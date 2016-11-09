@@ -38,6 +38,6 @@
             <ion-label floating>What's your nickname?</ion-label>
             <ion-input type="text" color="primary" class="uppercase" [(ngModel)]="reviewDataNickname"></ion-input>
         </ion-item>
-            <button class="marTop20 reviewSubmit" ion-button   full  (click)="submitReview()">SUBMIT REVIEWS<ion-spinner  icon="dots" *ngIf="submitSuccessful"></ion-spinner></button>
+        <button class="reviewSubmit" ion-button   full  (click)="submitReview()"><p  *ngIf="submitSuccessful==false">SUBMIT REVIEWS</p><ion-spinner class="spin" *ngIf="submitSuccessful"></ion-spinner></button>
     </ion-list>
 </ion-content>
