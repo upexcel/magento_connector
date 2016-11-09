@@ -5,7 +5,6 @@ import { Product } from '../../model/product/getProduct';
 import { ModalController, NavParams} from 'ionic-angular';
 import { SubmitReview } from '../submitReview/SubmitReview';
 import forEach from 'lodash/forEach';
-import { Events } from 'ionic-angular';
 @Component({
     selector: 'product-review',
     templateUrl: 'reviewProduct.html'
@@ -23,7 +22,7 @@ export class ProductReview implements OnInit {
     reviewKeys: Array<string> = [];
     AvgRating = [];
     displayAvgRating:any;
-    constructor(private _modalCtrl: ModalController, public _events: Events, private _getProduct: Product) { }
+    constructor(private _modalCtrl: ModalController, private _getProduct: Product) { }
     ngOnInit() {
         let self = this;
         this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
@@ -33,13 +32,13 @@ export class ProductReview implements OnInit {
                 this.noOfREView = this.productReview.data.data.length;
                 if (this.productReview.data.total_review != 0) {
                     this.displayAvgRating= parseInt(this.productReview.data.rating,10).toFixed(2);
-                    forEach(this.getRating.data.data, function(value, key) {
-                        forEach(value, function(title, key1) {
+                   
+                    forEach(this.getRating.data.attribute, function(title, titleKey) {
                             self.reviewTitle.push(title);
-                            self.reviewKeys.push(key1);
+                            self.reviewKeys.push(titleKey);
                             forEach(self.productReview.data.total_attribute_rating, function(raw, key) {
                                 forEach(raw, function(rating, key) {
-                                    if (key1 == key) {
+                                    if (titleKey == key) {
                                         self.AvgRating.push({
                                             value: title,
                                             key: rating
@@ -48,7 +47,6 @@ export class ProductReview implements OnInit {
                                 });
                             });
                         });
-                    });
                     this.reviewShow = true;
                 }
             }).catch((err) => { });
@@ -65,9 +63,8 @@ export class ProductReview implements OnInit {
         });
     }
     addReview(){
-        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData,title:this.reviewTitle,keys:this.reviewKeys });
+        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options });
         profileModal.present();
-        this._events.publish('user:submitReview', true);
     }
 
 }
