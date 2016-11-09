@@ -139,7 +139,6 @@ export class ProductPage implements OnInit {
         this.images = img;
     }
     userUpdated(event) {
-        console.log(event);
         this.reviewData = event;
     }
     addCart(response) {

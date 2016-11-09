@@ -11,35 +11,33 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
     <ion-list>
         <ion-item>
             <p class="uppercase"> HOW DO YOU RATE THIS PRODUCT?</p>  
         </ion-item>       
         <ion-item class="overflow rating-block" *ngFor="let name of title ; let i=index;  " >
-             <ion-label  class="uppercase">
+                  <ion-label  class="uppercase">
                 {{name}}
             </ion-label>
-            <ion-range min="0" max="5" step="1" snaps="true" pin="true" color="primary" class="no-padding" [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
-                <ion-label range-left>0</ion-label>
+            <ion-range min="1" max="5" step="1" snaps="true" pin="true" color="primary" class="no-padding" [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
+                <ion-label range-left>1</ion-label>
                 <ion-label range-right>5</ion-label>
             </ion-range>
         </ion-item>
         <ion-item>
             <ion-label floating>Let us know your thoughts</ion-label>
-            <ion-input type="textarea" [(ngModel)]="reviewDataDetails"></ion-input>
+            <ion-input type="textarea" color="primary" [(ngModel)]="reviewDataDetails"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Summary of Your Review</ion-label>
-            <ion-input type="text"  [(ngModel)]="reviewDataTitle"></ion-input>
+            <ion-input type="text" color="primary" [(ngModel)]="reviewDataTitle"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="hideByLogin">
             <ion-label floating>What's your nickname?</ion-label>
-            <ion-input type="text" class="uppercase" [(ngModel)]="reviewDataNickname"></ion-input>
+            <ion-input type="text" color="primary" class="uppercase" [(ngModel)]="reviewDataNickname"></ion-input>
         </ion-item>
-
-        <button class="margin-top15 reviewSubmit" ion-button   full  (click)="submitReview()">SUBMIT REVIEWS</button>
+            <button class="marTop20 reviewSubmit" ion-button   full  (click)="submitReview()">SUBMIT REVIEWS<ion-spinner  icon="dots" *ngIf="submitSuccessful"></ion-spinner></button>
     </ion-list>
 </ion-content>

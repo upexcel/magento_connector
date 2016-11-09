@@ -56,6 +56,7 @@ import { SideMenu} from '../directives/sidemenu/sidemenu';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
+import { SortBydate } from '../pipe/review/sortByDate';
 
 @NgModule({
     declarations: [
@@ -80,6 +81,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         Headers,
         SideMenu,
         ConvertCodeToName,
+        SortBydate,
         GoogleComponent,
         FacebookComponent,
         ProductReview,
@@ -128,7 +130,6 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         EditAccount,
         SocialAccount,
         OrderIdDetail]
-
 })
 export class AppModule {
 
