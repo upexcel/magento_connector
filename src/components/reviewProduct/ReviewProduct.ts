@@ -70,3 +70,4 @@ export class ProductReview implements OnInit {
         this._events.publish('user:submitReview', true);
     }
 
+}
