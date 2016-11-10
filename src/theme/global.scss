@@ -21,10 +21,6 @@
 }
 .reviewSubmit{
     background-color:#22C064 !important;
-    bottom: 0px !important;
-    position: absolute !important;
-    padding: 20px !important;
-    margin: 0px !important;
 }
 .rating-block .item-inner .input-wrapper{
     display: inline-block !important;
@@ -105,12 +101,15 @@ input .item-inner {
 }
 .spin {
     circle{
-    stroke: #fff !important;
+        stroke: #fff !important;
     }
 }
-/*ion-spinner {
-        margin-top: 60px;
-}*/
+
+.botton{  
+/*    position: absolute !important;*/
+    height: 50px !important;
+    margin: 0px !important;
+}
 .center{
     display: -webkit-box;
     display: -moz-box;
