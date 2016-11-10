@@ -4,7 +4,6 @@ import sortBy from 'lodash/sortBy';
 export class SortBydate implements PipeTransform {
     transform(obj: any, attr: any): any {
         let listData = sortBy(obj, [function(o) { return o.created_at * -1 }]);
-        console.log(listData);
         return listData;
     }
 }
