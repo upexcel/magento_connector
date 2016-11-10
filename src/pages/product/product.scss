@@ -87,6 +87,8 @@
     }
     .writeButt{
         background-color: $gray_light;
+        position: fixed;
+        bottom: 50px;
     }
     .gray{
         color: $gray;
