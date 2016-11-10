@@ -2,12 +2,12 @@ import { Component, OnInit,Input } from '@angular/core';
 import { NavController,Events} from 'ionic-angular';
 import { ProductPage } from '../product/product';
 import { Storage } from '@ionic/storage';
-import slice from 'lodash/slice';
 import {config} from './../../providers/config/config';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import { Slider } from '../../model/home/slider';
 import { SliderDataType } from './../../model/home/sliderDataType';
+import slice from 'lodash/slice';
 @Component({
     templateUrl: 'home.html'
 })

@@ -1,4 +1,6 @@
 .product{
+    /*margin-top:57px;*/
+
     .alert-wrapper {
         max-width: 264px;
         border-radius: 10px;
@@ -72,44 +74,81 @@
         padding-top: 0px;
         text-align: center;
     }
-
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-
-    body {
-        font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
-        font-size: 14px;
-        line-height: 1.5;
-        text-transform: uppercase;
-    }
-    .rating-box {
-        height: 20px;
-        display: inherit;
-        overflow: hidden;
-    }
     .nobr, .nowrap {
         white-space: nowrap;
-    }
-    .color{
-        color: $cyan;
     }
 
     a {
         color: $cyan;
         text-decoration: none;
     }
-    .textarea{
-        padding-right: 10%;
-        padding-bottom: 5%;
+    .color{
+        color: $cyan;
+    }
+    .writeButt{
+        background-color: $gray_light;
+        position: fixed;
+        bottom: 50px;
+    }
+    .gray{
+        color: $gray;
+    }
+    .white{
+        color: $white;
+    }
+    .border{
+        border-top: 1px solid $lightGray;
+        border-bottom: 1px solid $lightGray;
+    }
 
+    .totalReviewAvg20{
+        font-size: 30px;
+        color: $gray;
+        font-weight: 500;
     }
-    .text{
-      padding-right: 10%;
-       padding-bottom: 10px;;
+    .score {
+        display: inline-block;
+        font-size: 25px;
+        color: $gray_light;
+        position: relative;
     }
-    .pad56{
-      padding-top: 56px;
+    .score::before,
+    .score span::before{
+        content: "\2605\2605\2605\2605\2605";
+        display: block;
     }
+    .score span {
+        color:  $cyan;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: !important hidden ;
+    }
+    .whiteSpace{
+        white-space: normal !important;
+    } 
+    .overflow{
+        overflow: hidden;
+    }
+
+    progress[value] {
+        /* Reset the default appearance */
+        -webkit-appearance: none;
+        appearance: none;
+        height: 10px;
+    }
+    progress[value]::-webkit-progress-bar {
+        background-color: #eee;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+    }
+    progress[value]::-webkit-progress-value {
+        background-image: -webkit-linear-gradient(-45deg, transparent 100%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.1) 35%, transparent 0%), -webkit-linear-gradient(top, rgba(240,248,255, .1), rgba(0, 0, 0, 0.25)), -webkit-linear-gradient(left, #09c, #09c);
+        border-radius: 10px;
+        background-size: 35px 20px, 100% 100%, 100% 100%;
+    }
+
 }
+
+
+
