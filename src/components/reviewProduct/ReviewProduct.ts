@@ -68,11 +68,11 @@ export class ProductReview implements OnInit {
         });
     }
     moreReview() {
-        this.listLoad = true;
-        if (this.listLoad == true) {
+        if (this.listLoad != true) {
             this.countPage = this.countPage + 1;
             this.fetchReview();
         }
+        this.listLoad = true;
     }
     addReview() {
         let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options, max_review: this.getRating.data.max_review });
