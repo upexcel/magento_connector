@@ -58,15 +58,18 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, function(RatingValue, RatingKey) {
+        forEach(reviweDataJson, function(ratingValue, ratingKey) {
+            ratingValue = ratingValue * 1;
             forEach(self.option, function(optionValue, optionKey) {
-                if (RatingKey == optionKey) {
+                if (ratingKey == optionKey) {
                     forEach(optionValue, function(Value, key) {
+                        key = key* 1;
                         console.log(key);
-                        if (parseInt(key) == RatingValue - 1) {
+                        console.log(ratingValue)
+                        if( (key*1) == ( (ratingValue *1) - 1) ) {
                             finalSelectRating.push({
                                 value: Value,
-                                key: RatingKey
+                                key: ratingKey
                             })
                         }
                     })
