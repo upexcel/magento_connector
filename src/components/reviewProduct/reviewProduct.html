@@ -10,7 +10,7 @@
                     </ion-row>
                     <ion-row class="overflow" *ngIf="productReview.data.rating">
                         <ion-col>
-                            <span class="score"><span  [style.width]="productReview.data.rating * 20 + '%'" ></span></span>
+                            <span class="score"><span  [style.width]=" productReview.data.rating * 20 + '%'" ></span></span>
                         </ion-col>
                     </ion-row>
 
@@ -37,14 +37,17 @@
         </ion-item>
         <ion-item  (click)="moreReview()" *ngIf="noOfREView < productReview.data.total_review">
             <ion-buttons>
-                <span>All {{productReview.data.total_review}} Review </span> <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
+                <span *ngIf="listLoad==false">All {{productReview.data.total_review}} Review </span>
+                <ion-spinner  class="spin" *ngIf="listLoad"></ion-spinner>
+                <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
             </ion-buttons>
         </ion-item>
     </ion-list> 
-    <ion-row class="uppercase">
-        <ion-col>
-            <button no-padding ion-button color="primary" full  (click)="addReview()" class="writeButt">  Rate and write a review </button>
-        </ion-col>
-    </ion-row>
 </div>
+<ion-row class="uppercase">
+    <ion-col class="no-padding">
+        <button no-padding ion-button color="primary" full  (click)="addReview()" class="writeButt">  Rate and write a review </button>
+    </ion-col>
+</ion-row>
+
 

@@ -1,6 +1,6 @@
 export class GetRating {
     data: {
-        attribute: any
+        attribute: any,
         options: any
     }
     status: number

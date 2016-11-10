@@ -27,17 +27,17 @@
         </ion-item>
         <ion-item>
             <ion-label floating>Let us know your thoughts</ion-label>
-            <ion-input type="textarea" color="primary" [(ngModel)]="reviewDataDetails"></ion-input>
+            <ion-input type="textarea" color="primary" class="input" [(ngModel)]="reviewDataDetails"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Summary of Your Review</ion-label>
-            <ion-input type="text" color="primary" [(ngModel)]="reviewDataTitle"></ion-input>
+            <ion-input type="text" color="primary" class="input" [(ngModel)]="reviewDataTitle"></ion-input>
         </ion-item>
         <ion-item *ngIf="hideByLogin">
             <ion-label floating>What's your nickname?</ion-label>
             <ion-input type="text" color="primary" class="uppercase" [(ngModel)]="reviewDataNickname"></ion-input>
         </ion-item>
-            <button class="marTop20 reviewSubmit" ion-button   full  (click)="submitReview()">SUBMIT REVIEWS<ion-spinner  icon="dots" *ngIf="submitSuccessful"></ion-spinner></button>
+        <button class="reviewSubmit" ion-button   full  (click)="submitReview()"><p  *ngIf="submitSuccessful==false">SUBMIT REVIEWS</p><ion-spinner class="spin" *ngIf="submitSuccessful"></ion-spinner></button>
     </ion-list>
 </ion-content>

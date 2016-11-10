@@ -6,6 +6,7 @@ import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Product } from '../../model/product/getProduct';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
+import { Events } from 'ionic-angular';
 @Component({
     selector: 'submit-review',
     templateUrl: 'submitReview.html'
@@ -23,7 +24,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -57,14 +58,18 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, function(RatingValue, RatingKey) {
+        forEach(reviweDataJson, function(ratingValue, ratingKey) {
+            ratingValue = ratingValue * 1;
             forEach(self.option, function(optionValue, optionKey) {
-                if (RatingKey == optionKey) {
+                if (ratingKey == optionKey) {
                     forEach(optionValue, function(Value, key) {
-                        if (parseInt(key) == RatingValue - 1) {
+                        key = key* 1;
+                        console.log(key);
+                        console.log(ratingValue)
+                        if( (key*1) == ( (ratingValue *1) - 1) ) {
                             finalSelectRating.push({
                                 value: Value,
-                                key: RatingKey
+                                key: ratingKey
                             })
                         }
                     })
@@ -98,6 +103,7 @@ export class SubmitReview implements OnInit {
                         this.presentToast("Your Rating Is Pendding");
                     }
                 }
+                this._events.publish('api:review', true);
             })
         })
     }
