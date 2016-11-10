@@ -62,7 +62,7 @@ export class SubmitReview implements OnInit {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
                     forEach(optionValue, function(Value, key) {
-                        if(key == ratingValue-1 ) {
+                        if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,
                                 key: ratingKey
@@ -93,10 +93,10 @@ export class SubmitReview implements OnInit {
                 if (this.submitReviewData) {
                     this._viewCtrl.dismiss();
                     if (this.submitReviewData.data.review_status == "1") {
-                        this.presentToast("Your Rating Is Approved");
+                        this.presentToast("Thanks for your review!");
                     }
                     else {
-                        this.presentToast("Your Rating Is Pendding");
+                        this.presentToast("Thanks for your review! Your Rating is Pending approval by admin.");
                     }
                 }
                 this._events.publish('api:review', true);
