@@ -17,11 +17,12 @@ export class ProductReview implements OnInit {
     showReview: string;
     totalAttributeRatingKey: Array<any>;
     reviewShow: boolean = false;
-    countReview: number;
+    countPage: number = 1;
     reviewTitle: Array<any> = [];
     reviewKeys: Array<string> = [];
     graphRating = [];
     listLoad: boolean = false;
+    addCommingReview:number=0;
     constructor(public _events: Events, private _modalCtrl: ModalController, private _getProduct: Product) {
         _events.subscribe('api:review', (review) => {
             this.fetchReview();
@@ -31,7 +32,6 @@ export class ProductReview implements OnInit {
         let self = this;
         this._getProduct.getReview({}).then((getReview) => {
             this.getRating = getReview;
-            this.countReview = this.getRating.data.max_review;
             forEach(this.getRating.data.attribute, function(title, titleKey) {
                 self.reviewTitle.push(title);
                 self.reviewKeys.push(titleKey);
@@ -42,9 +42,11 @@ export class ProductReview implements OnInit {
     fetchReview() {
         let self = this;
         this.graphRating = [];
-        this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
+        this._getProduct.getProductReview({ "sku": this.skuData, "pageno": this.countPage }).then((review) => {
             this.productReview = review;
+            this.listLoad = false;
             if (this.productReview.data.total_review != 0) {
+                this.addCommingReview=this.addCommingReview+this.productReview.data.data.length;
                 forEach(this.getRating.data.attribute, function(title, titleKey) {
                     forEach(self.productReview.data.total_attribute_rating, function(raw, key) {
                         forEach(raw, function(rating, key) {
@@ -67,11 +69,13 @@ export class ProductReview implements OnInit {
     }
     moreReview() {
         this.listLoad = true;
-        this.countReview = this.countReview + this.getRating.data.max_review;
-        this.fetchReview();
+        if (this.listLoad == true) {
+            this.countPage = this.countPage + 1;
+            this.fetchReview();
+        }
     }
     addReview() {
-        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options });
+        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options, max_review: this.getRating.data.max_review });
         profileModal.present();
     }
 }

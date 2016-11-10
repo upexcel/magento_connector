@@ -16,6 +16,7 @@ export class SubmitReview implements OnInit {
     title: string;
     keys: string;
     option: any;
+    max_review:number;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
@@ -29,6 +30,7 @@ export class SubmitReview implements OnInit {
         this.title = _params.get('title');
         this.keys = _params.get('keys');
         this.option = _params.get('option');
+        this.max_review = _params.get('max_review');
     }
     ngOnInit() {
         this._local.get("access_token").then((access_token) => {

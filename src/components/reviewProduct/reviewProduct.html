@@ -35,7 +35,7 @@
             <p color="dark" class="whiteSpace">{{data.detail}}</p>
             <p><span class="color uppercase" >by {{data.nickname}}</span></p>
         </ion-item>
-        <ion-item (click)="moreReview()" *ngIf="this.productReview.data.data.length < productReview.data.total_review">
+        <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.data.total_review">
             <ion-buttons>
                 <span *ngIf="listLoad==false">All {{productReview.data.total_review}} Review </span>
                 <ion-spinner  *ngIf="listLoad"></ion-spinner>
