@@ -16,44 +16,42 @@ export class ProductReview implements OnInit {
     getRating: GetRating;
     showReview: string;
     totalAttributeRatingKey: Array<any>;
-    noOfREView: any;
     reviewShow: boolean = false;
-    countReview: number = 5;
+    countPage: number = 1;
     reviewTitle: Array<any> = [];
     reviewKeys: Array<string> = [];
-    AvgRating = [];
-    displayAvgRating: any;
+    graphRating = [];
     listLoad: boolean = false;
+    addCommingReview:number=0;
     constructor(public _events: Events, private _modalCtrl: ModalController, private _getProduct: Product) {
         _events.subscribe('api:review', (review) => {
-            this.review();
+            this.fetchReview();
         });
     }
     ngOnInit() {
         let self = this;
-        this._getProduct.getReview({ "sku": this.skuData }).then((getReview) => {
+        this._getProduct.getReview({}).then((getReview) => {
             this.getRating = getReview;
             forEach(this.getRating.data.attribute, function(title, titleKey) {
                 self.reviewTitle.push(title);
                 self.reviewKeys.push(titleKey);
             });
-            this.review();
+            this.fetchReview();
         }).catch((err) => { });
-
     }
-    review() {
+    fetchReview() {
         let self = this;
-        this.AvgRating = [];
-        this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
+        this.graphRating = [];
+        this._getProduct.getProductReview({ "sku": this.skuData, "pageno": this.countPage }).then((review) => {
             this.productReview = review;
-            this.noOfREView = this.productReview.data.data.length;
+            this.listLoad = false;
             if (this.productReview.data.total_review != 0) {
-                this.displayAvgRating = this.productReview.data.rating;
+                this.addCommingReview=this.addCommingReview+this.productReview.data.data.length;
                 forEach(this.getRating.data.attribute, function(title, titleKey) {
                     forEach(self.productReview.data.total_attribute_rating, function(raw, key) {
                         forEach(raw, function(rating, key) {
                             if (titleKey == key) {
-                                self.AvgRating.push({
+                                self.graphRating.push({
                                     value: title,
                                     key: rating
                                 })
@@ -70,20 +68,14 @@ export class ProductReview implements OnInit {
         });
     }
     moreReview() {
+        if (this.listLoad != true) {
+            this.countPage = this.countPage + 1;
+            this.fetchReview();
+        }
         this.listLoad = true;
-        this.countReview = this.countReview + 5;
-        this._getProduct.getProductReview({ "sku": this.skuData, "pagesize": this.countReview, "pageno": "1" }).then((review) => {
-            this.productReview = review;
-            this.listLoad = false;
-            this.noOfREView = this.productReview.data.data.length;
-            if (this.productReview.data.total_review != 0) {
-                this.reviewShow = true;
-            }
-        });
     }
     addReview() {
-        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options });
+        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options, max_review: this.getRating.data.max_review });
         profileModal.present();
     }
-
 }

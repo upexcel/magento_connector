@@ -20,9 +20,9 @@
                   <ion-label  class="uppercase">
                 {{name}}
             </ion-label>
-            <ion-range min="1" max="5" step="1" snaps="true" pin="true" color="primary" class="no-padding" [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
+            <ion-range min="1" max="{{max_review}}" step="1" snaps="true" pin="true" color="primary" class="no-padding" [(ngModel)]="reviewData[i]" (ngModelChange)="onSelectRatting(reviewData)">
                 <ion-label range-left>1</ion-label>
-                <ion-label range-right>5</ion-label>
+                <ion-label range-right>{{max_review}}</ion-label>
             </ion-range>
         </ion-item>
         <ion-item>

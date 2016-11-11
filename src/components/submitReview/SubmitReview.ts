@@ -16,6 +16,7 @@ export class SubmitReview implements OnInit {
     title: string;
     keys: string;
     option: any;
+    max_review:number;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
@@ -29,6 +30,7 @@ export class SubmitReview implements OnInit {
         this.title = _params.get('title');
         this.keys = _params.get('keys');
         this.option = _params.get('option');
+        this.max_review = _params.get('max_review');
     }
     ngOnInit() {
         this._local.get("access_token").then((access_token) => {
@@ -62,7 +64,7 @@ export class SubmitReview implements OnInit {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
                     forEach(optionValue, function(Value, key) {
-                        if(key == ratingValue-1 ) {
+                        if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,
                                 key: ratingKey
@@ -93,10 +95,10 @@ export class SubmitReview implements OnInit {
                 if (this.submitReviewData) {
                     this._viewCtrl.dismiss();
                     if (this.submitReviewData.data.review_status == "1") {
-                        this.presentToast("Your Rating Is Approved");
+                        this.presentToast("Thanks for your review!");
                     }
                     else {
-                        this.presentToast("Your Rating Is Pendding");
+                        this.presentToast("Thanks for your review! Your Rating is Pending approval by admin.");
                     }
                 }
                 this._events.publish('api:review', true);
