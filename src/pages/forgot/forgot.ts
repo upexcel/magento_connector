@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController,Events } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import {FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { Forgot } from '../../model/forgot/forgot';
+import {ToastService} from './../../providers/toast-service/toastService';
+
 @Component({
     templateUrl: 'forgot.html'
 })
@@ -12,7 +14,7 @@ export class ForgotPage implements OnInit {
     response: any;
     show_form: boolean = false;
 
-    constructor(private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toastCtrl: ToastController) { }
+    constructor(private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) { }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
@@ -33,19 +35,11 @@ export class ForgotPage implements OnInit {
         let self = this;
         this._forgot.getForgot(value).then((res) => {
             self.spin = false;
-            self.presentToast(res.message);
+            self._toast.toast(res.message,3000,"center");
         })
             .catch(err => {
                 if (err.status === 500) {
                 }
             });
-    }
-    presentToast(message: string) {
-        let toast = this._toastCtrl.create({
-            message: message,
-            duration: 2000,
-            position: 'top'
-        });
-        toast.present();
     }
 }
