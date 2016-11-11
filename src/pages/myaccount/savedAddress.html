@@ -4,7 +4,7 @@
     <h2 text-center>You have no saved address</h2>
     <button ion-button  full (click)="addNewAddress()">Add New Address</button>
   </ion-list>
-    <ion-list *ngIf="showAddress">
+    <ion-list *ngIf="showAddress" id="pad57">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-card *ngFor="let address of myaccount.data;let id=index" >
 
@@ -18,7 +18,7 @@
                 <p>Fax: {{address.fax}}</p>
                 <p>Pin Code: {{address.postcode}}</p>
                 <p>Country: {{address.country_id}}</p>
-                <p>Telephone: {{address.teliphone}}</p>
+                <p>Telephone: {{address.telephone}}</p>
             </ion-card-content>
             <ion-row no-padding>
                 <ion-col>

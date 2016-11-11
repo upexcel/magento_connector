@@ -22,6 +22,7 @@ export class MyEditAccountPage implements OnInit {
     title: string;
     id: any;
     entity_id:any;
+    message:string;
     constructor(private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _toastCtrl: ToastController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
@@ -80,25 +81,24 @@ export class MyEditAccountPage implements OnInit {
             })
     }
     update(value: any) {
-        this.upd_spin = true;
+      let self=this;
+        self.upd_spin = true;
         this._editaccount.updateAccount(value).then((res) => {
-            this.upd_spin = false;
-            this.editaccount = res;
-                console.log(this.editaccount);
-            if (this.editaccount.status === 0) {
-                this.presentUpdateToast(this.editaccount.message);
+            self.upd_spin = false;
+            self.editaccount = res;
+            if (self.editaccount.status === 1) {
+                  self._events.publish('api:savedaddress',true);
+                  self._navCtrl.pop();
             } else {
-                this.presentUpdateToast("Successfully updated");
-                this._events.publish('savedaddress');
-                  this._navCtrl.pop();
+            self.presentUpdateToast(JSON.parse(self.editaccount.message).error);
             }
-
         })
             .catch(err => {
             });
     }
     presentUpdateToast(message) {
-      let toast = this._toastCtrl.create({
+      let self=this;
+      let toast = self._toastCtrl.create({
               message: message,
               position:'top',
               duration: 3000
