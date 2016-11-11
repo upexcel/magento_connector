@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, MenuController, PopoverController, NavParams, LoadingController,Events} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
-import { ProductPage } from '../product/product';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
 import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
 import {LoginPage} from '../login/login';
@@ -71,11 +70,6 @@ export class CategoryProductPage implements OnInit {
         else {
             infiniteScroll.complete();
         }
-    }
-    gotoProduct(product) {
-        this._navCtrl.push(ProductPage, {
-            id: product
-        });
     }
     openMenu() {
         this._menuCtrl.open();

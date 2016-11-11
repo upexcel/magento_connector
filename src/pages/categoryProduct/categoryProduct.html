@@ -10,36 +10,6 @@
         </ion-refresher-content>
     </ion-refresher>
             <category-view *ngIf="categoryProduct" [product]="categoryProduct.data"></category-view>
-<!--    <ion-grid *ngIf="categoryProduct" showWhen="landscape">
-        <ion-row  wrap>
-            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data " width-20 >
-                     <ion-card (click)="gotoProduct(product.data.sku)">
-                    <img src="{{product.data.media_images[0]}}" alt="..." height="225px">
-                    <ion-card-content>
-                        <ion-card-title class="font12">
-                            {{product.data.name}}
-                        </ion-card-title>
-                        <p> <a href="#" class="price" role="button">{{product.data.display_price}}</a></p>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>-->
-<!--    <ion-grid *ngIf="categoryProduct" showWhen="mobile">
-        <ion-row  wrap>
-            <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data" width-50 >
-                     <ion-card (click)="gotoProduct(product.data.sku)">
-                    <img src="{{product.data.media_images[0]}}" alt="..."  height="150px">
-                    <ion-card-content>
-                        <ion-card-title class="font12">
-                            {{product.data.name}}
-                        </ion-card-title>
-                        <p> <a href="#" class="price" role="button">{{product.data.display_price}}</a></p>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>-->
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
