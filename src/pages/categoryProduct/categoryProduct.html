@@ -9,7 +9,8 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-grid *ngIf="categoryProduct" showWhen="landscape">
+            <category-view *ngIf="categoryProduct" [product]="categoryProduct.data"></category-view>
+<!--    <ion-grid *ngIf="categoryProduct" showWhen="landscape">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data " width-20 >
                      <ion-card (click)="gotoProduct(product.data.sku)">
@@ -23,8 +24,8 @@
                 </ion-card>
             </ion-col>
         </ion-row>
-    </ion-grid>
-    <ion-grid *ngIf="categoryProduct" showWhen="mobile">
+    </ion-grid>-->
+<!--    <ion-grid *ngIf="categoryProduct" showWhen="mobile">
         <ion-row  wrap>
             <ion-col class="cursorPointer" *ngFor="let product of categoryProduct.data" width-50 >
                      <ion-card (click)="gotoProduct(product.data.sku)">
@@ -38,7 +39,7 @@
                 </ion-card>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid>-->
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>

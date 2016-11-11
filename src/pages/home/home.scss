@@ -1,35 +1,3 @@
 .home {
-  margin-top: 56px;
-    .swiper-container-horizontal > .swiper-pagination {
-        bottom: 15px;
-        left: 0;
-        width: 100%;
-    }
-    .swiper-pagination-bullet {
-        background: $darkBlue;
-    }
-    .iconShow{
-        top: 0;
-        position: absolute;
-    }
-    .slideOption{
-        height: auto;
-        max-height: 220px;
-    }
-    .img{
-        width: 100%;
-        margin-top: -10px;
-        max-height: 220px;
-    }
-    .imgLandscape{
-        height: 200px;
-        width: 200px;
-    }
-    .imgMobile{
-        height: 120px;
-        width: 200px;
-    }
-    ion-label{
-        margin: 0;
-    }
+        margin-top: 43px;
 }

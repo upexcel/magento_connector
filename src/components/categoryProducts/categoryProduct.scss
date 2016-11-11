@@ -1,0 +1,48 @@
+category-view{
+    .iconShow{
+        top: 0;
+        position: absolute;
+    }
+    ion-card img {
+        height: 100% !important;
+    }
+    .imgBox{
+        height: 150px;
+        width: 80%;
+        margin: 0px auto;
+    }
+    .card-md {
+        border-radius: 2px;
+        box-shadow: none !important; 
+        border: 1px solid $lightGray !important;
+    }
+    .card-ios {
+        border: 1px solid $lightGray !important;
+    }
+
+
+    .column {
+        -webkit-flex: 0 0 25%;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        width: 165px;
+
+    }
+    .price{
+        text-align: right;
+        font-size: 11px !important;
+        color: $blue !important;
+        font-weight: 500;
+    }
+    .font013{
+        font-size: 13px !important;
+    }
+    @media only screen and (max-width: 600px) {
+        .column {
+            -webkit-flex: 0 0 50%;
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+        }
+
+    }
+}

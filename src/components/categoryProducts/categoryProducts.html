@@ -1,0 +1,17 @@
+<ion-grid  *ngIf="product">
+    <ion-row wrap>  
+            <div class="column"  *ngFor="let feat_prod of product">
+                 <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
+                    <div class="imgBox">
+                        <img src="{{feat_prod.data.media_images[0]}}"/>
+                    </div>
+                    <ion-card-content >
+                        <ion-card-title class="font013 capitalize">
+                            {{feat_prod.data.name}}
+                        </ion-card-title>
+                        <p class="price">{{feat_prod.data.display_price}}</p>
+                    </ion-card-content>
+                </ion-card>
+        </div>
+    </ion-row>
+</ion-grid>

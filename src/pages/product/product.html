@@ -18,7 +18,7 @@
                 </ion-slides>
                 <ion-row class="padLeft10">
                     <ion-col>
-                        <h2>{{productData.data.data.name}}</h2>
+                        <h2 class="capitalize">{{productData.data.data.name}}</h2>
                     </ion-col>
                 </ion-row>
                 <ion-row class="padLeft10"> 
@@ -50,7 +50,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <p class="font13 padLeft10">{{productData.data.data.short_description}}</p>
+                        <p class="font13 padLeft10 capitalize">{{productData.data.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               
