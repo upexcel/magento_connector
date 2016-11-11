@@ -2,7 +2,7 @@
 <ion-content  class="myaccount">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <form [formGroup]="updateform" *ngIf="myaccount">
-            <ion-list inset class="padd60">
+            <ion-list inset id="pad57">
                 <ion-item>
                     <ion-label stacked>First Name <span color="danger">*</span></ion-label>
                     <ion-input formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
@@ -39,7 +39,7 @@
                     <ion-label stacked>Country <span color="danger">*</span></ion-label>
                     <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
-                <button ion-button full class="add_address" color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
+                <button ion-button full  color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
             </ion-list>
         </form>
 </ion-content>

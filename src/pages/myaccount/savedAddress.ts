@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, PopoverController,Events } from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
 import {PopoverPage} from './../../components/popover/popover';
 import {StartPage} from './../../pages/startpage/startpage';
 import { Storage } from '@ionic/storage';
@@ -15,25 +16,28 @@ export class MySavedAddressPage implements OnInit {
     myaccount: MyAccountAddressDataType;
     spin: boolean;
     showAddress:boolean;
-    constructor(private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
-      _events.subscribe('savedaddress', () => {
-        this._navCtrl.pop();
-        this._navCtrl.push(MySavedAddressPage);
-            });
+    secret:string;
+    constructor(private _toast:ToastService, private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+      _events.subscribe('api:savedaddress', (savedaddress) => {
+        this.getInitAdd();
+        });
      }
     ngOnInit() {
-          this._local.get('access_token').then((access_token: any) => {
-              this._local.get('secret').then((secret: any) => {
-                  if (access_token != null) {
-                      this.getuser_details(secret);
-                  } else {
-                    this._navCtrl.push(LoginPage);
-                  }
-          });
-      })
-      .catch((err)=>{
-      })
-
+      this.getInitAdd();
+    }
+    getInitAdd(){
+        this._local.get('access_token').then((access_token: any) => {
+                this._local.get('secret').then((secret: any) => {
+                    if (access_token != null) {
+                        this.getuser_details(secret);
+                        this.secret=secret;
+                    } else {
+                      this._navCtrl.push(LoginPage);
+                    }
+            });
+        })
+        .catch((err)=>{
+        })
     }
     ionViewDidEnter() {
        setTimeout( () => {  this._events.publish("title",{title:"My Address"}); } , 0)
@@ -71,8 +75,16 @@ export class MySavedAddressPage implements OnInit {
             "title": "Edit Address", "id": id ,"entity_id":entity_id
         })
     }
-    deleteAccount() {
-
+    deleteAccount(entity_id) {
+      let self=this;
+      let data={entity_id:entity_id,secret:this.secret};
+      this._myaccount.deleteMyAddress(data).then((res)=>{
+        this._toast.toast("Deleted",3000,"bottom");
+        this.getInitAdd();
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
     }
     logout() {
         this._local.remove('firstname');

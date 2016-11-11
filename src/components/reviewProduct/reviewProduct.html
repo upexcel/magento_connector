@@ -31,13 +31,13 @@
     </ion-card>
     <ion-list class="padLeft10 marBot60" >
         <ion-item *ngFor=" let data of productReview.data.data ">
-            <p><span class="color">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
-            <p color="dark" class="whiteSpace">{{data.detail}}</p>
+            <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
+            <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
             <p><span class="color uppercase" >by {{data.nickname}}</span></p>
         </ion-item>
         <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.data.total_review">
             <ion-buttons>
-                <span *ngIf="listLoad==false">All {{productReview.data.total_review}} Review </span>
+                <span *ngIf="listLoad==false" class="capitalize">All {{productReview.data.total_review}} Review </span>
                 <ion-spinner  *ngIf="listLoad"></ion-spinner>
                 <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
             </ion-buttons>

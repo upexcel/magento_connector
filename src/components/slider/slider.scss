@@ -1,0 +1,18 @@
+get-slider{
+    .swiper-container-horizontal > .swiper-pagination {
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+    }
+    .swiper-pagination-bullet {
+        background: $darkBlue;
+    }
+    .slideOption{
+        height: auto;
+        max-height: 220px;
+    }
+    .sliderImg{
+        height: 150px;
+         width: 100%;
+    }
+}

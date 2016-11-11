@@ -41,6 +41,7 @@ import { SocialAccount } from '../model/startPage/socialAccount';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
+import {ToastService} from '../providers/toast-service/toastService';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -49,6 +50,9 @@ import { FacebookComponent } from '../components/facebookLogin/FacebookComponent
 import { GoogleComponent } from '../components/googleLogin/GoogleComponent';
 import { ProductReview } from '../components/reviewProduct/ReviewProduct';
 import { SubmitReview } from '../components/submitReview/SubmitReview';
+import { SliderComponent } from '../components/slider/Slider';
+import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
+
 //directives
 import { NextOnEnter} from '../directives/nextonenter';
 import { Headers} from '../directives/headers/headers';
@@ -68,6 +72,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         OrderlistPage,
         ChangepasswordPage,
         ForgotPage,
+        CategoryComponent,
         HomePage,
         CategoryProductPage,
         OrderModalPage,
@@ -78,6 +83,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         PopoverPage,
         NextOnEnter,
         Headers,
+        SliderComponent,
         SideMenu,
         ConvertCodeToName,
         GoogleComponent,
@@ -102,6 +108,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         ForgotPage,
         HomePage,
         CategoryProductPage,
+        CategoryComponent,
         MyEditAccountPage,
         MySavedAddressPage,
         LoginPage,
@@ -127,7 +134,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         MyAccount,
         EditAccount,
         SocialAccount,
-        OrderIdDetail]
+        OrderIdDetail,
+        ToastService]
 })
 export class AppModule {
 

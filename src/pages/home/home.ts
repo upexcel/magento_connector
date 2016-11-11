@@ -1,45 +1,25 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { NavController,Events} from 'ionic-angular';
-import { ProductPage } from '../product/product';
-import { Storage } from '@ionic/storage';
-import {config} from './../../providers/config/config';
+import { Events } from 'ionic-angular';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
-import { Slider } from '../../model/home/slider';
-import { SliderDataType } from './../../model/home/sliderDataType';
 import slice from 'lodash/slice';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
     homeProduct: HomeProductsDataType;
-    img: SliderDataType;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _events:Events,private _homeProductsConfig:HomeProducts,private _sliderConfig: Slider,private _local: Storage, private _navCtrl: NavController) { }
-    mySlideOptions = config.homePageSliderOptions;
-    ngOnInit() {
-        this.slider();
+    constructor(private _events:Events,private _homeProductsConfig:HomeProducts) { }
+   ngOnInit() {
         this.homeProducts();
     }
     ionViewDidEnter() {
        setTimeout( () => {  this._events.publish("title",{title:"Home",pagename:"home"}); } , 0);
       }
-    gotoProduct(product) {
-        this._navCtrl.push(ProductPage, {
-            id: product
-        });
-    }
 
-    slider() {
-        this._sliderConfig.getSlider().then((res) => {
-            if (res) {
-                this.img = res;
-            }
-        });
-    }
     homeProducts() {
         this.spin = true;
         let body = { "type": "large_data" }
@@ -85,7 +65,7 @@ export class HomePage implements OnInit {
 
     }
     doRefresh(refresher) {
-        this.slider();
+//        this.slider();
         this.homeProducts();
         setTimeout(() => {
             refresher.complete();
