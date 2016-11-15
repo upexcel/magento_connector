@@ -7,13 +7,13 @@ import {HomePage} from './../home/home';
 import {ForgotPage} from './../forgot/forgot';
 import { LoginDataType } from './loginDataType';
 import { Storage } from '@ionic/storage';
-import {Login} from '../../model/login/login';
+import { Login } from '../../model/login/login';
 @Component({
     templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit {
     logform: FormGroup;
-    spin: boolean;
+    login: boolean=false;
     response: string;
     website_id: any;
     show_form: boolean = false;
@@ -30,15 +30,15 @@ export class LoginPage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:"SignIn"}); } , 0)
+       setTimeout( () => {  this._events.publish("title",{title:"LOGIN"}); } , 0)
     }
     gotoreg() {
         this._navCtrl.push(RegisterPage);
     }
     signin(logvalue: any) {
-        this.spin = true;
+        this.login = true;
         this._login.getLogin(logvalue).then((res) => {
-            this.spin = false;
+            this.login = false;
             this.data=res;
             if (this.data.status === 1) {
                 this.data = res;

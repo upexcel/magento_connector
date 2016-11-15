@@ -12,18 +12,24 @@
         <ion-grid class="magTop60">
             <ion-row class="center" >
                 <ion-col class="center">
-                    <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">Login</button>
+                    <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">
+                            <span *ngIf="login==false" class="capitalize">
+                            Login
+                        </span>
+                        <ion-spinner *ngIf="login" class="spin">
+                        </ion-spinner>
+                    </button>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </form>
-    <p align="center" *ngIf="spin"><ion-spinner ></ion-spinner></p>
+
     <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
     <h5 align='center' class="marTop100">Don't have an account?</h5>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="primary" large  (click)="gotoreg()" >SIGN UP FOR FREE</button>
+                <button ion-button color="dark" large class="butt" (click)="gotoreg()" >SIGN UP FOR FREE</button>
             </ion-col>
         </ion-row>
     </ion-grid>

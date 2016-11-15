@@ -11,7 +11,7 @@ import { LoginDataType } from '../login/loginDataType';
 })
 export class RegisterPage implements OnInit {
     regForm: FormGroup;
-    spin: boolean;
+    spin: boolean=false;
     clear: boolean = false;
     data: LoginDataType;
     constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events, private _toastCtrl: ToastController) { }
@@ -28,7 +28,7 @@ export class RegisterPage implements OnInit {
         });
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:"Signup"}); } , 0)
+       setTimeout( () => {  this._events.publish("title",{title:"SIGN UP"}); } , 0)
     }
     signup(regvalue: any) {
         this.spin = true;
