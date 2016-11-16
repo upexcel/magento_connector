@@ -1,48 +1,5 @@
 <header></header>
 <ion-content  class="myaccount">
-<!-- <<<<<<< HEAD
-    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
-    <form [formGroup]="updateform" *ngIf="myaccount">
-        <ion-list inset class="padd60">
-            <ion-item>
-                <ion-label stacked>First Name <span color="danger">*</span></ion-label>
-                <ion-input formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Last Name <span color="danger">*</span></ion-label>
-                <ion-input formControlName="lastname" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>City <span color="danger">*</span></ion-label>
-                <ion-input formControlName="city" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Company</ion-label>
-                <ion-input  formControlName="company" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Fax</ion-label>
-                <ion-input  formControlName="fax" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Telephone <span color="danger">*</span></ion-label>
-                <ion-input  formControlName="telephone" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Address <span color="danger">*</span></ion-label>
-                <ion-input  formControlName="street" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
-                <ion-input  formControlName="zip" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Country <span color="danger">*</span></ion-label>
-                <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-        </ion-list>
-    </form>
-======= -->
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <form [formGroup]="updateform" *ngIf="myaccount">
             <ion-list inset id="pad57">
@@ -85,7 +42,6 @@
                 <button ion-button full  color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
             </ion-list>
         </form>
-<!-- >>>>>>> 12ccf5e8314e67c9c4e8b64496e169fa14ed7f92 -->
 </ion-content>
 <ion-footer>
     <button ion-button full class="add_address" color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>

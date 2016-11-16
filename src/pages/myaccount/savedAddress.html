@@ -1,12 +1,5 @@
 <header></header>
 <ion-content  class="myaccount">
-<!-- <<<<<<< HEAD
-    <ion-list *ngIf="showAddress==false">
-        <h2 text-center>You have no saved address</h2>
-        <button ion-button  full (click)="addNewAddress()">Add New Address</button>
-    </ion-list>
-    <ion-list *ngIf="showAddress">
-======= -->
   <ion-list *ngIf="showAddress==false" id="pad57">
     <h2 text-center>You have no saved address</h2>
     <button ion-button  full (click)="addNewAddress()">Add New Address</button>
@@ -34,10 +27,6 @@
                     </button>
                 </ion-col>
                 <ion-col text-right>
-<!-- <<<<<<< HEAD
-                    <button ion-button clear  color="primary" icon-left (click)="deleteAccount()">
-                            <ion-icon name='trash'></ion-icon>Delete
-======= -->
                     <button ion-button clear  color="primary" icon-left (click)="deleteAccount(address.entity_id)">
                         <ion-icon name='trash'></ion-icon>Delete
                     </button>
