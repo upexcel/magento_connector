@@ -41,6 +41,7 @@ import { SocialAccount } from '../model/startPage/socialAccount';
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
+import {ToastService} from '../providers/toast-service/toastService';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -133,7 +134,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         MyAccount,
         EditAccount,
         SocialAccount,
-        OrderIdDetail]
+        OrderIdDetail,
+        ToastService]
 })
 export class AppModule {
 

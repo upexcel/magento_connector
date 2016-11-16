@@ -14,4 +14,14 @@ export class MyAccount {
             });
         });
     }
+    deleteMyAddress(data){
+      let apiservice = this._apiService;
+        return new Promise(function(resolve, reject) {
+          apiservice.api("address/delete", data).subscribe((res) => {
+              resolve(res);
+          }, (err) => {
+              reject(err);
+          });
+      });
+    }
 }
