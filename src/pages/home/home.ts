@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Events } from 'ionic-angular';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
@@ -12,18 +12,18 @@ export class HomePage implements OnInit {
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _events:Events,private _homeProductsConfig:HomeProducts) { }
-   ngOnInit() {
+    constructor(private _events: Events, private _homeProductsConfig: HomeProducts) { }
+    ngOnInit() {
         this.homeProducts();
     }
     ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:"Home",pagename:"home"}); } , 0);
-      }
+        setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
+    }
 
     homeProducts() {
         this.spin = true;
         let body = { "type": "large_data" }
-         this._homeProductsConfig.getHomeProducts().then((res) => {
+        this._homeProductsConfig.getHomeProducts().then((res) => {
             if (res) {
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.data, this.start, this.end);
@@ -65,7 +65,6 @@ export class HomePage implements OnInit {
 
     }
     doRefresh(refresher) {
-//        this.slider();
         this.homeProducts();
         setTimeout(() => {
             refresher.complete();

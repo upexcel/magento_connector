@@ -1,17 +1,46 @@
 <ion-grid  *ngIf="product">
-    <ion-row wrap>  
-            <div class="column"  *ngFor="let feat_prod of product">
-                 <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
-                    <div class="imgBox">
-                        <img src="{{feat_prod.data.media_images[0]}}"/>
+
+    <div class="card1">   
+        <div class="rowForLandscape" wrap>
+            <div class="column cursorPointer"  *ngFor="let feat_prod of product" (click)="gotoProduct(feat_prod.data.sku)">
+                 <div class="cardForPortrait">
+                    <div class="row margin10"> 
+                        <div class="columnForGrid25">
+                            <div class="imgBox">
+                                <img src="{{feat_prod.data.media_images[0]}}"/>
+                            </div>
+                        </div>
+                        <div class="columnForGrid75">
+                            <ion-card-content class="margin10">
+                                <div class="row rowForLandscape">
+                                    <div class="columnForGrid100">
+                                        <div class="font013 capitalize cartTitle" >
+                                            {{feat_prod.data.name}}
+                                        </div>    
+                                    </div>
+                                </div>
+                                <div class="row rowForLandscape">
+                                    <div class="columnForGrid100">
+                                        <span  *ngIf="feat_prod.data.display_special_price >0" >{{feat_prod.data.currency}}{{feat_prod.data.display_special_price}}</span>
+                                        <span   [ngClass]="{'line': feat_prod.data.display_special_price >0}" >{{feat_prod.data.currency}}{{feat_prod.data.display_price}}</span>
+                                    </div>
+                                </div>
+                                <div class="row rowForLandscape" *ngIf="feat_prod.data.rating>0">
+                                    <div class="columnForGrid25 Grid50">
+                                        <button ion-button icon-left class="btnStar">
+                                            <ion-icon name="star"></ion-icon>
+                                            {{feat_prod.data.rating}}
+                                        </button>
+                                    </div>
+                                    <div class="columnForGrid75 Grid50 font12 marTop6  padTop5" *ngIf="feat_prod.data.total_review>0">
+                                        <span class="padTop6 lineHeight"> {{feat_prod.data.total_review}}&nbsp;Reviews</span>
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </div>   
                     </div>
-                    <ion-card-content >
-                        <ion-card-title class="font013 capitalize">
-                            {{feat_prod.data.name}}
-                        </ion-card-title>
-                        <p class="price">{{feat_prod.data.display_price}}</p>
-                    </ion-card-content>
-                </ion-card>
+                </div>
+            </div>
         </div>
-    </ion-row>
+    </div>
 </ion-grid>

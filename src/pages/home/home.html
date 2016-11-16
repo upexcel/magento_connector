@@ -11,27 +11,6 @@
         </ion-refresher-content>
     </ion-refresher>
     <get-slider></get-slider>
-
-    <!-- desktop display feature products -->
-<!--
-    <ion-grid showWhen="landscape" *ngIf="homeProduct">
-        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
-        <ion-row wrap>
-            <ion-col width-25 *ngFor="let feat_prod of feature_products">
-                     <ion-card (click)="gotoProduct(feat_prod.data.sku)" class="cursorPointer">
-                    <img src="{{feat_prod.data.media_images}}" class="imgLandscape"/>
-                    <ion-card-content>
-                        <ion-card-title class="aligncenter font14">
-                            {{feat_prod.data.name}}
-                        </ion-card-title>
-                        <p class="aligncenter">Price:{{feat_prod.data.display_price}}</p>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>-->
-
-    <!--  mobile display feature products -->
     <div *ngIf="homeProduct" >
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
         <category-view [product]="feature_products"></category-view>

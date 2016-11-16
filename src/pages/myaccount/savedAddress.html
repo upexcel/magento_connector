@@ -23,7 +23,7 @@
             <ion-row no-padding>
                 <ion-col>
                     <button ion-button clear  color="primary" icon-left (click)="editAccount(id,address.entity_id)">
-                        <ion-icon name='create'></ion-icon>Edit
+                            <ion-icon name='create'></ion-icon>Edit
                     </button>
                 </ion-col>
                 <ion-col text-right>
@@ -34,6 +34,9 @@
             </ion-row>
 
         </ion-card>
-        <button ion-button full class="add_address" (click)="addNewAddress()">Add New Address</button>
     </ion-list>
 </ion-content>
+<ion-footer>
+    <button ion-button full class="add_address" (click)="addNewAddress()">Add New Address</button>
+
+</ion-footer>

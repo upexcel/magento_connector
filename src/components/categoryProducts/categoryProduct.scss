@@ -1,48 +1,143 @@
 category-view{
-    .iconShow{
-        top: 0;
-        position: absolute;
+    @media screen and (orientation: portrait) {  
+        img{
+            max-height: 90px;
+        }
+        .cardForPortrait{
+            width: 100%; 
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 0px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+        }
+        .columnForGrid25{
+            -webkit-flex: 0 0 25%;
+            -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+        .columnForGrid75{
+            -webkit-flex: 0 0 75%;
+            -ms-flex: 0 0 75%;
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+        .columnForGrid100{
+            -webkit-flex: 0 0 100%;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;   
+        }
+        .row{
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            margin: 5px;
+        }
+        .imgBox{
+            margin: 10px; 
+        }
+        .margin10{
+            margin: 10px;
+        }
+        .marTop6{
+            margin-top: 6px !important;
+        }
+        .padTop6{
+            padding-top: 6px;
+        }
     }
-    ion-card img {
-        height: 100% !important;
-    }
-    .imgBox{
-        height: 150px;
-        width: 80%;
-        margin: 0px auto;
-    }
-    .card-md {
-        border-radius: 2px;
-        box-shadow: none !important; 
-        border: 1px solid $lightGray !important;
-    }
-    .card-ios {
-        border: 1px solid $lightGray !important;
-    }
-
-
-    .column {
-        -webkit-flex: 0 0 25%;
-        -ms-flex: 0 0 25%;
-        flex: 0 0 25%;
-        width: 165px;
-
-    }
-    .price{
-        text-align: right;
-        font-size: 11px !important;
-        color: $blue !important;
-        font-weight: 500;
-    }
-    .font013{
-        font-size: 13px !important;
-    }
-    @media only screen and (max-width: 600px) {
+    @media screen and (orientation: landscape) {
+        img{
+            max-width: 80%;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .iconShow{
+            top: 0;
+            position: absolute;
+        }
+        .card1 {
+            margin: 10px 0px 0px 0px ;
+            width: 100%; 
+            border-radius: 2px;
+            font-size: 1.4rem;
+            background: #fff;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0px 0px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0);
+        }
+        ion-card img {
+            height: 100% !important;
+        }
+        .imgBox{
+            height: 150px;
+            width: 100%;
+            margin: 0px auto;
+            overflow: hidden;
+        }
         .column {
-            -webkit-flex: 0 0 50%;
+            -webkit-flex: 0 0 25%;
+            -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+            width: 165px;
+            border:1px solid #EFEFEF;
+        }
+        .price{
+            text-align: right;
+            font-size: 11px !important;
+            color: $blue !important;
+            font-weight: 500;
+        }
+        .font013{
+            font-size: 13px !important;
+        }
+        .cartTitle{
+            display: block;
+            margin: 2px 0 2px;
+            padding: 8px 0 0px 0;
+            font-size: 1.8rem;
+            line-height: 1.2;
+            color: #222;
+        }
+        .rowForLandscape{
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            flex-wrap: wrap;
+            display: flex;
+            width: 100%;  
+            margin-bottom: 10px;
+        }
+        .margin10{
+            margin: 10px;
+        }
+        .Grid50{
+            -webkit-flex: 0 50%;
             -ms-flex: 0 0 50%;
             flex: 0 0 50%;
+            max-width: 50%;   
         }
+        .padTop5{
+            padding-top: 5px;
+        }
+        .lineHeight{
+            line-height: 1.55;
+        }
+        @media only screen and (max-width: 600px) {
+            .column {
+                -webkit-flex: 0 0 50%;
+                -ms-flex: 0 0 50%;
+                flex: 0 0 50%;
+            }
 
+        }
+    } 
+    .btnStar{
+        padding: 0px !important;
+        height: auto !important; 
+        font-size: 11px;
+        padding: 4px !important;
+    }
+    .fontWidth{
+        font-weight: bold;
     }
 }
