@@ -30,10 +30,9 @@ export class ForgotPage implements OnInit {
     }
     forgot(value: any) {
         this.spin = true;
-        let self = this;
         this._forgot.getForgot(value).then((res) => {
-            self.spin = false;
-            self.presentToast(res.message);
+            this.spin = false;
+            this.presentToast(res.message);
         })
             .catch(err => {
                 if (err.status === 500) {
