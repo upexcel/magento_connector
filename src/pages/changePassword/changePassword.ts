@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 import {PopoverPage} from './../../components/popover/popover';
 import { ChangePwd } from '../../model/changePassword/accountChangePwd';
 import { ChangePwdDataType } from './changePwdDataType';
+import {ToastService} from './../../providers/toast-service/toastService';
+
 @Component({
     templateUrl: 'changepassword.html'
 })
@@ -18,7 +20,7 @@ export class ChangepasswordPage implements OnInit {
     spin: boolean = false;
     secret: string;
     changeActive: boolean = false;
-    constructor(private _events:Events,private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _toastCtrl: ToastController, private _fb: FormBuilder, private _apiService: ApiService) { }
+    constructor(private _toast: ToastService,private _events:Events,private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -42,18 +44,11 @@ export class ChangepasswordPage implements OnInit {
         this._changePwd.getPwd(value).then((res) => {
             this.spin = false;
             this.response = res;
-            this.showToast(this.response.data);
+            this._toast.toast(this.response.data,3000,"top");
             this._navCtrl.setRoot(HomePage);
         })
     }
-    showToast(message: string) {
-        let toast = this._toastCtrl.create({
-            message: message,
-            duration: 2000,
-            position: 'top'
-        });
-        toast.present();
-    }
+
     doRefresh(refresher) {
         setTimeout(() => {
             refresher.complete();

@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, LoadingController, ToastController, Events} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Events} from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
 import { productDataType  } from './../product/productDataType';
 import { Product } from '../../model/product/getProduct';
 import { Cart } from '../../model/product/cart';
 import {  cartDataType } from './../product/cartDataType';
+import {ToastService} from './../../providers/toast-service/toastService';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -41,7 +42,7 @@ export class ProductPage implements OnInit {
     data: any;
     reviewData = [];
 
-    constructor(public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _toastCtrl: ToastController, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _toast: ToastService,public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -127,14 +128,6 @@ export class ProductPage implements OnInit {
         });
         loader.present();
     }
-    presentToast(message: string) {
-        let toast = this._toastCtrl.create({
-            message: message,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    }
     slideClick(img: string) {
         this.images = img;
     }
@@ -192,7 +185,7 @@ export class ProductPage implements OnInit {
                             this._cartService.addCart(other, this.keys).then((response: any) => {
                                 this.cartData = response;
                                 if (this.cartData.data != "undefined") {
-                                    this.presentToast("item inserted ");
+                                  this._toast.toast("item inserted " ,3000,"top");  
                                     this._navCtrl.push(CartPage);
                                 }
                                 else {
@@ -200,7 +193,7 @@ export class ProductPage implements OnInit {
                             });
                         }
                     }).catch((err) => {
-                        this.presentToast(err);
+                      this._toast.toast(err ,3000,"top"); 
                     })
                 });
             });

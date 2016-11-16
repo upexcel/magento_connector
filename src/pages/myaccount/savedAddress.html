@@ -17,7 +17,7 @@
                 <p>Fax: {{address.fax}}</p>
                 <p>Pin Code: {{address.postcode}}</p>
                 <p>Country: {{address.country_id}}</p>
-                <p>Telephone: {{address.teliphone}}</p>
+                <p>Telephone: {{address.telephone}}</p>
             </ion-card-content>
             <ion-row no-padding>
                 <ion-col>
@@ -26,8 +26,9 @@
                     </button>
                 </ion-col>
                 <ion-col text-right>
-                    <button ion-button clear  color="primary" icon-left (click)="deleteAccount()">
-                            <ion-icon name='trash'></ion-icon>Delete
+
+                    <button ion-button clear  color="primary" icon-left (click)="deleteAccount(address.entity_id)">
+                        <ion-icon name='trash'></ion-icon>Delete
                     </button>
                 </ion-col>
             </ion-row>

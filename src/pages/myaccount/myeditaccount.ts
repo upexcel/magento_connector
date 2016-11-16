@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController, ToastController, NavParams,Events} from 'ionic-angular';
+import { NavController, PopoverController, NavParams,Events} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
 import {FormBuilder } from '@angular/forms';
 import {StartPage} from './../../pages/startpage/startpage';
@@ -10,6 +10,7 @@ import {EditAccount} from './../../model/myaccount/editAccount';
 import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
 import {EditAccountDataType} from './../../model/myaccount/editAccountData';
 import {MySavedAddressPage} from './savedAddress';
+import {ToastService} from './../../providers/toast-service/toastService';
 @Component({
     templateUrl: 'myeditaccount.html'
 })
@@ -22,7 +23,8 @@ export class MyEditAccountPage implements OnInit {
     title: string;
     id: any;
     entity_id:any;
-    constructor(private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _toastCtrl: ToastController, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    message:string;
+    constructor(private _toast:ToastService,private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -84,26 +86,15 @@ export class MyEditAccountPage implements OnInit {
         this._editaccount.updateAccount(value).then((res) => {
             this.upd_spin = false;
             this.editaccount = res;
-                console.log(this.editaccount);
-            if (this.editaccount.status === 0) {
-                this.presentUpdateToast(this.editaccount.message);
-            } else {
-                this.presentUpdateToast("Successfully updated");
-                this._events.publish('savedaddress');
+            if (this.editaccount.status === 1) {
+                  this._events.publish('api:savedaddress',true);
                   this._navCtrl.pop();
+            } else {
+            this._toast.toast(JSON.parse(this.editaccount.message).error,3000,"top");
             }
-
         })
             .catch(err => {
             });
-    }
-    presentUpdateToast(message) {
-      let toast = this._toastCtrl.create({
-              message: message,
-              position:'top',
-              duration: 3000
-            });
-            toast.present();
     }
     presentPopover(myEvent: any) {
         let popover = this._popoverCtrl.create(PopoverPage);
