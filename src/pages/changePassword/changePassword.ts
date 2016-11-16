@@ -1,4 +1,3 @@
-
 import { Component, OnInit} from '@angular/core';
 import { NavController, ToastController, PopoverController,Events } from 'ionic-angular';
 import {HomePage} from './../home/home'
