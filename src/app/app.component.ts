@@ -24,7 +24,7 @@ export class MyApp implements OnInit{
                     this._rootPage =StartPage;
             }
             else{
-              this._rootPage =HomePage;
+              this._rootPage =StartPage;
             }
       })
     }
