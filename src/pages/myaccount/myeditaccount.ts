@@ -82,16 +82,15 @@ export class MyEditAccountPage implements OnInit {
             })
     }
     update(value: any) {
-      let self=this;
-        self.upd_spin = true;
+        this.upd_spin = true;
         this._editaccount.updateAccount(value).then((res) => {
-            self.upd_spin = false;
-            self.editaccount = res;
-            if (self.editaccount.status === 1) {
-                  self._events.publish('api:savedaddress',true);
-                  self._navCtrl.pop();
+            this.upd_spin = false;
+            this.editaccount = res;
+            if (this.editaccount.status === 1) {
+                  this._events.publish('api:savedaddress',true);
+                  this._navCtrl.pop();
             } else {
-            self._toast.toast(JSON.parse(self.editaccount.message).error,3000,"top");
+            this._toast.toast(JSON.parse(this.editaccount.message).error,3000,"top");
             }
         })
             .catch(err => {

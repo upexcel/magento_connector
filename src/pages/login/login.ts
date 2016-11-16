@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
                 this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
-                this._toast.toast(res.message,3000,"bottom");
+                this._toast.toast(res.message,3000,"top");
             }
         })
         .catch(err=>{
