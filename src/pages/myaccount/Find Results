@@ -1,0 +1,89 @@
+Searching 147 files for "console.log"
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/directives/headers/headers.ts:
+   26        this.title=title[0].title;
+   27        this.pagename=title[0].pagename;
+
+   30      });
+   31      this.access_token=this._navParams.get("access_token");
+   ..
+   39    }
+   40    openMenu() {
+   41:     console.log("open");
+   42:     console.log(this._menuCtrl.isOpen());
+   43        this._menuCtrl.toggle();
+   44    }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/index.html:
+   16      if ('serviceWorker' in navigator) {
+   17        navigator.serviceWorker.register('service-worker.js')
+   18:         .then(() => console.log('service worker installed'))
+   19:         .catch(err => console.log('Error', err));
+   20      }
+   21    </script>-->
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/myaccount/savedAddress.ts:
+   84        })
+   85        .catch((err)=>{
+   87        })
+   88      }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/takeTour/tour.ts:
+   22          this._appConfig.getAppConfig().then((res) => {
+   23              this.data = res;
+   26          });
+   27      }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/providers/toast-service/toastService.ts:
+   13              });
+   14          } else {
+   15:           console.log("please run on a device");
+   16          }
+   17      }
+
+10 matches across 5 files
+
+
+Searching 147 files for "console.log"
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/directives/headers/headers.ts:
+   26        this.title=title[0].title;
+   27        this.pagename=title[0].pagename;
+   30      });
+   31      this.access_token=this._navParams.get("access_token");
+   ..
+   39    }
+   40    openMenu() {
+   42:     console.log(this._menuCtrl.isOpen());
+   43        this._menuCtrl.toggle();
+   44    }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/index.html:
+   16      if ('serviceWorker' in navigator) {
+   17        navigator.serviceWorker.register('service-worker.js')
+   18:         .then(() => console.log('service worker installed'))
+   19:         .catch(err => console.log('Error', err));
+   20      }
+   21    </script>-->
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/myaccount/savedAddress.ts:
+   84        })
+   85        .catch((err)=>{
+   8
+   87        })
+   88      }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/pages/takeTour/tour.ts:
+   22          this._appConfig.getAppConfig().then((res) => {
+   23              this.data = res;
+   26          });
+   27      }
+
+/var/www/html/backupInvisionIonic/ionic_invision-master/src/providers/toast-service/toastService.ts:
+   13              });
+   14          } else {
+   15:           console.log("please run on a device");
+   16          }
+   17      }
+
+10 matches across 5 files

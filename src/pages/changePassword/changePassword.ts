@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, ToastController, PopoverController,Events } from 'ionic-angular';
+import { NavController, PopoverController,Events } from 'ionic-angular';
 import {HomePage} from './../home/home'
 import {ApiService} from './../../providers/api-service/api-service'
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
