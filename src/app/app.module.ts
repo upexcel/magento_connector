@@ -42,6 +42,7 @@ import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import {ToastService} from '../providers/toast-service/toastService';
+import {LogoutService} from '../providers/logout/logout-service';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -135,7 +136,9 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         EditAccount,
         SocialAccount,
         OrderIdDetail,
-        ToastService]
+        ToastService,
+        LogoutService,
+        NavController]
 })
 export class AppModule {
 

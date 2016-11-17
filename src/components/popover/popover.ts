@@ -4,12 +4,14 @@ import {StartPage} from './../../pages/startpage/startpage';
 import {MySavedAddressPage} from './../../pages/myaccount/savedAddress';
 import {ChangepasswordPage} from './../../pages/changePassword/changePassword';
 import {OrderlistPage} from './../../pages/orderList/orderList';
+import {LogoutService} from './../../providers/logout/logout-service';
 import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
-    constructor(private _local: Storage, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+    msg:string="";
+    constructor(private _logout:LogoutService,private _local: Storage, private _viewCtrl: ViewController, private _navCtrl: NavController) {
     }
     close() {
         this._viewCtrl.dismiss();
@@ -26,10 +28,8 @@ export class PopoverPage {
         this._navCtrl.push(OrderlistPage);
           this.close();
     }
-    logout() {
-        this._local.clear().then(() => {
-            this._navCtrl.push(StartPage);
-        });
+    logout() {      
+        this._logout.logout(this.msg);                  
           this.close();
     }
 }
