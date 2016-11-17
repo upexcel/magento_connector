@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { Events, NavController } from 'ionic-angular';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
@@ -12,9 +12,11 @@ export class HomePage implements OnInit {
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _events: Events, private _homeProductsConfig: HomeProducts) { }
+    backPressed: boolean = false;
+    constructor(private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController) { }
     ngOnInit() {
         this.homeProducts();
+        this.registerBackButtonListener();
     }
     ionViewDidEnter() {
         setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
@@ -69,5 +71,20 @@ export class HomePage implements OnInit {
         setTimeout(() => {
             refresher.complete();
         }, 2000);
+    }
+    registerBackButtonListener() {
+        console.log(this._navCtrl.parent);
+        document.addEventListener('backbutton', () => {
+                if(!this._navCtrl.parent){
+                    if(!this.backPressed) {
+                        this.backPressed = true;
+                        console.log('back')
+                        setTimeout(() => this.backPressed = false, 2000)
+                        return;
+                    } else{
+                        navigator.app.exitApp()
+                    }
+                }
+        });
     }
 }
