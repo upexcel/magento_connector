@@ -50,7 +50,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <p class="font13 padLeft10 capitalize">{{productData.data.data.short_description}}</p>
+                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.data.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               

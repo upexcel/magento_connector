@@ -1,4 +1,4 @@
-import {Component,AfterContentInit} from '@angular/core';
+import {Component,AfterContentInit,Input} from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams,Events} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {LoginPage} from '../../pages/login/login';
@@ -11,15 +11,22 @@ import { CartPage } from '../../pages/cart/cart';
 })
 
 export class Headers implements AfterContentInit{
+
   showPopOver:boolean=false;
   access_token:string;
   title:string;
   pagename:string;
-  constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){  }
+  constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ 
+  if(this.title=="LOGIN"){
+  this.showPopOver=false;
+  }
+   }
   ngAfterContentInit(){
     this._events.subscribe('title', (title) => {
       this.title=title[0].title;
       this.pagename=title[0].pagename;
+      console.log(this.title);
+      console.log( this.pagename);
     });
     this.access_token=this._navParams.get("access_token");
     this._local.get("access_token").then((access_token)=>{
