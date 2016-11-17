@@ -8,7 +8,7 @@ export class ToastService {
     }
     toast(message?:string, duration?:any, position?:string) {
         if (this.platform.is('cordova')) {
-          Toast.show(message, duration, position).subscribe(
+          Toast.show(message, duration, 'bottom').subscribe(
             toast => {
             });
         } else {
