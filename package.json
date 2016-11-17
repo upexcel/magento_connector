@@ -26,6 +26,7 @@
     "@ionic/app-scripts": "latest",
     "@types/lodash": "4.14.36",
     "@types/node": "^6.0.45",
+    "ionic-native": "^2.2.6",
     "tslint": "^3.15.1",
     "typescript": "^2.0.3"
   },
