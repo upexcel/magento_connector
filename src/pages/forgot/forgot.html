@@ -1,17 +1,13 @@
 <header></header>
-<ion-content padding class="forgot">
+<ion-content  class="forgot">
     <form [formGroup]="forgotform" *ngIf="show_form">
         <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input type="text"  formControlName="email" autocorrect autocomplete clearInput></ion-input>
         </ion-item>
-        <ion-grid class="magTop60">
-            <ion-row center >
-                <ion-col class="center">
-                    <button ion-button type="submit"  color="primary" round  [disabled]="!forgotform.valid" (click)="forgot(forgotform.value)">Forgot Password</button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                <button ion-button type="submit" full color="primary" class="botton buttForgotPwd"  (click)="forgot(forgotform.value)" [disabled]="!forgotform.valid">
+            <span *ngIf="spin==false">Forgot Password</span>
+            <ion-spinner *ngIf="spin" class="spin" ></ion-spinner>
+        </button>
     </form>
-    <p align="center" *ngIf="spin"><ion-spinner ></ion-spinner></p>
 </ion-content>

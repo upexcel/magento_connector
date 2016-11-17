@@ -83,7 +83,6 @@ export class MySavedAddressPage implements OnInit {
         this.getInitAdd();
       })
       .catch((err)=>{
-        console.log(err);
       })
     }
     logout() {

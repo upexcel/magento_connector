@@ -10,7 +10,7 @@
             <button  ion-button icon-only (click)="presentPopover($event)" *ngIf="showPopOver">
                      <ion-icon name="more"></ion-icon>
             </button>
-            <button  ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false">
+            <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false">
                      <ion-icon name="contact"></ion-icon>
             </button>
             <button ion-button icon-only *ngIf="pagename=='product'" (click)="gotoCart()">

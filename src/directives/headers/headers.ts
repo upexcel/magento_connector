@@ -25,8 +25,6 @@ export class Headers implements AfterContentInit{
     this._events.subscribe('title', (title) => {
       this.title=title[0].title;
       this.pagename=title[0].pagename;
-      console.log(this.title);
-      console.log( this.pagename);
     });
     this.access_token=this._navParams.get("access_token");
     this._local.get("access_token").then((access_token)=>{
@@ -38,7 +36,6 @@ export class Headers implements AfterContentInit{
     })
   }
   openMenu() {
-    console.log("open");
     console.log(this._menuCtrl.isOpen());
       this._menuCtrl.toggle();
   }
