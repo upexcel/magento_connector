@@ -21,6 +21,8 @@ export class TourPage implements OnInit {
     ngOnInit() {
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
+            console.log(this.data.data.tour_logo);
+            console.log(this.data.data.tour_logo);
         });
     }
     close() {

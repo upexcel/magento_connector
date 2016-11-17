@@ -12,7 +12,13 @@
         <ion-grid class="magTop60">
             <ion-row class="center" >
                 <ion-col class="center">
-                    <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)"> <span *ngIf="login==false" class="capitalize">Login</span><ion-spinner *ngIf="login" class="spin"   ></ion-spinner></button>
+                    <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">
+                            <span *ngIf="login==false" class="capitalize">
+                            Login
+                        </span>
+                        <ion-spinner *ngIf="login" class="spin">
+                        </ion-spinner>
+                    </button>
                 </ion-col>
             </ion-row>
         </ion-grid>

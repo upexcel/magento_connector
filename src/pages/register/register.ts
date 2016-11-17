@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController,ToastController,Events } from 'ionic-angular';
+import { NavController,Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
 import { Register } from '../../model/register/register';
 import {Login} from '../../model/login/login';
 import { LoginDataType } from '../login/loginDataType';
+import {ToastService} from './../../providers/toast-service/toastService';
 @Component({
     templateUrl: 'register.html'
 })
@@ -14,7 +15,7 @@ export class RegisterPage implements OnInit {
     spin: boolean=false;
     clear: boolean = false;
     data: LoginDataType;
-    constructor(private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events, private _toastCtrl: ToastController) { }
+    constructor(private _toast:ToastService,private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -37,7 +38,7 @@ export class RegisterPage implements OnInit {
             if (res.status == 1) {
                 this.signin(regvalue);
             } else {
-                this.presentToast(res.message);
+                this._toast.toast(res.message,3000,"top");
             }
         }
         );
@@ -58,13 +59,5 @@ export class RegisterPage implements OnInit {
                 this._navCtrl.setRoot(HomePage);
             }
         });
-    }
-    presentToast(message: string) {
-        let toast = this._toastCtrl.create({
-            message: message,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
     }
 }

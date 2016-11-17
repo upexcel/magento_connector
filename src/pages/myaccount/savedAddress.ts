@@ -79,7 +79,7 @@ export class MySavedAddressPage implements OnInit {
       let self=this;
       let data={entity_id:entity_id,secret:this.secret};
       this._myaccount.deleteMyAddress(data).then((res)=>{
-        this._toast.toast("Deleted",3000,"bottom");
+        this._toast.toast("Deleted",3000,"top");
         this.getInitAdd();
       })
       .catch((err)=>{
