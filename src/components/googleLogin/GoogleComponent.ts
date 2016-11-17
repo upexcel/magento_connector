@@ -19,7 +19,7 @@ export class GoogleComponent {
         this._socialProvider.googleLogin().then((res) => {
             this.google_data = res;
             this._local.get('website_id').then((website_id: string) => {
-                let body = { data: { website_id: website_id,firstname: this.google_data.givenName, lastname: this.google_data.familyName, email: this.google_data.email, picture: this.google_data.imageUrl,social:"google" }, token: { accessToken: this.google_data.accessToken } };
+                let body = { website_id: website_id,firstname: this.google_data.givenName, lastname: this.google_data.familyName, email: this.google_data.email, picture: this.google_data.imageUrl,social:"google", social_id: this.google_data.idToken, token: { accessToken: this.google_data.serverAuthCode } };
                 self.usergoogleLogin.emit(body);
             });
         })
