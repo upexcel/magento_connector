@@ -6,7 +6,7 @@ export class ToastService {
     constructor(private platform:Platform) {
       this.platform=platform;
     }
-    toast(message?:string, duration?:any, position?:string='bottom') {
+    toast(message?:string, duration?:any, position:string='bottom') {
         if (this.platform.is('cordova')) {
           Toast.show(message, duration, position).subscribe(
             toast => {

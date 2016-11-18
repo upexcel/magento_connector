@@ -40,8 +40,8 @@
                     <ion-label stacked>Country <span color="danger">*</span></ion-label>
                     <ion-input formControlName="countryid" autocorrect autocomplete clearInput></ion-input>
                 </ion-item>
-                <button ion-button full  color="primary" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
             </ion-list>
+            <button ion-button full  color="primary" class="saveAddress botton" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
         </form>
 </ion-content>
 <ion-footer>
