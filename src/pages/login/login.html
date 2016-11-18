@@ -1,13 +1,13 @@
 <header></header>
 <ion-content class="login" *ngIf="show_form">
-    <form  [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+    <form onReturn [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <ion-item >
+            <ion-label  floating>Email</ion-label>
+            <ion-input  onReturn type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
         </ion-item>
         <ion-item >
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password" formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-label  floating>Password</ion-label>
+            <ion-input  onReturn type="password" formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
         </ion-item>
         <ion-grid class="magTop60">
             <ion-row class="center" >
@@ -23,7 +23,6 @@
             </ion-row>
         </ion-grid>
     </form>
-
     <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
     <h5 align='center' class="marTop100">Don't have an account?</h5>
     <ion-grid >
@@ -33,13 +32,4 @@
             </ion-col>
         </ion-row>
     </ion-grid> 
-    <form onReturn>
-        <label>sjmglm</label>
-<input type ="text">
-<label>sfgsd</label><input type ="text">
-<label>edshbvyd</label><input type ="text">
-<label>mlnfglm</label><input type ="text"><input type="submit">
-    </form>
-    
-
 </ion-content>

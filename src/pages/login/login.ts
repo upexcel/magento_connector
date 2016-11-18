@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
     website_id: any;
     show_form: boolean = false;
     data: LoginDataType;
+    email1:any;
     constructor(private _toast:ToastService, private _events:Events,private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
@@ -37,6 +38,7 @@ export class LoginPage implements OnInit {
     }
     signin(logvalue: any) {
         this.login = true;
+        this.email1=logvalue.email;
         this._login.getLogin(logvalue).then((res) => {
             this.login = false;
             this.data=res;
@@ -59,7 +61,7 @@ export class LoginPage implements OnInit {
         })
     }
     gotoforgotPage() {
-        this._navCtrl.push(ForgotPage);
+        this._navCtrl.push(ForgotPage,{email:this.email1});
     }
     showLoginError(error) {
         let alert = this._alertCtrl.create({
