@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import {GooglePlus} from 'ionic-native';
 import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
 import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
+import {LogoutService} from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
 import uniq from 'lodash/uniq';
 import flattenDeep from 'lodash/flattenDeep';
@@ -37,7 +38,8 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    constructor(private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    message:string="Token expired";
+    constructor(private _logout:LogoutService, private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._local.get('secret').then((value: any) => {
             this.secret = value;
@@ -145,14 +147,6 @@ export class OrderlistPage implements OnInit {
         this._navCtrl.pop();
     }
     logout() {
-        this._local.remove('firstname');
-        this._local.remove('lastname');
-        this._local.remove('expiry');
-        this._local.remove('access_token');
-        this._local.remove('lists');
-        this._local.remove('email');
-        this._local.remove('secret');
-        GooglePlus.logout();
-        this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
+     this._logout.logout(this.message,this._navCtrl);
     }
 }
