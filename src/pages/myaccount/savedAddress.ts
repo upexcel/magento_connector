@@ -88,6 +88,6 @@ export class MySavedAddressPage implements OnInit {
       })
     }
     logout() {
-        this._logout.logout(this.message); 
+      this._logout.logout(this.message,this._navCtrl);
     }
 }

@@ -1,6 +1,6 @@
 <header></header>
 <ion-content class="login" *ngIf="show_form">
-    <form [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <form  [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
@@ -29,8 +29,17 @@
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="dark" large class="butt" (click)="gotoreg()" >SIGN UP FOR FREE</button>
+                <button ion-button color="dark" large class="butt" id="singup"(click)="gotoreg()" >SIGN UP FOR FREE</button>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid> 
+    <form onReturn>
+        <label>sjmglm</label>
+<input type ="text">
+<label>sfgsd</label><input type ="text">
+<label>edshbvyd</label><input type ="text">
+<label>mlnfglm</label><input type ="text"><input type="submit">
+    </form>
+    
+
 </ion-content>

@@ -16,9 +16,8 @@ import {
 @Injectable()
 
 export class LogoutService {
-    constructor(private _local: Storage, private _navCtrl: NavController) {}
-    logout(msg) {
-        let self = this;
+    constructor(private _local: Storage) {}
+    logout(msg,_navCtrl) {
         this._local.remove('firstname').then(() => {
             this._local.remove('lastname').then(() => {
                 this._local.remove('expiry').then(() => {
@@ -30,8 +29,7 @@ export class LogoutService {
                                         this._local.remove('homeProducts').then(() => {
                                             this._local.remove('slider').then(() => {
                                                 this._local.remove('web_config').then(() => {
-                                                    GooglePlus.logout();
-                                                    self._navCtrl.setRoot(StartPage, {
+                                                        _navCtrl.setRoot(StartPage, {
                                                         "message": msg
                                                     });
                                                 });
@@ -46,3 +44,4 @@ export class LogoutService {
             });
         });
     }
+}

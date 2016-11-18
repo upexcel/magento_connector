@@ -147,6 +147,6 @@ export class OrderlistPage implements OnInit {
         this._navCtrl.pop();
     }
     logout() {
-        this._logout.logout(this.message);
+     this._logout.logout(this.message,this._navCtrl);
     }
 }

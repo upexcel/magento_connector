@@ -29,7 +29,7 @@ export class PopoverPage {
           this.close();
     }
     logout() {      
-        this._logout.logout(this.msg);                  
+        this._logout.logout(this.msg,this._navCtrl);                  
           this.close();
     }
 }

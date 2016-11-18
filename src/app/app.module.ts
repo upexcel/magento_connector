@@ -55,9 +55,10 @@ import { SliderComponent } from '../components/slider/Slider';
 import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
 
 //directives
-import { NextOnEnter} from '../directives/nextonenter';
+import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
+
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -82,7 +83,6 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         LoginPage,
         LoadingModal,
         PopoverPage,
-        NextOnEnter,
         Headers,
         SliderComponent,
         SideMenu,
@@ -90,7 +90,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         GoogleComponent,
         FacebookComponent,
         ProductReview,
-        SubmitReview
+        SubmitReview,
+        FocusByEnterKey
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -138,7 +139,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         OrderIdDetail,
         ToastService,
         LogoutService,
-        NavController]
+        NavController ]
 })
 export class AppModule {
 
