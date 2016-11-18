@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Events } from 'ionic-angular';
+import {Platform} from 'ionic-angular';
+import { Events, NavController, ViewController } from 'ionic-angular';
 import {HomeProductsDataType  } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
+import {ToastService} from './../../providers/toast-service/toastService';
 @Component({
     templateUrl: 'home.html'
 })
@@ -12,9 +14,11 @@ export class HomePage implements OnInit {
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    constructor(private _events: Events, private _homeProductsConfig: HomeProducts) { }
+    backPressed: boolean = false;
+    constructor(private _toast:ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) { }
     ngOnInit() {
         this.homeProducts();
+        this.checkBackButton();
     }
     ionViewDidEnter() {
         setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
@@ -30,6 +34,22 @@ export class HomePage implements OnInit {
                 this.spin = false;
             }
         })
+    }
+    checkBackButton() {
+        this._platform.registerBackButtonAction(()=> {
+                if(this._viewController.isLast() && this._viewController.isFirst()){
+                    if(!this.backPressed) {
+                        this.backPressed = true;
+                        this._toast.toast('Press Again For Exit App',3000,"top");
+                        setTimeout(() => this.backPressed = false, 2000);
+                        return;
+                    } else{
+                        navigator.app.exitApp()
+                    }
+                } else{
+                    this._navCtrl.pop();
+                }
+            }, 100);
     }
     doInfinite(infiniteScroll) {
         if (this.homeProduct.data.length % 2 == 0) {

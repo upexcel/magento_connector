@@ -1,20 +1,6 @@
 <header></header>
 <ion-content class="orderlist" scroll="true">
-    <ion-list no-lines class="avt">
-        <ion-item>
-           <ion-avatar item-left>
-                <img src="../../assets/image/grey.jpg">
-            </ion-avatar>
-            <h1 text-capitalize>{{firstname + " " + lastname}}</h1>
-        </ion-item>
-    </ion-list>
     <ion-spinner *ngIf="spin"></ion-spinner>
-    <ion-grid class="seg">
-        <ion-row  *ngIf="totalOrder">
-            <ion-col id="total_orders">TOTAL ORDERS <h6>{{totalOrder.data.total_order}}</h6></ion-col>
-            <ion-col>TOTAL AMOUNT<h6> &#8377;{{totalOrder.data.total_amount}}</h6></ion-col>
-        </ion-row>
-    </ion-grid>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
     <ion-list no-lines *ngFor="let date of dates">
               <ion-list-header>{{date| date: 'dd/MM/yyyy'}}</ion-list-header>
