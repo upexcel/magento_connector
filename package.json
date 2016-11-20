@@ -1,7 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "excellence-magento-mobile",
+  "author": "Excellence Technologies",
+  "homepage": "http://excellencetechnologies.in/",
   "private": true,
   "scripts": {
     "build": "ionic-app-scripts build",
@@ -39,5 +39,5 @@
     "cordova-plugin-splashscreen"
   ],
   "cordovaPlatforms": [],
-  "description": "myionic_invesion: An Ionic project"
+  "description": "Excellence Technologies prototype project"
 }
