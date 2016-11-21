@@ -21,8 +21,8 @@ export class OrderModalPage implements OnInit {
     constructor(private _events:Events,private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-        this._local.get('secret').then((value: any) => {
-            this.getOrderDetails(this.order_id, value);
+        this._local.get('userData').then((userData: any) => {
+            this.getOrderDetails(this.order_id, userData.secret);
         });
     }
     ionViewDidEnter() {

@@ -33,12 +33,10 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
-        this._local.get("access_token").then((access_token) => {
-            if (access_token != null) {
-                this._local.get('firstname').then((firstname) => {
-                    this.reviewDataNickname = firstname;
-                    this.hideByLogin = false;
-                })
+        this._local.get("userData").then((userData) => {
+            if (userData.access_token != null) {
+                this.reviewDataNickname = userData.firstname;
+                this.hideByLogin = false;
             } else {
                 this.reviewDataNickname = "";
             }

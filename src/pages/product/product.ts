@@ -147,8 +147,7 @@ export class ProductPage implements OnInit {
         let type: string = this.productData.data.data.type;
         let other;
         let productid: string = this.productData.data.data.entity_id;
-        this._local.get('access_token').then((access_token: any) => {
-            this._local.get('secret').then((secret) => {
+        this._local.get('userData').then((userData: any) => {
                 this._local.get('store_id').then((store_id: any) => {
                     data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
                     other = data;
@@ -158,7 +157,7 @@ export class ProductPage implements OnInit {
                             array[key] = listdata.id;
                         });
                         selectedItem = (array);
-                        path = { "productid": productid, "options": selectedItem, "access_token": access_token, "secret": secret, "store_id": store_id };
+                        path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                         other = merge(data, selectedItem);
                         let ser = this.productData.data.associated_products.attributes;
                         this._local.get('search').then((search: any) => {
@@ -175,7 +174,7 @@ export class ProductPage implements OnInit {
                         });
                     }
                     else {
-                        path = { "productid": productid, "access_token": access_token, "secret": secret, "store_id": store_id };
+                        path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                     }
 
                     //cart api
@@ -196,7 +195,6 @@ export class ProductPage implements OnInit {
                       this._toast.toast(err ,3000,"top"); 
                     })
                 });
-            });
         });
     }
 }

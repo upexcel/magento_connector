@@ -30,13 +30,11 @@ export class MyEditAccountPage implements OnInit {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
         this.entity_id=this._navParams.get("entity_id");
-        this._local.get('secret').then((secret: any) => {
-            this._local.get('access_token').then((access_token: any) => {
-                if (access_token != null) {
-                    this.getuser_details(this.id, this.entity_id, secret);
-                } else {
-                }
-            });
+        this._local.get('userData').then((userData: any) => {
+          if (userData.access_token != null) {
+              this.getuser_details(this.id, this.entity_id, userData.secret);
+          } else {
+          }
         });
     }
     ionViewDidEnter() {

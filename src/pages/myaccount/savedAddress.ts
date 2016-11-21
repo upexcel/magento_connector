@@ -28,15 +28,13 @@ export class MySavedAddressPage implements OnInit {
       this.getInitAdd();
     }
     getInitAdd(){
-        this._local.get('access_token').then((access_token: any) => {
-                this._local.get('secret').then((secret: any) => {
-                    if (access_token != null) {
-                        this.getuser_details(secret);
-                        this.secret=secret;
-                    } else {
-                      this._navCtrl.push(LoginPage);
-                    }
-            });
+        this._local.get('userData').then((userData: any) => {
+            if (userData.access_token != null) {
+                this.getuser_details(userData.secret);
+                this.secret = userData.secret;
+            } else {
+              this._navCtrl.push(LoginPage);
+            }
         })
         .catch((err)=>{
         })

@@ -16,15 +16,14 @@ export class ForgotPage implements OnInit {
     show_form: boolean = false;
     btnShow:boolean=true;
     email:string;
-    constructor(  private _navparam: NavParams,private _navCtrl: NavController, private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) { 
+    constructor( private _navparam: NavParams,private _navCtrl: NavController, private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) { 
         this.email=this._navparam.get("email");
-            }
+    }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
             this.fb_coll(value);
         });
-        console.log(this.email);
     }
     ionViewDidEnter() {
        setTimeout( () => {  this._events.publish("title",{title:"Forgot Password"}); } , 0)
@@ -40,15 +39,14 @@ export class ForgotPage implements OnInit {
         this._forgot.getForgot(value).then((res) => {
             this.spin = false;
             if(res.message=="success"){
-            this.btnShow=false;
-            this._toast.toast("Check your inbox to retrieve your password!",3000,"top");
+                this.btnShow=false;
+                this._toast.toast("Check your inbox to retrieve your password!",3000,"top");
             }
             this._toast.toast(res.message,3000,"top");
-        })
-            .catch(err => {
+        }).catch(err => {
                 if (err.status === 500) {
                 }
-            });
+        });
     }
 }
 
