@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 //storage
 import { Storage } from '@ionic/storage';
@@ -58,7 +58,7 @@ import { CategoryComponent } from '../components/categoryProducts/CategoryProduc
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
-
+import { EqualValidator } from '../directives/equal-validator/equalValidator';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -91,7 +91,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         FacebookComponent,
         ProductReview,
         SubmitReview,
-        FocusByEnterKey
+        FocusByEnterKey,
+        EqualValidator
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -138,8 +139,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SocialAccount,
         OrderIdDetail,
         ToastService,
-        LogoutService,
-        NavController ]
+        LogoutService
+         ]
 })
 export class AppModule {
 

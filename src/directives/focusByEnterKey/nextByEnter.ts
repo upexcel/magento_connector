@@ -17,11 +17,9 @@ export class FocusByEnterKey {
            console.log(this.returnValue);
            if (e.srcElement.nextElementSibling) {
             e.srcElement.nextElementSibling.focus();
-            e.srcElement.nextElementSibling.focus();
             //console.log(e.srcElement);
             console.log(e.srcElement.nextElementSibling);
-            if(el.lastElementChild)
-           }
+            }
            else{
                console.log('close keyboard');
            }
@@ -38,8 +36,6 @@ export class FocusByEnterKey {
 //            }
 //            return;
 //        }
-
-
 
    }
 

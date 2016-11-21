@@ -50,7 +50,9 @@ export class SubmitReview implements OnInit {
     onSelectRatting(rating, title) {
         this.selectedRating = rating;
     }
+
     submitReview() {
+     var num:any=1;
         let reviweDataJson = {};
         let selectedRating = {};
         let self = this;
@@ -63,8 +65,10 @@ export class SubmitReview implements OnInit {
         forEach(reviweDataJson, function(ratingValue, ratingKey) {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
-                    forEach(optionValue, function(Value, key) {
-                        if (key == ratingValue - 1) {
+                    forEach(optionValue, function(Value:any, key:any) {
+                    let datas:any=ratingValue - num;
+                    console.log(ratingValue,datas,key);
+                        if (key === datas) {
                             finalSelectRating.push({
                                 value: Value,
                                 key: ratingKey
