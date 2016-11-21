@@ -16,15 +16,17 @@ export class Headers implements AfterContentInit{
   access_token:string;
   title:string;
   pagename:string;
-  constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ 
-  if(this.title=="LOGIN"){
-  this.showPopOver=false;
-  }
-   }
+  showLogin:boolean;
+  constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ }
   ngAfterContentInit(){
     this._events.subscribe('title', (title) => {
       this.title=title[0].title;
       this.pagename=title[0].pagename;
+      if(this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders'){
+        this.showLogin = false;
+      } else{
+        this.showLogin = true;
+      }
     });
     this.access_token=this._navParams.get("access_token");
     this._local.get("access_token").then((access_token)=>{

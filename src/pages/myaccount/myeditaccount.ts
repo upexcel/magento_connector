@@ -10,6 +10,7 @@ import {EditAccount} from './../../model/myaccount/editAccount';
 import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
 import {EditAccountDataType} from './../../model/myaccount/editAccountData';
 import {MySavedAddressPage} from './savedAddress';
+import {LogoutService} from './../../providers/logout/logout-service';
 import {ToastService} from './../../providers/toast-service/toastService';
 @Component({
     templateUrl: 'myeditaccount.html'
@@ -23,19 +24,17 @@ export class MyEditAccountPage implements OnInit {
     title: string;
     id: any;
     entity_id:any;
-    message:string;
-    constructor(private _toast:ToastService,private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    message:string="Token expired";
+    constructor(private _logout:LogoutService, private _toast:ToastService,private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
         this.entity_id=this._navParams.get("entity_id");
-        this._local.get('secret').then((secret: any) => {
-            this._local.get('access_token').then((access_token: any) => {
-                if (access_token != null) {
-                    this.getuser_details(this.id, this.entity_id, secret);
-                } else {
-                }
-            });
+        this._local.get('userData').then((userData: any) => {
+          if (userData.access_token != null) {
+              this.getuser_details(this.id, this.entity_id, userData.secret);
+          } else {
+          }
         });
     }
     ionViewDidEnter() {
@@ -103,8 +102,6 @@ export class MyEditAccountPage implements OnInit {
         });
     }
     logout() {
-      this._local.clear().then(() => {
-        this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
-      });
+      this._logout.logout(this.message,this._navCtrl);
     }
 }

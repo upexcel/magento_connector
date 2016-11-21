@@ -22,18 +22,16 @@ export class ChangepasswordPage implements OnInit {
     changeActive: boolean = false;
     constructor(private _toast: ToastService,private _events:Events,private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController, private _fb: FormBuilder, private _apiService: ApiService) { }
     ngOnInit() {
-        this._local.get('secret').then((value: any) => {
-            this.secret = value;
-            this._local.get('access_token').then((value: any) => {
-                this.access_token = value;
-                this.changepassform = this._fb.group({
-                    password: ['', Validators.required],
-                    newPassword: ['', Validators.required],
-                    secret: [this.secret],
-                    access_token: [this.access_token]
-                });
-                this.changeActive = true;
+        this._local.get('userData').then((userData: any) => {
+            this.secret = userData.secret;
+            this.access_token = userData.access_token;
+            this.changepassform = this._fb.group({
+                password: ['', Validators.required],
+                newPassword: ['', Validators.required],
+                secret: [this.secret],
+                access_token: [this.access_token]
             });
+            this.changeActive = true;
         });
     }
     ionViewDidEnter() {

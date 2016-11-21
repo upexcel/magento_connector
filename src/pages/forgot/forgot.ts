@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { Forgot } from '../../model/forgot/forgot';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { LoginPage } from './../login/login';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams } from 'ionic-angular';
 @Component({
     templateUrl: 'forgot.html'
 })
@@ -14,8 +14,11 @@ export class ForgotPage implements OnInit {
     spin: boolean=false;
     response: any;
     show_form: boolean = false;
-
-    constructor( private _navCtrl: NavController, private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) { }
+    btnShow:boolean=true;
+    email:string;
+    constructor( private _navparam: NavParams,private _navCtrl: NavController, private _events:Events,private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) { 
+        this.email=this._navparam.get("email");
+    }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
@@ -27,7 +30,7 @@ export class ForgotPage implements OnInit {
     }
     fb_coll(value) {
         this.forgotform = this._fb.group({
-            email: ['', Validators.required],
+            email: [this.email, Validators.required],
             website_id: [value]
         });
     }
@@ -36,14 +39,14 @@ export class ForgotPage implements OnInit {
         this._forgot.getForgot(value).then((res) => {
             this.spin = false;
             if(res.message=="success"){
-            this._navCtrl.setRoot(LoginPage);
+                this.btnShow=false;
+                this._toast.toast("Check your inbox to retrieve your password!",3000,"top");
             }
             this._toast.toast(res.message,3000,"top");
-        })
-            .catch(err => {
+        }).catch(err => {
                 if (err.status === 500) {
                 }
-            });
+        });
     }
 }
 

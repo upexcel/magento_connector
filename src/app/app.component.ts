@@ -11,6 +11,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp implements OnInit{
     private _rootPage: any;
     constructor(private _platform: Platform, private _local: Storage) {
+
     }
     ngOnInit(){
         this.appCheckConfig();
