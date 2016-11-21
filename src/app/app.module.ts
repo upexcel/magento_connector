@@ -138,8 +138,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SocialAccount,
         OrderIdDetail,
         ToastService,
-        LogoutService,
-        NavController ]
+        LogoutService ]
 })
 export class AppModule {
 
