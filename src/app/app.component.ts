@@ -10,10 +10,10 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
     <loading-modal id="loading"></loading-modal>`
 })
 export class MyApp implements OnInit{
-    private _rootPage: any;
-    constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
 
-    }
+    public _rootPage: any;
+    constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+     }
     ngOnInit(){
         this._platform.ready().then(() => {
             StatusBar.styleDefault();
