@@ -3,15 +3,17 @@ import {ApiService } from './../../providers/api-service/api-service';
 import { ConfigDataType } from './../../pages/takeTour/configDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 declare let Promise: any;
 @Injectable()
 export class AppConfig implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService) { }
+    constructor(public local: Storage, private _apiService: ApiService, private _appConfigService: AppDataConfigService) { }
     ngOnInit() { }
 
     getAppConfig(): Promise<ConfigDataType> {
         let local = this.local;
         let apiservice = this._apiService;
+        let appConfigService = this._appConfigService;
 
         return new Promise(function(resolve, reject) {
             local.get('web_config').then((web_config: string) => {
@@ -20,13 +22,12 @@ export class AppConfig implements OnInit {
                 }
                 else {
                     apiservice.api("web/config", {}).subscribe((res) => {
-                        local.set('web_config', res);
+                        appConfigService.setWebConfig(res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
                     });
                 }
-
             });
         });
     }
