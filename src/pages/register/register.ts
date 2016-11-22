@@ -46,19 +46,19 @@ export class RegisterPage implements OnInit {
     signin(logvalue: any) {
         this.spin = true;
         this._login.getLogin(logvalue).then((res) => {
-            this.spin = false;
+            this.login = false;
             this.data=res;
             if (this.data.status === 1) {
                 this.data = res;
-                this._local.set('firstname', this.data.data.firstname);
-                this._local.set('lastname', this.data.data.lastname);
-                this._local.set('access_token', this.data.data.access_token);
-                this._local.set('expiry', this.data.data.expiry);
-                this._local.set('secret', this.data.data.secret);
-                this._local.set('email', this.data.data.email);
-                 this._toast.toast("Wellcome"+ this.data.data.firstname,3000,"top");
-                this._navCtrl.setRoot(HomePage);
+                this._appConfigService.setUserData(res.data);
+                this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
+            else {
+                this._toast.toast(res.message,3000);
+            }
+        })
+        .catch(err=>{
+            this.showLoginError(err);
         });
     }
 }

@@ -29,8 +29,8 @@ export class Headers implements AfterContentInit{
       }
     });
     this.access_token=this._navParams.get("access_token");
-    this._local.get("access_token").then((access_token)=>{
-        if(this.access_token!=null || access_token!=null){
+    this._local.get("userData").then((userData)=>{
+        if(this.access_token!=null || userData.access_token!=null){
           this.showPopOver=true;
         }else{
           this.showPopOver=false;

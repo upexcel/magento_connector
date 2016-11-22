@@ -62,7 +62,7 @@ import { CategoryComponent } from '../components/categoryProducts/CategoryProduc
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
-import { EqualValidator } from '../directives/equal-validator/equalValidator';
+import { EqualValidator } from '../directives/password/equalValidator';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';

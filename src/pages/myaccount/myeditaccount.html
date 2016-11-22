@@ -1,49 +1,50 @@
 <header></header>
 <ion-content  class="myaccount">
 
-        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
-        <form [formGroup]="updateform" *ngIf="myaccount">
-            <ion-list inset id="pad57">
-                <ion-item>
-                    <ion-label stacked>First Name <span color="danger">*</span></ion-label>
-                    <ion-input id="41" [onReturn]='42' formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Last Name <span color="danger">*</span></ion-label>
-                    <ion-input formControlName="lastname" id="42" [onReturn]='43' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>City <span color="danger">*</span></ion-label>
-                    <ion-input formControlName="city" id="43" [onReturn]='45' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Company</ion-label>
-                    <ion-input  formControlName="company" id="45" [onReturn]='46' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Fax</ion-label>
-                    <ion-input  formControlName="fax" id="46" [onReturn]='47' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Telephone <span color="danger">*</span></ion-label>
-                    <ion-input  formControlName="telephone" id="47" [onReturn]='48' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Address <span color="danger">*</span></ion-label>
-                    <ion-input  formControlName="street" id="48" [onReturn]='49' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
-                    <ion-input  formControlName="zip" id="49" [onReturn]='50' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Country <span color="danger">*</span></ion-label>
-                    <ion-input formControlName="countryid" id="50" [onReturn]='100' autocorrect autocomplete clearInput></ion-input>
-                </ion-item>
+    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+    <form [formGroup]="updateform" *ngIf="myaccount">
+        <ion-list inset id="pad57">
+            <ion-item>
+                <ion-label stacked>First Name <span color="danger">*</span></ion-label>
+                <ion-input id="firstName" [onReturn]='"lastName"' formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Last Name <span color="danger">*</span></ion-label>
+                <ion-input formControlName="lastname" id="lastName"
+                           [onReturn]='"City"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>City <span color="danger">*</span></ion-label>
+                <ion-input formControlName="city" id="City" [onReturn]='"Company"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Company</ion-label>
+                <ion-input  formControlName="company" id="Company" [onReturn]='"Fax"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Fax</ion-label>
+                <ion-input  formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Telephone <span color="danger">*</span></ion-label>
+                <ion-input  formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Address <span color="danger">*</span></ion-label>
+                <ion-input  formControlName="street" id="Address" [onReturn]='"Pin"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
+                <ion-input  formControlName="zip" id="Pin" [onReturn]='"Country"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Country <span color="danger">*</span></ion-label>
+                <ion-input formControlName="countryid" id="Country" [onReturn]='"btn"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
 
-            </ion-list>
-            <button ion-button full  color="primary" id="100" class="saveAddress botton" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
-        </form>
+        </ion-list>
+        <button ion-button full  color="primary" id="btn" class="saveAddress botton" [disabled]="!updateform.valid" (click)="update(updateform.value)">Save<ion-spinner  *ngIf="upd_spin"></ion-spinner></button>
+    </form>
 </ion-content>
 <ion-footer>
 

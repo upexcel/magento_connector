@@ -3,9 +3,9 @@
     <form [formGroup]="forgotform" *ngIf="show_form">
         <ion-item>
             <ion-label floating>Email</ion-label>
-            <ion-input type="email" id="10" [onReturn]='100' formControlName="email" autocorrect autocomplete clearInput></ion-input>
+            <ion-input type="email" id="email" [onReturn]='"btn"' formControlName="email" autocorrect autocomplete clearInput></ion-input>
         </ion-item>
-                <button  *ngIf="btnShow" id="100" ion-button type="submit" full color="primary" class="botton buttForgotPwd"  (click)="forgot(forgotform.value)" [disabled]="!forgotform.valid">
+        <button  *ngIf="btnShow" id="btn" ion-button type="submit" full color="primary" class="botton buttForgotPwd"  (click)="forgot(forgotform.value)" [disabled]="!forgotform.valid">
             <span *ngIf="spin==false">Forgot Password</span>
             <ion-spinner *ngIf="spin" class="spin" ></ion-spinner>
         </button>

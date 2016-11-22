@@ -5,28 +5,28 @@
     <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>First Name</ion-label>
-            <ion-input type="text" id="11" [onReturn]='22' formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="text" id="First" [onReturn]='"Last"' formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Last Name</ion-label>
-            <ion-input type="text" id="22" [onReturn]='33' formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="text" id="Last" [onReturn]='"Email"' formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Email</ion-label>
-            <ion-input type="text" id="33" [onReturn]='44' formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="text" id="Email" [onReturn]='"Password1"' formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Password</ion-label>
-            <ion-input type="password" id="44" [onReturn]='55' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="password" id="Password1" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item class="padd36 lineHeight2-5">
             <ion-label> <b>RECEIVE NEWSLETTERS</b></ion-label>
-            <ion-toggle id="55" [onReturn]='100' checked="true"></ion-toggle>
+            <ion-toggle id="toggle" checked="true"></ion-toggle>
         </ion-item>
         <ion-grid >
             <ion-row center >
                 <ion-col class="center">
-                    <button type="submit" id="btn1" ion-button color="primary" round   [disabled]="!regForm.valid" id="100" (click)="signup(regForm.value)"> <span *ngIf="spin==false" class="capitalize">SIGN UP</span><ion-spinner class="spin" *ngIf="spin"></ion-spinner></button>
+                    <button type="submit" id="btn1" ion-button color="primary" round   [disabled]="!regForm.valid" id="btn" (click)="signup(regForm.value)"> <span *ngIf="spin==false" class="capitalize">SIGN UP</span><ion-spinner class="spin" *ngIf="spin"></ion-spinner></button>
                 </ion-col>
             </ion-row>
         </ion-grid>

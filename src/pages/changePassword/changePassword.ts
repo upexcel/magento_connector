@@ -24,12 +24,9 @@ export class ChangepasswordPage implements OnInit {
             newPassword: '',
             confirmPassword: ''
         }
-         this._local.get('access_token').then((access_token: any) => {
-         this.access_token=access_token;
-        this._local.get('secret').then((secret: any) => {
-            this.secret = secret;
-        });
-
+         this._local.get('userData').then((userData: any) => {
+         this.access_token=userData.access_token;
+            this.secret = userData.secret;
         });
     }
     ionViewDidEnter() {
@@ -41,7 +38,7 @@ export class ChangepasswordPage implements OnInit {
         this._changePwd.getPwd(data).then((res) => {
             this.spin = false;
             this.response = res;
-            this._toast.toast(this.response.data, 3000, "top");
+            this._toast.toast(this.response.data, 3000, "bottom");
             this._navCtrl.setRoot(HomePage);
         })
     }
