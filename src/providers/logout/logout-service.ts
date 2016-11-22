@@ -18,20 +18,7 @@ import {
 export class LogoutService {
     constructor(private _local: Storage) {}
     logout(msg,_navCtrl) {
-        this._local.remove('userData').then(() => {
-            this._local.remove('lists').then(() => {
-                this._local.remove('categorylist').then(() => {
-                    this._local.remove('homeProducts').then(() => {
-                        this._local.remove('slider').then(() => {
-                            this._local.remove('web_config').then(() => {
-                                    _navCtrl.setRoot(StartPage, {
-                                    "message": msg
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
+        this._local.clear();
+        _navCtrl.setRoot(StartPage, { "message": msg });
     }
 }
