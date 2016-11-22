@@ -43,6 +43,10 @@ import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import {ToastService} from '../providers/toast-service/toastService';
 import {LogoutService} from '../providers/logout/logout-service';
+import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
+import { sliderService } from '../providers/slider-service/slider.service';
+import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
+import { categoryService } from '../providers/category-service/category-service';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -139,8 +143,11 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SocialAccount,
         OrderIdDetail,
         ToastService,
-        LogoutService
-         ]
+        LogoutService,
+        AppDataConfigService,
+        sliderService,
+        homeProductsService,
+        categoryService ]
 })
 export class AppModule {
 

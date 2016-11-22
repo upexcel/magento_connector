@@ -41,16 +41,12 @@ export class OrderlistPage implements OnInit {
     message:string="Token expired";
     constructor(private _logout:LogoutService, private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
-        this._local.get('secret').then((value: any) => {
-            this.secret = value;
-            this._local.get('firstname').then((value: any) => {
-                this.firstname = value;
-                this._local.get('lastname').then((value: any) => {
-                    this.lastname = value;
-                    this.total_orders();
-                    this.selectedOrder_details();
-                });
-            });
+        this._local.get('userData').then((userData: any) => {
+            this.secret = userData.secret;
+            this.firstname = userData.firstname;
+            this.lastname = userData.lastname;
+            this.total_orders();
+            this.selectedOrder_details();
         });
     }
     ionViewDidEnter() {

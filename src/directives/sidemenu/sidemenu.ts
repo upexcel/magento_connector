@@ -9,6 +9,7 @@ import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct
 })
 export class SideMenu implements OnInit{
   data:CategoryListDataType;
+ public rootPage:any;
 constructor(private _categoryList:CategoryList,private _menuCtrl: MenuController,private _navCtrl:NavController){}
 ngOnInit(){
   this._menuCtrl.enable(true);

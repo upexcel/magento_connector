@@ -16,7 +16,7 @@ export class SubmitReview implements OnInit {
     title: string;
     keys: string;
     option: any;
-    max_review:number;
+    max_review: number;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
@@ -33,12 +33,10 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
-        this._local.get("access_token").then((access_token) => {
-            if (access_token != null) {
-                this._local.get('firstname').then((firstname) => {
-                    this.reviewDataNickname = firstname;
-                    this.hideByLogin = false;
-                })
+        this._local.get("userData").then((userData) => {
+            if (userData.access_token != null) {
+                this.reviewDataNickname = userData.firstname;
+                this.hideByLogin = false;
             } else {
                 this.reviewDataNickname = "";
             }
@@ -62,13 +60,11 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, function(ratingValue, ratingKey) {
+        forEach(reviweDataJson, function(ratingValue: number, ratingKey) {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
-                    forEach(optionValue, function(Value:any, key:any) {
-                    let datas:any=ratingValue - num;
-                    console.log(ratingValue,datas,key);
-                        if (key === datas) {
+                    forEach(optionValue, function(Value, key: number) {
+                            if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,
                                 key: ratingKey

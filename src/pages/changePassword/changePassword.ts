@@ -29,6 +29,7 @@ export class ChangepasswordPage implements OnInit {
         this._local.get('secret').then((secret: any) => {
             this.secret = secret;
         });
+
         });
     }
     ionViewDidEnter() {
