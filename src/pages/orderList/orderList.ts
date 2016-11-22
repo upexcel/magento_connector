@@ -11,6 +11,7 @@ import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
 import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
 import {LogoutService} from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import uniq from 'lodash/uniq';
 import flattenDeep from 'lodash/flattenDeep';
 import clone from 'lodash/clone';
@@ -39,9 +40,9 @@ export class OrderlistPage implements OnInit {
     startDateArray: number = 0;
     endDateArray: number = 2;
     message:string="Token expired";
-    constructor(private _logout:LogoutService, private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _appConfigService: AppDataConfigService,private _logout:LogoutService, private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
-        this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
             this.secret = userData.secret;
             this.firstname = userData.firstname;
             this.lastname = userData.lastname;

@@ -8,6 +8,7 @@ import { Product } from '../../model/product/getProduct';
 import { Cart } from '../../model/product/cart';
 import {  cartDataType } from './../product/cartDataType';
 import {ToastService} from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -42,7 +43,7 @@ export class ProductPage implements OnInit {
     data: any;
     reviewData = [];
 
-    constructor(private _toast: ToastService,public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _appConfigService: AppDataConfigService,private _toast: ToastService,public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -147,7 +148,7 @@ export class ProductPage implements OnInit {
         let type: string = this.productData.data.data.type;
         let other;
         let productid: string = this.productData.data.data.entity_id;
-        this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
                 this._local.get('store_id').then((store_id: any) => {
                     data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
                     other = data;
@@ -195,6 +196,6 @@ export class ProductPage implements OnInit {
                       this._toast.toast(err ,3000,"top"); 
                     })
                 });
-        });
+        });    
     }
 }

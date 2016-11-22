@@ -35,7 +35,6 @@ export class RegisterPage implements OnInit {
     }
     signup(regvalue: any) {
         this.spin = true;
-        console.log(regvalue);
         this._register.getRegister(regvalue).then((res) => {
             this.spin = false;
             if (res.status == 1) {

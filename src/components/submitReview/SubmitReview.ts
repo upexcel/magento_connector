@@ -4,6 +4,7 @@ import {ToastController} from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Product } from '../../model/product/getProduct';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
@@ -25,7 +26,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(private _appConfigService: AppDataConfigService,public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -33,14 +34,14 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
-        this._local.get("userData").then((userData) => {
+            this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
                 this.reviewDataNickname = userData.firstname;
                 this.hideByLogin = false;
             } else {
                 this.reviewDataNickname = "";
             }
-        })
+        });
     }
     close() {
         this._viewCtrl.dismiss();

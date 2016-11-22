@@ -5,11 +5,11 @@
     <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>First Name</ion-label>
-            <ion-input type="text" id="First" [onReturn]='"Last"' formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="text" id="First" [onReturn]='"Last"' formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="capitalize"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Last Name</ion-label>
-            <ion-input type="text" id="Last" [onReturn]='"Email"' formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+            <ion-input type="text" id="Last" [onReturn]='"Email"' formControlName="lastname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="capitalize"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Email</ion-label>

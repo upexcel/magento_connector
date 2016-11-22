@@ -12,6 +12,8 @@ import {EditAccountDataType} from './../../model/myaccount/editAccountData';
 import {MySavedAddressPage} from './savedAddress';
 import {LogoutService} from './../../providers/logout/logout-service';
 import {ToastService} from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+
 @Component({
     templateUrl: 'myeditaccount.html'
 })
@@ -25,17 +27,17 @@ export class MyEditAccountPage implements OnInit {
     id: any;
     entity_id:any;
     message:string="Token expired";
-    constructor(private _logout:LogoutService, private _toast:ToastService,private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(private _appConfigService: AppDataConfigService,private _logout:LogoutService, private _toast:ToastService,private _events:Events,private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
         this.entity_id=this._navParams.get("entity_id");
-        this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
           if (userData.access_token != null) {
               this.getuser_details(this.id, this.entity_id, userData.secret);
           } else {
           }
-        });
+        });        
     }
     ionViewDidEnter() {
        setTimeout( () => {  this._events.publish("title",{title:this.title}); } , 0)
