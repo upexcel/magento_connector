@@ -16,7 +16,7 @@ export class SubmitReview implements OnInit {
     title: string;
     keys: string;
     option: any;
-    max_review:number;
+    max_review: number;
     reviewDataDetails: string = "";
     reviewDataTitle: string = "";
     reviewDataNickname: string = "";
@@ -60,10 +60,11 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, function(ratingValue, ratingKey) {
+        forEach(reviweDataJson, function(ratingValue: number, ratingKey) {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
-                    forEach(optionValue, function(Value, key) {
+                    forEach(optionValue, function(Value, key: number) {
+
                         if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,

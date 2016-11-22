@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage';
     <loading-modal id="loading"></loading-modal>`
 })
 export class MyApp implements OnInit{
-    private _rootPage: any;
+    public _rootPage: any;
     constructor(private _platform: Platform, private _local: Storage) {
     }
     ngOnInit(){
