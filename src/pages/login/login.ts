@@ -8,7 +8,7 @@ import { LoginDataType } from './loginDataType';
 import { Storage } from '@ionic/storage';
 import { Login } from '../../model/login/login';
 import {ToastService} from './../../providers/toast-service/toastService';
-import { AppDataConfigService } from './../../providers/appdataconfig-service/appdataconfig.service';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
     templateUrl: 'login.html'
 })

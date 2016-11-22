@@ -3,29 +3,26 @@ import {ApiService } from './../../providers/api-service/api-service';
 import {CategoryListDataType  } from './../../pages/home/categorylistDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
+import { categoryService } from './../../providers/category-service/category-service';
 declare let Promise: any;
 @Injectable()
 export class CategoryList implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService) { }
+    constructor(public local: Storage, private _apiService: ApiService, private _categoryService: categoryService) { }
     ngOnInit() { }
 
     getCategoryList(): Promise<CategoryListDataType> {
         let local = this.local;
         let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject)=> {
             local.get('categorylist').then((categorylist: string) => {
                 if (keys(categorylist).length > 0) {
                     resolve(categorylist);
                 }
                 else {
-                    local.get('store_id').then((store_id: any) => {
-                        let data = { "parent_id": "1", "type": "full", "store_id": store_id }
-                        apiservice.api("category/categorylist/", data).subscribe((res) => {
-                            local.set('categorylist', res);
-                            resolve(res);
-                        }, (err) => {
-                            reject(err);
-                        });
+                    this._categoryService.getCategoryList().then((res)=> {
+                        resolve(res);
+                    }, (err)=> {
+                        reject(err);
                     });
                 }
             });

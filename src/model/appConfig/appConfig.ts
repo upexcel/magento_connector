@@ -3,7 +3,7 @@ import {ApiService } from './../../providers/api-service/api-service';
 import { ConfigDataType } from './../../pages/takeTour/configDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
-import { AppDataConfigService } from './../../providers/appdataconfig-service/appdataconfig.service';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 declare let Promise: any;
 @Injectable()
 export class AppConfig implements OnInit {
@@ -22,7 +22,7 @@ export class AppConfig implements OnInit {
                 }
                 else {
                     apiservice.api("web/config", {}).subscribe((res) => {
-                        appConfigService.setWeb_config(res);
+                        appConfigService.setWebConfig(res);
                         resolve(res);
                     }, (err) => {
                         reject(err);

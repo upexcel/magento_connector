@@ -4,7 +4,7 @@ import {StatusBar} from 'ionic-native';
 import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
 import { Storage } from '@ionic/storage';
-import { AppDataConfigService } from '../providers/appdataconfig-service/appdataconfig.service';
+import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 @Component({
     template: `<ion-nav [root]="_rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`
