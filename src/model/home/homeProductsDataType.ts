@@ -26,7 +26,7 @@ export class HomeProductsDataType {
                 show_on_home_page: string
             };
             bundle_items: {
-                options: Array<string>
+                options: Array<any>
             }
         }
     ];

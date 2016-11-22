@@ -3,6 +3,8 @@ import { NavController, MenuController, PopoverController, NavParams, LoadingCon
 import {PopoverPage} from './../../components/popover/popover';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
 import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+
 import {LoginPage} from '../login/login';
 import {Storage} from '@ionic/storage';
 @Component({
@@ -17,20 +19,20 @@ export class CategoryProductPage implements OnInit {
     categoryProduct: CategoryProductDataType;
     access_token:string;
     showPopOver:boolean=false;
-    constructor(private _events: Events,private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _appConfigService: AppDataConfigService,private _events: Events,private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
         this.access_token=this._navParams.get("access_token");
-        this._local.get("access_token").then((access_token)=>{
-            if(this.access_token!=null || access_token!=null){
+        this._appConfigService.getUserData().then((userData: any) => {
+            if(this.access_token!=null || userData.access_token!=null){
               this.showPopOver=true;
             }else{
               this.showPopOver=false;
             }
-        })
+        });        
         this.presentLoading();
         this.show_products(this.product_id, this.page, this.limit);
     }

@@ -8,6 +8,7 @@ import {GooglePlus} from 'ionic-native';
 import {MyEditAccountPage} from './myeditaccount';
 import {MyAccount} from './../../model/myaccount/myaccount';
 import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import {LogoutService} from './../../providers/logout/logout-service';
 import {LoginPage} from './../../pages/login/login';
 @Component({
@@ -19,7 +20,7 @@ export class MySavedAddressPage implements OnInit {
     showAddress:boolean;
     secret:string;
     message:string="Token expired";
-    constructor(private _logout:LogoutService, private _toast:ToastService, private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    constructor(private _appConfigService: AppDataConfigService,private _logout:LogoutService, private _toast:ToastService, private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
       _events.subscribe('api:savedaddress', (savedaddress) => {
         this.getInitAdd();
         });
@@ -28,7 +29,7 @@ export class MySavedAddressPage implements OnInit {
       this.getInitAdd();
     }
     getInitAdd(){
-        this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
                 this.getuser_details(userData.secret);
                 this.secret = userData.secret;

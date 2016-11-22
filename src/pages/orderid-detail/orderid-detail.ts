@@ -7,6 +7,8 @@ import forEach from 'lodash/forEach';
 import clone from 'lodash/clone';
 import {OrderIdDetail} from './../../model/orderid-detail/orderid-detail';
 import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+
 @Component({
     templateUrl: 'orderid-detail.html'
 })
@@ -18,10 +20,10 @@ export class OrderModalPage implements OnInit {
     items:any;
     showOrder:boolean=false;
     showOrderError:boolean=false;
-    constructor(private _events:Events,private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _appConfigService: AppDataConfigService, private _events:Events,private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-        this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
             this.getOrderDetails(this.order_id, userData.secret);
         });
     }

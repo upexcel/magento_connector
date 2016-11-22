@@ -17,6 +17,14 @@ export class AppDataConfigService {
         this.cleanUp();
         this._local.set('userData', userData);
     }
+    getUserData() {
+        return new Promise((resolve, reject)=> {
+        this.cleanUp();
+        this._local.get('userData').then((userData)=>{
+           resolve(userData);
+       });
+       });
+   }
     setWebConfig(data) {
         this.cleanUp();
         this._local.set('web_config', data);

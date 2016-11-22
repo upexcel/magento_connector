@@ -1,18 +1,18 @@
 <header></header>
 <ion-content class="login" *ngIf="show_form">
-    <form onReturn [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <form  [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item >
             <ion-label  floating>Email</ion-label>
-            <ion-input  onReturn type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input  id="email" [onReturn]='"Password"' type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
         </ion-item>
         <ion-item >
             <ion-label  floating>Password</ion-label>
-            <ion-input  onReturn type="password" formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input type="password" id="Password" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
         </ion-item>
         <ion-grid class="magTop60">
             <ion-row class="center" >
                 <ion-col class="center">
-                    <button ion-button color="primary" type="submit" id="btn1"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">
+                    <button ion-button color="primary" type="submit" id="btn"  round   [disabled]="!logform.valid" (click)="signin(logform.value)">
                             <span *ngIf="login==false" class="capitalize">
                             Login
                         </span>

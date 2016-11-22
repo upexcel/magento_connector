@@ -2,6 +2,7 @@ import {Component,AfterContentInit,Input} from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams,Events} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {LoginPage} from '../../pages/login/login';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import {PopoverPage} from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
 
@@ -17,7 +18,7 @@ export class Headers implements AfterContentInit{
   title:string;
   pagename:string;
   showLogin:boolean;
-  constructor(private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ }
+  constructor(private _appConfigService: AppDataConfigService,private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ }
   ngAfterContentInit(){
     this._events.subscribe('title', (title) => {
       this.title=title[0].title;
@@ -29,16 +30,15 @@ export class Headers implements AfterContentInit{
       }
     });
     this.access_token=this._navParams.get("access_token");
-    this._local.get("access_token").then((access_token)=>{
-        if(this.access_token!=null || access_token!=null){
+        this._appConfigService.getUserData().then((userData: any) => {
+        if(this.access_token!=null || userData!=null){
           this.showPopOver=true;
         }else{
           this.showPopOver=false;
         }
-    })
+        });
   }
   openMenu() {
-    console.log(this._menuCtrl.isOpen());
       this._menuCtrl.toggle();
   }
   gotoLogin() {
