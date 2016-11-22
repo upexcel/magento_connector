@@ -56,6 +56,7 @@ export class RegisterPage implements OnInit {
                 this._local.set('expiry', this.data.data.expiry);
                 this._local.set('secret', this.data.data.secret);
                 this._local.set('email', this.data.data.email);
+                 this._toast.toast("Wellcome"+ this.data.data.firstname,3000,"top");
                 this._navCtrl.setRoot(HomePage);
             }
         });

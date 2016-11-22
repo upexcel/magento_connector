@@ -20,7 +20,7 @@ export class MyEditAccountPage implements OnInit {
     editaccount: EditAccountDataType;
     spin: boolean;
     updateform: any;
-    upd_spin: boolean = false
+    upd_spin: boolean = false;
     title: string;
     id: any;
     entity_id:any;

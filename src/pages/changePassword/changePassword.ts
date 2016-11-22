@@ -24,8 +24,11 @@ export class ChangepasswordPage implements OnInit {
             newPassword: '',
             confirmPassword: ''
         }
+         this._local.get('access_token').then((access_token: any) => {
+         this.access_token=access_token;
         this._local.get('secret').then((secret: any) => {
             this.secret = secret;
+        });
         });
     }
     ionViewDidEnter() {
@@ -33,8 +36,7 @@ export class ChangepasswordPage implements OnInit {
     }
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
-        console.log(model, isValid);
-        let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret }
+        let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret,access_token:this.access_token }
         this._changePwd.getPwd(data).then((res) => {
             this.spin = false;
             this.response = res;
