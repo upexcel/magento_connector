@@ -8,6 +8,7 @@ import {GooglePlus} from 'ionic-native';
 import {MyEditAccountPage} from './myeditaccount';
 import {MyAccount} from './../../model/myaccount/myaccount';
 import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
+import {LogoutService} from './../../providers/logout/logout-service';
 import {LoginPage} from './../../pages/login/login';
 @Component({
     templateUrl: 'savedAddress.html'
@@ -17,7 +18,8 @@ export class MySavedAddressPage implements OnInit {
     spin: boolean;
     showAddress:boolean;
     secret:string;
-    constructor(private _toast:ToastService, private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    message:string="Token expired";
+    constructor(private _logout:LogoutService, private _toast:ToastService, private _events:Events,private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
       _events.subscribe('api:savedaddress', (savedaddress) => {
         this.getInitAdd();
         });
@@ -26,15 +28,13 @@ export class MySavedAddressPage implements OnInit {
       this.getInitAdd();
     }
     getInitAdd(){
-        this._local.get('access_token').then((access_token: any) => {
-                this._local.get('secret').then((secret: any) => {
-                    if (access_token != null) {
-                        this.getuser_details(secret);
-                        this.secret=secret;
-                    } else {
-                      this._navCtrl.push(LoginPage);
-                    }
-            });
+        this._local.get('userData').then((userData: any) => {
+            if (userData.access_token != null) {
+                this.getuser_details(userData.secret);
+                this.secret = userData.secret;
+            } else {
+              this._navCtrl.push(LoginPage);
+            }
         })
         .catch((err)=>{
         })
@@ -86,14 +86,6 @@ export class MySavedAddressPage implements OnInit {
       })
     }
     logout() {
-        this._local.remove('firstname');
-        this._local.remove('lastname');
-        this._local.remove('expiry');
-        this._local.remove('access_token');
-        this._local.remove('lists');
-        this._local.remove('email');
-        this._local.remove('secret');
-        GooglePlus.logout();
-        this._navCtrl.setRoot(StartPage, { "message": "Token expired" });
+      this._logout.logout(this.message,this._navCtrl);
     }
 }

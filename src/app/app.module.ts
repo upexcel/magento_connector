@@ -42,6 +42,11 @@ import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import {ToastService} from '../providers/toast-service/toastService';
+import {LogoutService} from '../providers/logout/logout-service';
+import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
+import { sliderService } from '../providers/slider-service/slider.service';
+import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
+import { categoryService } from '../providers/category-service/category-service';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -54,9 +59,10 @@ import { SliderComponent } from '../components/slider/Slider';
 import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
 
 //directives
-import { NextOnEnter} from '../directives/nextonenter';
+import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
+
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -81,7 +87,6 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         LoginPage,
         LoadingModal,
         PopoverPage,
-        NextOnEnter,
         Headers,
         SliderComponent,
         SideMenu,
@@ -89,7 +94,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         GoogleComponent,
         FacebookComponent,
         ProductReview,
-        SubmitReview
+        SubmitReview,
+        FocusByEnterKey
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -135,7 +141,12 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         EditAccount,
         SocialAccount,
         OrderIdDetail,
-        ToastService]
+        ToastService,
+        LogoutService,
+        AppDataConfigService,
+        sliderService,
+        homeProductsService,
+        categoryService ]
 })
 export class AppModule {
 

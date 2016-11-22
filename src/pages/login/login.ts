@@ -8,6 +8,7 @@ import { LoginDataType } from './loginDataType';
 import { Storage } from '@ionic/storage';
 import { Login } from '../../model/login/login';
 import {ToastService} from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
     templateUrl: 'login.html'
 })
@@ -18,7 +19,8 @@ export class LoginPage implements OnInit {
     website_id: any;
     show_form: boolean = false;
     data: LoginDataType;
-    constructor(private _toast:ToastService, private _events:Events,private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController) { }
+    forgotPasswordEmail:any;
+    constructor(private _toast:ToastService, private _events:Events,private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
@@ -37,17 +39,13 @@ export class LoginPage implements OnInit {
     }
     signin(logvalue: any) {
         this.login = true;
+        this.forgotPasswordEmail=logvalue.email;
         this._login.getLogin(logvalue).then((res) => {
             this.login = false;
             this.data=res;
             if (this.data.status === 1) {
                 this.data = res;
-                this._local.set('firstname', this.data.data.firstname);
-                this._local.set('lastname', this.data.data.lastname);
-                this._local.set('access_token', this.data.data.access_token);
-                this._local.set('expiry', this.data.data.expiry);
-                this._local.set('secret', this.data.data.secret);
-                this._local.set('email', this.data.data.email);
+                this._appConfigService.setUserData(res.data);
                 this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
@@ -59,7 +57,7 @@ export class LoginPage implements OnInit {
         })
     }
     gotoforgotPage() {
-        this._navCtrl.push(ForgotPage);
+        this._navCtrl.push(ForgotPage,{email:this.forgotPasswordEmail});
     }
     showLoginError(error) {
         let alert = this._alertCtrl.create({

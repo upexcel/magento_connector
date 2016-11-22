@@ -4,8 +4,8 @@ export class GoogleData {
     email: string;
     imageUrl: string;
     accessToken: string;
-    idToken  :string;
-    serverAuthCode:string;
+    idToken ?:string;
+    serverAuthCode ?:string;
 }
 
 

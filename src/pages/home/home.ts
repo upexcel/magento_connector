@@ -45,7 +45,6 @@ export class HomePage implements OnInit {
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-                    console.log(navigator);
 //                    navigator.app.exitApp()
                 }
             } else {

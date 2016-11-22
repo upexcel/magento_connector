@@ -12,10 +12,15 @@ export class ApiService {
     constructor(private _local: Storage, private _http: Http) { }
     api(path, body) {
         var subject = new Subject();
-        this._local.get('access_token').then((value) => {
+        this._local.get('userData').then((userData) => {
             var self = this;
+            var headers;
             let api_url = config.api_Url + path;
-            let headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': value });
+            if(path == 'web/config' || path == 'customer/login/' || path == 'home/products' || path == 'home/slider' || path == 'category/categorylist/'){
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});
+            } else {
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
+            }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
                 .subscribe((res: Response) => {

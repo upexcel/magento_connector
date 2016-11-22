@@ -12,6 +12,7 @@ export const config = {
     },
     "facebook_clientid": 1785639755024591,
     "facebook_version": "v2.8",
+    "appDataTime": 86400000,
     "homePageSliderOptions": {
         "autoplay": 3000,
         "initialSlide": 1,
