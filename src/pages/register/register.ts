@@ -7,6 +7,8 @@ import { Register } from '../../model/register/register';
 import {Login} from '../../model/login/login';
 import { LoginDataType } from '../login/loginDataType';
 import {ToastService} from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+
 @Component({
     templateUrl: 'register.html'
 })
@@ -15,7 +17,7 @@ export class RegisterPage implements OnInit {
     spin: boolean=false;
     clear: boolean = false;
     data: LoginDataType;
-    constructor(private _toast:ToastService,private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
+    constructor( private _appConfigService: AppDataConfigService, private _toast:ToastService,private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -33,6 +35,7 @@ export class RegisterPage implements OnInit {
     }
     signup(regvalue: any) {
         this.spin = true;
+        console.log(regvalue);
         this._register.getRegister(regvalue).then((res) => {
             this.spin = false;
             if (res.status == 1) {
@@ -46,7 +49,6 @@ export class RegisterPage implements OnInit {
     signin(logvalue: any) {
         this.spin = true;
         this._login.getLogin(logvalue).then((res) => {
-            this.login = false;
             this.data=res;
             if (this.data.status === 1) {
                 this.data = res;
@@ -58,7 +60,7 @@ export class RegisterPage implements OnInit {
             }
         })
         .catch(err=>{
-            this.showLoginError(err);
+           
         });
     }
 }

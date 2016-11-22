@@ -7,6 +7,8 @@ import { ChangePwd } from '../../model/changePassword/accountChangePwd';
 import { ChangePwdDataType } from './changePwdDataType';
 import {ToastService} from './../../providers/toast-service/toastService';
 import { User } from './userInterface';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+
 @Component({
     templateUrl: 'changepassword.html'
 })
@@ -17,14 +19,14 @@ export class ChangepasswordPage implements OnInit {
     spin: boolean = false;
     secret: string;
     public user: User;
-    constructor(private _toast: ToastService, private _events: Events, private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngOnInit() {
         this.user = {
             password: '',
             newPassword: '',
             confirmPassword: ''
         }
-         this._local.get('userData').then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
          this.access_token=userData.access_token;
             this.secret = userData.secret;
         });
