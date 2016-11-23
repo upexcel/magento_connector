@@ -1,0 +1,48 @@
+<div *ngIf="reviewShow">    
+    <ion-card class="card" >
+        <ion-card-content class="no-padding">
+            <ion-row>
+                <ion-col>
+                    <ion-row>
+                        <ion-col>
+                            <p class="margin-but totalReviewAvg20">{{productReview.data.rating}} /&nbsp;{{getRating.data.max_review}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="overflow" *ngIf="productReview.data.rating">
+                        <ion-col>
+                            <span class="score"><span  [style.width]=" productReview.data.rating * 20 + '%'" ></span></span>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col>
+                            <p class="gray">{{productReview.data.total_review}} Review(s)</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+                <ion-col>
+                    <ion-buttons  *ngFor="let rating of graphRating">
+                        <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span><span><progress max="{{getRating.data.max_review}}" value="{{rating.key}}" ></progress></span>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+
+    </ion-card>
+    <ion-list class="padLeft10 marBot60" >
+        <ion-item *ngFor=" let data of productReview.data.data ">
+            <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
+            <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
+            <p><span class="color uppercase" >by {{data.nickname}}</span></p>
+        </ion-item>
+        <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.data.total_review">
+            <ion-buttons>
+                <span *ngIf="listLoad==false" class="capitalize">All {{productReview.data.total_review}} Review </span>
+                <ion-spinner  *ngIf="listLoad"></ion-spinner>
+                <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
+            </ion-buttons>
+        </ion-item>
+    </ion-list> 
+</div>
+<button no-padding ion-button color="primary" full  (click)="addReview()" class="writeButt botton">  Rate and write a review </button>
+

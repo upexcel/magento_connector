@@ -1,0 +1,42 @@
+<ion-content class="tour">
+    <ion-grid *ngIf="data">
+        <ion-row >
+            <ion-col >
+                <ion-buttons end>
+                    <button ion-button clear color='dark' (click)="close()">
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row>
+        <ion-row class="margBot20">
+            <ion-col class="center">
+                <img src="{{data.data.tour_logo}}" class="logo" alt="{{data.data.logo_alt}}" />
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col >
+                <ion-slides  #mySlider [options]="mySlideOptions" >
+                    <ion-slide *ngFor="let desc of data.data.tour_slider ">
+                        <ion-row>
+                            <ion-col>
+                                <p class="heading">  {{desc.title}}</p>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p class="align"> {{desc.description}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <button ion-button color='primary' class="botton buttForgotPwd" (click)="gotoHome()" full>
+        Get Started now!!
+    </button>
+</ion-footer>

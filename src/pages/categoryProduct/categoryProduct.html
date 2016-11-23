@@ -1,0 +1,17 @@
+<header></header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+
+        </ion-refresher-content>
+    </ion-refresher>
+            <category-view *ngIf="categoryProduct" [product]="categoryProduct"></category-view>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content>
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

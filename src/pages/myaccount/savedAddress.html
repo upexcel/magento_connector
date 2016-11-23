@@ -1,0 +1,42 @@
+<header></header>
+<ion-content  class="myaccount">
+    <ion-list *ngIf="showAddress==false">
+        <h2 text-center>You have no saved address</h2>
+    </ion-list>
+    <ion-list *ngIf="showAddress">
+        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+        <ion-card *ngFor="let address of myaccount.data;let id=index" >
+
+            <ion-card-header>
+                <h2>{{address.firstname+" "+address.lastname}}</h2>
+            </ion-card-header>
+            <ion-card-content>
+                <p>City: {{address.city}}</p>
+                <p>Company: {{address.company}}</p>
+                <p>Street: {{address.street}}</p>
+                <p>Fax: {{address.fax}}</p>
+                <p>Pin Code: {{address.postcode}}</p>
+                <p>Country: {{address.country_id}}</p>
+                <p>Telephone: {{address.telephone}}</p>
+            </ion-card-content>
+            <ion-row no-padding>
+                <ion-col>
+                    <button ion-button clear  color="primary" icon-left (click)="editAccount(id,address.entity_id)">
+                            <ion-icon name='create'></ion-icon>Edit
+                    </button>
+                </ion-col>
+                <ion-col text-right>
+
+                    <button ion-button clear  color="primary" icon-left (click)="deleteAccount(address.entity_id)">
+                        <ion-icon name='trash'></ion-icon>Delete
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <!--<button ion-button  full (click)="addNewAddress()">Add New Address</button>-->
+    <button  ion-button full class="add_address botton" (click)="addNewAddress()">Add New Address</button>
+
+</ion-footer>

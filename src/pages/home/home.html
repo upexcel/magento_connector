@@ -1,0 +1,21 @@
+<header></header>
+<sidemenu></sidemenu>
+<ion-content  class="home">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+
+        </ion-refresher-content>
+    </ion-refresher>
+    <get-slider></get-slider>
+    <div *ngIf="homeProduct" >
+        <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+        <category-view [product]="feature_products"></category-view>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
