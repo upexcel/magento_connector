@@ -16,10 +16,10 @@ export class ApiService {
             var self = this;
             var headers;
             let api_url = config.api_Url + path;
-            if(path == 'web/config' || path == 'customer/login/' || path == 'home/products' || path == 'home/slider' || path == 'category/categorylist/'){
-                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});
-            } else {
+            if(userData !== null){
                 headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
+            } else{
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});                
             }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
