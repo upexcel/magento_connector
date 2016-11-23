@@ -76,10 +76,7 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-<<<<<<< HEAD
-    <plugin name="cordova-plugin-console" spec="~1.0.3" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.5.0" />
-    =======
+
     <plugin name="cordova-plugin-device" spec="~1.1.2" />
     <plugin name="cordova-plugin-console" spec="~1.0.3" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
@@ -88,22 +85,11 @@
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.5.0" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
-    >>>>>>> cf8702fff9d536ff3b52cb8e284b7c753c4086eb
     <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
         <variable name="APP_ID" value="1733669750287916" />
         <variable name="APP_NAME" value="Invision" />
     </plugin>
-<<<<<<< HEAD
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.1.3" />
-    <plugin name="cordova-plugin-device" spec="~1.1.3" />
-    <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
-    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <icon src="resources/ios/icon/icon-small@3x.png" />
-    <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
-        =======
-        <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
-            >>>>>>> cf8702fff9d536ff3b52cb8e284b7c753c4086eb
-            <variable name="REVERSED_CLIENT_ID" value="1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com" />
-        </plugin>
+    <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
+        <variable name="REVERSED_CLIENT_ID" value="1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com" />
+    </plugin>
 </widget>
