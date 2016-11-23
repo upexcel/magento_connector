@@ -10,18 +10,19 @@ export class CategoryList implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService, private _categoryService: categoryService) { }
     ngOnInit() { }
 
-    getCategoryList(){
+
+    getCategoryList(): Promise<CategoryListDataType> {
         let local = this.local;
         let apiservice = this._apiService;
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             local.get('categorylist').then((categorylist: string) => {
                 if (keys(categorylist).length > 0 && categorylist !== null) {
                     resolve(categorylist);
                 }
                 else {
-                    this._categoryService.getCategoryList().then((res)=> {
+                    this._categoryService.getCategoryList().then((res) => {
                         resolve(res);
-                    }, (err)=> {
+                    }, (err) => {
                         reject(err);
                     });
                 }

@@ -1,4 +1,5 @@
 <header></header>
+
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -9,7 +10,7 @@
 
         </ion-refresher-content>
     </ion-refresher>
-            <category-view *ngIf="categoryProduct" [product]="categoryProduct"></category-view>
+    <category-view *ngIf="categoryProduct" [product]="categoryProduct"></category-view>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>

@@ -1,7 +1,10 @@
 .tour{
+<<<<<<< HEAD
     .scroll-content{
         padding-top:0px !important;
     }
+=======
+>>>>>>> cf8702fff9d536ff3b52cb8e284b7c753c4086eb
     .heading{
         padding: 0 12px;
         font-size: 2rem;
@@ -27,7 +30,11 @@
         width: 100%;
     }
     .margBot20{
+<<<<<<< HEAD
         /*margin-bottom: 20px;*/
+=======
+        margin-bottom: 20px;
+>>>>>>> cf8702fff9d536ff3b52cb8e284b7c753c4086eb
     }
     scroll-content {
         overflow-y: hidden;
@@ -36,9 +43,15 @@
         max-width: 100px;
         margin: 40px;
     }
+<<<<<<< HEAD
     .logo {
         max-width: 100px;
         margin: 40px 0 0;
+=======
+    .logo{
+        max-width: 100px;
+        margin: 40px;
+>>>>>>> cf8702fff9d536ff3b52cb8e284b7c753c4086eb
     }
     .button-clear-dark.activated{
         color: $blacky;

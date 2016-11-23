@@ -16,16 +16,17 @@ export class ApiService {
             var self = this;
             var headers;
             let api_url = config.api_Url + path;
-            if(userData !== null){
+            if (userData !== null) {
                 headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
-            } else{
-                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});                
+            } else {
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID });
             }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
                 .subscribe((res: Response) => {
                     self._extractData(res, subject)
                 },
+
                 (error) => {
                     self._handleError(error, subject)
                 })
@@ -33,7 +34,6 @@ export class ApiService {
         return subject;
     }
     private _extractData(res, subject) {
-        //        
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
         }
@@ -41,6 +41,7 @@ export class ApiService {
         subject.next(body);
         return body;
     }
+
     private _handleError(error, subject) {
         return subject.error(error.message || error);
     }

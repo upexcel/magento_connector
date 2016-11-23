@@ -10,6 +10,7 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
     template: `<ion-nav [root]="_rootPage"></ion-nav>
     <loading-modal id="loading"></loading-modal>`
 })
+
 export class MyApp implements OnInit {
 
     public _rootPage: any;
@@ -38,5 +39,6 @@ export class MyApp implements OnInit {
                 this._rootPage = StartPage;
             }
         })
+
     }
 }
