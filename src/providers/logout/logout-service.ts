@@ -19,6 +19,5 @@ export class LogoutService {
     constructor(private _local: Storage) {}
     logout(msg,_navCtrl) {
         this._local.clear();
-        _navCtrl.setRoot(StartPage, { "message": msg });
     }
 }
