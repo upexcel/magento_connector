@@ -15,7 +15,7 @@ export class CategoryList implements OnInit {
         let apiservice = this._apiService;
         return new Promise((resolve, reject)=> {
             local.get('categorylist').then((categorylist: string) => {
-                if (keys(categorylist).length > 0) {
+                if (keys(categorylist).length > 0 && categorylist !== null) {
                     resolve(categorylist);
                 }
                 else {

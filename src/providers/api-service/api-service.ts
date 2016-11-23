@@ -16,11 +16,12 @@ export class ApiService {
             var self = this;
             var headers;
             let api_url = config.api_Url + path;
-             if(userData !== null){
-               headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
-           } else{
-               headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});               
-           }
+
+            if(userData !== null){
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
+            } else{
+                headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID});                
+            }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
                 .subscribe((res: Response) => {
