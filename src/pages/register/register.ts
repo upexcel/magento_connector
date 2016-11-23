@@ -46,13 +46,13 @@ export class RegisterPage implements OnInit {
         );
     }
     signin(logvalue: any) {
-        this.spin = true;
         this._login.getLogin(logvalue).then((res) => {
             this.data=res;
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(res.data);
-                this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
+                 this._toast.toast("Wellcome "+ logvalue.firstname,3000);
+                 this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
                 this._toast.toast(res.message,3000);

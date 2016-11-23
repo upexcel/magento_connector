@@ -49,6 +49,12 @@ input .item-inner {
 .capitalize{
     text-transform: capitalize;
 }
+.item-label-stacked .text-input-md, .item-label-floating .text-input-md.uppercase{
+    text-transform: uppercase !important;
+    }
+    ion-input.uppercase input{
+        text-transform: uppercase;
+    }
 .borderRt1{
     border-right: 1px solid gray;
 }
