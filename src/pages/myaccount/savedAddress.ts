@@ -40,6 +40,11 @@ import {
 import {
     LoginPage
 } from './../../pages/login/login';
+import {
+    AccountPopoverPage
+} from './../../components/myAccountPopOver/myAccountPopOver';
+import reverse from 'lodash/reverse';
+
 @Component({
     selector:'saved-address',
     templateUrl: 'savedAddress.html'
@@ -50,14 +55,19 @@ export class MySavedAddressPage implements OnInit {
     addAddr:boolean=false;
     showAddress: boolean;
     secret: string;
+    reverseCartData:any;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
-        _events.subscribe('api:savedaddress', (savedaddress) => {
+    constructor( private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+        this._events.subscribe('api:savedaddress', (savedaddress) => {
             this.getInitAdd();
+        });
+        this._events.subscribe('user:deleted', (deleted) => {
+            this.getInitAdd();  
         });
     }
     ngOnInit() {
         this.getInitAdd();
+
     }
     getInitAdd() {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -86,6 +96,8 @@ export class MySavedAddressPage implements OnInit {
         this._myaccount.getMyAccount(body).then((res) => {
                 this.spin = false;
                 this.myaccount = res;
+                this.reverseCartData=reverse(this.myaccount.data);
+
                 if (this.myaccount.data.length != 0) {
                     this.showAddress = true;
                 } else {
@@ -106,6 +118,13 @@ export class MySavedAddressPage implements OnInit {
             ev: myEvent,
         });
     }
+    AccountPopoverPage(myEvent: any,id,entity_id){
+        let data={id:id,entity_id: entity_id }
+        let popover = this._popoverCtrl.create(AccountPopoverPage,data);
+        popover.present({
+            ev: myEvent,
+        });     
+    }
     addNewAddress() {
     this.addAddr=true;
     setTimeout(() => {
@@ -115,24 +134,6 @@ export class MySavedAddressPage implements OnInit {
             "title": "Add New Address",
             "entity_id": entity_id
         })
-    }
-    editAccount(id, entity_id) {
-        this._navCtrl.push(MyEditAccountPage, {
-            "title": "Edit Address",
-            "id": id,
-            "entity_id": entity_id
-        })
-    }
-    deleteAccount(entity_id) {
-        let data = {
-            entity_id: entity_id,
-            secret: this.secret
-        };
-        this._myaccount.deleteMyAddress(data).then((res) => {
-                this._toast.toast("Deleted", 3000, "top");
-                this.getInitAdd();
-            })
-            .catch((err) => {})
     }
     logout() {
         this._logout.logout(this.message, this._navCtrl);

@@ -58,7 +58,7 @@ import { ProductReview } from '../components/reviewProduct/ReviewProduct';
 import { SubmitReview } from '../components/submitReview/SubmitReview';
 import { SliderComponent } from '../components/slider/Slider';
 import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
-
+import { AccountPopoverPage } from '../components/myAccountPopOver/myAccountPopOver';
 //directives
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
@@ -68,7 +68,6 @@ import { EqualValidator } from '../directives/password/equalValidator';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
-import { ReverceAddressCart } from '../pipe/myAddress/reverceAddress';
 
 @NgModule({
     declarations: [
@@ -82,6 +81,7 @@ import { ReverceAddressCart } from '../pipe/myAddress/reverceAddress';
         ChangepasswordPage,
         ForgotPage,
         CategoryComponent,
+        AccountPopoverPage,
         HomePage,
         CategoryProductPage,
         OrderModalPage,
@@ -94,7 +94,6 @@ import { ReverceAddressCart } from '../pipe/myAddress/reverceAddress';
         SliderComponent,
         SideMenu,
         ConvertCodeToName,
-        ReverceAddressCart,
         GoogleComponent,
         FacebookComponent,
         ProductReview,
@@ -116,6 +115,7 @@ import { ReverceAddressCart } from '../pipe/myAddress/reverceAddress';
         OrderlistPage,
         OrderModalPage,
         ChangepasswordPage,
+        AccountPopoverPage,
         ForgotPage,
         HomePage,
         CategoryProductPage,

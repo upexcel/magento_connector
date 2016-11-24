@@ -12,7 +12,7 @@ import {
     PopoverPage
 } from './../../components/popover/popover';
 import {
-    FormBuilder
+    FormBuilder,Validators,FormGroup
 } from '@angular/forms';
 import {
     StartPage
@@ -50,7 +50,7 @@ import {
 import {
     Country
 } from './../../model/myaccount/country';
-
+import reverse from 'lodash/reverse';
 @Component({
     templateUrl: 'myeditaccount.html'
 })
@@ -65,6 +65,7 @@ export class MyEditAccountPage implements OnInit {
     entity_id: any;
     message: string = "Token expired";
     counrtyName: any;
+    reverseCartData:any;
     constructor(private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
     ngOnInit() {
         this.title = this._navParams.get("title");
@@ -94,18 +95,19 @@ export class MyEditAccountPage implements OnInit {
         if (entity_id != null) {
             this._myaccount.getMyAccount(body).then((res) => {
                     this.myaccount = res;
+                    this.reverseCartData=reverse(this.myaccount.data);
                     this.spin = false;
                     if (this.myaccount.data.length != 0 && entity_id != null) {
                         this.updateform = this._fb.group({
-                            firstname: [this.myaccount.data[id].firstname],
-                            lastname: [this.myaccount.data[id].lastname],
-                            city: [this.myaccount.data[id].city],
-                            company: [this.myaccount.data[id].company],
-                            telephone: [this.myaccount.data[id].telephone],
-                            fax: [this.myaccount.data[id].fax],
-                            street: [this.myaccount.data[id].street],
-                            zip: [this.myaccount.data[id].postcode],
-                            countryid: [this.myaccount.data[id].country_id],
+                            firstname: [this.reverseCartData[id].firstname, Validators.required],
+                            lastname: [this.reverseCartData[id].lastname, Validators.required],
+                            city: [this.reverseCartData[id].city, Validators.required],
+                            company: [this.reverseCartData[id].company],
+                            telephone: [this.reverseCartData[id].telephone, Validators.required],
+                            fax: [this.reverseCartData[id].fax ],
+                            street: [this.reverseCartData[id].street , Validators.required],
+                            zip: [this.reverseCartData[id].postcode , Validators.required],
+                            countryid: [this.reverseCartData[id].country_id , Validators.required],
                             entity_id: [entity_id],
                             secret: [secret]
                         })
@@ -117,15 +119,15 @@ export class MyEditAccountPage implements OnInit {
         } else {
           this.spin = false;
             this.updateform = this._fb.group({
-                firstname: [''],
-                lastname: [''],
-                city: [''],
+                firstname: ['', Validators.required],
+                lastname: ['', Validators.required],
+                city: ['', Validators.required],
                 company: [''],
-                telephone: [''],
+                telephone: ['', Validators.required],
                 fax: [''],
-                street: [''],
-                zip: [''],
-                countryid: [''],
+                street: ['', Validators.required],
+                zip: ['', Validators.required],
+                countryid: ['', Validators.required],
                 entity_id: [''],
                 secret: [secret]
             })
@@ -133,6 +135,7 @@ export class MyEditAccountPage implements OnInit {
     }
     update(value: any) {
         this.upd_spin = true;
+        console.log(value);
         this._editaccount.updateAccount(value).then((res) => {
                 this.upd_spin = false;
                 this.editaccount = res;

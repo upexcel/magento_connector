@@ -5,6 +5,7 @@ import {MyAccountAddressDataType} from './myaccountData';
 export class MyAccount {
     constructor(private _apiService: ApiService) { }
     getMyAccount(data):Promise<MyAccountAddressDataType> {
+      console.log(data);
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
             apiservice.api("account/address/", data).subscribe((res) => {

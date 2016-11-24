@@ -11,7 +11,8 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+
+<ion-content class="submitreview">
     <ion-list>
         <ion-item>
             <p class="uppercase"> HOW DO YOU RATE THIS PRODUCT?</p>  
@@ -41,5 +42,5 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-        <button class="reviewSubmit" ion-button   full class=" botton reviewSubmit" (click)="submitReview()" ><p  *ngIf="submitSuccessful==false">SUBMIT REVIEWS</p><ion-spinner class="spin" *ngIf="submitSuccessful"></ion-spinner></button>
+    <button class="reviewSubmit" ion-button   full class=" botton reviewSubmit" (click)="submitReview()" ><p  *ngIf="submitSuccessful==false">SUBMIT REVIEWS</p><ion-spinner class="spin" *ngIf="submitSuccessful"></ion-spinner></button>
 </ion-footer>
