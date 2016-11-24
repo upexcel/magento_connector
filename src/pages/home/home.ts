@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-//                    navigator.app.exitApp()
+                    navigator.app.exitApp()
                 }
             } else {
                 this._navCtrl.pop();
