@@ -27,7 +27,7 @@ export class CategoryProductPage implements OnInit {
     ngOnInit() {
         this.access_token=this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
-            if(this.access_token!=null || userData.access_token!=null){
+            if(this.access_token!=null || userData!=null){
               this.showPopOver=true;
             }else{
               this.showPopOver=false;

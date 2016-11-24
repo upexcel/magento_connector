@@ -10,6 +10,7 @@ import {HomePage} from '../../pages/home/home';
 import { ConfigDataType } from '../takeTour/configDataType';
 import { SocialAccountDataType } from './socialAccountDataType';
 import { SocialAccount } from './../../model/startPage/socialAccount';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
     templateUrl: 'startpage.html'
 })
@@ -21,7 +22,7 @@ export class StartPage implements OnInit {
     options: {};
     constructor(private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
-        private _modelCtrl: ModalController) {
+        private _modelCtrl: ModalController, private _appConfigService: AppDataConfigService) {
     }
 
     ngOnInit() {
@@ -49,17 +50,17 @@ export class StartPage implements OnInit {
         profileModal.present();
     }
     userFbLogin(body) {
-        this._socialAccount.getSocialAccount(body.data).then((res) => {
+        this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this.socialData = res;
-            this._local.set("access_token", body.token.access_token);
-            this._navCtrl.setRoot(HomePage);
+            this._appConfigService.setUserData(res.data);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.data.access_token});
         });
     }
     userGoogleLogin(body) {
-        this._socialAccount.getSocialAccount(body).then((res) => {
+        this._socialAccount.getSocialAccount(body).then((res: any) => {
             this.socialData = res;
-            this._local.set("googleData", body);
-            this._navCtrl.setRoot(HomePage);
+            this._appConfigService.setUserData(res.data);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.data.access_token});
         });
     }
     showSocialLoginError(error) {

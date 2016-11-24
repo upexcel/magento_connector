@@ -1,5 +1,6 @@
 <header></header>
-<ion-content class="home1 marTop80">
+
+<ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -9,7 +10,7 @@
 
         </ion-refresher-content>
     </ion-refresher>
-            <category-view *ngIf="categoryProduct" [product]="categoryProduct.data"></category-view>
+    <category-view *ngIf="categoryProduct" [product]="categoryProduct"></category-view>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>

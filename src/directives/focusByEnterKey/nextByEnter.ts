@@ -12,9 +12,10 @@ export class FocusByEnterKey {
         if ((e.which == 13 || e.keyCode == 13)) {
             if (this.id != "btn") {
                 e.preventDefault();
-                //var ele = document.getElementById(this.id);
-              //  let child = ele.childNodes[0];
+                var ele = document.getElementById(this.id);
+                let child = ele.childNodes[0];
                 //child.focus();
+
                 return;
             }
             else {

@@ -30,6 +30,7 @@ export class PopoverPage {
     }
     logout() {      
         this._logout.logout(this.msg,this._navCtrl);                  
-          this.close();
+        this.close();
+        this._navCtrl.setRoot(StartPage, { "message": this.msg });
     }
 }

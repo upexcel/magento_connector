@@ -35,7 +35,7 @@ export class SubmitReview implements OnInit {
     }
     ngOnInit() {
             this._appConfigService.getUserData().then((userData: any) => {
-            if (userData.access_token != null) {
+            if (userData != null) {
                 this.reviewDataNickname = userData.firstname;
                 this.hideByLogin = false;
             } else {
