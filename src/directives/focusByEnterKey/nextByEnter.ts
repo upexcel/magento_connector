@@ -13,8 +13,14 @@ export class FocusByEnterKey {
             if (this.id != "btn") {
                 e.preventDefault();
                 var ele = document.getElementById(this.id);
-                let child = ele.childNodes[0];
-                //child.focus();
+                    for (let i = 0; i < ele.childNodes.length; i++) {
+                    let FatchTagName = ele.childNodes[i].nodeName;
+                    if(FatchTagName=="INPUT"){
+                    console.log(ele.childNodes[i])
+                    //ele.childNodes[i].click();
+                    break;
+                    }
+    }
                 return;
             }
             else {
