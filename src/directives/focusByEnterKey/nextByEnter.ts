@@ -14,7 +14,8 @@ export class FocusByEnterKey {
                 e.preventDefault();
                 var ele = document.getElementById(this.id);
                 let child = ele.childNodes[0];
-                //                child.focus();
+                //child.focus();
+
                 return;
             }
             else {
