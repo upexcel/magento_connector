@@ -15,17 +15,10 @@ export class MyApp implements OnInit {
 
     public _rootPage: any;
     constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
-        console.log(this._platform);
-
     }
     ngOnInit() {
         this._platform.ready().then(() => {
-            if (this._platform.is('ios')) {
-                StatusBar.hide();
-            } else {
-                StatusBar.styleDefault();
-            }
-
+            StatusBar.styleDefault();
             this.appCheckConfig();
         });
     }
@@ -36,7 +29,7 @@ export class MyApp implements OnInit {
             }
             else {
                 this._appConfigService.cleanUp();
-                this._rootPage = StartPage;
+                this._rootPage = HomePage;
             }
         })
 
