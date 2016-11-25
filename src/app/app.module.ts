@@ -48,6 +48,7 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
+import { CountryService } from '../providers/myAccount-service/country';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -153,7 +154,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         AppDataConfigService,
         sliderService,
         homeProductsService,
-        categoryService ]
+        categoryService,
+        CountryService ]
 })
 export class AppModule {
 
