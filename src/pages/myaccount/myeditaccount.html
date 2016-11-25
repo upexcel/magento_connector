@@ -35,7 +35,7 @@
                 <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
                 <ion-input type="number" min="0" formControlName="zip" id="Pin" [onReturn]='"Country"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
-            <ion-item class="no-padding" *ngIf="counrtyName">
+            <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                             <ion-label stacked>Country<span color="danger">*</span></ion-label>
                             <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
                             <span *ngFor="let name of counrtyName.data.country">
@@ -45,12 +45,12 @@
                              </span>   
                             </ion-select>
             </ion-item>
-            <ion-item>
-            <ion-label>Make it your default billing Address</ion-label>
+            <ion-item class="no-padding" no-lines>
+            <ion-label class="font13">Make it your default billing Address</ion-label>
             <ion-checkbox color="dark" checked="true"></ion-checkbox>
             </ion-item>
-            <ion-item>
-            <ion-label>Make it your default shipping Address</ion-label>
+            <ion-item class="no-padding" no-lines>
+            <ion-label class="font13">Make it your default shipping Address</ion-label>
             <ion-checkbox color="dark" checked="true"></ion-checkbox>
             </ion-item>
         </ion-list>

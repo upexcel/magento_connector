@@ -1,11 +1,7 @@
 <header></header>
 <ion-content class="myaccount">
     <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
-            pullingIcon="arrow-dropdown"
-            pullingText="Pull to refresh"
-            refreshingSpinner="circles"
-            refreshingText="Refreshing...">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
 
         </ion-refresher-content>
     </ion-refresher>
@@ -15,20 +11,70 @@
     <ion-list *ngIf="showAddress">
         <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-card *ngFor="let address of reverseCartData ; let id=index">
-            <ion-card-content>
-            <ion-buttons end>
-                    <button ion-button color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id)">
+            <ion-card-content class="paddTop">
+                <ion-buttons end>
+                    <button ion-button class="iconTransparent" color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id)">
                      <ion-icon name="more"></ion-icon>
             </button>
-                </ion-buttons >
-                <h2>{{address.firstname+" "+address.lastname}}</h2>
-                <p>City: {{address.city}}</p>
-                <p>Company: {{address.company}}</p>
-                <p>Street: {{address.street}}</p>
-                <p>Fax: {{address.fax}}</p>
-                <p>Pin Code: {{address.postcode}}</p>
-                <p>Country: {{address.country_id}}</p>
-                <p>Telephone: {{address.telephone}}</p>
+                </ion-buttons>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col width-20>
+                        </ion-col>
+                        <ion-col width-80>
+                            <h2 class="capitalize">{{address.firstname+" "+address.lastname}}</h2>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col width-20>
+                            <ion-buttons >
+                                <button class="iconTransparent" color="light" ion-button  icon-only small>
+                     <ion-icon name="call"></ion-icon>
+            </button>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col width-80>
+                         <p class="lineHeight"> {{address.telephone}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col width-20>
+                            <ion-buttons >
+                                <button class="iconTransparent" color="light" ion-button  icon-only small>
+                     <ion-icon name="pin"></ion-icon>
+               </button>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col  width-80>
+                        <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_id}}-{{address.postcode}}</p>                        
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col width-20>
+                            <ion-buttons >
+                                <button class="iconTransparent" color="light" ion-button  icon-only small>
+                     <ion-icon name="pin"></ion-icon>
+               </button>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col  width-80>
+                        <p class="capitalize lineHeight"> {{address.company}}</p>                        
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col width-20>
+                            <ion-buttons >
+                                <button class="iconTransparent" color="light" ion-button  icon-only small>
+                     <ion-icon name="print"></ion-icon>
+               </button>
+                            </ion-buttons>
+                        </ion-col>
+                        <ion-col  width-80>
+                        <p class="lineHeight">Fax: {{address.fax}}</p>              
+                        </ion-col>
+                    </ion-row>                    
+                </ion-grid>
             </ion-card-content>
         </ion-card>
     </ion-list>

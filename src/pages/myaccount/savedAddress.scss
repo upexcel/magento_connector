@@ -2,4 +2,20 @@ saved-address{
 	.back-button {
     display: block !important;
 }
+.cartData:nth-child(1) {
+color:black;
+}
+.iconTransparent 
+{
+	background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+.lineHeight{
+    line-height: 2;
+}
+.paddTop{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
 }

@@ -29,8 +29,9 @@ import {
 } from 'ionic-angular';
 
 @Component({
+     selector: 'popover',
     template: `
-    <ion-list>
+    <ion-list class="popover">
       <button ion-item (click)="editAccount()">Edit</button>
       <button ion-item (click)="deleteAccount()">Delete</button>
     </ion-list>
@@ -49,12 +50,10 @@ export class AccountPopoverPage {
         if (this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
-            console.log(this._navParams.data)
-            console.log(this.id);
-            console.log(this.entity_id);
         }
     }
     editAccount() {
+        this.close();
         this._navCtrl.push(MyEditAccountPage, {
             "title": "Edit Address",
             "id": this.id,
@@ -62,6 +61,7 @@ export class AccountPopoverPage {
         })
     }
     deleteAccount() {
+        this.close();
         let data = {
             entity_id: this.entity_id,
             secret: this.secret

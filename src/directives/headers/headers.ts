@@ -18,6 +18,7 @@ export class Headers implements AfterContentInit{
   title:string;
   pagename:string;
   showLogin:boolean;
+  show:boolean=true;
   constructor(private _appConfigService: AppDataConfigService,private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ }
   ngAfterContentInit(){
     this._events.subscribe('title', (title) => {
@@ -37,8 +38,8 @@ export class Headers implements AfterContentInit{
           this.showPopOver=false;
         }
         });
-        if(this.type){
-          this.showPopOver=false;
+        if(this.type==true){
+          this.show=false;
         }
 
   }

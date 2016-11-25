@@ -50,6 +50,9 @@ import {
 import {
     Country
 } from './../../model/myaccount/country';
+import {
+    ViewController
+} from 'ionic-angular';
 import reverse from 'lodash/reverse';
 @Component({
     templateUrl: 'myeditaccount.html'
@@ -66,7 +69,7 @@ export class MyEditAccountPage implements OnInit {
     message: string = "Token expired";
     counrtyName: any;
     reverseCartData:any;
-    constructor(private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
+    constructor(public viewCtrl: ViewController,private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -135,7 +138,7 @@ export class MyEditAccountPage implements OnInit {
     }
     update(value: any) {
         this.upd_spin = true;
-        console.log(value);
+        this.viewCtrl.dismiss();
         this._editaccount.updateAccount(value).then((res) => {
                 this.upd_spin = false;
                 this.editaccount = res;
