@@ -51,7 +51,7 @@ export class RegisterPage implements OnInit {
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(res.data);
-                 this._toast.toast("Wellcome "+ logvalue.firstname,3000);
+                 this._toast.toast("Welcome "+ logvalue.firstname,3000);
                  this._navCtrl.setRoot(HomePage,{"access_token":this.data.data.access_token});
             }
             else {
