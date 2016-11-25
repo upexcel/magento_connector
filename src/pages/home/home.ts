@@ -41,11 +41,11 @@ export class HomePage implements OnInit {
             if (this._viewController.isLast() && this._viewController.isFirst()) {
                 if (!this.backPressed) {
                     this.backPressed = true;
-                    this._toast.toast('Press Again For Exit App', 3000, "top");
+                    this._toast.toast('Press Again For Exit App', 3000);
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-//                    navigator.app.exitApp()
+                    navigator.app.exitApp()
                 }
             } else {
                 this._navCtrl.pop();
