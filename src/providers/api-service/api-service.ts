@@ -7,14 +7,16 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import {Subject} from 'rxjs/Rx';
+import {Platform} from 'ionic-angular';
 @Injectable()
 export class ApiService {
-    constructor(private _local: Storage, private _http: Http) { }
+    constructor(private _local: Storage, private _http: Http, private _platform: Platform) { }
     api(path, body) {
         var subject = new Subject();
         this._local.get('userData').then((userData) => {
             var self = this;
             var headers;
+            body.mobile_width = this._platform.width();
             let api_url = config.api_Url + path;
             if (userData !== null) {
                 headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });

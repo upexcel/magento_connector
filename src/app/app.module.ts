@@ -63,6 +63,7 @@ import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
+import { ImageDirective } from '../directives/image/image.directive';
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -96,7 +97,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         ProductReview,
         SubmitReview,
         FocusByEnterKey,
-        EqualValidator
+        EqualValidator,
+        ImageDirective
     ],
     imports: [
         IonicModule.forRoot(MyApp)
