@@ -67,7 +67,6 @@ export class MySavedAddressPage implements OnInit {
     }
     ngOnInit() {
         this.getInitAdd();
-
     }
     getInitAdd() {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -124,6 +123,12 @@ export class MySavedAddressPage implements OnInit {
         popover.present({
             ev: myEvent,
         });     
+    }
+    doRefresh(refresher) {
+        this.getInitAdd();
+        setTimeout(() => {
+            refresher.complete();
+        }, 2000);
     }
     addNewAddress() {
     this.addAddr=true;

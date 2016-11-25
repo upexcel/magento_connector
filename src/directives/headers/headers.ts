@@ -12,7 +12,7 @@ import { CartPage } from '../../pages/cart/cart';
 })
 
 export class Headers implements AfterContentInit{
-
+  @Input() type;
   showPopOver:boolean=false;
   access_token:string;
   title:string;
@@ -37,6 +37,10 @@ export class Headers implements AfterContentInit{
           this.showPopOver=false;
         }
         });
+        if(this.type){
+          this.showPopOver=false;
+        }
+
   }
   openMenu() {
       this._menuCtrl.toggle();

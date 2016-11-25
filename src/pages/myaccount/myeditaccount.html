@@ -1,6 +1,5 @@
-<header></header>
+<header [type]="true"></header>
 <ion-content class="myaccount">
-
     <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="spin==false">
         <ion-list inset>
@@ -47,7 +46,11 @@
                             </ion-select>
             </ion-item>
             <ion-item>
-            <ion-label>Daenerys Targaryen</ion-label>
+            <ion-label>Make it your default billing Address</ion-label>
+            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+            <ion-label>Make it your default shipping Address</ion-label>
             <ion-checkbox color="dark" checked="true"></ion-checkbox>
             </ion-item>
         </ion-list>

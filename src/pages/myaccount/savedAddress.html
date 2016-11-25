@@ -1,5 +1,14 @@
 <header></header>
 <ion-content class="myaccount">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+
+        </ion-refresher-content>
+    </ion-refresher>
     <ion-list *ngIf="showAddress==false">
         <h2 text-center>You have no saved address</h2>
     </ion-list>

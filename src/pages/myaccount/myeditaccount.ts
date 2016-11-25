@@ -157,4 +157,5 @@ export class MyEditAccountPage implements OnInit {
     logout() {
         this._logout.logout(this.message, this._navCtrl);
     }
+
 }
