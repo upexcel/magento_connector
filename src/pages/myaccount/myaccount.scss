@@ -1,5 +1,4 @@
 .myaccount {
-    // margin-top: 56px;
     ion-scroll {
         position: initial;
     }
@@ -15,13 +14,12 @@
     ion-card{
         padding-bottom: 20px;
     }
-    #pad57{
-          padding-top: 57px;
-          padding-bottom: 2.5em;
-    }
+.paddRt{
+    padding-right: 5px !important;
 }
 .saveAddress {
   position:fixed;
   bottom:0px;
+}
 }
 

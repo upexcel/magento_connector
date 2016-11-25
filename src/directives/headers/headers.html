@@ -7,7 +7,7 @@
             {{title}}
         </ion-title>
         <ion-buttons end >
-            <button  ion-button icon-only (click)="presentPopover($event)" *ngIf="showPopOver">
+            <button  ion-button icon-only  *ngIf="showPopOver &&  show" (click)="presentPopover($event)">
                      <ion-icon name="more"></ion-icon>
             </button>
             <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">

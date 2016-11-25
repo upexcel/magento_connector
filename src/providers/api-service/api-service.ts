@@ -16,6 +16,7 @@ export class ApiService {
             var self = this;
             var headers;
             let api_url = config.api_Url + path;
+
             if (userData !== null) {
                 headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
             } else {
