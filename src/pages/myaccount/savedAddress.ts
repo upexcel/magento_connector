@@ -59,10 +59,14 @@ export class MySavedAddressPage implements OnInit {
     message: string = "Token expired";
     constructor( private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this._events.subscribe('api:savedaddress', (savedaddress) => {
+            if(savedaddress){
             this.getInitAdd();
+        }
         });
         this._events.subscribe('user:deleted', (deleted) => {
+            if(deleted){
             this.getInitAdd();  
+            }
         });
     }
     ngOnInit() {

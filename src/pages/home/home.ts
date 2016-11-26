@@ -23,6 +23,9 @@ export class HomePage implements OnInit {
     ngOnInit() {
         this.homeProducts();
         this.checkBackButton();
+        this._events.subscribe('api:review', (review) => {
+        this.homeProducts();  
+        });
     }
     homeProducts() {
         this.spin = true;
