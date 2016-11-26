@@ -14,7 +14,8 @@ export class FocusByEnterKey {
             if (this.id != "btn") {
                 e.preventDefault();
                 var form = Zepto('#' + this.id)
-                form[0].children[0].focus();
+                form.find('input, select').focus();
+
             }
             else {
                 //  console.log('submit');

@@ -12,12 +12,13 @@ import { CartPage } from '../../pages/cart/cart';
 })
 
 export class Headers implements AfterContentInit{
-
+  @Input() type;
   showPopOver:boolean=false;
   access_token:string;
   title:string;
   pagename:string;
   showLogin:boolean;
+  show:boolean=true;
   constructor(private _appConfigService: AppDataConfigService,private _events:Events,private _navParams:NavParams,private _menuCtrl:MenuController,private _local:Storage,private _popoverCtrl: PopoverController,private _navCtrl:NavController){ }
   ngAfterContentInit(){
     this._events.subscribe('title', (title) => {
@@ -37,6 +38,10 @@ export class Headers implements AfterContentInit{
           this.showPopOver=false;
         }
         });
+        if(this.type==true){
+          this.show=false;
+        }
+
   }
   openMenu() {
       this._menuCtrl.toggle();

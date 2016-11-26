@@ -33,6 +33,7 @@ import { Forgot } from '../model/forgot/forgot';
 import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
 import { TotalOrder } from '../model/orderList/totalOrder';
 import {MyAccount} from '../model/myaccount/myaccount';
+import { Country } from '../model/myaccount/country';
 import {EditAccount} from '../model/myaccount/editAccount';
 import {OrderIdDetail} from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
@@ -47,6 +48,7 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
+import { CountryService } from '../providers/myAccount-service/country';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -57,12 +59,13 @@ import { ProductReview } from '../components/reviewProduct/ReviewProduct';
 import { SubmitReview } from '../components/submitReview/SubmitReview';
 import { SliderComponent } from '../components/slider/Slider';
 import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
-
+import { AccountPopoverPage } from '../components/myAccountPopOver/myAccountPopOver';
 //directives
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
+
 //pipe
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -79,6 +82,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         ChangepasswordPage,
         ForgotPage,
         CategoryComponent,
+        AccountPopoverPage,
         HomePage,
         CategoryProductPage,
         OrderModalPage,
@@ -112,6 +116,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         OrderlistPage,
         OrderModalPage,
         ChangepasswordPage,
+        AccountPopoverPage,
         ForgotPage,
         HomePage,
         CategoryProductPage,
@@ -122,8 +127,9 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         PopoverPage,
         SubmitReview
     ],
-    providers: [Storage,
+    providers: [
         AppConfig,
+        Storage,
         ApiService,
         CartService,
         SocialService,
@@ -139,6 +145,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         ChangePwd,
         TotalOrder,
         MyAccount,
+        Country,
         EditAccount,
         SocialAccount,
         OrderIdDetail,
@@ -147,7 +154,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         AppDataConfigService,
         sliderService,
         homeProductsService,
-        categoryService ]
+        categoryService,
+        CountryService ]
 })
 export class AppModule {
 
