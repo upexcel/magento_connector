@@ -29,4 +29,13 @@
         border-width: 1px;
         border-bottom-color: $lightGray;
     }
+    .iconTransparent 
+    {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    }
+    .lineHeight{
+    line-height: 2.5;
+}
 }

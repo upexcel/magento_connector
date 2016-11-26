@@ -25,18 +25,18 @@
                             <ion-row class="qtyborder">
                                 <ion-col width-33 >
                                     <ion-buttons>
-                                        <button ion-button icon-only (click)=remove(data) *ngIf="data.quantity>1" >
+                                        <button class="iconTransparent" color="light" ion-button icon-only small (click)=remove(data) *ngIf="data.quantity>1" >
                                                 <ion-icon name="remove">
                                             </ion-icon>
                                         </button>
                                     </ion-buttons>
                                 </ion-col>
                                 <ion-col class="aligncenter" width-33>
-                                    <p class="font20" id="marLeft20 marTop10">{{data.quantity}}</p>
+                                    <p class="font20 lineHeight" id="marLeft20 marTop10">{{data.quantity}}</p>
                                 </ion-col>
                                 <ion-col width-33 class="alignright" (click)=add(data)>
                                     <ion-buttons>
-                                        <button  ion-button icon-only>
+                                        <button class="iconTransparent" color="light" small ion-button icon-only>
                                             <ion-icon name="add">
                                             </ion-icon>
                                         </button>

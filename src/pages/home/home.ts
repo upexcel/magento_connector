@@ -21,6 +21,9 @@ export class HomePage implements OnInit {
     ngOnInit() {
         this.homeProducts();
         this.checkBackButton();
+        this._events.subscribe('api:review', (review) => {
+        this.homeProducts();  
+        });
     }
     ionViewDidEnter() {
         setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
