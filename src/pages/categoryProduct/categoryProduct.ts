@@ -36,9 +36,7 @@ export class CategoryProductPage implements OnInit {
         });
         this.show_products(this.product_id, this.page, this.limit);
     }
-    ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:this.title}); } , 0)
-    }
+   
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {

@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
     show_form: boolean = false;
     data: LoginDataType;
     forgotPasswordEmail:any;
+    title:string='LOGIN'
     constructor(private _toast:ToastService, private _events:Events,private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
@@ -31,9 +32,7 @@ export class LoginPage implements OnInit {
             });
         });
     }
-    ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:"LOGIN"}); } , 0)
-    }
+  
     gotoreg() {
         this._navCtrl.push(RegisterPage);
     }

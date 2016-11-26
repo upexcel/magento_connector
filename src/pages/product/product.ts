@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, LoadingController, Events} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { productDataType  } from './../product/productDataType';
+import { productDataType } from './../product/productDataType';
 import { Product } from '../../model/product/getProduct';
 import { Cart } from '../../model/product/cart';
-import {  cartDataType } from './../product/cartDataType';
-import {ToastService} from './../../providers/toast-service/toastService';
+import { cartDataType } from './../product/cartDataType';
+import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
@@ -44,7 +44,7 @@ export class ProductPage implements OnInit {
     data: any;
     reviewData = [];
 
-    constructor(private _appConfigService: AppDataConfigService,private _toast: ToastService,public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = { sku: id };
     }
@@ -73,9 +73,7 @@ export class ProductPage implements OnInit {
 
         })
     }
-    ionViewDidEnter() {
-        setTimeout(() => { this._events.publish("title", { title: this.product, pagename: "product" }); }, 0)
-    }
+
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -133,61 +131,62 @@ export class ProductPage implements OnInit {
         let path: any;
         let data: any;
         //gather data for send in add cart servive
-        let sku: string = response.data.sku;
-        let img: string = response.data.media_images[0];
-        let price: number = response.data.display_price;
-        let name: string = response.data.name;
+        console.log(response)
+        let sku: string = response.sku;
+        let img: string = response.media_images[0];
+        let price: number = response.display_price;
+        let name: string = response.name;
         let type: string = this.productData.data.type;
         let other;
         let productid: string = this.productData.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
-                this._local.get('store_id').then((store_id: any) => {
-                    data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-                    other = data;
-                    //check type of data for send data in cart api
-                    if (type == "configurable") {
-                        forEach(this.selectedList, function(listdata, key) {
-                            array[key] = listdata.id;
-                        });
-                        selectedItem = (array);
-                        path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-                        other = merge(data, selectedItem);
-                        let ser = this.productData.data.associated_products.attributes;
-                        this._local.get('search').then((search: any) => {
-                            if (search) {
-                                this.search = search;
-                                this.search.push(ser);
-                                this._local.set('search', uniqWith(this.search, isEqual));
+            this._local.get('store_id').then((store_id: any) => {
+                data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
+                other = data;
+                //check type of data for send data in cart api
+                if (type == "configurable") {
+                    forEach(this.selectedList, function(listdata, key) {
+                        array[key] = listdata.id;
+                    });
+                    selectedItem = (array);
+                    path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+                    other = merge(data, selectedItem);
+                    let ser = this.productData.data.associated_products.attributes;
+                    this._local.get('search').then((search: any) => {
+                        if (search) {
+                            this.search = search;
+                            this.search.push(ser);
+                            this._local.set('search', uniqWith(this.search, isEqual));
+                        }
+                        else {
+                            this.search.push(ser);
+                            this._local.set('search', uniqWith(this.search, isEqual));
+                        }
+
+                    });
+                }
+                else {
+                    path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+                }
+
+                //cart api
+                this._cart.getCart(path).then((res) => {
+                    if (res) {
+                        //add to cart service
+                        this._cartService.addCart(other, this.keys).then((response: any) => {
+                            this.cartData = response;
+                            if (this.cartData.data != "undefined") {
+                                this._toast.toast("item inserted ", 3000, "top");
+                                this._navCtrl.push(CartPage);
                             }
                             else {
-                                this.search.push(ser);
-                                this._local.set('search', uniqWith(this.search, isEqual));
                             }
-
                         });
                     }
-                    else {
-                        path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-                    }
-
-                    //cart api
-                    this._cart.getCart(path).then((res) => {
-                        if (res) {
-                            //add to cart service
-                            this._cartService.addCart(other, this.keys).then((response: any) => {
-                                this.cartData = response;
-                                if (this.cartData.data != "undefined") {
-                                  this._toast.toast("item inserted " ,3000,"top");  
-                                    this._navCtrl.push(CartPage);
-                                }
-                                else {
-                                }
-                            });
-                        }
-                    }).catch((err) => {
-                      this._toast.toast(err ,3000,"top"); 
-                    })
-                });
-        });    
+                }).catch((err) => {
+                    this._toast.toast(err, 3000, "top");
+                })
+            });
+        });
     }
 }
