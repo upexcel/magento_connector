@@ -144,7 +144,7 @@ export class MyEditAccountPage implements OnInit {
                 this.editaccount = res;
                 if (this.editaccount.status === 1) {
                     this._events.publish('api:savedaddress', true);
-                    this._navCtrl.pop();
+                    // this._navCtrl.pop();
                 } else {
                     this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
                 }
