@@ -44,7 +44,6 @@ export class CategoryProductPage implements OnInit {
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct = res;
-            console.log(res);
         })
             .catch((err) => {
             });

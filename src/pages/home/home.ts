@@ -31,7 +31,6 @@ export class HomePage implements OnInit {
         let body = { "type": "large_data" }
         this._homeProductsConfig.getHomeProducts().then((res) => {
             if (res) {
-                console.log(res);
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct, this.start, this.end);
                 this.spin = false;
