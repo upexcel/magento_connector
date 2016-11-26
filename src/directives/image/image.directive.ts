@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, Renderer, HostListener } from '@angular/core';
 @Directive({
-			 selector: '[imgageDirective]',
+			 selector: '[imageDirective]',
 			 host: { '(load)': 'handleLoad()' }
 		  })
 export class ImageDirective {
@@ -10,7 +10,6 @@ export class ImageDirective {
     	})
     }
     handleLoad(){
-    	console.log('load')
     	setTimeout(()=>{
     		this.renderer.setElementStyle(this._el.nativeElement, 'display', 'block');
     		this._el.nativeElement.nextElementSibling.outerHTML = '';

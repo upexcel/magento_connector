@@ -1,15 +1,15 @@
-import { Component, OnInit} from '@angular/core';
-import { NavController, PopoverController,Events} from 'ionic-angular';
-import {ApiService} from './../../providers/api-service/api-service';
-import {PopoverPage} from './../../components/popover/popover';
-import {OrderModalPage} from '../orderid-detail/orderid-detail';
-import {StartPage} from './../../pages/startpage/startpage';
+import { Component, OnInit } from '@angular/core';
+import { NavController, PopoverController, Events } from 'ionic-angular';
+import { ApiService } from './../../providers/api-service/api-service';
+import { PopoverPage } from './../../components/popover/popover';
+import { OrderModalPage } from '../orderid-detail/orderid-detail';
+import { StartPage } from './../../pages/startpage/startpage';
 import { TotalOrder } from '../../model/orderList/totalOrder';
 import { Storage } from '@ionic/storage';
-import {GooglePlus} from 'ionic-native';
+import { GooglePlus } from 'ionic-native';
 import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
 import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
-import {LogoutService} from './../../providers/logout/logout-service';
+import { LogoutService } from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import uniq from 'lodash/uniq';
@@ -21,8 +21,8 @@ import forEach from 'lodash/forEach';
     templateUrl: 'orderlist.html'
 })
 export class OrderlistPage implements OnInit {
-    totalOrder:TotalOrderDataType;
-    totalOrderList:OrderListDataType;
+    totalOrder: TotalOrderDataType;
+    totalOrderList: OrderListDataType;
     firstname: string;
     lastname: string;
     res: any;
@@ -39,8 +39,8 @@ export class OrderlistPage implements OnInit {
     endArray: number = 4;
     startDateArray: number = 0;
     endDateArray: number = 2;
-    message:string="Token expired";
-    constructor(private _appConfigService: AppDataConfigService,private _logout:LogoutService, private _events:Events,private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    message: string = "Token expired";
+    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
             this.secret = userData.secret;
@@ -50,17 +50,15 @@ export class OrderlistPage implements OnInit {
             this.selectedOrder_details();
         });
     }
-    ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:"My Orders"}); } , 0)
-      }
+
     total_orders() {
         var body = { "secret": this.secret }
         this._order.getTotalOrder(body).then((res) => {
-                this.totalOrder=res;
+            this.totalOrder = res;
         })
-        .catch(err=>{
-          this.logout();
-        });
+            .catch(err => {
+                this.logout();
+            });
     }
 
     selectedOrder_details() {
@@ -71,7 +69,7 @@ export class OrderlistPage implements OnInit {
         let datas: any;
         this._order.getOrderList(body).then((res) => {
             this.spin = false;
-            this.totalOrderList=res;
+            this.totalOrderList = res;
             if (this.totalOrderList.data == 0) {
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
@@ -89,9 +87,9 @@ export class OrderlistPage implements OnInit {
                 this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
             }
         })
-        .catch((err)=>{
-              this.logout();
-        })
+            .catch((err) => {
+                this.logout();
+            })
     }
     doInfinite(infiniteScroll) {
         if (this.values.length % 2 == 0 || this.dates.length % 2 == 0) {
@@ -144,6 +142,6 @@ export class OrderlistPage implements OnInit {
         this._navCtrl.pop();
     }
     logout() {
-     this._logout.logout(this.message,this._navCtrl);
+        this._logout.logout(this.message, this._navCtrl);
     }
 }

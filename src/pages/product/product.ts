@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
     Component,
     Input,
@@ -39,6 +40,20 @@ import {
 import {
     Storage
 } from '@ionic/storage';
+=======
+import { Component, Input, OnInit } from '@angular/core';
+import { CartPage } from '../cart/cart';
+import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { ApiService } from './../../providers/api-service/api-service';
+import { CartService } from './../../providers/cart-service/cart-service';
+import { productDataType } from './../product/productDataType';
+import { Product } from '../../model/product/getProduct';
+import { Cart } from '../../model/product/cart';
+import { cartDataType } from './../product/cartDataType';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { Storage } from '@ionic/storage';
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
@@ -87,7 +102,6 @@ export class ProductPage implements OnInit {
     }
     products() {
         this.product = "Product";
-        this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             this.productData = res;
             if (res) {
@@ -111,6 +125,7 @@ export class ProductPage implements OnInit {
 
         })
     }
+<<<<<<< HEAD
     ionViewDidEnter() {
         setTimeout(() => {
             this._events.publish("title", {
@@ -119,6 +134,9 @@ export class ProductPage implements OnInit {
             });
         }, 0)
     }
+=======
+
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -162,14 +180,6 @@ export class ProductPage implements OnInit {
         }
 
     }
-
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Please wait...",
-            duration: 2000
-        });
-        loader.present();
-    }
     slideClick(img: string) {
         this.images = img;
     }
@@ -182,6 +192,10 @@ export class ProductPage implements OnInit {
         let path: any;
         let data: any;
         //gather data for send in add cart servive
+<<<<<<< HEAD
+=======
+        console.log(response)
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
         let sku: string = response.sku;
         let img: string = response.media_images[0];
         let price: number = response.display_price;
@@ -191,6 +205,7 @@ export class ProductPage implements OnInit {
         let productid: string = this.productData.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
+<<<<<<< HEAD
                 data = {
                     id: sku,
                     img: img,
@@ -199,6 +214,9 @@ export class ProductPage implements OnInit {
                     type: type,
                     quantity: 1
                 };
+=======
+                data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
                 other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
@@ -206,6 +224,7 @@ export class ProductPage implements OnInit {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
+<<<<<<< HEAD
                     path = {
                         "productid": productid,
                         "options": selectedItem,
@@ -213,6 +232,9 @@ export class ProductPage implements OnInit {
                         "secret": userData.secret,
                         "store_id": store_id
                     };
+=======
+                    path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
                     other = merge(data, selectedItem);
                     let ser = this.productData.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
@@ -220,12 +242,18 @@ export class ProductPage implements OnInit {
                             this.search = search;
                             this.search.push(ser);
                             this._local.set('search', uniqWith(this.search, isEqual));
+<<<<<<< HEAD
                         } else {
+=======
+                        }
+                        else {
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
                             this.search.push(ser);
                             this._local.set('search', uniqWith(this.search, isEqual));
                         }
 
                     });
+<<<<<<< HEAD
                 } else {
                     path = {
                         "productid": productid,
@@ -233,6 +261,11 @@ export class ProductPage implements OnInit {
                         "secret": userData.secret,
                         "store_id": store_id
                     };
+=======
+                }
+                else {
+                    path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
                 }
 
                 //cart api
@@ -244,7 +277,13 @@ export class ProductPage implements OnInit {
                             if (this.cartData.data != "undefined") {
                                 this._toast.toast("item inserted ", 3000, "top");
                                 this._navCtrl.push(CartPage);
+<<<<<<< HEAD
                             } else {}
+=======
+                            }
+                            else {
+                            }
+>>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
                         });
                     }
                 }).catch((err) => {

@@ -83,13 +83,7 @@ export class MySavedAddressPage implements OnInit {
             })
             .catch((err) => {})
     }
-    ionViewDidEnter() {
-        setTimeout(() => {
-            this._events.publish("title", {
-                title: "My Address"
-            });
-        }, 0)
-    }
+ 
     getuser_details(secret) {
         this.spin = true;
         let entity_id = null;

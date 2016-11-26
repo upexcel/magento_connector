@@ -33,13 +33,10 @@ export class CategoryProductPage implements OnInit {
             }else{
               this.showPopOver=false;
             }
-        });        
-        this.presentLoading();
+        });
         this.show_products(this.product_id, this.page, this.limit);
     }
-    ionViewDidEnter() {
-       setTimeout( () => {  this._events.publish("title",{title:this.title}); } , 0)
-    }
+   
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
@@ -82,13 +79,6 @@ export class CategoryProductPage implements OnInit {
         popover.present({
             ev: myEvent,
         });
-    }
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Loading...",
-            duration: 2000
-        });
-        loader.present();
     }
     doRefresh(refresher) {
         this.show_products(this.product_id, this.page, this.limit);
