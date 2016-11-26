@@ -16,7 +16,8 @@ export class CategoryProductPage implements OnInit {
     title: string;
     limit: number = 10;
     page: number = 1;
-    categoryProduct: CategoryProductDataType;
+    // categoryProduct: CategoryProductDataType;
+    categoryProduct: any;
     access_token:string;
     showPopOver:boolean=false;
     constructor(private _appConfigService: AppDataConfigService,private _events: Events,private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
@@ -32,8 +33,7 @@ export class CategoryProductPage implements OnInit {
             }else{
               this.showPopOver=false;
             }
-        });        
-        this.presentLoading();
+        });
         this.show_products(this.product_id, this.page, this.limit);
     }
     ionViewDidEnter() {
@@ -49,18 +49,18 @@ export class CategoryProductPage implements OnInit {
     }
     doInfinite(infiniteScroll) {
         var limit = this.limit;
-        if (this.categoryProduct.data.length % 2 == 0) {
-            if (this.categoryProduct.data.length < limit) {
+        if (this.categoryProduct.length % 2 == 0) {
+            if (this.categoryProduct.length < limit) {
                 infiniteScroll.complete();
             }
-            else if (this.categoryProduct.data.length >= limit) {
+            else if (this.categoryProduct.length >= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
                 }, 2000);
             }
-            else if (this.categoryProduct.data.length <= limit) {
+            else if (this.categoryProduct.length <= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
@@ -81,13 +81,6 @@ export class CategoryProductPage implements OnInit {
         popover.present({
             ev: myEvent,
         });
-    }
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Loading...",
-            duration: 2000
-        });
-        loader.present();
     }
     doRefresh(refresher) {
         this.show_products(this.product_id, this.page, this.limit);

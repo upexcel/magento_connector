@@ -21,7 +21,8 @@ import isEqual from 'lodash/isEqual';
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
-    productData: productDataType;
+    // productData: productDataType;
+    productData: any;
     cartData: cartDataType;
     quantity: number;
     sp_priceShow: boolean = false;
@@ -49,22 +50,22 @@ export class ProductPage implements OnInit {
     }
     ngOnInit() {
         this.product = "Product";
-        this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
+            console.log(res);
             this.productData = res;
             if (res) {
                 this.spin = false;
-                this.images = this.productData.data.data.media_images[0];
-                this.price = this.productData.data.data.display_price;
-                this.final_price = this.productData.data.data.display_price;
-                if (this.productData.data.data.type != "configurable") {
+                this.images = this.productData.data.media_images[0];
+                this.price = this.productData.data.display_price;
+                this.final_price = this.productData.data.display_price;
+                if (this.productData.data.type != "configurable") {
                     this.disable = false;
                 }
-                if (this.productData.data.data.special_price > 0) {
+                if (this.productData.data.special_price > 0) {
                     this.sp_priceShow = true;
-                    this.final_price = this.productData.data.data.special_price;
+                    this.final_price = this.productData.data.special_price;
                 }
-                this.product = this.productData.data.data.name;
+                this.product = this.productData.data.name;
                 if (this.productData.data.associated_products) {
                     this.keys = keys(this.productData.data.associated_products.attributes);
                 }
@@ -121,14 +122,6 @@ export class ProductPage implements OnInit {
         }
 
     }
-
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Please wait...",
-            duration: 2000
-        });
-        loader.present();
-    }
     slideClick(img: string) {
         this.images = img;
     }
@@ -145,9 +138,9 @@ export class ProductPage implements OnInit {
         let img: string = response.data.media_images[0];
         let price: number = response.data.display_price;
         let name: string = response.data.name;
-        let type: string = this.productData.data.data.type;
+        let type: string = this.productData.data.type;
         let other;
-        let productid: string = this.productData.data.data.entity_id;
+        let productid: string = this.productData.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
                 this._local.get('store_id').then((store_id: any) => {
                     data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };

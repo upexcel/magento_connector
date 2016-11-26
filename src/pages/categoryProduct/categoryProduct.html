@@ -10,6 +10,7 @@
 
         </ion-refresher-content>
     </ion-refresher>
+    <ion-spinner class="apiSpinner" *ngIf="!categoryProduct"></ion-spinner>
     <category-view *ngIf="categoryProduct" [product]="categoryProduct"></category-view>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>

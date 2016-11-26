@@ -1,6 +1,6 @@
 <header [pagename]="'pruduct'" [title]="product"></header>
 <ion-content class="product">
-    <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+    <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
 
     <ion-grid  no-padding *ngIf="productData">
                <ion-row  responsive-lg responsive-md responsive-sm>
@@ -11,7 +11,7 @@
                 <ion-slides pager #mySlider [options]="mySlideOptions" >
                             <ion-slide>
                         <ion-row class="center">
-                            <ion-col class="maxWT" *ngFor = "let img of productData.data.data.media_images" (click)="slideClick(img)" >
+                            <ion-col class="maxWT" *ngFor = "let img of productData.data.media_images" (click)="slideClick(img)" >
                                      <img src="{{img}}" class="cursorPointer maxHt"/>
                             </ion-col>
                         </ion-row>
@@ -19,7 +19,7 @@
                 </ion-slides>
                 <ion-row class="padLeft10">
                     <ion-col>
-                        <h2 class="capitalize">{{productData.data.data.name}}</h2>
+                        <h2 class="capitalize">{{productData.data.name}}</h2>
                     </ion-col>
                 </ion-row>
                 <ion-row class="padLeft10"> 
@@ -51,7 +51,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.data.data.short_description}}</p>
+                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               
