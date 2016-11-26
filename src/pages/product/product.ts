@@ -50,7 +50,6 @@ export class ProductPage implements OnInit {
     }
     ngOnInit() {
         this.product = "Product";
-        this.presentLoading();
         this._getProduct.getProduct(this.data).then((res) => {
             console.log(res);
             this.productData = res;
@@ -122,14 +121,6 @@ export class ProductPage implements OnInit {
             }
         }
 
-    }
-
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Please wait...",
-            duration: 2000
-        });
-        loader.present();
     }
     slideClick(img: string) {
         this.images = img;

@@ -33,8 +33,7 @@ export class CategoryProductPage implements OnInit {
             }else{
               this.showPopOver=false;
             }
-        });        
-        this.presentLoading();
+        });
         this.show_products(this.product_id, this.page, this.limit);
     }
     ionViewDidEnter() {
@@ -82,13 +81,6 @@ export class CategoryProductPage implements OnInit {
         popover.present({
             ev: myEvent,
         });
-    }
-    presentLoading() {
-        let loader = this._loadingCtrl.create({
-            content: "Loading...",
-            duration: 2000
-        });
-        loader.present();
     }
     doRefresh(refresher) {
         this.show_products(this.product_id, this.page, this.limit);
