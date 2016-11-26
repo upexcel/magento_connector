@@ -1,4 +1,4 @@
-<header></header>
+<header [title]="'My Orders'"></header>
 <ion-content class="orderlist" scroll="true">
     <ion-spinner *ngIf="spin"></ion-spinner>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>

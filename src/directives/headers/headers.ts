@@ -12,7 +12,7 @@ import { CartPage } from '../../pages/cart/cart';
 })
 
 export class Headers implements AfterContentInit {
-    @Input() type:boolean;
+    @Input() type: boolean;
     @Input() title: string = '';
     @Input() loading: boolean;
     @Input() pagename: string = '';
@@ -22,17 +22,11 @@ export class Headers implements AfterContentInit {
     show: boolean = true;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
-        console.log(this.title);
-        //        this._events.subscribe('title', (title) => {
-
-        //            this.title = title[0].title;
-        //            this.pagename = title[0].pagename;
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
             this.showLogin = false;
         } else {
             this.showLogin = true;
         }
-        //        });
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
             if (this.access_token != null || userData != null) {

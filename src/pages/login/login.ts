@@ -32,9 +32,7 @@ export class LoginPage implements OnInit {
             });
         });
     }
-    ionViewDidEnter() {
-//       setTimeout( () => {  this._events.publish("title",{title:"LOGIN"}); } , 0)
-    }
+  
     gotoreg() {
         this._navCtrl.push(RegisterPage);
     }

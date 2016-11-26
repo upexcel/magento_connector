@@ -83,13 +83,7 @@ export class MyEditAccountPage implements OnInit {
             this.counrtyName = name;
         })
     }
-    ionViewDidEnter() {
-        setTimeout(() => {
-            this._events.publish("title", {
-                title: this.title
-            });
-        }, 0)
-    }
+
     getuser_details(id, entity_id, secret) {
         this.spin = true;
         let body = {

@@ -31,9 +31,7 @@ export class ChangepasswordPage implements OnInit {
             this.secret = userData.secret;
         });
     }
-    ionViewDidEnter() {
-        setTimeout(() => { this._events.publish("title", { title: "Change Password" }); }, 0)
-    }
+ 
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
         let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret,access_token:this.access_token }

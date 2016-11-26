@@ -29,9 +29,7 @@ export class CartPage implements OnInit {
             this.entery = true;
         });
     }
-    ionViewDidEnter() {
-//       setTimeout( () => {  this._events.publish("title",{title:"Cart",pagename:"product"}); } , 0)
-    }
+
     add(data) {
         this.local.get('item').then((value: any) => {
             let cartData: any = [];
