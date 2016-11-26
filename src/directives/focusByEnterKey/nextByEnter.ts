@@ -17,9 +17,7 @@ export class FocusByEnterKey {
                 form.find('input, select').focus();
 
             }
-            else {
-                //  console.log('submit');
-            }
+            else { }
         }
 
     }
