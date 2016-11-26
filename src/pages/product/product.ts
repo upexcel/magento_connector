@@ -51,7 +51,6 @@ export class ProductPage implements OnInit {
     ngOnInit() {
         this.product = "Product";
         this._getProduct.getProduct(this.data).then((res) => {
-            console.log(res);
             this.productData = res;
             if (res) {
                 this.spin = false;
