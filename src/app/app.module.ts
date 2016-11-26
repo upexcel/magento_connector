@@ -125,7 +125,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         MySavedAddressPage,
         LoginPage,
         PopoverPage,
-        SubmitReview
+        SubmitReview,
+        Headers
     ],
     providers: [
         AppConfig,

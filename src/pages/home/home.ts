@@ -16,13 +16,15 @@ export class HomePage implements OnInit {
     end: number = 4;
     backPressed: boolean = false;
     public navigator: any;
+    title:string='Home';
+    pagename:string='home'
     constructor(private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) { }
     ngOnInit() {
         this.homeProducts();
         this.checkBackButton();
     }
     ionViewDidEnter() {
-        setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
+//        setTimeout(() => { this._events.publish("title", { title: "Home", pagename: "home" }); }, 0);
     }
 
     homeProducts() {

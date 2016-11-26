@@ -74,7 +74,7 @@ export class ProductPage implements OnInit {
         })
     }
     ionViewDidEnter() {
-        setTimeout(() => { this._events.publish("title", { title: this.product, pagename: "product" }); }, 0)
+//        setTimeout(() => { this._events.publish("title", { title: this.product, pagename: "product" }); }, 0)
     }
     onChange(res, key) {
         let count = 0;
