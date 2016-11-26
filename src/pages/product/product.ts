@@ -1,46 +1,3 @@
-<<<<<<< HEAD
-import {
-    Component,
-    Input,
-    OnInit
-} from '@angular/core';
-import {
-    CartPage
-} from '../cart/cart';
-import {
-    NavController,
-    NavParams,
-    LoadingController,
-    Events
-} from 'ionic-angular';
-import {
-    ApiService
-} from './../../providers/api-service/api-service';
-import {
-    CartService
-} from './../../providers/cart-service/cart-service';
-import {
-    productDataType
-} from './../product/productDataType';
-import {
-    Product
-} from '../../model/product/getProduct';
-import {
-    Cart
-} from '../../model/product/cart';
-import {
-    cartDataType
-} from './../product/cartDataType';
-import {
-    ToastService
-} from './../../providers/toast-service/toastService';
-import {
-    AppDataConfigService
-} from './../../providers/appdataconfig/appdataconfig';
-import {
-    Storage
-} from '@ionic/storage';
-=======
 import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
@@ -53,7 +10,6 @@ import { cartDataType } from './../product/cartDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Storage } from '@ionic/storage';
->>>>>>> 01e32dfc200cc026cefd9b60a50ae596b0cf1591
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
