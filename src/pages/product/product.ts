@@ -248,4 +248,5 @@ export class ProductPage implements OnInit {
             });
         });
     }
+    
 }
