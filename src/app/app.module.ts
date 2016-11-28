@@ -66,6 +66,7 @@ import { Headers} from '../directives/headers/headers';
 import { SideMenu} from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
 import { ImageDirective } from '../directives/image/image.directive';
+import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 
@@ -100,7 +101,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SubmitReview,
         FocusByEnterKey,
         EqualValidator,
-        ImageDirective
+        ImageDirective,
+        ImageFallBackDirective
     ],
     imports: [
         IonicModule.forRoot(MyApp)

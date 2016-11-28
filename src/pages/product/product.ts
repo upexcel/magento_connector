@@ -16,7 +16,6 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-
 @Component({
     templateUrl: 'product.html'
 })
@@ -43,7 +42,6 @@ export class ProductPage implements OnInit {
     price: number;
     data: any;
     reviewData = [];
-
     constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = {
@@ -78,10 +76,8 @@ export class ProductPage implements OnInit {
                 }
             }
         }).catch((err) => {
-
         })
     }
-
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -122,7 +118,6 @@ export class ProductPage implements OnInit {
                 this.disable = true;
             }
         }
-
     }
     slideClick(img: string) {
         this.images = img;
@@ -166,14 +161,11 @@ export class ProductPage implements OnInit {
                             this.search.push(ser);
                             this._local.set('search', uniqWith(this.search, isEqual));
                         }
-
                     });
                 }
                 else {
                     path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-
                 }
-
                 //cart api
                 this._cart.getCart(path).then((res) => {
                     if (res) {
