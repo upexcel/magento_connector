@@ -9,9 +9,11 @@
                         </ion-col>
                     </ion-row>
                     <ion-row class="overflow" *ngIf="productReview.data.rating">
-                        <ion-col>
-                            <span class="score"><span  [style.width]=" productReview.data.rating * 20 + '%'" ></span></span>
-                        </ion-col>
+                    <div class="ratingContainer">
+                        <div class="ratingColor"></div>
+                        <div class="ratingAverage" [style.width]=" productReview.data.rating * 20 + '%'"></div>
+                        <div class="star"></div>
+                    </div>
                     </ion-row>
 
                     <ion-row>
