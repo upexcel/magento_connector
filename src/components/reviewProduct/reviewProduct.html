@@ -44,5 +44,19 @@
         </ion-item>
     </ion-list> 
 </div>
-<button no-padding ion-button color="primary" full  (click)="addReview()" class="writeButt botton">  Rate and write a review </button>
+<ion-grid>
+    <ion-row>
+        <ion-col width-25>
+
+        </ion-col>
+        <ion-col width-50 offset-25>
+            <button ion-button color="primary" block round width-60 offset-20 (click)="addReview()" class="writeButt botton">
+                    Review Product
+        </button>
+    </ion-col>
+    <ion-col width-25>
+
+    </ion-col>
+</ion-row>
+</ion-grid>
 
