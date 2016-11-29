@@ -5,7 +5,7 @@
                 <ion-col>
                     <ion-row>
                         <ion-col>
-                            <p class="margin-but totalReviewAvg20">{{productReview.data.rating}} /&nbsp;{{getRating.data.max_review}}</p>
+                            <p class="margin-but totalReviewAvg20">{{productReview.data.rating | singleDecimal}} /&nbsp;{{getRating.data.max_review}}</p>
                         </ion-col>
                     </ion-row>
                     <ion-row class="overflow" *ngIf="productReview.data.rating">
