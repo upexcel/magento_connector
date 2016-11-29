@@ -1,0 +1,7 @@
+    <button ion-button color="primary" type="submit" id="btn"  round   [disabled]="!valid" >
+        <span *ngIf="spin==false" class="capitalize">
+                {{title}}
+        </span>
+            <ion-spinner *ngIf="spin" class="spin">
+            </ion-spinner>
+    </button>

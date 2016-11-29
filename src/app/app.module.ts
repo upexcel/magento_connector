@@ -67,7 +67,8 @@ import { SideMenu} from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
 import { ImageDirective } from '../directives/image/image.directive';
 import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
-
+import { Button } from '../directives/button/buttonRound.directive';
+ //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { singleDecimalPipe } from '../pipe/singleDecimal/singledecimal';
 
@@ -104,7 +105,8 @@ import { singleDecimalPipe } from '../pipe/singleDecimal/singledecimal';
         FocusByEnterKey,
         EqualValidator,
         ImageDirective,
-        ImageFallBackDirective
+        ImageFallBackDirective,
+        Button
     ],
     imports: [
         IonicModule.forRoot(MyApp)
