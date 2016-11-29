@@ -69,7 +69,7 @@ import { ImageDirective } from '../directives/image/image.directive';
 import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
 
 import { ConvertCodeToName } from '../pipe/cart/attribute';
-import { singleDecimalPipe } from '../pipe/singleDecimal/singledecimal';
+import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 
 @NgModule({
     declarations: [
@@ -96,7 +96,7 @@ import { singleDecimalPipe } from '../pipe/singleDecimal/singledecimal';
         SliderComponent,
         SideMenu,
         ConvertCodeToName,
-        singleDecimalPipe,
+        ReviewDisplayPipe,
         GoogleComponent,
         FacebookComponent,
         ProductReview,

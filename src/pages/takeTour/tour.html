@@ -11,13 +11,13 @@
         </ion-row>
         <ion-row class="margBot20">
             <ion-col class="center">
-                <img src="{{data.data.tour_logo}}" class="logo" alt="{{data.data.logo_alt}}" />
+                <img src="{{data.body.tour_logo}}" class="logo" alt="{{data.body.logo_alt}}" />
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col >
                 <ion-slides  #mySlider [options]="mySlideOptions" >
-                    <ion-slide *ngFor="let desc of data.data.tour_slider ">
+                    <ion-slide *ngFor="let desc of data.body.tour_slider ">
                         <ion-row>
                             <ion-col>
                                 <p class="heading">  {{desc.title}}</p>

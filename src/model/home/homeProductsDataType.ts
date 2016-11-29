@@ -1,5 +1,5 @@
 export class HomeProductsDataType {
-    data: [
+    body: [
         {
             data: {
                 entity_id: string,
@@ -25,7 +25,7 @@ export class HomeProductsDataType {
                 in_stock: string,
                 show_on_home_page: string
             };
-            bundle_items: {
+            bundle_items ?: {
                 options: Array<any>
             }
         }

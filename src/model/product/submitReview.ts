@@ -1,5 +1,5 @@
 export class SubmitReviewDataType {
-    data: {
+    body: {
         review_status: string
     }
     status: number

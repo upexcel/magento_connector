@@ -1,6 +1,6 @@
 export class SliderDataType {
-    data: {
-        url: Array<any>
+    body: {
+        
     }
     status: number;
     message: string;
