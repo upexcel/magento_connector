@@ -95,7 +95,7 @@ export class SubmitReview implements OnInit {
                 this.submitReviewData = res;
                 if (this.submitReviewData) {
                     this._viewCtrl.dismiss();
-                    if (this.submitReviewData.data.review_status == "1") {
+                    if (this.submitReviewData.body.review_status == "1") {
                         this.presentToast("Thanks for your review!");
                     }
                     else {

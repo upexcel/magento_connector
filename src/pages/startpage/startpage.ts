@@ -33,9 +33,9 @@ export class StartPage implements OnInit {
 
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
-            this._local.set('website_id', this.data.data.website_id);
-            this._local.set('store_id', this.data.data.store_id);
-            this._local.set('require_login', this.data.data.store_id);
+            this._local.set('website_id', this.data.body.website_id);
+            this._local.set('store_id', this.data.body.store_id);
+            this._local.set('require_login', this.data.body.store_id);
             this.check = true;
         })
             .catch((err) => {
