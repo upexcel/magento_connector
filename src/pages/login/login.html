@@ -12,7 +12,7 @@
         <ion-grid class="magTop60">
             <ion-row class="center" >
                 <ion-col class="center">
-                <btn [title]='"Login"' [spin]="login" [valid]="logform.valid" (click)="signin(logform.value)"></btn>
+                <btn [title]='"Login"' [spin]="login" [id]="'btn'" [color]="'primary'" [valid]="!logform.valid" [otherDirective]="'round'" (function)="signin(logform.value)" ></btn>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -22,7 +22,8 @@
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="dark" large class="butt" id="singup"(click)="gotoreg()" >SIGN UP FOR FREE</button>
+                <btn [title]='"SIGN UP FOR FREE"' [class]="'butt'" [otherDirective]="'large'" [spin]="" [id]="'singup'" [color]="'dark'" [valid]="false" (function)="gotoreg()"></btn>            
+<!--                 <button ion-button color="dark" large class="butt" id="singup"(click)="gotoreg()" >SIGN UP FOR FREE</button> -->
             </ion-col>
         </ion-row>
     </ion-grid> 

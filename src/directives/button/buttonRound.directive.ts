@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input , Output, EventEmitter } from '@angular/core';
 @Component({
      selector: 'btn',
     templateUrl: 'button.html'
@@ -8,11 +8,13 @@ export class Button {
     @Input() color: string;
     @Input() spin:boolean;
     @Input() valid:boolean;
+    @Input() id:string;
+    @Input() class:string;
+    @Input() otherDirective:any;
+    @Output() function = new EventEmitter();
     constructor() {
-       this.onClick();
     }
     onClick(){
-       console.log("eneter function"); 
-       console.log(this.spin);
+      this.function.emit();
     }
 }
