@@ -5,26 +5,26 @@
                 <ion-col>
                     <ion-row>
                         <ion-col>
-                            <p class="margin-but totalReviewAvg20">{{productReview.data.rating | singleDecimal}} /&nbsp;{{getRating.data.max_review}}</p>
+                            <p class="margin-but totalReviewAvg20">{{productReview.body.rating | singleDecimal}} /&nbsp;{{getRating.body.max_review}}</p>
                         </ion-col>
                     </ion-row>
-                    <ion-row class="overflow" *ngIf="productReview.data.rating">
+                    <ion-row class="overflow" *ngIf="productReview.body.rating">
                     <div class="ratingContainer">
                         <div class="ratingColor"></div>
-                        <div class="ratingAverage" [style.width]=" productReview.data.rating * 20 + '%'"></div>
+                        <div class="ratingAverage" [style.width]=" productReview.body.rating * 20 + '%'"></div>
                         <div class="star"></div>
                     </div>
                     </ion-row>
 
                     <ion-row>
                         <ion-col>
-                            <p class="gray">{{productReview.data.total_review}} Review(s)</p>
+                            <p class="gray">{{productReview.body.total_review}} Review(s)</p>
                         </ion-col>
                     </ion-row>
                 </ion-col>
                 <ion-col>
                     <ion-buttons  *ngFor="let rating of graphRating">
-                        <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span><span><progress max="{{getRating.data.max_review}}" value="{{rating.key}}" ></progress></span>
+                        <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span><span><progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></span>
                     </ion-buttons>
                 </ion-col>
             </ion-row>
@@ -32,14 +32,14 @@
 
     </ion-card>
     <ion-list class="padLeft10 marBot60" >
-        <ion-item *ngFor=" let data of productReview.data.data ">
+        <ion-item *ngFor=" let data of productReview.body.data ">
             <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
             <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
             <p><span class="color uppercase" >by {{data.nickname}}</span></p>
         </ion-item>
-        <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.data.total_review">
+        <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.body.total_review">
             <ion-buttons>
-                <span *ngIf="listLoad==false" class="capitalize">All {{productReview.data.total_review}} Review </span>
+                <span *ngIf="listLoad==false" class="capitalize">All {{productReview.body.total_review}} Review </span>
                 <ion-spinner  *ngIf="listLoad"></ion-spinner>
                 <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
             </ion-buttons>

@@ -38,7 +38,7 @@
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                             <ion-label stacked>Country<span color="danger">*</span></ion-label>
                             <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
-                            <span *ngFor="let name of counrtyName.data.country">
+                            <span *ngFor="let name of counrtyName.body.country">
                                 <ion-option [value]="name"> 
                                  {{name}}
                                 </ion-option>

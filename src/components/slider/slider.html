@@ -2,7 +2,7 @@
     <ion-row no-padding class="slideOption" >
         <ion-col no-padding>
             <ion-slides  [options]="mySlideOptions" *ngIf="img">
-                <ion-slide *ngFor="let images of img">
+                <ion-slide *ngFor="let images of img.body">
                     <img src="{{images}}" class="sliderImg"/>
                 </ion-slide>
             </ion-slides>

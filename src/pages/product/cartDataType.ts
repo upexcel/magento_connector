@@ -1,5 +1,5 @@
 export class cartDataType {
-    data: {
+    body: {
         Tota_Price?: string,
         Total_Discount?: string,
         Tax?: string,
