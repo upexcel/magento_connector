@@ -27,7 +27,7 @@
         <ion-grid >
             <ion-row center >
                 <ion-col class="center">
-                <btn-round [title]='"SIGN UP"' [class]="'capitalize'" [spin]="spin" [id]="'btn'" [color]="'primary'" [valid]="!regForm.valid" (function)="signup(regForm.value)" ></btn-round>                    
+                <btn-round [title]='"SIGN UP"' [class]="'capitalize'" [spin]="spin" [id]="'btn'" [color]="'primary'" [valid]="!regForm.valid" (onBtnClick)="signup(regForm.value)" ></btn-round>                    
                 </ion-col>
             </ion-row>
         </ion-grid>

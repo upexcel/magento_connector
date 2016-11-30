@@ -4,16 +4,16 @@ import { Component, Input , Output, EventEmitter } from '@angular/core';
     templateUrl: 'buttonLarge.html'
 })
 export class ButtonForLarge {
-    @Input() titleForLarge: string;
-    @Input() colorForLarge: string;
-    @Input() spinForLarge:boolean;
-    @Input() validForLarge:boolean;
-    @Input() idForLarge:string;
-    @Input() classForLarge:string;
-    @Output() functionForLarge = new EventEmitter();
+    @Input() titleForLarge: string="";
+    @Input() colorForLarge: string="primary";
+    @Input() spinForLarge:boolean=false;
+    @Input() validForLarge:boolean=false;
+    @Input() idForLarge:string="";
+    @Input() classForLarge:string="";
+    @Output() onBtnClick = new EventEmitter();
     constructor() {
     }
     onClick(){
-      this.functionForLarge.emit();
+      this.onBtnClick.emit();
     }
 }
