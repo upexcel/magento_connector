@@ -12,16 +12,14 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <btn [title]='"Login"' [spin]="login" [color]="primary" [valid]="logform.valid" (click)="gotologin()"></btn>            
+                <btn-round [title]='"Login"' [spin]="false" [id]="'btn'" [color]="'primary'" [valid]="false" (function)="gotologin()" ></btn-round>           
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <btn [title]='"TAKE THE TOUR"' [spin]="login" [color]="light" [valid]="true" [id]="'id'" [otherDirective]="outline" (click)="presentProfileModal()"></btn>  
-                
-                "<!-- <button ion-button color="light" outline round  id="id"></button> -->"
+                <btn-tour [titleTour]='"TAKE THE TOUR"' [spinTour]="false" [colorTour]="'light'" [validTour]="false" [idTour]="''" [classTour]="'tourButt'" (functionTour)="presentProfileModal()"></btn-tour>  
             </ion-col>
         </ion-row>
     </ion-grid>

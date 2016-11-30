@@ -1,6 +1,6 @@
 import { Component, Input , Output, EventEmitter } from '@angular/core';
 @Component({
-     selector: 'btn',
+     selector: 'btn-round',
     templateUrl: 'button.html'
 })
 export class Button {
@@ -10,7 +10,6 @@ export class Button {
     @Input() valid:boolean;
     @Input() id:string;
     @Input() class:string;
-    @Input() otherDirective:any;
     @Output() function = new EventEmitter();
     constructor() {
     }

@@ -42,5 +42,5 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-    <button class="reviewSubmit" ion-button   full class=" botton reviewSubmit" (click)="submitReview()" ><p  *ngIf="submitSuccessful==false">SUBMIT REVIEWS</p><ion-spinner class="spin" *ngIf="submitSuccessful"></ion-spinner></button>
+        <btn-full  [titleFull]='"SUBMIT REVIEWS"' [spinFull]="submitSuccessful" [id]="'btn'" [colorFull]="'primary'" [validFull]="false" [classFull]="'botton reviewSubmit'" (functionFull)="submitReview()"></btn-full>
 </ion-footer>

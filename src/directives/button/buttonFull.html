@@ -1,1 +1,7 @@
-<!--  <button  ion-button color="primary" full class="botton " (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button> -->
+    <button ion-button color="{{colorFull}}"  [ngClass]="classFull" type="submit" id="{{idFull}}"   full (click)="onClick()"  [disabled]="validFull" >
+        <span *ngIf="spinFull==false" class="capitalize">
+                {{titleFull}}
+        </span>
+            <ion-spinner *ngIf="spinFull" class="spin">
+            </ion-spinner>
+    </button>

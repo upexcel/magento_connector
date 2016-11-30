@@ -27,7 +27,7 @@
         <ion-grid >
             <ion-row center >
                 <ion-col class="center">
-                    <button type="submit" id="btn1" ion-button color="primary" round   [disabled]="!regForm.valid" id="btn" (click)="signup(regForm.value)"> <span *ngIf="spin==false" class="capitalize">SIGN UP</span><ion-spinner class="spin" *ngIf="spin"></ion-spinner></button>
+                <btn-round [title]='"SIGN UP"' [class]="'capitalize'" [spin]="spin" [id]="'btn'" [color]="'primary'" [valid]="!regForm.valid" (function)="signup(regForm.value)" ></btn-round>                    
                 </ion-col>
             </ion-row>
         </ion-grid>
