@@ -38,7 +38,7 @@
                                 </ion-buttons>
                             </ion-label>
                             <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
-                                <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
+                                <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                     <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                         <ion-label no-margin class="font12">
                                             {{obj.label}}
@@ -60,5 +60,5 @@
     </ion-grid>
 </ion-content>
 <ion-footer class="uppercase ">
-    <button  ion-button color="primary" full class="botton " (click)="addCart(productData.body)" [disabled]=disable>ADD CART</button>
+    <btn-full  [titleFull]='"ADD CART"'  [id]="'btn'" [validFull]="disable" [classFull]="'botton'" (onBtnClick)="addCart(productData.body)"></btn-full>
 </ion-footer>
