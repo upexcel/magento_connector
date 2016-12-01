@@ -21,6 +21,8 @@ export class productDataType {
             "media_images": Array<string>,
             "additional_information"?: {},
             "in_stock": string,
+            "final_price" : number,
+            "currency_sign":string
         };
 
         "associated_products"?: {

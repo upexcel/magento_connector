@@ -19,6 +19,7 @@ export class CategoryProductDataType {
             "short_description": string,
             "long_description": string,
             "media_images": Array<string>,
+            "currency_sign":string,
             "additional_information" ?: {
                 "color": string,
                 "occasion": string,

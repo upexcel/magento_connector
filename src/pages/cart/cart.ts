@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { NavController, NavParams,Events} from 'ionic-angular';
+import { FinalPrice } from './../../providers/cart-service/final-price';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniq from 'lodash/uniq';
@@ -14,11 +15,13 @@ import _ from 'lodash';
 export class CartPage implements OnInit {
     res: any = [];
     lists: any = [];
-    entery: boolean = false;
-    constructor(private _events:Events,public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
+    entry: boolean = false;
+    constructor(private _finalPrice:FinalPrice,private _events:Events,public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
+            this._finalPrice.getPrice(this.res).then((finalPrice)=>{
+            })
             let tempObj = [];
             forEach(this.res, function(value, key) {
                 forEach(value, function(value1, key) {
@@ -26,7 +29,7 @@ export class CartPage implements OnInit {
                 });
             });
             this.lists = uniq(pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
-            this.entery = true;
+            this.entry = true;
         });
     }
 

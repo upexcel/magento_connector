@@ -24,8 +24,8 @@
                 </ion-row>
                 <ion-row class="padLeft10"> 
                     <ion-col no-padding> 
-                        <span id="font13" [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</span>
-                        <span class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</span>
+                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{this.productData.body.data.currency_sign}}{{display_price}}</span>
+                    <span class="sPrice"  *ngIf="(display_price*1) > (final_price*1)"> {{this.productData.body.data.currency_sign}}{{final_price}}</span>
                     </ion-col>
                 </ion-row>
                 <ion-row wrap>
