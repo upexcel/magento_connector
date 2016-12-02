@@ -25,11 +25,9 @@ export class MyApp implements OnInit {
 
     }
     hideSplashScreen() {
-//        if (navigator && navigator.splashscreen) {
-            setTimeout(() => {
-               Splashscreen.hide();
-            }, 800);
-//        }
+        setTimeout(() => {
+            Splashscreen.hide();
+        }, 1000);
     }
     ngOnInit() {
         this._platform.ready().then(() => {
@@ -50,24 +48,26 @@ export class MyApp implements OnInit {
 
     }
     addConnectivityListeners() {
-
+        var isOnline = true;
         var onOnline = () => {
             Network.onConnect().subscribe(() => {
-                //                setTimeout(() => {
-                if (Network.connection) {
-                    this.nav.pop();
+
+                if (isOnline) {
+                    if (Network.connection) {
+                        this.nav.pop();
+                    }
+                    isOnline = false;
                 }
-                //                }, 300);
-                console.log('network connect');
             });
         };
-
         var onOffline = () => {
             Network.onDisconnect().subscribe(() => {
-                console.log('network disconnect')
-                setTimeout(() => {
-                    this.nav.push(OfflinePage);
-                }, 300);
+                if (!isOnline) {
+                    setTimeout(() => {
+                        this.nav.push(OfflinePage);
+                    }, 300);
+                    isOnline = true;
+                }
             });
         };
 
