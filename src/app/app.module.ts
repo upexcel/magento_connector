@@ -113,7 +113,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Button,
         ButtonFull,
         ButtonTour,
-        ButtonForLarge
+        ButtonForLarge,
+        OfflinePage
     ],
     imports: [
         IonicModule.forRoot(MyApp)

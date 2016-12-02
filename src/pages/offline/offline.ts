@@ -8,9 +8,4 @@ import { NavController } from 'ionic-angular';
 export class OfflinePage {
 
   constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    console.log('Hello OfflinePage Page');
-  }
-
 }
