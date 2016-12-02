@@ -32,7 +32,7 @@ export class ProductReview implements OnInit {
         let self = this;
         this._getProduct.getReview({}).then((getReview) => {
             this.getRating = getReview;
-            forEach(this.getRating.data.attribute, function(title, titleKey) {
+            forEach(this.getRating.body.attribute, function(title, titleKey) {
                 self.reviewTitle.push(title);
                 self.reviewKeys.push(titleKey);
             });
@@ -45,10 +45,10 @@ export class ProductReview implements OnInit {
         this._getProduct.getProductReview({ "sku": this.skuData, "pageno": this.countPage }).then((review) => {
             this.productReview = review;
             this.listLoad = false;
-            if (this.productReview.data.total_review != 0) {
-                this.addCommingReview=this.addCommingReview+this.productReview.data.data.length;
-                forEach(this.getRating.data.attribute, function(title, titleKey) {
-                    forEach(self.productReview.data.total_attribute_rating, function(raw, key) {
+            if (this.productReview.body.total_review != 0) {
+                this.addCommingReview=this.addCommingReview+this.productReview.body.data.length;
+                forEach(this.getRating.body.attribute, function(title, titleKey) {
+                    forEach(self.productReview.body.total_attribute_rating, function(raw, key) {
                         forEach(raw, function(rating, key) {
                             if (titleKey == key) {
                                 self.graphRating.push({
@@ -75,7 +75,7 @@ export class ProductReview implements OnInit {
         this.listLoad = true;
     }
     addReview() {
-        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.data.options, max_review: this.getRating.data.max_review });
+        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.body.options, max_review: this.getRating.body.max_review });
         profileModal.present();
     }
 }

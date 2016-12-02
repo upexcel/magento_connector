@@ -70,11 +70,11 @@ export class OrderlistPage implements OnInit {
         this._order.getOrderList(body).then((res) => {
             this.spin = false;
             this.totalOrderList = res;
-            if (this.totalOrderList.data == 0) {
+            if (this.totalOrderList.body == 0) {
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
             } else {
-                forEach(this.totalOrderList.data, function(value, key) {
+                forEach(this.totalOrderList.body, function(value, key) {
                     date.unshift(value.created_at.split(" ", 1));
                     datas = {
                         value: value

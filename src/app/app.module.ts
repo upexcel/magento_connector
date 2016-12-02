@@ -66,8 +66,14 @@ import { Headers } from '../directives/headers/headers';
 import { SideMenu } from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
 import { ImageDirective } from '../directives/image/image.directive';
-
+import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
+import { Button } from '../directives/button/buttonRound.directive';
+import { ButtonFull } from '../directives/button/buttonFull.directive';
+import { ButtonTour } from '../directives/button/takeTourButton.directive';
+import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
+//pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
+import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 
 @NgModule({
     declarations: [
@@ -94,6 +100,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SliderComponent,
         SideMenu,
         ConvertCodeToName,
+        ReviewDisplayPipe,
         GoogleComponent,
         FacebookComponent,
         ProductReview,
@@ -101,6 +108,11 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         FocusByEnterKey,
         EqualValidator,
         ImageDirective,
+        ImageFallBackDirective,
+        Button,
+        ButtonFull,
+        ButtonTour,
+        ButtonForLarge,
         OfflinePage
     ],
     imports: [
