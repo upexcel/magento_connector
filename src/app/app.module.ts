@@ -40,6 +40,7 @@ import { SocialAccount } from '../model/startPage/socialAccount';
 
 //service
 import { CartService } from '../providers/cart-service/cart-service';
+import { FinalPrice } from '../providers/cart-service/final-price';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { ToastService } from '../providers/toast-service/toastService';
@@ -147,6 +148,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Storage,
         ApiService,
         CartService,
+        FinalPrice,
         SocialService,
         Login,
         Register,
