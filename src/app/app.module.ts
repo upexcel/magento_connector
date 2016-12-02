@@ -18,7 +18,7 @@ import { MyEditAccountPage } from '../pages/myaccount/myeditaccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
-
+import { OfflinePage } from '../pages/offline/offline'
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
 import { Login } from '../model/login/login';
@@ -112,7 +112,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Button,
         ButtonFull,
         ButtonTour,
-        ButtonForLarge
+        ButtonForLarge,
+        OfflinePage
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -138,7 +139,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         LoginPage,
         PopoverPage,
         SubmitReview,
-        Headers
+        Headers,
+        OfflinePage
     ],
     providers: [
         AppConfig,
