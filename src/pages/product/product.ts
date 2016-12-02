@@ -134,15 +134,15 @@ export class ProductPage implements OnInit {
         let sku: string = response.data.sku;
         let img: string = response.data.media_images[0];
         let final_price: number = response.data.final_price;
-        let tier_price:Array<any>=response.data.tier_price;
+        let tier_price:any=response.data.tier_price;
         let name: string = response.data.name;
         let type: string = this.productData.body.data.type;
         let other;
         let productid: string = this.productData.body.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
-                data = { id: sku, img: img, name: name, price: final_price,tier_price:tier_price, type: type, quantity: 1 };
-                other = data;
+                data = { id: sku, img: img, name: name, price: final_price,tier_price:tier_price[0], type: type, quantity: 1 };
+                other = clone(data);
                 //check type of data for send data in cart api
                 if (type == "configurable") {
                     forEach(this.selectedList, function(listdata, key) {
@@ -151,6 +151,7 @@ export class ProductPage implements OnInit {
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                     other = merge(data, selectedItem);
+                    console.log(other)
                     let ser = this.productData.body.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {

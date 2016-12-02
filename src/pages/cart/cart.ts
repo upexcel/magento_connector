@@ -21,6 +21,7 @@ export class CartPage implements OnInit {
         this.local.get('item').then((value: any) => {
             this.res = JSON.parse(value);
             this._finalPrice.getPrice(this.res).then((finalPrice)=>{
+                console.log(finalPrice);
             })
             let tempObj = [];
             forEach(this.res, function(value, key) {

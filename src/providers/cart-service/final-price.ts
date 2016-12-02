@@ -7,14 +7,23 @@ declare let Promise: any;
 export class FinalPrice {
     constructor(private _local: Storage) {
     }
-    getPrice(data): any {
+    getPrice(data): any {      
        return new Promise((resolve, reject)=> {
            forEach(data, function(value, key) {
- forEach(value.tier_price, function(value1, key1) {
-               console.log(value1)
-               console.log(key1)
-           });});
-           resolve(data);
+console.log(value.tier_price.price*1 );
+console.log(value.price*1);
+console.log(value.tier_price.price_qty*1);
+console.log(value.quantity*1);
+
+
+console.log((value.tier_price.price*1) < (value.price*1) && (value.tier_price.price_qty*1) >= (value.quantity*1));
+           if((value.tier_price.price*1) < (value.price*1) && (value.tier_price.price_qty*1) >= (value.quantity*1)){
+            resolve(value.tier_price.price);
+           }
+           else{
+            resolve(data.price);  
+           }
        });
-       }
+       });
+   }
 }
