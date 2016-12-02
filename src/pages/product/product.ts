@@ -116,7 +116,6 @@ export class ProductPage implements OnInit {
             forEach(res, function(value) {
                 count++;
             });
-
             if (this.keys.length == count) {
                 this.disable = false;
             } else {
@@ -147,9 +146,7 @@ export class ProductPage implements OnInit {
         let productid: string = this.productData.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
-
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
-
                 other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
@@ -157,9 +154,7 @@ export class ProductPage implements OnInit {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
-
                     path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-
                     other = merge(data, selectedItem);
                     let ser = this.productData.data.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
