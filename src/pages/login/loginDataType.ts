@@ -1,5 +1,5 @@
 export class LoginDataType {
-    data: {
+    body: {
         firstname: string,
         lastname: string,
         access_token: string,

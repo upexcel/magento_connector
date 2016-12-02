@@ -79,9 +79,13 @@ export class MyEditAccountPage implements OnInit {
                 this.getuser_details(this.id, this.entity_id, userData.secret);
             } else {}
         });
-        this._country.getCountryName().then((name) => {
-            this.counrtyName = name;
-        })
+        this._local.get('store_id').then((store_id) => {
+            let data = {"store_id":store_id};
+            this._country.getCountryName(data).then((name) => {
+                this.counrtyName = name;
+            })
+        });
+        
     }
 
     getuser_details(id, entity_id, secret) {
@@ -92,9 +96,9 @@ export class MyEditAccountPage implements OnInit {
         if (entity_id != null) {
             this._myaccount.getMyAccount(body).then((res) => {
                     this.myaccount = res;
-                    this.reverseCartData=reverse(this.myaccount.data);
+                    this.reverseCartData=reverse(this.myaccount.body);
                     this.spin = false;
-                    if (this.myaccount.data.length != 0 && entity_id != null) {
+                    if (this.myaccount.body.length != 0 && entity_id != null) {
                         this.updateform = this._fb.group({
                             firstname: [this.reverseCartData[id].firstname, Validators.required],
                             lastname: [this.reverseCartData[id].lastname, Validators.required],

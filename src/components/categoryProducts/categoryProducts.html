@@ -30,7 +30,7 @@
                                     <div class="columnForGrid25 Grid50">
                                         <button ion-button icon-left class="btnStar">
                                             <ion-icon name="star"></ion-icon>
-                                            {{feat_prod.data.rating}}
+                                            {{feat_prod.data.rating | singleDecimal}} / 5
                                         </button>
                                     </div>
                                     <div class="columnForGrid75 Grid50 font12 marTop6  padTop5" *ngIf="feat_prod.data.total_review>0">
