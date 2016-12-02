@@ -1,5 +1,5 @@
 export class ConfigDataType {
-    data: {
+    body: {
         tour_logo: string;
         logo_alt: string;
         logo_url: string;

@@ -9,8 +9,7 @@ import { ToastService } from './../../providers/toast-service/toastService';
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    // homeProduct: HomeProductsDataType;
-    homeProduct: any;
+    homeProduct: HomeProductsDataType;
     spin: boolean = true;
     feature_products: any;
     start: number = 0;
@@ -33,7 +32,7 @@ export class HomePage implements OnInit {
         this._homeProductsConfig.getHomeProducts().then((res) => {
             if (res) {
                 this.homeProduct = res;
-                this.feature_products = slice(this.homeProduct, this.start, this.end);
+                this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                 this.spin = false;
             }
         })
@@ -55,11 +54,11 @@ export class HomePage implements OnInit {
         }, 100);
     }
     doInfinite(infiniteScroll) {
-        if (this.homeProduct.length % 2 == 0) {
-            if (this.homeProduct.length > this.end) {
+        if (this.homeProduct.body.length % 2 == 0) {
+            if (this.homeProduct.body.length > this.end) {
                 setTimeout(() => {
                     this.end += 4;
-                    this.feature_products = slice(this.homeProduct, this.start, this.end);
+                    this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                     infiniteScroll.complete();
                 }, 2000);
             } else {
@@ -67,7 +66,7 @@ export class HomePage implements OnInit {
             }
         }
         else {
-            let check = this.homeProduct.length + 1;
+            let check = this.homeProduct.body.length + 1;
             if (check >= this.end) {
 
                 if (check == this.end) {
@@ -76,7 +75,7 @@ export class HomePage implements OnInit {
                 else {
                     setTimeout(() => {
                         this.end += 4;
-                        this.feature_products = slice(this.homeProduct, this.start, this.end);
+                        this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                         infiniteScroll.complete();
                     }, 2000);
                 }

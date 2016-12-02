@@ -1,5 +1,5 @@
 export class OrderListDataType{
-  "data": {
+  "body": {
       "order_id"?: string,
       "grand_total"?: string,
       "created_at"?: any,

@@ -16,13 +16,11 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-
 @Component({
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
-    // productData: productDataType;
-    productData: any;
+    productData: productDataType;
     cartData: cartDataType;
     quantity: number;
     sp_priceShow: boolean = false;
@@ -43,7 +41,7 @@ export class ProductPage implements OnInit {
     price: number;
     data: any;
     reviewData = [];
-
+    error: boolean = false;
     constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = {
@@ -62,26 +60,25 @@ export class ProductPage implements OnInit {
             this.productData = res;
             if (res) {
                 this.spin = false;
-                this.images = this.productData.data.media_images[0];
-                this.price = this.productData.data.display_price;
-                this.final_price = this.productData.data.display_price;
-                if (this.productData.data.type != "configurable") {
+                this.images = this.productData.body.data.media_images[0];
+                this.price = this.productData.body.data.display_price;
+                this.final_price = this.productData.body.data.display_price;
+                if (this.productData.body.data.type != "configurable") {
                     this.disable = false;
                 }
-                if (this.productData.data.special_price > 0) {
+                if (this.productData.body.data.special_price > 0) {
                     this.sp_priceShow = true;
-                    this.final_price = this.productData.data.special_price;
+                    this.final_price = this.productData.body.data.special_price;
                 }
-                this.product = this.productData.data.name;
-                if (this.productData.data.associated_products) {
-                    this.keys = keys(this.productData.data.associated_products.attributes);
+                this.product = this.productData.body.data.name;
+                if (this.productData.body.associated_products) {
+                    this.keys = keys(this.productData.body.associated_products.attributes);
                 }
             }
         }).catch((err) => {
-
+            this.error = true;
         })
     }
-
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -89,7 +86,7 @@ export class ProductPage implements OnInit {
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
         //        mapping between select list
-        forEach(this.productData.data.associated_products.attributes, function(res1, key1) {
+        forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
             if (key != key1) {
                 forEach(res1.options, function(res2) {
                     res2.shown = false;
@@ -122,7 +119,6 @@ export class ProductPage implements OnInit {
                 this.disable = true;
             }
         }
-
     }
     slideClick(img: string) {
         this.images = img;
@@ -137,13 +133,13 @@ export class ProductPage implements OnInit {
         let data: any;
         //gather data for send in add cart servive
 
-        let sku: string = response.sku;
-        let img: string = response.media_images[0];
-        let price: number = response.display_price;
-        let name: string = response.name;
-        let type: string = this.productData.data.type;
+        let sku: string = response.data.sku;
+        let img: string = response.data.media_images[0];
+        let price: number = response.data.display_price;
+        let name: string = response.data.name;
+        let type: string = this.productData.body.data.type;
         let other;
-        let productid: string = this.productData.data.entity_id;
+        let productid: string = this.productData.body.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
@@ -156,7 +152,7 @@ export class ProductPage implements OnInit {
                     selectedItem = (array);
                     path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                     other = merge(data, selectedItem);
-                    let ser = this.productData.data.associated_products.attributes;
+                    let ser = this.productData.body.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
                             this.search = search;
@@ -167,21 +163,18 @@ export class ProductPage implements OnInit {
                             this.search.push(ser);
                             this._local.set('search', uniqWith(this.search, isEqual));
                         }
-
                     });
                 }
                 else {
                     path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-
                 }
-
                 //cart api
                 this._cart.getCart(path).then((res) => {
                     if (res) {
-                        //add to cart service
+                        // add to cart service
                         this._cartService.addCart(other, this.keys).then((response: any) => {
                             this.cartData = response;
-                            if (this.cartData.data != "undefined") {
+                            if (this.cartData.body != "undefined") {
                                 this._toast.toast("item inserted ", 3000, "top");
                                 this._navCtrl.push(CartPage);
                             }

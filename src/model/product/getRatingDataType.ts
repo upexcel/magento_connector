@@ -1,5 +1,5 @@
 export class GetRating {
-    data: {
+    body: {
         max_review: number;
         attribute: any,
         options: any

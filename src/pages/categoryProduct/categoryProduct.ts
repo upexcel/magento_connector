@@ -16,10 +16,10 @@ export class CategoryProductPage implements OnInit {
     title: string;
     limit: number = 10;
     page: number = 1;
-    // categoryProduct: CategoryProductDataType;
-    categoryProduct: any;
+    categoryProduct: CategoryProductDataType;
     access_token:string;
     showPopOver:boolean=false;
+    error:boolean=false;
     constructor(private _appConfigService: AppDataConfigService,private _events: Events,private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
@@ -38,27 +38,28 @@ export class CategoryProductPage implements OnInit {
     }
    
     show_products(product_id: any, page: any, limit: any) {
-        let body = { "id": product_id, "page": page, "limit": limit };
+        let body = { "id": product_id, "pageno": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct = res;
         })
             .catch((err) => {
+                this.error = true;
             });
     }
     doInfinite(infiniteScroll) {
         var limit = this.limit;
-        if (this.categoryProduct.length % 2 == 0) {
-            if (this.categoryProduct.length < limit) {
+        if (this.categoryProduct.body.length % 2 == 0) {
+            if (this.categoryProduct.body.length < limit) {
                 infiniteScroll.complete();
             }
-            else if (this.categoryProduct.length >= limit) {
+            else if (this.categoryProduct.body.length >= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
                 }, 2000);
             }
-            else if (this.categoryProduct.length <= limit) {
+            else if (this.categoryProduct.body.length <= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);

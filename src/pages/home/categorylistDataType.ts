@@ -1,5 +1,5 @@
 export class CategoryListDataType {
-    data: {
+    body: {
         id: string,
         name: string,
         thumbnail: string,

@@ -1,10 +1,10 @@
-<ion-content [ngStyle]="{'background-image': 'url('+data.data.background_image+')'}" class="startpage" *ngIf="check==true">
+<ion-content [ngStyle]="{'background-image': 'url('+data.body.background_image+')'}" class="startpage" *ngIf="check==true">
     <p align="center">{{messsage_expired}}</p>
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
                 <div  class="imgbox">
-                    <img src="{{data.data.logo_url}}" class="img" alt="{{data.data.logo_alt}}" />
+                    <img src="{{data.body.logo_url}}" class="img" alt="{{data.body.logo_alt}}" />
                 </div>
             </ion-col>
         </ion-row>
@@ -12,14 +12,14 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="primary" round (click)="gotologin()">Login</button>
+                <btn-round [title]='"Login"' [id]="'btn'" [color]="'primary'" (onBtnClick)="gotologin()" ></btn-round>           
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <button ion-button color="light" outline round (click)=" presentProfileModal()" id="takeTour">TAKE THE TOUR</button>
+                <btn-tour [titleTour]='"TAKE THE TOUR"' [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
             </ion-col>
         </ion-row>
     </ion-grid>

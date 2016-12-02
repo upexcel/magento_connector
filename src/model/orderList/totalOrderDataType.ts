@@ -1,5 +1,5 @@
 export class TotalOrderDataType{
-data: {
+body: {
   total_order ?: number,
   total_amount ?: string
 };

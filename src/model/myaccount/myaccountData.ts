@@ -1,5 +1,5 @@
 export class MyAccountAddressDataType{
-"data"?: [
+"body"?: [
   {
     "entity_id"?: string,
     "firstname"?: string,

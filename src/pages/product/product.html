@@ -1,7 +1,7 @@
 <header [pagename]="'pruduct'" [title]="product"></header>
 <ion-content class="product">
-    <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
-
+    <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
+    <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-grid  no-padding *ngIf="productData">
                <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
@@ -11,7 +11,7 @@
                 <ion-slides pager #mySlider [options]="mySlideOptions" >
                             <ion-slide>
                         <ion-row class="center">
-                            <ion-col class="maxWT" *ngFor = "let img of productData.data.media_images" (click)="slideClick(img)" >
+                            <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
                                      <img src="{{img}}" class="cursorPointer maxHt"/>
                             </ion-col>
                         </ion-row>
@@ -19,7 +19,7 @@
                 </ion-slides>
                 <ion-row class="padLeft10">
                     <ion-col>
-                        <h2 class="capitalize">{{productData.data.name}}</h2>
+                        <h2 class="capitalize">{{productData.body.data.name}}</h2>
                     </ion-col>
                 </ion-row>
                 <ion-row class="padLeft10"> 
@@ -31,14 +31,14 @@
                 <ion-row wrap>
                     <ion-col width-50 *ngFor="let key of keys">
                              <ion-item class="selectlist">
-                            <ion-label no-margin class="font12">{{productData.data.associated_products.attributes[key].label}}</ion-label>
-                            <ion-label no-margin class="font12" *ngIf="productData.data.associated_products.attributes[key].label=='Color'">
+                            <ion-label no-margin class="font12">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                            <ion-label no-margin class="font12" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
                                 <ion-buttons class="alignright">
                                     <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                 </ion-buttons>
                             </ion-label>
                             <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
-                                <span *ngFor= "let obj of productData.data.associated_products.attributes[key].options">
+                                <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                     <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                         <ion-label no-margin class="font12">
                                             {{obj.label}}
@@ -51,7 +51,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.data.short_description}}</p>
+                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               
@@ -60,5 +60,5 @@
     </ion-grid>
 </ion-content>
 <ion-footer class="uppercase ">
-    <button  ion-button color="primary" full class="botton " (click)="addCart(productData.data)" [disabled]=disable>ADD CART</button>
+    <btn-full  [titleFull]='"ADD CART"'  [id]="'btn'" [validFull]="disable" [classFull]="'botton'" (onBtnClick)="addCart(productData.body)"></btn-full>
 </ion-footer>
