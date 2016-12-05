@@ -44,6 +44,7 @@ export class ApiService {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
         }
+
         subject.next(res.json());
         return res.json();
     }

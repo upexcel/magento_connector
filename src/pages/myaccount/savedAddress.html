@@ -87,9 +87,5 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-    <button ion-button full class="add_address botton" (click)="addNewAddress()">
-      <span *ngIf="addAddr==false">  Add New Address</span>
-      <ion-spinner *ngIf="addAddr" class="spin">
-     </ion-spinner>
-    </button>
+    <btn-full  [titleFull]='"Add New Address"' [spinFull]="addAddr" [id]="'btn'" [classFull]="'add_address botton'" (onBtnClick)="addNewAddress()"></btn-full>
 </ion-footer>

@@ -15,7 +15,8 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
-    data: ConfigDataType;
+    // data: ConfigDataType;
+    data: any;
     socialData: SocialAccountDataType;
     messsage_expired: string;
     check: boolean = false;

@@ -79,6 +79,7 @@ export class ProductPage implements OnInit {
             this.error = true;
         })
     }
+
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -86,7 +87,9 @@ export class ProductPage implements OnInit {
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
         //        mapping between select list
+
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
+
             if (key != key1) {
                 forEach(res1.options, function(res2) {
                     res2.shown = false;
@@ -132,16 +135,20 @@ export class ProductPage implements OnInit {
         let path: any;
         let data: any;
         //gather data for send in add cart servive
+
         let sku: string = response.data.sku;
         let img: string = response.data.media_images[0];
         let price: number = response.data.display_price;
         let name: string = response.data.name;
         let type: string = this.productData.body.data.type;
+
         let other;
         let productid: string = this.productData.body.data.entity_id;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
+
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
+
                 other = data;
                 //check type of data for send data in cart api
                 if (type == "configurable") {
@@ -149,7 +156,9 @@ export class ProductPage implements OnInit {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
+
                     path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+
                     other = merge(data, selectedItem);
                     let ser = this.productData.body.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
@@ -166,6 +175,7 @@ export class ProductPage implements OnInit {
                 }
                 else {
                     path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+
                 }
                 //cart api
                 this._cart.getCart(path).then((res) => {

@@ -55,7 +55,7 @@
             </ion-item>
         </ion-list>
         <div class="center">
-            <button ion-button round color="primary" id="btn" [disabled]="!updateform.valid" (click)="update(updateform.value)"><span  *ngIf="upd_spin==false">Save</span><ion-spinner  class="spin" *ngIf="upd_spin"></ion-spinner></button>
+        <btn-round [title]='"Save"' [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
         </div>
     </form>
 </ion-content>
