@@ -1,5 +1,5 @@
 export class CategoryProductDataType {
-    data: [{
+    body: [{
         data: {
             "entity_id": string,
             "rating": boolean,

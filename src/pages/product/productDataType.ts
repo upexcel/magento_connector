@@ -1,5 +1,5 @@
 export class productDataType {
-    data: {
+    body: {
         data: {
             "entity_id": string,
             "rating": boolean,
