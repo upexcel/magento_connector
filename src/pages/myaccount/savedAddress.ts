@@ -93,9 +93,9 @@ export class MySavedAddressPage implements OnInit {
         this._myaccount.getMyAccount(body).then((res) => {
                 this.spin = false;
                 this.myaccount = res;
-                this.reverseCartData=reverse(this.myaccount.data);
+                this.reverseCartData=reverse(this.myaccount.body);
 
-                if (this.myaccount.data.length != 0) {
+                if (this.myaccount.body.length != 0) {
                     this.showAddress = true;
                 } else {
                     this.showAddress = false;

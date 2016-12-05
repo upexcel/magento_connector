@@ -57,6 +57,10 @@
     .maxWT{
         max-width: 85px;
     }
+    p.stock {
+        color: green;
+        font-weight: 600;
+    }
     .img{
         min-height: 140px;
         max-height: 270px;
@@ -85,6 +89,9 @@
         background-color: $gray_light;
         position: fixed;
         bottom: 50px;
+    }
+    .writeButt:hover{
+        background-color: $gray_light;
     }
     .gray{
         color: $gray;
@@ -147,4 +154,34 @@
 }
 
 
-
+.ratingContainer{
+    height: 20px;
+    width: 115px;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+.ratingColor {
+    //background-color: #666666;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.ratingAverage {
+    background-color: #057CB7;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    top: -19px;
+    left: 0.5px;
+}
+.star {
+    position: relative;
+    left: 0;
+    width: 115px;
+    height: 20px;
+    top: -40px;
+    background: url('../assets/image/stars.png') repeat-x;
+}

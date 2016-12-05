@@ -1,6 +1,6 @@
 
 export class ProductReviewDataType {
-    data: {
+    body: {
         data: [{
                 review_id: string
                 created_at: string

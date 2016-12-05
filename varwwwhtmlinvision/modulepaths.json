@@ -1690,7 +1690,13 @@
   "/var/www/html/invision/src/directives/sidemenu/sidemenu.ts",
   "/var/www/html/invision/src/directives/password/equalValidator.ts",
   "/var/www/html/invision/src/directives/image/image.directive.ts",
+  "/var/www/html/invision/src/directives/image/imagefallback.directive.ts",
+  "/var/www/html/invision/src/directives/button/buttonRound.directive.ts",
+  "/var/www/html/invision/src/directives/button/buttonFull.directive.ts",
+  "/var/www/html/invision/src/directives/button/takeTourButton.directive.ts",
+  "/var/www/html/invision/src/directives/button/buttonLarge.directive.ts",
   "/var/www/html/invision/src/pipe/cart/attribute.ts",
+  "/var/www/html/invision/src/pipe/reviewdisplay/reviewdisplay.ts",
   "/var/www/html/invision/src/app/app.module.ts",
   "/var/www/html/invision/src/app/main.dev.ts"
 ]
