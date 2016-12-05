@@ -6,11 +6,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/timeout';
 import {Subject} from 'rxjs/Rx';
 import {Platform} from 'ionic-angular';
+import { ToastService } from './../../providers/toast-service/toastService';
 @Injectable()
 export class ApiService {
-    constructor(private _local: Storage, private _http: Http, private _platform: Platform) { }
+    constructor(private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) { }
     api(path, body) {
         var subject = new Subject();
         this._local.get('userData').then((userData) => {
@@ -26,11 +28,13 @@ export class ApiService {
             }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
+                .timeout(5000, new Error('Check Network Connection'))
                 .subscribe((res: Response) => {
                     self._extractData(res, subject)
                 },
 
                 (error) => {
+                    this._toast.toast(error, 3000);
                     self._handleError(error, subject)
                 })
         });
