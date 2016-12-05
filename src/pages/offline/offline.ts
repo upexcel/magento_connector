@@ -8,4 +8,5 @@ import { NavController } from 'ionic-angular';
 export class OfflinePage {
 
   constructor(public navCtrl: NavController) {}
+
 }
