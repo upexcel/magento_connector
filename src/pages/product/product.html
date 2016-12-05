@@ -8,7 +8,7 @@
                 <div class="imgbox">
                     <img src="{{images}}" class=" img cursorPointer"/>
                 </div>
-                <ion-slides pager #mySlider [options]="mySlideOptions" >
+                <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData.data.media_images.length>1">
                             <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
@@ -23,8 +23,8 @@
                     </ion-col>
                 </ion-row>
                 <ion-row class="padLeft10"> 
-                    <ion-col no-padding> 
-                        <span id="font13" [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</span>
+                    <ion-col> 
+                        <span id="font13" [ngClass]="{'line': sp_priceShow == true}" class="price">{{price}}</span>
                         <span class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</span>
                     </ion-col>
                 </ion-row>
