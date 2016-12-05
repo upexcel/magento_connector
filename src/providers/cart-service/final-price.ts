@@ -7,12 +7,9 @@ export class FinalPrice {
     constructor() {
     }
     getPrice(data): any {
-        console.log(data)
         let finalprice = [];
         return new Promise((resolve, reject) => {
             forEach(data, function(data, key1) {
-                console.log("enter loop")
-                console.log(data.tier_price.length)
                 if (data.tier_price.length > 0) {
                     forEach(data.tier_price, function(tier_priceValue, key) {
                         if ((tier_priceValue.website_price * 1) < (data.price * 1) && (tier_priceValue.price_qty * 1) <= data.quantity) {
