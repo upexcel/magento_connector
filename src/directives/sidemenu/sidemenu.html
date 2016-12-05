@@ -4,7 +4,7 @@
     </ion-toolbar>
 
     <ion-content class="sidemenu" *ngIf="data">
-        <ion-list  no-lines *ngFor="let list of data.data.children">
+        <ion-list  no-lines *ngFor="let list of data.body.children">
                    <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
                    {{list1.name}}
                    <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>

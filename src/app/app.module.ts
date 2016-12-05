@@ -18,7 +18,7 @@ import { MyEditAccountPage } from '../pages/myaccount/myeditaccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
-
+import { OfflinePage } from '../pages/offline/offline'
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
 import { Login } from '../model/login/login';
@@ -32,18 +32,18 @@ import { ChangePwd } from '../model/changePassword/accountChangePwd';
 import { Forgot } from '../model/forgot/forgot';
 import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
 import { TotalOrder } from '../model/orderList/totalOrder';
-import {MyAccount} from '../model/myaccount/myaccount';
+import { MyAccount } from '../model/myaccount/myaccount';
 import { Country } from '../model/myaccount/country';
-import {EditAccount} from '../model/myaccount/editAccount';
-import {OrderIdDetail} from '../model/orderid-detail/orderid-detail';
+import { EditAccount } from '../model/myaccount/editAccount';
+import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
-import {ToastService} from '../providers/toast-service/toastService';
-import {LogoutService} from '../providers/logout/logout-service';
+import { ToastService } from '../providers/toast-service/toastService';
+import { LogoutService } from '../providers/logout/logout-service';
 import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
@@ -62,13 +62,18 @@ import { CategoryComponent } from '../components/categoryProducts/CategoryProduc
 import { AccountPopoverPage } from '../components/myAccountPopOver/myAccountPopOver';
 //directives
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
-import { Headers} from '../directives/headers/headers';
-import { SideMenu} from '../directives/sidemenu/sidemenu';
+import { Headers } from '../directives/headers/headers';
+import { SideMenu } from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
 import { ImageDirective } from '../directives/image/image.directive';
 import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
-
+import { Button } from '../directives/button/buttonRound.directive';
+import { ButtonFull } from '../directives/button/buttonFull.directive';
+import { ButtonTour } from '../directives/button/takeTourButton.directive';
+import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
+ //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
+import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 
 @NgModule({
     declarations: [
@@ -95,6 +100,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         SliderComponent,
         SideMenu,
         ConvertCodeToName,
+        ReviewDisplayPipe,
         GoogleComponent,
         FacebookComponent,
         ProductReview,
@@ -102,7 +108,13 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         FocusByEnterKey,
         EqualValidator,
         ImageDirective,
-        ImageFallBackDirective
+        OfflinePage,
+        ImageFallBackDirective,
+        Button,
+        ButtonFull,
+        ButtonTour,
+        ButtonForLarge,
+        OfflinePage
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -128,7 +140,8 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         LoginPage,
         PopoverPage,
         SubmitReview,
-        Headers
+        Headers,
+        OfflinePage
     ],
     providers: [
         AppConfig,
@@ -158,7 +171,7 @@ import { ConvertCodeToName } from '../pipe/cart/attribute';
         sliderService,
         homeProductsService,
         categoryService,
-        CountryService ]
+        CountryService]
 })
 export class AppModule {
 

@@ -97,6 +97,9 @@
         background-color: $gray_light;
 
     }
+    .writeButt:hover{
+        background-color: $gray_light;
+    }
     .gray{
         color: $gray;
     }
@@ -159,7 +162,7 @@
 
 
 .ratingContainer{
-   // height: 20px;
+    height: 20px;
     width: 115px;
     overflow: hidden;
     position: relative;
