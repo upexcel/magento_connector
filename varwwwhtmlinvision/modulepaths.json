@@ -1341,10 +1341,7 @@
   "/var/www/html/invision/src/providers/social-service/social-service.ts",
   "/var/www/html/invision/src/model/startPage/socialAccount.ts",
   "/var/www/html/invision/src/pages/startpage/startpage.ts",
-<<<<<<< HEAD
-=======
   "/var/www/html/invision/src/pages/offline/offline.ts",
->>>>>>> c85bd46779ad230886a0fc32b84f079fcb87b056
   "/var/www/html/invision/src/app/app.component.ts",
   "/var/www/html/invision/node_modules/lodash/_arrayEach.js",
   "/var/www/html/invision/node_modules/lodash/_createBaseFor.js",
@@ -1694,16 +1691,12 @@
   "/var/www/html/invision/src/directives/password/equalValidator.ts",
   "/var/www/html/invision/src/directives/image/image.directive.ts",
   "/var/www/html/invision/src/directives/image/imagefallback.directive.ts",
-<<<<<<< HEAD
-  "/var/www/html/invision/src/pipe/cart/attribute.ts",
-=======
   "/var/www/html/invision/src/directives/button/buttonRound.directive.ts",
   "/var/www/html/invision/src/directives/button/buttonFull.directive.ts",
   "/var/www/html/invision/src/directives/button/takeTourButton.directive.ts",
   "/var/www/html/invision/src/directives/button/buttonLarge.directive.ts",
   "/var/www/html/invision/src/pipe/cart/attribute.ts",
   "/var/www/html/invision/src/pipe/reviewdisplay/reviewdisplay.ts",
->>>>>>> c85bd46779ad230886a0fc32b84f079fcb87b056
   "/var/www/html/invision/src/app/app.module.ts",
   "/var/www/html/invision/src/app/main.dev.ts"
 ]
