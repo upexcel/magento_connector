@@ -1,6 +1,7 @@
 <header [title]="'My Orders'"></header>
 <ion-content class="orderlist" scroll="true">
-    <ion-spinner *ngIf="spin"></ion-spinner>
+    <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
+    <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
     <ion-list no-lines *ngFor="let date of dates">
               <ion-list-header>{{date| date: 'dd/MM/yyyy'}}</ion-list-header>
