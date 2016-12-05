@@ -45,7 +45,7 @@ export class ProductPage implements OnInit {
     reviewData = [];
     error: boolean = false;
     id: string;
-    offerTier_price: any;
+    offerTier_price: any;// use to show offer
     constructor(private _tierPrice: TierPrice, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) { }
     ngOnInit() {
         this.id = this._navParams.get('id');
@@ -58,7 +58,9 @@ export class ProductPage implements OnInit {
     }
     products() {
         this.product = "Product";
+        // get data from local storage of userData via funtion of getUserData
         this._appConfigService.getUserData().then((userData: any) => {
+            // in data variable access_token and sku is used to check user login in backend to send tier price
             if (userData) {
                 this.data = {
                     "sku": this.id,
@@ -70,6 +72,7 @@ export class ProductPage implements OnInit {
                     "sku": this.id
                 };
             }
+            //getProduct is use to fire product/get api to get product 
             this._getProduct.getProduct(this.data).then((res) => {
                 this.productData = res;
                 if (res) {
@@ -78,6 +81,7 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
+                    // here we are using tierPrice servive to get offer of tire price .
                     this._tierPrice.getTierPriceData(this.productData.body.data.tier_price).then((tier_price) => {
                         this.offerTier_price = tier_price;
                         if (this.productData.body.data.type != "configurable") {

@@ -24,8 +24,8 @@
                 </ion-row>
                 <ion-row class="padLeft10"> 
                     <ion-col no-padding> 
-                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{this.productData.body.data.currency_sign}}{{display_price}}</span>
-                        <span class="sPrice"  *ngIf="(display_price*1) > (final_price*1)"> {{this.productData.body.data.currency_sign}}{{final_price}}</span>
+                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
+                        <span class="sPrice"  *ngIf="(display_price*1) > (final_price*1)"> {{productData.body.data.currency_sign}}{{final_price}}</span>
                     </ion-col>
                 </ion-row>
                 <ion-row wrap>
@@ -49,11 +49,13 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
-                <ion-row wrap *ngIf="offerTier_price.length>0">
-                         <ion-col *ngFor="let data of offerTier_price">
-                        <p class=" font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{data.tierPrice}} each.  </p>
-                    </ion-col>
-                </ion-row>
+                <div *ngIf="offerTier_price.length>0">
+                    <ion-row *ngFor="let data of offerTier_price">
+                             <ion-col>
+                                 <p class="no-margin font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice}} each.  </p>
+                        </ion-col>
+                    </ion-row>
+                </div>
                 <ion-row>
                     <ion-col>
                         <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>

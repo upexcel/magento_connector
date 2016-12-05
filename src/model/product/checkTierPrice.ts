@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+// this service is use in product page to get tier price 
+import { Injectable } from '@angular/core'; 
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
 declare let Promise: any;
@@ -6,7 +7,8 @@ declare let Promise: any;
 export class TierPrice {
     constructor() {
     }
-    getTierPriceData(data): any {
+ //function is used to get muntipul offer of tier price    
+    getTierPriceData(data): any {  
         let finalprice = [];
         return new Promise((resolve, reject) => {
             if (data.length > 0) {

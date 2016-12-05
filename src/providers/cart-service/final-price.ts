@@ -1,3 +1,4 @@
+// this service use to implement tire price in cart page 
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
@@ -6,6 +7,7 @@ declare let Promise: any;
 export class FinalPrice {
     constructor() {
     }
+    //the getPrice funtion return all necessary data to be use in cart page  inclused additional attribute of tier_price 
     getPrice(data): any {
         let finalprice = [];
         return new Promise((resolve, reject) => {
