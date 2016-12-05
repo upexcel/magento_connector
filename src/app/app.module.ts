@@ -26,6 +26,7 @@ import { Register } from '../model/register/register';
 import { CategoryList } from '../model/home/categoryList';
 import { HomeProducts } from '../model/home/homeProducts';
 import { Product } from '../model/product/getProduct';
+import { TierPrice } from '../model/product/checkTierPrice';
 import { Cart } from '../model/product/cart';
 import { Slider } from '../model/home/slider';
 import { ChangePwd } from '../model/changePassword/accountChangePwd';
@@ -158,6 +159,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CategoryProduct,
         HomeProducts,
         Product,
+        TierPrice,
         Cart,
         ChangePwd,
         TotalOrder,

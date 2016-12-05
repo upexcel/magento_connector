@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { NavController, NavParams,Events} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { FinalPrice } from './../../providers/cart-service/final-price';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
@@ -16,12 +16,14 @@ export class CartPage implements OnInit {
     res: any = [];
     lists: any = [];
     entry: boolean = false;
-    constructor(private _finalPrice:FinalPrice,private _events:Events,public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
+    constructor(private _finalPrice: FinalPrice, private _events: Events, public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
+        this.firstExecute();
+    }
+    firstExecute() {
         this.local.get('item').then((value: any) => {
-            this.res = JSON.parse(value);
-            this._finalPrice.getPrice(this.res).then((finalPrice)=>{
-                console.log(finalPrice);
+            this._finalPrice.getPrice(JSON.parse(value)).then((finalPrice) => {
+                this.res = finalPrice;
             })
             let tempObj = [];
             forEach(this.res, function(value, key) {
@@ -65,7 +67,10 @@ export class CartPage implements OnInit {
                     }
 
                 });
-                this.local.set('item', JSON.stringify(UpdatecartData));
+                this._finalPrice.getPrice(UpdatecartData).then((finalPrice) => {
+                    data.tPrice = finalPrice.tPrice;
+                    this.local.set('item', JSON.stringify(finalPrice));
+                })
             }
 
 
@@ -81,14 +86,19 @@ export class CartPage implements OnInit {
                         UpdatecartData.push(value);
                     }
                 });
-                this.local.set('item', JSON.stringify(UpdatecartData));
-
+                this._finalPrice.getPrice(UpdatecartData).then((finalPrice) => {
+                    data.tPrice = finalPrice.tPrice;
+                    this.local.set('item', JSON.stringify(finalPrice));
+                })
 
             }
+
         });
+
     }
     remove(data) {
         this.local.get('item').then((value: any) => {
+
             let cartData = [];
             let UpdatecartData = [];
             let keyDataCheck: boolean = false;
