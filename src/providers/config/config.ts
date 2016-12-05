@@ -19,5 +19,6 @@ export const config = {
         "initialSlide": 1,
         "loop": true,
         "pager": true
-    }
+    },
+    "stopApiTime":10000
 }

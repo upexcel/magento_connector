@@ -10,6 +10,7 @@ import 'rxjs/add/operator/timeout';
 import { Subject } from 'rxjs/Rx';
 import { Platform } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
+rom
 @Injectable()
 export class ApiService {
     constructor(private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) { }
@@ -28,7 +29,7 @@ export class ApiService {
             }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
-                .timeout(10000, new Error('Check Network Connection'))
+                .timeout(config.stopApiTime, new Error('Check Network Connection'))
                 .subscribe((res: Response) => {
                     self._extractData(res, subject)
                 },
