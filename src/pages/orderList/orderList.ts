@@ -35,6 +35,7 @@ export class OrderlistPage implements OnInit {
     itemsValue: any = [];
     itemsDate: any = [];
     spin: boolean = false;
+    error: boolean = false;
     startArray: number = 0;
     endArray: number = 4;
     startDateArray: number = 0;
@@ -88,6 +89,7 @@ export class OrderlistPage implements OnInit {
             }
         })
             .catch((err) => {
+                this.error = true;
                 this.logout();
             })
     }
