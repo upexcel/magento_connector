@@ -53,15 +53,15 @@ export class StartPage implements OnInit {
     userFbLogin(body) {
         this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this.socialData = res;
-            this._appConfigService.setUserData(res.data);
-            this._navCtrl.setRoot(HomePage,{"access_token":res.data.access_token});
+            this._appConfigService.setUserData(res.body);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
         });
     }
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this.socialData = res;
-            this._appConfigService.setUserData(res.data);
-            this._navCtrl.setRoot(HomePage,{"access_token":res.data.access_token});
+            this._appConfigService.setUserData(res.body);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
         });
     }
     showSocialLoginError(error) {

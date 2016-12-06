@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { Login } from '../../model/login/login';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { SocialAccount } from './../../model/startPage/socialAccount';
 @Component({
     templateUrl: 'login.html'
 })
@@ -21,14 +22,7 @@ export class LoginPage implements OnInit {
     data: LoginDataType;
     forgotPasswordEmail: any;
     title: string = 'LOGIN'
-    constructor(private _toast: ToastService,
-        private _events: Events,
-        private _login: Login,
-        private _local: Storage,
-        private _navCtrl: NavController,
-        private _fb: FormBuilder,
-        private _alertCtrl: AlertController,
-        private _appConfigService: AppDataConfigService) { }
+    constructor(private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
@@ -60,6 +54,18 @@ export class LoginPage implements OnInit {
             .catch(err => {
                 this.showLoginError(err);
             })
+    }
+    userFbLogin(body) {
+        this._socialAccount.getSocialAccount(body.data).then((res: any) => {
+            this._appConfigService.setUserData(res.body);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
+        });
+    }
+    userGoogleLogin(body) {
+        this._socialAccount.getSocialAccount(body).then((res: any) => {
+            this._appConfigService.setUserData(res.body);
+            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
+        });
     }
     gotoforgotPage() {
         this._navCtrl.push(ForgotPage, { email: this.forgotPasswordEmail });

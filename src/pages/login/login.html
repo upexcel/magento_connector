@@ -17,6 +17,20 @@
             </ion-row>
         </ion-grid>
     </form>
+    <ion-grid >
+        <ion-row center >
+            <ion-col class="center">
+                <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid >
+        <ion-row center >
+            <ion-col class="center">
+                <google-login (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
     <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
     <h5 align='center' class="marTop100">Don't have an account?</h5>
     <ion-grid >
