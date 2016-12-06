@@ -142,12 +142,13 @@ export class ProductPage implements OnInit {
     userUpdated(event) {
         this.reviewData = event;
     }
-    public askEmail: boolean;;
-    notifySet() {
+    public askEmail: boolean;
+    
+    notifySet() { // this function is used to set notification for product stock
         if (this.userEmail) {
             this.alertSetApi(this.userEmail)
         } else {
-            this.askEmail = true;
+         this._toast.toast("Please Login First !!", 3000, "bottom");
         }
     }
 
@@ -156,12 +157,10 @@ export class ProductPage implements OnInit {
         this._notifyService.setNotification({ sku: this.productData.body.data.sku, email: useremail }).then((data: any) => {
             this.alertset = false;
             this.askEmail = true;
-            this._toast.toast("Alert Set ", 3000, "bottom");
+            
         });
     }
-    notifySetalert(res: any) {
-        this.alertSetApi(res.email);
-    }
+   
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
