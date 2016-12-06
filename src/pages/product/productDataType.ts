@@ -19,6 +19,8 @@ export class productDataType {
             "short_description": string,
             "long_description": string,
             "media_images": Array<string>,
+            "small_image"?:any,
+            "minify_image"?:any,
             "additional_information"?: {},
             "in_stock": string,
             "final_price" : number,
@@ -41,7 +43,9 @@ export class productDataType {
                 "inclTaxTitle"?: string,
             }
         },
-        "bundle_items":any,
+        "bundle_items"?:{
+            options ? : any
+        },
         "samples"?: string,
         "links"?: Array<any>
     }

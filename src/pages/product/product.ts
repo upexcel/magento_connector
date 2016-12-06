@@ -41,17 +41,18 @@ export class ProductPage implements OnInit {
     keys: Array<string> = [];
     search: any = [];
     res: {} = {};
+    imgArray: Array<string> = [];
     data: any;
     reviewData = [];
     error: boolean = false;
     id: string;
     offerTier_price: any;// use to show offer
+    //    small_image: Array<string>
+    //    minify_image: Array<string>
     constructor(private _tierPrice: TierPrice, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) { }
     ngOnInit() {
         this.id = this._navParams.get('id');
-
         this.products();
-
         this._events.subscribe('api:review', (review) => {
             this.products();
         });
@@ -81,6 +82,16 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
+                    //                    this.minify_image = this.productData.body.data.minify_image;
+                    //                    this.small_image = this.productData.body.data.small_image;
+                    // creating json Array for  minify_image and small_image
+                    //                    for (let i = 0; i <= this.productData.body.data.media_images.length; i++) {
+                    //                        this.imgArray.push({
+                    //                            minify_image: this.minify_image[i],
+                    //                            small_image: this.small_image[i]
+                    //                        });
+                    //                    }
+                    //                    console.log(this.imgArray);
                     // here we are using tierPrice servive to get offer of tire price .
                     this._tierPrice.getTierPriceData(this.productData.body.data.tier_price).then((tier_price) => {
                         this.offerTier_price = tier_price;
@@ -92,6 +103,13 @@ export class ProductPage implements OnInit {
                             this.keys = keys(this.productData.body.associated_products.attributes);
                         }
                     });
+                    if (this.productData.body.data.type == "bundle") {
+                        console.log(this.productData.body.bundle_items.options.length);
+                        forEach(this.productData.body.bundle_items.options, function(value, key) {
+                            console.log(key);
+                            console.log(value);
+                        })
+                    }
                 }
             }).catch((err) => {
                 this.error = true;

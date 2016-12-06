@@ -49,10 +49,53 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
+
+
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Gaming</ion-label>
+                        <ion-select [(ngModel)]="gaming" multiple="true">
+                            <ion-option value="nes">NES</ion-option>
+
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+                <ion-list radio-group>
+                    <ion-list-header>
+                        Language
+                    </ion-list-header>
+
+                    <ion-item>
+                        <ion-label>Go</ion-label>
+                        <ion-radio checked="true" value="go"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Rust</ion-label>
+                        <ion-radio value="rust"></ion-radio>
+                    </ion-item>
+
+                </ion-list>
+                <ion-item>
+                    <ion-label>Daenerys Targaryen</ion-label>
+                    <ion-checkbox color="dark" checked="true"></ion-checkbox>
+                </ion-item>
+
+
+
+
+
+
+
+
+
+
+
+
                 <div *ngIf="offerTier_price.length>0">
                     <ion-row *ngFor="let data of offerTier_price">
-                             <ion-col>
-                                 <p class="no-margin font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice}} each.  </p>
+                        <ion-col>
+                            <p class="no-margin font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice}} each.  </p>
                         </ion-col>
                     </ion-row>
                 </div>
