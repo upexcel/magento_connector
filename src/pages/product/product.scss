@@ -60,7 +60,13 @@
     p.stock {
         color: green;
         font-weight: 600;
+        float:left;
     }
+    .notifyBt{
+        float: right;
+        margin: 13px 0 0 0;
+    }
+
     .img{
         min-height: 140px;
         max-height: 270px;
@@ -149,6 +155,9 @@
         background-image: -webkit-linear-gradient(-45deg, transparent 100%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.1) 35%, transparent 0%), -webkit-linear-gradient(top, rgba(240,248,255, .1), rgba(0, 0, 0, 0.25)), -webkit-linear-gradient(left, #09c, #09c);
         border-radius: 10px;
         background-size: 35px 20px, 100% 100%, 100% 100%;
+    }
+    .paddingZero{
+        padding:0px;
     }
 
 }

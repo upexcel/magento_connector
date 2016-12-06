@@ -18,9 +18,27 @@
                     </ion-slide>
                 </ion-slides>
                 <ion-row class="padLeft10">
-                    <ion-col>
-                        <p class="stock">{{productData.body.data.in_stock}}</p>
-                        <h3 class="capitalize">{{productData.body.data.name}}</h3>
+                    <ion-col class='paddingZero'>
+                        <ion-col class='paddingZero'>
+                            <h4 class="capitalize">{{productData.body.data.name}}</h4>
+                        </ion-col> 
+                        <ion-col class="paddingZero">
+                            <p class="stock">{{productData.body.data.in_stock}}</p>
+                            <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
+                        </ion-col>
+                        <form  *ngIf="askEmail" [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <ion-item>
+                                <ion-label  floating>Email</ion-label>
+                                <ion-input  id="email"  type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+                            </ion-item>  
+                            <ion-grid class="magTop60">
+                                <ion-row class="center" >
+                                    <ion-col class="center">
+                                        <btn-round [title]="'Set Notification'" [spin]="alertset" [valid]="!logform.valid" (onBtnClick)="notifySetalert(logform.value)" ></btn-round>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </form>    
 
                     </ion-col>
                 </ion-row>
