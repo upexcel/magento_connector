@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NotifyMe } from '../../model/product/notify';
 import { CartService } from './../../providers/cart-service/cart-service';
 import { productDataType } from './../product/productDataType';
 import { Product } from '../../model/product/getProduct';
@@ -21,6 +23,7 @@ import isEqual from 'lodash/isEqual';
 })
 export class ProductPage implements OnInit {
     productData: productDataType;
+    logform: FormGroup;
     cartData: cartDataType;
     quantity: number;
     sp_priceShow: boolean = false;
@@ -42,11 +45,21 @@ export class ProductPage implements OnInit {
     data: any;
     reviewData = [];
     error: boolean = false;
-    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    userEmail: any;
+    alertset: boolean = false;
+    constructor(private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = {
             sku: id
         };
+        this.logform = this.emailTest.group({ email: ['', Validators.required] });
+        this._appConfigService.getUserData().then((userData: any) => {
+            if (userData) {
+                this.userEmail = userData.email;
+            } else {
+                this.userEmail = '';
+            }
+        })
     }
     ngOnInit() {
         this._events.subscribe('api:review', (review) => {
@@ -129,6 +142,27 @@ export class ProductPage implements OnInit {
     userUpdated(event) {
         this.reviewData = event;
     }
+    public askEmail: boolean;
+
+    notifySet() { // this function is used to set notification for product stock
+        if (this.userEmail) {
+            this.alertSetApi(this.userEmail)
+        } else {
+            this._toast.toast("Please Login First !!", 3000, "bottom");
+        }
+    }
+
+    alertSetApi(useremail) {
+        this.alertset = true;
+        let sku = this.productData.body.data.sku;
+        let email = useremail
+        this._notifyService.setNotification(sku,email).then((data: any) => {
+            this.alertset = false;
+            this.askEmail = true;
+
+        });
+    }
+
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
@@ -142,6 +176,7 @@ export class ProductPage implements OnInit {
         let type: string = this.productData.body.data.type;
         let other;
         let productid: string = this.productData.body.data.entity_id;
+
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: sku, img: img, name: name, price: price, type: type, quantity: 1 };
@@ -191,4 +226,5 @@ export class ProductPage implements OnInit {
             });
         });
     }
+
 }

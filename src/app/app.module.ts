@@ -37,7 +37,7 @@ import { Country } from '../model/myaccount/country';
 import { EditAccount } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
-
+import { NotifyMe } from '../model/product/notify';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
@@ -108,12 +108,12 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         FocusByEnterKey,
         EqualValidator,
         ImageDirective,
+        OfflinePage,
         ImageFallBackDirective,
         Button,
         ButtonFull,
         ButtonTour,
-        ButtonForLarge,
-        OfflinePage
+        ButtonForLarge
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -170,7 +170,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         sliderService,
         homeProductsService,
         categoryService,
-        CountryService]
+        CountryService,
+        NotifyMe]
 })
 export class AppModule {
 
