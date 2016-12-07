@@ -49,6 +49,7 @@ export class ProductPage implements OnInit {
     offerTier_price: any;// use to show offer
     //    small_image: Array<string>
     //    minify_image: Array<string>
+    test={"bundle_items":[{"type":"multi", "selection":[{"selection_id":"1","selection_name":"Testing Product","selection_product_id":"1","selection_qty":"1.0000"},{"selection_id":"6","selection_name":"Vishal Testing Product","selection_product_id":"6","selection_qty":"1.0000"}]},{"type":"checkbox","selection":[{"selection_id":"2","selection_name":"Testing Check Product","selection_product_id":"2","selection_qty":"1.0000"}]}]};
     constructor(private _tierPrice: TierPrice, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) { }
     ngOnInit() {
         this.id = this._navParams.get('id');
@@ -91,7 +92,6 @@ export class ProductPage implements OnInit {
                     //                            small_image: this.small_image[i]
                     //                        });
                     //                    }
-                    //                    console.log(this.imgArray);
                     // here we are using tierPrice servive to get offer of tire price .
                     this._tierPrice.getTierPriceData(this.productData.body.data.tier_price).then((tier_price) => {
                         this.offerTier_price = tier_price;
@@ -104,10 +104,24 @@ export class ProductPage implements OnInit {
                         }
                     });
                     if (this.productData.body.data.type == "bundle") {
-                        console.log(this.productData.body.bundle_items.options.length);
+                        let type = [];
+//                        let i = 0;
+//                        let noOfCoponent = 0;
+//                        let noOFsameComponent = 1;
                         forEach(this.productData.body.bundle_items.options, function(value, key) {
-                            console.log(key);
-                            console.log(value);
+                            forEach(value, function(data, keyData) {
+                                let id = data.id;
+                                //will fetch type of component and its occurence 
+//                                type.push(data.type);
+//                                ++noOfCoponent;
+//                                if (type[i] == type[i + 1]) {
+//                                    noOFsameComponent++;
+//                                }
+                                if (keyData == "selections" && data.selections.length > 0) {
+                                    forEach(value, function(selections, keySelections) {
+                                    })
+                                }
+                            })
                         })
                     }
                 }

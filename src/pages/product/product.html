@@ -28,6 +28,7 @@
                         <span class="sPrice"  *ngIf="(display_price*1) > (final_price*1)"> {{productData.body.data.currency_sign}}{{final_price}}</span>
                     </ion-col>
                 </ion-row>
+                <!--for config.. product-->
                 <ion-row wrap>
                     <ion-col width-50 *ngFor="let key of keys">
                              <ion-item class="selectlist">
@@ -49,39 +50,43 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
-
-
-                <ion-list>
-                    <ion-item>
-                        <ion-label>Gaming</ion-label>
-                        <ion-select [(ngModel)]="gaming" multiple="true">
-                            <ion-option value="nes">NES</ion-option>
-
-                        </ion-select>
-                    </ion-item>
-                </ion-list>
-                <ion-list radio-group>
-                    <ion-list-header>
-                        Language
-                    </ion-list-header>
-
-                    <ion-item>
-                        <ion-label>Go</ion-label>
-                        <ion-radio checked="true" value="go"></ion-radio>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label>Rust</ion-label>
-                        <ion-radio value="rust"></ion-radio>
-                    </ion-item>
-
-                </ion-list>
-                <ion-item>
-                    <ion-label>Daenerys Targaryen</ion-label>
-                    <ion-checkbox color="dark" checked="true"></ion-checkbox>
-                </ion-item>
-
-
+                <!--for bundal product-->
+                <div *ngFor="let b_test1 of test.bundle_items ; let i = index">
+                    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='multi'">
+                          <ion-item>
+                            <ion-label>Select</ion-label>
+                            <ion-select [(ngModel)]="multi" multiple="true">
+                                <ion-option *ngFor="let selection of b_test1.selection" value="nes">{{selection.selection_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+                    <ion-list no-lines *ngIf="b_test1.type=='select'">
+                              <ion-item>
+                            <ion-label>Gaming</ion-label>
+                            <ion-select [(ngModel)]="gaming">
+                                <ion-option  *ngFor="let selection of b_test1.selection" value="nes" >{{selection.selection_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+                    <ion-list no-margin no-lines radio-group *ngIf="b_test1.type=='radio'">
+                              <ion-list-header>
+                            Language
+                        </ion-list-header>
+                        <ion-item *ngFor="let selection of b_test1.selection">
+                            <ion-label>{{selection.selection_name}}</ion-label>
+                            <ion-radio checked="true" value="selection.selection_name"></ion-radio>
+                        </ion-item>
+                    </ion-list>
+                    <div *ngIf="b_test1.type=='checkbox'">
+                        <ion-item no-lines *ngFor="let selection of b_test1.selection">
+                                  <ion-label>{{selection.selection_name}}</ion-label>
+                            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+                        </ion-item>
+                    </div>
+                </div>
+                <!--////////////////-->
+                <!--for downlodeable product-->
+                <ion-grid></ion-grid>
 
 
 
