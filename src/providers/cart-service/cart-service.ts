@@ -16,7 +16,7 @@ export class CartService {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
-            cartData = JSON.parse(value);
+            cartData = value;
             if (value) {
                 //local/cartdata is not null
                 if (value && cartData.length > 0) {
@@ -68,7 +68,7 @@ export class CartService {
                 cartData.unshift(data);
             }
             if (cartData != "undefined") {
-                this._local.set('item', JSON.stringify(cartData));
+                this._local.set('item', cartData);
                 return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });

@@ -22,9 +22,7 @@ export class CartPage implements OnInit {
     }
     firstExecute() {
         this.local.get('item').then((value: any) => {
-            this._finalPrice.getPrice(JSON.parse(value)).then((finalPrice) => {
-                this.res = finalPrice;
-            })
+            this.res= this._finalPrice.getPrice(value);
             let tempObj = [];
             forEach(this.res, function(value, key) {
                 forEach(value, function(value1, key) {
@@ -67,10 +65,7 @@ export class CartPage implements OnInit {
                     }
 
                 });
-                this._finalPrice.getPrice(UpdatecartData).then((finalPrice) => {
-                    data.tPrice = finalPrice.tPrice;
-                    this.local.set('item', JSON.stringify(finalPrice));
-                })
+                    this.local.set('item', JSON.stringify(UpdatecartData));
             }
 
 
@@ -86,10 +81,8 @@ export class CartPage implements OnInit {
                         UpdatecartData.push(value);
                     }
                 });
-                this._finalPrice.getPrice(UpdatecartData).then((finalPrice) => {
-                    data.tPrice = finalPrice.tPrice;
-                    this.local.set('item', JSON.stringify(finalPrice));
-                })
+
+                    this.local.set('item', JSON.stringify(UpdatecartData));
 
             }
 

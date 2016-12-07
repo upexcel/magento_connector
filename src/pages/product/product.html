@@ -38,7 +38,7 @@
                                     <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                 </ion-buttons>
                             </ion-label>
-                            <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
+                            <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChangeConfigurableAttribute(res,key)">
                                 <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                     <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                         <ion-label no-margin class="font12">
@@ -51,7 +51,7 @@
                     </ion-col>
                 </ion-row>
                 <!--for bundal product-->
-                <div *ngFor="let b_test1 of test.bundle_items ; let i = index">
+                <div *ngFor="let b_test1 of productData.body.bundle_items ; let i = index">
                     <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='multi'">
                           <ion-item>
                             <ion-label>Select</ion-label>
@@ -97,8 +97,8 @@
 
 
 
-                <div *ngIf="offerTier_price.length>0">
-                    <ion-row *ngFor="let data of offerTier_price">
+                <div *ngIf="show_add_to_cart.length>0">
+                    <ion-row *ngFor="let data of show_add_to_cart">
                         <ion-col>
                             <p class="no-margin font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice}} each.  </p>
                         </ion-col>

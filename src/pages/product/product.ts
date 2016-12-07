@@ -32,7 +32,6 @@ export class ProductPage implements OnInit {
     selectColor: string;
     selectedList: Array<any> = [];
     disable: boolean = true;
-    product: string;
     images: string;
     final_price: number;
     display_price: number;
@@ -46,20 +45,18 @@ export class ProductPage implements OnInit {
     reviewData = [];
     error: boolean = false;
     id: string;
-    offerTier_price: any;// use to show offer
-    //    small_image: Array<string>
-    //    minify_image: Array<string>
-    test={"bundle_items":[{"type":"multi", "selection":[{"selection_id":"1","selection_name":"Testing Product","selection_product_id":"1","selection_qty":"1.0000"},{"selection_id":"6","selection_name":"Vishal Testing Product","selection_product_id":"6","selection_qty":"1.0000"}]},{"type":"checkbox","selection":[{"selection_id":"2","selection_name":"Testing Check Product","selection_product_id":"2","selection_qty":"1.0000"}]}]};
+    show_add_to_cart: any;// use to show offer
     constructor(private _tierPrice: TierPrice, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) { }
     ngOnInit() {
         this.id = this._navParams.get('id');
+        // coll products function when it lode first time
         this.products();
-        this._events.subscribe('api:review', (review) => {
-            this.products();
-        });
+        //coll when any review is added 
+//        this._events.subscribe('api:review', (review) => {
+//            this.products();
+//        });
     }
     products() {
-        this.product = "Product";
         // get data from local storage of userData via funtion of getUserData
         this._appConfigService.getUserData().then((userData: any) => {
             // in data variable access_token and sku is used to check user login in backend to send tier price
@@ -83,47 +80,14 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
-                    //                    this.minify_image = this.productData.body.data.minify_image;
-                    //                    this.small_image = this.productData.body.data.small_image;
-                    // creating json Array for  minify_image and small_image
-                    //                    for (let i = 0; i <= this.productData.body.data.media_images.length; i++) {
-                    //                        this.imgArray.push({
-                    //                            minify_image: this.minify_image[i],
-                    //                            small_image: this.small_image[i]
-                    //                        });
-                    //                    }
                     // here we are using tierPrice servive to get offer of tire price .
-                    this._tierPrice.getTierPriceData(this.productData.body.data.tier_price).then((tier_price) => {
-                        this.offerTier_price = tier_price;
+                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                         if (this.productData.body.data.type != "configurable") {
                             this.disable = false;
                         }
-                        this.product = this.productData.body.data.name;
                         if (this.productData.body.associated_products) {
                             this.keys = keys(this.productData.body.associated_products.attributes);
                         }
-                    });
-                    if (this.productData.body.data.type == "bundle") {
-                        let type = [];
-//                        let i = 0;
-//                        let noOfCoponent = 0;
-//                        let noOFsameComponent = 1;
-                        forEach(this.productData.body.bundle_items.options, function(value, key) {
-                            forEach(value, function(data, keyData) {
-                                let id = data.id;
-                                //will fetch type of component and its occurence 
-//                                type.push(data.type);
-//                                ++noOfCoponent;
-//                                if (type[i] == type[i + 1]) {
-//                                    noOFsameComponent++;
-//                                }
-                                if (keyData == "selections" && data.selections.length > 0) {
-                                    forEach(value, function(selections, keySelections) {
-                                    })
-                                }
-                            })
-                        })
-                    }
                 }
             }).catch((err) => {
                 this.error = true;
@@ -131,7 +95,7 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-    onChange(res, key) {
+     onChangeConfigurableAttribute(res, key){
         let count = 0;
         //take current selected item
         let res111 = res[key];
