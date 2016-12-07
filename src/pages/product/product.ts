@@ -43,6 +43,10 @@ export class ProductPage implements OnInit {
     keys: Array<string> = [];
     search: any = [];
     res: {} = {};
+    bundalCheck: any = [];
+    bundalRadio: any = [];
+    bundalMulti: any = [];
+    bundalSelect: any = [];
     imgArray: Array<string> = [];
     data: any;
     reviewData = [];
@@ -51,7 +55,7 @@ export class ProductPage implements OnInit {
     show_add_to_cart: any;// use to show offer
     userEmail: any;
     alertset: boolean = false;
-    constructor(private _tierPrice: TierPrice,private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -66,9 +70,9 @@ export class ProductPage implements OnInit {
         // coll products function when it lode first time
         this.products();
         //coll when any review is added 
-//        this._events.subscribe('api:review', (review) => {
-//            this.products();
-//        });
+        this._events.subscribe('api:review', (review) => {
+            this.products();
+        });
     }
     products() {
         // get data from local storage of userData via funtion of getUserData
@@ -86,7 +90,8 @@ export class ProductPage implements OnInit {
                 };
             }
             //getProduct is use to fire product/get api to get product 
-            this._getProduct.getProduct(this.data).then((res) => {
+            //            this._getProduct.getProduct(this.data).then((res) => {
+            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
@@ -95,13 +100,13 @@ export class ProductPage implements OnInit {
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
                     // here we are using tierPrice servive to get offer of tire price .
-                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
-                        if (this.productData.body.data.type != "configurable") {
-                            this.disable = false;
-                        }
-                        if (this.productData.body.associated_products) {
-                            this.keys = keys(this.productData.body.associated_products.attributes);
-                        }
+                    this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
+                    if (this.productData.body.data.type != "configurable") {
+                        this.disable = false;
+                    }
+                    if (this.productData.body.associated_products) {
+                        this.keys = keys(this.productData.body.associated_products.attributes);
+                    }
                 }
             }).catch((err) => {
                 this.error = true;
@@ -109,7 +114,7 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-     onChangeConfigurableAttribute(res, key){
+    onChangeConfigurableAttribute(res, key) {
         let count = 0;
         //take current selected item
         let res111 = res[key];
@@ -172,11 +177,40 @@ export class ProductPage implements OnInit {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
         let email = useremail
-        this._notifyService.setNotification(sku,email).then((data: any) => {
+        this._notifyService.setNotification(sku, email).then((data: any) => {
             this.alertset = false;
             this.askEmail = true;
 
         });
+    }
+
+
+    onChangeBundalSelect(bundalSelect) {
+        let self = this;
+        let dataBundalSelect = [];
+        forEach(bundalSelect, function(value, key1) {
+                console.log(value)
+                console.log(key)
+                //            dataBundalSelect.push({ "nameBundalSelect": value1.selection_name, "priceBundalSelect": value1.selection_price });
+                //            self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+        })
+        console.log(dataBundalSelect);
+    }
+    onChangeBundalMulti(bundalMulti) {
+        let self = this;
+        console.log(bundalMulti);
+        let dataBundalMulti = [];
+        forEach(bundalMulti, function(value, key) {
+            forEach(value, function(data, key1) {
+                console.log(data);
+                dataBundalMulti.push({ "nameBundalMulti": value, "priceBundalMulti": value.selection_price });
+                self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+            })
+        })
+        console.log(dataBundalMulti);
+    }
+    onChangeBundalCheck(bundalcheck) {
+        console.log(bundalcheck)
     }
 
     addCart(response) {
