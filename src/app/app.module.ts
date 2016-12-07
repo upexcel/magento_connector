@@ -38,6 +38,7 @@ import { EditAccount } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
+import {CartFunction} from '../model/cart/cartHandling';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { ApiService } from '../providers/api-service/api-service';
@@ -171,7 +172,9 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         homeProductsService,
         categoryService,
         CountryService,
-        NotifyMe]
+        NotifyMe,
+        CartFunction
+        ]
 })
 export class AppModule {
 

@@ -207,9 +207,10 @@ export class ProductPage implements OnInit {
 
                 }
                 //cart api
-                this._cart.getCart(path).then((res) => {
-                    if (res) {
+//                this._cart.getCart(path).then((res) => {
+//                    if (res) {
                         // add to cart service
+                console.log('others',other)
                         this._cartService.addCart(other, this.keys).then((response: any) => {
                             this.cartData = response;
                             if (this.cartData.body != "undefined") {
@@ -219,10 +220,10 @@ export class ProductPage implements OnInit {
                             else {
                             }
                         });
-                    }
-                }).catch((err) => {
-                    this._toast.toast(err, 3000, "top");
-                })
+//                    }
+//                }).catch((err) => {
+//                    this._toast.toast(err, 3000, "top");
+//                })
             });
         });
     }

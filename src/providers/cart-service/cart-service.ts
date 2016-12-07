@@ -12,11 +12,11 @@ export class CartService {
     constructor(private _local: Storage) {
     }
     addCart(data, keyGrop): any {
-        return this._local.get('item').then((value: any) => {
+        return this._local.get('CartData').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
-            cartData = JSON.parse(value);
+            cartData = value;
             if (value) {
                 //local/cartdata is not null
                 if (value && cartData.length > 0) {
@@ -68,7 +68,8 @@ export class CartService {
                 cartData.unshift(data);
             }
             if (cartData != "undefined") {
-                this._local.set('item', JSON.stringify(cartData));
+                console.log(cartData);
+                this._local.set('CartData', cartData);
                 return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });
