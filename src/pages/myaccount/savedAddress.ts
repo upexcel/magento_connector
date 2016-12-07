@@ -52,6 +52,7 @@ import reverse from 'lodash/reverse';
 export class MySavedAddressPage implements OnInit {
     myaccount: MyAccountAddressDataType;
     spin: boolean;
+    error: boolean = false;
     addAddr:boolean=false;
     showAddress: boolean;
     secret: string;
@@ -106,6 +107,7 @@ export class MySavedAddressPage implements OnInit {
                 }
             })
             .catch(err => {
+                this.error = true;
                 this.logout();
             })
     }

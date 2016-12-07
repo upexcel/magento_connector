@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NotifyMe } from '../../model/product/notify';
 import { CartService } from './../../providers/cart-service/cart-service';
 import { productDataType } from './../product/productDataType';
 import { Product } from '../../model/product/getProduct';
@@ -22,6 +24,7 @@ import isEqual from 'lodash/isEqual';
 })
 export class ProductPage implements OnInit {
     productData: productDataType;
+    logform: FormGroup;
     cartData: cartDataType;
     quantity: number;
     selectshow: boolean = true;
@@ -46,7 +49,18 @@ export class ProductPage implements OnInit {
     error: boolean = false;
     id: string;
     show_add_to_cart: any;// use to show offer
-    constructor(private _tierPrice: TierPrice, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) { }
+    userEmail: any;
+    alertset: boolean = false;
+    constructor(private _tierPrice: TierPrice,private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+        this.logform = this.emailTest.group({ email: ['', Validators.required] });
+        this._appConfigService.getUserData().then((userData: any) => {
+            if (userData) {
+                this.userEmail = userData.email;
+            } else {
+                this.userEmail = '';
+            }
+        })
+    }
     ngOnInit() {
         this.id = this._navParams.get('id');
         // coll products function when it lode first time
@@ -102,7 +116,9 @@ export class ProductPage implements OnInit {
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
         //        mapping between select list
+
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
+
             if (key != key1) {
                 forEach(res1.options, function(res2) {
                     res2.shown = false;
@@ -142,13 +158,33 @@ export class ProductPage implements OnInit {
     userUpdated(event) {
         this.reviewData = event;
     }
+    public askEmail: boolean;
+
+    notifySet() { // this function is used to set notification for product stock
+        if (this.userEmail) {
+            this.alertSetApi(this.userEmail)
+        } else {
+            this._toast.toast("Please Login First !!", 3000, "bottom");
+        }
+    }
+
+    alertSetApi(useremail) {
+        this.alertset = true;
+        let sku = this.productData.body.data.sku;
+        let email = useremail
+        this._notifyService.setNotification(sku,email).then((data: any) => {
+            this.alertset = false;
+            this.askEmail = true;
+
+        });
+    }
+
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
         let path: any;
         let data: any;
         //gather data for send in add cart servive
-
         let sku: string = response.data.sku;
         let img: string = response.data.media_images[0];
         let final_price: number = response.data.final_price;
@@ -157,6 +193,7 @@ export class ProductPage implements OnInit {
         let type: string = this.productData.body.data.type;
         let other;
         let productid: string = this.productData.body.data.entity_id;
+
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: sku, img: img, name: name, price: final_price, tier_price: tier_price, type: type, quantity: 1 };
@@ -184,6 +221,7 @@ export class ProductPage implements OnInit {
                 }
                 else {
                     path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+
                 }
                 //cart api
                 this._cart.getCart(path).then((res) => {
@@ -205,4 +243,5 @@ export class ProductPage implements OnInit {
             });
         });
     }
+
 }

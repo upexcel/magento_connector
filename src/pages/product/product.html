@@ -8,7 +8,7 @@
                 <div class="imgbox">
                     <img src="{{images}}" class=" img cursorPointer"/>
                 </div>
-                <ion-slides pager #mySlider [options]="mySlideOptions" >
+                <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>1">
                             <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
@@ -18,14 +18,22 @@
                     </ion-slide>
                 </ion-slides>
                 <ion-row class="padLeft10">
-                    <ion-col>
-                        <h2 class="capitalize">{{productData.body.data.name}}</h2>
+                    <ion-col class='paddingZero'>
+                        <ion-col class='paddingZero'>
+                            <h4 class="capitalize">{{productData.body.data.name}}</h4>
+                        </ion-col> 
+                        <ion-col class="paddingZero">
+                            <p class="stock">{{productData.body.data.in_stock}}</p>
+                            <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
+                        </ion-col>
+
+
                     </ion-col>
                 </ion-row>
                 <ion-row class="padLeft10"> 
-                    <ion-col no-padding> 
-                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
-                        <span class="sPrice"  *ngIf="(display_price*1) > (final_price*1)"> {{productData.body.data.currency_sign}}{{final_price}}</span>
+                    <ion-col class="padLeft10"> 
+                        <span id="font13" [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</span>
+                        <span class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</span>
                     </ion-col>
                 </ion-row>
                 <!--for config.. product-->

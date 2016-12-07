@@ -38,7 +38,7 @@ import { Country } from '../model/myaccount/country';
 import { EditAccount } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
-
+import { NotifyMe } from '../model/product/notify';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { FinalPrice } from '../providers/cart-service/final-price';
@@ -73,7 +73,7 @@ import { Button } from '../directives/button/buttonRound.directive';
 import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
- //pipe
+//pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 
@@ -174,7 +174,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         sliderService,
         homeProductsService,
         categoryService,
-        CountryService]
+        CountryService,
+        NotifyMe]
 })
 export class AppModule {
 
