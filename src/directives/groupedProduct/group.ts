@@ -9,7 +9,7 @@ import forEach from 'lodash/forEach';
 })
 export class group {
     @Input() grouped: any;
-    public quantity:any = [];
+    public quantity:Array<any> = [];
     public opt: {}
     constructor() {
         let data = {};
