@@ -59,6 +59,14 @@ export class ProductPage implements OnInit {
     show_add_to_cart: any;// use to show offer
     userEmail: any;
     alertset: boolean = false;
+    qty: number = 1;
+    productid: string;
+    //gather data for send in add cart servive
+    sku: string;
+    img: string;
+    name: string;
+    type: string;
+    path: any;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -94,15 +102,21 @@ export class ProductPage implements OnInit {
                 };
             }
             //getProduct is use to fire product/get api to get product 
-//                        this._getProduct.getProduct(this.data).then((res) => {
-            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
+            this._getProduct.getProduct(this.data).then((res) => {
+                //            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
+                    this.productid = this.productData.body.data.entity_id;
                     this.images = this.productData.body.data.media_images[0];
                     this.special_price = this.productData.body.data.special_price;
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
+                    //gather data for send in add cart servive
+                    this.sku = this.productData.body.data.sku;
+                    this.img = this.productData.body.data.media_images[0];
+                    this.name = this.productData.body.data.name;
+                    this.type = this.productData.body.data.type;
                     // here we are using tierPrice servive to get offer of tire price .
                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                     if (this.productData.body.data.type != "configurable" && this.productData.body.data.type != "bundle") {
@@ -111,6 +125,7 @@ export class ProductPage implements OnInit {
                     if (this.productData.body.associated_products) {
                         this.keys = keys(this.productData.body.associated_products.attributes);
                     }
+                    this.genrateData();
                 }
             }).catch((err) => {
                 this.error = true;
@@ -120,12 +135,16 @@ export class ProductPage implements OnInit {
     }
     onChangeConfigurableAttribute(res, key) {
         let count = 0;
+        let totalPrice = 0;
         //take current selected item
         let res111 = res[key];
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
         //        mapping between select list
-
+        forEach(res, function(takePrice) {
+            totalPrice = takePrice.price * 1 + totalPrice * 1;
+        })
+        console.log(totalPrice);
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
 
             if (key != key1) {
@@ -160,6 +179,7 @@ export class ProductPage implements OnInit {
                 this.disable = true;
             }
         }
+        this.genrateData();
     }
     slideClick(img: string) {
         this.images = img;
@@ -189,74 +209,80 @@ export class ProductPage implements OnInit {
     }
     onChangeBundalSelect(bundalSelect) {
         let self = this;
+        var total = 0;
+        var testPrice;
         this.dataBundalSelect = [];
         forEach(bundalSelect, function(value) {
             if (value) {
                 self.dataBundalSelect.push({ "nameBundalSelect": value.selection_name, "priceBundalSelect": value.selection_price });
-                self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+                total = ((value.selection_price) * 1);
+                //                testPrice = total;
             }
         })
-        console.log(this.dataBundalSelect);
+        //        console.log(this.dataBundalSelect);
+        //        console.log(total);
+
+        //        if (testPrice > total) {
+        //            this.final_price = this.final_price - total;
+        //        }
+        //        else {
+        //            this.final_price = this.final_price + total;
+        //        }
     }
     onChangeBundalMulti(bundalMulti) {
+        console.log(bundalMulti);
         this.dataBundalMulti = [];
         let self = this;
+        var total = 0;
         forEach(bundalMulti, function(value, key) {
             forEach(value, function(data, key1) {
                 self.dataBundalMulti.push({ "nameBundalMulti": data.selection_name, "priceBundalMulti": data.selection_price });
-                self.final_price = ((data.selection_price) * 1) + ((self.final_price) * 1);
+                total = ((data.selection_price) * 1) + total;
             })
         })
-        console.log(self.final_price);
+        console.log(total);
+        this.final_price = total + this.final_price * 1;
         console.log(this.dataBundalMulti);
     }
     onChangeBundalCheck(x, id) {
         let self = this;
+        var total = 0;
         self.dataBundalCheck = [];
         forEach(self.bundalCheck, function(id, key) {
             if (id) {
                 forEach(x, function(value) {
                     if (key == value.selection_id) {
-//                        console.log(value.selection_name);
                         self.dataBundalCheck.push({ "nameBundalCheck": value.selection_name, "priceBundalCheck": value.selection_price });
-
+                        total = ((value.selection_price) * 1) + total;
                     }
                 })
             }
         })
         console.log(this.dataBundalCheck);
-
+        console.log(total);
     }
     onChangeBundalRadio() {
         console.log(this.bundalRadio)
     }
-    addCart(response) {
-        let selectedItem: string;
-        let array: any = {};
-        let path: any;
-        let data: any;
-        //gather data for send in add cart servive
-        let sku: string = response.data.sku;
-        let img: string = response.data.media_images[0];
-        let final_price: number = response.data.final_price;
-        let tier_price: any = response.data.tier_price;
-        let name: string = response.data.name;
-        let type: string = this.productData.body.data.type;
-        let other;
-        let productid: string = this.productData.body.data.entity_id;
 
+    genrateData() {
+        let array: any = {};
+        let selectedItem: string;
+        let other;
+        let data: any;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
-                data = { id: sku, img: img, name: name, price: final_price, tier_price: tier_price, type: type, quantity: 1 };
+                data = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1 };
                 other = clone(data);
+
                 //check type of data for send data in cart api
-                if (type == "configurable") {
+                if (this.type == "configurable") {
                     console.log(this.selectedList);
                     forEach(this.selectedList, function(listdata, key) {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
-                    path = { "productid": productid, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+                    this.path = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                     other = merge(data, selectedItem);
                     let ser = this.productData.body.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
@@ -271,34 +297,35 @@ export class ProductPage implements OnInit {
                         }
                     });
                 }
-                
                 //bundalproduct
-//                else if (type == "bundle") {
-//                
-//                }
+                //                else if (type == "bundle") {
+                //                
+                //                }
                 else {
-                    path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
+                    this.path = { "productid": this.productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                 }
+            })
+        });
+    }
 
-
-                //cart api
-                this._cart.getCart(path).then((res) => {
-                    if (res) {
-                        // add to cart service
-                        this._cartService.addCart(other, this.keys).then((response: any) => {
-                            this.cartData = response;
-                            if (this.cartData.body != "undefined") {
-                                this._toast.toast("item inserted ", 3000, "top");
-                                this._navCtrl.push(CartPage);
-                            }
-                            else {
-                            }
-                        });
+    addCart(response) {
+        let other;
+        //cart api
+        this._cart.getCart(this.path).then((res) => {
+            if (res) {
+                // add to cart service
+                this._cartService.addCart(other, this.keys).then((response: any) => {
+                    this.cartData = response;
+                    if (this.cartData.body != "undefined") {
+                        this._toast.toast("item inserted ", 3000, "top");
+                        this._navCtrl.push(CartPage);
                     }
-                }).catch((err) => {
-                    this._toast.toast(err, 3000, "top");
-                })
-            });
+                    else {
+                    }
+                });
+            }
+        }).catch((err) => {
+            this._toast.toast(err, 3000, "top");
         });
     }
 
