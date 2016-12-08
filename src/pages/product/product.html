@@ -82,17 +82,18 @@
                         </ion-list-header>
                         <ion-item *ngFor="let selection of b_test1.selection">
                             <ion-label>{{selection.selection_name}} "+" {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-label>
-                            <ion-radio  value="selection" ></ion-radio>
+                            <ion-radio  [value]="selection" [(ngModel)]="bundalRadio[selection.selection_id]" (ngModelChange)="onChangeBundalRadio()"></ion-radio>
                         </ion-item>
                     </ion-list>
-                    <ion-item no-lines *ngIf="b_test1.type=='checkbox'">
+                    <ion-list no-lines *ngIf="b_test1.type=='checkbox'">
                               <ion-list-header class="no-padding">
                             {{b_test1.title}}
                         </ion-list-header>
-                        <ion-checkbox *ngFor="let selection of b_test1.selection" color="dark" value="selection" [(ngModel)]="bundalCheck[i]" (ngModelChange)="onChangeBundalCheck(bundalCheck)" >                           
-                            <ion-label>{{selection.selection_name}} "+" {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-label>
-                        </ion-checkbox>
-                    </ion-item>
+                        <ion-item *ngFor="let selection of b_test1.selection ; let j = index">
+                            <ion-checkbox  color="dark" value="selection" [(ngModel)]="bundalCheck[selection.selection_id]" (ngModelChange)="onChangeBundalCheck(b_test1.selection,selection.selection_id)" ></ion-checkbox>
+                            <ion-label>{{selection.selection_name}}  "+" {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-label>
+                        </ion-item>          
+                    </ion-list>
                 </div>
                 <!--////////////////-->
                 <!--for downlodeable product-->

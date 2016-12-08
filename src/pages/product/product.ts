@@ -190,7 +190,7 @@ export class ProductPage implements OnInit {
         let dataBundalSelect = [];
         forEach(bundalSelect, function(value, key1) {
                 console.log(value)
-                console.log(key)
+                console.log(key1)
                 //            dataBundalSelect.push({ "nameBundalSelect": value1.selection_name, "priceBundalSelect": value1.selection_price });
                 //            self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
         })
@@ -209,10 +209,15 @@ export class ProductPage implements OnInit {
         })
         console.log(dataBundalMulti);
     }
-    onChangeBundalCheck(bundalcheck) {
+    onChangeBundalCheck(x,id) {
+        console.log(this.bundalCheck)
+        console.log(x);
+        console.log(id);
+        
+    }
+    onChangeBundalRadio(bundalcheck) {
         console.log(bundalcheck)
     }
-
     addCart(response) {
         let selectedItem: string;
         let array: any = {};
