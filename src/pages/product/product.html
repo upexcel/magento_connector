@@ -17,7 +17,10 @@
                         </ion-row>
                     </ion-slide>
                 </ion-slides>
-                <ion-row class="padLeft10">
+                <ion-row *ngIf="productData.body.data.type=='grouped'">
+                       <group [grouped]="productData.body"></group>
+                </ion-row>
+                <ion-row class="padLeft10" *ngIf="productData.body.data.type!='grouped'">
                     <ion-col class='paddingZero'>
                         <ion-col class='paddingZero'>
                             <h4 class="capitalize">{{productData.body.data.name}}</h4>
@@ -30,13 +33,13 @@
 
                     </ion-col>
                 </ion-row>
-                <ion-row class="padLeft10"> 
+                <ion-row class="padLeft10" *ngIf="productData.body.data.type!='grouped'"> 
                     <ion-col class="padLeft10"> 
                         <span id="font13" [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</span>
                         <span class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</span>
                     </ion-col>
                 </ion-row>
-                <ion-row wrap>
+                <ion-row wrap *ngIf="productData.body.data.type!='grouped'">
                     <ion-col width-50 *ngFor="let key of keys">
                              <ion-item class="selectlist">
                             <ion-label no-margin class="font12">{{productData.body.associated_products.attributes[key].label}}</ion-label>
@@ -64,6 +67,7 @@
                 </ion-row>
                 <product-review [skuData]="data.sku"> loading..</product-review>               
             </ion-col>
+         
         </ion-row>
     </ion-grid>
 </ion-content>
