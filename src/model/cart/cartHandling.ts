@@ -7,7 +7,7 @@ import findIndex from 'lodash/findIndex';
 import difference from 'lodash/difference';
 import pullAll from 'lodash/pullAll';
 import { Storage } from '@ionic/storage';
-
+import _ from 'lodash';
 
 declare let Promise: any;
 @Injectable()
@@ -20,7 +20,6 @@ export class CartFunction implements OnInit {
             let UpdatecartData = [];
             let keyDataCheck: boolean = false;
             CartData = value;
-            //            data.quantity++;
             if (data.type == "configurable") {
                 let keyGrop = uniq(pullAll(_.keys(data), ['id', 'name', 'img', 'price', 'type', 'quantity']));
                 forEach(CartData, function(value, key) {
@@ -62,7 +61,7 @@ export class CartFunction implements OnInit {
             }
         });
     }
-    
+
     totalPay(data) {
         let totalPay: number = 0;
         forEach(data, function(value, key) {
@@ -75,40 +74,37 @@ export class CartFunction implements OnInit {
         });
     }
     deleteItem(data, response) {
-        let cartData = [];
-        let tempObj = [];
-        let dataloc = [];
         let key = [];
         let allKey = [];
         let iterate: any = [];
-        let data1 = [];
         let val;
-        this.local.get('CartData').then((value: any) => {
-            val = value;
-            let output;
-            let r = {};
+        val = response;
+        let output;
+        let r = {};
 
-            if (data.type == "configurable") {
-                allKey = uniq(pullAll(_.keys(data), ['name', 'img', 'price', 'quantity']));
+        if (data.type == "configurable") {
+            allKey = uniq(pullAll(_.keys(data), ['name', 'img', 'price', 'quantity']));
 
-                for (var i = 0; i < allKey.length; i++) {
-                    var keys = allKey[i];
-                    iterate.push(data[keys]);
-                }
-                for (i = 0; i < keys.length; i++) {
-                    r[allKey[i]] = iterate[i];
-                };
-                let f = findIndex(val, r);
-                output = difference(val, val.splice(f, 1));
-                this.local.set('CartData', output);
-                response = output;
+            for (var i = 0; i < allKey.length; i++) {
+                var keys = allKey[i];
+                iterate.push(data[keys]);
             }
-            else {
-                let f = findIndex(val, { 'id': data.id, 'type': data.type });
-                output = difference(val, val.splice(f, 1));
-                this.local.set('CartData', output);
-                response = output;
-            }
+            for (i = 0; i < keys.length; i++) {
+                r[allKey[i]] = iterate[i];
+            };
+            let f = findIndex(val, r);
+            output = difference(val, val.splice(f, 1));
+            this.local.set('CartData', output);
+            response = output;
+        }
+        else {
+            let f = findIndex(val, { 'id': data.id, 'type': data.type });
+            output = difference(val, val.splice(f, 1));
+            this.local.set('CartData', output);
+            response = output;
+        }
+        return new Promise(function(resolve, reject) {
+            resolve(response);
         });
     }
 }

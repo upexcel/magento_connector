@@ -12,6 +12,7 @@ export class CartService {
     constructor(private _local: Storage) {
     }
     addCart(data, keyGrop): any {
+        console.log('checking for storing',data,keyGrop);
         return this._local.get('CartData').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;

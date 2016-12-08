@@ -16,7 +16,7 @@ export class CartPage implements OnInit {
     res: any = [];
     lists: any = [];
     entery: boolean = false;
-    totalPay: number
+    totalPay: number;
     constructor(private _cartFunction: CartFunction, private _events: Events, public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
@@ -37,6 +37,7 @@ export class CartPage implements OnInit {
     }
 
     changeQuantity(newQuantity, data) {
+        console.log('checking for data',data)
         this._cartFunction.addItem(newQuantity, data)
         this._cartFunction.totalPay(this.res).then((response) => {
             this.totalPay = response;
@@ -45,7 +46,13 @@ export class CartPage implements OnInit {
 
 
     delete(data) {
-        this._cartFunction.deleteItem(data, this.res);
+        this._cartFunction.deleteItem(data, this.res).then((response) => {
+            this.res = response;
+            this._cartFunction.totalPay(this.res).then((rese) => {
+                this.totalPay = rese;
+            });
+
+        });
     }
 
 }

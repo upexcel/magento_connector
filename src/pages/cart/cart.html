@@ -1,8 +1,8 @@
 <header [title]="'cart'" [pagename]="'product'"></header>
 <ion-content class="cart">
     <ion-list>
-        <ion-item-sliding>
-            <ion-item  *ngFor="let data of res">
+        <ion-item-sliding  *ngFor="let data of res">
+            <ion-item >
                 <ion-grid no-padding>
                     <ion-row center>
                         <ion-col class="aligncenter" width-20>
@@ -15,16 +15,17 @@
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                    <input [(ngModel)]="data.quantity" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="number"> <!--<ion-input type="number"></ion-input>-->
+                                    <input [(ngModel)]="data.quantity" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="text"> <!--<ion-input type="number"></ion-input>-->
                                 </ion-col>
 
                             </ion-row>
                             <ion-row *ngIf="entery==true">
-                                <ion-col width-80 *ngFor="let list of lists | convertCodeToName : data" >
-                                         <p>{{list}}</p>
+                                <ion-col width-80>
+                                    <ion-col class="inlineCol" width-20 *ngFor="let list of lists | convertCodeToName : data" >
+                                             <p>{{list}}</p>
+                                    </ion-col>
                                 </ion-col>
-
-                                <ion-col width-20 offset-80 class="alignRight">
+                                <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.price}}</p>
                                 </ion-col>
                             </ion-row>
@@ -78,7 +79,7 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>-->
-        <ion-item class="borderRemove">
+        <ion-item class="borderRemove" *ngIf="res.length!=0">
             <ion-row>
                 <ion-col width-50 class="alignLeft">TOTAL</ion-col>
                 <ion-col width-50 class="alignRight">{{totalPay}}</ion-col>
