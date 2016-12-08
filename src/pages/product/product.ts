@@ -19,6 +19,7 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
+import pullAll from 'lodash/pullAll';
 @Component({
     templateUrl: 'product.html'
 })
@@ -47,6 +48,9 @@ export class ProductPage implements OnInit {
     bundalRadio: any = [];
     bundalMulti: any = [];
     bundalSelect: any = [];
+    dataBundalSelect = [];
+    dataBundalMulti = [];
+    dataBundalCheck = [];
     imgArray: Array<string> = [];
     data: any;
     reviewData = [];
@@ -90,7 +94,7 @@ export class ProductPage implements OnInit {
                 };
             }
             //getProduct is use to fire product/get api to get product 
-            //            this._getProduct.getProduct(this.data).then((res) => {
+//                        this._getProduct.getProduct(this.data).then((res) => {
             this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
@@ -101,7 +105,7 @@ export class ProductPage implements OnInit {
                     this.final_price = this.productData.body.data.final_price;
                     // here we are using tierPrice servive to get offer of tire price .
                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
-                    if (this.productData.body.data.type != "configurable") {
+                    if (this.productData.body.data.type != "configurable" && this.productData.body.data.type != "bundle") {
                         this.disable = false;
                     }
                     if (this.productData.body.associated_products) {
@@ -183,40 +187,48 @@ export class ProductPage implements OnInit {
 
         });
     }
-
-
     onChangeBundalSelect(bundalSelect) {
         let self = this;
-        let dataBundalSelect = [];
-        forEach(bundalSelect, function(value, key1) {
-                console.log(value)
-                console.log(key1)
-                //            dataBundalSelect.push({ "nameBundalSelect": value1.selection_name, "priceBundalSelect": value1.selection_price });
-                //            self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+        this.dataBundalSelect = [];
+        forEach(bundalSelect, function(value) {
+            if (value) {
+                self.dataBundalSelect.push({ "nameBundalSelect": value.selection_name, "priceBundalSelect": value.selection_price });
+                self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+            }
         })
-        console.log(dataBundalSelect);
+        console.log(this.dataBundalSelect);
     }
     onChangeBundalMulti(bundalMulti) {
+        this.dataBundalMulti = [];
         let self = this;
-        console.log(bundalMulti);
-        let dataBundalMulti = [];
         forEach(bundalMulti, function(value, key) {
             forEach(value, function(data, key1) {
-                console.log(data);
-                dataBundalMulti.push({ "nameBundalMulti": value, "priceBundalMulti": value.selection_price });
-                self.final_price = ((value.selection_price) * 1) + ((self.final_price) * 1);
+                self.dataBundalMulti.push({ "nameBundalMulti": data.selection_name, "priceBundalMulti": data.selection_price });
+                self.final_price = ((data.selection_price) * 1) + ((self.final_price) * 1);
             })
         })
-        console.log(dataBundalMulti);
+        console.log(self.final_price);
+        console.log(this.dataBundalMulti);
     }
-    onChangeBundalCheck(x,id) {
-        console.log(this.bundalCheck)
-        console.log(x);
-        console.log(id);
-        
+    onChangeBundalCheck(x, id) {
+        let self = this;
+        self.dataBundalCheck = [];
+        forEach(self.bundalCheck, function(id, key) {
+            if (id) {
+                forEach(x, function(value) {
+                    if (key == value.selection_id) {
+//                        console.log(value.selection_name);
+                        self.dataBundalCheck.push({ "nameBundalCheck": value.selection_name, "priceBundalCheck": value.selection_price });
+
+                    }
+                })
+            }
+        })
+        console.log(this.dataBundalCheck);
+
     }
-    onChangeBundalRadio(bundalcheck) {
-        console.log(bundalcheck)
+    onChangeBundalRadio() {
+        console.log(this.bundalRadio)
     }
     addCart(response) {
         let selectedItem: string;
@@ -239,6 +251,7 @@ export class ProductPage implements OnInit {
                 other = clone(data);
                 //check type of data for send data in cart api
                 if (type == "configurable") {
+                    console.log(this.selectedList);
                     forEach(this.selectedList, function(listdata, key) {
                         array[key] = listdata.id;
                     });
@@ -258,10 +271,16 @@ export class ProductPage implements OnInit {
                         }
                     });
                 }
+                
+                //bundalproduct
+//                else if (type == "bundle") {
+//                
+//                }
                 else {
                     path = { "productid": productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-
                 }
+
+
                 //cart api
                 this._cart.getCart(path).then((res) => {
                     if (res) {
