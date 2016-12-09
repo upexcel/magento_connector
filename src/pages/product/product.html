@@ -18,7 +18,7 @@
                     </ion-slide>
                 </ion-slides>
                 <ion-row *ngIf="productData.body.data.type=='grouped'">
-                       <group [grouped]="productData.body"></group>
+                       <group [grouped]="productData.body" (sendData)="group($event)"></group>
                 </ion-row>
                 <ion-row class="padLeft10" *ngIf="productData.body.data.type!='grouped'">
                     <ion-col class='paddingZero'>

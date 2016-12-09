@@ -47,6 +47,7 @@ export class ProductPage implements OnInit {
     error: boolean = false;
     userEmail: any;
     alertset: boolean = false;
+    groupedData: any;
     constructor(private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         let id = _navParams.get('id');
         this.data = {
@@ -92,7 +93,10 @@ export class ProductPage implements OnInit {
             this.error = true;
         })
     }
-
+    group(json) {
+        console.log('checking grouped data', json);
+        this.groupedData = json;
+    }
     onChange(res, key) {
         let count = 0;
         //take current selected item
@@ -156,14 +160,34 @@ export class ProductPage implements OnInit {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
         let email = useremail
-        this._notifyService.setNotification(sku,email).then((data: any) => {
+        this._notifyService.setNotification(sku, email).then((data: any) => {
             this.alertset = false;
             this.askEmail = true;
 
         });
     }
-
+    cartApi(cartData) {
+        this._cart.getCart(cartData).then((res) => {
+            console.log('cart response',res)
+        });
+    }
     addCart(response) {
+        if (this.productData.body.data.type == "grouped") {
+            console.log("this is grouped data");
+            var cartData;
+            
+            this._appConfigService.getUserData().then((userData: any) => {
+                if (userData) {
+                    console.log(this.groupedData);
+                    cartData = { user_token: userData.access_token, qty: this.groupedData.qty, productid: this.groupedData.productid, options: this.groupedData.options,"secret": userData.secret }
+                     console.log('this is cart data', cartData);
+                     this.cartApi(cartData);
+                } else {
+                    this.cartApi(this.groupedData);
+                }
+            })
+          
+        }
         let selectedItem: string;
         let array: any = {};
         let path: any;
@@ -207,23 +231,23 @@ export class ProductPage implements OnInit {
 
                 }
                 //cart api
-//                this._cart.getCart(path).then((res) => {
-//                    if (res) {
-                        // add to cart service
-                console.log('others',other)
-                        this._cartService.addCart(other, this.keys).then((response: any) => {
-                            this.cartData = response;
-                            if (this.cartData.body != "undefined") {
-                                this._toast.toast("item inserted ", 3000, "top");
-                                this._navCtrl.push(CartPage);
-                            }
-                            else {
-                            }
-                        });
-//                    }
-//                }).catch((err) => {
-//                    this._toast.toast(err, 3000, "top");
-//                })
+                //                this._cart.getCart(path).then((res) => {
+                //                    if (res) {
+                // add to cart service
+                console.log('others', other)
+                this._cartService.addCart(other, this.keys).then((response: any) => {
+                    this.cartData = response;
+                    if (this.cartData.body != "undefined") {
+                        this._toast.toast("item inserted ", 3000, "top");
+                        this._navCtrl.push(CartPage);
+                    }
+                    else {
+                    }
+                });
+                //                    }
+                //                }).catch((err) => {
+                //                    this._toast.toast(err, 3000, "top");
+                //                })
             });
         });
     }

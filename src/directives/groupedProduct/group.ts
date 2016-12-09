@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PopoverController, MenuController, NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
@@ -9,7 +9,8 @@ import forEach from 'lodash/forEach';
 })
 export class group {
     @Input() grouped: any;
-    public quantity:Array<any> = [];
+    @Output() sendData = new EventEmitter();
+    public quantity: Array<any> = [];
     public opt: {}
     constructor() {
         let data = {};
@@ -38,7 +39,7 @@ export class group {
             } else {
                 qun = "1"
             }
-            if (qun != "0") {
+            if (qun != "0" && qun !="") {
                 opt[productId] = qun;
             }
         });
@@ -47,5 +48,7 @@ export class group {
             productid: this.grouped.data.entity_id,
             options: opt
         }
+        this.sendData.emit(obj);
     }
+
 }
