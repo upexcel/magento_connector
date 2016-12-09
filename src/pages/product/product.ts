@@ -19,7 +19,6 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-import pullAll from 'lodash/pullAll';
 @Component({
     templateUrl: 'product.html'
 })
@@ -44,13 +43,6 @@ export class ProductPage implements OnInit {
     keys: Array<string> = [];
     search: any = [];
     res: {} = {};
-    bundalCheck: any = [];
-    bundalRadio: any = [];
-    bundalMulti: any = [];
-    bundalSelect: any = [];
-    dataBundalSelect = [];
-    dataBundalMulti = [];
-    dataBundalCheck = [];
     imgArray: Array<string> = [];
     data: any;
     reviewData = [];
@@ -67,6 +59,7 @@ export class ProductPage implements OnInit {
     name: string;
     type: string;
     path: any;
+    bundalPrice: number;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -102,8 +95,8 @@ export class ProductPage implements OnInit {
                 };
             }
             //getProduct is use to fire product/get api to get product 
-            this._getProduct.getProduct(this.data).then((res) => {
-                //            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
+            //            this._getProduct.getProduct(this.data).then((res) => {
+            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
@@ -179,7 +172,7 @@ export class ProductPage implements OnInit {
                 this.disable = true;
             }
         }
-        this.genrateData();
+        this.genrateData(totalPrice);
     }
     slideClick(img: string) {
         this.images = img;
@@ -207,69 +200,14 @@ export class ProductPage implements OnInit {
 
         });
     }
-    onChangeBundalSelect(bundalSelect) {
-        let self = this;
-        var total = 0;
-        var testPrice;
-        this.dataBundalSelect = [];
-        forEach(bundalSelect, function(value) {
-            if (value) {
-                self.dataBundalSelect.push({ "nameBundalSelect": value.selection_name, "priceBundalSelect": value.selection_price });
-                total = ((value.selection_price) * 1);
-                //                testPrice = total;
-            }
-        })
-        //        console.log(this.dataBundalSelect);
-        //        console.log(total);
 
-        //        if (testPrice > total) {
-        //            this.final_price = this.final_price - total;
-        //        }
-        //        else {
-        //            this.final_price = this.final_price + total;
-        //        }
-    }
-    onChangeBundalMulti(bundalMulti) {
-        console.log(bundalMulti);
-        this.dataBundalMulti = [];
-        let self = this;
-        var total = 0;
-        forEach(bundalMulti, function(value, key) {
-            forEach(value, function(data, key1) {
-                self.dataBundalMulti.push({ "nameBundalMulti": data.selection_name, "priceBundalMulti": data.selection_price });
-                total = ((data.selection_price) * 1) + total;
-            })
-        })
-        console.log(total);
-        this.final_price = total + this.final_price * 1;
-        console.log(this.dataBundalMulti);
-    }
-    onChangeBundalCheck(x, id) {
-        let self = this;
-        var total = 0;
-        self.dataBundalCheck = [];
-        forEach(self.bundalCheck, function(id, key) {
-            if (id) {
-                forEach(x, function(value) {
-                    if (key == value.selection_id) {
-                        self.dataBundalCheck.push({ "nameBundalCheck": value.selection_name, "priceBundalCheck": value.selection_price });
-                        total = ((value.selection_price) * 1) + total;
-                    }
-                })
-            }
-        })
-        console.log(this.dataBundalCheck);
-        console.log(total);
-    }
-    onChangeBundalRadio() {
-        console.log(this.bundalRadio)
-    }
 
-    genrateData() {
+    genrateData(price?) {
         let array: any = {};
         let selectedItem: string;
         let other;
         let data: any;
+        let testPrice;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1 };
@@ -298,16 +236,20 @@ export class ProductPage implements OnInit {
                     });
                 }
                 //bundalproduct
-                //                else if (type == "bundle") {
-                //                
-                //                }
+                else if (this.type == "bundle") {
+
+                }
                 else {
                     this.path = { "productid": this.productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
                 }
             })
         });
     }
-
+    bundal(bundalPrice) {
+        this.bundalPrice = this.final_price;
+        this.bundalPrice + = bundalPrice
+        console.log(this.bundalPrice);
+    }
     addCart(response) {
         let other;
         //cart api

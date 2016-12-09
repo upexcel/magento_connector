@@ -73,6 +73,7 @@ import { Button } from '../directives/button/buttonRound.directive';
 import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
+import { BundalProduct } from '../directives/bundalProduct/bundalProduct';
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
@@ -115,7 +116,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Button,
         ButtonFull,
         ButtonTour,
-        ButtonForLarge
+        ButtonForLarge,
+        BundalProduct
     ],
     imports: [
         IonicModule.forRoot(MyApp)

@@ -33,7 +33,9 @@
                 <ion-row class="padLeft10"> 
                     <ion-col class="padLeft10"> 
                         <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{this.productData.body.data.currency_sign}}{{display_price}}</span>
-                        <span class="sPrice" >{{this.productData.body.data.currency_sign}} {{final_price}}</span>
+                        <!--<span class="sPrice" >{{this.productData.body.data.currency_sign}} {{final_price}}</span>-->
+                        <span class="sPrice" *ngIf="this.productData.body.data.type=='bundle'">{{this.productData.body.data.currency_sign}} {{bundalPrice}}</span>
+
                     </ion-col>
                 </ion-row>
                 <!--for config.. product-->
@@ -59,42 +61,7 @@
                     </ion-col>
                 </ion-row>
                 <!--for bundal product-->
-                <div *ngFor="let b_test1 of productData.body.bundle_items ; let i = index">
-                    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='multi'">
-                          <ion-item>
-                            <ion-label>{{b_test1.title}}</ion-label>
-                            <ion-select [(ngModel)]="bundalMulti[i]" (ngModelChange)="onChangeBundalMulti(bundalMulti )" multiple="true">
-                                <ion-option *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='select'">
-                              <ion-item>
-                            <ion-label class="padLeft20">{{b_test1.title}}</ion-label>
-                            <ion-select [(ngModel)]="bundalSelect[i]" (ngModelChange)="onChangeBundalSelect(bundalSelect)">
-                                <ion-option  *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{productData.body.data.currency_sign}}{{selection.selection_price}} </ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                    <!--                    <ion-list no-margin no-lines radio-group *ngIf="b_test1.type=='radio'">
-                                                  <ion-list-header>
-                                                {{b_test1.title}}
-                                            </ion-list-header>
-                                            <ion-item *ngFor="let selection of b_test1.selection">
-                                                <ion-label>{{selection.selection_name}} "+" {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-label>
-                                                <ion-radio [(ngModel)]="bundalRadio[selection.selection_id]" (ngModelChange)="onChangeBundalRadio()"></ion-radio>
-                                            </ion-item>
-                                        </ion-list>-->
-                    <ion-list no-lines *ngIf="b_test1.type=='checkbox'">
-                              <ion-list-header class="no-padding">
-                            {{b_test1.title}}
-                        </ion-list-header>
-                        <ion-item *ngFor="let selection of b_test1.selection ; let j = index">
-                            <ion-checkbox  color="dark" value="selection" [(ngModel)]="bundalCheck[selection.selection_id]" (ngModelChange)="onChangeBundalCheck(b_test1.selection,selection.selection_id)" ></ion-checkbox>
-                            <ion-label>{{selection.selection_name}}  + {{productData.body.data.currency_sign}}{{selection.selection_price}}</ion-label>
-                        </ion-item>          
-                    </ion-list>
-                </div>
+                <bundal [bundal]="productData.body.bundle_items" (onChange)=bundal($event)></bundal>
                 <!--////////////////-->
                 <!--for downlodeable product-->
                 <ion-grid></ion-grid>
