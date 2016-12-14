@@ -33,9 +33,7 @@
                 <ion-row class="padLeft10"> 
                     <ion-col class="padLeft10"> 
                         <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1)}" class="price">{{this.productData.body.data.currency_sign}}{{display_price}}</span>
-                        <!--<span class="sPrice" >{{this.productData.body.data.currency_sign}} {{final_price}}</span>-->
-                        <span class="sPrice" *ngIf="this.productData.body.data.type=='bundle'">{{this.productData.body.data.currency_sign}} {{bundalPrice}}</span>
-
+                        <span class="sPrice" >{{this.productData.body.data.currency_sign}} {{final_price}}</span>
                     </ion-col>
                 </ion-row>
                 <!--for config.. product-->
@@ -61,9 +59,12 @@
                     </ion-col>
                 </ion-row>
                 <!--for bundal product-->
-                <bundal [bundal]="productData.body.bundle_items" (onChange)=bundal($event)></bundal>
+                <bundal [bundal]="productData.body.bundle_items"></bundal>
                 <!--////////////////-->
                 <!--for downlodeable product-->
+                <downLode [data]="productData" (onChange)="calcultateData($event)"></downLode>
+                <!--for virtual product-->
+                <virtual *ngIf="type=='virtual'" [data]="productData" (onChange)="calcultateData($event)"></virtual>
                 <ion-grid></ion-grid>
                 <div *ngIf="show_add_to_cart.length>0">
                     <ion-row *ngFor="let data of show_add_to_cart">

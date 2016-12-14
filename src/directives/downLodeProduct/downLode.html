@@ -1,0 +1,26 @@
+<div *ngFor="let sampleSet of sample ; let i= index ">
+    <ion-item no-lines>
+        <ion-label>{{sampleSet.title}}</ion-label>
+        <ion-checkbox color="dark" value="sampleSet" [(ngModel)]="sampleData[i]" (ngModelChange)="onChangeSample(sampleSet,i,$event)"></ion-checkbox>
+    </ion-item>
+    <ion-item no-lines class="minHeight">
+        <ion-label class="paddLft55 no-margin">
+            <a href="linkSet.sample_file_downaload">(Sample)</a>
+        </ion-label> 
+    </ion-item>
+</div>
+<ion-list-header no-lines *ngIf="links.length > 0">
+                 Check Items to Download  <span color="danger">*</span>
+</ion-list-header>
+
+<div *ngFor="let linkSet of links ; let i= index">
+    <ion-item no-lines >
+        <ion-label>{{linkSet.title}} - Price {{linkSet.price}}</ion-label>
+        <ion-checkbox color="dark" value="linkSet" [(ngModel)]="linkData[i]" (ngModelChange)="onChangeLink(linkSet,i,$event,linkSet.sample_file_downaload)" ></ion-checkbox>
+    </ion-item>
+    <ion-item no-lines class="minHeight">
+        <ion-label class="paddLft55 no-margin">
+            <a href="linkSet.sample_file_downaload">(download)</a>
+        </ion-label> 
+    </ion-item>
+</div>

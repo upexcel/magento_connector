@@ -60,6 +60,9 @@ export class ProductPage implements OnInit {
     type: string;
     path: any;
     bundalPrice: number;
+    configPrice = [];
+    other;
+
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -96,7 +99,7 @@ export class ProductPage implements OnInit {
             }
             //getProduct is use to fire product/get api to get product 
             //            this._getProduct.getProduct(this.data).then((res) => {
-            this._getProduct.getProduct({ sku: "hde014", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
+            this._getProduct.getProduct({ sku: "mem000", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
@@ -112,7 +115,7 @@ export class ProductPage implements OnInit {
                     this.type = this.productData.body.data.type;
                     // here we are using tierPrice servive to get offer of tire price .
                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
-                    if (this.productData.body.data.type != "configurable" && this.productData.body.data.type != "bundle") {
+                    if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
                         this.disable = false;
                     }
                     if (this.productData.body.associated_products) {
@@ -128,16 +131,24 @@ export class ProductPage implements OnInit {
     }
     onChangeConfigurableAttribute(res, key) {
         let count = 0;
-        let totalPrice = 0;
+        var total = 0;
+        let self = this;
+        this.configPrice = [];
         //take current selected item
         let res111 = res[key];
         //cloneing for use checked list in add cart function
         this.selectedList = clone(res);
-        //        mapping between select list
+        // get effected price
         forEach(res, function(takePrice) {
-            totalPrice = takePrice.price * 1 + totalPrice * 1;
+            self.configPrice.push({ price: takePrice.price });
         })
-        console.log(totalPrice);
+
+        forEach(this.configPrice, function(value: any) {
+            total += (value.price * 1);
+        });
+        this.calcultateData(total);
+        //        mapping between select list
+
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
 
             if (key != key1) {
@@ -172,7 +183,7 @@ export class ProductPage implements OnInit {
                 this.disable = true;
             }
         }
-        this.genrateData(totalPrice);
+        this.genrateData();
     }
     slideClick(img: string) {
         this.images = img;
@@ -201,27 +212,24 @@ export class ProductPage implements OnInit {
         });
     }
 
-
     genrateData(price?) {
         let array: any = {};
         let selectedItem: string;
-        let other;
         let data: any;
         let testPrice;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1 };
-                other = clone(data);
+                this.other = clone(data);
 
                 //check type of data for send data in cart api
                 if (this.type == "configurable") {
-                    console.log(this.selectedList);
                     forEach(this.selectedList, function(listdata, key) {
                         array[key] = listdata.id;
                     });
                     selectedItem = (array);
                     this.path = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
-                    other = merge(data, selectedItem);
+                    this.other = merge(data, selectedItem);
                     let ser = this.productData.body.associated_products.attributes;
                     this._local.get('search').then((search: any) => {
                         if (search) {
@@ -245,11 +253,7 @@ export class ProductPage implements OnInit {
             })
         });
     }
-    bundal(bundalPrice) {
-        this.bundalPrice = this.final_price;
-        this.bundalPrice + = bundalPrice
-        console.log(this.bundalPrice);
-    }
+
     addCart(response) {
         let other;
         //cart api
@@ -270,5 +274,11 @@ export class ProductPage implements OnInit {
             this._toast.toast(err, 3000, "top");
         });
     }
-
+    calcultateData(data) {
+        this.bundalPrice = this.final_price * 1;
+        this.bundalPrice += data.price;
+        data = merge(data, this.other);
+        data = merge(data, this.path);
+        this.disable = data.disable;
+    }
 }

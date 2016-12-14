@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
+//import { DatePickerModule } from 'datepicker-ionic2/datepicker-ionic2';
 //storage
 import { Storage } from '@ionic/storage';
 //pages
@@ -74,6 +75,8 @@ import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
 import { BundalProduct } from '../directives/bundalProduct/bundalProduct';
+import { DownLodeProduct } from '../directives/downLodeProduct/downLodeProduct';
+import { VirtualProduct } from '../directives/virtualProduct/virtualProduct';
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
@@ -117,10 +120,13 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         ButtonFull,
         ButtonTour,
         ButtonForLarge,
-        BundalProduct
+        BundalProduct,
+        DownLodeProduct,
+        VirtualProduct
     ],
     imports: [
         IonicModule.forRoot(MyApp)
+//        DatePickerModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [

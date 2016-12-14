@@ -58,9 +58,6 @@ export class BundalProduct {
         })
         this.calculateTotal();
     }
-    onChangeBundalRadio() {
-        //        console.log(this.bundalRadio)
-    }
     calculateTotal() {
         let self = this;
         var total = 0;
