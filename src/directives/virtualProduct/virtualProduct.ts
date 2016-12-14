@@ -101,14 +101,14 @@ export class VirtualProduct {
         if (this.textData != "") {
             this.textSubdata = { "text": opt };
         }
-        this.bundalJson();
+        this.bundleJson();
     }
     textArea(opt) {
         this.textAreaPrice = { "price": opt.price };
         if (this.textarea != "") {
             this.textAreaSubdata = { "textArea": opt };
         }
-        this.bundalJson();
+        this.bundleJson();
     }
     onChangeSelect(data) {
         this.selectPrice = [];
@@ -128,7 +128,7 @@ export class VirtualProduct {
         this.selectObj[option_id] = json;
         let select = { "select": value };
         this.selectSubdata = select;
-        this.bundalJson();
+        this.bundleJson();
 
     }
     onChangeRadio(data) {
@@ -138,7 +138,7 @@ export class VirtualProduct {
         this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
         radio = { "radio": this.radio }
         this.radioSubdata = radio;
-        this.bundalJson();
+        this.bundleJson();
 
     }
     onChangeMulti(data) {
@@ -161,7 +161,7 @@ export class VirtualProduct {
         this.multiObj[option_id] = json;
         let multi = { "multiSelect": valueData };
         this.multiSubdata = multi;
-        this.bundalJson();
+        this.bundleJson();
     }
     onChangeCheck(data, event) {
         let self = this;
@@ -185,7 +185,7 @@ export class VirtualProduct {
         this.checkObj[option_id] = json;
         let ckeckBox = { "ckeckBox": this.checkData };
         this.checkSubData = ckeckBox;
-        this.bundalJson();
+        this.bundleJson();
     }
     file(event, opt) {
         let self = this;
@@ -205,7 +205,7 @@ export class VirtualProduct {
         })
         let json = { "file": this.jsonFileData };
         self.fileSubData = json;
-        this.bundalJson();
+        this.bundleJson();
     }
 
     timeChanged() {
@@ -229,7 +229,7 @@ export class VirtualProduct {
             "day_part": day_part
         }
         this.timeJson[this.jsonTimeData.option_id] = time;
-        this.bundalJson();
+        this.bundleJson();
     }
     dateChanged() {
         var dateObj = new Date(this.dateData);
@@ -243,7 +243,7 @@ export class VirtualProduct {
             "year": year
         }
         this.dateJson[this.jsonDateData.option_id] = dateJson;
-        this.bundalJson();
+        this.bundleJson();
     }
     calenderChanged() {
         var dateObj = new Date(this.month);
@@ -259,9 +259,9 @@ export class VirtualProduct {
             "day_part": "am"
         }
         this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
-        this.bundalJson();
+        this.bundleJson();
     }
-    bundalJson() {
+    bundleJson() {
         var total = 0;
         let jsonData = {};
         let subdata = {};
@@ -297,11 +297,10 @@ export class VirtualProduct {
                 total += (value.option_Price * 1);
             }
         });
-        jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson, this.bundalJson)
+        jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson, this.bundleJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
-        jsonData = { "price": total, "option": jsonData, "sudata": subdata }
+        jsonData = { "dynemicPrice": total, "option": jsonData, "sudata": subdata }
         this.onChange.emit(jsonData);
-
     }
 }
 

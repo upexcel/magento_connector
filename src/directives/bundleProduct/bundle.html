@@ -1,0 +1,27 @@
+<div *ngFor="let b_test1 of bundle ; let i = index">
+    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='multi'">
+          <ion-item>
+            <ion-label>{{b_test1.title}}</ion-label>
+            <ion-select [(ngModel)]="bundleMulti[i]" (ngModelChange)="onChangeBundleMulti(bundleMulti )" multiple="true">
+                <ion-option *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{selection.selection_price}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='select'">
+              <ion-item>
+            <ion-label class="padLeft20">{{b_test1.title}}</ion-label>
+            <ion-select [(ngModel)]="bundleSelect[i]" (ngModelChange)="onChangeBundleSelect(bundleSelect)">
+                <ion-option  *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{selection.selection_price}} </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-list no-lines *ngIf="b_test1.type=='checkbox'">
+              <ion-list-header class="no-padding">
+            {{b_test1.title}}
+        </ion-list-header>
+        <ion-item *ngFor="let selection of b_test1.selection ; let j = index">
+            <ion-checkbox  color="dark" value="selection" [(ngModel)]="bundleCheck[selection.selection_id]" (ngModelChange)="onChangeBundleCheck(b_test1.selection,selection.selection_id)" ></ion-checkbox>
+            <ion-label>{{selection.selection_name}}  + {{selection.selection_price}}</ion-label>
+        </ion-item>          
+    </ion-list>
+</div>

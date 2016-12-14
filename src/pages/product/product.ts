@@ -37,6 +37,7 @@ export class ProductPage implements OnInit {
     disable: boolean = true;
     images: string;
     final_price: number;
+    refPrice: number;
     display_price: number;
     special_price: number;
     tier_price: Array<any>;
@@ -59,7 +60,7 @@ export class ProductPage implements OnInit {
     name: string;
     type: string;
     path: any;
-    bundalPrice: number;
+    bundlePrice: number;
     configPrice = [];
     other;
 
@@ -98,8 +99,8 @@ export class ProductPage implements OnInit {
                 };
             }
             //getProduct is use to fire product/get api to get product 
-            //            this._getProduct.getProduct(this.data).then((res) => {
-            this._getProduct.getProduct({ sku: "mem000", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
+            this._getProduct.getProduct(this.data).then((res) => {
+                //            this._getProduct.getProduct({ sku: "hbm010", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
@@ -108,6 +109,7 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
+                    this.refPrice = this.productData.body.data.final_price;
                     //gather data for send in add cart servive
                     this.sku = this.productData.body.data.sku;
                     this.img = this.productData.body.data.media_images[0];
@@ -200,7 +202,6 @@ export class ProductPage implements OnInit {
             this._toast.toast("Please Login First !!", 3000, "bottom");
         }
     }
-
     alertSetApi(useremail) {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
@@ -243,7 +244,7 @@ export class ProductPage implements OnInit {
                         }
                     });
                 }
-                //bundalproduct
+                //bundleproduct
                 else if (this.type == "bundle") {
 
                 }
@@ -274,11 +275,20 @@ export class ProductPage implements OnInit {
             this._toast.toast(err, 3000, "top");
         });
     }
-    calcultateData(data) {
-        this.bundalPrice = this.final_price * 1;
-        this.bundalPrice += data.price;
-        data = merge(data, this.other);
-        data = merge(data, this.path);
-        this.disable = data.disable;
+    calcultateData(data?) {
+        this.bundlePrice = this.refPrice * 1;
+        if (this.type != 'configurable' && this.type != 'bundle') {
+            data = merge(data, this.other, this.path);
+            this.disable = data.disable;
+            this.bundlePrice += data.dynemicPrice * 1;
+        }
+        else if(this.type == 'bundle'){
+            
+         this.bundlePrice += data * 1;
+        }
+        else {
+            this.bundlePrice += data * 1;
+        }
+        this.final_price = this.bundlePrice;
     }
 }

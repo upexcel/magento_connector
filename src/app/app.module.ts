@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-//import { DatePickerModule } from 'datepicker-ionic2/datepicker-ionic2';
 //storage
 import { Storage } from '@ionic/storage';
 //pages
@@ -42,6 +41,7 @@ import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
+import { DownloadService } from '../providers/cart-service/download-service';
 import { FinalPrice } from '../providers/cart-service/final-price';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -74,8 +74,8 @@ import { Button } from '../directives/button/buttonRound.directive';
 import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
-import { BundalProduct } from '../directives/bundalProduct/bundalProduct';
-import { DownLodeProduct } from '../directives/downLodeProduct/downLodeProduct';
+import { BundleProduct } from '../directives/bundleProduct/bundleProduct';
+import { DownloadProduct } from '../directives/downloadProduct/downloadProduct';
 import { VirtualProduct } from '../directives/virtualProduct/virtualProduct';
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
@@ -120,13 +120,12 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         ButtonFull,
         ButtonTour,
         ButtonForLarge,
-        BundalProduct,
-        DownLodeProduct,
+        BundleProduct,
+        DownloadProduct,
         VirtualProduct
     ],
     imports: [
         IonicModule.forRoot(MyApp)
-//        DatePickerModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -157,6 +156,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Storage,
         ApiService,
         CartService,
+        DownloadService,
         FinalPrice,
         SocialService,
         Login,
