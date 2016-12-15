@@ -20,5 +20,5 @@ export const config = {
         "loop": true,
         "pager": true
     },
-    "stopApiTime":10000
+    "stopApiTime":50000
 }

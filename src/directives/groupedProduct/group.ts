@@ -35,16 +35,21 @@ export class group {
         forEach(this.grouped.group_associated_products, function(value, key) {
             let productId = value['product_id'];
             if (data.product_id == value['product_id']) {
+                console.log(newVal)
+                if (!newVal) {
+                    newVal = "0";
+                }
                 qun = newVal;
+
             } else {
                 qun = "1"
             }
-            if (qun != "0" && qun !="") {
-                opt[productId] = qun;
-            }
+
+            opt[productId] = qun;
+
         });
         let obj = {
-            qty: 1,
+//            qty: 1,
             productid: this.grouped.data.entity_id,
             options: opt
         }

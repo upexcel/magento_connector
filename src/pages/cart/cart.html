@@ -29,6 +29,25 @@
                                     <p class="font10">{{data.price}}</p>
                                 </ion-col>
                             </ion-row>
+                            <ion-row *ngIf="data.type=='bundle'">
+                                <ion-col width-80>
+                                    <ion-col class="inlineCol" *ngIf="data.select.multiselect.length>0" width-20  >
+                                        <p>multiselect</p> 
+                                    </ion-col>
+                                    <ion-col offset-20 *ngIf="data.select.checkbox.length>0" class="inlineCol" width-20  >
+                                             <p>checkbox</p>
+                                    </ion-col>
+                                    <ion-col offset-20 *ngIf="data.select.radioButton.length>0"class="inlineCol" width-20  >
+                                             <p>radiobutton</p>
+                                    </ion-col>
+                                    <ion-col offset-20 *ngIf="data.select.select.length>0" class="inlineCol" width-20  >
+                                             <p>select</p>
+                                    </ion-col>
+                                </ion-col>
+                                <ion-col width-20 class="alignRight">
+                                    <p class="font10">{{data.price}}</p>
+                                </ion-col>
+                            </ion-row>
                             <ion-row class="qtyborder">
 
                             </ion-row>
@@ -85,6 +104,7 @@
                 <ion-col width-50 class="alignRight">{{totalPay}}</ion-col>
             </ion-row>
         </ion-item>
+
     </ion-grid>
 </ion-content>
 <ion-footer>

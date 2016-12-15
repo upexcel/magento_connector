@@ -8,6 +8,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
+import { ToastService } from './../../providers/toast-service/toastService';
 @Component({
     selector: 'submit-review',
     templateUrl: 'submitReview.html'
@@ -26,7 +27,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(private _appConfigService: AppDataConfigService,public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService,public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -96,10 +97,10 @@ export class SubmitReview implements OnInit {
                 if (this.submitReviewData) {
                     this._viewCtrl.dismiss();
                     if (this.submitReviewData.body.review_status == "1") {
-                        this.presentToast("Thanks for your review!");
+                        this._toast.toast("Thanks for your review!", 3000);
                     }
                     else {
-                        this.presentToast("Thanks for your review! Your Rating is Pending approval by admin.");
+                        this._toast.toast("Thanks for your review! Your Rating is Pending approval by admin.", 3000);
                     }
                 }
                 this._events.publish('api:review', true);
