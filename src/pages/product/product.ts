@@ -54,6 +54,7 @@ export class ProductPage implements OnInit {
     alertset: boolean = false;
     qty: number = 1;
     productid: string;
+    additionalInformationData:any = [];
     //gather data for send in add cart servive
     sku: string;
     img: string;
@@ -84,6 +85,7 @@ export class ProductPage implements OnInit {
         });
     }
     products() {
+        var self=this;
         // get data from local storage of userData via funtion of getUserData
         this._appConfigService.getUserData().then((userData: any) => {
             // in data variable access_token and sku is used to check user login in backend to send tier price
@@ -115,6 +117,17 @@ export class ProductPage implements OnInit {
                     this.img = this.productData.body.data.media_images[0];
                     this.name = this.productData.body.data.name;
                     this.type = this.productData.body.data.type;
+                    let additionalInformation = this.productData.body.data.additional_information;
+                    //get additional_information if exit
+                    if (additionalInformation != undefined) {
+                        forEach(additionalInformation, function(value, key) {
+                            self.additionalInformationData.push({
+                                "key": key,
+                                "value": value
+                            })
+                        })
+
+                    }
                     // here we are using tierPrice servive to get offer of tire price .
                     this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                     if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
@@ -282,9 +295,9 @@ export class ProductPage implements OnInit {
             this.disable = data.disable;
             this.bundlePrice += data.dynemicPrice * 1;
         }
-        else if(this.type == 'bundle'){
-            
-         this.bundlePrice += data * 1;
+        else if (this.type == 'bundle') {
+
+            this.bundlePrice += data * 1;
         }
         else {
             this.bundlePrice += data * 1;

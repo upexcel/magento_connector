@@ -28,8 +28,8 @@ export class HomePage implements OnInit {
     }
     homeProducts() {
         this.spin = true;
-        let body = { "type": "large_data" }
-        this._homeProductsConfig.getHomeProducts().then((res) => {
+        let body = { "type": "full" }
+        this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.body, this.start, this.end);

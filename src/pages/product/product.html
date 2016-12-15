@@ -75,6 +75,13 @@
                         <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
+                <ion-list *ngIf="additionalInformationData.length > 0 ">
+                    <h4 class="padLeft20 capitalize">Additional Information</h4>
+                    <ion-item *ngFor="let info of additionalInformationData">
+                        <span class="additionalInformation capitalize">{{info.key}} : </span> <span>{{info.value}} </span>
+                    </ion-item>
+                </ion-list>
+
                 <product-review [skuData]="data.sku"> loading..</product-review>               
             </ion-col>
         </ion-row>

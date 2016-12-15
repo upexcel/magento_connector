@@ -1,5 +1,5 @@
 <div *ngFor="let b_test1 of bundle ; let i = index">
-    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='multi'">
+    <ion-list class="no-margin"  *ngIf="b_test1.type=='multi'">
           <ion-item>
             <ion-label>{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleMulti[i]" (ngModelChange)="onChangeBundleMulti(bundleMulti )" multiple="true">
@@ -7,7 +7,7 @@
             </ion-select>
         </ion-item>
     </ion-list>
-    <ion-list class="no-margin" no-lines *ngIf="b_test1.type=='select'">
+    <ion-list class="no-margin"  *ngIf="b_test1.type=='select'">
               <ion-item>
             <ion-label class="padLeft20">{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleSelect[i]" (ngModelChange)="onChangeBundleSelect(bundleSelect)">
@@ -15,7 +15,7 @@
             </ion-select>
         </ion-item>
     </ion-list>
-    <ion-list no-lines *ngIf="b_test1.type=='checkbox'">
+    <ion-list class="padLeft20"  *ngIf="b_test1.type=='checkbox'">
               <ion-list-header class="no-padding">
             {{b_test1.title}}
         </ion-list-header>

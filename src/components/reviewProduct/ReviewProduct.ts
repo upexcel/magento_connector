@@ -42,7 +42,7 @@ export class ProductReview implements OnInit {
     fetchReview() {
         let self = this;
         this.graphRating = [];
-        this._getProduct.getProductReview({ "sku": this.skuData, "pageno": this.countPage }).then((review) => {
+        this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
             this.productReview = review;
             this.listLoad = false;
             if (this.productReview.body.total_review != 0) {
