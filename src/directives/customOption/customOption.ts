@@ -6,13 +6,14 @@ import merge from 'lodash/merge';
 import find from 'lodash/find';
 
 @Component({
-    selector: 'virtual',
-    templateUrl: 'virtual.html'
+    selector: 'custom',
+    templateUrl: 'custom.html'
 })
-export class VirtualProduct {
+export class CustomOption {
     @Input() data: any = "";
     @Output() onChange = new EventEmitter();
-    virtualData: any = [];
+    currencySign:string;
+    custom_option: any = [];
     month: any;
     textData: any = {};
     textarea: any = {};
@@ -55,6 +56,7 @@ export class VirtualProduct {
     dateTimePrice;
     constructor( @Attribute("format") format) { }
     ngOnInit() {
+        this.currencySign=this.data.body.data.currency_sign;
         var _dateString = new Date();
         var day = _dateString.getDate();
         var months = _dateString.getMonth();
@@ -65,8 +67,8 @@ export class VirtualProduct {
         this.time = hours + ':' + min;
         this.month = string;
         let self = this;
-        this.virtualData = this.data.body.data.product_custom_option;
-        forEach(this.virtualData, function(value, key) {
+        this.custom_option = this.data.body.data.product_custom_option;
+        forEach(this.custom_option, function(value, key) {
             if (value.type == "date_time") {
                 self.jsonDateTimeData = {
                     "option_id": value.option_type[0].option_id,
@@ -299,7 +301,7 @@ export class VirtualProduct {
         });
         jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson, this.bundleJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
-        jsonData = { "dynemicPrice": total, "option": jsonData, "sudata": subdata }
+        jsonData = { "dynemicPrice": total, "custom": jsonData, "sudata": subdata }
         this.onChange.emit(jsonData);
     }
 }

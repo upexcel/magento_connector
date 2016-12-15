@@ -1,4 +1,4 @@
-<div *ngFor="let customOption of virtualData ; let i=index">
+<div *ngFor="let customOption of custom_option ; let i=index">
     <div *ngIf="customOption.type=='field'">
         <ion-item  *ngFor="let opt of customOption.option_type">
             <ion-label floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
@@ -21,7 +21,7 @@
         <ion-item >
             <ion-label>{{customOption.title}} <span color="danger">*</span></ion-label>
             <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti)" multiple="true">
-                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{opt.default_price}}</ion-option>
+                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} +{{currencySign}} {{opt.default_price | number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
@@ -29,7 +29,7 @@
         <ion-item >
             <ion-label>{{customOption.title}} <span color="danger">*</span></ion-label>
             <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select)">
-                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{opt.default_price}}</ion-option>
+                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{currencySign}} {{opt.default_price| number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
@@ -38,17 +38,17 @@
             {{customOption.title}} <span color="danger">*</span>
         </ion-list-header>
         <ion-item *ngFor="let opt of customOption.option_type">
-            <ion-label>{{opt.default_title}} + {{opt.default_price}}</ion-label>
+            <ion-label>{{opt.default_title}} + {{currencySign}} {{opt.default_price | number}}</ion-label>
             <ion-radio [value]="opt" ></ion-radio>
         </ion-item>
     </ion-list>
-    <ion-list class="no-margin" *ngIf="customOption.type=='checkbox'">
+    <ion-list class="no-margin padLeft20" *ngIf="customOption.type=='checkbox'">
         <ion-list-header  class="padLeft20 no-padding no-margin">
             {{customOption.title}} <span color="danger">*</span>
         </ion-list-header>
         <ion-item *ngFor="let opt of customOption.option_type ; let j = index">
             <ion-checkbox  color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event)" ></ion-checkbox>
-            <ion-label>{{opt.default_title}} + {{opt.default_price}}</ion-label>
+            <ion-label>{{opt.default_title}} + {{currencySign}} {{opt.default_price | number}}</ion-label>
         </ion-item>          
     </ion-list>
     <ion-list class="no-margin" *ngIf="customOption.type=='date_time'">

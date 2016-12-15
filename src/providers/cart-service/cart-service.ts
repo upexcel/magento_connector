@@ -1,4 +1,4 @@
-import { Injectable}    from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -12,7 +12,8 @@ export class CartService {
     constructor(private _local: Storage) {
     }
     addCart(data, keyGrop): any {
-        return this._local.get('item').then((value: any) => {
+        console.log('checking for storing', data, keyGrop);
+        return this._local.get('CartData').then((value: any) => {
             let count = 0;
             let keyDataCheck: boolean = false;
             let cartData: any = [];
@@ -68,7 +69,7 @@ export class CartService {
                 cartData.unshift(data);
             }
             if (cartData != "undefined") {
-                this._local.set('item', cartData);
+                this._local.set('CartData', cartData);
                 return new Promise((resolve: any, reject: any) => resolve(cartData));
             }
         });

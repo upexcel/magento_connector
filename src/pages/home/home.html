@@ -1,5 +1,5 @@
 <header [title]='title' [pagename]='pagename'></header>
-<sidemenu></sidemenu>
+<sidemenu [token]="userToken"></sidemenu>
 <ion-content  class="home">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content

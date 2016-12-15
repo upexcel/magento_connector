@@ -1,0 +1,16 @@
+<ion-item  class="group">
+    <ion-grid>
+    <ion-row>
+        <ion-col width-67>name</ion-col>
+        <ion-col width-20>price</ion-col>
+        <ion-col width-10>quantiy</ion-col>
+    </ion-row>
+    <ion-row *ngFor = "let group of grouped.group_associated_products;let i=index">
+        <ion-col width-60>{{group.name}}</ion-col>
+        <ion-col width-20>{{grouped.data.currency_sign}} {{group.price | number}}</ion-col>
+        <ion-col width-10><input type="text" class="inputsize" [(ngModel)]="quantity[i]" (ngModelChange)="changeQty($event,group)"></ion-col>
+    </ion-row> 
+    </ion-grid>
+</ion-item>
+
+

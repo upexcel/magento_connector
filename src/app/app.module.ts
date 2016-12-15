@@ -39,6 +39,7 @@ import { EditAccount } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
+import { CartFunction } from '../model/cart/cartHandling';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { DownloadService } from '../providers/cart-service/download-service';
@@ -52,7 +53,8 @@ import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
 import { CountryService } from '../providers/myAccount-service/country';
-
+import {GroupService} from '../providers/cart-service/groupService';
+import {bundleService} from '../providers/cart-service/bundleService';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -74,9 +76,11 @@ import { Button } from '../directives/button/buttonRound.directive';
 import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
+import { group } from '../directives/groupedProduct/group';
 import { BundleProduct } from '../directives/bundleProduct/bundleProduct';
 import { DownloadProduct } from '../directives/downloadProduct/downloadProduct';
-import { VirtualProduct } from '../directives/virtualProduct/virtualProduct';
+import { CustomOption } from '../directives/customOption/customOption';
+
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
@@ -122,7 +126,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         ButtonForLarge,
         BundleProduct,
         DownloadProduct,
-        VirtualProduct
+        CustomOption,
+        group
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -183,7 +188,11 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         homeProductsService,
         categoryService,
         CountryService,
-        NotifyMe]
+        NotifyMe,
+        CartFunction,
+        GroupService,
+        bundleService
+    ]
 })
 export class AppModule {
 

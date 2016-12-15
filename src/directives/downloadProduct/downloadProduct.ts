@@ -10,18 +10,21 @@ import pull from 'lodash/pull';
 export class DownloadProduct {
     @Input() data: any = "";
     @Output() onChange = new EventEmitter();
-    links = [];
-    sample = [];
+    links: any = [];
+    sample: any = [];
     sampleData: any = [];
     linkData: any = [];
     obj: any = [];
-    simpleObj = [];
-    price = [];
-    index:any = [];
-    linkD = [];
+    simpleObj: any = [];
+    price: any = [];
+    index: any = [];
+    linkD: any = [];
     key: any;
+    currencySign: string;
+
     constructor() { }
     ngOnInit() {
+        this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         forEach(this.data.body.links, function(value: any, key) {
             self.links.push(value);

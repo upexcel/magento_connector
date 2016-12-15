@@ -15,7 +15,7 @@
 
 <div *ngFor="let linkSet of links ; let i= index">
     <ion-item no-lines >
-        <ion-label>{{linkSet.title}} - Price {{linkSet.price}}</ion-label>
+        <ion-label>{{linkSet.title}} - Price {{currencySign}} {{linkSet.price | number}}</ion-label>
         <ion-checkbox color="dark" value="linkSet" [(ngModel)]="linkData[i]" (ngModelChange)="onChangeLink(linkSet,i,$event,linkSet.sample_file_downaload)" ></ion-checkbox>
     </ion-item>
     <ion-item no-lines class="minHeight">
