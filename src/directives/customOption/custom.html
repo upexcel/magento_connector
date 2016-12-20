@@ -1,13 +1,13 @@
 <div *ngFor="let customOption of custom_option ; let i=index">
     <div *ngIf="customOption.type=='field'">
         <ion-item  *ngFor="let opt of customOption.option_type">
-            <ion-label floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
+            <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
             <ion-input type="text" value="opt" [(ngModel)]="textData[opt.option_id]" (keyup.enter)="text(opt)"  (blur)="text(opt)"></ion-input>
         </ion-item>
     </div>
     <div *ngIf="customOption.type=='area'">
-        <ion-item class="no-margin" *ngFor="let opt of customOption.option_type">
-            <ion-label floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
+        <ion-item  class="no-margin" *ngFor="let opt of customOption.option_type">
+                   <ion-label class="capitalize" floating >{{opt.default_title}} <span color="danger">*</span></ion-label>
             <ion-textarea value="opt" [(ngModel)]="textarea[opt.option_id]" (blur)="textArea(opt)"></ion-textarea> 
         </ion-item>
     </div>
@@ -19,54 +19,56 @@
     </div>
     <ion-list class="no-margin" *ngIf="customOption.type=='multiple'">
         <ion-item >
-            <ion-label>{{customOption.title}} <span color="danger">*</span></ion-label>
+            <ion-label class="capitalize">{{customOption.title}} <span color="danger">*</span></ion-label>
             <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti)" multiple="true">
-                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} +{{currencySign}} {{opt.default_price | number}}</ion-option>
+                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} +{{currencySign}}{{opt.default_price | number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
     <ion-list class="no-margin"  *ngIf="customOption.type=='drop_down'">
         <ion-item >
-            <ion-label>{{customOption.title}} <span color="danger">*</span></ion-label>
+            <ion-label class="capitalize">{{customOption.title}} <span color="danger">*</span></ion-label>
             <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select)">
-                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{currencySign}} {{opt.default_price| number}}</ion-option>
+                <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{currencySign}}{{opt.default_price| number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
     <ion-list no-margin  radio-group [(ngModel)]="radio" (ngModelChange)="onChangeRadio()" *ngIf="customOption.type=='radio'">
-              <ion-list-header >
-            {{customOption.title}} <span color="danger">*</span>
+              <ion-list-header  (click)="checkVisiblety('radio')" >
+            <span class="capitalize"> {{customOption.title}}</span> <span color="danger">*</span><ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
-        <ion-item *ngFor="let opt of customOption.option_type">
-            <ion-label>{{opt.default_title}} + {{currencySign}} {{opt.default_price | number}}</ion-label>
-            <ion-radio [value]="opt" ></ion-radio>
+        <ion-item [hidden]="radioHidden"  *ngFor="let opt of customOption.option_type">
+            <ion-label class="capitalize">{{opt.default_title}} + {{currencySign}}{{opt.default_price | number}}</ion-label>
+            <ion-radio class="marRigth0" [value]="opt" ></ion-radio>
         </ion-item>
     </ion-list>
-    <ion-list class="no-margin padLeft20" *ngIf="customOption.type=='checkbox'">
-        <ion-list-header  class="padLeft20 no-padding no-margin">
-            {{customOption.title}} <span color="danger">*</span>
+    <ion-list class="no-margin " *ngIf="customOption.type=='checkbox'">
+        <ion-list-header (click)="checkVisiblety('check')" class=" no-margin paddLef15">
+            <span class="capitalize">  {{customOption.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
-        <ion-item *ngFor="let opt of customOption.option_type ; let j = index">
-            <ion-checkbox  color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event)" ></ion-checkbox>
-            <ion-label>{{opt.default_title}} + {{currencySign}} {{opt.default_price | number}}</ion-label>
+        <ion-item [hidden]="checkHidden" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
+            <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event)" ></ion-checkbox>
+            <ion-label class="capitalize">{{opt.default_title}} + {{currencySign}}{{opt.default_price | number}}</ion-label>
         </ion-item>          
     </ion-list>
     <ion-list class="no-margin" *ngIf="customOption.type=='date_time'">
-              <ion-item >
-            <ion-label>{{customOption.title}}<span color="danger">*</span></ion-label>
-            <ion-datetime displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="2016"  [(ngModel)]="month" (ionChange)="calenderChanged()"></ion-datetime>
+        <ion-item >
+            <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
+            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="2016"  [(ngModel)]="month" (ionChange)="calenderChanged()"></ion-datetime>
         </ion-item>
     </ion-list>
     <ion-list  *ngIf="customOption.type=='time'">
         <ion-item >
-            <ion-label>{{customOption.title}}<span color="danger">*</span></ion-label>
-            <ion-datetime displayFormat=" h:mm A"  [(ngModel)]="time" (ionChange)="timeChanged()"></ion-datetime>
+            <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon>
+            </ion-label>
+            <ion-datetime displayFormat=" h:mm A"    [(ngModel)]="time" (ionChange)="timeChanged()"> </ion-datetime>
+            <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-item>
     </ion-list>
     <ion-list *ngIf="customOption.type=='date'">
         <ion-item >
-            <ion-label>{{customOption.title}}<span color="danger">*</span></ion-label>
-            <ion-datetime displayFormat="MMM DD YYYY" min="2016" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
+            <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
+            <ion-datetime  displayFormat="MMM DD YYYY" min="2016" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
         </ion-item>
     </ion-list>
 </div>

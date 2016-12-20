@@ -16,6 +16,16 @@
         font-weight: 300;
         color: $gray;
     }
+    .lineH0{
+        line-height: 0;
+    }
+    .price{
+        line-height: 2.5;
+        padding-left: 5px;
+    }
+    .lineH2-4{
+        line-height: 2.4 !important;
+    }
     ion-item.selectlist.item.item-select{
         min-height: 3rem;
     }

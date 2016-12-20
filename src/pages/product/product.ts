@@ -40,6 +40,7 @@ export class ProductPage implements OnInit {
     images: string;
     final_price: number;
     refPrice: number;
+    refDisplayPrice: number;
     display_price: number;
     special_price: number;
     tier_price: Array<any>;
@@ -69,6 +70,8 @@ export class ProductPage implements OnInit {
     valueBundle: boolean;
     bData: {};
     customPrice: number;
+    customDisplayPrice: number;
+    dynemicDisplayPrice: number;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -91,7 +94,6 @@ export class ProductPage implements OnInit {
 
 
     group(json) {
-        console.log('checking grouped data', json);
         this.groupedData = json;
     }
     groupedData: any;
@@ -123,7 +125,9 @@ export class ProductPage implements OnInit {
                     this.display_price = this.productData.body.data.display_price;
                     this.final_price = this.productData.body.data.final_price;
                     this.refPrice = this.productData.body.data.final_price;
+                    this.refDisplayPrice = this.productData.body.data.display_price;
                     this.bundlePrice = this.refPrice * 1;
+                    this.dynemicDisplayPrice = this.refDisplayPrice;
                     //gather data for send in add cart servive
                     this.sku = this.productData.body.data.sku;
                     this.img = this.productData.body.data.media_images[0];
@@ -245,11 +249,13 @@ export class ProductPage implements OnInit {
     }
     bundle(bundlePrice) {
         this.bundlePrice = this.refPrice * 1;
+        this.dynemicDisplayPrice = this.refDisplayPrice * 1;
         this.bundlePrice += bundlePrice * 1;
+        this.dynemicDisplayPrice += bundlePrice * 1;
         this.final_price = this.bundlePrice;
+        this.display_price = this.dynemicDisplayPrice;
     }
     bundleData(obj) {
-        //        console.log('bundle data', obj);
         this.bData = obj;
     }
     addCart(response) {
@@ -341,33 +347,40 @@ export class ProductPage implements OnInit {
                 this._toast.toast("item inserted ", 3000, "top");
                 this._navCtrl.push(CartPage);
             }, 200);
-
-
         });
 
     }
 
     calcultateData(data?) {
         this.bundlePrice = this.refPrice * 1;
+        this.dynemicDisplayPrice = this.refDisplayPrice * 1;
         if (this.type != 'configurable' && this.type != 'bundle') {
             data = merge(data, this.other, this.path);
             this.disable = data.disable;
             this.bundlePrice += data.dynemicPrice * 1;
+            this.dynemicDisplayPrice += data.dynemicPrice * 1;
         }
         else if (this.type == 'bundle') {
             this.bundlePrice += data * 1;
+            this.dynemicDisplayPrice += data * 1;
         }
         else {
             this.bundlePrice += data * 1;
+            this.dynemicDisplayPrice += data * 1;
         }
         this.final_price = this.bundlePrice;
+        this.display_price = this.dynemicDisplayPrice;
     }
 
     customData(customData) {
         this.customPrice = this.bundlePrice * 1;
+        this.customDisplayPrice = this.refDisplayPrice * 1;
         //        this.disable = customData.disable;
         this.customPrice += customData.dynemicPrice * 1;
+        this.customDisplayPrice += customData.dynemicPrice * 1;
+        //        this.display_price = this.;
         this.final_price = this.customPrice;
+        this.display_price = this.customDisplayPrice;
         customData = merge(customData, this.other, this.path);
 
     }

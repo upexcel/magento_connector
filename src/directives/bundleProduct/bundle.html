@@ -3,34 +3,35 @@
         <ion-item>
             <ion-label>{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleMulti[i]" (ngModelChange)="onChangeBundleMulti(bundleMulti )" multiple="true">
-                <ion-option *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{bundle.data.currency_sign}} {{selection.selection_price | number}}</ion-option>
+                <ion-option *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{bundle.data.currency_sign}}{{selection.selection_price | number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
     <ion-list class="no-margin"  *ngIf="b_test1.type=='select'">
         <ion-item>
-            <ion-label class="padLeft20">{{b_test1.title}}</ion-label>
+            <ion-label>{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleSelect[i]" (ngModelChange)="onChangeBundleSelect(bundleSelect)">
                 <ion-option  *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} + {{bundle.data.currency_sign }} {{selection.selection_price | number}} </ion-option>
             </ion-select>
         </ion-item>
-    </ion-list>
-    <ion-list no-margin  [(ngModel)]="bundleratio" radio-group *ngIf="b_test1.type=='radio'">
-              <ion-list-header>
-            {{b_test1.title}}
+    </ion-list>     
+    <ion-list no-margin  radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio()" *ngIf="b_test1.type=='radio'">
+              <ion-list-header  (click)="checkVisiblety('radio')" >
+            <span class="capitalize"> {{b_test1.title}}</span> <span color="danger">*</span><ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
-        <ion-item *ngFor="let selection of b_test1.selection" (ngModelChange)="onChangeBundleRadio($event)">
-            <ion-label>{{selection.selection_name}} + {{bundle.data.currency_sign}} {{selection.selection_price | number}}</ion-label>
-            <ion-radio [value]="selection" ></ion-radio>
+        <ion-item [hidden]="radioHidden"  *ngFor="let selection of b_test1.selection" (ngModelChange)="onChangeBundleRadio($event)" >
+            <ion-label class="capitalize">{{selection.selection_name}} + {{bundle.data.currency_sign}}{{selection.selection_price | number}}</ion-label>
+            <ion-radio class="marRigth0"[value]="selection" ></ion-radio>
         </ion-item>
     </ion-list>
-    <ion-list class="padLeft20"  *ngIf="b_test1.type=='checkbox'">
-        <ion-list-header class="no-padding">
-            {{b_test1.title}}
+    <ion-list class="no-margin"  *ngIf="b_test1.type=='checkbox'">
+        <ion-list-header (click)="checkVisiblety('check')" class="no-margin paddLef15">
+            <span class="capitalize">  {{b_test1.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
+
         </ion-list-header>
-        <ion-item *ngFor="let selection of b_test1.selection ; let j = index">
-            <ion-checkbox  color="dark" value="selection" [(ngModel)]="bundleCheck[selection.selection_id]" (ngModelChange)="onChangeBundleCheck(b_test1.selection,selection.selection_id)" ></ion-checkbox>
-            <ion-label>{{selection.selection_name}}  + {{bundle.data.currency_sign}} {{selection.selection_price | number }}</ion-label>
+        <ion-item [hidden]="checkHidden" class="padLeft10"  *ngFor="let selection of b_test1.selection ; let j = index">
+            <ion-checkbox  class="marRight" color="dark" value="selection" [(ngModel)]="bundleCheck[selection.selection_id]" (ngModelChange)="onChangeBundleCheck(b_test1.selection,selection.selection_id)" ></ion-checkbox>
+            <ion-label>{{selection.selection_name}}  + {{bundle.data.currency_sign}}{{selection.selection_price | number }}</ion-label>
         </ion-item>          
     </ion-list>
 </div>

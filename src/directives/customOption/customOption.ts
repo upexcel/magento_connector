@@ -1,10 +1,8 @@
 import { Component, Attribute, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import forEach from 'lodash/forEach';
-import clone from 'lodash/clone';
 import pull from 'lodash/pull';
 import merge from 'lodash/merge';
-import find from 'lodash/find';
-
+import keys from 'lodash/keys';
 @Component({
     selector: 'custom',
     templateUrl: 'custom.html'
@@ -12,7 +10,7 @@ import find from 'lodash/find';
 export class CustomOption {
     @Input() data: any = "";
     @Output() onChange = new EventEmitter();
-    currencySign:string;
+    currencySign: string;
     custom_option: any = [];
     month: any;
     textData: any = {};
@@ -54,21 +52,28 @@ export class CustomOption {
     datePrice;
     timePrice;
     dateTimePrice;
+    radioHidden: boolean = true;
+    checkHidden: boolean = true;
+    keys:any=[];
+    disable = {
+        multiple: false,
+        checkbox: false,
+        file: false,
+        drop_down: false,
+        radio: false,
+        area: false,
+        field: false,
+        date: false,
+        date_time: false,
+        time: false
+    }
     constructor( @Attribute("format") format) { }
     ngOnInit() {
-        this.currencySign=this.data.body.data.currency_sign;
-        var _dateString = new Date();
-        var day = _dateString.getDate();
-        var months = _dateString.getMonth();
-        var year = _dateString.getFullYear();
-        var min = _dateString.getMinutes();
-        var hours = _dateString.getHours();
-        var string = year + '-' + months + '-' + day;
-        this.time = hours + ':' + min;
-        this.month = string;
+        this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.custom_option = this.data.body.data.product_custom_option;
         forEach(this.custom_option, function(value, key) {
+            self.keys.push(value.type);
             if (value.type == "date_time") {
                 self.jsonDateTimeData = {
                     "option_id": value.option_type[0].option_id,
@@ -98,17 +103,18 @@ export class CustomOption {
             }
         })
     }
+
     text(opt) {
         this.textPrice = { "price": opt.price };
         if (this.textData != "") {
-            this.textSubdata = { "text": opt };
+            this.textSubdata = { "field": opt };
         }
         this.bundleJson();
     }
     textArea(opt) {
         this.textAreaPrice = { "price": opt.price };
         if (this.textarea != "") {
-            this.textAreaSubdata = { "textArea": opt };
+            this.textAreaSubdata = { "area": opt };
         }
         this.bundleJson();
     }
@@ -118,17 +124,21 @@ export class CustomOption {
         let self = this;
         let json: any = [];
         this.selectObj = {};
+        let disable = false;
         let value: any;
+        this.disable.drop_down = true;
         forEach(data, function(data: any, key1) {
             if (data) {
+                data.disable = true;
+                disable = data.disable;
                 value = data;
-                self.selectPrice.push({ "price": data.price });
+                self.selectPrice.push({ "price": data.price, "disable": disable });
                 option_id = data.option_id;
                 json.push(data.option_type_id);
             }
         })
         this.selectObj[option_id] = json;
-        let select = { "select": value };
+        let select = { "drop_down": value };
         this.selectSubdata = select;
         this.bundleJson();
 
@@ -136,6 +146,7 @@ export class CustomOption {
     onChangeRadio(data) {
         this.Radioobj = {};
         let radio: any;
+        this.disable.radio = true;
         this.radioPrice = { "price": this.radio.price };
         this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
         radio = { "radio": this.radio }
@@ -150,6 +161,12 @@ export class CustomOption {
         let option_id;
         this.multiObj = {};
         let valueData: any = [];
+        if (this.selectMulti.length > 0) {
+            this.disable.multiple = true;
+        }
+        else {
+            this.disable.multiple = false;
+        }
         forEach(this.selectMulti, function(value, key) {
             forEach(value, function(data: any, key1) {
                 if (data) {
@@ -161,7 +178,7 @@ export class CustomOption {
             })
         })
         this.multiObj[option_id] = json;
-        let multi = { "multiSelect": valueData };
+        let multi = { "multiple": valueData };
         this.multiSubdata = multi;
         this.bundleJson();
     }
@@ -177,6 +194,13 @@ export class CustomOption {
         else {
             this.checkData = pull(this.checkData, data);
         }
+        if (this.checkData.length > 0) {
+            this.disable.checkbox = true;
+        }
+        else {
+            this.disable.checkbox = false;
+
+        }
         forEach(this.checkData, function(data: any, key1) {
             if (data) {
                 self.checkPrice.push({ "price": data.price });
@@ -185,7 +209,7 @@ export class CustomOption {
             }
         })
         this.checkObj[option_id] = json;
-        let ckeckBox = { "ckeckBox": this.checkData };
+        let ckeckBox = { "checkbox": this.checkData };
         this.checkSubData = ckeckBox;
         this.bundleJson();
     }
@@ -199,7 +223,13 @@ export class CustomOption {
                 value.file = opt;
             }
         })
+        if (this.jsonFileData.length > 0) {
+            this.disable.file = true;
 
+        }
+        else {
+            this.disable.file = false;
+        }
         forEach(this.jsonFileData, function(value) {
             self.jsonFileDataValue[value.option_id] = value.option_url;
             fileArray.push(value.file);
@@ -209,13 +239,13 @@ export class CustomOption {
         self.fileSubData = json;
         this.bundleJson();
     }
-
     timeChanged() {
         let array = [];
         let time = {};
         let day_part;
         let hour = 0;
         this.timePrice = { "price": this.jsonTimeData.option_Price };
+        this.disable.time = true;
         array = this.time.split(':');
         if (array[0] * 1 > 12) {
             hour = (array[0] * 1) - 12;
@@ -238,6 +268,7 @@ export class CustomOption {
         var day = dateObj.getDate();
         var months = dateObj.getMonth();
         var year = dateObj.getFullYear();
+        this.disable.date = true;
         this.datePrice = { "price": this.jsonDateData.option_Price };
         let dateJson = {
             "month": months * 1 + 1,
@@ -254,6 +285,7 @@ export class CustomOption {
         var year = dateObj.getFullYear();
         var min = dateObj.getUTCMinutes();
         var hours = dateObj.getUTCHours();
+        this.disable.date_time = true;
         this.dateTimePrice = { "price": this.jsonDateTimeData.option_Price };
         var data = {
             "hour": hours,
@@ -263,10 +295,19 @@ export class CustomOption {
         this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
         this.bundleJson();
     }
+    checkVisiblety(name) {
+        if (name == "radio") {
+            this.radioHidden = false;
+        }
+        else {
+            this.checkHidden = false;
+        }
+    }
     bundleJson() {
         var total = 0;
         let jsonData = {};
         let subdata = {};
+        let self = this;
         if (this.textPrice.price != undefined) {
             total += (this.textPrice.price * 1);
         }
@@ -299,7 +340,7 @@ export class CustomOption {
                 total += (value.option_Price * 1);
             }
         });
-        jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson, this.bundleJson)
+        jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
         jsonData = { "dynemicPrice": total, "custom": jsonData, "sudata": subdata }
         this.onChange.emit(jsonData);

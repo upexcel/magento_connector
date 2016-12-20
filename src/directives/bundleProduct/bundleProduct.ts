@@ -19,7 +19,11 @@ export class BundleProduct {
     dataBundleSelect = [];
     dataBundleMulti = [];
     dataBundleCheck = [];
+    radioHidden: boolean = true;
+    checkHidden: boolean = true;
     ratio = [];
+    Radioobj = {};
+    radioPrice: any = {};
     constructor() {
     }
     onClick(obj) {
@@ -87,37 +91,46 @@ export class BundleProduct {
         this.calculateTotal();
     }
 
-    onChangeBundleRadio(e) {
-        console.log(e)
-        console.log(this.bundleratio)
-        console.log("hello radio");
-        //        console.log(this.bundleRadio)
-        //        console.log(e)
-        //                console.log(selection)
-        //
-        //        if (e) {
-        //            this.ratio.push(selection)
-        //        } else {
-        //            this.ratio = pull(this.ratio, selection);
-        //           
-        //        }
+    onChangeRadio(data) {
+        this.Radioobj = {};
+        let radio: any;
+        this.radioPrice = { "nameBundleCheck": this.bundleratio.selection_name, "price3": this.bundleratio.selection_price };
+        this.Radioobj[this.bundleratio.option_id] = this.bundleratio.option_type_id;
+        radio = { "radio": this.bundleratio };
         this.obj.radioButton.push(this.bundleratio);
         this.onClick(this.obj);
-
+        this.calculateTotal();
     }
     calculateTotal() {
         let self = this;
-        var total = 0;
-        forEach(this.dataBundleMulti, function(value) {
-            total += (value.price1 * 1);
+        var total:number = 0;
+        forEach(this.dataBundleMulti, function(value: any) {
+            if (value != undefined) {
+                total += (value.price1 * 1);
+            }
         });
-        forEach(this.dataBundleCheck, function(value) {
-            total += (value.price2 * 1);
+        forEach(this.dataBundleCheck, function(value: any) {
+            if (value != undefined) {
+                total += (value.price2 * 1);
+            }
         });
-        forEach(this.dataBundleSelect, function(value) {
-            total += (value.price3 * 1);
+        forEach(this.dataBundleSelect, function(value: any) {
+            if (value != undefined) {
+                total += (value.price3 * 1);
+            }
         });
+        if (this.radioPrice.price3 != undefined) {
+            total += (this.radioPrice.price3 * 1);
+        }
         this.onChange.emit(total);
 
+    }
+    checkVisiblety(name) {
+        if (name == "radio") {
+            this.radioHidden = false;
+        }
+        else {
+            this.checkHidden = false;
+        }
     }
 }

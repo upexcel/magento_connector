@@ -10,7 +10,7 @@ import forEach from 'lodash/forEach';
 export class group {
     @Input() grouped: any;
     @Output() sendData = new EventEmitter();
-    public quantity: Array<any> = [];
+    public quantity: any = [];
     public opt: {}
     constructor() {
         let data = {};
@@ -20,7 +20,7 @@ export class group {
             this.groupedData(newVal, data);
         }, 100);
     }
-    
+
     changeQty(newVal, data) {
         this.groupedData(newVal, data);
     }
@@ -29,13 +29,12 @@ export class group {
             this.quantity[i] = 1;
         }
     }
-    groupedData(newVal, data) {
+    groupedData(newVal?, data?) {
         var opt = {};
         var qun;
         forEach(this.grouped.group_associated_products, function(value, key) {
             let productId = value['product_id'];
             if (data.product_id == value['product_id']) {
-                console.log(newVal)
                 if (!newVal) {
                     newVal = "0";
                 }
@@ -49,7 +48,7 @@ export class group {
 
         });
         let obj = {
-//            qty: 1,
+            //            qty: 1,
             productid: this.grouped.data.entity_id,
             options: opt
         }
