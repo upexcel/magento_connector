@@ -26,6 +26,7 @@ import { Register } from '../model/register/register';
 import { CategoryList } from '../model/home/categoryList';
 import { HomeProducts } from '../model/home/homeProducts';
 import { Product } from '../model/product/getProduct';
+import { TierPrice } from '../model/product/checkTierPrice';
 import { Cart } from '../model/product/cart';
 import { Slider } from '../model/home/slider';
 import { ChangePwd } from '../model/changePassword/accountChangePwd';
@@ -38,8 +39,11 @@ import { EditAccount } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
+import { CartFunction } from '../model/cart/cartHandling';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
+import { DownloadService } from '../providers/cart-service/download-service';
+import { FinalPrice } from '../providers/cart-service/final-price';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
 import { ToastService } from '../providers/toast-service/toastService';
@@ -49,7 +53,8 @@ import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
 import { CountryService } from '../providers/myAccount-service/country';
-
+import {GroupService} from '../providers/cart-service/groupService';
+import {bundleService} from '../providers/cart-service/bundleService';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -71,6 +76,11 @@ import { Button } from '../directives/button/buttonRound.directive';
 import { ButtonFull } from '../directives/button/buttonFull.directive';
 import { ButtonTour } from '../directives/button/takeTourButton.directive';
 import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
+import { group } from '../directives/groupedProduct/group';
+import { BundleProduct } from '../directives/bundleProduct/bundleProduct';
+import { DownloadProduct } from '../directives/downloadProduct/downloadProduct';
+import { CustomOption } from '../directives/customOption/customOption';
+
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
@@ -113,7 +123,11 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Button,
         ButtonFull,
         ButtonTour,
-        ButtonForLarge
+        ButtonForLarge,
+        BundleProduct,
+        DownloadProduct,
+        CustomOption,
+        group
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -147,6 +161,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Storage,
         ApiService,
         CartService,
+        DownloadService,
+        FinalPrice,
         SocialService,
         Login,
         Register,
@@ -156,6 +172,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CategoryProduct,
         HomeProducts,
         Product,
+        TierPrice,
         Cart,
         ChangePwd,
         TotalOrder,
@@ -171,7 +188,11 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         homeProductsService,
         categoryService,
         CountryService,
-        NotifyMe]
+        NotifyMe,
+        CartFunction,
+        GroupService,
+        bundleService
+    ]
 })
 export class AppModule {
 
