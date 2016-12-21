@@ -1,5 +1,6 @@
 <div *ngFor="let customOption of custom_option ; let i=index">
     <div *ngIf="customOption.type=='field'">
+	
         <ion-item  *ngFor="let opt of customOption.option_type">
             <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
             <ion-input type="text" value="opt" [(ngModel)]="textData[opt.option_id]" (keyup.enter)="text(opt)"  (blur)="text(opt)"></ion-input>

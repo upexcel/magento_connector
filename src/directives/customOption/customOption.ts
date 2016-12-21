@@ -3,6 +3,8 @@ import forEach from 'lodash/forEach';
 import pull from 'lodash/pull';
 import merge from 'lodash/merge';
 import keys from 'lodash/keys';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 @Component({
     selector: 'custom',
     templateUrl: 'custom.html'
@@ -54,21 +56,19 @@ export class CustomOption {
     dateTimePrice;
     radioHidden: boolean = true;
     checkHidden: boolean = true;
-    keys:any=[];
-    disable = {
-        multiple: false,
-        checkbox: false,
-        file: false,
-        drop_down: false,
-        radio: false,
-        area: false,
-        field: false,
-        date: false,
-        date_time: false,
-        time: false
-    }
-    constructor( @Attribute("format") format) { }
+    keys: any = [];
+    validate: FormGroup;
+    constructor(private _fb: FormBuilder) { }
     ngOnInit() {
+//        this.validate = this._fb.group({
+//            textData: ['', Validators.required],
+//            textarea: ['', Validators.required],
+//            radio: ['', Validators.required],
+//            check: ['', Validators.required],
+//            select: ['', Validators.required],
+//            selectMulti: ['', Validators.required],
+//            fileData: ['', Validators.required]
+//        });
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.custom_option = this.data.body.data.product_custom_option;
@@ -126,7 +126,6 @@ export class CustomOption {
         this.selectObj = {};
         let disable = false;
         let value: any;
-        this.disable.drop_down = true;
         forEach(data, function(data: any, key1) {
             if (data) {
                 data.disable = true;
@@ -146,7 +145,6 @@ export class CustomOption {
     onChangeRadio(data) {
         this.Radioobj = {};
         let radio: any;
-        this.disable.radio = true;
         this.radioPrice = { "price": this.radio.price };
         this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
         radio = { "radio": this.radio }
@@ -161,12 +159,6 @@ export class CustomOption {
         let option_id;
         this.multiObj = {};
         let valueData: any = [];
-        if (this.selectMulti.length > 0) {
-            this.disable.multiple = true;
-        }
-        else {
-            this.disable.multiple = false;
-        }
         forEach(this.selectMulti, function(value, key) {
             forEach(value, function(data: any, key1) {
                 if (data) {
@@ -194,13 +186,6 @@ export class CustomOption {
         else {
             this.checkData = pull(this.checkData, data);
         }
-        if (this.checkData.length > 0) {
-            this.disable.checkbox = true;
-        }
-        else {
-            this.disable.checkbox = false;
-
-        }
         forEach(this.checkData, function(data: any, key1) {
             if (data) {
                 self.checkPrice.push({ "price": data.price });
@@ -223,13 +208,6 @@ export class CustomOption {
                 value.file = opt;
             }
         })
-        if (this.jsonFileData.length > 0) {
-            this.disable.file = true;
-
-        }
-        else {
-            this.disable.file = false;
-        }
         forEach(this.jsonFileData, function(value) {
             self.jsonFileDataValue[value.option_id] = value.option_url;
             fileArray.push(value.file);
@@ -245,7 +223,6 @@ export class CustomOption {
         let day_part;
         let hour = 0;
         this.timePrice = { "price": this.jsonTimeData.option_Price };
-        this.disable.time = true;
         array = this.time.split(':');
         if (array[0] * 1 > 12) {
             hour = (array[0] * 1) - 12;
@@ -268,7 +245,6 @@ export class CustomOption {
         var day = dateObj.getDate();
         var months = dateObj.getMonth();
         var year = dateObj.getFullYear();
-        this.disable.date = true;
         this.datePrice = { "price": this.jsonDateData.option_Price };
         let dateJson = {
             "month": months * 1 + 1,
@@ -285,7 +261,6 @@ export class CustomOption {
         var year = dateObj.getFullYear();
         var min = dateObj.getUTCMinutes();
         var hours = dateObj.getUTCHours();
-        this.disable.date_time = true;
         this.dateTimePrice = { "price": this.jsonDateTimeData.option_Price };
         var data = {
             "hour": hours,
