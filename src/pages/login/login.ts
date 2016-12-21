@@ -53,18 +53,19 @@ export class LoginPage implements OnInit {
         })
             .catch(err => {
                 this.showLoginError(err);
+                this.login = false;
             })
     }
     userFbLogin(body) {
         this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
+            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage,{"access_token":res.body.access_token});
+            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }
     gotoforgotPage() {

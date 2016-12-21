@@ -40,8 +40,11 @@ export class RegisterPage implements OnInit {
             } else {
                 this._toast.toast(res.message, 3000, "top");
             }
-        }
-        );
+        }).catch(err => {
+            this.spin = false;
+        })
+
+
     }
     signin(logvalue: any) {
         this._login.getLogin(logvalue).then((res) => {
@@ -57,7 +60,7 @@ export class RegisterPage implements OnInit {
             }
         })
             .catch(err => {
-
+                this.spin = false;
             });
     }
 }

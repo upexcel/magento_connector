@@ -12,7 +12,7 @@ import {
     PopoverPage
 } from './../../components/popover/popover';
 import {
-    FormBuilder,Validators,FormGroup
+    FormBuilder, Validators, FormGroup
 } from '@angular/forms';
 import {
     StartPage
@@ -60,7 +60,7 @@ import reverse from 'lodash/reverse';
 export class MyEditAccountPage implements OnInit {
     myaccount: MyAccountAddressDataType;
     editaccount: EditAccountDataType;
-    spin: boolean ;
+    spin: boolean;
     updateform: any;
     upd_spin: boolean = false;
     title: string;
@@ -68,8 +68,8 @@ export class MyEditAccountPage implements OnInit {
     entity_id: any;
     message: string = "Token expired";
     counrtyName: any;
-    reverseCartData:any;
-    constructor(public viewCtrl: ViewController,private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
+    reverseCartData: any;
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -77,15 +77,15 @@ export class MyEditAccountPage implements OnInit {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
                 this.getuser_details(this.id, this.entity_id, userData.secret);
-            } else {}
+            } else { }
         });
         this._local.get('store_id').then((store_id) => {
-            let data = {"store_id":store_id};
+            let data = { "store_id": store_id };
             this._country.getCountryName(data).then((name) => {
                 this.counrtyName = name;
             })
         });
-        
+
     }
 
     getuser_details(id, entity_id, secret) {
@@ -95,30 +95,30 @@ export class MyEditAccountPage implements OnInit {
         };
         if (entity_id != null) {
             this._myaccount.getMyAccount(body).then((res) => {
-                    this.myaccount = res;
-                    this.reverseCartData=reverse(this.myaccount.body);
-                    this.spin = false;
-                    if (this.myaccount.body.length != 0 && entity_id != null) {
-                        this.updateform = this._fb.group({
-                            firstname: [this.reverseCartData[id].firstname, Validators.required],
-                            lastname: [this.reverseCartData[id].lastname, Validators.required],
-                            city: [this.reverseCartData[id].city, Validators.required],
-                            company: [this.reverseCartData[id].company],
-                            telephone: [this.reverseCartData[id].telephone, Validators.required],
-                            fax: [this.reverseCartData[id].fax ],
-                            street: [this.reverseCartData[id].street , Validators.required],
-                            zip: [this.reverseCartData[id].postcode , Validators.required],
-                            countryid: [this.reverseCartData[id].country_id , Validators.required],
-                            entity_id: [entity_id],
-                            secret: [secret]
-                        })
-                    }
-                })
+                this.myaccount = res;
+                this.reverseCartData = reverse(this.myaccount.body);
+                this.spin = false;
+                if (this.myaccount.body.length != 0 && entity_id != null) {
+                    this.updateform = this._fb.group({
+                        firstname: [this.reverseCartData[id].firstname, Validators.required],
+                        lastname: [this.reverseCartData[id].lastname, Validators.required],
+                        city: [this.reverseCartData[id].city, Validators.required],
+                        company: [this.reverseCartData[id].company],
+                        telephone: [this.reverseCartData[id].telephone, Validators.required],
+                        fax: [this.reverseCartData[id].fax],
+                        street: [this.reverseCartData[id].street, Validators.required],
+                        zip: [this.reverseCartData[id].postcode, Validators.required],
+                        countryid: [this.reverseCartData[id].country_id, Validators.required],
+                        entity_id: [entity_id],
+                        secret: [secret]
+                    })
+                }
+            })
                 .catch(err => {
                     this.logout();
                 })
         } else {
-          this.spin = false;
+            this.spin = false;
             this.updateform = this._fb.group({
                 firstname: ['', Validators.required],
                 lastname: ['', Validators.required],
@@ -138,15 +138,17 @@ export class MyEditAccountPage implements OnInit {
         this.upd_spin = true;
         this.viewCtrl.dismiss();
         this._editaccount.updateAccount(value).then((res) => {
+            this.upd_spin = false;
+            this.editaccount = res;
+            if (this.editaccount.status === 1) {
+                this._events.publish('api:savedaddress', true);
+            } else {
+                this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
+            }
+        })
+            .catch(err => {
                 this.upd_spin = false;
-                this.editaccount = res;
-                if (this.editaccount.status === 1) {
-                    this._events.publish('api:savedaddress', true);
-                } else {
-                    this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
-                }
-            })
-            .catch(err => {});
+            });
     }
     presentPopover(myEvent: any) {
         let popover = this._popoverCtrl.create(PopoverPage);
