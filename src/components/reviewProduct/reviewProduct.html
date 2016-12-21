@@ -9,13 +9,12 @@
                         </ion-col>
                     </ion-row>
                     <ion-row class="overflow" *ngIf="productReview.body.rating">
-                    <div class="ratingContainer">
-                        <div class="ratingColor"></div>
-                        <div class="ratingAverage" [style.width]=" productReview.body.rating * 20 + '%'"></div>
-                        <div class="star"></div>
-                    </div>
+                        <div class="ratingContainer">
+                            <div class="ratingColor"></div>
+                            <div class="ratingAverage" [style.width]=" productReview.body.rating * 20 + '%'"></div>
+                            <div class="star"></div>
+                        </div>
                     </ion-row>
-
                     <ion-row>
                         <ion-col>
                             <p class="gray">{{productReview.body.total_review}} Review(s)</p>
@@ -45,8 +44,8 @@
             </ion-buttons>
         </ion-item>
     </ion-list> 
-        <btn-full  [titleFull]='" Review Product "' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
 </div>
+<btn-full  [titleFull]='" Review Product "' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
 
 
 

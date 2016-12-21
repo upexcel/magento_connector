@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Slider } from '../../model/home/slider';
 import { SliderDataType } from './../../model/home/sliderDataType';
-import {config} from './../../providers/config/config';
+import { config } from './../../providers/config/config';
 @Component({
     selector: 'get-slider',
     templateUrl: 'slider.html'
@@ -9,7 +9,7 @@ import {config} from './../../providers/config/config';
 export class SliderComponent implements OnInit {
     img: SliderDataType;
     mySlideOptions = config.homePageSliderOptions;
-    constructor(private _sliderConfig: Slider) { 
+    constructor(private _sliderConfig: Slider) {
     }
     ngOnInit() {
         this.slider();
@@ -19,6 +19,8 @@ export class SliderComponent implements OnInit {
             if (res) {
                 this.img = res;
             }
+        }, (err) => {
+            console.log(err);
         });
     }
 }

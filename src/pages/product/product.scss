@@ -16,6 +16,16 @@
         font-weight: 300;
         color: $gray;
     }
+    .lineH0{
+        line-height: 0;
+    }
+    .price{
+        line-height: 2.5;
+        padding-left: 5px;
+    }
+    .lineH2-4{
+        line-height: 2.4 !important;
+    }
     ion-item.selectlist.item.item-select{
         min-height: 3rem;
     }
@@ -29,16 +39,17 @@
         line-height: 1.5;
         color: $blacky;
     }
-    ion-select {
-        padding: 0px !important;
-        font-size: 12px;
-    }
     ion-item.selectlist.item.item-select {
         min-height: 3rem;
         padding-left: 2px;
     }
     .hidden{
         display: none;
+    }
+
+    .additionalInformation{
+        color:gray;
+        padding-right: 20px;
     }
     .sPrice{
         font-size: 1em;
@@ -62,6 +73,9 @@
         color: gray;
         margin-left: 5px;
         line-height: 2.6;
+    }
+    .hide{
+        display: none;
     }
     .maxHt{
         max-height: 100px;

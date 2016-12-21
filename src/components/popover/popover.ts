@@ -7,6 +7,7 @@ import {OrderlistPage} from './../../pages/orderList/orderList';
 import {LogoutService} from './../../providers/logout/logout-service';
 import { Storage } from '@ionic/storage';
 @Component({
+    selector:'user-menu',
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
@@ -18,19 +19,15 @@ export class PopoverPage {
     }
     gotoMyAccount() {
         this._navCtrl.push(MySavedAddressPage);
-          this.close();
     }
     gotoPass() {
         this._navCtrl.push(ChangepasswordPage);
-          this.close();
     }
     gotoOrders() {
         this._navCtrl.push(OrderlistPage);
-          this.close();
     }
     logout() {      
         this._logout.logout(this.msg,this._navCtrl);                  
-        this.close();
         this._navCtrl.setRoot(StartPage, { "message": this.msg });
     }
 }
