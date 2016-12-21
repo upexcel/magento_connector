@@ -18,9 +18,9 @@ export class HomePage implements OnInit {
     public navigator: any;
     title: string = 'Home';
     pagename: string = 'home'
-    userToken:any;
+    userToken: any;
     constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
-        this.userToken=this._navParams.data.access_token;
+        this.userToken = this._navParams.data.access_token;
     }
     ngOnInit() {
         this.homeProducts();
@@ -64,9 +64,10 @@ export class HomePage implements OnInit {
                     this.end += 4;
                     this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                     infiniteScroll.complete();
-                }, 2000);
+                }, 100);
             } else {
                 infiniteScroll.complete();
+                infiniteScroll.enable(false);
             }
         }
         else {
@@ -81,11 +82,13 @@ export class HomePage implements OnInit {
                         this.end += 4;
                         this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                         infiniteScroll.complete();
-                    }, 2000);
+                        infiniteScroll.enable(false);
+                    }, 100);
                 }
             }
             else {
                 infiniteScroll.complete();
+                infiniteScroll.enable(false);
             }
         }
 
