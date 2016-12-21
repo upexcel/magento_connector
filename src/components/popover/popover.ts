@@ -19,21 +19,7 @@ export class PopoverPage {
     }
     gotoMyAccount() {
         this._navCtrl.push(MySavedAddressPage);
-<<<<<<< HEAD
-//          this.close();
-    }
-    gotoPass() {
-        this._navCtrl.push(ChangepasswordPage);
-//          this.close();
-    }
-    gotoOrders() {
-        this._navCtrl.push(OrderlistPage);
-//          this.close();
-    }
-    logout() {      
-        this._logout.logout(this.msg,this._navCtrl);                  
-//        this.close();
-=======
+
     }
     gotoPass() {
         this._navCtrl.push(ChangepasswordPage);
@@ -43,7 +29,6 @@ export class PopoverPage {
     }
     logout() {      
         this._logout.logout(this.msg,this._navCtrl);                  
->>>>>>> e74700487ce1a971c405f36905e0560abf701f5d
         this._navCtrl.setRoot(StartPage, { "message": this.msg });
     }
 }
