@@ -1,5 +1,4 @@
 <ion-grid  *ngIf="product">
-
     <div class="card1">   
         <div class="rowForLandscape" wrap>
             <div class="column cursorPointer"  *ngFor="let feat_prod of product" (click)="gotoProduct(feat_prod.data.sku)">
@@ -22,8 +21,8 @@
                                 </div>
                                 <div class="row rowForLandscape">
                                     <div class="columnForGrid100">
-                                        <span  *ngIf="feat_prod.data.display_special_price >0" >{{feat_prod.data.currency}}{{feat_prod.data.display_special_price}}</span>
-                                        <span   [ngClass]="{'line': feat_prod.data.display_special_price >0}" >{{feat_prod.data.currency}}{{feat_prod.data.display_price}}</span>
+                                        <span  *ngIf="feat_prod.data.display_special_price >0" >{{feat_prod.data.currency_sign}}{{feat_prod.data.display_special_price}}</span>
+                                        <span   [ngClass]="{'line': feat_prod.data.display_special_price >0}" >{{feat_prod.data.currency_sign}}{{feat_prod.data.display_price}}</span>
                                     </div>
                                 </div>
                                 <div class="row rowForLandscape" *ngIf="feat_prod.data.rating>0">

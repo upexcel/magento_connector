@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { Events, NavController, ViewController } from 'ionic-angular';
+import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
@@ -18,18 +18,22 @@ export class HomePage implements OnInit {
     public navigator: any;
     title: string = 'Home';
     pagename: string = 'home'
-    constructor(private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) { }
+    userToken:any;
+    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+        this.userToken=this._navParams.data.access_token;
+    }
     ngOnInit() {
         this.homeProducts();
         this.checkBackButton();
         this._events.subscribe('api:review', (review) => {
-        this.homeProducts();  
+            this.homeProducts();
         });
+
     }
     homeProducts() {
         this.spin = true;
-        let body = { "type": "large_data" }
-        this._homeProductsConfig.getHomeProducts().then((res) => {
+        let body = { "type": "full" }
+        this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.body, this.start, this.end);

@@ -10,8 +10,44 @@
 .padd36{
     padding:36px;
 }
+.paddLeft10{
+    padding-left: 10px;
+}
 .padd44{
     padding: 44px;
+}
+.paddLft55{
+    padding-left: 55px;
+}
+.padd20{
+    padding:20px;
+}
+.paddLft25{
+    padding-left: 25px;
+}
+.down-arrow{
+    padding-right: 5px;
+    font-size: 20px;
+    color:#a5a5a5;
+}
+.down-arrowDate{
+    font-size: 20px;
+    color:#a5a5a5;
+}
+.paddRight5 {
+    padding-right: 5px;
+}
+.paddLef15{
+    padding-left: 15px !important;
+}
+.minHeight{
+    min-height: 10px !important;
+}   
+.marRight{
+    margin-right: 5px !important;
+}
+.marRigth0{
+    margin-right: 0px !important;
 }
 .line{
     text-decoration: line-through;
@@ -19,19 +55,42 @@
     color: gray;
     margin-left: 5px;
 }
-
+table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+}
+th, td {
+    padding: 15px !important;
+    text-align: left;
+    border-bottom: 1px solid #ddd ;
+}
 .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
     border-bottom-color: #387ef5 !important;
     box-shadow: inset 0 -1px 0 0 #387ef5 !important;
 }
-.item-md {
+.fontWidth600{
+    font-weight: 600;
+}
+.dateIcon{
+    position: absolute;
+    right: 10px;
+}
+.datetime-md {
+    padding: 13px 20px 13px 16px !important;
+}
+/*.item-md {
     padding-right: 16px !important;
+}*/
+.offer{
+    color:#f58138;
 }
 
 .padd60{
     padding-bottom:60px;
 }
-
+.padLeft20{
+    padding-left: 20px !important;
+}
 .marTop20{
     margin-top: 20px !important;
 }
@@ -54,10 +113,10 @@ input .item-inner {
 }
 .item-label-stacked .text-input-md, .item-label-floating .text-input-md.uppercase{
     text-transform: uppercase !important;
-    }
-    ion-input.uppercase input{
-        text-transform: uppercase;
-    }
+}
+ion-input.uppercase input{
+    text-transform: uppercase;
+}
 .borderRt1{
     border-right: 1px solid gray;
 }
@@ -84,6 +143,9 @@ input .item-inner {
 }
 .floatLeft{
     float: left;
+}
+.floatRight{
+    float: right;
 }
 .right{
     position: absolute !important;

@@ -4,16 +4,13 @@ import {
 import {
     Storage
 } from '@ionic/storage';
-import {ApiService } from './../../providers/api-service/api-service';
-import { HomeProductsDataType } from './../../pages/home/homeProductsDataType';
-
+import { ApiService } from './../../providers/api-service/api-service';
 @Injectable()
 
 export class homeProductsService {
-    constructor(private _local: Storage, private _apiService: ApiService) {}
-    getHomeProducts(): Promise<HomeProductsDataType> {
-        return new Promise((resolve, reject)=> {
-            let data = { "type": "large_data" }
+    constructor(private _local: Storage, private _apiService: ApiService) { }
+    getHomeProducts(data) {
+        return new Promise((resolve, reject) => {
             this._apiService.api("home/products", data).subscribe((res) => {
                 this._local.set('homeProducts', res);
                 resolve(res);
