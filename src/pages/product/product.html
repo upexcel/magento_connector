@@ -41,7 +41,7 @@
 
                          <ion-col width-50 *ngFor="let key of keys">
                          <ion-item class="selectlist">
-                            <ion-label no-margin class="font12">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                            <ion-label no-margin class="capitalize">{{productData.body.associated_products.attributes[key].label}}</ion-label>
                             <ion-label no-margin class="font12" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
                                 <ion-buttons class="alignright">
                                     <ion-icon name="radio-button-on" dark id="color"></ion-icon>

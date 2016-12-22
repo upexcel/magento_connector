@@ -60,15 +60,15 @@ export class CustomOption {
     validate: FormGroup;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
-//        this.validate = this._fb.group({
-//            textData: ['', Validators.required],
-//            textarea: ['', Validators.required],
-//            radio: ['', Validators.required],
-//            check: ['', Validators.required],
-//            select: ['', Validators.required],
-//            selectMulti: ['', Validators.required],
-//            fileData: ['', Validators.required]
-//        });
+        //        this.validate = this._fb.group({
+        //            textData: ['', Validators.required],
+        //            textarea: ['', Validators.required],
+        //            radio: ['', Validators.required],
+        //            check: ['', Validators.required],
+        //            select: ['', Validators.required],
+        //            selectMulti: ['', Validators.required],
+        //            fileData: ['', Validators.required]
+        //        });
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.custom_option = this.data.body.data.product_custom_option;
@@ -311,7 +311,7 @@ export class CustomOption {
             total += (value.price * 1);
         });
         forEach(this.jsonFileData, function(value: any) {
-            if (value.option_Price) {
+            if (value != undefined) {
                 total += (value.option_Price * 1);
             }
         });
