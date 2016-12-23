@@ -63,32 +63,30 @@ export class HomePage implements OnInit {
                     this.end += 4;
                     this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                     infiniteScroll.complete();
-                }, 2000);
+                }, 100);
             } else {
                 infiniteScroll.complete();
+                infiniteScroll.enable(false);
             }
         }
         else {
             let check = this.homeProduct.body.length + 1;
             if (check >= this.end) {
-
-                if (check == this.end) {
+                if (check <= this.end) {
                     infiniteScroll.complete();
                     infiniteScroll.enable(false);
-
                 }
                 else {
                     setTimeout(() => {
                         this.end += 4;
                         this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                         infiniteScroll.complete();
-                    }, 2000);
+                    }, 100);
                 }
             }
             else {
                 infiniteScroll.complete();
                 infiniteScroll.enable(false);
-
             }
         }
 

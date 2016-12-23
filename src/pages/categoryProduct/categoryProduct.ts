@@ -58,21 +58,22 @@ export class CategoryProductPage implements OnInit {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
-                }, 2000);
+                    infiniteScroll.enable(false);
+                }, 100);
             }
             else if (this.categoryProduct.body.length <= limit) {
                 setTimeout(() => {
                     this.limit += 6;
                     this.show_products(this.product_id, this.page, this.limit);
                     infiniteScroll.complete();
-                }, 2000);
+                    infiniteScroll.enable(false);
+                }, 100);
             }
             else { }
-        }
+        } 
         else {
             infiniteScroll.complete();
             infiniteScroll.enable(false);
-
         }
     }
     openMenu() {
