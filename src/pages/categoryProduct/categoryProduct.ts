@@ -70,7 +70,7 @@ export class CategoryProductPage implements OnInit {
                 }, 100);
             }
             else { }
-        }
+        } 
         else {
             infiniteScroll.complete();
             infiniteScroll.enable(false);
