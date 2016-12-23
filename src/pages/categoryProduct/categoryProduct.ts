@@ -1,12 +1,12 @@
-import { Component, OnInit} from '@angular/core';
-import { NavController, MenuController, PopoverController, NavParams, LoadingController,Events} from 'ionic-angular';
-import {PopoverPage} from './../../components/popover/popover';
+import { Component, OnInit } from '@angular/core';
+import { NavController, MenuController, PopoverController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { PopoverPage } from './../../components/popover/popover';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
-import {CategoryProductDataType} from './../../model/categoryProduct/categoryProductData';
+import { CategoryProductDataType } from './../../model/categoryProduct/categoryProductData';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 
-import {LoginPage} from '../login/login';
-import {Storage} from '@ionic/storage';
+import { LoginPage } from '../login/login';
+import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -17,26 +17,26 @@ export class CategoryProductPage implements OnInit {
     limit: number = 10;
     page: number = 1;
     categoryProduct: CategoryProductDataType;
-    access_token:string;
-    showPopOver:boolean=false;
-    error:boolean=false;
-    constructor(private _appConfigService: AppDataConfigService,private _events: Events,private _local:Storage,private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    access_token: string;
+    showPopOver: boolean = false;
+    error: boolean = false;
+    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
-        this.access_token=this._navParams.get("access_token");
+        this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
-            if(this.access_token!=null || userData!=null){
-              this.showPopOver=true;
-            }else{
-              this.showPopOver=false;
+            if (this.access_token != null || userData != null) {
+                this.showPopOver = true;
+            } else {
+                this.showPopOver = false;
             }
         });
         this.show_products(this.product_id, this.page, this.limit);
     }
-   
+
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
@@ -51,6 +51,7 @@ export class CategoryProductPage implements OnInit {
         if (this.categoryProduct.body.length % 2 == 0) {
             if (this.categoryProduct.body.length < limit) {
                 infiniteScroll.complete();
+                infiniteScroll.enable(false);
             }
             else if (this.categoryProduct.body.length >= limit) {
                 setTimeout(() => {
@@ -70,6 +71,8 @@ export class CategoryProductPage implements OnInit {
         }
         else {
             infiniteScroll.complete();
+            infiniteScroll.enable(false);
+
         }
     }
     openMenu() {
