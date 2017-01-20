@@ -21,7 +21,6 @@ export class CartPage implements OnInit {
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
             this.res = value;
-            console.log('this response from cart page',this.res);
             let tempObj = [];
             forEach(this.res, function(value, key) {
                 forEach(value, function(value1, key) {
@@ -38,7 +37,6 @@ export class CartPage implements OnInit {
 
 
     changeQuantity(newQuantity, data) {
-        console.log('checking for data', data)
         this._cartFunction.addItem(newQuantity, data)
         this._cartFunction.totalPay(this.res).then((response) => {
             this.totalPay = response;

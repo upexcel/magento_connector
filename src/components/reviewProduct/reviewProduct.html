@@ -21,7 +21,7 @@
                         </ion-col>
                     </ion-row>
                 </ion-col>
-                <ion-col>
+                <ion-col class="bar">
                     <ion-buttons  *ngFor="let rating of graphRating">
                         <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span><span><progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></span>
                     </ion-buttons>
@@ -44,18 +44,9 @@
             </ion-buttons>
         </ion-item>
     </ion-list> 
-<<<<<<< HEAD
 </div>
-<btn-full  [titleFull]='" Review Product "' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
+<btn-full  [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
 
-=======
-<<<<<<< HEAD
-</div>
-<btn-full  [titleFull]='" Review Product "' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
-
-=======
-        <btn-full  [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
-</div>
 <!--<ion-grid>
     <ion-row>
         <ion-col width-25>

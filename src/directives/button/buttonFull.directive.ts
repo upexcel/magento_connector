@@ -1,20 +1,23 @@
-import { Component, Input , Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
-     selector: 'btn-full',
+    selector: 'btn-full',
     templateUrl: 'buttonFull.html'
 })
 export class ButtonFull {
-    @Input() titleFull: string="";
-    @Input() colorFull: string="primary";
-    @Input() spinFull:boolean=false;
-    @Input() validFull:boolean=false;
-    @Input() idFull:string="";
-    @Input() classFull:string="";
+    @Input() titleFull: string = "";
+    @Input() colorFull: string = "primary";
+    @Input() spinFull: boolean = false;
+    @Input() validFull: boolean = false;
+    @Input() idFull: string = "";
+    @Input() classFull: string = "";
     @Output() onBtnClick = new EventEmitter();
     constructor() {
+//        setTimeout(() => {
+//            console.log(this.validFull)
+//        }, 500);
     }
-    onClick(){
-      this.onBtnClick.emit();
+    onClick() {
+        this.onBtnClick.emit();
     }
 }
 

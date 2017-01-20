@@ -44,30 +44,40 @@ export class BundleProduct {
         var i = 1;
         forEach(bundleSelect, function(value) {
             if (value) {
-                self.dataBundleSelect.push({ "nameBundleSelect": value.selection_name, "price3": value.selection_price });
+                self.dataBundleSelect.push({ "nameBundleSelect": value.selection_name, "price3": value.selection_price, "disable": true });
             }
         })
         this.calculateTotal();
         this.obj.select.push(bundleSelect);
         this.onClick(this.obj);
-
     }
     onChangeBundleMulti(bundleMulti) {
         this.dataBundleMulti = [];
         this.obj.multiselect = [];
+        let dataBundleMulti: any = [];
+        let dataMulti: any = [];
+        let dataSubMulti: any = [];
         let self = this;
         var total = 0;
         forEach(bundleMulti, function(value, key) {
-
             forEach(value, function(data, key1) {
-                self.dataBundleMulti.push({ "nameBundleMulti": data.selection_name, "price1": data.selection_price });
+                dataBundleMulti.push({ "nameBundleMulti": data.selection_name, "price1": data.selection_price });
+                dataMulti.push(data);
             })
+            if (value != undefined) {
+                self.dataBundleMulti.push(dataBundleMulti);
+                dataSubMulti.push(dataMulti);
+                dataBundleMulti = [];
+                dataMulti = [];
+            }
         })
         this.calculateTotal();
         if (bundleMulti[0]) {
-            this.obj.multiselect.push(bundleMulti);
+            this.obj.multiselect=dataSubMulti;
+            this.onClick(this.obj);
         }
-        this.onClick(this.obj);
+
+
     }
     onChangeBundleCheck(x, id) {
         this.obj.checkbox = [];
@@ -103,11 +113,13 @@ export class BundleProduct {
     }
     calculateTotal() {
         let self = this;
-        var total:number = 0;
+        var total: number = 0;
         forEach(this.dataBundleMulti, function(value: any) {
-            if (value != undefined) {
-                total += (value.price1 * 1);
-            }
+            forEach(value, function(data: any) {
+                if (data != undefined) {
+                    total += (data.price1 * 1);
+                }
+            });
         });
         forEach(this.dataBundleCheck, function(value: any) {
             if (value != undefined) {
@@ -117,6 +129,7 @@ export class BundleProduct {
         forEach(this.dataBundleSelect, function(value: any) {
             if (value != undefined) {
                 total += (value.price3 * 1);
+                console.log(value.disable);
             }
         });
         if (this.radioPrice.price3 != undefined) {

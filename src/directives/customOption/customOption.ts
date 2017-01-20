@@ -60,19 +60,13 @@ export class CustomOption {
     validate: FormGroup;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
-        //        this.validate = this._fb.group({
-        //            textData: ['', Validators.required],
-        //            textarea: ['', Validators.required],
-        //            radio: ['', Validators.required],
-        //            check: ['', Validators.required],
-        //            select: ['', Validators.required],
-        //            selectMulti: ['', Validators.required],
-        //            fileData: ['', Validators.required]
-        //        });
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.custom_option = this.data.body.data.product_custom_option;
         forEach(this.custom_option, function(value, key) {
+            forEach(value.option_type, function(data, id) {
+                data.disable = false;
+            })
             self.keys.push(value.type);
             if (value.type == "date_time") {
                 self.jsonDateTimeData = {
@@ -97,7 +91,8 @@ export class CustomOption {
                     "option_id": value.option_type[0].option_id,
                     "option_url": "",
                     "option_Price": "",
-                    "file": ""
+                    "file": "",
+                    "disable": ""
                 }
                 self.jsonFileData.push(obj);
             }
@@ -125,12 +120,12 @@ export class CustomOption {
         let json: any = [];
         this.selectObj = {};
         let disable = false;
-        let value: any;
+        let value: any = [];
         forEach(data, function(data: any, key1) {
             if (data) {
                 data.disable = true;
                 disable = data.disable;
-                value = data;
+                value.push(data);
                 self.selectPrice.push({ "price": data.price, "disable": disable });
                 option_id = data.option_id;
                 json.push(data.option_type_id);
@@ -145,7 +140,7 @@ export class CustomOption {
     onChangeRadio(data) {
         this.Radioobj = {};
         let radio: any;
-        this.radioPrice = { "price": this.radio.price };
+        this.radioPrice = { "price": this.radio.price, "disable": true };
         this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
         radio = { "radio": this.radio }
         this.radioSubdata = radio;
@@ -158,19 +153,28 @@ export class CustomOption {
         let json: any = [];
         let option_id;
         this.multiObj = {};
-        let valueData: any = [];
-        forEach(this.selectMulti, function(value, key) {
+        let dataRecord:any=[];
+        let subRecord:any=[];
+        let multiPrice: any = [];
+        forEach(this.selectMulti, function(value) {
             forEach(value, function(data: any, key1) {
                 if (data) {
-                    valueData.push(data);
-                    self.multiPrice.push({ "price": data.price });
+                    subRecord.push(data);
+                    multiPrice.push({ "price": data.price });
                     option_id = data.option_id;
                     json.push(data.option_type_id);
                 }
             })
+            if (value != undefined) {
+                self.multiPrice.push(multiPrice);
+                self.multiObj[option_id] = json;
+                dataRecord.push(subRecord);
+                json=[];
+                multiPrice=[];
+                subRecord=[];
+            }
         })
-        this.multiObj[option_id] = json;
-        let multi = { "multiple": valueData };
+        let multi = { "multiple": dataRecord };
         this.multiSubdata = multi;
         this.bundleJson();
     }
@@ -181,7 +185,7 @@ export class CustomOption {
         this.checkObj = {};
         this.checkPrice = [];
         if (event) {
-            this.checkData.push(data)
+            this.checkData.push(data);
         }
         else {
             this.checkData = pull(this.checkData, data);
@@ -305,7 +309,9 @@ export class CustomOption {
             total += (value.price * 1);
         });
         forEach(this.multiPrice, function(value: any) {
-            total += (value.price * 1);
+            forEach(value, function(data) {
+                total += (data.price * 1);
+            })
         });
         forEach(this.checkPrice, function(value: any) {
             total += (value.price * 1);

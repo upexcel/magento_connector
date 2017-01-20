@@ -68,6 +68,8 @@ export class MyEditAccountPage implements OnInit {
     entity_id: any;
     message: string = "Token expired";
     counrtyName: any;
+    default_billing: any = 0;
+    default_shipping: any = 0;
     reverseCartData: any;
     constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
@@ -109,6 +111,8 @@ export class MyEditAccountPage implements OnInit {
                         street: [this.reverseCartData[id].street, Validators.required],
                         zip: [this.reverseCartData[id].postcode, Validators.required],
                         countryid: [this.reverseCartData[id].country_id, Validators.required],
+                        default_billing: [this.reverseCartData[id].default_billing],
+                        default_shipping: [this.reverseCartData[id].default_shipping],
                         entity_id: [entity_id],
                         secret: [secret]
                     })
@@ -129,12 +133,26 @@ export class MyEditAccountPage implements OnInit {
                 street: ['', Validators.required],
                 zip: ['', Validators.required],
                 countryid: ['', Validators.required],
+                default_billing: [0],
+                default_shipping: [0],
                 entity_id: [''],
                 secret: [secret]
             })
         }
     }
     update(value: any) {
+        if (value.default_billing) {
+            value.default_billing = '1';
+        }
+        else {
+            value.default_billing = '0';
+        }
+        if (value.default_shipping) {
+            value.default_shipping = '1';
+        }
+        else {
+            value.default_shipping = '0';
+        }
         this.upd_spin = true;
         this.viewCtrl.dismiss();
         this._editaccount.updateAccount(value).then((res) => {

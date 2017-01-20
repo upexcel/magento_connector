@@ -41,13 +41,20 @@ export class SideMenu implements OnInit {
         this._navCtrl.push(CategoryProductPage, { "id": gchild_id, "name": gchild_name });
     }
     toggle(_toggleData) {
-        if (_toggleData.showDetails) {
-            _toggleData.showDetails = false;
-            _toggleData.icon = 'ios-add-circle-outline';
-        } else {
-            _toggleData.showDetails = true;
-            _toggleData.icon = 'ios-remove-circle-outline';
+        if (_toggleData.children.length > 0) {
+            if (_toggleData.showDetails) {
+                _toggleData.showDetails = false;
+                _toggleData.icon = 'ios-add-circle-outline';
+            } else {
+                _toggleData.showDetails = true;
+                _toggleData.icon = 'ios-remove-circle-outline';
+            }
         }
+        else {
+            this._menuCtrl.close();
+            this._navCtrl.push(CategoryProductPage, { "id": _toggleData.id, "name": _toggleData.name });
+        }
+
     }
 
 }

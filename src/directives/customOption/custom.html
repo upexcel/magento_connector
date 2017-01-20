@@ -36,7 +36,7 @@
     </ion-list>
     <ion-list no-margin  radio-group [(ngModel)]="radio" (ngModelChange)="onChangeRadio()" *ngIf="customOption.type=='radio'">
               <ion-list-header  (click)="checkVisiblety('radio')" >
-            <span class="capitalize"> {{customOption.title}}</span> <span color="danger">*</span><ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
+            <span class="capitalize"> {{customOption.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="radioHidden"  *ngFor="let opt of customOption.option_type">
             <ion-label class="capitalize">{{opt.default_title}} + {{currencySign}}{{opt.default_price | number}}</ion-label>
@@ -45,7 +45,7 @@
     </ion-list>
     <ion-list class="no-margin " *ngIf="customOption.type=='checkbox'">
         <ion-list-header (click)="checkVisiblety('check')" class=" no-margin paddLef15">
-            <span class="capitalize">  {{customOption.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
+            <span class="capitalize">  {{customOption.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="checkHidden" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
             <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event)" ></ion-checkbox>
@@ -67,7 +67,7 @@
         </ion-item>
     </ion-list>
     <ion-list *ngIf="customOption.type=='date'">
-        <ion-item >
+        <ion-item>
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
             <ion-datetime  displayFormat="MMM DD YYYY" min="2016" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
         </ion-item>

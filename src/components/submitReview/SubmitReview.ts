@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavParams } from 'ionic-angular';
-import {ToastController} from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { SubmitReviewDataType } from '../../model/product/submitReview';
 import { Product } from '../../model/product/getProduct';
@@ -27,7 +27,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService,public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -35,7 +35,7 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
-            this._appConfigService.getUserData().then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
                 this.reviewDataNickname = userData.firstname;
                 this.hideByLogin = false;
@@ -52,7 +52,7 @@ export class SubmitReview implements OnInit {
     }
 
     submitReview() {
-     var num:any=1;
+        var num: any = 1;
         let reviweDataJson = {};
         let selectedRating = {};
         let self = this;
@@ -66,7 +66,7 @@ export class SubmitReview implements OnInit {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
                     forEach(optionValue, function(Value, key: number) {
-                            if (key == ratingValue - 1) {
+                        if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,
                                 key: ratingKey

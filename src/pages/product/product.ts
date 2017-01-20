@@ -173,7 +173,9 @@ export class ProductPage implements OnInit {
         this.selectedList = clone(res);
         // get effected price
         forEach(res, function(takePrice) {
-            self.configPrice.push({ price: takePrice.price });
+            if (takePrice != undefined) {
+                self.configPrice.push({ price: takePrice.price });
+            }
         })
 
         forEach(this.configPrice, function(value: any) {
@@ -183,17 +185,20 @@ export class ProductPage implements OnInit {
         //        mapping between select list
 
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
-
             if (key != key1) {
                 forEach(res1.options, function(res2) {
-                    res2.shown = false;
-                    forEach(res111.products, function(res4) {
-                        forEach(res2.products, function(res3) {
-                            if (res4 == res3) {
-                                res2.shown = true;
+                    if (res111 != undefined) {
+                        res2.shown = false;
+                        forEach(res111.products, function(res4) {
+                            if (res2.products != undefined && res4 != undefined) {
+                                forEach(res2.products, function(res3) {
+                                    if (res4 == res3) {
+                                        res2.shown = true;
+                                    }
+                                })
                             }
                         })
-                    })
+                    }
                 })
             } else {
                 forEach(res1.options, function(res2) {
@@ -204,7 +209,9 @@ export class ProductPage implements OnInit {
         //change color of icon when its type is color
         this.selectshow = false;
         let myDiv = document.getElementById('color');
-        myDiv.style.color = res[key].label;
+        if (res[key] != undefined) {
+            myDiv.style.color = res[key].label;
+        }
         //disable button when select list is not checked
         if (typeof res != "undefined") {
             forEach(res, function(value) {
@@ -240,7 +247,6 @@ export class ProductPage implements OnInit {
         this._notifyService.setNotification(sku, email).then((data: any) => {
             this.alertset = false;
             this.askEmail = true;
-
         });
     }
 
@@ -310,9 +316,7 @@ export class ProductPage implements OnInit {
         //        this._cart.getCart(this.path).then((res) => {
         //            if (res) {
         // add to cart service
-        //                console.log('this is other data',other);
         //        this._cartService.addCart(other, this.keys).then((response: any) => {
-        //            console.log('this is response', response)
         //            this.cartData = response;
         //            if (this.cartData.body != "undefined") {
         //                this._toast.toast("item inserted ", 3000, "top");
@@ -352,7 +356,12 @@ export class ProductPage implements OnInit {
     }
 
     calcultateData(data?) {
-        this.bundlePrice = this.refPrice * 1;
+        if (this.customPrice != undefined) {
+            this.bundlePrice = this.customPrice * 1;
+        }
+        else {
+            this.bundlePrice = this.refPrice * 1;
+        }
         this.dynemicDisplayPrice = this.refDisplayPrice * 1;
         if (this.type != 'configurable' && this.type != 'bundle') {
             data = merge(data, this.other, this.path);
@@ -361,18 +370,22 @@ export class ProductPage implements OnInit {
             this.dynemicDisplayPrice += data.dynemicPrice * 1;
         }
         else if (this.type == 'bundle') {
+            this.disable = data.disable;
             this.bundlePrice += data * 1;
             this.dynemicDisplayPrice += data * 1;
         }
         else {
-            this.bundlePrice += data * 1;
-            this.dynemicDisplayPrice += data * 1;
+            if (data) {
+                this.bundlePrice += data * 1;
+                this.dynemicDisplayPrice += data * 1;
+            }
         }
         this.final_price = this.bundlePrice;
         this.display_price = this.dynemicDisplayPrice;
     }
 
     customData(customData) {
+
         this.customPrice = this.bundlePrice * 1;
         this.customDisplayPrice = this.refDisplayPrice * 1;
         //        this.disable = customData.disable;

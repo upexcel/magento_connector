@@ -16,14 +16,11 @@ export class GroupService {
         //            data: other,
         //            subdata: []
         //        };
-        console.log(other);
         let keyDataCheck: boolean = false;
         var subData = [];
         let count=0;
         return this._local.get('CartData').then((localData: any) => {
-            console.log('group services', localData);
             forEach(other.options, function(value, key) {
-                console.log(value);
                 if (value != 0) {
                     forEach(data.body.group_associated_products, function(value1, key1) {
                        
@@ -34,10 +31,8 @@ export class GroupService {
                                     if (value1.product_id == value2.product_id && value2.type == "grouped") {
                                         value2.quantity++
                                         keyDataCheck = true && keyDataCheck;
-                                        console.log(keyDataCheck);
                                     } else {
                                         keyDataCheck = false && keyDataCheck;
-                                        console.log(keyDataCheck);
                                     }
                                 });
                                
@@ -53,7 +48,6 @@ export class GroupService {
             });
 
 
-            console.log(localData);
 
             return new Promise(function(resolve, reject) {
                 if (localData) {

@@ -51,9 +51,12 @@
 }
 .line{
     text-decoration: line-through;
-    font-size: 11px;
+    font-size: 13px;
     color: gray;
     margin-left: 5px;
+}
+.green{
+    color: green;
 }
 table {
     border-collapse: collapse !important;
@@ -155,9 +158,9 @@ ion-input.uppercase input{
 .marTop80{
     margin-top: 60px;
 }
-.alignright{
+/*.alignright{
     text-align: center;
-}
+}*/
 .marTop10{
     margin-top: 10px;
 }
@@ -268,3 +271,13 @@ header .toolbar-ios{
 ::-webkit-scrollbar { 
     display: none; 
 }
+
+/*144 server*/
+ion-app {
+    width: 420px !important;
+    position: relative !important;
+    margin: 0px auto !important; }
+
+
+body {
+    background-color: #ccc !important; }

@@ -37,12 +37,11 @@
                         <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{this.productData.body.data.currency_sign}} {{final_price | number}}</span>
                     </ion-col>
                 </ion-row>
-                <ion-row wrap *ngIf="productData.body.data.type!='grouped'">
-
-                         <ion-col width-50 *ngFor="let key of keys">
-                         <ion-item class="selectlist">
-                            <ion-label no-margin class="capitalize">{{productData.body.associated_products.attributes[key].label}}</ion-label>
-                            <ion-label no-margin class="font12" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
+                <ion-row  *ngFor="let key of keys">
+                    <ion-col *ngIf="productData.body.associated_products">
+                        <ion-item class="selectlist">
+                            <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                            <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
                                 <ion-buttons class="alignright">
                                     <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                 </ion-buttons>
@@ -62,7 +61,7 @@
 
                 <!--for bundle product-->
                 <bundle [bundle]="productData.body" (onChangeData)=bundleData($event) (onChange)=bundle($event)></bundle>
-                <!--for downloadable product-->
+                <!--                for downloadable product-->
                 <download  [data]="productData" (onChange)="calcultateData($event)"></download>
                 <!--for custom product-->
                 <custom  [data]="productData" (onChange)="customData($event)"></custom>
@@ -83,16 +82,18 @@
                 <ion-list *ngIf="additionalInformationData.length > 0 ">
                     <h4 class="padLeft20 capitalize">Additional Information</h4>
                     <ion-item *ngFor="let info of additionalInformationData">
-                        <span class="additionalInformation capitalize">{{info.key}} : </span> <span>{{info.value}} </span>
+                        <ion-row>
+                            <ion-col width-20> <span class="additionalInformation capitalize">{{info.key}} : </span> </ion-col>
+                            <ion-col width-80><span class='additionalInfo'>{{info.value}} </span></ion-col>
+                        </ion-row>
                     </ion-item>
                 </ion-list>
 
                 <product-review [skuData]="data.sku"> loading..</product-review>               
             </ion-col>
-
         </ion-row>
     </ion-grid>
 </ion-content>
 <ion-footer class="uppercase ">
-    <btn-full  [titleFull]='"ADD CART"'  [id]="'btn'"  [classFull]="'botton'" (onBtnClick)="addCart(productData.body)"></btn-full>
+    <btn-full  [titleFull]='"ADD CART"'  [id]="'btn'"  [classFull]="'botton'" [validFull]="disable" (onBtnClick)="addCart(productData.body)"></btn-full>
 </ion-footer>

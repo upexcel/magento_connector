@@ -47,7 +47,7 @@ export class AccountPopoverPage {
         this._appConfigService.getUserData().then((userData: any) => {
             this.secret = userData.secret;
         });
-        if (this._navParams.data) {
+        if(this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
         }

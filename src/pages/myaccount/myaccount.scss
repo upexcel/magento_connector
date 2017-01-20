@@ -11,15 +11,18 @@
         position: fixed;
         margin: 0;
     }
+    .back-button {
+        display: block;
+    }
     ion-card{
         padding-bottom: 20px;
     }
-.paddRt{
-    padding-right: 5px !important;
-}
-.saveAddress {
-  position:fixed;
-  bottom:0px;
-}
+    .paddRt{
+        padding-right: 5px !important;
+    }
+    .saveAddress {
+        position:fixed;
+        bottom:0px;
+    }
 }
 

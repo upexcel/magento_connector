@@ -1,4 +1,4 @@
-<header [title]='title'></header>
+<header class="myaccount" [title]='title'></header>
 <ion-content class="myaccount">
     <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="spin==false">
@@ -47,11 +47,11 @@
             </ion-item>
             <ion-item class="no-padding" no-lines>
             <ion-label class="font13">Make it your default billing Address</ion-label>
-            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+            <ion-checkbox color="dark" formControlName="default_billing" checked="false"></ion-checkbox>
             </ion-item>
             <ion-item class="no-padding" no-lines>
             <ion-label class="font13">Make it your default shipping Address</ion-label>
-            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+            <ion-checkbox color="dark" formControlName="default_shipping" checked="false"></ion-checkbox>
             </ion-item>
         </ion-list>
         <div class="center">
