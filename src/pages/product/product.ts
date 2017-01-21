@@ -185,7 +185,7 @@ export class ProductPage implements OnInit {
         //        mapping between select list
 
         forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
-            if (key != key1) {
+//            if (key != key1) {
                 forEach(res1.options, function(res2) {
                     if (res111 != undefined) {
                         res2.shown = false;
@@ -200,17 +200,17 @@ export class ProductPage implements OnInit {
                         })
                     }
                 })
-            } else {
+//            } else {
                 forEach(res1.options, function(res2) {
-                    res2.shown = true;
+//                    res2.shown = true;
                 });
-            }
+//            }
         })
         //change color of icon when its type is color
         this.selectshow = false;
         let myDiv = document.getElementById('color');
         if (res[key] != undefined) {
-            myDiv.style.color = res[key].label;
+            myDiv.style.color = ((res[key].label).trim()).replace(" ", "");;
         }
         //disable button when select list is not checked
         if (typeof res != "undefined") {

@@ -2,7 +2,6 @@ import { Component, Attribute, Input, Output, EventEmitter, OnInit } from '@angu
 import forEach from 'lodash/forEach';
 import pull from 'lodash/pull';
 import merge from 'lodash/merge';
-import keys from 'lodash/keys';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -58,8 +57,12 @@ export class CustomOption {
     checkHidden: boolean = true;
     keys: any = [];
     validate: FormGroup;
+    curYear: any;
+    
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
+        var dateObj = new Date();
+        this.curYear = dateObj.getFullYear();
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.custom_option = this.data.body.data.product_custom_option;
@@ -98,18 +101,33 @@ export class CustomOption {
             }
         })
     }
-
     text(opt) {
-        this.textPrice = { "price": opt.price };
-        if (this.textData != "") {
+        var val;
+        forEach(this.textData, function(value) {
+            val = value;
+        })
+        if (val.length > 0) {
+            this.textPrice = { "price": opt.price };
             this.textSubdata = { "field": opt };
+        }
+        else {
+            this.textPrice = { "price": 0 };
+            this.textSubdata = { "area": "" };
         }
         this.bundleJson();
     }
     textArea(opt) {
-        this.textAreaPrice = { "price": opt.price };
-        if (this.textarea != "") {
+        var val;
+        forEach(this.textarea, function(value) {
+            val = value;
+        })
+        if (val.length > 0) {
+            this.textAreaPrice = { "price": opt.price };
             this.textAreaSubdata = { "area": opt };
+        }
+        else {
+            this.textAreaPrice = { "price": 0 };
+            this.textAreaSubdata = { "area": "" };
         }
         this.bundleJson();
     }
@@ -153,8 +171,8 @@ export class CustomOption {
         let json: any = [];
         let option_id;
         this.multiObj = {};
-        let dataRecord:any=[];
-        let subRecord:any=[];
+        let dataRecord: any = [];
+        let subRecord: any = [];
         let multiPrice: any = [];
         forEach(this.selectMulti, function(value) {
             forEach(value, function(data: any, key1) {
@@ -169,9 +187,9 @@ export class CustomOption {
                 self.multiPrice.push(multiPrice);
                 self.multiObj[option_id] = json;
                 dataRecord.push(subRecord);
-                json=[];
-                multiPrice=[];
-                subRecord=[];
+                json = [];
+                multiPrice = [];
+                subRecord = [];
             }
         })
         let multi = { "multiple": dataRecord };
@@ -205,6 +223,8 @@ export class CustomOption {
     file(event, opt) {
         let self = this;
         let fileArray: any = [];
+        console.log("event", event);
+        console.log("opt", opt);
         forEach(this.jsonFileData, function(value) {
             if (value.option_id == opt.option_id) {
                 value.option_url = event.srcElement.files[0].name;
@@ -276,10 +296,20 @@ export class CustomOption {
     }
     checkVisiblety(name) {
         if (name == "radio") {
-            this.radioHidden = false;
+            if (this.radioHidden) {
+                this.radioHidden = false;
+            }
+            else {
+                this.radioHidden = true;
+            }
         }
         else {
-            this.checkHidden = false;
+            if (this.checkHidden) {
+                this.checkHidden = false;
+            }
+            else {
+                this.checkHidden = true;
+            }
         }
     }
     bundleJson() {
@@ -318,9 +348,11 @@ export class CustomOption {
         });
         forEach(this.jsonFileData, function(value: any) {
             if (value != undefined) {
+                console.log("file uplode", value.option_Price * 1)
                 total += (value.option_Price * 1);
             }
         });
+        console.log("total", total)
         jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
         jsonData = { "dynemicPrice": total, "custom": jsonData, "sudata": subdata }

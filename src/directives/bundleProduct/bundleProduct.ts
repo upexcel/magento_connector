@@ -73,7 +73,7 @@ export class BundleProduct {
         })
         this.calculateTotal();
         if (bundleMulti[0]) {
-            this.obj.multiselect=dataSubMulti;
+            this.obj.multiselect = dataSubMulti;
             this.onClick(this.obj);
         }
 
@@ -140,10 +140,20 @@ export class BundleProduct {
     }
     checkVisiblety(name) {
         if (name == "radio") {
-            this.radioHidden = false;
+            if (this.radioHidden) {
+                this.radioHidden = false;
+            }
+            else {
+                this.radioHidden = true;
+            }
         }
         else {
-            this.checkHidden = false;
+            if (this.checkHidden) {
+                this.checkHidden = false;
+            }
+            else {
+                this.checkHidden = true;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 <div *ngFor="let customOption of custom_option ; let i=index">
     <div *ngIf="customOption.type=='field'">
-	
+
         <ion-item  *ngFor="let opt of customOption.option_type">
             <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
             <ion-input type="text" value="opt" [(ngModel)]="textData[opt.option_id]" (keyup.enter)="text(opt)"  (blur)="text(opt)"></ion-input>
@@ -12,9 +12,13 @@
             <ion-textarea value="opt" [(ngModel)]="textarea[opt.option_id]" (blur)="textArea(opt)"></ion-textarea> 
         </ion-item>
     </div>
+
+
+
     <div  *ngIf="customOption.type == 'file'">
         <div *ngFor="let opt of customOption.option_type" >
-            <input type="file" class="padd20" [(ngModel)]="fileData[opt.option_type_id]" (change)="file($event ,opt)" value="opt">
+            <!--<input type="file" class="padd20" [(ngModel)]="fileData[opt.option_type_id]" (change)="file($event ,opt)" value="opt">-->
+             <input type="file" (change)="onChangeFile($event)"/>
             <label>{{opt.default_title}} <span color="danger">*</span></label>
         </div>
     </div>
@@ -55,7 +59,7 @@
     <ion-list class="no-margin" *ngIf="customOption.type=='date_time'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
-            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="2016"  [(ngModel)]="month" (ionChange)="calenderChanged()"></ion-datetime>
+            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="month" (ionChange)="calenderChanged()"></ion-datetime>
         </ion-item>
     </ion-list>
     <ion-list  *ngIf="customOption.type=='time'">
@@ -69,7 +73,7 @@
     <ion-list *ngIf="customOption.type=='date'">
         <ion-item>
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
-            <ion-datetime  displayFormat="MMM DD YYYY" min="2016" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
+            <ion-datetime  displayFormat="MMM DD YYYY" min="{{curYear}}" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
         </ion-item>
     </ion-list>
 </div>
