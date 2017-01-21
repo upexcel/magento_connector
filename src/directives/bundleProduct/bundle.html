@@ -1,5 +1,5 @@
-<div *ngFor="let b_test1 of bundle.bundle_items ; let i = index">
-    <ion-list class="no-margin"  *ngIf="b_test1.type=='multi'">
+<div class="custom-options" *ngFor="let b_test1 of bundle.bundle_items ; let i = index">
+    <ion-list   *ngIf="b_test1.type=='multi'">
         <ion-item>
             <ion-label>{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleMulti[i]" (ngModelChange)="onChangeBundleMulti(bundleMulti )" multiple="true">
@@ -7,7 +7,7 @@
             </ion-select>
         </ion-item>
     </ion-list>
-    <ion-list class="no-margin"  *ngIf="b_test1.type=='select'">
+    <ion-list   *ngIf="b_test1.type=='select'">
         <ion-item>
             <ion-label>{{b_test1.title}}</ion-label>
             <ion-select [(ngModel)]="bundleSelect[i]" (ngModelChange)="onChangeBundleSelect(bundleSelect)">
@@ -15,7 +15,7 @@
             </ion-select>
         </ion-item>
     </ion-list>     
-    <ion-list no-margin class="no-margin"  radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio()" *ngIf="b_test1.type=='radio'">
+    <ion-list   radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio()" *ngIf="b_test1.type=='radio'">
               <ion-list-header  (click)="checkVisiblety('radio')" >
             <span class="capitalize"> {{b_test1.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
@@ -24,7 +24,7 @@
             <ion-radio class="marRigth0"[value]="selection" ></ion-radio>
         </ion-item>
     </ion-list>
-    <ion-list class="no-margin"  *ngIf="b_test1.type=='checkbox'">
+    <ion-list   *ngIf="b_test1.type=='checkbox'">
         <ion-list-header (click)="checkVisiblety('check')" class="no-margin paddLef15">
             <span class="capitalize">  {{b_test1.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight paddRight5 " name="arrow-dropdown"></ion-icon>
 

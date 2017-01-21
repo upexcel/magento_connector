@@ -256,9 +256,16 @@
 .no-bottom-border{
     border-bottom: 0px!important;
 }
+.custom-options ion-list{
+    border-bottom: 1px solid #dedede;
+    margin: 0px;
+}
 .custom-options .list-md > .item-block:last-child, .list-md > .item-wrapper:last-child .item-block{
-    border-bottom: 0px;
+    border: 0px;
 }
 .custom-options .list-header-md, .list-md ion-item-divider{
-    border-bottom: 0px;
+    border: 0px;
+}
+.custom-options .list-md > .item-block:first-child, .list-md > .item-wrapper:first-child .item-block{
+    border: 0px;
 }
