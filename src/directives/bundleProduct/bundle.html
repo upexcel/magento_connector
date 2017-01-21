@@ -15,7 +15,7 @@
             </ion-select>
         </ion-item>
     </ion-list>     
-    <ion-list no-margin  radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio()" *ngIf="b_test1.type=='radio'">
+    <ion-list no-margin class="no-margin"  radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio()" *ngIf="b_test1.type=='radio'">
               <ion-list-header  (click)="checkVisiblety('radio')" >
             <span class="capitalize"> {{b_test1.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
