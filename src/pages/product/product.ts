@@ -162,17 +162,19 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-    onChangeConfigurableAttribute(res, key) {
+    onChangeConfigurableAttribute(configurableSelectedObject, key) {
         let count = 0;
         var total = 0;
         let self = this;
+        var flag = 0;
         this.configPrice = [];
         //take current selected item
-        let res111 = res[key];
+        let currentSelectedItem = configurableSelectedObject[key];
         //cloneing for use checked list in add cart function
-        this.selectedList = clone(res);
+        this.selectedList = clone(configurableSelectedObject);
         // get effected price
-        forEach(res, function(takePrice) {
+        forEach(configurableSelectedObject, function(takePrice) {
+            ++flag;
             if (takePrice != undefined) {
                 self.configPrice.push({ price: takePrice.price });
             }
@@ -184,37 +186,39 @@ export class ProductPage implements OnInit {
         this.calcultateData(total);
         //        mapping between select list
 
-        forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
-//            if (key != key1) {
-                forEach(res1.options, function(res2) {
-                    if (res111 != undefined) {
-                        res2.shown = false;
-                        forEach(res111.products, function(res4) {
-                            if (res2.products != undefined && res4 != undefined) {
-                                forEach(res2.products, function(res3) {
-                                    if (res4 == res3) {
-                                        res2.shown = true;
+        forEach(this.productData.body.associated_products.attributes, function(allConfigData, allConfigKey) {
+            if (key != allConfigKey) {
+                forEach(allConfigData.options, function(allConfigValue) {
+                    if (currentSelectedItem != undefined) {
+                            allConfigValue.shown = false;
+                        forEach(currentSelectedItem.products, function(currentConfigProductsVal) {
+                            if (allConfigValue.products != undefined && currentConfigProductsVal != undefined) {
+                                forEach(allConfigValue.products, function(allConfigProductsVal) {
+                                    if (currentConfigProductsVal == allConfigProductsVal) {
+                                        allConfigValue.shown = true;
                                     }
                                 })
                             }
                         })
                     }
                 })
-//            } else {
-                forEach(res1.options, function(res2) {
-//                    res2.shown = true;
+            } else {
+                forEach(allConfigData.options, function(allConfigValue) {
+                    if(flag == 1) {
+                        allConfigValue.shown = true;
+                    }
                 });
-//            }
+            }
         })
         //change color of icon when its type is color
         this.selectshow = false;
         let myDiv = document.getElementById('color');
-        if (res[key] != undefined) {
-            myDiv.style.color = ((res[key].label).trim()).replace(" ", "");;
+        if (configurableSelectedObject[key] != undefined) {
+            myDiv.style.color = ((configurableSelectedObject[key].label).trim()).replace(" ", "");;
         }
         //disable button when select list is not checked
-        if (typeof res != "undefined") {
-            forEach(res, function(value) {
+        if (typeof configurableSelectedObject != "undefined") {
+            forEach(configurableSelectedObject, function(value) {
                 count++;
             });
             if (this.keys.length == count) {
@@ -225,6 +229,7 @@ export class ProductPage implements OnInit {
         }
         this.genrateData();
     }
+    
     slideClick(img: string) {
         this.images = img;
     }
