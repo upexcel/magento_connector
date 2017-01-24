@@ -24,7 +24,8 @@ export class productDataType {
             "additional_information"?: {},
             "in_stock": string,
             "final_price" : number,
-            "currency_sign":string
+            "currency_sign":string,
+            "product_custom_option"?:any
         };
 
         "associated_products"?: {

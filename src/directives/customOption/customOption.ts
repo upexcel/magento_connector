@@ -58,15 +58,19 @@ export class CustomOption {
     keys: any = [];
     validate: FormGroup;
     curYear: any;
-    
+    validateArray: any = [];
+
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
         this.curYear = dateObj.getFullYear();
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
+        this.validateArray = [];
         this.custom_option = this.data.body.data.product_custom_option;
-        forEach(this.custom_option, function(value, key) {
+        forEach(this.custom_option, (value, key) => {
+            value.id = key;
+            this.validateArray.push({ "id": value.id, "validate": true });
             forEach(value.option_type, function(data, id) {
                 data.disable = false;
             })
@@ -101,50 +105,55 @@ export class CustomOption {
             }
         })
     }
-    text(opt) {
+    text(opt, formId) {
         var val;
         forEach(this.textData, function(value) {
             val = value;
         })
         if (val.length > 0) {
+            this.formValidate(formId, false);
+            this.validateArray.iid
             this.textPrice = { "price": opt.price };
             this.textSubdata = { "field": opt };
         }
         else {
+            this.formValidate(formId, true);
             this.textPrice = { "price": 0 };
             this.textSubdata = { "area": "" };
         }
         this.bundleJson();
     }
-    textArea(opt) {
+    textArea(opt, formId) {
         var val;
         forEach(this.textarea, function(value) {
             val = value;
         })
         if (val.length > 0) {
+            this.formValidate(formId, false);
             this.textAreaPrice = { "price": opt.price };
             this.textAreaSubdata = { "area": opt };
         }
         else {
+            this.formValidate(formId, true);
             this.textAreaPrice = { "price": 0 };
             this.textAreaSubdata = { "area": "" };
         }
         this.bundleJson();
     }
-    onChangeSelect(data) {
+    onChangeSelect(data, formId) {
         this.selectPrice = [];
         let option_id;
-        let self = this;
         let json: any = [];
         this.selectObj = {};
         let disable = false;
         let value: any = [];
-        forEach(data, function(data: any, key1) {
+        forEach(data, (data: any, key1) => {
             if (data) {
                 data.disable = true;
                 disable = data.disable;
                 value.push(data);
-                self.selectPrice.push({ "price": data.price, "disable": disable });
+                this.selectPrice.push({ "price": data.price, "disable": disable });
+                this.formValidate(formId, false);
                 option_id = data.option_id;
                 json.push(data.option_type_id);
             }
@@ -155,17 +164,18 @@ export class CustomOption {
         this.bundleJson();
 
     }
-    onChangeRadio(data) {
+    onChangeRadio(formId) {
         this.Radioobj = {};
         let radio: any;
-        this.radioPrice = { "price": this.radio.price, "disable": true };
+        this.formValidate(formId, false);
+        this.radioPrice = { "price": this.radio.price };
         this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
         radio = { "radio": this.radio }
         this.radioSubdata = radio;
         this.bundleJson();
 
     }
-    onChangeMulti(data) {
+    onChangeMulti(data, formId, i) {
         this.multiPrice = [];
         let self = this;
         let json: any = [];
@@ -174,6 +184,12 @@ export class CustomOption {
         let dataRecord: any = [];
         let subRecord: any = [];
         let multiPrice: any = [];
+        if (data[i].length > 0) {
+            this.formValidate(formId, false);
+        }
+        else {
+            this.formValidate(formId, true);
+        }
         forEach(this.selectMulti, function(value) {
             forEach(value, function(data: any, key1) {
                 if (data) {
@@ -192,11 +208,12 @@ export class CustomOption {
                 subRecord = [];
             }
         })
+        forEach(dataRecord)
         let multi = { "multiple": dataRecord };
         this.multiSubdata = multi;
         this.bundleJson();
     }
-    onChangeCheck(data, event) {
+    onChangeCheck(data, event, formId) {
         let self = this;
         let json: any = [];
         let option_id;
@@ -207,6 +224,11 @@ export class CustomOption {
         }
         else {
             this.checkData = pull(this.checkData, data);
+        }
+        if (this.checkData.length > 0) {
+            this.formValidate(formId, false);
+        } else {
+            this.formValidate(formId, true);
         }
         forEach(this.checkData, function(data: any, key1) {
             if (data) {
@@ -220,11 +242,10 @@ export class CustomOption {
         this.checkSubData = ckeckBox;
         this.bundleJson();
     }
-    file(event, opt) {
+    file(event, opt, formId) {
         let self = this;
         let fileArray: any = [];
-        console.log("event", event);
-        console.log("opt", opt);
+        this.formValidate(formId, false);
         forEach(this.jsonFileData, function(value) {
             if (value.option_id == opt.option_id) {
                 value.option_url = event.srcElement.files[0].name;
@@ -241,11 +262,12 @@ export class CustomOption {
         self.fileSubData = json;
         this.bundleJson();
     }
-    timeChanged() {
+    timeChanged(formId) {
         let array = [];
         let time = {};
         let day_part;
         let hour = 0;
+        this.formValidate(formId, false);
         this.timePrice = { "price": this.jsonTimeData.option_Price };
         array = this.time.split(':');
         if (array[0] * 1 > 12) {
@@ -264,7 +286,8 @@ export class CustomOption {
         this.timeJson[this.jsonTimeData.option_id] = time;
         this.bundleJson();
     }
-    dateChanged() {
+    dateChanged(formId) {
+        this.formValidate(formId, false);
         var dateObj = new Date(this.dateData);
         var day = dateObj.getDate();
         var months = dateObj.getMonth();
@@ -278,13 +301,14 @@ export class CustomOption {
         this.dateJson[this.jsonDateData.option_id] = dateJson;
         this.bundleJson();
     }
-    calenderChanged() {
+    calenderChanged(formId) {
         var dateObj = new Date(this.month);
         var day = dateObj.getDate();
         var months = dateObj.getMonth();
         var year = dateObj.getFullYear();
         var min = dateObj.getUTCMinutes();
         var hours = dateObj.getUTCHours();
+        this.formValidate(formId, false);
         this.dateTimePrice = { "price": this.jsonDateTimeData.option_Price };
         var data = {
             "hour": hours,
@@ -312,11 +336,21 @@ export class CustomOption {
             }
         }
     }
+    formValidate(data, flag) {
+        forEach(this.validateArray, (value, key) => {
+            if (value.id == data) {
+                value.validate = flag;
+                return false;
+            }
+        })
+    }
     bundleJson() {
         var total = 0;
         let jsonData = {};
         let subdata = {};
         let self = this;
+        let validateCount = 0;
+        let custonCartDisable = true;
         if (this.textPrice.price != undefined) {
             total += (this.textPrice.price * 1);
         }
@@ -348,14 +382,20 @@ export class CustomOption {
         });
         forEach(this.jsonFileData, function(value: any) {
             if (value != undefined) {
-                console.log("file uplode", value.option_Price * 1)
                 total += (value.option_Price * 1);
             }
         });
-        console.log("total", total)
+        forEach(this.validateArray, (value, key: any) => {
+            if (value.validate == false) {
+                validateCount++;
+            }
+        })
+        if (validateCount == this.validateArray.length) {
+            custonCartDisable = false;
+        }
         jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
-        jsonData = { "dynemicPrice": total, "custom": jsonData, "sudata": subdata }
+        jsonData = { "dynemicPrice": total, "custom": jsonData, "sudata": subdata, "disable": custonCartDisable }
         this.onChange.emit(jsonData);
     }
 }
