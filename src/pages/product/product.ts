@@ -74,7 +74,7 @@ export class ProductPage implements OnInit {
     customPrice: number;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
-    product_custom_option;
+    product_custom_option:any;
     config = true;
     downlodeFormValidate = true;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
@@ -120,7 +120,6 @@ export class ProductPage implements OnInit {
             }
             //getProduct is use to fire product/get api to get product 
             this._getProduct.getProduct(this.data).then((res) => {
-                //                            this._getProduct.getProduct({ sku: "abl008", access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYWdlbnRvIiwiYXVkIjoiY29tLnRldGhyIiwiaWF0IjoxNDgxMTA2NjAwLCJuYmYiOiIyMDE2LTEyLTE0IDEwOjMwOjAwIn0.QZXWtectrWjL_et3aQFmWMRkWm1kEjN6lPtrZoHrF-o" }).then((res) => {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
@@ -160,7 +159,7 @@ export class ProductPage implements OnInit {
                     if (this.productData.body.associated_products) {
                         this.keys = keys(this.productData.body.associated_products.attributes);
                     }
-                    if (this.product_custom_option.length > 0) {
+                    if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                         this.customFormValidate = true;
                         this.customDisable = true;
                         this.disable = true;
