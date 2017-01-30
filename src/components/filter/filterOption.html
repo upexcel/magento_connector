@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Filter by
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                    <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item *ngFor="let opt of option ">
+        <ion-label>{{opt.value.filter_name}}</ion-label>
+            <ion-checkbox color="dark" value="opt" [(ngModel)]="check[opt.key]" (ngModelChange)="onChangeCheck(opt.value.filter_name,opt.key,$event)"></ion-checkbox>
+    </ion-item>
+</ion-content>
+<ion-footer>
+    <btn-full  [titleFull]='"Done"'  [id]="'btn'"  [classFull]="'botton'"  (onBtnClick)="done()"></btn-full>
+</ion-footer>

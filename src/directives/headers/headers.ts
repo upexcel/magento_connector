@@ -15,11 +15,14 @@ export class Headers implements AfterContentInit {
     @Input() type: boolean;
     @Input() title: string = '';
     @Input() loading: boolean;
+    @Input() view: boolean=false;
     @Input() pagename: string = '';
+    @Input() menu: boolean = false;
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
     show: boolean = true;
+    viewChang: string = "Landscape";
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
@@ -39,6 +42,15 @@ export class Headers implements AfterContentInit {
             this.show = false;
         }
 
+    }
+    changeView(view) {
+        if (view == "portrait") {
+            this.viewChang = "Landscape";
+        }
+        else {
+            this.viewChang = "portrait";
+        }
+        this._events.publish('view:created', this.viewChang);
     }
     openMenu() {
         this._menuCtrl.toggle();

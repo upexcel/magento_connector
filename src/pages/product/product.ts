@@ -51,6 +51,7 @@ export class ProductPage implements OnInit {
     data: any;
     reviewData = [];
     error: boolean = false;
+    customFormValidate: boolean = false;
     id: string;
     show_add_to_cart: any;// use to show offer
     userEmail: any;
@@ -58,6 +59,7 @@ export class ProductPage implements OnInit {
     qty: number = 1;
     productid: string;
     additionalInformationData: any = [];
+    customDisable: boolean = false;
     //gather data for send in add cart servive
     sku: string;
     img: string;
@@ -72,6 +74,9 @@ export class ProductPage implements OnInit {
     customPrice: number;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
+    product_custom_option;
+    config = true;
+    downlodeFormValidate = true;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -134,6 +139,7 @@ export class ProductPage implements OnInit {
                     this.name = this.productData.body.data.name;
                     this.type = this.productData.body.data.type;
                     let additionalInformation = this.productData.body.data.additional_information;
+                    this.product_custom_option = this.productData.body.data.product_custom_option;
                     //get additional_information if exit
                     if (additionalInformation != undefined) {
                         forEach(additionalInformation, function(value, key) {
@@ -154,6 +160,11 @@ export class ProductPage implements OnInit {
                     if (this.productData.body.associated_products) {
                         this.keys = keys(this.productData.body.associated_products.attributes);
                     }
+                    if (this.product_custom_option.length > 0) {
+                        this.customFormValidate = true;
+                        this.customDisable = true;
+                        this.disable = true;
+                    }
                     this.genrateData();
                 }
             }).catch((err) => {
@@ -162,17 +173,19 @@ export class ProductPage implements OnInit {
         }).catch((err) => {
         })
     }
-    onChangeConfigurableAttribute(res, key) {
+    onChangeConfigurableAttribute(configurableSelectedObject, key) {
         let count = 0;
         var total = 0;
         let self = this;
+        var flag = 0;
         this.configPrice = [];
         //take current selected item
-        let res111 = res[key];
+        let currentSelectedItem = configurableSelectedObject[key];
         //cloneing for use checked list in add cart function
-        this.selectedList = clone(res);
+        this.selectedList = clone(configurableSelectedObject);
         // get effected price
-        forEach(res, function(takePrice) {
+        forEach(configurableSelectedObject, function(takePrice) {
+            ++flag;
             if (takePrice != undefined) {
                 self.configPrice.push({ price: takePrice.price });
             }
@@ -184,47 +197,56 @@ export class ProductPage implements OnInit {
         this.calcultateData(total);
         //        mapping between select list
 
-        forEach(this.productData.body.associated_products.attributes, function(res1, key1) {
-//            if (key != key1) {
-                forEach(res1.options, function(res2) {
-                    if (res111 != undefined) {
-                        res2.shown = false;
-                        forEach(res111.products, function(res4) {
-                            if (res2.products != undefined && res4 != undefined) {
-                                forEach(res2.products, function(res3) {
-                                    if (res4 == res3) {
-                                        res2.shown = true;
+        forEach(this.productData.body.associated_products.attributes, function(allConfigData, allConfigKey) {
+            if (key != allConfigKey) {
+                forEach(allConfigData.options, function(allConfigValue) {
+                    if (currentSelectedItem != undefined) {
+                        allConfigValue.shown = false;
+                        forEach(currentSelectedItem.products, function(currentConfigProductsVal) {
+                            if (allConfigValue.products != undefined && currentConfigProductsVal != undefined) {
+                                forEach(allConfigValue.products, function(allConfigProductsVal) {
+                                    if (currentConfigProductsVal == allConfigProductsVal) {
+                                        allConfigValue.shown = true;
                                     }
                                 })
                             }
                         })
                     }
                 })
-//            } else {
-                forEach(res1.options, function(res2) {
-//                    res2.shown = true;
+            } else {
+                forEach(allConfigData.options, function(allConfigValue) {
+                    if (flag == 1) {
+                        allConfigValue.shown = true;
+                    }
                 });
-//            }
+            }
         })
         //change color of icon when its type is color
         this.selectshow = false;
         let myDiv = document.getElementById('color');
-        if (res[key] != undefined) {
-            myDiv.style.color = ((res[key].label).trim()).replace(" ", "");;
+        if (configurableSelectedObject[key] != undefined) {
+            myDiv.style.color = ((configurableSelectedObject[key].label).trim()).replace(" ", "");;
         }
         //disable button when select list is not checked
-        if (typeof res != "undefined") {
-            forEach(res, function(value) {
+        if (typeof configurableSelectedObject != "undefined") {
+            forEach(configurableSelectedObject, function(value) {
                 count++;
             });
             if (this.keys.length == count) {
-                this.disable = false;
+                if (this.customDisable == false) {
+                    this.disable = false;
+                }
+                this.config = false;
             } else {
-                this.disable = true;
+                if (this.customDisable == false) {
+                    this.disable = true;
+                }
+                this.config = true;
             }
         }
         this.genrateData();
     }
+
     slideClick(img: string) {
         this.images = img;
     }
@@ -263,6 +285,7 @@ export class ProductPage implements OnInit {
     }
     bundleData(obj) {
         this.bData = obj;
+        this.disable = obj.disable
     }
     addCart(response) {
         let array: any = {};
@@ -363,9 +386,22 @@ export class ProductPage implements OnInit {
             this.bundlePrice = this.refPrice * 1;
         }
         this.dynemicDisplayPrice = this.refDisplayPrice * 1;
+        this.customFormValidate = data.disable;
         if (this.type != 'configurable' && this.type != 'bundle') {
+            if (this.type == 'downloadable') {
+                if (data.disable == false && this.customDisable == false) {
+                    this.disable = false;
+                    this.downlodeFormValidate = data.disable;
+                }
+                else {
+                    this.disable = true;
+                    this.downlodeFormValidate = data.disable;
+                }
+            }
+            else {
+                this.disable = data.disable;
+            }
             data = merge(data, this.other, this.path);
-            this.disable = data.disable;
             this.bundlePrice += data.dynemicPrice * 1;
             this.dynemicDisplayPrice += data.dynemicPrice * 1;
         }
@@ -385,10 +421,32 @@ export class ProductPage implements OnInit {
     }
 
     customData(customData) {
-
         this.customPrice = this.bundlePrice * 1;
         this.customDisplayPrice = this.refDisplayPrice * 1;
         //        this.disable = customData.disable;
+        this.customDisable = customData.disable;
+        if (this.type == 'configurable') {
+            if (this.config == false && customData.disable == false) {
+                this.disable = false;
+            }
+            else {
+                this.disable = true;
+            }
+        } else if (this.type == 'downloadable') {
+            if (this.downlodeFormValidate == false && customData.disable == false) {
+
+                this.disable = false;
+            }
+            else {
+                this.disable = true;
+            }
+        } else if (this.type == 'simple' || this.type == 'virtual') {
+            this.disable = customData.disable;
+        }
+        else {
+            this.disable = true;
+        }
+
         this.customPrice += customData.dynemicPrice * 1;
         this.customDisplayPrice += customData.dynemicPrice * 1;
         //        this.display_price = this.;

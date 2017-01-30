@@ -1,17 +1,19 @@
 .home1 {
-    margin-top: 56px;
     .mgLeft50{
         margin-left: 50%;
     }
-}
-    .apiSpinner{
-        display: block;
-        margin: 0 auto;
-        position: fixed;
-        top: 45%;
-        left: 45%;
+    .scroll-content{
+        margin-bottom: 50px;
     }
-    //for 144 server
+}
+.apiSpinner{
+    display: block;
+    margin: 0 auto;
+    position: fixed;
+    top: 45%;
+    left: 45%;
+}
+//for 144 server
 /*        .apiSpinner{
         display: block;
         margin: 0 auto;

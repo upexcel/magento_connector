@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Filter by
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                    <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list-header>
+        Price
+    </ion-list-header>
+    <div class="padding">
+        <div><span >Min</span><span class="floatRight ">Max</span></div>
+        <div><span  *ngIf="dualValue2">{{dualValue2.lower}} </span> <span *ngIf="dualValue2" class="floatRight"> {{dualValue2.upper}}</span></div>
+    </div>
+    <ion-list>
+        <ion-item>
+            <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="100" (ngModelChange)="range()"></ion-range>
+        </ion-item>        
+    </ion-list>
+    <ion-list *ngFor="let response of res">
+        <a ion-item (click)="openModal(response.filter_title)">
+       {{response.filter_title}}
+       <p *ngIf='data && data.title == response.filter_title'> <span *ngFor="let sectedData of checkedData">  {{sectedData.value}}, </span>    
+            </p>
+        </a>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <btn-full  [titleFull]='"Apply"'  [id]="'btn'"  [classFull]="'botton'"  (onBtnClick)="apply()"></btn-full>
+</ion-footer>

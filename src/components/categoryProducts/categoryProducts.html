@@ -1,4 +1,4 @@
-<ion-grid  *ngIf="product">
+<ion-grid  *ngIf="product" [ngClass]="{'portrait': displayMode == 'Portrait', 'landscape': displayMode == 'Landscape'}" >
     <div class="card1">   
         <div class="rowForLandscape" wrap>
             <div class="column cursorPointer"  *ngFor="let feat_prod of product" (click)="gotoProduct(feat_prod.data.sku)">

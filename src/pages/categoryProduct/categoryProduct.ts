@@ -4,7 +4,6 @@ import { PopoverPage } from './../../components/popover/popover';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
 import { CategoryProductDataType } from './../../model/categoryProduct/categoryProductData';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-
 import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 @Component({
@@ -20,7 +19,7 @@ export class CategoryProductPage implements OnInit {
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
-    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor( private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
@@ -36,7 +35,6 @@ export class CategoryProductPage implements OnInit {
         });
         this.show_products(this.product_id, this.page, this.limit);
     }
-
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };
         this._category.getCategoryProduct(body).then((res) => {
@@ -70,7 +68,7 @@ export class CategoryProductPage implements OnInit {
                 }, 100);
             }
             else { }
-        } 
+        }
         else {
             infiniteScroll.complete();
             infiniteScroll.enable(false);

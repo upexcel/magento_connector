@@ -2,21 +2,21 @@
     <ion-list *ngIf="customOption.type=='field'">
         <ion-item  *ngFor="let opt of customOption.option_type">
             <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger">*</span></ion-label>
-            <ion-input type="text" value="opt" [(ngModel)]="textData[opt.option_id]" (keyup.enter)="text(opt)"  (blur)="text(opt)"></ion-input>
+            <ion-input type="text" value="opt" [(ngModel)]="textData[opt.option_id]" (keyup.enter)="text(opt,customOption.id)"  (blur)="text(opt,customOption.id)"></ion-input>
         </ion-item>
     </ion-list>
     
     <ion-list *ngIf="customOption.type=='area'">
         <ion-item   *ngFor="let opt of customOption.option_type">
                    <ion-label class="capitalize" floating >{{opt.default_title}} <span color="danger">*</span></ion-label>
-            <ion-textarea value="opt" [(ngModel)]="textarea[opt.option_id]" (blur)="textArea(opt)"></ion-textarea> 
+            <ion-textarea value="opt" [(ngModel)]="textarea[opt.option_id]" (blur)="textArea(opt,customOption.id)"></ion-textarea> 
         </ion-item>
     </ion-list>
 
     <ion-list *ngIf="customOption.type == 'file'">
         <ion-item *ngFor="let opt of customOption.option_type" >
             <label>{{opt.default_title}} <span color="danger">*</span></label><br>
-            <input type="file" [(ngModel)]="fileData[opt.option_type_id]" (change)="file($event ,opt)" value="opt">
+            <input type="file" [(ngModel)]="fileData[opt.option_type_id]" (change)="file($event ,opt,customOption.id)" value="opt">
              <!--<input type="file" (change)="onChangeFile($event)"/>-->
         </ion-item>
     </ion-list>
@@ -24,7 +24,7 @@
     <ion-list *ngIf="customOption.type=='multiple'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}} <span color="danger">*</span></ion-label>
-            <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti)" multiple="true">
+            <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti,customOption.id,i)" multiple="true">
                 <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} +{{currencySign}}{{opt.default_price | number}}</ion-option>
             </ion-select>
         </ion-item>
@@ -33,13 +33,13 @@
     <ion-list *ngIf="customOption.type=='drop_down'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}} <span color="danger">*</span></ion-label>
-            <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select)">
+            <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select,customOption.id)">
                 <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{currencySign}}{{opt.default_price| number}}</ion-option>
             </ion-select>
         </ion-item>
     </ion-list>
     
-    <ion-list radio-group [(ngModel)]="radio" (ngModelChange)="onChangeRadio()" *ngIf="customOption.type=='radio'">
+    <ion-list radio-group [(ngModel)]="radio" (ngModelChange)="onChangeRadio(customOption.id)" *ngIf="customOption.type=='radio'">
         <ion-list-header (click)="checkVisiblety('radio')">
             <span class="capitalize"> {{customOption.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
@@ -54,7 +54,7 @@
             <span class="capitalize">  {{customOption.title}}</span> <span color="danger">*</span> <ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="checkHidden" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
-            <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event)" ></ion-checkbox>
+            <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[j]" (ngModelChange)="onChangeCheck(opt,$event,customOption.id)" ></ion-checkbox>
             <ion-label class="capitalize">{{opt.default_title}} + {{currencySign}}{{opt.default_price | number}}</ion-label>
         </ion-item>          
     </ion-list>
@@ -62,7 +62,7 @@
     <ion-list  *ngIf="customOption.type=='date_time'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
-            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="month" (ionChange)="calenderChanged()"></ion-datetime>
+            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="month" (ionChange)="calenderChanged(customOption.id)"></ion-datetime>
         </ion-item>
     </ion-list>
     
@@ -70,7 +70,7 @@
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon>
             </ion-label>
-            <ion-datetime displayFormat=" h:mm A" [(ngModel)]="time" (ionChange)="timeChanged()"> </ion-datetime>
+            <ion-datetime displayFormat=" h:mm A" [(ngModel)]="time" (ionChange)="timeChanged(customOption.id)"> </ion-datetime>
             <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-item>
     </ion-list>
@@ -78,7 +78,7 @@
     <ion-list *ngIf="customOption.type=='date'" >
         <ion-item>
             <ion-label class="capitalize">{{customOption.title}}<span color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
-            <ion-datetime  displayFormat="MMM DD YYYY" min="{{curYear}}" [(ngModel)]="dateData" (ionChange)="dateChanged()"></ion-datetime>
+            <ion-datetime  displayFormat="MMM DD YYYY" min="{{curYear}}" [(ngModel)]="dateData" (ionChange)="dateChanged(customOption.id)"></ion-datetime>
         </ion-item>
     </ion-list>
 </div>

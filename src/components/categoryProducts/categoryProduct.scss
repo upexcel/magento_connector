@@ -1,5 +1,6 @@
 category-view{
     /*@media screen and (orientation: portrait) {*/  
+    .portrait{
         img{
             max-height: 90px;
         }
@@ -46,27 +47,28 @@ category-view{
         .padTop6{
             padding-top: 6px;
         }
-    /*}*/
+    }
     /*@media screen and (orientation: landscape) {*/
-/*        img{
+    .landscape{
+        img{
             max-width: 80%;
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-size: cover;
-        }*/
-/*        .iconShow{
+        }
+        .iconShow{
             top: 0;
             position: absolute;
-        }*/
-/*        .card1 {
+        }
+        .card1 {
             margin: 10px 0px 0px 0px ;
             width: 100%; 
             border-radius: 2px;
             font-size: 1.4rem;
             background: #fff;
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0px 0px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0);
-        }*/
-/*        ion-card img {
+        }
+        ion-card img {
             height: 100% !important;
         }
         .imgBox{
@@ -121,16 +123,16 @@ category-view{
         }
         .lineHeight{
             line-height: 1.55;
-        }*/
-        /*@media only screen and (max-width: 600px) {*/
-/*            .column {
+        }
+        @media only screen and (max-width: 600px) {
+            .column {
                 -webkit-flex: 0 0 50%;
                 -ms-flex: 0 0 50%;
                 flex: 0 0 50%;
-            }*/
+            }
 
-        /*}*/
-    /*}*/ 
+        }
+    } 
     .btnStar{
         padding: 0px !important;
         height: auto !important; 
@@ -140,4 +142,8 @@ category-view{
     .fontWidth{
         font-weight: bold;
     }
+}
+.footerCateg{
+    line-height: 3;
+    background: white;
 }
