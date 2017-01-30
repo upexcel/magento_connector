@@ -8,8 +8,8 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
-import {CartPage} from '../pages/cart/cart';
-
+import { CartPage } from '../pages/cart/cart';
+import { DeviceOrientation, CompassHeading } from 'ionic-native';
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `
@@ -22,10 +22,21 @@ export class MyApp implements OnInit {
     constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
+            //            DeviceOrientation.getCurrentHeading().then(
+            //                (data: CompassHeading) => console.log(data),
+            //                (error: any) => console.log(error)
+            //            );
+            //
+            //            // Watch the device compass heading change
+            //            var subscription = DeviceOrientation.watchHeading().subscribe(
+            //                (data: CompassHeading) => console.log(data)
+            //            );
+            //            subscription.unsubscribe();
+
         });
         this.addConnectivityListeners();
-
     }
+
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();

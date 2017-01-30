@@ -1,4 +1,4 @@
-<header [title]='title' [pagename]='pagename'></header>
+<header [title]='title' [pagename]='pagename' [view]="true" [menu]='menu'></header>
 <sidemenu [token]="userToken"></sidemenu>
 <ion-content  class="home">
     <ion-refresher (ionRefresh)="doRefresh($event)">
@@ -19,3 +19,4 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
+<category-footer></category-footer>

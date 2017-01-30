@@ -5,6 +5,8 @@ import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
 import { ToastService } from './../../providers/toast-service/toastService';
+declare var $:any;
+
 @Component({
     templateUrl: 'home.html'
 })
@@ -16,11 +18,19 @@ export class HomePage implements OnInit {
     end: number = 4;
     backPressed: boolean = false;
     public navigator: any;
-    title: string = 'Home';
-    pagename: string = 'home'
+    title: string = '';
+    pagename: string = 'home';
     userToken: any;
+    menu: boolean = true;
     constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
         this.userToken = this._navParams.data.access_token;
+        if (this.userToken) {
+            this.pagename = 'home';
+            this.title = '';
+        }
+        else {
+            this.title = 'Home';
+        }
     }
     ngOnInit() {
         this.homeProducts();

@@ -40,6 +40,8 @@ import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
 import { CartFunction } from '../model/cart/cartHandling';
+import { SortByModel } from '../model/sortBy/sortBy/';
+import { FilterByModel } from '../model/filterBy/filterBy/';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { DownloadService } from '../providers/cart-service/download-service';
@@ -53,8 +55,8 @@ import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
 import { CountryService } from '../providers/myAccount-service/country';
-import {GroupService} from '../providers/cart-service/groupService';
-import {bundleService} from '../providers/cart-service/bundleService';
+import { GroupService } from '../providers/cart-service/groupService';
+import { bundleService } from '../providers/cart-service/bundleService';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -65,6 +67,11 @@ import { SubmitReview } from '../components/submitReview/SubmitReview';
 import { SliderComponent } from '../components/slider/Slider';
 import { CategoryComponent } from '../components/categoryProducts/CategoryProducts';
 import { AccountPopoverPage } from '../components/myAccountPopOver/myAccountPopOver';
+import { CategoryFooter } from '../components/categoryFooter/categoryFooter';
+import { FilterBy } from '../components/filter/filterBy';
+import { FilterOption } from '../components/filter/filterOption';
+import { SortBy } from '../components/sort/sort';
+
 //directives
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
 import { Headers } from '../directives/headers/headers';
@@ -97,6 +104,9 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         ChangepasswordPage,
         ForgotPage,
         CategoryComponent,
+        FilterBy,
+        CategoryFooter,
+        FilterOption,
         AccountPopoverPage,
         HomePage,
         CategoryProductPage,
@@ -122,6 +132,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         ImageFallBackDirective,
         Button,
         ButtonFull,
+        SortBy,
         ButtonTour,
         ButtonForLarge,
         BundleProduct,
@@ -148,9 +159,13 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         HomePage,
         CategoryProductPage,
         CategoryComponent,
+        FilterBy,
+        SortBy,
+        CategoryFooter,
         MyEditAccountPage,
         MySavedAddressPage,
         LoginPage,
+        FilterOption,
         PopoverPage,
         SubmitReview,
         Headers,
@@ -190,6 +205,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CountryService,
         NotifyMe,
         CartFunction,
+        SortByModel,
+        FilterByModel,
         GroupService,
         bundleService
     ]

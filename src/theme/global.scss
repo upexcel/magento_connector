@@ -10,6 +10,7 @@
 .padd36{
     padding:36px;
 }
+
 .paddLeft10{
     padding-left: 10px;
 }
@@ -260,10 +261,43 @@ header .toolbar-ios{
     min-height: 65px;
 }
 .content-ios .scroll-content {
-    padding-top: 65px !important;
+    padding-top: 65px;
+}
+sort{
+    .content-ios .scroll-content {
+        padding-top: 0px !important;
+    }
+    .scroll-content {
+        padding-top: 0px !important;
+    }
+}
+filter{
+    .content-ios .scroll-content {
+        padding-top: 0px !important;
+    } 
+    .padding{
+        padding: 18px;
+    }
+    margin-top: 0px;
+}
+filter-option{
+    .content-ios .scroll-content {
+        padding-top: 0px !important;
+    } 
+    .padding{
+        padding: 18px;
+    }
+    .scroll-content {
+        padding-top: 0px;
+    }
 }
 .scroll-content {
     padding-top: 56px;
+}
+filter {
+    .scroll-content {
+        padding-top: 0px;
+    }
 }
 .toolbar-ios ion-title {
     padding: 10px 0px 1px !important;

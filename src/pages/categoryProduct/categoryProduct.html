@@ -1,6 +1,6 @@
-<header [title]='title'></header>
+<header [title]='title' [pagename]="'home'" [view]="true" ></header>
 
-<ion-content>
+<ion-content class="home1">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -18,3 +18,4 @@
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
+<category-footer></category-footer>
