@@ -11,7 +11,7 @@
         border-bottom: 1px solid #e9efe9;
     }
     .top{
-         border-top: 1px solid #e9efe9;
+        border-top: 1px solid #e9efe9;
     }
     .select-md{
         padding: 13px 5px 13px 0px !important;
@@ -134,9 +134,9 @@
     }
 
     /*    for 144 server*/
-/*    ion-slides{
-        height: auto;
-    }*/
+    /*    ion-slides{
+            height: auto;
+        }*/
 
     /*    for 144 server*/
     .nobr, .nowrap {
@@ -268,4 +268,33 @@
 }
 .custom-options .list-md > .item-block:first-child, .list-md > .item-wrapper:first-child .item-block{
     border: 0px;
+}
+.custom-options .list-ios > .item-block:first-child{
+    border: 0px;
+}
+.custom-options .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+    border: 0px;
+}
+filter{
+    ion-list{
+        border-bottom: 1px solid #dedede;
+        margin: 0px;
+    }
+    .list-md > .item-block:last-child, .list-md > .item-wrapper:last-child .item-block{
+        border: 0px;
+    }
+    .list-header-md, .list-md ion-item-divider{
+        border: 0px;
+    }
+    .list-md > .item-block:first-child, .list-md > .item-wrapper:first-child .item-block{
+        border: 0px;
+    }
+    .list-ios > .item-block:first-child{
+        border: 0px;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: 0px;
+    }
+    
+    
 }

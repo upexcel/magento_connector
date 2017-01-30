@@ -11,8 +11,8 @@
                                  <ion-icon name="more"></ion-icon>
                         </button>-->
             <button ion-button icon-only  (click)="changeView(viewChang)">
-                    <ion-icon name="phone-landscape" *ngIf='viewChang=="Landscape" && view'></ion-icon>
-                <ion-icon name="phone-portrait" *ngIf='viewChang=="portrait" && view'></ion-icon>
+                    <ion-icon name="list" *ngIf='viewChang=="Landscape" && view'></ion-icon>
+                <ion-icon name="logo-windows" *ngIf='viewChang=="portrait" && view'></ion-icon>
 
             </button>
             <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (click)="gotoCart()">

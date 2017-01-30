@@ -111,7 +111,11 @@ input .item-inner {
 .lineHeight2-5{
     line-height: 2.5 !important;
 }
-
+filter{
+    a div div.input-wrapper{
+        text-transform: capitalize;
+    }
+}
 .capitalize{
     text-transform: capitalize;
 }

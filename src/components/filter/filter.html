@@ -24,11 +24,12 @@
             <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="100" (ngModelChange)="range()"></ion-range>
         </ion-item>        
     </ion-list>
-    <ion-list *ngFor="let response of res">
-        <a ion-item (click)="openModal(response.filter_title)">
+    <ion-list class="no-margin" *ngFor="let response of res">
+        <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
        {{response.filter_title}}
-       <p *ngIf='data && data.title == response.filter_title'> <span *ngFor="let sectedData of checkedData">  {{sectedData.value}}, </span>    
-            </p>
+       <span></span>
+            <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='data && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
+            
         </a>
     </ion-list>
 </ion-content>

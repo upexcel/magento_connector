@@ -57,6 +57,7 @@ import { categoryService } from '../providers/category-service/category-service'
 import { CountryService } from '../providers/myAccount-service/country';
 import { GroupService } from '../providers/cart-service/groupService';
 import { bundleService } from '../providers/cart-service/bundleService';
+import { FilterService } from '../providers/filter-service/filterService';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -173,6 +174,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
     ],
     providers: [
         AppConfig,
+        FilterService,
         Storage,
         ApiService,
         CartService,
