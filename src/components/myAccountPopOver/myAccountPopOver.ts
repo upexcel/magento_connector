@@ -33,7 +33,7 @@ import {
     template: `
     <ion-list class="popover">
       <button ion-item (click)="editAccount()">Edit</button>
-      <button ion-item (click)="deleteAccount()">Delete</button>
+      <button ion-item *ngIf="accountCartLength.length > 1" (click)="deleteAccount()">Delete</button>
     </ion-list>
  `
 })
@@ -42,6 +42,7 @@ export class AccountPopoverPage {
     secret: string;
     id: number;
     entity_id: number;
+    accountCartLength:number;
     constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) {}
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -50,6 +51,7 @@ export class AccountPopoverPage {
         if(this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
+            this.accountCartLength = this._navParams.data.accountCartLen;
         }
     }
     editAccount() {

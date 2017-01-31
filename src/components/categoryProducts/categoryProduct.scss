@@ -1,5 +1,6 @@
 category-view{
     /*@media screen and (orientation: portrait) {*/  
+       ion-grid{padding-top: 0px;} 
     .portrait{
         img{
             max-height: 90px;
@@ -61,7 +62,7 @@ category-view{
             position: absolute;
         }
         .card1 {
-            margin: 10px 0px 0px 0px ;
+            /*margin: 10px 0px 0px 0px ;*/
             width: 100%; 
             border-radius: 2px;
             font-size: 1.4rem;
@@ -144,6 +145,6 @@ category-view{
     }
 }
 .footerCateg{
-    line-height: 3;
+    line-height: 2;
     background: white;
 }

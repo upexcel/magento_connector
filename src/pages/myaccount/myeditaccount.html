@@ -12,10 +12,6 @@
                 <ion-input formControlName="lastname" id="lastName" [onReturn]='"City"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>City <span color="danger">*</span></ion-label>
-                <ion-input formControlName="city" id="City" [onReturn]='"Company"' autocorrect autocomplete clearInput></ion-input>
-            </ion-item>
-            <ion-item>
                 <ion-label stacked>Company</ion-label>
                 <ion-input formControlName="company" id="Company" [onReturn]='"Fax"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
@@ -24,7 +20,7 @@
                 <ion-input type="number" min="0" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Telephone <span color="danger">*</span></ion-label>
+                <ion-label stacked>Mobile Number <span color="danger">*</span></ion-label>
                 <ion-input type="number" min="0" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
@@ -32,30 +28,34 @@
                 <ion-input formControlName="street" id="Address" [onReturn]='"Pin"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label stacked>City <span color="danger">*</span></ion-label>
+                <ion-input formControlName="city" id="City" [onReturn]='"Company"' autocorrect autocomplete clearInput></ion-input>
+            </ion-item>
+            <ion-item>
                 <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
                 <ion-input type="number" min="0" formControlName="zip" id="Pin" [onReturn]='"Country"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
-                            <ion-label stacked>Country<span color="danger">*</span></ion-label>
-                            <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
-                            <span *ngFor="let name of counrtyName.body.country">
-                                <ion-option [value]="name"> 
-                                 {{name}}
-                                </ion-option>
-                             </span>   
-                            </ion-select>
+                <ion-label stacked>Country<span color="danger">*</span></ion-label>
+                <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
+                    <span *ngFor="let name of counrtyName.body.country">
+                        <ion-option [value]="name"> 
+                            {{name}}
+                        </ion-option>
+                    </span>   
+                </ion-select>
             </ion-item>
             <ion-item class="no-padding" no-lines>
-            <ion-label class="font13">Make it your default billing Address</ion-label>
-            <ion-checkbox color="dark" formControlName="default_billing" checked="false"></ion-checkbox>
+                <ion-label class="font13">Make it your default billing Address</ion-label>
+                <ion-checkbox color="dark" formControlName="default_billing" checked="false"></ion-checkbox>
             </ion-item>
             <ion-item class="no-padding" no-lines>
-            <ion-label class="font13">Make it your default shipping Address</ion-label>
-            <ion-checkbox color="dark" formControlName="default_shipping" checked="false"></ion-checkbox>
+                <ion-label class="font13">Make it your default shipping Address</ion-label>
+                <ion-checkbox color="dark" formControlName="default_shipping" checked="false"></ion-checkbox>
             </ion-item>
         </ion-list>
         <div class="center">
-        <btn-round [title]='"Save"' [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
+            <btn-round [title]='"Save"' [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
         </div>
     </form>
 </ion-content>

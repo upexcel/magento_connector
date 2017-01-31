@@ -16,7 +16,7 @@ import { ToastService } from './../../providers/toast-service/toastService';
 export class SubmitReview implements OnInit {
     skuValue: string;
     title: string;
-    keys: string;
+    keys: any;
     option: any;
     max_review: number;
     reviewDataDetails: string = "";
@@ -52,12 +52,11 @@ export class SubmitReview implements OnInit {
     }
 
     submitReview() {
-        var num: any = 1;
         let reviweDataJson = {};
         let selectedRating = {};
         let self = this;
         this.submitSuccessful = true;
-        let ratingValueChangeAsApi = [];
+        let ratingValueChangeAsApi: any = [];
         let finalSelectRating: Array<any> = [];
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
@@ -65,7 +64,7 @@ export class SubmitReview implements OnInit {
         forEach(reviweDataJson, function(ratingValue: number, ratingKey) {
             forEach(self.option, function(optionValue, optionKey) {
                 if (ratingKey == optionKey) {
-                    forEach(optionValue, function(Value, key: number) {
+                    forEach(optionValue, (Value, key: number) => {
                         if (key == ratingValue - 1) {
                             finalSelectRating.push({
                                 value: Value,
@@ -104,6 +103,8 @@ export class SubmitReview implements OnInit {
                     }
                 }
                 this._events.publish('api:review', true);
+            }).catch((res) => {
+                this.submitSuccessful = false;
             })
         })
     }

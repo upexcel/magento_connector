@@ -1,6 +1,7 @@
 <header [title]="'My Address'"></header>
 <ion-content class="myaccount">
-    <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
+    <ion-spinner *ngIf="spin && !error" id="magLeft50"></ion-spinner>
+    <!--<ion-spinner class="apiSpinner" *ngIf="spin1" ></ion-spinner>-->
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
@@ -8,10 +9,9 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-list *ngIf="showAddress==false">
-        <h2 text-center>You have no saved address</h2>
+        <h2 text-center >Your address book is blank.Update it with your regular billing/shipping address and add new address button just below it</h2>
     </ion-list>
     <ion-list *ngIf="showAddress">
-        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
         <ion-card *ngFor="let address of reverseCartData ; let id=index">
             <ion-card-content class="paddTop">
                 <ion-buttons end>
@@ -57,7 +57,7 @@
                             <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_id}}-{{address.postcode}}</p>                        
                         </ion-col>
                     </ion-row>
-                    <ion-row>
+                    <ion-row *ngIf="address.company">
                         <ion-col width-20 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
@@ -69,7 +69,7 @@
                             <p class="capitalize lineHeight"> {{address.company}}</p>                        
                         </ion-col>
                     </ion-row>
-                    <ion-row>
+                    <ion-row *ngIf="address.fax">
                         <ion-col width-20 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>

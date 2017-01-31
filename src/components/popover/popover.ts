@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 })
 export class PopoverPage {
     msg:string="";
-    constructor(private _logout:LogoutService,private _local: Storage, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+    constructor(private _logout:LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
     }
     close() {
         this._viewCtrl.dismiss();

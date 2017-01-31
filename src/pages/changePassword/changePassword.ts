@@ -35,10 +35,10 @@ export class ChangepasswordPage implements OnInit {
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
         let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret, access_token: this.access_token }
-        this._changePwd.getPwd(data).then((res) => {
+        this._changePwd.getPwd(data).then((res:any) => {
             this.spin = false;
             this.response = res;
-            this._toast.toast(this.response.data, 3000, "bottom");
+            this._toast.toast(res.body, 3000, "bottom");
             this._navCtrl.setRoot(HomePage);
         }).catch(err => {
             this.spin = false;

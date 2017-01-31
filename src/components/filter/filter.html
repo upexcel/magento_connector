@@ -28,8 +28,7 @@
         <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
        {{response.filter_title}}
        <span></span>
-            <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='data && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
-            
+            <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
         </a>
     </ion-list>
 </ion-content>

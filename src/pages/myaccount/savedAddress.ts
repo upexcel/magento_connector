@@ -117,7 +117,7 @@ export class MySavedAddressPage implements OnInit {
         });
     }
     AccountPopoverPage(myEvent: any, id, entity_id) {
-        let data = { id: id, entity_id: entity_id }
+        let data = { id: id, entity_id: entity_id,accountCartLen: this.myaccount.body }
         let popover = this._popoverCtrl.create(AccountPopoverPage, data);
         popover.present({
             ev: myEvent,
