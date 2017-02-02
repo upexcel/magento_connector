@@ -85,6 +85,10 @@ bundle{
     position: absolute;
     right: 10px;
 }
+.padTB{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
 .datetime-md {
     padding: 13px 20px 13px 16px !important;
 }
@@ -94,7 +98,15 @@ bundle{
 .offer{
     color:#f58138;
 }
-
+login{
+    span ion-icon{
+        padding-right: 10px;
+        font-size: 25px;
+    } 
+}
+.fb{
+    background-color: #365899 !important;
+}
 .padd60{
     padding-bottom:60px;
 }
@@ -104,9 +116,9 @@ bundle{
 .marTop20{
     margin-top: 20px !important;
 }
-.marginBottom50{
+/*.marginBottom50{
     margin-bottom:50px;
-}
+}*/
 .rating-block .item-inner .input-wrapper{
     display: inline-block !important;
 }

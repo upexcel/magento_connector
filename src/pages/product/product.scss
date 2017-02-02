@@ -113,6 +113,9 @@
         color: green;
         font-weight: 600;
         float:left;
+        margin: 0px;
+        padding-top: 7px;
+        padding-bottom: 2px;
     }
     .notifyBt{
         float: right;
@@ -121,8 +124,7 @@
 
     .img{
         min-height: 140px;
-        max-height: 270px;
-        max-width: 250px;
+        max-height: 240px;
         width: auto;
 
     }
@@ -131,12 +133,13 @@
         width:100%;
         padding-top: 0px;
         text-align: center;
+        padding-bottom: 0px;
     }
 
     /*    for 144 server*/
-    /*    ion-slides{
+        ion-slides{
             height: auto;
-        }*/
+        }
 
     /*    for 144 server*/
     .nobr, .nowrap {
@@ -295,6 +298,6 @@ filter{
     .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
         border: 0px;
     }
-    
-    
+
+
 }

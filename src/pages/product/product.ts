@@ -76,6 +76,7 @@ export class ProductPage implements OnInit {
     dynemicDisplayPrice: number;
     product_custom_option:any;
     config = true;
+    product="product";
     downlodeFormValidate = true;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
@@ -123,6 +124,8 @@ export class ProductPage implements OnInit {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
+                    this.product=this.productData.body.data.name;
+                    console.log(this.product)
                     this.productid = this.productData.body.data.entity_id;
                     this.images = this.productData.body.data.media_images[0];
                     this.special_price = this.productData.body.data.special_price;

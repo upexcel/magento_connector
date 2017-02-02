@@ -15,16 +15,18 @@ export class GoogleComponent {
     @Output() usergoogleError: EventEmitter<any> = new EventEmitter();
     constructor(public _local: Storage, private _socialProvider: SocialService) { }
     getGoogleData() {
-        var self = this;
+          console.log("collres1")
         this._socialProvider.googleLogin().then((res) => {
+            console.log("googleApi Coll")
             this.google_data = res;
+            console.log("collres",res)
             this._local.get('website_id').then((website_id: string) => {
                 let body = { website_id: website_id,firstname: this.google_data.givenName, lastname: this.google_data.familyName, email: this.google_data.email, picture: this.google_data.imageUrl,social:"google", social_id: this.google_data.userId, token: { accessToken: this.google_data.serverAuthCode } };
-                self.usergoogleLogin.emit(body);
+                this.usergoogleLogin.emit(body);
             });
         })
             .catch((err) => {
-                self.usergoogleError.emit(err);
+                this.usergoogleError.emit(err);
             })
     }
 }

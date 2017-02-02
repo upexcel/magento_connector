@@ -8,6 +8,7 @@ import { Login } from '../../model/login/login';
 import { LoginDataType } from '../login/loginDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { EmailValidator } from '../../validation/emailValidate'
 
 @Component({
     templateUrl: 'register.html'
@@ -24,7 +25,8 @@ export class RegisterPage implements OnInit {
             this.regForm = this._fb.group({
                 firstname: ['', Validators.required],
                 lastname: ['', Validators.required],
-                email: ['', Validators.required],
+                email: ['', Validators.compose([Validators.maxLength(50),
+                    EmailValidator.isValidMailFormat, Validators.required])],
                 password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
                 website_id: [website_id]
             });

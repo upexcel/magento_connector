@@ -42,7 +42,7 @@ export class AccountPopoverPage {
     secret: string;
     id: number;
     entity_id: number;
-    accountCartLength:number;
+    accountCartLength:any;
     constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) {}
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {

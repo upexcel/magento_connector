@@ -9,7 +9,8 @@ import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
 import { CartPage } from '../pages/cart/cart';
-import { DeviceOrientation, CompassHeading } from 'ionic-native';
+import { GoogleAnalytics } from 'ionic-native';
+declare var window: any;
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `
@@ -22,17 +23,19 @@ export class MyApp implements OnInit {
     constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
-            //            DeviceOrientation.getCurrentHeading().then(
-            //                (data: CompassHeading) => console.log(data),
-            //                (error: any) => console.log(error)
-            //            );
-            //
-            //            // Watch the device compass heading change
-            //            var subscription = DeviceOrientation.watchHeading().subscribe(
-            //                (data: CompassHeading) => console.log(data)
-            //            );
-            //            subscription.unsubscribe();
-
+            GoogleAnalytics.debugMode();
+            console.log("typeof window.analytics", typeof GoogleAnalytics)
+            //            GoogleAnalytics.startTrackerWithId('UA-91316126-1');
+            GoogleAnalytics.startTrackerWithId('UA-91316126-1').then(
+                res => console.log("res", res),
+                error => console.log("error", error),
+            );
+            GoogleAnalytics.enableUncaughtExceptionReporting(true)
+                .then((_success) => {
+                    console.log("GoogleAnalytics")
+                }).catch((_error) => {
+                    console.log("erreee")
+                });
         });
         this.addConnectivityListeners();
     }
