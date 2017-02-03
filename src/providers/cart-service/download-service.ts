@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
-import forEach from 'lodash/forEach';
+
 declare let Promise: any;
 @Injectable()
 export class DownloadService {

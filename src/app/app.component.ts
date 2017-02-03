@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { StartPage } from '../pages/startpage/startpage';
 import { HomePage } from '../pages/home/home';
@@ -8,8 +8,8 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
-import { CartPage } from '../pages/cart/cart';
-import { DeviceOrientation, CompassHeading } from 'ionic-native';
+
+
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `
@@ -66,7 +66,7 @@ export class MyApp implements OnInit {
             Network.onConnect().subscribe(() => {
 
                 if (isOnline) {
-                    if (Network.connection) {
+                    if (Network) {
                         this.nav.pop();
                     }
                     isOnline = false;

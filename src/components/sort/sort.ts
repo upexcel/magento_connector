@@ -1,6 +1,6 @@
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import { ModalController, Platform, NavParams } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 
 @Component({
     selector: 'sort',

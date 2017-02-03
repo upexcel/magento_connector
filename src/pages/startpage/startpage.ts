@@ -7,7 +7,6 @@ import {AppConfig} from '../../model/appConfig/appConfig';
 import { config } from './../../providers/config/config';
 import {SocialService} from '../../providers/social-service/social-service';
 import {HomePage} from '../../pages/home/home';
-import { ConfigDataType } from '../takeTour/configDataType';
 import { SocialAccountDataType } from './socialAccountDataType';
 import { SocialAccount } from './../../model/startPage/socialAccount';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';

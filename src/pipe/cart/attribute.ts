@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 export class ConvertCodeToName implements PipeTransform {
     constructor(public local: Storage) { }
     transform(obj: any, attr: any): any {
-        let lists;
+        
         let data: any = [];
         let filterData: any = [];
         this.local.get('search').then((value: any) => {

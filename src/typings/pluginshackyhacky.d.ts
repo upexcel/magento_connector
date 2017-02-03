@@ -1,6 +1,0 @@
-
-interface Navigator {
-    app: any;
-}
-
-

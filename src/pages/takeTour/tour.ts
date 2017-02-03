@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ViewController, NavController } from 'ionic-angular';
 import {AppConfig} from '../../model/appConfig/appConfig';
 import {ApiService } from './../../providers/api-service/api-service';

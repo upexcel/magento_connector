@@ -3,10 +3,10 @@ import { NavController, PopoverController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { PopoverPage } from './../../components/popover/popover';
 import { OrderModalPage } from '../orderid-detail/orderid-detail';
-import { StartPage } from './../../pages/startpage/startpage';
+
 import { TotalOrder } from '../../model/orderList/totalOrder';
 import { Storage } from '@ionic/storage';
-import { GooglePlus } from 'ionic-native';
+
 import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
 import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
 import { LogoutService } from './../../providers/logout/logout-service';

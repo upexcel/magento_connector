@@ -17,7 +17,7 @@ export class bundleService {
         //            subdata: []
         //        };
         var sub_data: any = {}
-        var subData = [];
+        
         return this._local.get('CartData').then((localData: any) => {
             sub_data.id = data.data.entity_id;
             sub_data.img = data.data.small_image;

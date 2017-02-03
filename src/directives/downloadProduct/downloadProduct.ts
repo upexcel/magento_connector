@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
-import clone from 'lodash/clone';
+
 import pull from 'lodash/pull';
 
 @Component({
@@ -52,7 +52,7 @@ export class DownloadProduct {
         this.calculateTotal();
     }
     onChangeSample(object, i, event) {
-        let self = this;
+        
         if (event) {
             this.simpleObj.push(object)
         }

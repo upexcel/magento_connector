@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductReviewDataType } from '../../model/product/productReviewDataType';
 import { GetRating } from '../../model/product/getRatingDataType';
 import { Product } from '../../model/product/getProduct';
-import { ModalController, NavParams} from 'ionic-angular';
+import { ModalController} from 'ionic-angular';
 import { SubmitReview } from '../submitReview/SubmitReview';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';

@@ -1,8 +1,8 @@
-import { Component, Attribute, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
 import pull from 'lodash/pull';
 import merge from 'lodash/merge';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'custom',
@@ -258,7 +258,7 @@ export class CustomOption {
         forEach(this.jsonFileData, function(value) {
             self.jsonFileDataValue[value.option_id] = value.option_url;
             fileArray.push(value.file);
-            var option = { "file": fileArray };
+            
         })
         let json = { "file": this.jsonFileData };
         self.fileSubData = json;
@@ -305,9 +305,7 @@ export class CustomOption {
     }
     calenderChanged(formId) {
         var dateObj = new Date(this.month);
-        var day = dateObj.getDate();
-        var months = dateObj.getMonth();
-        var year = dateObj.getFullYear();
+        
         var min = dateObj.getUTCMinutes();
         var hours = dateObj.getUTCHours();
         this.formValidate(formId, false);
@@ -350,7 +348,7 @@ export class CustomOption {
         var total = 0;
         let jsonData = {};
         let subdata = {};
-        let self = this;
+        
         let validateCount = 0;
         let custonCartDisable = true;
         if (this.textPrice.price != undefined) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-                    navigator.app.exitApp()
+                    // navigator.app.exitApp()
                 }
             } else {
                 this._navCtrl.pop();

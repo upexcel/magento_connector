@@ -1,8 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import { ApiService } from './../../providers/api-service/api-service';
 import forEach from 'lodash/forEach';
 import uniq from 'lodash/uniq';
-import keys from 'lodash/keys';
 import findIndex from 'lodash/findIndex';
 import difference from 'lodash/difference';
 import pullAll from 'lodash/pullAll';
@@ -74,7 +72,7 @@ export class CartFunction implements OnInit {
         });
     }
     deleteItem(data, response) {
-        let key = [];
+        
         let allKey = [];
         let iterate: any = [];
         let val;

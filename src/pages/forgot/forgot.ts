@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { Forgot } from '../../model/forgot/forgot';
 import { ToastService } from './../../providers/toast-service/toastService';
-import { LoginPage } from './../login/login';
+
 import { NavController, NavParams } from 'ionic-angular';
 @Component({
     templateUrl: 'forgot.html'

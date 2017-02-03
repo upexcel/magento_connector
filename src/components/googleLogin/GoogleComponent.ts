@@ -1,4 +1,4 @@
-import { NavController} from 'ionic-angular';
+
 import { Component, Output, EventEmitter } from '@angular/core';
 import {SocialService} from '../../providers/social-service/social-service';
 import {GoogleData} from './googleData';

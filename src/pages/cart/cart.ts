@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import forEach from 'lodash/forEach';
 import { CartFunction } from '../../model/cart/cartHandling'
-import uniq from 'lodash/uniq';
-import keys from 'lodash/keys';
-import findIndex from 'lodash/findIndex';
-import difference from 'lodash/difference';
-import pullAll from 'lodash/pullAll';
-import _ from 'lodash';
+    
+
+
+
+
 @Component({
     templateUrl: 'cart.html'
 })

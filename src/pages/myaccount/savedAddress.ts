@@ -13,15 +13,11 @@ import {
 import {
     PopoverPage
 } from './../../components/popover/popover';
-import {
-    StartPage
-} from './../../pages/startpage/startpage';
+
 import {
     Storage
 } from '@ionic/storage';
-import {
-    GooglePlus
-} from 'ionic-native';
+
 import {
     MyEditAccountPage
 } from './myeditaccount';

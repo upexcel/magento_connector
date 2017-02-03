@@ -13,7 +13,6 @@ export class CategoryList implements OnInit {
 
     getCategoryList(): Promise<CategoryListDataType> {
         let local = this.local;
-        let apiservice = this._apiService;
         return new Promise((resolve, reject) => {
             local.get('categorylist').then((categorylist: string) => {
                 if (keys(categorylist).length > 0 && categorylist !== null) {

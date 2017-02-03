@@ -40,8 +40,8 @@ import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
 import { CartFunction } from '../model/cart/cartHandling';
-import { SortByModel } from '../model/sortBy/sortBy/';
-import { FilterByModel } from '../model/filterBy/filterBy/';
+import { SortByModel } from '../model/sortBy/sortBy';
+import { FilterByModel } from '../model/filterBy/filterBy';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { DownloadService } from '../providers/cart-service/download-service';

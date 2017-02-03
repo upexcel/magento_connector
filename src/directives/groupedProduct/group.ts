@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PopoverController, MenuController, NavController, NavParams, Events } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+
 import forEach from 'lodash/forEach';
 
 @Component({

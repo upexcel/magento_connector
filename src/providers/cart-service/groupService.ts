@@ -18,7 +18,7 @@ export class GroupService {
         //        };
         let keyDataCheck: boolean = false;
         var subData = [];
-        let count=0;
+        
         return this._local.get('CartData').then((localData: any) => {
             forEach(other.options, function(value, key) {
                 if (value != 0) {

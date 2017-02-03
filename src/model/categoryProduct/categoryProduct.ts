@@ -1,4 +1,4 @@
-import { Injectable, OnInit} from '@angular/core';
+import { Injectable} from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
 import { CategoryProductDataType } from './categoryProductData';
 declare let Promise: any;

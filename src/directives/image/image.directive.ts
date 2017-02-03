@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer, HostListener } from '@angular/core';
+import { Directive, ElementRef,  Renderer } from '@angular/core';
 @Directive({
 			 selector: '[imageDirective]',
 			 host: { '(load)': 'handleLoad()' }

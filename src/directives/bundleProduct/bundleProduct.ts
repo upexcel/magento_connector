@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
 import merge from 'lodash/merge';
 
-import pull from 'lodash/pull';
+
 @Component({
     selector: 'bundle',
     templateUrl: 'bundle.html'
@@ -56,10 +56,10 @@ export class BundleProduct {
         select: []
     }
     onChangeBundleSelect(bundleSelect, formId) {
-        var testPrice;
-        var select = [];
+        
+        
         this.dataBundleSelect = [];
-        var i = 1;
+        
         forEach(bundleSelect, (value) => {
             if (value) {
                 this.dataBundleSelect.push({ "nameBundleSelect": value.selection_name, "price3": value.selection_price });
@@ -151,7 +151,7 @@ export class BundleProduct {
         this.calculateTotal();
     }
     calculateTotal() {
-        let self = this;
+        
         var total: number = 0;
         forEach(this.dataBundleMulti, function(value: any) {
             forEach(value, function(data: any) {

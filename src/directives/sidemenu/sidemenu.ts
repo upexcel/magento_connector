@@ -3,7 +3,7 @@ import { CategoryListDataType } from './../../pages/home/categorylistDataType';
 import { CategoryList } from '../../model/home/categoryList';
 import { MenuController, NavController } from 'ionic-angular';
 import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct';
-import { PopoverPage } from './../../components/popover/popover';
+
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
     selector: 'sidemenu',

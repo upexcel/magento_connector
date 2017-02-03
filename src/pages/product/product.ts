@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
 import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
@@ -290,7 +290,7 @@ export class ProductPage implements OnInit {
         let array: any = {};
         let selectedItem: string;
         let data: any;
-        let testPrice;
+        
         let other;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {

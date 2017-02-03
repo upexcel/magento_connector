@@ -1,6 +1,6 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, ViewController } from 'ionic-angular';
 import { FilterBy } from '../filter/filterBy';
 import { PopoverController } from 'ionic-angular';
 import { SortBy } from '../sort/sort';

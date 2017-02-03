@@ -12,17 +12,11 @@ import {
     PopoverPage
 } from './../../components/popover/popover';
 import {
-    FormBuilder, Validators, FormGroup
+    FormBuilder, Validators
 } from '@angular/forms';
-import {
-    StartPage
-} from './../../pages/startpage/startpage';
 import {
     Storage
 } from '@ionic/storage';
-import {
-    GooglePlus
-} from 'ionic-native';
 import {
     MyAccount
 } from './../../model/myaccount/myaccount';
@@ -35,9 +29,7 @@ import {
 import {
     EditAccountDataType
 } from './../../model/myaccount/editAccountData';
-import {
-    MySavedAddressPage
-} from './savedAddress';
+
 import {
     LogoutService
 } from './../../providers/logout/logout-service';

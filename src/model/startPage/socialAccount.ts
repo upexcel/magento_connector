@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { SocialAccountDataType  } from './../../pages/startpage/socialAccountDataType';
+
 declare let Promise: any;
 @Injectable()
 export class SocialAccount implements OnInit {

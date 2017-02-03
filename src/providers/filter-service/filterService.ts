@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
-import findIndex from 'lodash/findIndex';
+
 @Injectable()
 export class FilterService {
     filterData: any = [];

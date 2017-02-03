@@ -1,12 +1,12 @@
 import {
     Component,
-    ViewChild,
-    OnInit
+    
+    
 } from '@angular/core';
 import {
     ViewController,
     NavController,
-    Nav,
+    
     NavParams
 } from 'ionic-angular';
 import {
