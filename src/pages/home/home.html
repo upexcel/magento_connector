@@ -13,7 +13,7 @@
     <get-slider></get-slider>
     <div *ngIf="homeProduct" >
         <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-        <category-view [product]="feature_products"></category-view>
+        <category-view [product]="feature_products" (gotoProductEvent)="trackEvent($event)"></category-view>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>

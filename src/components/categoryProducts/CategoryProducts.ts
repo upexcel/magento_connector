@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,Output,EventEmitter } from '@angular/core';
 import { ProductPage } from '../../pages/product/product';
 import { NavController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
@@ -9,6 +9,8 @@ import { Events } from 'ionic-angular';
 })
 export class CategoryComponent {
     @Input() product: any;
+    
+    @Output() gotoProductEvent = new EventEmitter(); 
     displayMode: any = "Portrait";
     click: boolean = false;
     constructor(private _events: Events, private _navCtrl: NavController) {
@@ -40,6 +42,7 @@ export class CategoryComponent {
         //        }
     }
     gotoProduct(product) {
+        this.gotoProductEvent.emit(true)
         this._navCtrl.push(ProductPage, {
             id: product
         });

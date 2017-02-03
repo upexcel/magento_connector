@@ -98,7 +98,7 @@
         <variable name="APP_NAME" value="Invision"/>
     </plugin>
     <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
-        <variable name="REVERSED_CLIENT_ID" value="1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com"/>
+        <variable name="webClientId" value="1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com"/>
     </plugin>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>

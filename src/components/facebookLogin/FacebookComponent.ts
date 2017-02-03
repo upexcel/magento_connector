@@ -6,7 +6,7 @@ import {FacebookAuthResponse} from './facebookData';
 import { Storage } from '@ionic/storage';
 @Component({
     selector: 'facebook-login',
-    template: `  <button ion-button color='primary' (click)="getFacebookData()" id="social">
+    template: `  <button ion-button class="fb" (click)="getFacebookData()" id="social">
                  <ion-icon name="logo-facebook"></ion-icon>Login with Facebook
                  </button>`
 })
