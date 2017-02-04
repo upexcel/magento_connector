@@ -21,23 +21,25 @@ export class MyApp implements OnInit {
     constructor(private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
-            GoogleAnalytics.debugMode();
-            console.log("typeof window.analytics", typeof GoogleAnalytics)
-            //            GoogleAnalytics.startTrackerWithId('UA-91316126-1');
-            GoogleAnalytics.startTrackerWithId('UA-91316126-1').then(
-                res => console.log("res", res),
-                error => console.log("error", error),
-            );
-            GoogleAnalytics.enableUncaughtExceptionReporting(true)
-                .then((_success) => {
-                    console.log("GoogleAnalytics")
-                }).catch((_error) => {
-                    console.log("erreee")
-                });
         });
         this.addConnectivityListeners();
+        this.initGoogleAnalytics();
     }
-
+    initGoogleAnalytics() {
+        this._platform.ready().then(() => {
+            this.hideSplashScreen();
+            GoogleAnalytics.debugMode();
+            GoogleAnalytics.startTrackerWithId('UA-91423110-1').then(() => {
+                console.log("GoogleAnalytics Initialized with ****** : " + 'UA-91423110-1');
+                GoogleAnalytics.enableUncaughtExceptionReporting(true)
+                    .then((_success) => {
+                        console.log("GoogleAnalytics enableUncaughtExceptionReporting Enabled.");
+                    }).catch((_error) => {
+                        console.log("GoogleAnalytics Error enableUncaughtExceptionReporting : " + _error)
+                    });
+            });
+        });
+    }
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();
@@ -65,9 +67,8 @@ export class MyApp implements OnInit {
         var isOnline = true;
         var onOnline = () => {
             Network.onConnect().subscribe(() => {
-
                 if (isOnline) {
-                    if (Network) {
+                    if (Network.type != "none") {
                         this.nav.pop();
                     }
                     isOnline = false;

@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
+import { GoogleAnalyticsEvents } from './../../googleAnalyst/googleAnalyst'
 @Component({
     selector: 'submit-review',
     templateUrl: 'submitReview.html'
@@ -44,7 +45,11 @@ export class SubmitReview implements OnInit {
             }
         });
     }
+    openPage(a, b, c, d, e) {
+        GoogleAnalyticsEvents.trackEvent(a, b, c, d, e);
+    }
     close() {
+        GoogleAnalyticsEvents.trackEvent("close","click","submit",0,false);
         this._viewCtrl.dismiss();
     }
     onSelectRatting(rating, title) {

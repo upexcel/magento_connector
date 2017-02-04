@@ -42,5 +42,5 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-        <btn-full  [titleFull]='"SUBMIT REVIEWS"' [spinFull]="submitSuccessful" [id]="'btn'" [colorFull]="'primary'" [validFull]="false" [classFull]="'botton reviewSubmit'" (onBtnClick)="submitReview()"></btn-full>
+        <btn-full  [titleFull]='"SUBMIT REVIEWS"' [spinFull]="submitSuccessful" [id]="'btn'" [colorFull]="'primary'" [validFull]="false" [classFull]="'botton reviewSubmit'" (click)='openPage("send","click","submit",2,false)' (onBtnClick)="submitReview()"></btn-full>
 </ion-footer>

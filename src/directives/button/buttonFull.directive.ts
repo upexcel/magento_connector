@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { GoogleAnalyticsEvents } from './../../googleAnalyst/googleAnalyst'
+
 @Component({
     selector: 'btn-full',
     templateUrl: 'buttonFull.html'
@@ -10,13 +12,19 @@ export class ButtonFull {
     @Input() validFull: boolean = false;
     @Input() idFull: string = "";
     @Input() classFull: string = "";
+    @Input() category: string = "";
+    @Input() action: string = "";
+    @Input() label: string = "";
+    @Input() value: number;
+    @Input() newSession: boolean = false;
     @Output() onBtnClick = new EventEmitter();
     constructor() {
-//        setTimeout(() => {
-//            console.log(this.validFull)
-//        }, 500);
+        //        setTimeout(() => {
+        //            console.log(this.validFull)
+        //        }, 500);
     }
     onClick() {
+        GoogleAnalyticsEvents.trackEvent(this.category, this.action, this.label, this.value, this.newSession)
         this.onBtnClick.emit();
     }
 }

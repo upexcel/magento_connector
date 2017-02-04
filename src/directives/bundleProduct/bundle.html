@@ -16,7 +16,7 @@
         </ion-item>
     </ion-list>     
     <ion-list   radio-group [(ngModel)]="bundleratio" (ngModelChange)="onChangeRadio(b_test1.id)" *ngIf="b_test1.type=='radio'">
-              <ion-list-header  (click)="checkVisiblety('radio')" >
+              <ion-list-header class="no-margin"  (click)="checkVisiblety('radio')" >
             <span class="capitalize"> {{b_test1.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="radioHidden"  *ngFor="let selection of b_test1.selection" (ngModelChange)="onChangeBundleRadio($event)" >

@@ -5,7 +5,6 @@ import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
 import { ToastService } from './../../providers/toast-service/toastService';
-declare var $: any;
 import { GoogleAnalytics } from 'ionic-native';
 @Component({
     templateUrl: 'home.html'

@@ -59,6 +59,11 @@
 .green{
     color: green;
 }
+product{
+    .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+        display: none;
+    }
+}
 table {
     border-collapse: collapse !important;
     width: 100% !important;
@@ -292,6 +297,9 @@ sort{
     .scroll-content {
         padding-top: 0px !important;
     }
+    .label-md{
+        margin-bottom: 0px;
+    }
 }
 filter{
     .content-ios .scroll-content {
@@ -299,9 +307,15 @@ filter{
     } 
     .padding{
         padding: 18px;
+        padding-top: 0px;
+        padding-bottom: 0px;
     }
     margin-top: 0px;
+    filter .list-header-md, filter .list-md ion-item-divider{
+        margin-bottom: 0px;
+    }
 }
+
 filter-option{
     .content-ios .scroll-content {
         padding-top: 0px !important;

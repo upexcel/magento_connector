@@ -40,7 +40,7 @@
     </ion-list>
     
     <ion-list radio-group [(ngModel)]="radio" (ngModelChange)="onChangeRadio(customOption.id)" *ngIf="customOption.type=='radio'">
-        <ion-list-header (click)="checkVisiblety('radio')">
+        <ion-list-header class="no-margin" (click)="checkVisiblety('radio')">
             <span class="capitalize"> {{customOption.title}}</span> <span color="danger">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="radioHidden" *ngFor="let opt of customOption.option_type">
