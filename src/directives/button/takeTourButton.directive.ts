@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { GoogleAnalyticsEvents } from './../../googleAnalyst/googleAnalyst'
 
 @Component({
     selector: 'btn-tour',
@@ -12,16 +11,10 @@ export class ButtonTour {
     @Input() validTour: boolean = false;
     @Input() idTour: string = "";
     @Input() classTour: string = "";
-    @Input() category: string = "";
-    @Input() action: string = "";
-    @Input() label: string = "";
-    @Input() value: number ;
-    @Input() newSession: boolean = false;
     @Output() onBtnClick = new EventEmitter();
     constructor() {
     }
     onClick() {
-        GoogleAnalyticsEvents.trackEvent(this.category, this.action, this.label, this.value, this.newSession);
         this.onBtnClick.emit();
     }
 }

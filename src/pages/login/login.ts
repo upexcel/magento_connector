@@ -73,10 +73,8 @@ export class LoginPage implements OnInit {
         });
     }
     userGoogleLogin(body) {
-        console.log("body",body);
         this._socialAccount.getSocialAccount(body).then((res: any) => {
 //            this._appConfigService.setUserData(res.body);
-            console.log("res",res)
 //            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }

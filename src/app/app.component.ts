@@ -8,12 +8,10 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
-import { GoogleAnalytics } from 'ionic-native';
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `
-    //    <loading-modal id="loading"></loading-modal>
-})
+   })
 
 export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
@@ -23,22 +21,6 @@ export class MyApp implements OnInit {
             this.hideSplashScreen();
         });
         this.addConnectivityListeners();
-        this.initGoogleAnalytics();
-    }
-    initGoogleAnalytics() {
-        this._platform.ready().then(() => {
-            this.hideSplashScreen();
-            GoogleAnalytics.debugMode();
-            GoogleAnalytics.startTrackerWithId('UA-91423110-1').then(() => {
-                console.log("GoogleAnalytics Initialized with ****** : " + 'UA-91423110-1');
-                GoogleAnalytics.enableUncaughtExceptionReporting(true)
-                    .then((_success) => {
-                        console.log("GoogleAnalytics enableUncaughtExceptionReporting Enabled.");
-                    }).catch((_error) => {
-                        console.log("GoogleAnalytics Error enableUncaughtExceptionReporting : " + _error)
-                    });
-            });
-        });
     }
     hideSplashScreen() {
         setTimeout(() => {
