@@ -14,6 +14,7 @@ export class GoogleAnalyticsEvents {
     static trackEvent(action?, label?, value?) {
         if (GoogleAnalytics) {
             GoogleAnalytics.trackEvent(action, label, value).then((res) => {
+                console.log("action, label, value",action, label, value);
                 console.log('set', res);
             }).catch((err) => {
                 console.log('err', err);
