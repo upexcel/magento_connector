@@ -5,7 +5,6 @@ import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
 import { ToastService } from './../../providers/toast-service/toastService';
-import { GoogleAnalytics } from 'ionic-native';
 @Component({
     templateUrl: 'home.html'
 })
@@ -30,9 +29,6 @@ export class HomePage implements OnInit {
         else {
             this.title = 'Home';
         }
-        this._platform.ready().then(() => {
-            GoogleAnalytics.trackView("track example");
-        });
     }
     ngOnInit() {
         this.homeProducts();
@@ -52,11 +48,7 @@ export class HomePage implements OnInit {
             }
         })
     }
-       trackEvent(e) {
-        this._platform.ready().then(() => {
-            GoogleAnalytics.trackEvent("Category", "Action", "Label", 25);
-        });
-    }
+
     checkBackButton() {
         this._platform.registerBackButtonAction(() => {
             if (this._viewController.isLast() && this._viewController.isFirst()) {
