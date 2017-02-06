@@ -22,7 +22,7 @@ import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
 @Component({
-    selector:'product',
+    selector: 'product',
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
@@ -75,11 +75,11 @@ export class ProductPage implements OnInit {
     customPrice: number;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
-    product_custom_option:any;
+    product_custom_option: any;
     config = true;
-    product="product";
+    product = "product";
     downlodeFormValidate = true;
-    virtual=false;
+    virtual = false;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -96,6 +96,7 @@ export class ProductPage implements OnInit {
         this.products();
         //coll when any review is added 
         this._events.subscribe('api:review', (review) => {
+              console.log("user")
             this.products();
         });
     }
@@ -126,7 +127,7 @@ export class ProductPage implements OnInit {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
-                    this.product=this.productData.body.data.name;
+                    this.product = this.productData.body.data.name;
                     console.log(this.product)
                     this.productid = this.productData.body.data.entity_id;
                     this.images = this.productData.body.data.media_images[0];
@@ -167,7 +168,7 @@ export class ProductPage implements OnInit {
                     if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                         this.customFormValidate = true;
                         this.customDisable = true;
-                        this.virtual=false;
+                        this.virtual = false;
                         this.disable = true;
                     }
                     this.genrateData();
@@ -296,7 +297,7 @@ export class ProductPage implements OnInit {
         let array: any = {};
         let selectedItem: string;
         let data: any;
-        
+
         let other;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
@@ -445,10 +446,10 @@ export class ProductPage implements OnInit {
             else {
                 this.disable = true;
             }
-        }else if (this.type == 'virtual') {
+        } else if (this.type == 'virtual') {
             this.disable = customData.disable;
         }
-         else if (this.type == 'simple') {
+        else if (this.type == 'simple') {
             this.disable = customData.disable;
         }
         else {

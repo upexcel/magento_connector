@@ -6,7 +6,6 @@ import {
 import {
     ViewController,
     NavController,
-    
     NavParams
 } from 'ionic-angular';
 import {

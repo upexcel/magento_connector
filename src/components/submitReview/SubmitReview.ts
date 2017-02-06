@@ -102,6 +102,7 @@ export class SubmitReview implements OnInit {
                         this._toast.toast("Thanks for your review! Your Rating is Pending approval by admin.", 3000);
                     }
                 }
+                console.log(this._events.publish('api:review', true))
                 this._events.publish('api:review', true);
             }).catch((res) => {
                 this.submitSuccessful = false;

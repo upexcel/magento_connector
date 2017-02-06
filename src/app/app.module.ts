@@ -3,6 +3,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 //storage
 import { Storage } from '@ionic/storage';
+
 //pages
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
@@ -58,6 +59,8 @@ import { CountryService } from '../providers/myAccount-service/country';
 import { GroupService } from '../providers/cart-service/groupService';
 import { bundleService } from '../providers/cart-service/bundleService';
 import { FilterService } from '../providers/filter-service/filterService';
+import { GenericAnalytics } from '../providers/genericAnalytics/genericAnalytics'
+
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -171,6 +174,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         SubmitReview,
         Headers,
         OfflinePage
+        
     ],
     providers: [
         AppConfig,
@@ -210,7 +214,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         SortByModel,
         FilterByModel,
         GroupService,
-        bundleService
+        bundleService,
+        GenericAnalytics,
     ]
 })
 export class AppModule {

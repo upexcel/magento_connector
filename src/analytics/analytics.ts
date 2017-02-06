@@ -1,8 +1,19 @@
 import { GoogleAnalytics } from 'ionic-native';
 export class GoogleAnalyticsEvents {
-    static trackEvent(category?, action?, label?, value?, newSession?) {
+    static SetgoogleAnalytics() {
+        console.log("user")
+        GoogleAnalytics.debugMode();
+        GoogleAnalytics.startTrackerWithId('UA-91423110-1').then(() => {
+            GoogleAnalytics.enableUncaughtExceptionReporting(true)
+                .then((_success) => {
+                    console.log("success", _success)
+                }).catch((_error) => {
+                });
+        });
+    }
+    static trackEvent(action?, label?, value?) {
         if (GoogleAnalytics) {
-            GoogleAnalytics.trackEvent(category, action, label, value, newSession).then((res) => {
+            GoogleAnalytics.trackEvent(action, label, value).then((res) => {
                 console.log('set', res);
             }).catch((err) => {
                 console.log('err', err);
