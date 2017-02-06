@@ -12,14 +12,14 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <btn-round [title]='"Login"' [id]="'btn'" [color]="'primary'" (onBtnClick)="gotologin()" ></btn-round>           
+                <btn-round [title]='"Login"' [category]="'click'" [action]="'login'" [label]="'login page open'" [value]=1 [id]="'btn'" [color]="'primary'" (onBtnClick)="gotologin()" ></btn-round>           
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <btn-tour [titleTour]='"TAKE THE TOUR"'  [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
+                <btn-tour [titleTour]='"TAKE THE TOUR"' [category]="'click'" [action]="'model open'" [label]="'take tour'" [value]=1 [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
             </ion-col>
         </ion-row>
     </ion-grid>
