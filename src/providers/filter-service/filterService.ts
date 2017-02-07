@@ -30,7 +30,6 @@ export class FilterService {
         } else {
             this.filterData = [data];
         }
-        console.log(this.filterData)
     }
     getFilterData() {
         return new Promise((resolve, reject) => {

@@ -37,7 +37,6 @@ export class CategoryProductPage implements OnInit {
         this.show_products(this.product_id, this.page, this.limit);
     }
     ngOnDestroy() {
-        console.log("distroyf")
     }
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };

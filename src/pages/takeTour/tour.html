@@ -36,5 +36,5 @@
     </ion-grid>
 </ion-content>
 <ion-footer>
-        <btn-full  [titleFull]='"Get Started now!!"' [id]="'btn'" [classFull]="'botton buttForgotPwd'" (onBtnClick)="gotoHome()"></btn-full>
+        <btn-full  [titleFull]='"Get Started now!!"' [analyticsAction]="'click'" [analyticsTitle]="'tourPage'" [analyticsCampaignUrl]="'Home'" [analyticsLabel]="'redirect page to home page without login'"[id]="'btn'" [analyticsValue]=1 [classFull]="'botton buttForgotPwd'" (onBtnClick)="gotoHome()"></btn-full>
 </ion-footer>

@@ -96,7 +96,6 @@ export class ProductPage implements OnInit {
         this.products();
         //coll when any review is added 
         this._events.subscribe('api:review', (review) => {
-              console.log("user")
             this.products();
         });
     }
@@ -128,7 +127,6 @@ export class ProductPage implements OnInit {
                 if (res) {
                     this.spin = false;
                     this.product = this.productData.body.data.name;
-                    console.log(this.product)
                     this.productid = this.productData.body.data.entity_id;
                     this.images = this.productData.body.data.media_images[0];
                     this.special_price = this.productData.body.data.special_price;

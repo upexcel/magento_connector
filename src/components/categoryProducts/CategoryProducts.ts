@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ProductPage } from '../../pages/product/product';
 import { NavController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
-//declare var $: any;
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics'
 @Component({
     selector: 'category-view',
     templateUrl: 'categoryProducts.html'
@@ -11,7 +11,7 @@ export class CategoryComponent {
     @Input() product: any;
     displayMode: any = "Portrait";
     click: boolean = false;
-    constructor(private _events: Events, private _navCtrl: NavController) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _events: Events, private _navCtrl: NavController) {
         this._events.subscribe('view:created', (view) => {
             this.viewChange(view);
         });
@@ -40,6 +40,8 @@ export class CategoryComponent {
         //        }
     }
     gotoProduct(product) {
+        this._genericAnalytic.setTrackEventValue("click", "CategoryProduct", product);
+        this._genericAnalytic.setTrackView("HomePage", "ProductPage");
         this._navCtrl.push(ProductPage, {
             id: product
         });

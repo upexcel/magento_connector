@@ -40,13 +40,11 @@ export class FilterBy {
                         })
                     })
                 })
-                console.log("this.checkedData", this.checkedData)
             })
         })
     }
 
     range() {
-        console.log(this.dualValue2)
     }
     openModal(title) {
         var data = '';

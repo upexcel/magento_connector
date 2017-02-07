@@ -16,10 +16,13 @@ export class ButtonTour {
     @Input() analyticsLabel: string = "";
     @Input() analyticsValue: number;
     @Output() onBtnClick = new EventEmitter();
-    constructor(public _genericAnalytic:GenericAnalytics) {
+    @Input() analyticsTitle: string = "";
+    @Input() analyticsCampaignUrl: string;
+    constructor(public _genericAnalytic: GenericAnalytics) {
     }
     onClick() {
-        this._genericAnalytic.setTrackEventValue(this.analyticsAction, this.analyticsLabel, this.analyticsValue)
+        this._genericAnalytic.setTrackEventValue(this.analyticsAction, this.analyticsLabel, this.analyticsValue);
+        this._genericAnalytic.setTrackView(this.analyticsTitle, this.analyticsCampaignUrl);
         this.onBtnClick.emit();
     }
 }

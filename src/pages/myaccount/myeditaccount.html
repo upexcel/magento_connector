@@ -55,7 +55,7 @@
             </ion-item>
         </ion-list>
         <div class="center">
-            <btn-round [title]='"Save"' [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
+            <btn-round [title]='"Save"' [analyticsAction]="'click'" [analyticsTitle]="'addAccountPage'" [analyticsCampaignUrl]="'viewAddressPage'" [analyticsLabel]="'addAccountPage'" [analyticsValue]=1  [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
         </div>
     </form>
 </ion-content>

@@ -36,7 +36,6 @@ export class FilterOption {
         else {
             this.checkData.splice(findIndex(this.checkData, data), 1);
         }
-        console.log(this.checkData)
     }
     done() {
         this._nav.setRoot(FilterBy, { "data":{"data": this.checkData,"title":this.data.filter_title }});

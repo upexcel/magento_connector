@@ -12,14 +12,14 @@
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
-                <btn-round [title]='"Login"'  [analyticsAction]="'login'" [analyticsLabel]="'login page open'" [analyticsValue]=1 [id]="'btn'" [color]="'primary'" (onBtnClick)="gotologin()" ></btn-round>           
+                <btn-round [title]='"Login"'  [analyticsAction]="'login'" [analyticsTitle]="'startPage'" [analyticsCampaignUrl]="'Home'" [analyticsLabel]="'login page open'" [analyticsValue]=1 [id]="'btn'" [color]="'primary'" (onBtnClick)="gotologin()" ></btn-round>           
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <btn-tour [titleTour]='"TAKE THE TOUR"'  [analyticsAction]="'model open'" [analyticsLabel]="'take tour'" [analyticsValue]=1 [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
+                <btn-tour [titleTour]='"TAKE THE TOUR"'  [analyticsAction]="'model open'" [analyticsTitle]="'startPage'" [analyticsCampaignUrl]="'tourPage'" [analyticsLabel]="'take tour'" [analyticsValue]=1 [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
             </ion-col>
         </ion-row>
     </ion-grid>

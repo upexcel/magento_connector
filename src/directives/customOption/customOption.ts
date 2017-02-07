@@ -214,7 +214,6 @@ export class CustomOption {
         this.bundleJson();
     }
     onChangeCheck(data, event, formId) {
-        console.log(data)
         let self = this;
         let json: any = [];
         let option_id;
@@ -226,7 +225,6 @@ export class CustomOption {
         else {
             this.checkData = pull(this.checkData, data);
         }
-        console.log(this.checkData)
         if (this.checkData.length > 0) {
             this.formValidate(formId, false);
         } else {

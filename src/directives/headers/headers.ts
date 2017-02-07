@@ -5,6 +5,7 @@ import { LoginPage } from '../../pages/login/login';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { PopoverPage } from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics'
 
 @Component({
     selector: 'header',
@@ -15,7 +16,7 @@ export class Headers implements AfterContentInit {
     @Input() type: boolean;
     @Input() title: string = '';
     @Input() loading: boolean;
-    @Input() view: boolean=false;
+    @Input() view: boolean = false;
     @Input() pagename: string = '';
     @Input() menu: boolean = false;
     showPopOver: boolean = false;
@@ -23,7 +24,7 @@ export class Headers implements AfterContentInit {
     showLogin: boolean;
     show: boolean = true;
     viewChang: string = "Landscape";
-    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
             this.showLogin = false;
@@ -46,16 +47,24 @@ export class Headers implements AfterContentInit {
     changeView(view) {
         if (view == "portrait") {
             this.viewChang = "Landscape";
+            this._genericAnalytic.setTrackEventValue("click", "layOut", "Landscape");
+
         }
         else {
             this.viewChang = "portrait";
+            this._genericAnalytic.setTrackEventValue("click", "layOut", "portrait");
+
         }
         this._events.publish('view:created', this.viewChang);
     }
     openMenu() {
         this._menuCtrl.toggle();
+        this._genericAnalytic.setTrackEventValue("click", "menu", "open Menu");
+
     }
     gotoLogin() {
+        this._genericAnalytic.setTrackEventValue("click", "gotoLogin", "login page open");
+        this._genericAnalytic.setTrackView(this.title, "Login");
         this._navCtrl.push(LoginPage);
     }
     presentPopover(myEvent) {
@@ -65,6 +74,8 @@ export class Headers implements AfterContentInit {
         });
     }
     gotoCart() {
+        this._genericAnalytic.setTrackEventValue("click", "gotoCart", "open Cart");
+        this._genericAnalytic.setTrackView(this.title, "CartPage");
         this._navCtrl.push(CartPage);
     }
 }

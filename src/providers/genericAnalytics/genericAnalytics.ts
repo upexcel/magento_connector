@@ -17,4 +17,9 @@ export class GenericAnalytics {
             GoogleAnalyticsEvents.trackEvent(action, label, value);
         }
     }
+    setTrackView(title, campaignUrl, newSession?) {
+        if (this.type == "googleAnalytics") {
+            GoogleAnalyticsEvents.trackView(title, campaignUrl, newSession);
+        }
+    }
 }
