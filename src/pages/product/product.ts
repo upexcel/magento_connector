@@ -14,6 +14,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { TierPrice } from '../../model/product/checkTierPrice';
 import { GroupService } from './../../providers/cart-service/groupService';
 import { bundleService } from './../../providers/cart-service/bundleService';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
@@ -80,7 +81,7 @@ export class ProductPage implements OnInit {
     product = "product";
     downlodeFormValidate = true;
     virtual = false;
-    constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -90,6 +91,9 @@ export class ProductPage implements OnInit {
             }
         })
     }
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Product Page");
+    } 
     ngOnInit() {
         this.id = this._navParams.get('id');
         // coll products function when it lode first time

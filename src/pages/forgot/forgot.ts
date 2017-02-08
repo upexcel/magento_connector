@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { Forgot } from '../../model/forgot/forgot';
 import { ToastService } from './../../providers/toast-service/toastService';
-
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 import { NavController, NavParams } from 'ionic-angular';
 @Component({
     templateUrl: 'forgot.html'
@@ -16,8 +16,11 @@ export class ForgotPage implements OnInit {
     show_form: boolean = false;
     btnShow: boolean = true;
     email: string;
-    constructor(private _navparam: NavParams, private _navCtrl: NavController, private _events: Events, private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _navparam: NavParams, private _navCtrl: NavController, private _events: Events, private _forgot: Forgot, private _local: Storage, private _fb: FormBuilder, private _toast: ToastService) {
         this.email = this._navparam.get("email");
+    }
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Forgot Page");
     }
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {

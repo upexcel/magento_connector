@@ -12,14 +12,24 @@ export class GenericAnalytics {
             GoogleAnalyticsEvents.SetgoogleAnalytics();
         }
     }
+    setUserId(id) {
+        if (this.type == "googleAnalytics") {
+            GoogleAnalyticsEvents.UserId(id);
+        }
+    }
     setTrackEventValue(action, label?, value?) {
         if (this.type == "googleAnalytics") {
             GoogleAnalyticsEvents.trackEvent(action, label, value);
         }
     }
-    setTrackView(title, campaignUrl, newSession?) {
+    setAppVersion(appVersion) {
         if (this.type == "googleAnalytics") {
-            GoogleAnalyticsEvents.trackView(title, campaignUrl, newSession);
+            GoogleAnalyticsEvents.setAppVersion(appVersion)
+        }
+    }
+    setTrackView(title) {
+        if (this.type == "googleAnalytics") {
+            GoogleAnalyticsEvents.trackView(title);
         }
     }
 }

@@ -60,5 +60,5 @@ export class FilterBy {
     dismiss() {
         this._viewCtrl.dismiss();
     }
-    apply() { console.log("apy");}
+    applyClick() { }
 }

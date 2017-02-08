@@ -17,9 +17,23 @@ export class GoogleAnalyticsEvents {
         };
         //        return null;
     }
-    static trackView(title, campaignUrl, newSession?){
+    static setAppVersion(appVersion) {
         if (GoogleAnalytics) {
-            GoogleAnalytics.trackView(title, campaignUrl, newSession).then((res) => {
+            GoogleAnalytics.setAppVersion(appVersion).then((res) => {
+            }).catch((err) => {
+            })
+        }
+    }
+    static UserId(id) {
+        if (GoogleAnalytics) {
+            GoogleAnalytics.setUserId(id).then((res) => {
+            }).catch((err) => {
+            })
+        }
+    }
+    static trackView(title) {
+        if (GoogleAnalytics) {
+            GoogleAnalytics.trackView(title).then((res) => {
             }).catch((err) => {
             })
         }

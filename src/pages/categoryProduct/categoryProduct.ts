@@ -4,6 +4,7 @@ import { PopoverPage } from './../../components/popover/popover';
 import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
 import { CategoryProductDataType } from './../../model/categoryProduct/categoryProductData';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 @Component({
@@ -19,10 +20,13 @@ export class CategoryProductPage implements OnInit {
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
-    constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         _menuCtrl.enable(true);
+    }
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("categoryProduct Page");
     }
     ngOnInit() {
         console.log(this._viewCtrl)

@@ -46,6 +46,7 @@ import {
     ViewController
 } from 'ionic-angular';
 import reverse from 'lodash/reverse';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     templateUrl: 'myeditaccount.html'
 })
@@ -63,7 +64,7 @@ export class MyEditAccountPage implements OnInit {
     default_billing: any = 0;
     default_shipping: any = 0;
     reverseCartData: any;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(public _genericAnalytic: GenericAnalytics, public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -81,7 +82,9 @@ export class MyEditAccountPage implements OnInit {
         });
 
     }
-
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("myEditAccount Page");
+    }
     getuser_details(id, entity_id, secret) {
         this.spin = true;
         let body = {

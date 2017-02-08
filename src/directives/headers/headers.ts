@@ -64,7 +64,6 @@ export class Headers implements AfterContentInit {
     }
     gotoLogin() {
         this._genericAnalytic.setTrackEventValue("click", "gotoLogin", "login page open");
-        this._genericAnalytic.setTrackView(this.title, "Login");
         this._navCtrl.push(LoginPage);
     }
     presentPopover(myEvent) {
@@ -75,7 +74,6 @@ export class Headers implements AfterContentInit {
     }
     gotoCart() {
         this._genericAnalytic.setTrackEventValue("click", "gotoCart", "open Cart");
-        this._genericAnalytic.setTrackView(this.title, "CartPage");
         this._navCtrl.push(CartPage);
     }
 }

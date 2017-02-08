@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CartFunction } from '../../model/cart/cartHandling'
-    
-
-
-
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 
 @Component({
     templateUrl: 'cart.html'
@@ -15,24 +12,26 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(private _cartFunction: CartFunction, private _events: Events, public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _cartFunction: CartFunction, private _events: Events, public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
-//        this.local.get('CartData').then((value: any) => {
-//            this.res = value;
-//            let tempObj = [];
-//            forEach(this.res, function(value, key) {
-//                forEach(value, function(value1, key) {
-//                    tempObj.push(key);
-//                });
-//            });
-//            this.lists = uniq(pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
-//            this.entery = true;
-//            this._cartFunction.totalPay(this.res).then((response) => {
-//                this.totalPay = response;
-//            });
-//        });
+        //        this.local.get('CartData').then((value: any) => {
+        //            this.res = value;
+        //            let tempObj = [];
+        //            forEach(this.res, function(value, key) {
+        //                forEach(value, function(value1, key) {
+        //                    tempObj.push(key);
+        //                });
+        //            });
+        //            this.lists = uniq(pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
+        //            this.entery = true;
+        //            this._cartFunction.totalPay(this.res).then((response) => {
+        //                this.totalPay = response;
+        //            });
+        //        });
     }
-
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Cart Page");
+    }
 
     changeQuantity(newQuantity, data) {
         this._cartFunction.addItem(newQuantity, data)

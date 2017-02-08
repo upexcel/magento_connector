@@ -10,7 +10,8 @@ import { Login } from '../../model/login/login';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { SocialAccount } from './../../model/startPage/socialAccount';
-import { EmailValidator } from '../../validation/emailValidate'
+import { EmailValidator } from '../../validation/emailValidate';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     selector: 'login',
     templateUrl: 'login.html'
@@ -24,7 +25,7 @@ export class LoginPage implements OnInit {
     data: LoginDataType;
     forgotPasswordEmail: any;
     title: string = 'LOGIN'
-    constructor(private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
@@ -43,6 +44,9 @@ export class LoginPage implements OnInit {
         });
 
     }
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Login Page");
+    }
     gotoreg() {
         this._navCtrl.push(RegisterPage);
     }
@@ -56,6 +60,7 @@ export class LoginPage implements OnInit {
                 this.data = res;
                 this._appConfigService.setUserData(this.data.body);
                 this._navCtrl.setRoot(HomePage, { "access_token": this.data.body.access_token });
+                this._genericAnalytic.setUserId(logvalue.email);
             }
             else {
                 this._toast.toast(res.message, 3000, "top");
@@ -74,8 +79,8 @@ export class LoginPage implements OnInit {
     }
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
-//            this._appConfigService.setUserData(res.body);
-//            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            //            this._appConfigService.setUserData(res.body);
+            //            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }
     gotoforgotPage() {

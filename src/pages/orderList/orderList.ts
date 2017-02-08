@@ -16,7 +16,7 @@ import uniq from 'lodash/uniq';
 import flattenDeep from 'lodash/flattenDeep';
 import clone from 'lodash/clone';
 import forEach from 'lodash/forEach';
-
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     templateUrl: 'orderlist.html'
 })
@@ -41,7 +41,7 @@ export class OrderlistPage implements OnInit {
     startDateArray: number = 0;
     endDateArray: number = 2;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
             this.secret = userData.secret;
@@ -51,7 +51,9 @@ export class OrderlistPage implements OnInit {
             this.selectedOrder_details();
         });
     }
-
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("orderList Page");
+    }
     total_orders() {
         var body = { "secret": this.secret }
         this._order.getTotalOrder(body).then((res) => {

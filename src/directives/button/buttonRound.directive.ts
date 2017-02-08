@@ -15,14 +15,11 @@ export class Button {
     @Input() analyticsAction: string = "";
     @Input() analyticsLabel: string = "";
     @Input() analyticsValue: number;
-    @Input() analyticsTitle: string = "";
-    @Input() analyticsCampaignUrl: string;
     @Output() onBtnClick = new EventEmitter();
     constructor(public _genericAnalytic: GenericAnalytics) {
     }
     onClick() {
         this._genericAnalytic.setTrackEventValue(this.analyticsAction, this.analyticsLabel, this.analyticsValue);
-        this._genericAnalytic.setTrackView(this.analyticsTitle, this.analyticsCampaignUrl);
         this.onBtnClick.emit();
     }
 }

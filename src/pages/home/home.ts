@@ -5,6 +5,7 @@ import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
 import { ToastService } from './../../providers/toast-service/toastService';
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     templateUrl: 'home.html'
 })
@@ -20,7 +21,7 @@ export class HomePage implements OnInit {
     pagename: string = 'home';
     userToken: any;
     menu: boolean = true;
-    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
             this.pagename = 'home';
@@ -29,6 +30,9 @@ export class HomePage implements OnInit {
         else {
             this.title = 'Home';
         }
+    }
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Home Page");
     }
     ngOnInit() {
         this.homeProducts();

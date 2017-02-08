@@ -8,7 +8,7 @@ import { ChangePwdDataType } from './changePwdDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { User } from './userInterface';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     templateUrl: 'changepassword.html'
 })
@@ -19,7 +19,7 @@ export class ChangepasswordPage implements OnInit {
     spin: boolean = false;
     secret: string;
     public user: User;
-    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngOnInit() {
         this.user = {
             password: '',
@@ -31,11 +31,13 @@ export class ChangepasswordPage implements OnInit {
             this.secret = userData.secret;
         });
     }
-
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Change Password Page");
+    }
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
         let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret, access_token: this.access_token }
-        this._changePwd.getPwd(data).then((res:any) => {
+        this._changePwd.getPwd(data).then((res: any) => {
             this.spin = false;
             this.response = res;
             this._toast.toast(res.body, 3000, "bottom");

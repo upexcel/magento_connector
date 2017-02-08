@@ -41,7 +41,6 @@ export class CategoryComponent {
     }
     gotoProduct(product) {
         this._genericAnalytic.setTrackEventValue("click", "CategoryProduct", product);
-        this._genericAnalytic.setTrackView("HomePage", "ProductPage");
         this._navCtrl.push(ProductPage, {
             id: product
         });

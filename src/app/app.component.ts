@@ -8,8 +8,8 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
-import { GenericAnalytics } from '../providers/genericAnalytics/genericAnalytics'
-
+import { GenericAnalytics } from '../providers/genericAnalytics/genericAnalytics';
+declare var cordova :any;
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `
@@ -19,19 +19,36 @@ import { GenericAnalytics } from '../providers/genericAnalytics/genericAnalytics
 export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
-    constructor(public _genericAnalytic:GenericAnalytics,private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(public _genericAnalytic: GenericAnalytics, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
+            this._appConfigService.getUserData().then((userData: any) => {
+                if (userData) {
+                    this.initAnalytics(userData.access_token, userData.email);
+                } else {
+                    this.initAnalytics();
+                }
+            });
         });
         this.addConnectivityListeners();
-        this.initAnalytics();
     }
-    initAnalytics() {
+    initAnalytics(access_token?, userId?) {
         this._platform.ready().then(() => {
             this._genericAnalytic.addAnalytics("googleAnalytics");
+            if (this._platform.is('cordova')) {
+                cordova.getAppVersion((version)=> {
+                    this._genericAnalytic.setAppVersion(version);
+                });
+            }
+            if (access_token && access_token != undefined) {
+                this._genericAnalytic.setUserId(userId);
+            }
+            else {
+                this._genericAnalytic.setUserId("false");
+            }
         });
     }
-    
+
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();

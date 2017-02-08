@@ -9,7 +9,7 @@ import { LoginDataType } from '../login/loginDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { EmailValidator } from '../../validation/emailValidate'
-
+import { GenericAnalytics } from './../../providers/genericAnalytics/genericAnalytics';
 @Component({
     templateUrl: 'register.html'
 })
@@ -18,7 +18,7 @@ export class RegisterPage implements OnInit {
     spin: boolean = false;
     clear: boolean = false;
     data: LoginDataType;
-    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
+    constructor(public _genericAnalytic: GenericAnalytics, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -26,13 +26,15 @@ export class RegisterPage implements OnInit {
                 firstname: ['', Validators.required],
                 lastname: ['', Validators.required],
                 email: ['', Validators.compose([Validators.maxLength(50),
-                    EmailValidator.isValidMailFormat, Validators.required])],
+                EmailValidator.isValidMailFormat, Validators.required])],
                 password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
                 website_id: [website_id]
             });
         });
     }
-
+    ionViewWillEnter() {
+        this._genericAnalytic.setTrackView("Registration Page");
+    }
     signup(regvalue: any) {
         this.spin = true;
         this._register.getRegister(regvalue).then((res) => {
@@ -45,8 +47,6 @@ export class RegisterPage implements OnInit {
         }).catch(err => {
             this.spin = false;
         })
-
-
     }
     signin(logvalue: any) {
         this._login.getLogin(logvalue).then((res) => {
@@ -54,6 +54,7 @@ export class RegisterPage implements OnInit {
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(res.body);
+                this._genericAnalytic.setUserId(logvalue.email);
                 this._toast.toast("Welcome " + logvalue.firstname, 3000);
                 this._navCtrl.setRoot(HomePage, { "access_token": this.data.body.access_token });
             }
