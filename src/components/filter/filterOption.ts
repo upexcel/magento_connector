@@ -16,6 +16,7 @@ export class FilterOption {
     checkData: any = [];
     data;
     constructor(private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {
+                console.log("enter Op")
         this.data = this._navParam.get('data');
         forEach(this.data.option, (value, key) => {
             this.option.push({
@@ -39,7 +40,7 @@ export class FilterOption {
     }
     done() {
         this._nav.setRoot(FilterBy, { "data":{"data": this.checkData,"title":this.data.filter_title }});
-        this._viewCtrl.dismiss();
+//        this._viewCtrl.dismiss();
     }
     dismiss() {
         this._viewCtrl.dismiss();
