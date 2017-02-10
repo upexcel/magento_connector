@@ -5,18 +5,22 @@
 
     <ion-content class="sidemenu" *ngIf="data">
         <ion-list  no-lines *ngFor="let list of data.body.children">
-                   <ion-item  ion-item class="cursorPointer" *ngFor="let list1 of list.children;let i=index" (click)="toggle(list1)" >
-                   {{list1.name}}
-                   <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
-                <ion-list *ngIf="list1.showDetails">
-                    <ion-item *ngFor="let glist of list1.children" id="sidemenuList" (click)="gotoCategoryProduct(glist.id,glist.name)">
-                        {{glist.name}}
-                </ion-item>
-            </ion-list>
-        </ion-item>
-    </ion-list>
-    <user-menu *ngIf="usermenu || token"></user-menu>
-</ion-content>
+                   <span *ngFor="let list1 of list.children;let i=index">
+                <ion-item  ion-item class="cursorPointer" *ngIf='list1.include_in_menu=="true"' (click)="toggle(list1)" >
+                    {{list1.name}}
+                    <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
+                    <ion-list *ngIf="list1.showDetails">
+                        <span *ngFor="let glist of list1.children">
+                            <ion-item  *ngIf="glist.include_in_menu=='true'" id="sidemenuList" (click)="gotoCategoryProduct(glist.id,glist.name)">
+                                {{glist.name}}
+                            </ion-item>
+                        </span>
+                    </ion-list>
+                </ion-item>               
+            </span>
+        </ion-list>
+        <user-menu *ngIf="usermenu || token"></user-menu>
+    </ion-content>
 </ion-menu>
 <ion-nav id="nav"  #content [root]="rootPage" >
 </ion-nav>

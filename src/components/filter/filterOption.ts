@@ -40,7 +40,6 @@ export class FilterOption {
     }
     done() {
         this._nav.setRoot(FilterBy, { "data":{"data": this.checkData,"title":this.data.filter_title }});
-        this._viewCtrl.dismiss();
     }
     dismiss() {
         this._viewCtrl.dismiss();

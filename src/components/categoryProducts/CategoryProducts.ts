@@ -1,4 +1,4 @@
-import { Component, Input,Output,EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductPage } from '../../pages/product/product';
 import { NavController } from 'ionic-angular';
 import { Events } from 'ionic-angular';

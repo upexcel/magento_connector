@@ -46,12 +46,11 @@
                                     <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                 </ion-buttons>
                             </ion-label>
-                            <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChangeConfigurableAttribute(res,key)">
-                                <!--<ion-option value="-1" ><ion-label no-margin class="font12">Select</ion-label></ion-option>--> 
+                            <ion-select [(ngModel)]="res[key]"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(res,key)">
                                 <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                     <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                         <ion-label no-margin class="font12">
-                                            {{obj.label}}
+                                            {{obj.label}}&nbsp;+{{productData.body.data.currency_sign}}{{obj.price}}
                                         </ion-label>
                                     </ion-option>
                                 </span>

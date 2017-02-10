@@ -19,7 +19,7 @@ export class CustomOption {
     textAreaPrice: any = {};
     selectMulti: any = [];
     select: any = [];
-    radio: any;
+    radio: any = [];
     checkData: any = [];
     check: any = [];
     fileData: any = {};
@@ -27,7 +27,6 @@ export class CustomOption {
     multiPrice: any = [];
     selectPrice: any = [];
     checkPrice: any = [];
-    radioPrice: any = {};
     textPrice: any = {};
     fileDataValue: any = [];
     jsonFileData: any = [];
@@ -70,9 +69,16 @@ export class CustomOption {
         this.custom_option = this.data.body.data.product_custom_option;
         forEach(this.custom_option, (value, key) => {
             value.id = key;
-            this.validateArray.push({ "id": value.id, "validate": true });
+            value.visable = true;
+            if (value.is_require == "1") {
+                this.validateArray.push({ "id": value.id, "validate": true });
+            } else {
+                this.validateArray.push({ "id": value.id, "validate": false });
+            }
+
             forEach(value.option_type, function(data, id) {
                 data.disable = false;
+                console.log("this.custom_option",data.price_type );
             })
             self.keys.push(value.type);
             if (value.type == "date_time") {
@@ -105,42 +111,42 @@ export class CustomOption {
             }
         })
     }
-    text(opt, formId) {
+    text(opt, formId, is_require) {
         var val;
         forEach(this.textData, function(value) {
             val = value;
         })
         if (val.length > 0) {
-            this.formValidate(formId, false);
+            this.formValidate(formId, false, is_require);
             this.validateArray.iid
             this.textPrice = { "price": opt.price };
             this.textSubdata = { "field": opt };
         }
         else {
-            this.formValidate(formId, true);
+            this.formValidate(formId, true, is_require);
             this.textPrice = { "price": 0 };
             this.textSubdata = { "area": "" };
         }
         this.bundleJson();
     }
-    textArea(opt, formId) {
+    textArea(opt, formId, is_require) {
         var val;
         forEach(this.textarea, function(value) {
             val = value;
         })
         if (val.length > 0) {
-            this.formValidate(formId, false);
+            this.formValidate(formId, false, is_require);
             this.textAreaPrice = { "price": opt.price };
             this.textAreaSubdata = { "area": opt };
         }
         else {
-            this.formValidate(formId, true);
+            this.formValidate(formId, true, is_require);
             this.textAreaPrice = { "price": 0 };
             this.textAreaSubdata = { "area": "" };
         }
         this.bundleJson();
     }
-    onChangeSelect(data, formId) {
+    onChangeSelect(data, formId, is_require) {
         this.selectPrice = [];
         let option_id;
         let json: any = [];
@@ -153,7 +159,7 @@ export class CustomOption {
                 disable = data.disable;
                 value.push(data);
                 this.selectPrice.push({ "price": data.price, "disable": disable });
-                this.formValidate(formId, false);
+                this.formValidate(formId, false, is_require);
                 option_id = data.option_id;
                 json.push(data.option_type_id);
             }
@@ -164,18 +170,23 @@ export class CustomOption {
         this.bundleJson();
 
     }
-    onChangeRadio(formId) {
+    onChangeRadio(formId, is_require) {
         this.Radioobj = {};
         let radio: any;
-        this.formValidate(formId, false);
-        this.radioPrice = { "price": this.radio.price };
-        this.Radioobj[this.radio.option_id] = this.radio.option_type_id;
-        radio = { "radio": this.radio }
-        this.radioSubdata = radio;
+        let selectedRadioFiled: any = [];
+        this.formValidate(formId, false, is_require);
+        forEach(this.radio, (value, key) => {
+            if (value) {
+                this.Radioobj[value.option_id] = value.option_type_id;
+                selectedRadioFiled.push(value);
+            }
+        });
+        radio = { "radio": selectedRadioFiled }
+        this.radioSubdata = selectedRadioFiled;
         this.bundleJson();
 
     }
-    onChangeMulti(data, formId, i) {
+    onChangeMulti(data, formId, i, is_require) {
         this.multiPrice = [];
         let self = this;
         let json: any = [];
@@ -185,10 +196,10 @@ export class CustomOption {
         let subRecord: any = [];
         let multiPrice: any = [];
         if (data[i].length > 0) {
-            this.formValidate(formId, false);
+            this.formValidate(formId, false, is_require);
         }
         else {
-            this.formValidate(formId, true);
+            this.formValidate(formId, true, is_require);
         }
         forEach(this.selectMulti, function(value) {
             forEach(value, function(data: any, key1) {
@@ -213,10 +224,7 @@ export class CustomOption {
         this.multiSubdata = multi;
         this.bundleJson();
     }
-    onChangeCheck(data, event, formId) {
-        console.log(data)
-        let self = this;
-        let json: any = [];
+    onChangeCheck(data, event, formId, is_require) {
         let option_id;
         this.checkObj = {};
         this.checkPrice = [];
@@ -226,28 +234,29 @@ export class CustomOption {
         else {
             this.checkData = pull(this.checkData, data);
         }
-        console.log(this.checkData)
         if (this.checkData.length > 0) {
-            this.formValidate(formId, false);
+            this.formValidate(formId, false, is_require);
         } else {
-            this.formValidate(formId, true);
+            this.formValidate(formId, true, is_require);
         }
-        forEach(this.checkData, function(data: any, key1) {
+        forEach(this.checkData, (data: any, key1) => {
+            if (!this.checkObj[data.option_id]) {
+                this.checkObj[data.option_id] = [];
+            }
             if (data) {
-                self.checkPrice.push({ "price": data.price });
+                this.checkPrice.push({ "price": data.price });
                 option_id = data.option_id;
-                json.push(data.option_type_id);
+                this.checkObj[option_id].push(data.option_type_id);
             }
         })
-        this.checkObj[option_id] = json;
         let ckeckBox = { "checkbox": this.checkData };
         this.checkSubData = ckeckBox;
         this.bundleJson();
     }
-    file(event, opt, formId) {
+    file(event, opt, formId, is_require) {
         let self = this;
         let fileArray: any = [];
-        this.formValidate(formId, false);
+        this.formValidate(formId, false, is_require);
         forEach(this.jsonFileData, function(value) {
             if (value.option_id == opt.option_id) {
                 value.option_url = event.srcElement.files[0].name;
@@ -258,18 +267,18 @@ export class CustomOption {
         forEach(this.jsonFileData, function(value) {
             self.jsonFileDataValue[value.option_id] = value.option_url;
             fileArray.push(value.file);
-            
+
         })
         let json = { "file": this.jsonFileData };
         self.fileSubData = json;
         this.bundleJson();
     }
-    timeChanged(formId) {
+    timeChanged(formId, is_require) {
         let array = [];
         let time = {};
         let day_part;
         let hour = 0;
-        this.formValidate(formId, false);
+        this.formValidate(formId, false, is_require);
         this.timePrice = { "price": this.jsonTimeData.option_Price };
         array = this.time.split(':');
         if (array[0] * 1 > 12) {
@@ -288,8 +297,8 @@ export class CustomOption {
         this.timeJson[this.jsonTimeData.option_id] = time;
         this.bundleJson();
     }
-    dateChanged(formId) {
-        this.formValidate(formId, false);
+    dateChanged(formId, is_require) {
+        this.formValidate(formId, false, is_require);
         var dateObj = new Date(this.dateData);
         var day = dateObj.getDate();
         var months = dateObj.getMonth();
@@ -303,12 +312,11 @@ export class CustomOption {
         this.dateJson[this.jsonDateData.option_id] = dateJson;
         this.bundleJson();
     }
-    calenderChanged(formId) {
+    calenderChanged(formId, is_require) {
         var dateObj = new Date(this.month);
-        
         var min = dateObj.getUTCMinutes();
         var hours = dateObj.getUTCHours();
-        this.formValidate(formId, false);
+        this.formValidate(formId, false, is_require);
         this.dateTimePrice = { "price": this.jsonDateTimeData.option_Price };
         var data = {
             "hour": hours,
@@ -318,25 +326,18 @@ export class CustomOption {
         this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
         this.bundleJson();
     }
-    checkVisiblety(name) {
-        if (name == "radio") {
-            if (this.radioHidden) {
-                this.radioHidden = false;
-            }
-            else {
-                this.radioHidden = true;
-            }
+    checkVisiblety(obj) {
+        if (obj.visable == false) {
+            obj.visable = true;
         }
         else {
-            if (this.checkHidden) {
-                this.checkHidden = false;
-            }
-            else {
-                this.checkHidden = true;
-            }
+            obj.visable = false;
         }
     }
-    formValidate(data, flag) {
+    formValidate(data, flag, is_require) {
+        if (is_require == "0") {
+            flag = false;
+        }
         forEach(this.validateArray, (value, key) => {
             if (value.id == data) {
                 value.validate = flag;
@@ -348,14 +349,11 @@ export class CustomOption {
         var total = 0;
         let jsonData = {};
         let subdata = {};
-        
+
         let validateCount = 0;
         let custonCartDisable = true;
         if (this.textPrice.price != undefined) {
             total += (this.textPrice.price * 1);
-        }
-        if (this.radioPrice.price != undefined) {
-            total += (this.radioPrice.price * 1);
         }
         if (this.textAreaPrice.price != undefined) {
             total += (this.textAreaPrice.price * 1);
@@ -369,6 +367,9 @@ export class CustomOption {
         if (this.dateTimePrice != undefined) {
             total += (this.dateTimePrice.price * 1);
         }
+        forEach(this.radioSubdata, function(value: any) {
+            total += (value.price * 1);
+        });
         forEach(this.selectPrice, function(value: any) {
             total += (value.price * 1);
         });

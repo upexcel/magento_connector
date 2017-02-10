@@ -11,6 +11,7 @@ export class Button {
     @Input() valid: boolean = false;
     @Input() id: string = "";
     @Input() class: string = "";
+    @Input() category;
     @Output() onBtnClick = new EventEmitter();
     constructor() {
     }
