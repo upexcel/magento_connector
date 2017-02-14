@@ -19,13 +19,14 @@ export class CategoryProductPage implements OnInit {
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
+    c_Id: any;
     constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
+        this.c_Id=_navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
-        console.log(this._viewCtrl)
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
             if (this.access_token != null || userData != null) {
@@ -37,7 +38,6 @@ export class CategoryProductPage implements OnInit {
         this.show_products(this.product_id, this.page, this.limit);
     }
     ngOnDestroy() {
-        console.log("distroyf")
     }
     show_products(product_id: any, page: any, limit: any) {
         let body = { "id": product_id, "page": page, "limit": limit };

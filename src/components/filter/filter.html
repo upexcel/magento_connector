@@ -12,25 +12,30 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-list-header>
-        Price
-    </ion-list-header>
-    <div class="padding">
-        <div><span >Min</span><span class="floatRight ">Max</span></div>
-        <div><span  *ngIf="dualValue2">{{dualValue2.lower}} </span> <span *ngIf="dualValue2" class="floatRight"> {{dualValue2.upper}}</span></div>
+    <ion-spinner class="apiSpinner" *ngIf="!res.length>0"></ion-spinner>
+    <div *ngIf="res.length>0">
+        <div *ngIf="price">
+            <ion-list-header class='capitalize'>
+                {{price.filter_title}}
+            </ion-list-header>
+            <div class="padding">
+                <div><span >Min</span><span class="floatRight ">Max</span></div>
+                <div><span  *ngIf="dualValue2">{{dualValue2.lower}} </span> <span *ngIf="dualValue2" class="floatRight"> {{dualValue2.upper}}</span></div>
+            </div>
+            <ion-list>
+                <ion-item  *ngIf="price">
+                    <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="{{price.price.Min}}" max="{{price.price.Max}}" (ngModelChange)="range()"></ion-range>
+                </ion-item>        
+            </ion-list>
+        </div>
+        <ion-list class="no-margin" *ngFor="let response of res">
+                  <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
+                {{response.filter_title}}
+                <span></span>
+                <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
+            </a>
+        </ion-list>
     </div>
-    <ion-list>
-        <ion-item>
-            <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="100" (ngModelChange)="range()"></ion-range>
-        </ion-item>        
-    </ion-list>
-    <ion-list class="no-margin" *ngFor="let response of res">
-        <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
-       {{response.filter_title}}
-       <span></span>
-            <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
-        </a>
-    </ion-list>
 </ion-content>
 <ion-footer>
     <btn-full  [titleFull]='"Apply"'  [id]="'btn'"  [classFull]="'botton'"  (onBtnClick)="apply()"></btn-full>

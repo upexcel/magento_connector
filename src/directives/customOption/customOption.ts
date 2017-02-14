@@ -58,7 +58,7 @@ export class CustomOption {
     validate: FormGroup;
     curYear: any;
     validateArray: any = [];
-
+    price:number;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
@@ -66,6 +66,8 @@ export class CustomOption {
         this.currencySign = this.data.body.data.currency_sign;
         let self = this;
         this.validateArray = [];
+        this.price = this.data.body.data.final_price;
+        console.log(this.price)
         this.custom_option = this.data.body.data.product_custom_option;
         forEach(this.custom_option, (value, key) => {
             value.id = key;
@@ -75,10 +77,14 @@ export class CustomOption {
             } else {
                 this.validateArray.push({ "id": value.id, "validate": false });
             }
-
-            forEach(value.option_type, function(data, id) {
+            forEach(value.option_type,(data, id)=> {
                 data.disable = false;
-                console.log("this.custom_option",data.price_type );
+                if (data.price_type == "percent") {
+                    let interest = ((this.price*1) * (data.price*1)) / 100;
+                    console.log("interest", interest, "price", data.price)
+                    data.price = interest;
+                    data.default_price=interest;
+                }
             })
             self.keys.push(value.type);
             if (value.type == "date_time") {
@@ -112,8 +118,8 @@ export class CustomOption {
         })
     }
     text(opt, formId, is_require) {
-        var val;
-        forEach(this.textData, function(value) {
+        var val:any=[];
+        forEach(this.textData,(value)=> {
             val = value;
         })
         if (val.length > 0) {

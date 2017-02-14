@@ -138,6 +138,9 @@ filter{
     a div div.input-wrapper{
         text-transform: capitalize;
     }
+    .capitalize{
+        text-transform: capitalize !important;
+    }
 }
 .capitalize{
     text-transform: capitalize;

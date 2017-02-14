@@ -10,6 +10,7 @@ import { SortBy } from '../sort/sort';
 })
 export class CategoryFooter {
     @Input() product: any;
+    @Input() catedoryId: any;
     constructor(public _popoverCtrl: PopoverController, public _modalCtrl: ModalController, private _navCtrl: NavController, public _viewCtrl: ViewController) {
     }
 
@@ -18,7 +19,7 @@ export class CategoryFooter {
         popover.present();
     }
     filterModal() {
-        let modal = this._modalCtrl.create(FilterBy);
+        let modal = this._modalCtrl.create(FilterBy, { "catedoryId": this.catedoryId });
         modal.present();
     }
     dismiss() {

@@ -5,6 +5,7 @@ import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
 import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
 import { ToastService } from './../../providers/toast-service/toastService';
+
 @Component({
     templateUrl: 'home.html'
 })
@@ -20,6 +21,7 @@ export class HomePage implements OnInit {
     pagename: string = 'home';
     userToken: any;
     menu: boolean = true;
+    c_Id;
     constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {

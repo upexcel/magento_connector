@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import { ModalController,  NavParams } from 'ionic-angular';
+import { ModalController, NavParams } from 'ionic-angular';
 import { FilterOption } from './filterOption';
 import { FilterByModel } from './../../model/filterBy/filterBy';
 import { Storage } from '@ionic/storage';
@@ -16,15 +16,27 @@ export class FilterBy {
     data: any;
     filter_title: string = "";
     checkedData: any = [];
-    res = [{ "filter_title": "color", "color": { "2": { "filter_name": "Black" }, "3": { "filter_name": "Indigo" }, "4": { "filter_name": "Pink" }, "5": { "filter_name": "Taupe" }, "6": { "filter_name": "White" } } }, { "filter_title": "occasion", "occasion": { "2": { "filter_name": "Career" }, "3": { "filter_name": "Casual" }, "4": { "filter_name": "Evening" }, "5": { "filter_name": "Taupe" }, "6": { "filter_name": "White" } } }, { "filter_title": "apparel_type", "apparel_type": { "2": { "filter_name": "Blouses" }, "3": { "filter_name": "Knits" }, "4": { "filter_name": "Tops" }, "5": { "filter_name": "Taupe" }, "6": { "filter_name": "White" } } }, { "filter_title": "sleeve_length", "sleeve_length": { "2": { "filter_name": "Long Sleeve" }, "3": { "filter_name": "Short Sleeve" }, "4": { "filter_name": "Sleeveless" }, "5": { "filter_name": "Taupe" }, "6": { "filter_name": "White" } } }, { "filter_title": "fit", "fit": { "2": { "filter_name": "Long Sleeve" }, "3": { "filter_name": "Short Sleeve" }, "4": { "filter_name": "Sleeveless" }, "5": { "filter_name": "Taupe" }, "6": { "filter_name": "White" } } }, { "filter_title": "size", "size": { "2": { "filter_name": "XS" }, "3": { "filter_name": "S" }, "4": { "filter_name": "M" }, "5": { "filter_name": "L" }, "6": { "filter_name": "XL" } } }, { "filter_title": "length", "length": { "2": { "filter_name": "XS" }, "3": { "filter_name": "S" }, "4": { "filter_name": "M" }, "5": { "filter_name": "L" }, "6": { "filter_name": "XL" } } }, { "filter_title": "gender", "gender": { "2": { "filter_name": "Female" }, "3": { "filter_name": "S" }, "4": { "filter_name": "M" }, "5": { "filter_name": "L" }, "6": { "filter_name": "XL" } } }, { "filter_title": "custom", "custom": { "2": { "filter_name": "Female" }, "3": { "filter_name": "S" }, "4": { "filter_name": "M" }, "5": { "filter_name": "L" }, "6": { "filter_name": "XL" } } }];
+    categoryId: any;
+    res: any = [];
+    price: any;
     constructor(private _filterService: FilterService, private _navParam: NavParams, private _local: Storage, public _filter: FilterByModel, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
-        this._local.get('store_id').then((storeId) => {
-            this._filter.getFilterData({ "id": "3", "store_id": storeId }).then((res) => {
-            })
-        })
+
     }
     ngOnInit() {
+        this.categoryId = this._navParam.get('catedoryId');
         this.data = this._navParam.get('data');
+        this._local.get('store_id').then((storeId) => {
+            this._filter.getFilterData({ "id": this.categoryId, "store_id": storeId, "coll": this.data ? 1 : 0 }).then((res) => {
+                forEach(res, (value, key) => {
+                    if (value.filter_title != "price") {
+                        this.res.push(value);
+                    } else {
+                        this.price = value;
+                    }
+                })
+            })
+        });
+
         this.checkedData = [];
         if (this.data) {
             this._filterService.setFilterData(this.data);
@@ -40,13 +52,11 @@ export class FilterBy {
                         })
                     })
                 })
-                console.log("this.checkedData", this.checkedData)
             })
         })
     }
 
     range() {
-        console.log(this.dualValue2)
     }
     openModal(title) {
         var data = '';
@@ -56,11 +66,22 @@ export class FilterBy {
                 data = value[value.filter_title];
             }
         })
+        forEach(data, (value: any, key) => {
+            value.checked = false;
+            forEach(this.checkedData, (checkedValue, CheckedKey) => {
+                if (checkedValue.title == title) {
+                    if (value.filter_name == checkedValue.value && checkedValue.key==key) {
+                        value.checked = true;
+                    } else {
+                    }
+                }
+            })
+        })
         let modal = this._modalCtrl.create(FilterOption, { "data": { option: data, filter_title: title } });
         modal.present();
     }
     dismiss() {
         this._viewCtrl.dismiss();
     }
-    apply() { console.log("apy");}
+    apply() { console.log("apy"); }
 }
