@@ -3,21 +3,9 @@
         SORT BY.
     </ion-list-header>
     <ion-list radio-group>
-        <ion-item>
-            <ion-label>Price-High to Low</ion-label>
-            <ion-radio checked="true" value="1"></ion-radio>
-        </ion-item>   
-        <ion-item>
-            <ion-label>Price-Low to High</ion-label>
-            <ion-radio  value="2"></ion-radio>
+        <ion-item *ngFor="let sortData of sortRes">
+            <ion-label class="capitalize">{{sortData.key}}</ion-label>
+            <ion-radio value="{{sortData.key}}"></ion-radio>
         </ion-item> 
-        <ion-item>
-            <ion-label>popularity</ion-label>
-            <ion-radio  value="3"></ion-radio>
-        </ion-item> 
-        <ion-item>
-            <ion-label>Newest First</ion-label>
-            <ion-radio  value="4"></ion-radio>
-        </ion-item>
     </ion-list>
 </ion-content>
