@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
-import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
-import { HomeProducts } from '../../model/home/homeProducts';
+import {Component, OnInit} from '@angular/core';
+import {Platform} from 'ionic-angular';
+import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
+import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
+import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import { ToastService } from './../../providers/toast-service/toastService';
-
+import {ToastService} from './../../providers/toast-service/toastService';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 @Component({
     templateUrl: 'home.html'
 })
@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
     userToken: any;
     menu: boolean = true;
     c_Id;
-    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController, private _AppDataConfigService: AppDataConfigService) {
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
             this.pagename = 'home';
@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
     }
     homeProducts() {
         this.spin = true;
-        let body = { "type": "full" }
+        let body = {"type": "full"}
         this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
                 this.homeProduct = res;
@@ -103,9 +103,11 @@ export class HomePage implements OnInit {
 
     }
     doRefresh(refresher) {
-        this.homeProducts();
-        setTimeout(() => {
-            refresher.complete();
-        }, 2000);
+        this._AppDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
+            this.homeProducts();
+            setTimeout(() => {
+                refresher.complete();
+            }, 2000);
+        });
     }
 }

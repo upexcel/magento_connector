@@ -12,7 +12,6 @@ export class FilterOption {
     @Input() product: any;
     dualValue2: any;
     option: any = [];
-    check = [];
     checkData: any = [];
     data;
     constructor(private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {

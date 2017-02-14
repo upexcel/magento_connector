@@ -8,8 +8,10 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-list *ngIf="showAddress==false">
-        <h2 text-center >Your address book is blank.Update it with your regular billing/shipping address and add new address button just below it</h2>
+    <ion-list *ngIf="showAddress==false" text-center>
+        <h2 text-center>Your address book is blank. Update it with your regular billing/shipping address.</h2>
+        <button ion-button round (click)="addNewAddress()">Add New Address</button>
+        <!--<btn-full [titleFull]='"Add New Address"' [spinFull]="addAddr" [id]="'btn'" [classFull]="'add_address botton'" (onBtnClick)="addNewAddress()"></btn-full>-->
     </ion-list>
     <ion-list *ngIf="showAddress">
         <ion-card *ngFor="let address of reverseCartData ; let id=index">
