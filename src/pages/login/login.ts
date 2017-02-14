@@ -62,7 +62,6 @@ export class LoginPage implements OnInit {
             }
         })
             .catch(err => {
-                this.showLoginError(err);
                 this.login = false;
             })
     }
@@ -80,13 +79,5 @@ export class LoginPage implements OnInit {
     }
     gotoforgotPage() {
         this._navCtrl.push(ForgotPage, { email: this.forgotPasswordEmail });
-    }
-    showLoginError(error) {
-        let alert = this._alertCtrl.create({
-            title: 'Error',
-            subTitle: error,
-            buttons: ['OK']
-        });
-        alert.present();
     }
 }
