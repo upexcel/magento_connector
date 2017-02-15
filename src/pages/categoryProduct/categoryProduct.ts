@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController, PopoverController, NavParams, ViewController, LoadingController, Events } from 'ionic-angular';
-import { PopoverPage } from './../../components/popover/popover';
-import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
-import { CategoryProductDataType } from './../../model/categoryProduct/categoryProductData';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { LoginPage } from '../login/login';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavController, MenuController, PopoverController, NavParams, ViewController, LoadingController, Events} from 'ionic-angular';
+import {PopoverPage} from './../../components/popover/popover';
+import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {LoginPage} from '../login/login';
+import {Storage} from '@ionic/storage';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -15,7 +14,7 @@ export class CategoryProductPage implements OnInit {
     title: string;
     limit: number = 10;
     page: number = 1;
-    categoryProduct: CategoryProductDataType;
+    categoryProduct: any;
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
@@ -23,7 +22,7 @@ export class CategoryProductPage implements OnInit {
     constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
-        this.c_Id=_navParams.get('name');
+        this.c_Id = _navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
@@ -40,7 +39,7 @@ export class CategoryProductPage implements OnInit {
     ngOnDestroy() {
     }
     show_products(product_id: any, page: any, limit: any) {
-        let body = { "id": product_id, "page": page, "limit": limit };
+        let body = {"id": product_id, "page": page, "limit": limit};
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct = res;
         })
@@ -49,34 +48,14 @@ export class CategoryProductPage implements OnInit {
             });
     }
     doInfinite(infiniteScroll) {
-        var limit = this.limit;
-        if (this.categoryProduct.body.length % 2 == 0) {
-            if (this.categoryProduct.body.length < limit) {
-                infiniteScroll.complete();
-                infiniteScroll.enable(false);
-            }
-            else if (this.categoryProduct.body.length >= limit) {
-                setTimeout(() => {
-                    this.limit += 6;
-                    this.show_products(this.product_id, this.page, this.limit);
-                    infiniteScroll.complete();
-                    infiniteScroll.enable(false);
-                }, 100);
-            }
-            else if (this.categoryProduct.body.length <= limit) {
-                setTimeout(() => {
-                    this.limit += 6;
-                    this.show_products(this.product_id, this.page, this.limit);
-                    infiniteScroll.complete();
-                    infiniteScroll.enable(false);
-                }, 100);
-            }
-            else { }
-        }
-        else {
+        ++this.page;
+        this._category.getCategoryProduct({"id": this.product_id, "page": this.page, "limit": this.limit}).then((res) => {
+            this.categoryProduct.body = this.categoryProduct.body.concat(res.body);
+            infiniteScroll.complete();
+        }).catch((err) => {
             infiniteScroll.complete();
             infiniteScroll.enable(false);
-        }
+        });
     }
     openMenu() {
         this._menuCtrl.open();
