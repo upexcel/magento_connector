@@ -30,7 +30,7 @@
         </ion-card-content>
 
     </ion-card>
-    <ion-list class="padLeft10 marBot60" >
+    <ion-list class="marBot60" >
         <ion-item *ngFor=" let data of productReview.body.data ">
             <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
             <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
@@ -39,28 +39,10 @@
         <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.body.total_review">
             <ion-buttons>
                 <span *ngIf="listLoad==false" class="capitalize">All {{productReview.body.total_review}} Review </span>
-                <ion-spinner  *ngIf="listLoad"></ion-spinner>
+                <ion-spinner *ngIf="listLoad"></ion-spinner>&nbsp;
                 <ion-icon name="arrow-dropright" class="floatRight"></ion-icon> 
             </ion-buttons>
         </ion-item>
     </ion-list> 
 </div>
 <btn-full  [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
-
-<!--<ion-grid>
-    <ion-row>
-        <ion-col width-25>
-
-        </ion-col>
-        <ion-col width-50 offset-25>
-            <button ion-button color="primary" block round width-60 offset-20 (click)="addReview()" class="writeButt botton">
-                    Review Product
-        </button>
-    </ion-col>
-    <ion-col width-25>
-
-    </ion-col>
-</ion-row>
-</ion-grid>-->
-
-
