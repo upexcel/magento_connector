@@ -43,9 +43,9 @@ export class SocialService {
             if (this.platform.is('cordova')) {
                 console.log("this.options", this.options)
                 GooglePlus.login({
-                    'scopes': '',
-                    'webClientId': "1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com",
-                    'offline': false,
+//                    'scopes': '',
+//                    'webClientId': "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
+//                    'offline': false,
                 }).then((success) => {
                     console.log(success)
                     resolve(success);
