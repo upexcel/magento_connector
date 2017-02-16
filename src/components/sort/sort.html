@@ -2,10 +2,10 @@
     <ion-list-header>
         SORT BY.
     </ion-list-header>
-    <ion-list radio-group>
+    <ion-list radio-group [(ngModel)]= "slectedSort" (ngModelChange)="dismiss(slectedSort)">
         <ion-item *ngFor="let sortData of sortRes">
             <ion-label class="capitalize">{{sortData.key}}</ion-label>
-            <ion-radio value="{{sortData.key}}"></ion-radio>
+            <ion-radio [value]="sortData.key"></ion-radio>
         </ion-item> 
     </ion-list>
 </ion-content>
