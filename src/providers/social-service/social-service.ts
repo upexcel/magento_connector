@@ -20,6 +20,8 @@ export class SocialService {
             if (this.platform.is('cordova')) {
                 Facebook.login(['email']).then((success) => {
                     resolve(success);
+                }).catch((res) => {
+                    reject(res);
                 })
             } else {
                 reject('Please run me on a device');
@@ -33,7 +35,9 @@ export class SocialService {
             Facebook.api('/me?fields=id,first_name,last_name,email,picture.width(150).height(150)', null).then(
                 (profileData) => {
                     resolve(profileData);
-                });
+                }).catch((res) => {
+                    reject(res);
+                })
         });
 
     }
@@ -43,9 +47,9 @@ export class SocialService {
             if (this.platform.is('cordova')) {
                 console.log("this.options", this.options)
                 GooglePlus.login({
-//                    'scopes': '',
-//                    'webClientId': "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
-//                    'offline': false,
+                    //                    'scopes': '',
+                    //                    'webClientId': "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
+                    //                    'offline': false,
                 }).then((success) => {
                     console.log(success)
                     resolve(success);
