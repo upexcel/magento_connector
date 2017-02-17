@@ -60,7 +60,7 @@
                 </ion-row>
 
                 <!--for bundle product-->
-                <bundle [bundle]="productData.body" (onChangeData)=bundleData($event) (onChange)=bundle($event)></bundle>
+                <bundle [bundle]="productData.body" (onChangeData)=calcultateData($event) (onChange)=bundle($event)></bundle>
                 <!--                for downloadable product-->
                 <download  [data]="productData" (onChange)="calcultateData($event)"></download>
                 <!--for custom product-->

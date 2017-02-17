@@ -22,7 +22,7 @@ import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
 @Component({
-    selector:'product',
+    selector: 'product',
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit {
@@ -75,11 +75,11 @@ export class ProductPage implements OnInit {
     customPrice: number;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
-    product_custom_option:any;
+    product_custom_option: any;
     config = true;
-    product="product";
+    product = "product";
     downlodeFormValidate = true;
-    virtual=false;
+    virtual = false;
     constructor(private _bundleService: bundleService, private _groupServices: GroupService, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, private _cart: Cart, private _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -126,7 +126,7 @@ export class ProductPage implements OnInit {
                 this.productData = res;
                 if (res) {
                     this.spin = false;
-                    this.product=this.productData.body.data.name;
+                    this.product = this.productData.body.data.name;
                     console.log(this.product)
                     this.productid = this.productData.body.data.entity_id;
                     this.images = this.productData.body.data.media_images[0];
@@ -167,7 +167,7 @@ export class ProductPage implements OnInit {
                     if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                         this.customFormValidate = true;
                         this.customDisable = true;
-                        this.virtual=false;
+                        this.virtual = false;
                         this.disable = true;
                     }
                     this.genrateData();
@@ -288,15 +288,11 @@ export class ProductPage implements OnInit {
         this.final_price = this.bundlePrice;
         this.display_price = this.dynemicDisplayPrice;
     }
-    bundleData(obj) {
-        this.bData = obj;
-        this.disable = obj.disable
-    }
     addCart(response) {
         let array: any = {};
         let selectedItem: string;
         let data: any;
-        
+
         let other;
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
@@ -330,7 +326,7 @@ export class ProductPage implements OnInit {
                 }
                 //bundleproduct
                 else if (this.type == "bundle") {
-                    this.bundleCart(this.bData, this.bundlePrice, this.productData.body);
+                    this.bundleCart(this.bData, this.bundlePrice, this.productData.body);//
                 }
                 else {
                     this.path = { "productid": this.productid, "access_token": userData.access_token, "secret": userData.secret, "store_id": store_id };
@@ -412,8 +408,8 @@ export class ProductPage implements OnInit {
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
-            this.bundlePrice += data * 1;
-            this.dynemicDisplayPrice += data * 1;
+            this.bundlePrice += data.total * 1;
+            this.dynemicDisplayPrice += data.total * 1;
         }
         else {
             if (data) {
@@ -445,10 +441,10 @@ export class ProductPage implements OnInit {
             else {
                 this.disable = true;
             }
-        }else if (this.type == 'virtual') {
+        } else if (this.type == 'virtual') {
             this.disable = customData.disable;
         }
-         else if (this.type == 'simple') {
+        else if (this.type == 'simple') {
             this.disable = customData.disable;
         }
         else {
@@ -463,7 +459,6 @@ export class ProductPage implements OnInit {
         customData = merge(customData, this.other, this.path);
 
     }
-
     bundleCart(other, price, data) {
         this._bundleService.addCart(other, price, data).then((response: any) => {
             this._local.set('CartData', response);
@@ -471,8 +466,6 @@ export class ProductPage implements OnInit {
                 this._toast.toast("item inserted ", 3000, "top");
                 this._navCtrl.push(CartPage);
             }, 200);
-
-
         });
     }
 }

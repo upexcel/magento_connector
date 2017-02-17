@@ -1,8 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
-import merge from 'lodash/merge';
-
-
 @Component({
     selector: 'bundle',
     templateUrl: 'bundle.html'
@@ -14,119 +11,114 @@ export class BundleProduct {
     @Input() valBundle: boolean;
     bundleCheck: any = [];
     bundleRadio: any = [];
-    bundleratio: any = [];
-    bundleMulti: any = [];
-    bundleSelect: any = [];
-    dataBundleSelect: any = [];
+    bundleMulti: any;
     dataBundleMulti: any = [];
-    dataBundleCheck: any = [];
     bundleSelected: any = {}
-    radioHidden: boolean = true;
-    checkHidden: boolean = true;
     bundleMultiSelected: any = {};
-    ratio = [];
-    Radioobj: any = {};
     checkObj: any = {};
     validateArray: any = [];
     radioChecked: any = {};
+    total = 0;
     constructor() {
     }
     ngOnInit() {
         this.validateArray = [];
+        let m_Flag = 0;
+        let c_Flag = 0;
+        let r_Flag = 0;
+        let s_Flag = 0;
         forEach(this.bundle.bundle_items, (value, key) => {
             value.id = key;
+            value.vertualId = false;
             value.visable = true;
+            value.vertualArray = [];
             if (value.is_require == "1") {
                 this.validateArray.push({ "id": value.id, "validate": true });
             } else {
                 this.validateArray.push({ "id": value.id, "validate": false });
             }
-        })
-    }
-    onClick(obj) {
-        let validateCount = 0;
-        let custonCartDisable = true;
-        forEach(this.validateArray, (value) => {
-            if (value.validate == false) {
-                validateCount++;
+            forEach(value.selection, (selection: any, selectionKey) => {
+                selection.defaultSet = true;
+                if (selection.defaultSet == true) {
+                    m_Flag = 1;
+                    value.vertualId = selection;
+                    if (value.type == "multi") {
+                        value.vertualArray.push(selection);
+                        if (!this.bundleMultiSelected[selection.selection_id]) {
+                            this.bundleMultiSelected[selection.selection_id] = [];
+                        }
+                        this.bundleMultiSelected[selection.selection_id].push(selection.selection_product_id);
+                    }
+                    if (value.type == 'checkbox') {
+                        if (!this.checkObj[selection.selection_id]) {
+                            this.checkObj[selection.selection_id] = [];
+                        }
+                        this.checkObj[selection.selection_id].push(selection.selection_product_id);
+                    }
+                    if (value.type == 'radio' && value.vertualId) {
+                        this.radioChecked[value.vertualId.selection_id] = value.vertualId.selection_product_id;
+                    }
+                    if (value.type == 'select' && value.vertualId) {
+                        this.bundleSelected[value.vertualId.selection_id] = value.vertualId.selection_product_id;
+                    }
+                }
+            })
+            if (m_Flag == 1) {
+                this.formValidate(value.id, false, value.is_require);
+                m_Flag = 0;
+            }
+            if (c_Flag == 1) {
+                this.formValidate(value.id, false, value.is_require);
+                c_Flag = 0;
+            }
+            if (s_Flag == 1) {
+                this.formValidate(value.id, false, value.is_require);
+                s_Flag = 0;
+            }
+            if (r_Flag == 1) {
+                this.formValidate(value.id, false, value.is_require);
+                r_Flag = 0;
             }
         })
-        if (validateCount == this.validateArray.length) {
-            custonCartDisable = false;
-        }
-        obj = merge(obj, { "disable": custonCartDisable })
-        this.onChangeData.emit(obj);
     }
-    public obj = {
-        multiselect: [],
-        checkbox: [],
-        radioButton: [],
-        select: []
-    }
+
     onChangeBundleSelect(bundleSelect, formId, is_require) {
-        this.dataBundleSelect = [];
         this.bundleSelected = {};
-        console.log("bundleSelect", bundleSelect);
-        forEach(bundleSelect, (value) => {
-            if (value) {
-                this.bundleSelected[value.selection_id] = (value.selection_product_id);
-                this.dataBundleSelect.push({ "nameBundleSelect": value.selection_name, "price3": value.selection_price });
-                this.formValidate(formId, false, is_require);
+        forEach(this.bundle.bundle_items, (value) => {
+            if (value.type == 'select' && value.vertualId) {
+                this.bundleSelected[value.vertualId.selection_id] = value.vertualId.selection_product_id;
             }
-        })
-        this.calculateTotal();
-        this.obj.select.push(bundleSelect);
-        this.onClick(this.obj);
+        });
+        this.formValidate(formId, false, is_require);
+        console.log("bundleSelected", this.bundleSelected)
     }
     onChangeBundleMulti(bundleMulti, formId, i, is_require) {
-        this.dataBundleMulti = [];
-        this.obj.multiselect = [];
-        let dataBundleMulti: any = [];
-        let dataMulti: any = [];
-        let dataSubMulti: any = [];
-        let self = this;
-        this.bundleMultiSelected = {}
-        if (bundleMulti[i].length > 0) {
+        this.bundleMultiSelected = {};
+        forEach(this.bundle.bundle_items, (value) => {
+            if (value.type == 'multi') {
+                forEach(value.vertualArray, (multiSelectData) => {
+                    if (!this.bundleMultiSelected[multiSelectData.selection_id]) {
+                        this.bundleMultiSelected[multiSelectData.selection_id] = [];
+                    }
+                    this.bundleMultiSelected[multiSelectData.selection_id].push(multiSelectData.selection_product_id);
+                });
+            }
+        });
+        console.log(this.bundleMultiSelected);
+        if (bundleMulti.length > 0) {
             this.formValidate(formId, false, is_require);
         }
         else {
             this.formValidate(formId, true, is_require);
         }
-        forEach(bundleMulti, (value, key) => {
-            forEach(value, (data) => {
-                if (!this.bundleMultiSelected[data.selection_id]) {
-                    this.bundleMultiSelected[data.selection_id] = [];
-                }
-                this.bundleMultiSelected[data.selection_id].push(data.selection_product_id);
-                dataBundleMulti.push({ "nameBundleMulti": data.selection_name, "price1": data.selection_price });
-                dataMulti.push(data);
-            })
-            if (value != undefined) {
-                self.dataBundleMulti.push(dataBundleMulti);
-                dataSubMulti.push(dataMulti);
-                dataBundleMulti = [];
-                dataMulti = [];
-            }
-        })
-        console.log("this.bundleMulti", this.bundleMultiSelected)
-        this.calculateTotal();
-        if (bundleMulti[0]) {
-            this.obj.multiselect = dataSubMulti;
-            this.onClick(this.obj);
-        }
     }
-    onChangeBundleCheck(formId, is_require) {
-        this.obj.checkbox = [];
-        this.dataBundleCheck = [];
+    onChangeBundleCheck(selection, formId, is_require) {
         this.checkObj = {};
         var countCheck = 0;
-        forEach(this.bundleCheck, (value, key) => {
+        forEach(selection, (value, key) => {
             if (value) {
-                if (value == true) {
+                if (value.defaultSet == true) {
                     countCheck++;
-                }
-                else {
-                    countCheck--;
                 }
             }
         })
@@ -136,77 +128,61 @@ export class BundleProduct {
         else {
             this.formValidate(formId, true, is_require);
         }
-        forEach(this.bundleCheck, (id, key) => {
-            if (id) {
-                forEach(this.bundle.bundle_items, (valueItems) => {
-                    if (valueItems.type = "checkbox") {
-                        forEach(valueItems.selection, (value) => {
-                            if (key == value.selection_product_id) {
-                                if (!this.checkObj[value.selection_id]) {
-                                    this.checkObj[value.selection_id] = [];
-                                }
-                                this.checkObj[value.selection_id].push(value.selection_product_id);
-                                this.dataBundleCheck.push({ "nameBundleCheck": value.selection_name, "price2": value.selection_price });
-                            }
-                        })
+        forEach(this.bundle.bundle_items, (valueItems) => {
+            if (valueItems.type == "checkbox") {
+                forEach(valueItems.selection, (value) => {
+                    if (value.defaultSet == true) {
+                        if (!this.checkObj[value.selection_id]) {
+                            this.checkObj[value.selection_id] = [];
+                        }
+                        this.checkObj[value.selection_id].push(value.selection_product_id);
                     }
                 })
             }
         });
         console.log("this.checkObj", this.checkObj);
-        if (this.dataBundleCheck[0]) {
-            this.obj.checkbox.push(this.dataBundleCheck);
-        }
-        this.onClick(this.obj);
-        this.calculateTotal();
     }
 
-    onChangeRadio(formId, is_require) {
-        this.Radioobj = {};
-        let radio: any;
+    onChangeRadio(selection, formId, is_require) {
         this.radioChecked = {};
-        this.Radioobj[this.bundleratio.option_id] = this.bundleratio.option_type_id;
-        radio = { "radio": this.bundleratio };
-        forEach(this.bundleratio, (value) => {
-            if (value) {
-                this.radioChecked[value.selection_id] = value.selection_product_id;
+        forEach(this.bundle.bundle_items, (value) => {
+            if (value.type == 'radio' && value.vertualId) {
+                this.radioChecked[value.vertualId.selection_id] = value.vertualId.selection_product_id;
             }
         });
         this.formValidate(formId, false, is_require);
-        console.log("this.radioChecked",this.radioChecked)
-        this.obj.radioButton.push(this.bundleratio);
-        this.onClick(this.obj);
-        this.calculateTotal();
+        console.log(this.radioChecked);
     }
-    calculateTotal() {
-
-        var total: number = 0;
-        forEach(this.dataBundleMulti, function(value: any) {
-            forEach(value, function(data: any) {
-                if (data != undefined) {
-                    total += (data.price1 * 1);
-                }
-            });
-        });
-        forEach(this.dataBundleCheck, function(value: any) {
-            if (value != undefined) {
-                total += (value.price2 * 1);
+    calculateTotal(obj) {
+        let total = 0;
+        forEach(this.bundle.bundle_items, (value) => {
+            if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
+                total += (value.vertualId.selection_price * 1);
             }
-        });
-        forEach(this.dataBundleSelect, function(value: any) {
-            if (value != undefined) {
-                total += (value.price3 * 1);
+            if (value.type == "multi") {
+                forEach(value.vertualArray, (multiValue1) => {
+                    total += (multiValue1.selection_price * 1);
+                })
             }
-        });
-        forEach(this.bundleratio, (value) => {
-            if (value) {
-                total += (value.selection_price * 1);
+            if (value.type == "checkbox") {
+                forEach(value.selection, (checkboxValue1) => {
+                    if (checkboxValue1.defaultSet == true) {
+                        total += (checkboxValue1.selection_price * 1);
+                    }
+                })
             }
         })
-        this.onChange.emit(total);
+        obj["total"]=total;
+        setTimeout(() => {
+            this.onChangeData.emit(obj);
+        }, 100);
+        console.log("total", obj)
+        //        this.onChange.emit(total);
 
     }
     formValidate(data, flag, is_require) {
+        let validateCount = 0;
+        let obj;
         if (is_require == "0") {
             flag = false;
         }
@@ -216,6 +192,18 @@ export class BundleProduct {
                 return false;
             }
         })
+        forEach(this.validateArray, (value) => {
+            if (value.validate == false) {
+                validateCount++;
+            }
+        })
+        if (validateCount == this.validateArray.length) {
+            obj = { "disable": false };
+        } else {
+            obj = { "disable": true };
+        }
+        this.calculateTotal(obj);
+
     }
     checkVisiblety(obj) {
         if (obj.visable == false) {

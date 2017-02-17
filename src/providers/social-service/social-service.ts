@@ -50,6 +50,7 @@ export class SocialService {
                     console.log(success)
                     resolve(success);
                 }).catch((res) => {
+                    reject(res);
                     console.log("error", res)
                 })
             } else {
