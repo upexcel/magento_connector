@@ -13,8 +13,8 @@
 </ion-header>
 <ion-content>
     <ion-item *ngFor="let opt of option ">
-        <ion-label >{{opt.value.filter_name}}{{opt.value.checked}}</ion-label>
-            <ion-checkbox color="dark"  value="opt" [(ngModel)]='opt.value.checked' (ngModelChange)="onChangeCheck(opt.value.filter_name,opt.key,$event)"></ion-checkbox>
+        <ion-label >{{opt.value.filter_name}}</ion-label>
+        <ion-checkbox color="dark"  value="opt" [(ngModel)]='opt.value.checked' (ngModelChange)="onChangeCheck(opt.value.filter_name,opt.key,$event)"></ion-checkbox>
     </ion-item>
 </ion-content>
 <ion-footer>

@@ -141,6 +141,29 @@ filter{
     .capitalize{
         text-transform: capitalize !important;
     }
+    .filterFooterBtnDiv{
+        padding:0px;
+        ion-col{
+            padding:0px;
+        }
+        .filterFooterBtn{
+            width: 100%;
+            padding:0px;
+            margin: 0px;
+        }
+        .filterFooterBtnFirst{
+            background-color: #e85151;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+        .filterFooterBtnFirst:hover{
+            background-color: #e85151;
+        }
+        .filterFooterBtnSecond{
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+    }
 }
 .capitalize{
     text-transform: capitalize;

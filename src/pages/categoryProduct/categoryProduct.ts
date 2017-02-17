@@ -20,6 +20,7 @@ export class CategoryProductPage implements OnInit {
     error: boolean = false;
     c_Id: any;
     sortByData: any;
+    filterData:any = [];
     previouseSortSection:any;
     constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
@@ -33,7 +34,14 @@ export class CategoryProductPage implements OnInit {
             this.categoryProduct = null;
             this.previouseSortSection = data.data.sortBy;
             this.page = 1;
-            this.show_products(this.page, this.limit, this.product_id, this.sortByData);
+            this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
+        });
+        this._events.subscribe('filter:data', (filterData) => {
+            console.log('filterData',filterData)
+            this.filterData = filterData;
+            this.categoryProduct = null;
+            this.page = 1;
+            this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
         });
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
@@ -43,16 +51,16 @@ export class CategoryProductPage implements OnInit {
                 this.showPopOver = false;
             }
         });
-        this.show_products(this.page, this.limit, this.product_id, this.sortByData);
+        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
     }
     ngOnDestroy() {
     }
-    show_products(page: any, limit: any, product_id, sortByData?) {
+    show_products(page: any, limit: any, product_id, sortByData?, filterData?) {
         let body;
         if (!sortByData) {
-            body = {"id": product_id, "page": page, "limit": limit};
+            body = {"id": product_id, "page": page, "limit": limit, "filter":filterData};
         } else {
-            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy};
+            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "filter":filterData};
         }
 
         this._category.getCategoryProduct(body).then((res) => {
@@ -65,9 +73,9 @@ export class CategoryProductPage implements OnInit {
         ++this.page;
         let body;
         if (!this.sortByData) {
-            body = {"id": this.product_id, "page": this.page, "limit": this.limit};
+            body = {"id": this.product_id, "page": this.page, "limit": this.limit, "filter":this.filterData};
         } else {
-            body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy};
+            body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "filter": this.filterData};
         }
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct.body = this.categoryProduct.body.concat(res.body);
@@ -91,7 +99,7 @@ export class CategoryProductPage implements OnInit {
     }
     doRefresh(refresher) {
         this.page = 1;
-        this.show_products(this.page, this.limit, this.product_id, this.sortByData);
+        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
         setTimeout(() => {
             refresher.complete();
         }, 2000);
