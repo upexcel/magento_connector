@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController, PopoverController, NavParams, ViewController, LoadingController, Events } from 'ionic-angular';
-import { PopoverPage } from './../../components/popover/popover';
-import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
-import { CategoryProductDataType } from './../../model/categoryProduct/categoryProductData';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { LoginPage } from '../login/login';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavController, MenuController, PopoverController, NavParams, ViewController, LoadingController, Events} from 'ionic-angular';
+import {PopoverPage} from './../../components/popover/popover';
+import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {LoginPage} from '../login/login';
+import {Storage} from '@ionic/storage';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -15,18 +14,35 @@ export class CategoryProductPage implements OnInit {
     title: string;
     limit: number = 10;
     page: number = 1;
-    categoryProduct: CategoryProductDataType;
+    categoryProduct: any;
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
     c_Id: any;
+    sortByData: any;
+    filterData:any = [];
+    previouseSortSection:any;
     constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
-        this.c_Id=_navParams.get('name');
+        this.c_Id = _navParams.get('name');
         _menuCtrl.enable(true);
     }
     ngOnInit() {
+        this._events.subscribe('sort:data', (data) => {
+            this.sortByData = data.data;
+            this.categoryProduct = null;
+            this.previouseSortSection = data.data.sortBy;
+            this.page = 1;
+            this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
+        });
+        this._events.subscribe('filter:data', (filterData) => {
+            console.log('filterData',filterData)
+            this.filterData = filterData;
+            this.categoryProduct = null;
+            this.page = 1;
+            this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
+        });
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
             if (this.access_token != null || userData != null) {
@@ -35,48 +51,42 @@ export class CategoryProductPage implements OnInit {
                 this.showPopOver = false;
             }
         });
-        this.show_products(this.product_id, this.page, this.limit);
+        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
     }
     ngOnDestroy() {
     }
-    show_products(product_id: any, page: any, limit: any) {
-        let body = { "id": product_id, "page": page, "limit": limit };
+    show_products(page: any, limit: any, product_id, sortByData?, filterData?) {
+        let body;
+        if (!sortByData) {
+            body = {"id": product_id, "page": page, "limit": limit, "filter":filterData};
+        } else {
+            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "filter":filterData};
+        }
+
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct = res;
-        })
-            .catch((err) => {
-                this.error = true;
-            });
+        }).catch((err) => {
+            this.error = true;
+        });
     }
     doInfinite(infiniteScroll) {
-        var limit = this.limit;
-        if (this.categoryProduct.body.length % 2 == 0) {
-            if (this.categoryProduct.body.length < limit) {
-                infiniteScroll.complete();
-                infiniteScroll.enable(false);
-            }
-            else if (this.categoryProduct.body.length >= limit) {
-                setTimeout(() => {
-                    this.limit += 6;
-                    this.show_products(this.product_id, this.page, this.limit);
-                    infiniteScroll.complete();
-                    infiniteScroll.enable(false);
-                }, 100);
-            }
-            else if (this.categoryProduct.body.length <= limit) {
-                setTimeout(() => {
-                    this.limit += 6;
-                    this.show_products(this.product_id, this.page, this.limit);
-                    infiniteScroll.complete();
-                    infiniteScroll.enable(false);
-                }, 100);
-            }
-            else { }
+        ++this.page;
+        let body;
+        if (!this.sortByData) {
+            body = {"id": this.product_id, "page": this.page, "limit": this.limit, "filter":this.filterData};
+        } else {
+            body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "filter": this.filterData};
         }
-        else {
+        this._category.getCategoryProduct(body).then((res) => {
+            this.categoryProduct.body = this.categoryProduct.body.concat(res.body);
+            infiniteScroll.complete();
+        }).catch((err) => {
             infiniteScroll.complete();
             infiniteScroll.enable(false);
-        }
+            setTimeout(()=>{
+                infiniteScroll.enable(true);
+            },5000);
+        });
     }
     openMenu() {
         this._menuCtrl.open();
@@ -88,7 +98,8 @@ export class CategoryProductPage implements OnInit {
         });
     }
     doRefresh(refresher) {
-        this.show_products(this.product_id, this.page, this.limit);
+        this.page = 1;
+        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
         setTimeout(() => {
             refresher.complete();
         }, 2000);

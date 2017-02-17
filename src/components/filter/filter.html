@@ -38,5 +38,14 @@
     </div>
 </ion-content>
 <ion-footer>
-    <btn-full  [titleFull]='"Apply"'  [id]="'btn'"  [classFull]="'botton'"  (onBtnClick)="apply()"></btn-full>
+    <ion-grid class="filterFooterBtnDiv">
+        <ion-row>
+            <ion-col width-50>
+                <btn-large [titleForLarge]='"Clear All"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="clearAll()"></btn-large>
+            </ion-col>
+            <ion-col width-50>
+                <btn-large [titleForLarge]='"Apply"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond'" [spinForLarge]="false" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="applyFilter()"></btn-large>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
 </ion-footer>
