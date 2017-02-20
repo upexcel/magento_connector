@@ -3,6 +3,7 @@ import forEach from 'lodash/forEach';
 import pull from 'lodash/pull';
 import merge from 'lodash/merge';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { FileChooser } from 'ionic-native';
 
 @Component({
     selector: 'custom',
@@ -58,7 +59,7 @@ export class CustomOption {
     validate: FormGroup;
     curYear: any;
     validateArray: any = [];
-    price:number;
+    price: number;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
@@ -67,7 +68,6 @@ export class CustomOption {
         let self = this;
         this.validateArray = [];
         this.price = this.data.body.data.final_price;
-        console.log(this.price)
         this.custom_option = this.data.body.data.product_custom_option;
         forEach(this.custom_option, (value, key) => {
             value.id = key;
@@ -77,13 +77,12 @@ export class CustomOption {
             } else {
                 this.validateArray.push({ "id": value.id, "validate": false });
             }
-            forEach(value.option_type,(data, id)=> {
+            forEach(value.option_type, (data, id) => {
                 data.disable = false;
                 if (data.price_type == "percent") {
-                    let interest = ((this.price*1) * (data.price*1)) / 100;
-                    console.log("interest", interest, "price", data.price)
+                    let interest = ((this.price * 1) * (data.price * 1)) / 100;
                     data.price = interest;
-                    data.default_price=interest;
+                    data.default_price = interest;
                 }
             })
             self.keys.push(value.type);
@@ -111,15 +110,17 @@ export class CustomOption {
                     "option_url": "",
                     "option_Price": "",
                     "file": "",
-                    "disable": ""
+                    "disable": "",
+                    "options": "",
+                    "uri": ""
                 }
                 self.jsonFileData.push(obj);
             }
         })
     }
     text(opt, formId, is_require) {
-        var val:any=[];
-        forEach(this.textData,(value)=> {
+        var val: any = [];
+        forEach(this.textData, (value) => {
             val = value;
         })
         if (val.length > 0) {
@@ -263,21 +264,38 @@ export class CustomOption {
         let self = this;
         let fileArray: any = [];
         this.formValidate(formId, false, is_require);
-        forEach(this.jsonFileData, function(value) {
-            if (value.option_id == opt.option_id) {
-                value.option_url = event.srcElement.files[0].name;
-                value.option_Price = opt.price;
-                value.file = opt;
-            }
-        })
-        forEach(this.jsonFileData, function(value) {
-            self.jsonFileDataValue[value.option_id] = value.option_url;
-            fileArray.push(value.file);
+        //        const fileTransfer = new Transfer();
+        var options: any;
+        options = {
+            fileKey: event.srcElement.files[0].type,
+            fileName: event.srcElement.files[0].name,
+            headers: {}
+        }
+        FileChooser.open()
+            .then((uri) => {
+                console.log(uri)
+                forEach(this.jsonFileData, function(value) {
+                    if (value.option_id == opt.option_id) {
+                        value.option_url = event.srcElement.files[0].name;
+                        value.option_Price = opt.price;
+                        value.file = opt;
+                        value.options=options;
+                        value.uri=uri;
+                    }
+                })
+                forEach(this.jsonFileData, (value)=> {
+                    this.jsonFileDataValue[value.option_id] = value.option_url;
+                    fileArray.push(value.file);
 
-        })
-        let json = { "file": this.jsonFileData };
-        self.fileSubData = json;
-        this.bundleJson();
+                })
+                console.log(this.jsonFileData)
+                let json = { "file": this.jsonFileData };
+                self.fileSubData = json;
+                this.bundleJson();
+                
+            })
+            .catch(e => console.log(e));
+
     }
     timeChanged(formId, is_require) {
         let array = [];

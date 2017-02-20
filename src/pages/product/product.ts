@@ -21,6 +21,8 @@ import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
+import { Transfer } from 'ionic-native';
+
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
@@ -292,8 +294,15 @@ export class ProductPage implements OnInit {
         let array: any = {};
         let selectedItem: string;
         let data: any;
-
         let other;
+//        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
+//                    .then((data) => {
+//                        // success
+//                        console.log("data", data);
+//                    }, (err) => {
+//                        // error
+//                        console.log("err", err);
+//                    })
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 data = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1 };
@@ -450,14 +459,12 @@ export class ProductPage implements OnInit {
         else {
             this.disable = true;
         }
-
         this.customPrice += customData.dynemicPrice * 1;
         this.customDisplayPrice += customData.dynemicPrice * 1;
         //        this.display_price = this.;
         this.final_price = this.customPrice;
         this.display_price = this.customDisplayPrice;
         customData = merge(customData, this.other, this.path);
-
     }
     bundleCart(other, price, data) {
         this._bundleService.addCart(other, price, data).then((response: any) => {
