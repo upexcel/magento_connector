@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
 import forEach from 'lodash/forEach';
 
 @Component({
@@ -9,48 +8,33 @@ import forEach from 'lodash/forEach';
 export class group {
     @Input() grouped: any;
     @Output() sendData = new EventEmitter();
-    public quantity: any = [];
     public opt: {}
     constructor() {
         let data = {};
-        let newVal = 1;
+        let newVal = 0;
         setTimeout(() => {
             this.quantityDefault();
-            this.groupedData(newVal, data);
+            this.groupedData();
         }, 100);
     }
 
-    changeQty(newVal, data) {
-        this.groupedData(newVal, data);
-    }
     quantityDefault() {
         for (let i = 0; i < this.grouped.group_associated_products.length; i++) {
-            this.quantity[i] = 1;
+            this.grouped.group_associated_products[i]['quantity'] = 0;
         }
     }
-    groupedData(newVal?, data?) {
+    groupedData() {
         var opt = {};
-        var qun;
+        var id = {};
         forEach(this.grouped.group_associated_products, function(value, key) {
-            let productId = value['product_id'];
-            if (data.product_id == value['product_id']) {
-                if (!newVal) {
-                    newVal = "0";
-                }
-                qun = newVal;
-
-            } else {
-                qun = "1"
+            id[value.product_id] = value.quantity;
+            if (!opt[value.product_id]) {
+                opt[value.product_id] = [];
             }
-
-            opt[productId] = qun;
-
+            opt[value.product_id].push(value);
         });
-        let obj = {
-            //            qty: 1,
-            productid: this.grouped.data.entity_id,
-            options: opt
-        }
+        let obj = { "option": id, "subData": opt }
+        console.log(obj)
         this.sendData.emit(obj);
     }
 

@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
+import merge from 'lodash/merge';
+
 @Component({
     selector: 'bundle',
     templateUrl: 'bundle.html'
@@ -122,12 +124,7 @@ export class BundleProduct {
                 }
             }
         })
-        if (countCheck > 0) {
-            this.formValidate(formId, false, is_require);
-        }
-        else {
-            this.formValidate(formId, true, is_require);
-        }
+
         forEach(this.bundle.bundle_items, (valueItems) => {
             if (valueItems.type == "checkbox") {
                 forEach(valueItems.selection, (value) => {
@@ -141,6 +138,12 @@ export class BundleProduct {
             }
         });
         console.log("this.checkObj", this.checkObj);
+        if (countCheck > 0) {
+            this.formValidate(formId, false, is_require);
+        }
+        else {
+            this.formValidate(formId, true, is_require);
+        }
     }
 
     onChangeRadio(selection, formId, is_require) {
@@ -172,13 +175,9 @@ export class BundleProduct {
                 })
             }
         })
-        obj["total"]=total;
-        setTimeout(() => {
-            this.onChangeData.emit(obj);
-        }, 100);
-        console.log("total", obj)
+        obj["total"] = total;
         //        this.onChange.emit(total);
-
+        this.bundleData(obj);
     }
     formValidate(data, flag, is_require) {
         let validateCount = 0;
@@ -212,5 +211,45 @@ export class BundleProduct {
         else {
             obj.visable = false;
         }
+    }
+    bundleData(obj?) {
+        let data = {};
+        let jsonData = {};
+        let bundleDataToBeEmit = {};
+        data = merge(data, this.radioChecked, this.checkObj, this.bundleSelected, this.bundleMultiSelected);
+        let bundle = {};
+        forEach(this.bundle.bundle_items, (value) => {
+            if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
+                if (!bundle[value.id]) {
+                    bundle[value.id] = [];
+                }
+                console.log(bundle[value.id], value.vertualId)
+
+                bundle[value.id].push(value.vertualId);
+            }
+            if (value.type == "multi") {
+                if (!bundle[value.id]) {
+                    bundle[value.id] = [];
+                }
+                forEach(value.vertualArray, (multiValue1) => {
+                    bundle[value.id].push(multiValue1);
+                })
+            }
+            if (value.type == "checkbox") {
+                if (!bundle[value.id]) {
+                    bundle[value.id] = [];
+                }
+                forEach(value.selection, (checkboxValue1) => {
+                    if (checkboxValue1.defaultSet == true) {
+                        bundle[value.id].push(checkboxValue1);
+                    }
+                })
+            }
+        })
+        bundleDataToBeEmit = { "option": data, "subData": bundle, "disable": obj.disable, "total": obj.total };
+        setTimeout(() => {
+            this.onChangeData.emit(bundleDataToBeEmit);
+        }, 100);
+        console.log(obj)
     }
 }

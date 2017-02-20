@@ -2,7 +2,7 @@
     <table cellspacing="10">
         <thead>
             <tr class="capitalize">
-                <th>
+                <th class="tableData">
                     name
                 </th>
                 <th>
@@ -15,15 +15,19 @@
         </thead>
         <tbody>
             <tr class="capitalize" *ngFor = "let group of grouped.group_associated_products ; let i=index">
-                <td> {{group.name}}</td>
-                <td>{{grouped.data.currency_sign}}{{group.price | number}}</td>
+                <td class="tableData"> {{group.name}}</td>
+
+                <td><span [ngClass]="{'line':(group.price*1) > (group.final_price*1), 'hide':(group.price*1) <= (group.final_price*1),groupedPro:true}">
+                        {{grouped.data.currency_sign}}{{group.price | number}}</span>
+                    <span>{{grouped.data.currency_sign}}{{group.final_price | number}}</span></td>
+
+
                 <td>
-                    <input type="text" class="inputsize" [(ngModel)]="quantity[i]" (ngModelChange)="changeQty($event,group)">
+                    <input type="text" class="inputsize" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
                 </td>
             </tr>
         </tbody>
     </table>
-
 </ion-item>
 
 
