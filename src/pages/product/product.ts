@@ -145,7 +145,7 @@ export class ProductPage implements OnInit {
                 this.type = this.productData.body.data.type;
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
-                this.addToCartData = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1 };
+                this.addToCartData = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1,"access_token": this.userData.access_token, "secret": this.userData.secret, "store_id": this.store_id };
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, function(value, key) {
@@ -301,7 +301,7 @@ export class ProductPage implements OnInit {
                 array[key] = listdata.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "access_token": this.userData.access_token, "secret": this.userData.secret, "store_id": this.store_id };
+            let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem };
             this.addToCartData = merge(this.addToCartData, cartApiData);
             let ser = this.productData.body.associated_products.attributes;
             this._local.get('search').then((search: any) => {
@@ -444,8 +444,9 @@ export class ProductPage implements OnInit {
     }
 
     group(groupData) {
-        this.refPrice = this.refPrice + groupData.total;
-        this.final_price = this.refPrice;
+        let total = (this.refPrice*1) + (groupData.total *1);
+        console.log(this.refPrice)
+        this.final_price = total;
         this.groupedData = groupData;
         this.disable = groupData.disable;
         if (groupData.disable == false) {

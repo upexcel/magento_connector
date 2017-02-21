@@ -16,7 +16,7 @@ export class CartService {
             this._local.get('CartData').then((value: any) => {
                 console.log("valueCart", value);
                 console.log("data", data);
-                //                this.cartApi(data)
+                this.cartApi(data)
                 resolve(data);
             });
         });

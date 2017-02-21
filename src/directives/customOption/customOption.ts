@@ -273,26 +273,24 @@ export class CustomOption {
         }
         FileChooser.open()
             .then((uri) => {
-                console.log(uri)
                 forEach(this.jsonFileData, function(value) {
                     if (value.option_id == opt.option_id) {
                         value.option_url = event.srcElement.files[0].name;
                         value.option_Price = opt.price;
                         value.file = opt;
-                        value.options=options;
-                        value.uri=uri;
+                        value.options = options;
+                        value.uri = uri;
                     }
                 })
-                forEach(this.jsonFileData, (value)=> {
+                forEach(this.jsonFileData, (value) => {
                     this.jsonFileDataValue[value.option_id] = value.option_url;
                     fileArray.push(value.file);
 
                 })
-                console.log(this.jsonFileData)
                 let json = { "file": this.jsonFileData };
                 self.fileSubData = json;
                 this.bundleJson();
-                
+
             })
             .catch(e => console.log(e));
 
@@ -370,7 +368,6 @@ export class CustomOption {
         })
     }
     bundleJson() {
-        console.log("this.radioSubdata",this.radioSubdata);
         var total = 0;
         let jsonData = {};
         let subdata = {};

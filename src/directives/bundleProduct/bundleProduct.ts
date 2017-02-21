@@ -92,7 +92,6 @@ export class BundleProduct {
             }
         });
         this.formValidate(formId, false, is_require);
-        console.log("bundleSelected", this.bundleSelected)
     }
     onChangeBundleMulti(bundleMulti, formId, i, is_require) {
         this.bundleMultiSelected = {};
@@ -106,7 +105,6 @@ export class BundleProduct {
                 });
             }
         });
-        console.log(this.bundleMultiSelected);
         if (bundleMulti.length > 0) {
             this.formValidate(formId, false, is_require);
         }
@@ -137,7 +135,6 @@ export class BundleProduct {
                 })
             }
         });
-        console.log("this.checkObj", this.checkObj);
         if (countCheck > 0) {
             this.formValidate(formId, false, is_require);
         }
@@ -154,7 +151,6 @@ export class BundleProduct {
             }
         });
         this.formValidate(formId, false, is_require);
-        console.log(this.radioChecked);
     }
     calculateTotal(obj) {
         let total = 0;
@@ -223,8 +219,6 @@ export class BundleProduct {
                 if (!bundle[value.id]) {
                     bundle[value.id] = [];
                 }
-                console.log(bundle[value.id], value.vertualId)
-
                 bundle[value.id].push(value.vertualId);
             }
             if (value.type == "multi") {
@@ -250,6 +244,5 @@ export class BundleProduct {
         setTimeout(() => {
             this.onChangeData.emit(bundleDataToBeEmit);
         }, 100);
-        console.log(obj)
     }
 }
