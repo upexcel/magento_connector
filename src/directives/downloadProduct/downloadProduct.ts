@@ -76,7 +76,7 @@ export class DownloadProduct {
         else {
             disable = true;
         }
-        json = { "options": json, "dynemicPrice": total, "disable": disable, "sudata": this.obj };
+        json = { "options": json, "dynemicPrice": total, "disable": disable, "subdata": this.obj };
         this.onChange.emit(json);
     }
 }

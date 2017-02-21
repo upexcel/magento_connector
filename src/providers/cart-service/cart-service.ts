@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
+import { Cart } from '../../model/product/cart';
+import { ToastService } from './../../providers/toast-service/toastService';
 declare let Promise: any;
 @Injectable()
 
 export class CartService {
-    constructor(private _local: Storage) {
+    constructor(private _local: Storage, private _cart: Cart, private _toast: ToastService) {
     }
-    addCart(data, keyGrop): any {
+    addCart(data, keyGrop?): any {
+        console.log(data);
         return new Promise((resolve, reject) => {
-        this._local.get('CartData').then((value: any) => {
-            console.log("valueCart", value);
-            console.log("data",data);
-            resolve(data);
+            this._local.get('CartData').then((value: any) => {
+                console.log("valueCart", value);
+                console.log("data", data);
+                //                this.cartApi(data)
+                resolve(data);
+            });
         });
+    }
+    cartApi(data) {
+        this._cart.getCart(data).then((res) => {
+            if (res) {
+                console.log(res);
+            }
+        }).catch((err) => {
+            this._toast.toast(err, 3000, "top");
         });
     }
 }

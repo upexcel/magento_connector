@@ -55,10 +55,12 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
-                
+
                 <!--for group product-->
-                <group [grouped]="productData.body" (sendData)="group($event)"></group>
-                
+                <span *ngIf="type=='grouped'">
+                    <group [grouped]="productData.body" (sendData)="group($event)"></group>
+                </span>
+
                 <!--for bundle product-->
                 <bundle [bundle]="productData.body" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
                 <!--                for downloadable product-->
@@ -94,5 +96,5 @@
     </ion-grid>
 </ion-content>
 <ion-footer class="uppercase ">
-    <btn-full  [titleFull]='"ADD TO CART"'  [id]="'btn'"  [classFull]="'botton'" [validFull]="disable" (onBtnClick)="addCart(productData.body)"></btn-full>
+    <btn-full  [titleFull]='"ADD TO CART"'  [id]="'btn'"  [classFull]="'botton'" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
 </ion-footer>

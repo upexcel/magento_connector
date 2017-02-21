@@ -370,6 +370,7 @@ export class CustomOption {
         })
     }
     bundleJson() {
+        console.log("this.radioSubdata",this.radioSubdata);
         var total = 0;
         let jsonData = {};
         let subdata = {};
@@ -420,7 +421,7 @@ export class CustomOption {
         }
         jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
         subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
-        jsonData = { "dynemicPrice": total, "custom": jsonData, "customSudata": subdata, "disable": custonCartDisable }
+        jsonData = { "dynemicPrice": total, "custom": jsonData, "customSubdata": subdata, "disable": custonCartDisable }
         this.onChange.emit(jsonData);
     }
 }
