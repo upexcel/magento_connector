@@ -111,10 +111,6 @@ export class ProductPage implements OnInit {
             })
         })
     }
-    group(json) {
-        this.groupedData = json;
-//        console.log(json);
-    }
     products() {
         var self = this;
         // get data from local storage of userData via funtion of getUserData
@@ -500,6 +496,14 @@ export class ProductPage implements OnInit {
         //        this.display_price = this.;
         this.final_price = this.customPrice;
         this.display_price = this.customDisplayPrice;
+    }
+    
+    group(groupData) {
+        console.log('jsonjsonjson',groupData)
+        this.refPrice = this.refPrice + groupData.total;
+        this.final_price = this.refPrice;
+        this.groupedData = groupData;
+        this.disable = groupData.disable;
     }
 
 //    bundleCart(other, price, data) {

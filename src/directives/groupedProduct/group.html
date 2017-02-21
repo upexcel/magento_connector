@@ -1,4 +1,4 @@
-<ion-item  class="group no-padding">
+<ion-item  class="group no-padding" no-lines>
     <table cellspacing="10">
         <thead>
             <tr class="capitalize">
@@ -23,7 +23,7 @@
 
 
                 <td>
-                    <input type="text" class="inputsize" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
+                    <input type="text" class="inputsize" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
                 </td>
             </tr>
         </tbody>

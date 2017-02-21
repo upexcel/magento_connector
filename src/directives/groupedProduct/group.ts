@@ -10,8 +10,6 @@ export class group {
     @Output() sendData = new EventEmitter();
     public opt: {}
     constructor() {
-        let data = {};
-        let newVal = 0;
         setTimeout(() => {
             this.quantityDefault();
             this.groupedData();
@@ -24,16 +22,19 @@ export class group {
         }
     }
     groupedData() {
-        var opt = {};
-        var id = {};
+        let opt = {}, id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, function(value, key) {
             id[value.product_id] = value.quantity;
             if (!opt[value.product_id]) {
                 opt[value.product_id] = [];
             }
             opt[value.product_id].push(value);
+            if(value.quantity*1 !== 0){
+                flag = 1;
+                total = total+ (value.quantity * 1)*(value.final_price*1);
+            }
         });
-        let obj = { "option": id, "subData": opt }
+        let obj = { "option": id, "subData": opt, "disable": (flag > 0)? false:true, "total": total };
         console.log(obj)
         this.sendData.emit(obj);
     }

@@ -17,9 +17,6 @@
                         </ion-row>
                     </ion-slide>
                 </ion-slides>
-                <ion-row *ngIf="productData.body.data.type=='grouped'">
-                    <group [grouped]="productData.body" (sendData)="group($event)"></group>
-                </ion-row>
                 <ion-row class="padLeft10" *ngIf="productData.body.data.type!='grouped'">
                     <ion-col class='lineH0 no-padding'>
                         <ion-col class="padTB">
@@ -31,7 +28,7 @@
                         </ion-col>
                     </ion-col>
                 </ion-row>
-                <ion-row  *ngIf="productData.body.data.type!='grouped'"> 
+                <ion-row> 
                     <ion-col class="padTB"> 
                         <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{this.productData.body.data.currency_sign}}{{display_price | number}}</span>
                         <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{this.productData.body.data.currency_sign}} {{final_price | number}}</span>
@@ -58,7 +55,10 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
-
+                
+                <!--for group product-->
+                <group [grouped]="productData.body" (sendData)="group($event)"></group>
+                
                 <!--for bundle product-->
                 <bundle [bundle]="productData.body" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
                 <!--                for downloadable product-->
@@ -66,7 +66,6 @@
                 <!--for custom product-->
                 <custom  [data]="productData" (onChange)="customData($event)"></custom>
 
-                <ion-grid></ion-grid>
                 <div *ngIf="show_add_to_cart.length>0">
                     <ion-row *ngFor="let data of show_add_to_cart">
                         <ion-col class="padTB">
