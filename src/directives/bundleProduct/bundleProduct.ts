@@ -40,7 +40,11 @@ export class BundleProduct {
                 this.validateArray.push({ "id": value.id, "validate": false });
             }
             forEach(value.selection, (selection: any, selectionKey) => {
-                selection.defaultSet = true;
+                if (selection.is_default == "1") {
+                    selection.defaultSet = true;
+                } else {
+                    selection.defaultSet = false;
+                }
                 if (selection.defaultSet == true) {
                     m_Flag = 1;
                     value.vertualId = selection;

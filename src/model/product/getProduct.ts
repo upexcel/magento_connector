@@ -13,8 +13,10 @@ export class Product implements OnInit {
         let apiservice = this._apiService;
         return new Promise(function(resolve, reject) {
             apiservice.api("product/get/", data).subscribe((res) => {
+                console.log("ksdbnfk");
                 resolve(res);
             }, (err) => {
+              console.log("edsf");
                 reject(err);
             });
         });

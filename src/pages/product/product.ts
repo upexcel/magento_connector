@@ -93,18 +93,18 @@ export class ProductPage implements OnInit {
         })
     }
     ngOnInit() {
-        this.id = this._navParams.get('id');
-        // coll products function when it lode first time
-        this.products();
-        //coll when any review is added 
-        this._events.subscribe('api:review', (review) => {
-            this.products();
-        });
         this._appConfigService.getUserData().then((userData: any) => {
             this._local.get('store_id').then((store_id: any) => {
                 this.userData = userData;
-                this.store_id = store_id
+                this.store_id = store_id;
             })
+            this.id = this._navParams.get('id');
+            // coll products function when it lode first time
+            this.products();
+            //coll when any review is added 
+            this._events.subscribe('api:review', (review) => {
+                this.products();
+            });
         })
     }
     products() {
@@ -145,7 +145,9 @@ export class ProductPage implements OnInit {
                 this.type = this.productData.body.data.type;
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
-                this.addToCartData = { id: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1,"access_token": this.userData.access_token, "secret": this.userData.secret, "store_id": this.store_id };
+
+                this.addToCartData = { productid: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, function(value, key) {
@@ -164,7 +166,9 @@ export class ProductPage implements OnInit {
                     this.disable = false;
                 }
                 if (this.productData.body.associated_products) {
+                    console.log("hello")
                     this.keys = keys(this.productData.body.associated_products.attributes);
+                    console.log(this.productData.body.associated_products, this.keys)
                 }
                 if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                     this.customFormValidate = true;
@@ -175,7 +179,8 @@ export class ProductPage implements OnInit {
                 this.genrateData();
                 this.ifCustomOption(null, null);
             }
-        }).catch((err) => {
+        }, (err) => {
+            console.log("err", err)
             this.error = true;
         });
 
@@ -444,7 +449,7 @@ export class ProductPage implements OnInit {
     }
 
     group(groupData) {
-        let total = (this.refPrice*1) + (groupData.total *1);
+        let total = (this.refPrice * 1) + (groupData.total * 1);
         console.log(this.refPrice)
         this.final_price = total;
         this.groupedData = groupData;

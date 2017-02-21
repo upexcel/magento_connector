@@ -34,28 +34,29 @@
                         <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{this.productData.body.data.currency_sign}} {{final_price | number}}</span>
                     </ion-col>
                 </ion-row>
-                <ion-row  *ngFor="let key of keys">
-                    <ion-col *ngIf="productData.body.associated_products">
-                        <ion-item class="selectlist">
-                            <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
-                            <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
-                                <ion-buttons class="alignright">
-                                    <ion-icon name="radio-button-on" dark id="color"></ion-icon>
-                                </ion-buttons>
-                            </ion-label>
-                            <ion-select [(ngModel)]="res[key]"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(res,key)">
-                                <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
-                                    <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                        <ion-label no-margin class="font12">
-                                            {{obj.label}}&nbsp;+{{productData.body.data.currency_sign}}{{obj.price}}
-                                        </ion-label>
-                                    </ion-option>
-                                </span>
-                            </ion-select>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-
+                <span *ngIf="type=='configurable'">
+                    <ion-row  *ngFor="let key of keys">
+                        <ion-col *ngIf="productData.body.associated_products">
+                            <ion-item class="selectlist">
+                                <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                                <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
+                                    <ion-buttons class="alignright">
+                                        <ion-icon name="radio-button-on" dark id="color"></ion-icon>
+                                    </ion-buttons>
+                                </ion-label>
+                                <ion-select [(ngModel)]="res[key]"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(res,key)">
+                                    <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
+                                        <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                            <ion-label no-margin class="font12">
+                                                {{obj.label}}&nbsp;+{{productData.body.data.currency_sign}}{{obj.price}}
+                                            </ion-label>
+                                        </ion-option>
+                                    </span>
+                                </ion-select>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </span>
                 <!--for group product-->
                 <span *ngIf="type=='grouped'">
                     <group [grouped]="productData.body" (sendData)="group($event)"></group>
@@ -63,12 +64,13 @@
 
                 <!--for bundle product-->
                 <bundle [bundle]="productData.body" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
+
                 <!--                for downloadable product-->
                 <download  [data]="productData" (onChange)="diffrentTypeProductData($event)"></download>
                 <!--for custom product-->
                 <custom  [data]="productData" (onChange)="customData($event)"></custom>
 
-                <div *ngIf="show_add_to_cart.length>0">
+                <div *ngIf="show_add_to_cart && show_add_to_cart.length > 0">
                     <ion-row *ngFor="let data of show_add_to_cart">
                         <ion-col class="padTB">
                             <p class="no-margin font20 padLeft10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice | number}} each.  </p>
