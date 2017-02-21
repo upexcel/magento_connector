@@ -60,6 +60,9 @@ export class CustomOption {
     curYear: any;
     validateArray: any = [];
     price: number;
+    timeSubData;
+    dateSubData;
+    datTimeeSubData;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
@@ -317,6 +320,7 @@ export class CustomOption {
             "day_part": day_part
         }
         this.timeJson[this.jsonTimeData.option_id] = time;
+        this.timeSubData = {"time": time};
         this.bundleJson();
     }
     dateChanged(formId, is_require) {
@@ -332,6 +336,7 @@ export class CustomOption {
             "year": year
         }
         this.dateJson[this.jsonDateData.option_id] = dateJson;
+        this.dateSubData = {"dateJson":dateJson};
         this.bundleJson();
     }
     calenderChanged(formId, is_require) {
@@ -346,6 +351,7 @@ export class CustomOption {
             "day_part": "am"
         }
         this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
+        this.datTimeeSubData = {"dateTime":data};
         this.bundleJson();
     }
     checkVisiblety(obj) {
@@ -417,13 +423,8 @@ export class CustomOption {
             custonCartDisable = false;
         }
         jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
-        subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData);
+        subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData, this.timeSubData, this.dateSubData, this.datTimeeSubData);
         jsonData = { "dynemicPrice": total, "custom": jsonData, "customSubdata": subdata, "disable": custonCartDisable }
         this.onChange.emit(jsonData);
     }
 }
-
-
-
-
-
