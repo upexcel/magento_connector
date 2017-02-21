@@ -122,7 +122,7 @@ export class ProductPage implements OnInit {
                 "sku": this.id
             };
         }
-        //getProduct is use to fire product/get api to get product 
+        //getProduct is use to fire product/get api to get product
         this._getProduct.getProduct(this.data).then((res) => {
             this.productData = res;
             if (res) {
@@ -175,8 +175,9 @@ export class ProductPage implements OnInit {
                 this.genrateData();
                 this.ifCustomOption(null, null);
             }
-        }).catch((err) => {
+        },(err)=>{
             this.error = true;
+        }).catch((err) => {
         });
 
     }
