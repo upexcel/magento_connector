@@ -83,5 +83,8 @@ export class CartFunction implements OnInit {
             });
         });
     }
+    updateCart(newCartData){
+        this.local.set('CartData', newCartData);
+    }
 }
 

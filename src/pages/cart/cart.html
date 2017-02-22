@@ -15,7 +15,7 @@
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                    <input [(ngModel)]="data.qty" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="text"> <!--<ion-input type="number"></ion-input>-->
+                                    <input type="number" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
                                 </ion-col>
 
                             </ion-row>
@@ -38,19 +38,7 @@
                                                 Quantity: {{subDataOption.selection_qty}}
                                             </div> 
                                         </div> 
-                                    </ion-col><!--
-<!--                                    <ion-col class="inlineCol" *ngIf="data.subData>0" width-20  >
-                                        <p>multiselect</p> 
                                     </ion-col>
-                                    <ion-col offset-20 *ngIf="data.select.checkbox.length>0" class="inlineCol" width-20  >
-                                             <p>checkbox</p>
-                                    </ion-col>
-                                    <ion-col offset-20 *ngIf="data.select.radioButton.length>0"class="inlineCol" width-20  >
-                                             <p>radiobutton</p>
-                                    </ion-col>
-                                    <ion-col offset-20 *ngIf="data.select.select.length>0" class="inlineCol" width-20  >
-                                             <p>select</p>
-                                    </ion-col>-->
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.total}}</p>
