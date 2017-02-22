@@ -1,5 +1,5 @@
 <header [title]="'cart'" [pagename]="''"></header>
-<ion-content class="cart">
+<ion-content class="cart" *ngIf="res && res.length > 0">
     <ion-list>
         <ion-item-sliding  *ngFor="let data of res">
             <ion-item >
@@ -15,11 +15,11 @@
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                    <input [(ngModel)]="data.quantity" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="text"> <!--<ion-input type="number"></ion-input>-->
+                                    <input [(ngModel)]="data.qty" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="text"> <!--<ion-input type="number"></ion-input>-->
                                 </ion-col>
 
                             </ion-row>
-                            <ion-row *ngIf="entery==true">
+<!--                            <ion-row *ngIf="entery==true">
                                 <ion-col width-80>
                                     <ion-col class="inlineCol" width-20 *ngFor="let list of lists | convertCodeToName : data" >
                                              <p>{{list}}</p>
@@ -28,7 +28,7 @@
                                 <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.price}}</p>
                                 </ion-col>
-                            </ion-row>
+                            </ion-row>-->
                             <ion-row *ngIf="data.type=='bundle'">
                                 <ion-col width-80>
                                     <ion-col class="inlineCol" *ngIf="data.select.multiselect.length>0" width-20  >
@@ -45,7 +45,7 @@
                                     </ion-col>
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
-                                    <p class="font10">{{data.price}}</p>
+                                    <p class="font10">{{data.total}}</p>
                                 </ion-col>
                             </ion-row>
                             <ion-row class="qtyborder">
@@ -56,7 +56,7 @@
                 </ion-grid>
             </ion-item>
             <ion-item-options side="right">
-                <button ion-button color="primary" (click)=delete(data)>
+                <button ion-button color="primary" (click)=deleteProduct(data)>
                     <ion-icon name="trash"></ion-icon>
                     Delete
                 </button>

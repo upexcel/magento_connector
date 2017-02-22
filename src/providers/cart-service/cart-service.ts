@@ -16,8 +16,7 @@ export class CartService {
             this._cart.getCart(data).then((res) => {
                 if (res) {
                     console.log(res);
-                    this.saveCartInLocal(data);
-                    resolve(res);
+                    this.saveCartInLocal(data, resolve, res);
                 }
             }).catch((err) => {
                 this._toast.toast(err, 3000, "top");
@@ -25,7 +24,7 @@ export class CartService {
             });
         });
     }
-    saveCartInLocal(data): any {
+    saveCartInLocal(data, resolve, res): any {
         let flag = 0;
         console.log("data", data);
         this._local.get('CartData').then((value: any) => {
@@ -34,6 +33,7 @@ export class CartService {
                 delete data.secret;
                 delete data.disable;
                 this._local.set('CartData', [data]);
+                resolve(res);
             } else {
                 forEach(value, (valueData, key) => {
                     let dataQty = data.qty;
@@ -53,9 +53,11 @@ export class CartService {
                 });
                 if (flag == 1) {
                     this._local.set('CartData', value);
+                    resolve(res);
                 } else {
                     value.push(data);
                     this._local.set('CartData', value);
+                    resolve(res);
                 }
             }
             console.log("valueCart", value);

@@ -17,20 +17,14 @@ export class CartPage implements OnInit {
     totalPay: number;
     constructor(private _cartFunction: CartFunction, private _events: Events, public local: Storage, public navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
-//        this.local.get('CartData').then((value: any) => {
-//            this.res = value;
-//            let tempObj = [];
-//            forEach(this.res, function(value, key) {
-//                forEach(value, function(value1, key) {
-//                    tempObj.push(key);
-//                });
-//            });
-//            this.lists = uniq(pullAll(tempObj, ['id', 'name', 'img', 'price', 'type', 'quantity']));
-//            this.entery = true;
+        this.local.get('CartData').then((value: any) => {
+            console.log(value);
+            this.res = value;            
+            this.entery = true;
 //            this._cartFunction.totalPay(this.res).then((response) => {
 //                this.totalPay = response;
 //            });
-//        });
+        });
     }
 
 
@@ -41,14 +35,9 @@ export class CartPage implements OnInit {
         });
     }
 
-
-    delete(data) {
-        this._cartFunction.deleteItem(data, this.res).then((response) => {
-            this.res = response;
-            this._cartFunction.totalPay(this.res).then((rese) => {
-                this.totalPay = rese;
-            });
-
+    deleteProduct(data) {
+        this._cartFunction.deleteItem(data).then((res)=>{
+            this.res = res;
         });
     }
 
