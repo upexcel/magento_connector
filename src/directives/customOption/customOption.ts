@@ -68,7 +68,6 @@ export class CustomOption {
         var dateObj = new Date();
         this.curYear = dateObj.getFullYear();
         this.currencySign = this.data.body.data.currency_sign;
-        let self = this;
         this.validateArray = [];
         this.price = this.data.body.data.final_price;
         this.custom_option = this.data.body.data.product_custom_option;
@@ -88,21 +87,21 @@ export class CustomOption {
                     data.default_price = interest;
                 }
             })
-            self.keys.push(value.type);
+            this.keys.push(value.type);
             if (value.type == "date_time") {
-                self.jsonDateTimeData = {
+                this.jsonDateTimeData = {
                     "option_id": value.option_type[0].option_id,
                     "option_Price": value.option_type[0].price
                 }
             }
             if (value.type == "time") {
-                self.jsonTimeData = {
+                this.jsonTimeData = {
                     "option_id": value.option_type[0].option_id,
                     "option_Price": value.option_type[0].price
                 }
             }
             if (value.type == "date") {
-                self.jsonDateData = {
+                this.jsonDateData = {
                     "option_id": value.option_type[0].option_id,
                     "option_Price": value.option_type[0].price
                 }
@@ -117,7 +116,7 @@ export class CustomOption {
                     "options": "",
                     "uri": ""
                 }
-                self.jsonFileData.push(obj);
+                this.jsonFileData.push(obj);
             }
         })
     }
@@ -192,7 +191,7 @@ export class CustomOption {
             }
         });
         radio = { "radio": selectedRadioFiled }
-        this.radioSubdata = selectedRadioFiled;
+        this.radioSubdata = { "radio": selectedRadioFiled };
         this.bundleJson();
 
     }
@@ -264,7 +263,6 @@ export class CustomOption {
         this.bundleJson();
     }
     file(event, opt, formId, is_require) {
-        let self = this;
         let fileArray: any = [];
         this.formValidate(formId, false, is_require);
         //        const fileTransfer = new Transfer();
@@ -276,7 +274,7 @@ export class CustomOption {
         }
         FileChooser.open()
             .then((uri) => {
-                forEach(this.jsonFileData, function(value) {
+                forEach(this.jsonFileData, (value)=> {
                     if (value.option_id == opt.option_id) {
                         value.option_url = event.srcElement.files[0].name;
                         value.option_Price = opt.price;
@@ -291,7 +289,7 @@ export class CustomOption {
 
                 })
                 let json = { "file": this.jsonFileData };
-                self.fileSubData = json;
+                this.fileSubData = json;
                 this.bundleJson();
 
             }, (err) => {
