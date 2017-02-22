@@ -11,8 +11,8 @@
         </ion-refresher-content>
     </ion-refresher>
     <get-slider></get-slider>
+    <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
     <div *ngIf="homeProduct" >
-        <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
         <category-view [product]="feature_products" ></category-view>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

@@ -28,13 +28,8 @@ export class ProductPage implements OnInit {
     productData: productDataType;
     logform: FormGroup;
     cartData: cartDataType;
-    quantity: number;
     selectshow: boolean = true;
     spin: boolean = true;
-    itemSize: string;
-    itemColor: string;
-    selectSize: string;
-    selectColor: string;
     selectedList: Array<any> = [];
     disable: boolean = true;
     images: string;
@@ -83,6 +78,8 @@ export class ProductPage implements OnInit {
     groupedData: any;
     configSubData: any = {};
     cartSpin: boolean = false;
+    customOptData;
+    diffProductData;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -109,7 +106,6 @@ export class ProductPage implements OnInit {
         })
     }
     products() {
-        var self = this;
         // get data from local storage of userData via funtion of getUserData
         // in data variable access_token and sku is used to check user login in backend to send tier price
         if (this.userData) {
@@ -129,7 +125,6 @@ export class ProductPage implements OnInit {
             if (res) {
                 this.spin = false;
                 this.product = this.productData.body.data.name;
-                //                console.log(this.product)
                 this.productid = this.productData.body.data.entity_id;
                 this.images = this.productData.body.data.media_images[0];
                 this.special_price = this.productData.body.data.special_price;
@@ -151,9 +146,9 @@ export class ProductPage implements OnInit {
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
-                    forEach(additionalInformation, function(value, key) {
+                    forEach(additionalInformation, (value, key) => {
                         if (value != false) {
-                            self.additionalInformationData.push({
+                            this.additionalInformationData.push({
                                 "key": key,
                                 "value": value
                             });
@@ -167,9 +162,7 @@ export class ProductPage implements OnInit {
                     this.disable = false;
                 }
                 if (this.productData.body.associated_products) {
-                    console.log("hello")
                     this.keys = keys(this.productData.body.associated_products.attributes);
-                    console.log(this.productData.body.associated_products, this.keys)
                 }
                 if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                     this.customFormValidate = true;
@@ -190,7 +183,6 @@ export class ProductPage implements OnInit {
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
         let count = 0;
         var total = 0;
-        let self = this;
         var flag = 0;
         this.configPrice = [];
         this.configSubData = {};
@@ -202,10 +194,10 @@ export class ProductPage implements OnInit {
         forEach(configurableSelectedObject, (takePrice) => {
             ++flag;
             if (takePrice != undefined) {
-                self.configPrice.push({ price: takePrice.price });
+                this.configPrice.push({ price: takePrice.price });
             }
         })
-        forEach(this.configPrice, function(value: any) {
+        forEach(this.configPrice, (value: any) => {
             total += (value.price * 1);
         });
         this.diffrentTypeProductData(total);
@@ -332,8 +324,6 @@ export class ProductPage implements OnInit {
             //            this.cartApi(this.cartApiData, this.keys);//will change
         }
     }
-    customOptData;
-    diffProductData;
     //simple+vertual+downloadble 
     ifCustomOption(customOpt, diffProduct) {
         if (diffProduct != null) {
