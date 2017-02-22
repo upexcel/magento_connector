@@ -349,14 +349,6 @@ export class ProductPage implements OnInit {
 
     addToCartService() {
         this.cartSpin = true;
-        //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
-        //                    .then((data) => {
-        //                        // success
-        //                        console.log("data", data);
-        //                    }, (err) => {
-        //                        // error
-        //                        console.log("err", err);
-        //                    })
         this._cartService.addCart(this.addToCartData).then((response: any) => {
             this.cartData = response;
             this.cartSpin = false;
