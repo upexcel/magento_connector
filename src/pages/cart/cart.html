@@ -31,7 +31,15 @@
                             </ion-row>-->
                             <ion-row *ngIf="data.type=='bundle'">
                                 <ion-col width-80>
-                                    <ion-col class="inlineCol" *ngIf="data.select.multiselect.length>0" width-20  >
+                                    <ion-col class="inlineCol" *ngIf="data.subData.length > 0" width-20>
+                                        <div *ngFor="let subData of data.subData">
+                                            <div *ngFor="let subDataOption of subData">
+                                                Name:{{subDataOption.selection_name}} <br>
+                                                Quantity: {{subDataOption.selection_qty}}
+                                            </div> 
+                                        </div> 
+                                    </ion-col><!--
+<!--                                    <ion-col class="inlineCol" *ngIf="data.subData>0" width-20  >
                                         <p>multiselect</p> 
                                     </ion-col>
                                     <ion-col offset-20 *ngIf="data.select.checkbox.length>0" class="inlineCol" width-20  >
@@ -42,7 +50,7 @@
                                     </ion-col>
                                     <ion-col offset-20 *ngIf="data.select.select.length>0" class="inlineCol" width-20  >
                                              <p>select</p>
-                                    </ion-col>
+                                    </ion-col>-->
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.total}}</p>

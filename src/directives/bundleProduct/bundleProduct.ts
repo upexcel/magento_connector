@@ -233,7 +233,7 @@ export class BundleProduct {
         let bundle_option_qty = {};
         bundle_option_qty = merge(bundle_option_qty, this.bundleCheckQty, this.bundleRadioQty, this.bundleSelectedQty);
         data = merge(data, this.radioChecked, this.checkObj, this.bundleSelected, this.bundleMultiSelected);
-        let bundle = {};
+        let bundle = [];
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
                 if (!bundle[value.id]) {
