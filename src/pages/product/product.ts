@@ -146,7 +146,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+                this.addToCartData = {productid:this.productData.body.data.entity_id, sku: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
