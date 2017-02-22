@@ -270,8 +270,8 @@ export class CustomOption {
         //        const fileTransfer = new Transfer();
         var options: any;
         options = {
-            fileKey: event.srcElement.files[0].type,
-            fileName: event.srcElement.files[0].name,
+            fileKey: event.srcElement.files[0] ? event.srcElement.files[0].type : "",
+            fileName: event.srcElement.files[0] ? event.srcElement.files[0].name : "",
             headers: {}
         }
         FileChooser.open()
@@ -294,8 +294,9 @@ export class CustomOption {
                 self.fileSubData = json;
                 this.bundleJson();
 
-            })
-            .catch(e => console.log(e));
+            }, (err) => {
+                console.log(err)
+            });
 
     }
     timeChanged(formId, is_require) {
@@ -320,7 +321,7 @@ export class CustomOption {
             "day_part": day_part
         }
         this.timeJson[this.jsonTimeData.option_id] = time;
-        this.timeSubData = {"time": time};
+        this.timeSubData = { "time": time };
         this.bundleJson();
     }
     dateChanged(formId, is_require) {
@@ -336,7 +337,7 @@ export class CustomOption {
             "year": year
         }
         this.dateJson[this.jsonDateData.option_id] = dateJson;
-        this.dateSubData = {"dateJson":dateJson};
+        this.dateSubData = { "dateJson": dateJson };
         this.bundleJson();
     }
     calenderChanged(formId, is_require) {
@@ -351,7 +352,7 @@ export class CustomOption {
             "day_part": "am"
         }
         this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
-        this.datTimeeSubData = {"dateTime":data};
+        this.datTimeeSubData = { "dateTime": data };
         this.bundleJson();
     }
     checkVisiblety(obj) {

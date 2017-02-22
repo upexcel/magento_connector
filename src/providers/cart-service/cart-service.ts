@@ -55,7 +55,7 @@ export class CartService {
                     this._local.set('CartData', value);
                     resolve(res);
                 } else {
-                    value.push(data);
+                    value.unshift(data);
                     this._local.set('CartData', value);
                     resolve(res);
                 }
