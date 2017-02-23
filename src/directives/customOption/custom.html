@@ -24,7 +24,7 @@
     <ion-list *ngIf="customOption.type=='multiple'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}} <span *ngIf="customOption.is_require=='1'" color="danger" >*</span></ion-label>
-            <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti,customOption.id,i,customOption.is_require)" multiple="true">
+            <ion-select [(ngModel)]="selectMulti[i]" (ngModelChange)="onChangeMulti(selectMulti,customOption.id,i,customOption.is_require,customOption.title)" multiple="true">
                 <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} +{{currencySign}}{{opt.default_price | number}}</ion-option>
             </ion-select>
         </ion-item>
@@ -33,7 +33,7 @@
     <ion-list *ngIf="customOption.type=='drop_down'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}} <span color="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
-            <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select,customOption.id,customOption.is_require)">
+            <ion-select [(ngModel)]="select[i]" (ngModelChange)="onChangeSelect(select,customOption.id,customOption.is_require,customOption.title)">
                 <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} + {{currencySign}}{{opt.default_price| number}}</ion-option>
             </ion-select>
         </ion-item>
@@ -54,7 +54,7 @@
             <span class="capitalize">  {{customOption.title}}</span> <span *ngIf="customOption.is_require=='1'" color="danger">*</span> <ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="customOption.visable" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
-            <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[opt.option_type_id]" (ngModelChange)="onChangeCheck(opt,$event,customOption.id,customOption.is_require)" ></ion-checkbox>
+            <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="check[opt.option_type_id]" (ngModelChange)="onChangeCheck(opt,$event,customOption.id,customOption.is_require,title)" ></ion-checkbox>
             <ion-label class="capitalize">{{opt.default_title}} + {{currencySign}}{{opt.default_price | number}}</ion-label>
         </ion-item>          
     </ion-list>

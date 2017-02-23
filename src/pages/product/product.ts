@@ -444,8 +444,9 @@ export class ProductPage implements OnInit {
         }
     }
     addToCartService() {
-        this.cartSpin = true;
-        if (!this.cartSpin){
+        if (!this.cartSpin) {
+            this.cartSpin = true;
+            console.log("dshnfj")
             this._cartService.addCart(this.addToCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;

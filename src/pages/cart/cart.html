@@ -25,15 +25,15 @@
                             <ion-row>
                                 <ion-col width-80 *ngIf="data.type=='configurable'">
                                          <span *ngFor="let subdata of data.subData">
-                                        <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
+                                        <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
                                     </span>
                                 </ion-col>
-                                    <ion-col width-80 *ngIf="data.subData.length > 0 && data.type=='bundle' || data.type=='grouped'" >
-                                             <div *ngFor="let subData of data.subData">
-                                            <div *ngFor="let subDataOption of subData">
-                                                <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
-                                            </div> 
+                                <ion-col width-80 *ngIf="data.subData.length > 0 && data.type=='bundle' || data.type=='grouped'" >
+                                         <div *ngFor="let subData of data.subData">
+                                        <div *ngFor="let subDataOption of subData">
+                                            <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
                                         </div> 
+                                    </div> 
                                 </ion-col>                       
                                 <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable'" > </ion-col>
                                 <ion-col width-20 class="aligncenter cartPrice">
