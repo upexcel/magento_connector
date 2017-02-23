@@ -20,7 +20,7 @@
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                    <input [(ngModel)]="data.qty" (ngModelChange)="changeQuantity($event,data)" class="inputSize" type="text"> <!--<ion-input type="number"></ion-input>-->
+                                    <input type="number" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
                                 </ion-col>
                             </ion-row>
                             <span *ngIf="data.subData">
@@ -38,6 +38,7 @@
                                             Quantity: {{subDataOption.selection_qty}}
                                         </div> 
                                     </div> 
+
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.total}}</p>

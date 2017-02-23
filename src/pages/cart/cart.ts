@@ -28,11 +28,11 @@ export class CartPage implements OnInit {
     }
 
 
-    changeQuantity(newQuantity, data) {
-        this._cartFunction.addItem(newQuantity, data)
-        this._cartFunction.totalPay(this.res).then((response) => {
-            this.totalPay = response;
-        });
+    changeQuantity() {
+        this._cartFunction.updateCart(this.res);
+//        this._cartFunction.totalPay(this.res).then((response) => {
+//            this.totalPay = response;
+//        });
     }
 
     deleteProduct(data) {
