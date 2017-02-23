@@ -63,7 +63,7 @@
                 </span>
 
                 <!--for bundle product-->
-                <bundle [bundle]="productData.body" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
+                <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
 
                 <!--                for downloadable product-->
                 <download  [data]="productData" (onChange)="diffrentTypeProductData($event)"></download>

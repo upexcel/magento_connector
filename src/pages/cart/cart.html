@@ -1,4 +1,8 @@
 <header [title]="'Cart'" [pagename]="''"></header>
+<ion-content class="empty-cart" *ngIf="!res || res.length == 0">
+    <img src="assets/image/empty-cart.png">
+    <h3>Your Shopping Cart is empty</h3>
+</ion-content>
 <ion-content class="cart" *ngIf="res && res.length > 0">
     <ion-list>
         <ion-item-sliding  *ngFor="let data of res">
@@ -24,12 +28,12 @@
                                         <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
                                     </span>
                                 </ion-col>
-                                <ion-col width-80 *ngIf="data.type=='bundle' && data.subData.length > 0" >
-                                         <div *ngFor="let subData of data.subData">
-                                        <div *ngFor="let subDataOption of subData"  class="capitalize">
-                                            <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption.value'> {{subDataOption["value"].selection_name}}</p>
+                                    <ion-col width-80 *ngIf="data.subData.length > 0 && data.type=='bundle' || data.type=='grouped'" >
+                                             <div *ngFor="let subData of data.subData">
+                                            <div *ngFor="let subDataOption of subData">
+                                                <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
+                                            </div> 
                                         </div> 
-                                    </div> 
                                 </ion-col>                       
                                 <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable'" > </ion-col>
                                 <ion-col width-20 class="aligncenter cartPrice">
@@ -40,8 +44,8 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <ion-item-options side="right" (click)=edit(data)>
-                <button ion-button color="primary">
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)=edit(data)>
                     <ion-icon name="create"></ion-icon>
                     Edit
                 </button>

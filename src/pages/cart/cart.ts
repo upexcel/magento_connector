@@ -38,7 +38,7 @@ export class CartPage implements OnInit {
         });
     }
     edit(data) {
-        this._navCtrl.push(ProductPage,{'id':data.sku});
+        this._navCtrl.push(ProductPage,{'id':data.sku,"editCartData":data});
     }
 
 }

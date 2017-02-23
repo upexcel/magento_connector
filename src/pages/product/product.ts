@@ -80,7 +80,8 @@ export class ProductPage implements OnInit {
     cartSpin: boolean = false;
     customOptData;
     diffProductData;
-    constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    editCartData: any;
+    constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -97,6 +98,7 @@ export class ProductPage implements OnInit {
                 this.store_id = store_id;
             })
             this.id = this._navParams.get('id');
+            this.editCartData = this._navParams.get('editCartData');
             // coll products function when it lode first time
             this.products();
             //coll when any review is added 
@@ -142,7 +144,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku,"currency_sign": this.productData.body.data.currency_sign,img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
@@ -340,22 +342,6 @@ export class ProductPage implements OnInit {
         }
     }
 
-    addToCartService() {
-        this.cartSpin = true;
-        this._cartService.addCart(this.addToCartData).then((response: any) => {
-            this.cartData = response;
-            this.cartSpin = false;
-            if (this.cartData.body != undefined) {
-                this._toast.toast("item inserted ", 3000, "top");
-                this._navCtrl.push(CartPage);
-            }
-            else {
-            }
-        }, (err) => {
-            this.cartSpin = false;
-        });
-    }
-
     diffrentTypeProductData(data?) {
         if (this.customPrice != undefined) {
             this.bundlePrice = this.customPrice * 1;
@@ -457,7 +443,23 @@ export class ProductPage implements OnInit {
             this.addToCartData = merge(this.addToCartData, groupData);
         }
     }
-
+    addToCartService() {
+        this.cartSpin = true;
+        if (!this.cartSpin){
+            this._cartService.addCart(this.addToCartData).then((response: any) => {
+                this.cartData = response;
+                this.cartSpin = false;
+                if (this.cartData.body != undefined) {
+                    this._toast.toast("item inserted ", 3000, "top");
+                    this._navCtrl.push(CartPage);
+                }
+                else {
+                }
+            }, (err) => {
+                this.cartSpin = false;
+            });
+        }
+    }
 }
 
 
