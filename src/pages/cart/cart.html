@@ -18,28 +18,23 @@
                                     <input type="number" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
                                 </ion-col>
                             </ion-row>
-                            <span *ngIf="data.type=='configurable'">
-                                <ion-row>
-                                    <ion-col width-80>
-                                        <span *ngFor="let subdata of data.subData">
-                                            <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
-                                        </span>
-                                    </ion-col>
-                                    <ion-col width-20 class="alignRight">
-                                        <p class="font10">{{data.total}}</p>
-                                    </ion-col>
-                                </ion-row>
-                            </span>
-                            <ion-row *ngIf="data.type=='bundle'">
-                                <ion-col width-80 *ngIf="data.subData.length > 0" >
-                                         <div *ngFor="let subData of data.subData">
-                                        <div *ngFor="let subDataOption of subData">
-                                            <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption'> {{subDataOption.value.selection_name}}</p>
-                                        </div> 
-                                    </div> 
+                            <ion-row>
+                                <ion-col width-80 *ngIf="data.type=='configurable'">
+                                         <span *ngFor="let subdata of data.subData">
+                                        <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
+                                    </span>
                                 </ion-col>
+                                <span *ngIf="data.type=='bundle'">
+                                    <ion-col width-80 *ngIf="data.subData.length > 0" >
+                                             <div *ngFor="let subData of data.subData">
+                                            <div *ngFor="let subDataOption of subData">
+                                                <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption'> {{subDataOption.value.selection_name}}</p>
+                                            </div> 
+                                        </div> 
+                                    </ion-col>                       
+                                </span>
                                 <ion-col width-20 class="alignRight">
-                                    <p class="font10">{{data.total}}</p>
+                                    <p class="font10">{{data.currency_sign}}{{data.total}}</p>
                                 </ion-col>
                             </ion-row>
                         </ion-col>

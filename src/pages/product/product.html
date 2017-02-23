@@ -30,8 +30,8 @@
                 </ion-row>
                 <ion-row> 
                     <ion-col class="padTB"> 
-                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{this.productData.body.data.currency_sign}}{{display_price | number}}</span>
-                        <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{this.productData.body.data.currency_sign}} {{final_price | number}}</span>
+                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price | number}}</span>
+                        <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{productData.body.data.currency_sign}} {{final_price | number}}</span>
                     </ion-col>
                 </ion-row>
                 <span *ngIf="type=='configurable'">
