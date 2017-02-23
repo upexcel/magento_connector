@@ -274,7 +274,7 @@ export class CustomOption {
         }
         FileChooser.open()
             .then((uri) => {
-                forEach(this.jsonFileData, (value)=> {
+                forEach(this.jsonFileData, (value) => {
                     if (value.option_id == opt.option_id) {
                         value.option_url = event.srcElement.files[0].name;
                         value.option_Price = opt.price;
@@ -375,7 +375,7 @@ export class CustomOption {
     bundleJson() {
         var total = 0;
         let jsonData = {};
-        let subdata = {};
+        let subdata = [];
 
         let validateCount = 0;
         let custonCartDisable = true;
@@ -395,7 +395,10 @@ export class CustomOption {
             total += (this.dateTimePrice.price * 1);
         }
         forEach(this.radioSubdata, function(value: any) {
-            total += (value.price * 1);
+            forEach(value, function(radioValue: any) {
+                console.log("radio Price", radioValue.price);
+                total += (radioValue.price * 1);
+            });
         });
         forEach(this.selectPrice, function(value: any) {
             total += (value.price * 1);

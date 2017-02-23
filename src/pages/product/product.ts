@@ -142,7 +142,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, img: this.img, name: this.name, price: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
@@ -185,7 +185,7 @@ export class ProductPage implements OnInit {
         var total = 0;
         var flag = 0;
         this.configPrice = [];
-        this.configSubData = {};
+        this.configSubData = [];
         //take current selected item
         let currentSelectedItem = configurableSelectedObject[key];
         //cloneing for use checked list in add cart function
@@ -229,7 +229,10 @@ export class ProductPage implements OnInit {
             if (typeof configurableSelectedObject != undefined) {
                 forEach(configurableSelectedObject, (value, key) => {
                     if (allConfigData.id == key) {
-                        this.configSubData[allConfigData.label] = value;
+                        this.configSubData.push({
+                            key: allConfigData.label,
+                            value: value
+                        });
                         if (allConfigData.label == "Color") {
                             let myDiv = document.getElementById('color');
                             myDiv.style.color = configurableSelectedObject[key] ? ((configurableSelectedObject[key].label).trim()).replace(" ", "") : "";
@@ -432,14 +435,16 @@ export class ProductPage implements OnInit {
         else {
             this.disable = true;
         }
-        if (customData.disable == false) {
-            this.ifCustomOption(customData, null);
-        }
         this.customPrice += customData.dynemicPrice * 1;
         this.customDisplayPrice += customData.dynemicPrice * 1;
         //        this.display_price = this.;
         this.final_price = this.customPrice;
         this.display_price = this.customDisplayPrice;
+        console.log(this.final_price)
+        this.addToCartData.total = this.final_price;
+        if (customData.disable == false) {
+            this.ifCustomOption(customData, null);
+        }
     }
 
     group(groupData) {
