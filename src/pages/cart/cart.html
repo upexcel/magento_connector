@@ -13,7 +13,7 @@
                                 <ion-col width-80 class="size capitalize">
                                     {{data.name}}
                                 </ion-col>
-                                <ion-col width-20 class="alignRight">
+                                <ion-col width-20 class="aligncenter">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
                                     <input type="number" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
                                 </ion-col>
@@ -24,16 +24,15 @@
                                         <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
                                     </span>
                                 </ion-col>
-                                <span *ngIf="data.type=='bundle'">
-                                    <ion-col width-80 *ngIf="data.subData.length > 0" >
-                                             <div *ngFor="let subData of data.subData">
-                                            <div *ngFor="let subDataOption of subData">
-                                                <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption'> {{subDataOption.value.selection_name}}</p>
-                                            </div> 
+                                <ion-col width-80 *ngIf="data.type=='bundle' && data.subData.length > 0" >
+                                         <div *ngFor="let subData of data.subData">
+                                        <div *ngFor="let subDataOption of subData"  class="capitalize">
+                                            <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption.value'> {{subDataOption["value"].selection_name}}</p>
                                         </div> 
-                                    </ion-col>                       
-                                </span>
-                                <ion-col width-20 class="alignRight">
+                                    </div> 
+                                </ion-col>                       
+                                <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable'" > </ion-col>
+                                <ion-col width-20 class="aligncenter cartPrice">
                                     <p class="font10">{{data.currency_sign}}{{data.total}}</p>
                                 </ion-col>
                             </ion-row>
@@ -41,8 +40,12 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <ion-item-options side="right">
-                <button ion-button color="primary" (click)=deleteProduct(data)>
+            <ion-item-options side="right" (click)=edit(data)>
+                <button ion-button color="primary">
+                    <ion-icon name="create"></ion-icon>
+                    Edit
+                </button>
+                <button ion-button color="red" (click)=deleteProduct(data)>
                     <ion-icon name="trash"></ion-icon>
                     Delete
                 </button>
