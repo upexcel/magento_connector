@@ -22,7 +22,7 @@ export class group {
         }
     }
     groupedData() {
-        let opt = {}, id = {}, total = 0, flag = 0;
+        let opt = [], id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, function(value, key) {
             id[value.product_id] = value.quantity;
 
