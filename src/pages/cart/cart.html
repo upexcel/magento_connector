@@ -10,12 +10,7 @@
                         </ion-col>
                         <ion-col width-80>
                             <ion-row>
-                                <ion-col  class="alignRight">
-                                    <p class="font10">{{data.total}}</p>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col width-80 class="size">
+                                <ion-col width-80 class="size capitalize">
                                     {{data.name}}
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
@@ -23,10 +18,15 @@
                                     <input type="number" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
                                 </ion-col>
                             </ion-row>
-                            <span *ngIf="data.subData">
-                                <ion-row *ngFor="let subdata of data.subData">
+                            <span *ngIf="data.type=='configurable'">
+                                <ion-row>
                                     <ion-col width-80>
-                                        <p *ngIf="subdata.value">{{subdata.key}}-{{subdata["value"].label}}</p>
+                                        <span *ngFor="let subdata of data.subData">
+                                            <span *ngIf="subdata">{{subdata.key}} </span>-<p *ngIf="subdata"> {{subdata["value"].label}}</p>
+                                        </span>
+                                    </ion-col>
+                                    <ion-col width-20 class="alignRight">
+                                        <p class="font10">{{data.total}}</p>
                                     </ion-col>
                                 </ion-row>
                             </span>
@@ -34,11 +34,9 @@
                                 <ion-col width-80 *ngIf="data.subData.length > 0" >
                                          <div *ngFor="let subData of data.subData">
                                         <div *ngFor="let subDataOption of subData">
-                                            Name:{{subDataOption.selection_name}} <br>
-                                            Quantity: {{subDataOption.selection_qty}}
+                                            <span>{{subDataOption.key}} </span>-<p *ngIf='subDataOption'> {{subDataOption.value.selection_name}}</p>
                                         </div> 
                                     </div> 
-
                                 </ion-col>
                                 <ion-col width-20 class="alignRight">
                                     <p class="font10">{{data.total}}</p>

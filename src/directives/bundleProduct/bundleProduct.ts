@@ -235,18 +235,19 @@ export class BundleProduct {
         data = merge(data, this.radioChecked, this.checkObj, this.bundleSelected, this.bundleMultiSelected);
         let bundle = [];
         forEach(this.bundle.bundle_items, (value) => {
+            console.log(value)
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
                 if (!bundle[value.id]) {
                     bundle[value.id] = [];
                 }
-                bundle[value.id].push(value.vertualId);
+                bundle[value.id].push({"key":value.title,"value":value.vertualId});
             }
             if (value.type == "multi") {
                 if (!bundle[value.id]) {
                     bundle[value.id] = [];
                 }
                 forEach(value.vertualArray, (multiValue1) => {
-                    bundle[value.id].push(multiValue1);
+                    bundle[value.id].push({"key":value.title,"value":multiValue1});
                 })
             }
             if (value.type == "checkbox") {
@@ -255,7 +256,7 @@ export class BundleProduct {
                 }
                 forEach(value.selection, (checkboxValue1) => {
                     if (checkboxValue1.defaultSet == true) {
-                        bundle[value.id].push(checkboxValue1);
+                        bundle[value.id].push({"key":value.title,"value":checkboxValue1});
                     }
                 })
             }
