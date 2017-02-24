@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import forEach from 'lodash/forEach';
 
 @Component({
@@ -7,15 +7,30 @@ import forEach from 'lodash/forEach';
 })
 export class group {
     @Input() grouped: any;
+    @Input() editCartData: any;
     @Output() sendData = new EventEmitter();
     public opt: {}
     constructor() {
         setTimeout(() => {
-            this.quantityDefault();
-            this.groupedData();
+            if (this.editCartData) {
+                this.quantityEdit();
+            } else {
+                this.quantityDefault();
+                this.groupedData();
+            }
         }, 100);
     }
 
+    quantityEdit() {
+        forEach(this.editCartData.option, (editCartOptionValue, editCartOptionkey)=>{
+            forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue,key)=>{
+                if(editCartOptionkey == groupAssociatedProducsValue.product_id){
+                    this.grouped.group_associated_products[key]['quantity'] = editCartOptionValue;
+                }
+            });
+        });
+        this.groupedData();
+    }
     quantityDefault() {
         for (let i = 0; i < this.grouped.group_associated_products.length; i++) {
             this.grouped.group_associated_products[i]['quantity'] = 0;
@@ -23,20 +38,15 @@ export class group {
     }
     groupedData() {
         let opt = [], id = {}, total = 0, flag = 0;
-        forEach(this.grouped.group_associated_products, function(value, key) {
+        forEach(this.grouped.group_associated_products, function (value, key) {
             id[value.product_id] = value.quantity;
-
             if (value.quantity * 1 !== 0) {
-                if (!opt[value.product_id]) {
-                    opt[value.product_id] = [];
-                }
-                opt[value.product_id].push(value);
+                opt.push(value);
                 flag = 1;
                 total = total + (value.quantity * 1) * (value.final_price * 1);
             }
         });
-        let obj = { "option": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total };
-        console.log(obj)
+        let obj = {"option": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
         this.sendData.emit(obj);
     }
 

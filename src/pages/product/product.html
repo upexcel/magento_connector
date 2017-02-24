@@ -59,7 +59,7 @@
                 </span>
                 <!--for group product-->
                 <span *ngIf="type=='grouped'">
-                    <group [grouped]="productData.body" (sendData)="group($event)"></group>
+                    <group [grouped]="productData.body" [editCartData]="editCartData" (sendData)="group($event)"></group>
                 </span>
 
                 <!--for bundle product-->

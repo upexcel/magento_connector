@@ -435,19 +435,18 @@ export class ProductPage implements OnInit {
 
     group(groupData) {
         let total = (this.refPrice * 1) + (groupData.total * 1);
-        console.log(this.refPrice)
         this.final_price = total;
         this.groupedData = groupData;
         this.disable = groupData.disable;
         if (groupData.disable == false) {
+            this.addToCartData.subData = [];
             this.addToCartData = merge(this.addToCartData, groupData);
         }
     }
     addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
-            console.log("dshnfj")
-            this._cartService.addCart(this.addToCartData).then((response: any) => {
+            this._cartService.addCart(this.addToCartData, this.editCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
