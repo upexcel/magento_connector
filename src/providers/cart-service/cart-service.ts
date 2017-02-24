@@ -7,10 +7,11 @@ import {Cart} from '../../model/product/cart';
 import {ToastService} from './../../providers/toast-service/toastService';
 declare let Promise: any;
 import findIndex from 'lodash/findIndex';
+import { Events } from 'ionic-angular';
 @Injectable()
 
 export class CartService {
-    constructor(private _local: Storage, private _cart: Cart, private _toast: ToastService) {
+    constructor(private _events: Events, private _local: Storage, private _cart: Cart, private _toast: ToastService) {
     }
     addCart(data, editCartData) {
         return new Promise((resolve, reject) => {
@@ -48,6 +49,7 @@ export class CartService {
                     delete data.tier_price;
                 }
                 this._local.set('CartData', [data]);
+                this._events.publish('cartItems:length', 1);
                 resolve(res);
             } else {
                 forEach(value, (valueData, key) => {
@@ -71,10 +73,12 @@ export class CartService {
                 });
                 if (flag == 1) {
                     this._local.set('CartData', value);
+                    this._events.publish('cartItems:length', value.length);
                     resolve(res);
                 } else {
                     value.unshift(data);
                     this._local.set('CartData', value);
+                    this._events.publish('cartItems:length', value.length);
                     resolve(res);
                 }
             }
@@ -87,6 +91,7 @@ export class CartService {
             if (index >= 0) {
                 CartData.splice(index, 1)
             }
+            this._events.publish('cartItems:length', CartData.length);
             this._local.set('CartData', CartData);
         });
     }

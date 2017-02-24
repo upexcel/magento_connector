@@ -6,11 +6,12 @@ import difference from 'lodash/difference';
 import pullAll from 'lodash/pullAll';
 import {Storage} from '@ionic/storage';
 import _ from 'lodash';
+import { Events } from 'ionic-angular';
 
 declare let Promise: any;
 @Injectable()
 export class CartFunction implements OnInit {
-    constructor(public local: Storage) {}
+    constructor(private _events: Events, public local: Storage) {}
     ngOnInit() {}
     addItem(newQuantity, data) {
         //        this.local.get('CartData').then((value: any) => {
@@ -78,12 +79,14 @@ export class CartFunction implements OnInit {
                 if (index >= 0) {
                     CartData.splice(index, 1)
                 }
+                this._events.publish('cartItems:length', CartData.length);
                 this.local.set('CartData', CartData);
                 resolve(CartData);
             });
         });
     }
     updateCart(newCartData){
+        this._events.publish('cartItems:length', newCartData.length);
         this.local.set('CartData', newCartData);
     }
 }
