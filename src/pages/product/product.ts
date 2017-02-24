@@ -81,6 +81,7 @@ export class ProductPage implements OnInit {
     customOptData;
     diffProductData;
     editCartData: any;
+    cartButtonTitle: string;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -99,6 +100,11 @@ export class ProductPage implements OnInit {
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
+            if(this.editCartData){
+                this.cartButtonTitle = 'UPDATE CART'
+            } else{
+                this.cartButtonTitle = 'ADD TO CART'
+            }
             // coll products function when it lode first time
             this.products();
             //coll when any review is added 

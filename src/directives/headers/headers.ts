@@ -43,15 +43,18 @@ export class Headers implements AfterContentInit {
             this.show = false;
         }
         this._local.get('CartData').then((value: any) => {
-            if(value && value.length > 0){
+            if(value){
                 this.cartItems = value.length;
             }
         });
         this._events.subscribe('cartItems:length', (data) => {
-            if(data && data > 0){
+            if(data){
                 this.cartItems = data;
             }
         });
+    }
+    ngOnDestroy(){
+        this._events.subscribe('cartItems:length');
     }
     changeView(view) {
         if (view == "portrait") {
