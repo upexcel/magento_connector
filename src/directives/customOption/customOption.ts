@@ -63,6 +63,7 @@ export class CustomOption {
     timeSubData;
     dateSubData;
     datTimeeSubData;
+    date: any;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
@@ -74,12 +75,15 @@ export class CustomOption {
         forEach(this.custom_option, (value, key) => {
             value.id = key;
             value.visable = true;
+            value.vertualArray = [];
+            value.vertualId = false;
             if (value.is_require == "1") {
                 this.validateArray.push({ "id": value.id, "validate": true });
             } else {
                 this.validateArray.push({ "id": value.id, "validate": false });
             }
             forEach(value.option_type, (data, id) => {
+                data.defaultSet = false;
                 data.disable = false;
                 if (data.price_type == "percent") {
                     let interest = ((this.price * 1) * (data.price * 1)) / 100;
@@ -156,145 +160,111 @@ export class CustomOption {
         this.bundleJson();
     }
     onChangeSelect(data, formId, is_require) {
-        this.selectPrice = [];
-        let option_id;
-        let json: any = [];
+        //        this.bundleJson();
         this.selectObj = {};
-        let disable = false;
-        let value: any = [];
-        forEach(data, (data: any, key1) => {
-            if (data) {
-                data.disable = true;
-                disable = data.disable;
-                value.push(data);
-                this.selectPrice.push({ "price": data.price, "disable": disable });
-                this.formValidate(formId, false, is_require);
-                option_id = data.option_id;
-                json.push(data.option_type_id);
+        forEach(this.custom_option, (value) => {
+            if (value.type == "drop_down" && value.vertualId) {
+                this.selectObj[value.vertualId.option_id] = value.vertualId.option_type_id;
             }
-        })
-        this.selectObj[option_id] = json;
-        let select = { "drop_down": value };
-        this.selectSubdata = select;
-        this.bundleJson();
-
+        });
+        console.log(this.selectObj)
+        this.formValidate(formId, false, is_require);
     }
     onChangeRadio(formId, is_require) {
         this.Radioobj = {};
-        let radio: any;
-        let selectedRadioFiled: any = [];
-        this.formValidate(formId, false, is_require);
-        forEach(this.radio, (value, key) => {
-            if (value) {
-                this.Radioobj[value.option_id] = value.option_type_id;
-                selectedRadioFiled.push(value);
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'radio' && value.vertualId) {
+                this.Radioobj[value.vertualId.option_id] = value.vertualId.option_type_id;
             }
         });
-        radio = { "radio": selectedRadioFiled }
-        this.radioSubdata = { "radio": selectedRadioFiled };
-        this.bundleJson();
-
+        this.formValidate(formId, false, is_require);
+        console.log(this.Radioobj)
     }
     onChangeMulti(data, formId, i, is_require) {
-        this.multiPrice = [];
-        let self = this;
-        let json: any = [];
-        let option_id;
+        //        this.bundleJson();
         this.multiObj = {};
-        let dataRecord: any = [];
-        let subRecord: any = [];
-        let multiPrice: any = [];
-        if (data[i].length > 0) {
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'multiple') {
+                forEach(value.vertualArray, (multiSelectData) => {
+                    if (!this.multiObj[multiSelectData.option_id]) {
+                        this.multiObj[multiSelectData.option_id] = [];
+                    }
+                    this.multiObj[multiSelectData.option_id].push(multiSelectData.option_type_id);
+                });
+            }
+        });
+        if (data.length > 0) {
             this.formValidate(formId, false, is_require);
         }
         else {
             this.formValidate(formId, true, is_require);
         }
-        forEach(this.selectMulti, function(value) {
-            forEach(value, function(data: any, key1) {
-                if (data) {
-                    subRecord.push(data);
-                    multiPrice.push({ "price": data.price });
-                    option_id = data.option_id;
-                    json.push(data.option_type_id);
-                }
-            })
-            if (value != undefined) {
-                self.multiPrice.push(multiPrice);
-                self.multiObj[option_id] = json;
-                dataRecord.push(subRecord);
-                json = [];
-                multiPrice = [];
-                subRecord = [];
-            }
-        })
-        forEach(dataRecord)
-        let multi = { "multiple": dataRecord };
-        this.multiSubdata = multi;
-        this.bundleJson();
     }
-    onChangeCheck(data, event, formId, is_require) {
-        let option_id;
+    onChangeCheck(selection, event, formId, is_require) {
         this.checkObj = {};
-        this.checkPrice = [];
-        if (event) {
-            this.checkData.push(data);
-        }
-        else {
-            this.checkData = pull(this.checkData, data);
-        }
-        if (this.checkData.length > 0) {
-            this.formValidate(formId, false, is_require);
-        } else {
-            this.formValidate(formId, true, is_require);
-        }
-        forEach(this.checkData, (data: any, key1) => {
-            if (!this.checkObj[data.option_id]) {
-                this.checkObj[data.option_id] = [];
-            }
-            if (data) {
-                this.checkPrice.push({ "price": data.price });
-                option_id = data.option_id;
-                this.checkObj[option_id].push(data.option_type_id);
+        var countCheck = 0;
+        forEach(selection, (value, key) => {
+            if (value) {
+                if (value.defaultSet == true) {
+                    countCheck++;
+                }
             }
         })
-        let ckeckBox = { "checkbox": this.checkData };
-        this.checkSubData = ckeckBox;
-        this.bundleJson();
+
+        forEach(this.custom_option, (valueItems) => {
+            if (valueItems.type == "checkbox") {
+                forEach(valueItems.option_type, (value) => {
+                    if (value.defaultSet == true) {
+                        if (!this.checkObj[value.option_id]) {
+                            this.checkObj[value.option_id] = [];
+                        }
+                        this.checkObj[value.option_id].push(value.option_type_id);
+                    }
+                })
+            }
+        });
+        console.log(this.checkObj)
+        if (countCheck > 0) {
+            this.formValidate(formId, false, is_require);
+        }
+        else {
+            this.formValidate(formId, true, is_require);
+        }
     }
     file(event, opt, formId, is_require) {
         let fileArray: any = [];
+        console.log(opt)
         this.formValidate(formId, false, is_require);
         //        const fileTransfer = new Transfer();
-        var options: any;
-        options = {
-            fileKey: event.srcElement.files[0] ? event.srcElement.files[0].type : "",
-            fileName: event.srcElement.files[0] ? event.srcElement.files[0].name : "",
-            headers: {}
-        }
-        FileChooser.open()
-            .then((uri) => {
-                forEach(this.jsonFileData, (value) => {
-                    if (value.option_id == opt.option_id) {
-                        value.option_url = event.srcElement.files[0].name;
-                        value.option_Price = opt.price;
-                        value.file = opt;
-                        value.options = options;
-                        value.uri = uri;
-                    }
-                })
-                forEach(this.jsonFileData, (value) => {
-                    this.jsonFileDataValue[value.option_id] = value.option_url;
-                    fileArray.push(value.file);
-
-                })
-                let json = { "file": this.jsonFileData };
-                this.fileSubData = json;
-                this.bundleJson();
-
-            }, (err) => {
-                console.log(err)
-            });
+        //        var options: any;
+        //        options = {
+        //            fileKey: event.srcElement.files[0] ? event.srcElement.files[0].type : "",
+        //            fileName: event.srcElement.files[0] ? event.srcElement.files[0].name : "",
+        //            headers: {}
+        //        }
+        //        FileChooser.open()
+        //            .then((uri) => {
+        //                forEach(this.jsonFileData, (value) => {
+        //                    if (value.option_id == opt.option_id) {
+        //                        value.option_url = event.srcElement.files[0].name;
+        //                        value.option_Price = opt.price;
+        //                        value.file = opt;
+        //                        value.options = options;
+        //                        value.uri = uri;
+        //                    }
+        //                })
+        //                forEach(this.jsonFileData, (value) => {
+        //                    this.jsonFileDataValue[value.option_id] = value.option_url;
+        //                    fileArray.push(value.file);
+        //
+        //                })
+        //                let json = { "file": this.jsonFileData };
+        //                this.fileSubData = json;
+        //                this.bundleJson();
+        //
+        //            }, (err) => {
+        //                console.log(err)
+        //            });
 
     }
     timeChanged(formId, is_require) {
@@ -323,20 +293,38 @@ export class CustomOption {
         this.bundleJson();
     }
     dateChanged(formId, is_require) {
-        this.formValidate(formId, false, is_require);
-        var dateObj = new Date(this.dateData);
-        var day = dateObj.getDate();
-        var months = dateObj.getMonth();
-        var year = dateObj.getFullYear();
-        this.datePrice = { "price": this.jsonDateData.option_Price };
-        let dateJson = {
-            "month": months * 1 + 1,
-            "day": day,
-            "year": year
-        }
-        this.dateJson[this.jsonDateData.option_id] = dateJson;
-        this.dateSubData = { "dateJson": dateJson };
-        this.bundleJson();
+        //        this.formValidate(formId, false, is_re        quire);
+        //                
+        //        var dateObj = new Date(this.dat        eData);
+        //        var day = dateObj.get        Date();
+        //        var months = dateObj.getM        onth();
+        //        var year = dateObj.getFull        Year();
+        //        this.datePrice = { "price": this.jsonDateData.option_P        rice };
+        //        let dateJ        son = {
+        //            "month": months *         1 + 1,
+        //            "day        ": day,
+        //            "year        ": year
+        //                }
+        //        this.dateJson[this.jsonDateData.option_id] = da        teJson;
+        //        this.dateSubData = { "dateJson": date        Json };
+        //        this.bundleJson();
+        let dateJson; var dateObj; var day; var year; var months;
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'date' && value.vertualId) {
+                console.log(value.vertualId)
+                dateObj = new Date(value.vertualId);
+                day = dateObj.getDate();
+                months = dateObj.getMonth();
+                year = dateObj.getFullYear();
+                dateJson = {
+                    "month": months * 1 + 1,
+                    "day": day,
+                    "year": year
+                }
+                this.date[value.vertualId.option_id] = dateJson;// option_id is undefined
+            }
+        });
+        console.log(this.date);
     }
     calenderChanged(formId, is_require) {
         var dateObj = new Date(this.month);
