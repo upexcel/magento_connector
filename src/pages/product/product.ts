@@ -164,6 +164,7 @@ export class ProductPage implements OnInit {
                     })
 
                 }
+                console.log(res)
                 // here we are using tierPrice servive to get offer of tire price .
                 this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                 if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
@@ -171,6 +172,9 @@ export class ProductPage implements OnInit {
                 }
                 if (this.productData.body.associated_products) {
                     this.keys = keys(this.productData.body.associated_products.attributes);
+                    if(this.keys.length == 0){
+                        this.disable = false;
+                    }
                 }
                 if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                     this.customFormValidate = true;
