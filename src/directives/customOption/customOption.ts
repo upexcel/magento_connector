@@ -89,11 +89,11 @@ export class CustomOption {
         forEach(this.custom_option, (value) => {
             if (value.type == "field") {
                 if (value.text.length > 0) {
-                    this.formValidate(formId, false, is_require);
+                    this.formValidate(value.id, false, is_require);
                     value.vertualId = opt;
                     this.textData[value.vertualId.option_id] = value.text;
                 } else {
-                    this.formValidate(formId, true, is_require);
+                    this.formValidate(value.id, true, is_require);
                     if (value.vertualId.option_id) {
                         this.textData[value.vertualId.option_id] = "";
                     }
@@ -106,12 +106,13 @@ export class CustomOption {
     textArea(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
             if (value.type == "area") {
+                console.log(value, formId, is_require)
                 if (value.text.length > 0) {
-                    this.formValidate(formId, false, is_require);
+                    this.formValidate(value.id, false, is_require);
                     value.vertualId = opt;
                     this.textarea[value.vertualId.option_id] = value.text;
                 } else {
-                    this.formValidate(formId, true, is_require);
+                    this.formValidate(value.id, true, is_require);
                     if (value.vertualId.option_id) {
                         this.textarea[value.vertualId.option_id] = "";
                         value.vertualId['price'] = 0;
@@ -317,7 +318,7 @@ export class CustomOption {
             }
         });
         this.bundleJson();
-        console.log(this.dateTimeJson, data);
+//        console.log(this.dateTimeJson, data);
 
     }
     checkVisiblety(obj) {
@@ -390,7 +391,7 @@ export class CustomOption {
             custonCartDisable = false;
         }
         opt = { "dynemicPrice": total, "custom": opt, "customSubdata": subdata, "disable": custonCartDisable }
-        console.log("opt", opt)
+//        console.log("opt", opt)
         this.onChange.emit(opt);
         //    }
     }
