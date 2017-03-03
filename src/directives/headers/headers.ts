@@ -23,6 +23,7 @@ export class Headers implements AfterContentInit {
     showLogin: boolean;
     show: boolean = true;
     viewChang: string = "Landscape";
+    cartItems: number;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
@@ -41,7 +42,19 @@ export class Headers implements AfterContentInit {
         if (this.type == true) {
             this.show = false;
         }
-
+        this._local.get('CartData').then((value: any) => {
+            if(value){
+                this.cartItems = value.length;
+            }
+        });
+        this._events.subscribe('cartItems:length', (data) => {
+            if(data){
+                this.cartItems = data;
+            }
+        });
+    }
+    ngOnDestroy(){
+        this._events.subscribe('cartItems:length');
     }
     changeView(view) {
         if (view == "portrait") {

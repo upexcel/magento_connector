@@ -377,6 +377,25 @@ filter {
 ::-webkit-scrollbar { 
     display: none; 
 }
+.icon-badge {
+    position: absolute;
+    top: -4px;
+    right: calc(50% - 20px);
+    padding: 1px 6px;
+    height: auto;
+    font-size: 12px;
+    line-height: 16px;
+    background-color: #ef4e3a;
+    color: #fff;
+    z-index: 1;
+    display: inline-block;
+    min-width: 10px;
+    border-radius: 10px;
+    vertical-align: baseline;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: bold;
+}
 
 /*144 server css*/
 /*ion-app {

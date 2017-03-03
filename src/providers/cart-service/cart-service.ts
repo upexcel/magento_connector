@@ -1,18 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
 import isEqual from 'lodash/isEqual';
-import { Cart } from '../../model/product/cart';
-import { ToastService } from './../../providers/toast-service/toastService';
+import {Cart} from '../../model/product/cart';
+import {ToastService} from './../../providers/toast-service/toastService';
 declare let Promise: any;
+import findIndex from 'lodash/findIndex';
+import { Events } from 'ionic-angular';
 @Injectable()
 
 export class CartService {
-    constructor(private _local: Storage, private _cart: Cart, private _toast: ToastService) {
+    constructor(private _events: Events, private _local: Storage, private _cart: Cart, private _toast: ToastService) {
     }
-    addCart(data) {
+    addCart(data, editCartData) {
         return new Promise((resolve, reject) => {
+            if (editCartData) {
+                this.removeEditCartDataFromLocal(editCartData);
+            }
             this._cart.getCart(data).then((res) => {
                 //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
                 //                    .then((data) => {
@@ -44,6 +49,7 @@ export class CartService {
                     delete data.tier_price;
                 }
                 this._local.set('CartData', [data]);
+                this._events.publish('cartItems:length', 1);
                 resolve(res);
             } else {
                 forEach(value, (valueData, key) => {
@@ -67,14 +73,26 @@ export class CartService {
                 });
                 if (flag == 1) {
                     this._local.set('CartData', value);
+                    this._events.publish('cartItems:length', value.length);
                     resolve(res);
                 } else {
                     value.unshift(data);
                     this._local.set('CartData', value);
+                    this._events.publish('cartItems:length', value.length);
                     resolve(res);
                 }
             }
             console.log("valueCart", value);
+        });
+    }
+    removeEditCartDataFromLocal(editCartData) {
+        this._local.get('CartData').then((CartData: any) => {
+            let index = findIndex(CartData, editCartData);
+            if (index >= 0) {
+                CartData.splice(index, 1)
+            }
+            this._events.publish('cartItems:length', CartData.length);
+            this._local.set('CartData', CartData);
         });
     }
 }

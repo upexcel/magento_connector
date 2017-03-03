@@ -16,14 +16,11 @@
         <tbody>
             <tr class="capitalize" *ngFor = "let group of grouped.group_associated_products ; let i=index">
                 <td class="tableData"> {{group.name}}</td>
-
                 <td><span [ngClass]="{'line':(group.price*1) > (group.final_price*1), 'hide':(group.price*1) <= (group.final_price*1),groupedPro:true}">
                         {{grouped.data.currency_sign}}{{group.price | number}}</span>
                     <span>{{grouped.data.currency_sign}}{{group.final_price | number}}</span></td>
-
-
                 <td>
-                    <input type="number" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
+                    <input type="number" min="0" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
                 </td>
             </tr>
         </tbody>

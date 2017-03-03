@@ -81,6 +81,7 @@ export class ProductPage implements OnInit {
     customOptData;
     diffProductData;
     editCartData: any;
+    cartButtonTitle: string;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -99,6 +100,11 @@ export class ProductPage implements OnInit {
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
+            if(this.editCartData){
+                this.cartButtonTitle = 'UPDATE CART'
+            } else{
+                this.cartButtonTitle = 'ADD TO CART'
+            }
             // coll products function when it lode first time
             this.products();
             //coll when any review is added 
@@ -158,6 +164,7 @@ export class ProductPage implements OnInit {
                     })
 
                 }
+                console.log(res)
                 // here we are using tierPrice servive to get offer of tire price .
                 this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                 if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
@@ -165,6 +172,9 @@ export class ProductPage implements OnInit {
                 }
                 if (this.productData.body.associated_products) {
                     this.keys = keys(this.productData.body.associated_products.attributes);
+                    if(this.keys.length == 0){
+                        this.disable = false;
+                    }
                 }
                 if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
                     this.customFormValidate = true;
@@ -436,19 +446,18 @@ export class ProductPage implements OnInit {
 
     group(groupData) {
         let total = (this.refPrice * 1) + (groupData.total * 1);
-        console.log(this.refPrice)
         this.final_price = total;
         this.groupedData = groupData;
         this.disable = groupData.disable;
         if (groupData.disable == false) {
+            this.addToCartData.subData = [];
             this.addToCartData = merge(this.addToCartData, groupData);
         }
     }
     addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
-            console.log("dshnfj")
-            this._cartService.addCart(this.addToCartData).then((response: any) => {
+            this._cartService.addCart(this.addToCartData, this.editCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
