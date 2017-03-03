@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { CartPage } from '../cart/cart';
-import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NotifyMe } from '../../model/product/notify';
-import { CartService } from './../../providers/cart-service/cart-service';
-import { productDataType } from './../product/productDataType';
-import { Product } from '../../model/product/getProduct';
-import { cartDataType } from './../product/cartDataType';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { TierPrice } from '../../model/product/checkTierPrice';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {CartPage} from '../cart/cart';
+import {NavController, NavParams, LoadingController, Events} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NotifyMe} from '../../model/product/notify';
+import {CartService} from './../../providers/cart-service/cart-service';
+import {productDataType} from './../product/productDataType';
+import {Product} from '../../model/product/getProduct';
+import {cartDataType} from './../product/cartDataType';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {TierPrice} from '../../model/product/checkTierPrice';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-import { Transfer } from 'ionic-native';
+import {Transfer} from 'ionic-native';
 
 @Component({
     selector: 'product',
@@ -75,14 +75,14 @@ export class ProductPage implements OnInit {
     store_id: any;
     userData: any;
     groupedData: any;
-    configSubData: any = {};
+    configSubData: any = [];
     cartSpin: boolean = false;
     customOptData;
     diffProductData;
     editCartData: any;
     cartButtonTitle: string;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
-        this.logform = this.emailTest.group({ email: ['', Validators.required] });
+        this.logform = this.emailTest.group({email: ['', Validators.required]});
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
                 this.userEmail = userData.email;
@@ -99,9 +99,9 @@ export class ProductPage implements OnInit {
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
-            if(this.editCartData){
+            if (this.editCartData) {
                 this.cartButtonTitle = 'UPDATE CART'
-            } else{
+            } else {
                 this.cartButtonTitle = 'ADD TO CART'
             }
             // coll products function when it lode first time
@@ -149,7 +149,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+                this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id};
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
@@ -163,7 +163,23 @@ export class ProductPage implements OnInit {
                     })
 
                 }
-                console.log(res)
+                console.log(res.body)
+                //if edit cart is present, add a vertual key
+                if (this.editCartData) {
+                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                        forEach(this.productData.body.associated_products.attributes, (attributesData) => {
+                            console.log('attributesData', attributesData)
+                            //                            attributesData.vertualKey = attributesData.options;
+                        });
+                    }
+                } else {
+                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                        forEach(this.productData.body.associated_products.attributes, (attributesData) => {
+                            attributesData.vertualKey = false;
+                        });
+                    }
+                }
+
                 // here we are using tierPrice servive to get offer of tire price .
                 this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
                 if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
@@ -171,7 +187,7 @@ export class ProductPage implements OnInit {
                 }
                 if (this.productData.body.associated_products) {
                     this.keys = keys(this.productData.body.associated_products.attributes);
-                    if(this.keys.length == 0){
+                    if (this.keys.length == 0) {
                         this.disable = false;
                     }
                 }
@@ -181,7 +197,6 @@ export class ProductPage implements OnInit {
                     this.virtual = false;
                     this.disable = true;
                 }
-                this.genrateData();
                 this.ifCustomOption(null, null);
             }
 
@@ -196,70 +211,112 @@ export class ProductPage implements OnInit {
         var total = 0;
         var flag = 0;
         this.configPrice = [];
-        this.configSubData = [];
+        this.selectedList = [];
+        //        this.configSubData = [];
         //take current selected item
-        let currentSelectedItem = configurableSelectedObject[key];
-        //cloneing for use checked list in add cart function
-        this.selectedList = clone(configurableSelectedObject);
+        //        let currentSelectedItem = configurableSelectedObject[key];
+        //cloneing for use checked list in add cart f        unction
+        //        this.selectedList = clone(configurableSelectedObject);
         // get effected price
-        console.log(configurableSelectedObject);
-        forEach(configurableSelectedObject, (takePrice) => {
-            ++flag;
-            if (takePrice != undefined) {
-                this.configPrice.push({ price: takePrice.price });
-            }
-        })
-        forEach(this.configPrice, (value: any) => {
-            total += (value.price * 1);
-        });
-        this.diffrentTypeProductData(total);
+        //        forEach(configurableSelectedObject, (takePric        e) => {
+        //                    ++flag;
+        //            if (takePrice != undef        ined) {
+        //                this.configPrice.push({price: takePrice.p        rice});
+        //                    }
+        //                })
+        //        forEach(this.configPrice, (value: an        y) => {
+        //            total += (value.pric        e * 1);
+        //                });
+        //        this.diffrentTypeProductData(total);
         //        mapping between select list
 
         forEach(this.productData.body.associated_products.attributes, (allConfigData, allConfigKey) => {
+//            console.log(allConfigData)
+            if (typeof (allConfigData.vertualKey) == 'object') {
+//                console.log(allConfigData.vertualKey);
+                ++flag;
+                count++;
+                this.configPrice.push({price: allConfigData.vertualKey.price});
+                this.selectedList.push(allConfigData);
+                if (allConfigData.id == key) {
+                    this.configSubData.push({
+                        key: allConfigData.label,
+                        value: allConfigData.vertualKey
+                    });
+                    if (allConfigData.label == "Color") {
+                        let myDiv = document.getElementById('color');
+                        myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || "";
+                    }
+                }
+            }
             if (key != allConfigKey) {
                 forEach(allConfigData.options, (allConfigValue) => {
-                    if (currentSelectedItem != undefined) {
-                        allConfigValue.shown = false;
-                        forEach(currentSelectedItem.products, (currentConfigProductsVal) => {
-                            if (allConfigValue.products != undefined && currentConfigProductsVal != undefined) {
-                                forEach(allConfigValue.products, (allConfigProductsVal) => {
-                                    if (currentConfigProductsVal == allConfigProductsVal) {
-                                        allConfigValue.shown = true;
-                                    }
-                                })
+                    allConfigValue.shown = false;
+                    forEach(configurableSelectedObject.products, (currVal) => {
+                        forEach(allConfigValue.products, (allConfigProductsVal) => {
+                            if (currVal == allConfigProductsVal) {
+                                allConfigValue.shown = true;
                             }
                         })
-                    }
+                    })
                 })
             } else {
                 forEach(allConfigData.options, (allConfigValue) => {
                     if (flag == 1) {
                         allConfigValue.shown = true;
                     }
-                });
-            }
-            if (typeof configurableSelectedObject != undefined) {
-                forEach(configurableSelectedObject, (value, key) => {
-                    if (allConfigData.id == key) {
-                        this.configSubData.push({
-                            key: allConfigData.label,
-                            value: value
-                        });
-                        if (allConfigData.label == "Color") {
-                            let myDiv = document.getElementById('color');
-                            myDiv.style.color = configurableSelectedObject[key] ? ((configurableSelectedObject[key].label).trim()).replace(" ", "") : "";
-                        }
-                    }
-                });
+                })
             }
         })
+        forEach(this.configPrice, (value: any) => {
+            total += (value.price * 1);
+        });
+        this.diffrentTypeProductData(total);
+
+        //                forEach(allConfigData.options, (allConfigValue) => {
+        //                    if (currentSelectedItem != undefined) {
+        //                        allConfigValue.shown = false;
+        //                        forEach(currentSelectedItem.products, (currentConfigProductsVal) => {
+        //                            if (allConfigValue.products != undefined && currentConfigProductsVal != undefined) {
+        //                                forEach(allConfigValue.products, (allConfigProductsVal) => {
+        //                                    if (currentConfigProductsVal == allConfigProductsVal) {
+        //                                        allConfigValue.shown = true;
+        //                                    }
+        //                                })
+        //                            }
+        //                        })
+        //                    }
+        //                })
+        //            } else {
+        //                forEach(allConfigData.options, (allConfigValue) => {
+        //                    if (flag == 1) {
+        //                        allConfigValue.shown = true;
+        //                    }
+        //                });
+        //            }
+        //            if (typeof configurableSelectedObject != undefined) {
+        //                forEach(configurableSelectedObject, (value, key) => {
+        //                    if (allConfigData.id == key) {
+        //                        this.configSubData.push({
+        //                            key: allConfigData.label,
+        //                            value: value
+        //                        });
+        //                        if (allConfigData.label == "Color") {
+        //                            let myDiv = document.getElementById('color');
+        //                            myDiv.style.color = configurableSelectedObject[key] ? ((configurableSelectedObject[key].label).trim()).replace(" ", "") : "";
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        })
         //change color of icon when its type is color
         this.selectshow = false;
         //disable button when select list is not checked
         if (typeof configurableSelectedObject != "undefined") {
-            forEach(configurableSelectedObject, function(value) {
-                count++;
-            });
+//            forEach(configurableSelectedObject, function (value) {
+//                count++;
+//            });
+            console.log(count)
             if (this.keys.length == count) {
                 if (this.customDisable == false) {
                     this.disable = false;
@@ -272,7 +329,6 @@ export class ProductPage implements OnInit {
                 this.config = true;
             }
         }
-        this.genrateData();
         this.configurabilData();
     }
 
@@ -301,9 +357,6 @@ export class ProductPage implements OnInit {
         });
     }
 
-    genrateData(price?) {
-
-    }
     bundle(bundlePrice) {
         this.bundlePrice = this.refPrice * 1;
         this.dynemicDisplayPrice = this.refDisplayPrice * 1;
@@ -318,12 +371,14 @@ export class ProductPage implements OnInit {
         let selectedItem: string;
 
         if (this.type == "configurable") {
-            forEach(this.selectedList, function(listdata, key) {
-                array[key] = listdata.id;
+            forEach(this.selectedList, function (listdata) {
+                console.log('listdata, key',listdata)
+                array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData };
+            let cartApiData = {"productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData};
             this.addToCartData = merge(this.addToCartData, cartApiData);
+            console.log(this.addToCartData)
             let ser = this.productData.body.associated_products.attributes;
             this._local.get('search').then((search: any) => {
                 if (search) {
@@ -471,6 +526,5 @@ export class ProductPage implements OnInit {
         }
     }
 }
-
 
 
