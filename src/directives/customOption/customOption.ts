@@ -14,14 +14,9 @@ export class CustomOption {
     @Output() onChange = new EventEmitter();
     currencySign: string;
     custom_option: any = [];
-    month: any;
     textData: any = {};
     textarea: any = {};
     textAreaPrice: any = {};
-    selectMulti: any = [];
-    select: any = [];
-    radio: any = [];
-    checkData: any = [];
     check: any = [];
     fileData: any = {};
     time: any;
@@ -42,28 +37,11 @@ export class CustomOption {
     multiObj: any = {};
     checkObj: any = {};
     timeJson: any = {};
-    datTimeeJson: any = {};
-    textSubdata;
-    textAreaSubdata;
-    selectSubdata;
-    radioSubdata;
-    multiSubdata;
-    checkSubData;
-    fileSubData;
-    datePrice;
-    timePrice;
-    dateTimePrice;
-    radioHidden: boolean = true;
-    checkHidden: boolean = true;
-    keys: any = [];
-    validate: FormGroup;
     curYear: any;
     validateArray: any = [];
     price: number;
-    timeSubData;
-    dateSubData;
-    datTimeeSubData;
     date: any;
+    dateTimeJson: any;
     constructor(private _fb: FormBuilder) { }
     ngOnInit() {
         var dateObj = new Date();
@@ -77,6 +55,8 @@ export class CustomOption {
             value.visable = true;
             value.vertualArray = [];
             value.vertualId = false;
+            value.date = false;
+            value.text = "";
             if (value.is_require == "1") {
                 this.validateArray.push({ "id": value.id, "validate": true });
             } else {
@@ -91,25 +71,6 @@ export class CustomOption {
                     data.default_price = interest;
                 }
             })
-            this.keys.push(value.type);
-            if (value.type == "date_time") {
-                this.jsonDateTimeData = {
-                    "option_id": value.option_type[0].option_id,
-                    "option_Price": value.option_type[0].price
-                }
-            }
-            if (value.type == "time") {
-                this.jsonTimeData = {
-                    "option_id": value.option_type[0].option_id,
-                    "option_Price": value.option_type[0].price
-                }
-            }
-            if (value.type == "date") {
-                this.jsonDateData = {
-                    "option_id": value.option_type[0].option_id,
-                    "option_Price": value.option_type[0].price
-                }
-            }
             if (value.type == "file") {
                 var obj = {
                     "option_id": value.option_type[0].option_id,
@@ -125,50 +86,50 @@ export class CustomOption {
         })
     }
     text(opt, formId, is_require) {
-        var val: any = [];
-        forEach(this.textData, (value) => {
-            val = value;
-        })
-        if (val.length > 0) {
-            this.formValidate(formId, false, is_require);
-            this.validateArray.iid
-            this.textPrice = { "price": opt.price };
-            this.textSubdata = { "field": opt };
-        }
-        else {
-            this.formValidate(formId, true, is_require);
-            this.textPrice = { "price": 0 };
-            this.textSubdata = { "area": "" };
-        }
+        forEach(this.custom_option, (value) => {
+            if (value.type == "field") {
+                if (value.text.length > 0) {
+                    this.formValidate(formId, false, is_require);
+                    value.vertualId = opt;
+                    this.textData[value.vertualId.option_id] = value.text;
+                } else {
+                    this.formValidate(formId, true, is_require);
+                    if (value.vertualId.option_id) {
+                        this.textData[value.vertualId.option_id] = "";
+                    }
+                    value.vertualId['price'] = 0;
+                }
+            }
+        });
         this.bundleJson();
     }
     textArea(opt, formId, is_require) {
-        var val;
-        forEach(this.textarea, function(value) {
-            val = value;
-        })
-        if (val.length > 0) {
-            this.formValidate(formId, false, is_require);
-            this.textAreaPrice = { "price": opt.price };
-            this.textAreaSubdata = { "area": opt };
-        }
-        else {
-            this.formValidate(formId, true, is_require);
-            this.textAreaPrice = { "price": 0 };
-            this.textAreaSubdata = { "area": "" };
-        }
+        forEach(this.custom_option, (value) => {
+            if (value.type == "area") {
+                if (value.text.length > 0) {
+                    this.formValidate(formId, false, is_require);
+                    value.vertualId = opt;
+                    this.textarea[value.vertualId.option_id] = value.text;
+                } else {
+                    this.formValidate(formId, true, is_require);
+                    if (value.vertualId.option_id) {
+                        this.textarea[value.vertualId.option_id] = "";
+                        value.vertualId['price'] = 0;
+                    }
+                }
+            }
+        });
         this.bundleJson();
     }
     onChangeSelect(data, formId, is_require) {
-        //        this.bundleJson();
         this.selectObj = {};
         forEach(this.custom_option, (value) => {
             if (value.type == "drop_down" && value.vertualId) {
                 this.selectObj[value.vertualId.option_id] = value.vertualId.option_type_id;
             }
         });
-        console.log(this.selectObj)
         this.formValidate(formId, false, is_require);
+        this.bundleJson();
     }
     onChangeRadio(formId, is_require) {
         this.Radioobj = {};
@@ -178,10 +139,9 @@ export class CustomOption {
             }
         });
         this.formValidate(formId, false, is_require);
-        console.log(this.Radioobj)
+        this.bundleJson();
     }
     onChangeMulti(data, formId, i, is_require) {
-        //        this.bundleJson();
         this.multiObj = {};
         forEach(this.custom_option, (value) => {
             if (value.type == 'multiple') {
@@ -199,6 +159,7 @@ export class CustomOption {
         else {
             this.formValidate(formId, true, is_require);
         }
+        this.bundleJson();
     }
     onChangeCheck(selection, event, formId, is_require) {
         this.checkObj = {};
@@ -223,17 +184,16 @@ export class CustomOption {
                 })
             }
         });
-        console.log(this.checkObj)
         if (countCheck > 0) {
             this.formValidate(formId, false, is_require);
         }
         else {
             this.formValidate(formId, true, is_require);
         }
+        this.bundleJson();
     }
     file(event, opt, formId, is_require) {
         let fileArray: any = [];
-        console.log(opt)
         this.formValidate(formId, false, is_require);
         //        const fileTransfer = new Transfer();
         //        var options: any;
@@ -265,53 +225,49 @@ export class CustomOption {
         //            }, (err) => {
         //                console.log(err)
         //            });
-
+        this.bundleJson();
     }
     timeChanged(formId, is_require) {
         let array = [];
         let time = {};
         let day_part;
         let hour = 0;
+        var dateObj;
         this.formValidate(formId, false, is_require);
-        this.timePrice = { "price": this.jsonTimeData.option_Price };
-        array = this.time.split(':');
-        if (array[0] * 1 > 12) {
-            hour = (array[0] * 1) - 12;
-            day_part = "pm";
-        }
-        else {
-            hour = (array[0] * 1);
-            day_part = "am";
-        }
-        time = {
-            "hour": hour,
-            "minute": (array[1] * 1),
-            "day_part": day_part
-        }
-        this.timeJson[this.jsonTimeData.option_id] = time;
-        this.timeSubData = { "time": time };
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'time' && value.vertualId) {
+                dateObj = new Date(value.vertualId);
+                array = value.vertualId.split(':');
+                if (array[0] * 1 > 12) {
+                    hour = (array[0] * 1) - 12;
+                    day_part = "pm";
+                }
+                else {
+                    hour = (array[0] * 1);
+                    day_part = "am";
+                }
+                time = {
+                    "hour": hour,
+                    "minute": (array[1] * 1),
+                    "day_part": day_part
+                }
+                forEach(value, (optId, optKey) => {
+                    if (typeof (optId) == "object" && optId.length > 0) {
+                        forEach(optId, (id) => {
+                            this.timeJson[id.option_id] = time;
+                            value.date = id;
+                        })
+                    }
+                })
+            }
+        });
         this.bundleJson();
     }
     dateChanged(formId, is_require) {
-        //        this.formValidate(formId, false, is_re        quire);
-        //                
-        //        var dateObj = new Date(this.dat        eData);
-        //        var day = dateObj.get        Date();
-        //        var months = dateObj.getM        onth();
-        //        var year = dateObj.getFull        Year();
-        //        this.datePrice = { "price": this.jsonDateData.option_P        rice };
-        //        let dateJ        son = {
-        //            "month": months *         1 + 1,
-        //            "day        ": day,
-        //            "year        ": year
-        //                }
-        //        this.dateJson[this.jsonDateData.option_id] = da        teJson;
-        //        this.dateSubData = { "dateJson": date        Json };
-        //        this.bundleJson();
+        this.date = {};
         let dateJson; var dateObj; var day; var year; var months;
         forEach(this.custom_option, (value) => {
             if (value.type == 'date' && value.vertualId) {
-                console.log(value.vertualId)
                 dateObj = new Date(value.vertualId);
                 day = dateObj.getDate();
                 months = dateObj.getMonth();
@@ -321,25 +277,48 @@ export class CustomOption {
                     "day": day,
                     "year": year
                 }
-                this.date[value.vertualId.option_id] = dateJson;// option_id is undefined
+                forEach(value, (optId, optKey) => {
+                    if (typeof (optId) == "object" && optId.length > 0) {
+                        forEach(optId, (id) => {
+                            this.date[id.option_id] = dateJson;
+                            value.date = id;
+                        })
+                    }
+                })
             }
         });
-        console.log(this.date);
+        this.formValidate(formId, false, is_require);
+        this.bundleJson();
+
     }
     calenderChanged(formId, is_require) {
-        var dateObj = new Date(this.month);
-        var min = dateObj.getUTCMinutes();
-        var hours = dateObj.getUTCHours();
+        var data; var hours; var min; var dateObj;
         this.formValidate(formId, false, is_require);
-        this.dateTimePrice = { "price": this.jsonDateTimeData.option_Price };
-        var data = {
-            "hour": hours,
-            "minute": min,
-            "day_part": "am"
-        }
-        this.datTimeeJson[this.jsonDateTimeData.option_id] = data;
-        this.datTimeeSubData = { "dateTime": data };
+        //        this.bundleJson();
+        this.dateTimeJson = {};
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'date_time' && value.vertualId) {
+                dateObj = new Date(value.vertualId);
+                data = {
+                    "hour": dateObj.getUTCHours(),
+                    "minute": dateObj.getUTCMinutes(),
+                    "month": dateObj.getUTCMonth() * 1 + 1,
+                    "day": dateObj.getUTCDate(),
+                    "year": dateObj.getUTCFullYear()
+                }
+                forEach(value, (optId, optKey) => {
+                    if (typeof (optId) == "object" && optId.length > 0) {
+                        forEach(optId, (id) => {
+                            this.dateTimeJson[id.option_id] = data;
+                            value.date = id;
+                        })
+                    }
+                })
+            }
+        });
         this.bundleJson();
+        console.log(this.dateTimeJson, data);
+
     }
     checkVisiblety(obj) {
         if (obj.visable == false) {
@@ -362,48 +341,46 @@ export class CustomOption {
     }
     bundleJson() {
         var total = 0;
-        let jsonData = {};
-        let subdata = [];
-
+        let subdata: any = [];
+        let opt = {};
         let validateCount = 0;
         let custonCartDisable = true;
-        if (this.textPrice.price != undefined) {
-            total += (this.textPrice.price * 1);
-        }
-        if (this.textAreaPrice.price != undefined) {
-            total += (this.textAreaPrice.price * 1);
-        }
-        if (this.datePrice != undefined) {
-            total += (this.datePrice.price * 1);
-        }
-        if (this.timePrice != undefined) {
-            total += (this.timePrice.price * 1);
-        }
-        if (this.dateTimePrice != undefined) {
-            total += (this.dateTimePrice.price * 1);
-        }
-        forEach(this.radioSubdata, function(value: any) {
-            forEach(value, function(radioValue: any) {
-                console.log("radio Price", radioValue.price);
-                total += (radioValue.price * 1);
-            });
-        });
-        forEach(this.selectPrice, function(value: any) {
-            total += (value.price * 1);
-        });
-        forEach(this.multiPrice, function(value: any) {
-            forEach(value, function(data) {
-                total += (data.price * 1);
-            })
-        });
-        forEach(this.checkPrice, function(value: any) {
-            total += (value.price * 1);
-        });
-        forEach(this.jsonFileData, function(value: any) {
-            if (value != undefined) {
-                total += (value.option_Price * 1);
+        forEach(this.custom_option, (value) => {
+            if (value.type == 'checkbox') {
+                forEach(value.option_type, (opt) => {
+                    if (opt.defaultSet) {
+                        total = total + (opt.price) * 1;
+                        subdata.push({ "key": value.title, 'value': opt })
+                    }
+                })
             }
-        });
+            if ((value.type == "drop_down" || value.type == 'radio') && value.vertualId) {
+                total = total + value.vertualId.price * 1;
+                subdata.push({ "key": value.title, 'value': value.vertualId })
+            }
+            if ((value.type == "date" || value.type == "time" || value.type == "date_time") && value.vertualId) {
+                if (value.date) {
+                    total = total + (value.date.price) * 1;
+                    let date = new Date(value.vertualId);
+                    subdata.push({ "key": value.title, 'value': value.vertualId, 'dateFoemate': date })
+                }
+            }
+            if (value.type == 'multiple' && value.vertualArray) {
+                //vertualArray
+                forEach(value.vertualArray, (multiSelectValue, multiSelectKey) => {
+                    total = total + multiSelectValue.price * 1;
+                    subdata.push({ "key": value.title, 'value': multiSelectValue });
+                })
+            }
+            if ((value.type == 'area' || value.type == 'field') && value.vertualId) {
+                //vertualArray
+                total = total + value.vertualId.price * 1;
+                subdata.push({ "key": value.title, 'value': value.text })
+            }
+        })
+
+        opt = merge(opt, this.textData, this.textarea, this.selectObj, this.Radioobj, this.checkObj, this.timeJson, this.date, this.dateTimeJson, this.multiObj)
+
         forEach(this.validateArray, (value, key: any) => {
             if (value.validate == false) {
                 validateCount++;
@@ -412,9 +389,9 @@ export class CustomOption {
         if (validateCount == this.validateArray.length) {
             custonCartDisable = false;
         }
-        jsonData = merge(jsonData, this.jsonTimeData, this.datTimeeJson, this.textData, this.checkObj, this.textarea, this.selectObj, this.Radioobj, this.multiObj, this.jsonFileDataValue, this.timeJson, this.dateJson)
-        subdata = merge(subdata, this.textSubdata, this.textAreaSubdata, this.selectSubdata, this.radioSubdata, this.multiSubdata, this.checkSubData, this.fileSubData, this.timeSubData, this.dateSubData, this.datTimeeSubData);
-        jsonData = { "dynemicPrice": total, "custom": jsonData, "customSubdata": subdata, "disable": custonCartDisable }
-        this.onChange.emit(jsonData);
+        opt = { "dynemicPrice": total, "custom": opt, "customSubdata": subdata, "disable": custonCartDisable }
+        console.log("opt", opt)
+        this.onChange.emit(opt);
+        //    }
     }
 }

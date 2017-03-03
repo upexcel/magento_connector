@@ -193,6 +193,7 @@ export class ProductPage implements OnInit {
         //cloneing for use checked list in add cart function
         this.selectedList = clone(configurableSelectedObject);
         // get effected price
+        console.log(configurableSelectedObject);
         forEach(configurableSelectedObject, (takePrice) => {
             ++flag;
             if (takePrice != undefined) {
