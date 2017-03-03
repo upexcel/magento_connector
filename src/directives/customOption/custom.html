@@ -1,19 +1,17 @@
 <div *ngFor="let customOption of custom_option ; let i=index" class="custom-options">
-    <!--    <ion-list *ngIf="customOption.type=='field'">
-            <ion-item  *ngFor="let opt of customOption.option_type">
-                <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
-                <ion-input type="text" value="opt" [(ngModel)]="customOption.vertualId" (keyup.enter)="text(opt,customOption.id,customOption.is_require)"  (blur)="text(opt,customOption.id)"></ion-input>
-            </ion-item>
-        </ion-list>
+    <ion-list *ngIf="customOption.type=='field'">
+        <ion-item  *ngFor="let opt of customOption.option_type">
+            <ion-label class="capitalize" floating>{{opt.default_title}} <span color="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
+            <ion-input type="text" value="opt" [(ngModel)]="customOption.text" (keyup.enter)="text(opt,customOption.id,customOption.is_require)"  (blur)="text(opt,customOption.id)"></ion-input>
+        </ion-item>
+    </ion-list>
 
-<ion-list *ngIf="customOption.type=='area'">
-    <ion-item   *ngFor="let opt of customOption.option_type">
-               <ion-label class="capitalize" floating >{{opt.default_title}} <span *ngIf="customOption.is_require=='1'" color="danger">*</span></ion-label>
-        <ion-textarea value="opt" [(ngModel)]="customOption.vertualId" (blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
-    </ion-item>
-</ion-list>
-
-    -->   
+    <ion-list *ngIf="customOption.type=='area'">
+        <ion-item   *ngFor="let opt of customOption.option_type">
+            <ion-label class="capitalize" floating >{{opt.default_title}} <span *ngIf="customOption.is_require=='1'" color="danger">*</span></ion-label>
+            <ion-textarea value="opt" [(ngModel)]="customOption.text" (blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
+        </ion-item>
+    </ion-list>
     <ion-list *ngIf="customOption.type == 'file'">
         <label>{{customOption.default_title}}
             <span *ngIf="customOption.is_require=='1'" color="danger" >*</span>
@@ -59,26 +57,26 @@
         </ion-item>          
     </ion-list>
 
-<!--    <ion-list  *ngIf="customOption.type=='date_time'">
+    <ion-list  *ngIf="customOption.type=='date_time'">
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
-            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="month" (ionChange)="calenderChanged(customOption.id,customOption.is_require)"></ion-datetime>
+            <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="customOption.vertualId" (ionChange)="calenderChanged(customOption.id,customOption.is_require)"></ion-datetime>
         </ion-item>
-    </ion-list>
+    </ion-list><!--
 
-    <ion-list *ngIf="customOption.type=='time'" >
+-->    <ion-list *ngIf="customOption.type=='time'" >
         <ion-item >
             <ion-label class="capitalize">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon>
             </ion-label>
-            <ion-datetime displayFormat=" h:mm A" [(ngModel)]="time" (ionChange)="timeChanged(customOption.id,customOption.is_require)"> </ion-datetime>
+            <ion-datetime displayFormat=" h:mm A" [(ngModel)]="customOption.vertualId" (ionChange)="timeChanged(customOption.id,customOption.is_require)"> </ion-datetime>
             <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
         </ion-item>
-    </ion-list>-->
+    </ion-list>
 
     <ion-list *ngIf="customOption.type=='date'" >
         <ion-item>
             <ion-label class="capitalize">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" color="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
             <ion-datetime  displayFormat="MMM DD YYYY" min="{{curYear}}" [(ngModel)]="customOption.vertualId" (ionChange)="dateChanged(customOption.id,customOption.is_require)"></ion-datetime>
         </ion-item>
-    </ion-list>-->
+    </ion-list>
 </div>
