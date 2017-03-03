@@ -369,29 +369,13 @@ export class ProductPage implements OnInit {
     configurabilData() {
         let array: any = {};
         let selectedItem: string;
-
         if (this.type == "configurable") {
             forEach(this.selectedList, function (listdata) {
-                console.log('listdata, key',listdata)
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
             let cartApiData = {"productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData};
             this.addToCartData = merge(this.addToCartData, cartApiData);
-            console.log(this.addToCartData)
-            let ser = this.productData.body.associated_products.attributes;
-            this._local.get('search').then((search: any) => {
-                if (search) {
-                    this.search = search;
-                    this.search.push(ser);
-                    this._local.set('search', uniqWith(this.search, isEqual));
-                }
-                else {
-                    this.search.push(ser);
-                    this._local.set('search', uniqWith(this.search, isEqual));
-                }
-            });
-            //            this.cartApi(this.cartApiData, this.keys);//will change
         }
     }
     //simple+vertual+downloadble 
