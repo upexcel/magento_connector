@@ -40,8 +40,6 @@ export class ProductPage implements OnInit {
     special_price: number;
     tier_price: Array<any>;
     keys: Array<string> = [];
-    search: any = [];
-    imgArray: Array<string> = [];
     data: any;
     reviewData = [];
     error: boolean = false;
@@ -62,8 +60,6 @@ export class ProductPage implements OnInit {
     bundlePrice: number;
     configPrice = [];
     addToCartData;
-    valueBundle: boolean;
-    bData: {};
     customPrice: number;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
@@ -163,13 +159,22 @@ export class ProductPage implements OnInit {
                     })
 
                 }
-                console.log(res.body)
-                //if edit cart is present, add a vertual key
+                //add a vertual key
                 if (this.editCartData) {
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
                         forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                            console.log('attributesData', attributesData)
-                            //                            attributesData.vertualKey = attributesData.options;
+                            forEach(this.editCartData.subData, (subData) => {
+                                if (subData.key == attributesData.label) {
+                                    forEach(attributesData.options, (optionData) => {
+                                        if (optionData.id == subData.value.id) {
+                                            attributesData.vertualKey = optionData;
+                                            optionData.shown = true;
+                                            this.onChangeConfigurableAttribute(optionData, attributesData.id);
+                                            this.disable = false;
+                                        }
+                                    })
+                                }
+                            })
                         });
                     }
                 } else {
@@ -212,41 +217,24 @@ export class ProductPage implements OnInit {
         var flag = 0;
         this.configPrice = [];
         this.selectedList = [];
-        //        this.configSubData = [];
-        //take current selected item
-        //        let currentSelectedItem = configurableSelectedObject[key];
-        //cloneing for use checked list in add cart f        unction
-        //        this.selectedList = clone(configurableSelectedObject);
-        // get effected price
-        //        forEach(configurableSelectedObject, (takePric        e) => {
-        //                    ++flag;
-        //            if (takePrice != undef        ined) {
-        //                this.configPrice.push({price: takePrice.p        rice});
-        //                    }
-        //                })
-        //        forEach(this.configPrice, (value: an        y) => {
-        //            total += (value.pric        e * 1);
-        //                });
-        //        this.diffrentTypeProductData(total);
-        //        mapping between select list
-
+        this.configSubData = [];
+        //mapping between select list
         forEach(this.productData.body.associated_products.attributes, (allConfigData, allConfigKey) => {
-//            console.log(allConfigData)
             if (typeof (allConfigData.vertualKey) == 'object') {
-//                console.log(allConfigData.vertualKey);
                 ++flag;
                 count++;
                 this.configPrice.push({price: allConfigData.vertualKey.price});
                 this.selectedList.push(allConfigData);
-                if (allConfigData.id == key) {
-                    this.configSubData.push({
-                        key: allConfigData.label,
-                        value: allConfigData.vertualKey
-                    });
-                    if (allConfigData.label == "Color") {
+                this.configSubData.push({
+                    key: allConfigData.label,
+                    value: allConfigData.vertualKey
+                });
+                if (allConfigData.label == "Color") {
+                    setTimeout(() => {
                         let myDiv = document.getElementById('color');
                         myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || "";
-                    }
+                        console.log(myDiv)
+                    },100)
                 }
             }
             if (key != allConfigKey) {
@@ -272,62 +260,18 @@ export class ProductPage implements OnInit {
             total += (value.price * 1);
         });
         this.diffrentTypeProductData(total);
-
-        //                forEach(allConfigData.options, (allConfigValue) => {
-        //                    if (currentSelectedItem != undefined) {
-        //                        allConfigValue.shown = false;
-        //                        forEach(currentSelectedItem.products, (currentConfigProductsVal) => {
-        //                            if (allConfigValue.products != undefined && currentConfigProductsVal != undefined) {
-        //                                forEach(allConfigValue.products, (allConfigProductsVal) => {
-        //                                    if (currentConfigProductsVal == allConfigProductsVal) {
-        //                                        allConfigValue.shown = true;
-        //                                    }
-        //                                })
-        //                            }
-        //                        })
-        //                    }
-        //                })
-        //            } else {
-        //                forEach(allConfigData.options, (allConfigValue) => {
-        //                    if (flag == 1) {
-        //                        allConfigValue.shown = true;
-        //                    }
-        //                });
-        //            }
-        //            if (typeof configurableSelectedObject != undefined) {
-        //                forEach(configurableSelectedObject, (value, key) => {
-        //                    if (allConfigData.id == key) {
-        //                        this.configSubData.push({
-        //                            key: allConfigData.label,
-        //                            value: value
-        //                        });
-        //                        if (allConfigData.label == "Color") {
-        //                            let myDiv = document.getElementById('color');
-        //                            myDiv.style.color = configurableSelectedObject[key] ? ((configurableSelectedObject[key].label).trim()).replace(" ", "") : "";
-        //                        }
-        //                    }
-        //                });
-        //            }
-        //        })
-        //change color of icon when its type is color
         this.selectshow = false;
         //disable button when select list is not checked
-        if (typeof configurableSelectedObject != "undefined") {
-//            forEach(configurableSelectedObject, function (value) {
-//                count++;
-//            });
-            console.log(count)
-            if (this.keys.length == count) {
-                if (this.customDisable == false) {
-                    this.disable = false;
-                }
-                this.config = false;
-            } else {
-                if (this.customDisable == false) {
-                    this.disable = true;
-                }
-                this.config = true;
+        if (this.keys.length == count) {
+            if (this.customDisable == false) {
+                this.disable = false;
             }
+            this.config = false;
+        } else {
+            if (this.customDisable == false) {
+                this.disable = true;
+            }
+            this.config = true;
         }
         this.configurabilData();
     }
@@ -428,7 +372,6 @@ export class ProductPage implements OnInit {
             this.bundlePrice += data.total * 1;
             this.dynemicDisplayPrice += data.total * 1;
             if (data.disable == false) {
-                //                console.log("bundalData",data)
                 this.ifCustomOption(null, data);
             }
         }
@@ -445,7 +388,6 @@ export class ProductPage implements OnInit {
     customData(customData) {
         this.customPrice = this.bundlePrice * 1;
         this.customDisplayPrice = this.refDisplayPrice * 1;
-        //        this.disable = customData.disable;
         this.customDisable = customData.disable;
         if (this.type == 'configurable') {
             if (this.config == false && customData.disable == false) {
@@ -472,10 +414,8 @@ export class ProductPage implements OnInit {
         }
         this.customPrice += customData.dynemicPrice * 1;
         this.customDisplayPrice += customData.dynemicPrice * 1;
-        //        this.display_price = this.;
         this.final_price = this.customPrice;
         this.display_price = this.customDisplayPrice;
-        console.log(this.final_price)
         this.addToCartData.total = this.final_price;
         if (customData.disable == false) {
             this.ifCustomOption(customData, null);
@@ -510,5 +450,3 @@ export class ProductPage implements OnInit {
         }
     }
 }
-
-
