@@ -41,7 +41,6 @@ export class ProductPage implements OnInit {
     tier_price: Array<any>;
     keys: Array<string> = [];
     search: any = [];
-    res: {} = {};
     imgArray: Array<string> = [];
     data: any;
     reviewData = [];
