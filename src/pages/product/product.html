@@ -68,7 +68,7 @@
                 <!--                for downloadable product-->
                 <download  [data]="productData" (onChange)="diffrentTypeProductData($event)"></download>
                 <!--for custom product-->
-                <custom  [data]="productData" (onChange)="customData($event)"></custom>
+                <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
 
                 <div *ngIf="show_add_to_cart && show_add_to_cart.length > 0">
                     <ion-row *ngFor="let data of show_add_to_cart">
