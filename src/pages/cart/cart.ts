@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CartFunction } from '../../model/cart/cartHandling'
 import { ProductPage } from './../product/product'
@@ -12,10 +12,9 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(private _cartFunction: CartFunction, private _events: Events, public local: Storage, public _navCtrl: NavController, public navParams: NavParams) { }
+    constructor(private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
-            console.log(value);
             this.res = value;
             this.entery = true;
             //            this._cartFunction.totalPay(this.res).then((response) => {

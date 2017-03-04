@@ -66,7 +66,7 @@
                 <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
 
                 <!--                for downloadable product-->
-                <download  [data]="productData" (onChange)="diffrentTypeProductData($event)"></download>
+                <download  [data]="productData" [editCartData]="editCartData" (onChange)="diffrentTypeProductData($event)"></download>
                 <!--for custom product-->
                 <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
 

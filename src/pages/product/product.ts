@@ -1,24 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {CartPage} from '../cart/cart';
-import {NavController, NavParams, LoadingController, Events} from 'ionic-angular';
-import {ApiService} from './../../providers/api-service/api-service';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {NotifyMe} from '../../model/product/notify';
-import {CartService} from './../../providers/cart-service/cart-service';
-import {productDataType} from './../product/productDataType';
-import {Product} from '../../model/product/getProduct';
-import {cartDataType} from './../product/cartDataType';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {TierPrice} from '../../model/product/checkTierPrice';
-import {Storage} from '@ionic/storage';
+import { Component, OnInit } from '@angular/core';
+import { CartPage } from '../cart/cart';
+import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { ApiService } from './../../providers/api-service/api-service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NotifyMe } from '../../model/product/notify';
+import { CartService } from './../../providers/cart-service/cart-service';
+import { productDataType } from './../product/productDataType';
+import { Product } from '../../model/product/getProduct';
+import { cartDataType } from './../product/cartDataType';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { TierPrice } from '../../model/product/checkTierPrice';
+import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
 import clone from 'lodash/clone';
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
-import {Transfer} from 'ionic-native';
+import { Transfer } from 'ionic-native';
 
 @Component({
     selector: 'product',
@@ -78,7 +78,7 @@ export class ProductPage implements OnInit {
     editCartData: any;
     cartButtonTitle: string;
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
-        this.logform = this.emailTest.group({email: ['', Validators.required]});
+        this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
                 this.userEmail = userData.email;
@@ -95,6 +95,7 @@ export class ProductPage implements OnInit {
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
+            console.log("editCartData**", this.editCartData)
             if (this.editCartData) {
                 this.cartButtonTitle = 'UPDATE CART'
             } else {
@@ -145,7 +146,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id};
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
 
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
@@ -214,7 +215,7 @@ export class ProductPage implements OnInit {
 
     }
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
-        if(!configurableSelectedObject){
+        if (!configurableSelectedObject) {
             return;
         }
         let count = 0;
@@ -228,7 +229,7 @@ export class ProductPage implements OnInit {
             if (typeof (allConfigData.vertualKey) == 'object') {
                 ++flag;
                 count++;
-                this.configPrice.push({price: allConfigData.vertualKey.price});
+                this.configPrice.push({ price: allConfigData.vertualKey.price });
                 this.selectedList.push(allConfigData);
                 this.configSubData.push({
                     key: allConfigData.label,
@@ -318,11 +319,11 @@ export class ProductPage implements OnInit {
         let array: any = {};
         let selectedItem: string;
         if (this.type == "configurable") {
-            forEach(this.selectedList, function (listdata) {
+            forEach(this.selectedList, function(listdata) {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = {"productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData};
+            let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData };
             this.addToCartData = merge(this.addToCartData, cartApiData);
         }
     }
@@ -334,9 +335,11 @@ export class ProductPage implements OnInit {
         if (customOpt != null) {
             this.customOptData = customOpt;
         }
-        if (!this.disable) {
-            this.addToCartData = merge(this.addToCartData, this.customOptData, this.diffProductData);
-        }
+        setTimeout(() => {
+            if (!this.disable) {
+                this.addToCartData = merge(this.addToCartData, this.customOptData, this.diffProductData);
+            }
+        })
     }
 
     diffrentTypeProductData(data?) {
@@ -351,7 +354,7 @@ export class ProductPage implements OnInit {
         if (this.type != 'configurable' && this.type != 'bundle') {
             if (this.type == 'downloadable') {
                 if (data.disable == false) {
-                    this.ifCustomOption(null, data)
+                    this.ifCustomOption(null, data);
                 }
                 if (data.disable == false && this.customDisable == false) {
                     this.disable = false;

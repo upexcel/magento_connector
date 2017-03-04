@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
-
 import pull from 'lodash/pull';
 
 @Component({
@@ -9,6 +8,7 @@ import pull from 'lodash/pull';
 })
 export class DownloadProduct {
     @Input() data: any = "";
+    @Input() editCartData: any = "";
     @Output() onChange = new EventEmitter();
     links: any = [];
     sample: any = [];
@@ -25,34 +25,33 @@ export class DownloadProduct {
     constructor() { }
     ngOnInit() {
         this.currencySign = this.data.body.data.currency_sign;
-        let self = this;
-        forEach(this.data.body.links, function(value: any, key) {
-            self.links.push(value);
+        forEach(this.data.body.links, (value: any, key) => {
+            value.download = false;
+            if (this.editCartData) {
+                 forEach(this.editCartData.subdata, (subdata: any) => {
+                if (value.link_id == subdata.value.link_id) {
+                    value.download = value;
+                }});
+            }
+            this.links.push(value);
         })
-        forEach(this.data.body.samples, function(value: any, key) {
-            self.sample.push(value)
+        forEach(this.data.body.samples, (value: any, key) => {
+            this.sample.push(value);
         })
+        setTimeout(() => {
+            this.onChangeLink();
+        }, 100)
     }
-    onChangeLink(object, i, event, link) {
-        let self = this;
-        this.price = [];
-        if (event) {
-            this.obj.push(object)
-            this.linkD.push(link);
-            this.index.push(i);
-        }
-        else {
-            this.obj = pull(this.obj, object);
-            this.linkD = pull(this.linkD, link);
-            this.index = pull(this.index, i);
-        }
-        forEach(this.obj, function(value: any) {
-            self.price.push({ "price": value.price });
+    onChangeLink() {
+        this.linkData = {};
+        forEach(this.links, (value: any, key) => {
+            if (value.download) {
+                this.linkData[value.link_id] = value.link_file;
+            }
         })
         this.calculateTotal();
     }
     onChangeSample(object, i, event) {
-        
         if (event) {
             this.simpleObj.push(object)
         }
@@ -62,22 +61,26 @@ export class DownloadProduct {
     }
     calculateTotal() {
         var total = 0;
-        let json = {};
+        let download = {};
         let disable;
-        forEach(this.price, function(value: any) {
-            total += (value.price * 1);
-        });
-        for (let i = 0; i < this.index.length; i++) {
-            json[this.index[i]] = this.linkD[i];
-        };
-        if (this.obj.length > 0) {
+        let count = 0;
+        forEach(this.links, (value: any, key) => {
+            if (value.download) {
+                count++;
+                total = total + (value.price * 1);
+                if (value != undefined) {
+                    download[value.link_id]={ "key": value.title, "value": value };
+                }
+            }
+        })
+        if (count > 0) {
             disable = false;
         }
         else {
             disable = true;
         }
-        json = { "options": json, "dynemicPrice": total, "disable": disable, "subdata": this.obj };
-        this.onChange.emit(json);
+        this.linkData = { "options": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
+        this.onChange.emit(this.linkData);
     }
 }
 

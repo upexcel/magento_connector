@@ -48,9 +48,7 @@ export class Headers implements AfterContentInit {
             }
         });
         this._events.subscribe('cartItems:length', (data) => {
-            if(data){
                 this.cartItems = data;
-            }
         });
     }
     ngOnDestroy(){
