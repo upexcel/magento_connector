@@ -178,10 +178,12 @@ export class ProductPage implements OnInit {
                         });
                     }
                 } else {
-                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                        forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                            attributesData.vertualKey = false;
-                        });
+                    if (this.productData.body.associated_products) {
+                        if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                            forEach(this.productData.body.associated_products.attributes, (attributesData) => {
+                                attributesData.vertualKey = false;
+                            });
+                        }
                     }
                 }
 
@@ -212,6 +214,9 @@ export class ProductPage implements OnInit {
 
     }
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
+        if(!configurableSelectedObject){
+            return;
+        }
         let count = 0;
         var total = 0;
         var flag = 0;
@@ -233,8 +238,7 @@ export class ProductPage implements OnInit {
                     setTimeout(() => {
                         let myDiv = document.getElementById('color');
                         myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || "";
-                        console.log(myDiv)
-                    },100)
+                    }, 100)
                 }
             }
             if (key != allConfigKey) {
