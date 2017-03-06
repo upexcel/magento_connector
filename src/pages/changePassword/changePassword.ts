@@ -39,7 +39,9 @@ export class ChangepasswordPage implements OnInit {
             this.spin = false;
             this.response = res;
             this._toast.toast(res.body, 3000, "bottom");
-            this._navCtrl.setRoot(HomePage);
+            if(res.body !== 'Incorrect Old Password.'){
+                this._navCtrl.setRoot(HomePage);
+            }
         }).catch(err => {
             this.spin = false;
         })
