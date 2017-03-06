@@ -63,10 +63,14 @@
                 </span>
 
                 <!--for bundle product-->
-                <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
-
+                
+                <span *ngIf="type=='bundle'">
+                    <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
+                </span>
                 <!--                for downloadable product-->
-                <download  [data]="productData" [editCartData]="editCartData" (onChange)="diffrentTypeProductData($event)"></download>
+                <span *ngIf="type == 'downloadable'">
+                    <download  [data]="productData" [editCartData]="editCartData" (onChange)="diffrentTypeProductData($event)"></download>
+                </span>
                 <!--for custom product-->
                 <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
 
