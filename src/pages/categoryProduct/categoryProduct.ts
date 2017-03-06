@@ -22,6 +22,7 @@ export class CategoryProductPage implements OnInit {
     sortByData: any;
     filterData:any = [];
     previouseSortSection:any;
+    previouseSortOrder:string;
     constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
@@ -33,6 +34,7 @@ export class CategoryProductPage implements OnInit {
             this.sortByData = data.data;
             this.categoryProduct = null;
             this.previouseSortSection = data.data.sortBy;
+            this.previouseSortOrder = data.data.sort_order;
             this.page = 1;
             this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
         });
@@ -59,7 +61,7 @@ export class CategoryProductPage implements OnInit {
         if (!sortByData) {
             body = {"id": product_id, "page": page, "limit": limit, "filter":filterData};
         } else {
-            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "filter":filterData};
+            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "sort_order": sortByData.sort_order, "filter":filterData};
         }
 
         this._category.getCategoryProduct(body).then((res) => {
@@ -74,7 +76,7 @@ export class CategoryProductPage implements OnInit {
         if (!this.sortByData) {
             body = {"id": this.product_id, "page": this.page, "limit": this.limit, "filter":this.filterData};
         } else {
-            body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "filter": this.filterData};
+            body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "sort_order": this.sortByData.sort_order, "filter": this.filterData};
         }
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct.body = this.categoryProduct.body.concat(res.body);
