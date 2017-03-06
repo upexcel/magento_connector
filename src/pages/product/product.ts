@@ -442,7 +442,7 @@ export class ProductPage implements OnInit {
                 this.cartData = response;
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
-                    this._toast.toast("item inserted ", 3000, "top");
+                    this._toast.toast("Product added to cart successfully", 3000, "top");
                     this._navCtrl.push(CartPage);
                 }
                 else {
