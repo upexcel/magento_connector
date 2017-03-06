@@ -27,6 +27,9 @@
                                          <span *ngFor="let subdata of data.subData">
                                         <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
                                     </span>
+                                    <span *ngFor="let subdata of data.customSubdata">
+                                        <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata['value'])}}</span></p>      
+                                    </span>
                                 </ion-col>
                                 <ion-col width-80 *ngIf="(data.subData && data.subData.length > 0) && data.type=='bundle'">
                                          <div *ngFor="let subData of data.subData">
@@ -34,14 +37,21 @@
                                             <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
                                         </div> 
                                     </div> 
+                                    <span *ngFor="let subdata of data.customSubdata">
+                                        <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata['value'])}}</span></p>      
+                                    </span>
                                 </ion-col> 
                                 <ion-col width-80 *ngIf="(data.subData && data.subData.length > 0) && data.type=='grouped'" >
-                                    <div *ngFor="let subData of data.subData" style="margin:12px;">
+                                         <div *ngFor="let subData of data.subData" style="margin:12px;">
                                         <p style="width: 80%; display: inline-block; white-space: pre-line;"> {{subData.name}}: <b>{{subData.quantity}}</b> </p>
-                                            <!--<input center type="number" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
+                                        <!--<input center type="number" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
                                     </div> 
                                 </ion-col>                       
-                                <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > </ion-col>
+                                <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
+                                         <span *ngFor="let subdata of data.customSubdata">
+                                        <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata['value'])}}</span></p>      
+                                    </span>
+                                </ion-col>
                                 <ion-col width-20 class="aligncenter cartPrice">
                                     <p class="font10">{{data.currency_sign}}{{data.total}}</p>
                                 </ion-col>
