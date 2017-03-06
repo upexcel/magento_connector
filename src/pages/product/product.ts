@@ -144,7 +144,6 @@ export class ProductPage implements OnInit {
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
                 this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
-
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, (value, key) => {
@@ -167,6 +166,7 @@ export class ProductPage implements OnInit {
                 if (this.editCartData) {
                     if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
                         this.disable = false;
+                        this.add_cart = merge(this.add_cart, this.addToCartData);
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
                         forEach(this.productData.body.associated_products.attributes, (attributesData) => {
