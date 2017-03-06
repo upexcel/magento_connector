@@ -28,10 +28,12 @@ export class DownloadProduct {
         forEach(this.data.body.links, (value: any, key) => {
             value.download = false;
             if (this.editCartData) {
-                 forEach(this.editCartData.subdata, (subdata: any) => {
-                if (value.link_id == subdata.value.link_id) {
-                    value.download = value;
-                }});
+                forEach(this.editCartData.subdata, (subdata: any) => {
+                    if (subdata && subdata.value.link_id == value.link_id) {
+                        value.download = true;
+                        console.log(subdata.value.download)
+                    }
+                });
             }
             this.links.push(value);
         })
@@ -41,6 +43,7 @@ export class DownloadProduct {
         setTimeout(() => {
             this.onChangeLink();
         }, 100)
+
     }
     onChangeLink() {
         this.linkData = {};
@@ -49,6 +52,7 @@ export class DownloadProduct {
                 this.linkData[value.link_id] = value.link_file;
             }
         })
+        console.log(this.linkData)
         this.calculateTotal();
     }
     onChangeSample(object, i, event) {
@@ -69,7 +73,7 @@ export class DownloadProduct {
                 count++;
                 total = total + (value.price * 1);
                 if (value != undefined) {
-                    download[value.link_id]={ "key": value.title, "value": value };
+                    download[value.link_id] = { "key": value.title, "value": value };
                 }
             }
         })
@@ -79,6 +83,7 @@ export class DownloadProduct {
         else {
             disable = true;
         }
+        console.log("download", download)
         this.linkData = { "options": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
         this.onChange.emit(this.linkData);
     }

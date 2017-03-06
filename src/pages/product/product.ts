@@ -74,6 +74,7 @@ export class ProductPage implements OnInit {
     diffProductData;
     editCartData: any;
     cartButtonTitle: string;
+    add_cart = {};
     constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -164,6 +165,9 @@ export class ProductPage implements OnInit {
                 }
                 //add a vertual key
                 if (this.editCartData) {
+                    if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
+                        this.disable = false;
+                    }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
                         forEach(this.productData.body.associated_products.attributes, (attributesData) => {
                             forEach(this.editCartData.subData, (subData) => {
@@ -313,6 +317,7 @@ export class ProductPage implements OnInit {
     //configurabilData
     configurabilData() {
         let array: any = {};
+        this.add_cart = {};
         let selectedItem: string;
         if (this.type == "configurable") {
             forEach(this.selectedList, function(listdata) {
@@ -320,11 +325,14 @@ export class ProductPage implements OnInit {
             });
             selectedItem = (array);
             let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData };
-            this.addToCartData = merge(this.addToCartData, cartApiData);
+            console.log("cartApiData", cartApiData);
+            this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
+            this.ifCustomOption("", this.add_cart)
         }
     }
     //simple+vertual+downloadble 
     ifCustomOption(customOpt, diffProduct) {
+        this.add_cart = {};
         if (diffProduct != null) {
             this.diffProductData = diffProduct;
         }
@@ -333,8 +341,9 @@ export class ProductPage implements OnInit {
         }
         setTimeout(() => {
             if (!this.disable) {
-                this.addToCartData = merge(this.addToCartData, this.customOptData, this.diffProductData);
+                this.add_cart = merge(this.add_cart, this.addToCartData, this.customOptData, this.diffProductData);
             }
+            console.log("this.add_cart", this.add_cart)
         })
     }
 
@@ -427,18 +436,19 @@ export class ProductPage implements OnInit {
 
     group(groupData) {
         let total = (this.refPrice * 1) + (groupData.total * 1);
+        this.add_cart = {};
         this.final_price = total;
         this.groupedData = groupData;
         this.disable = groupData.disable;
         if (groupData.disable == false) {
             this.addToCartData.subData = [];
-            this.addToCartData = merge(this.addToCartData, groupData);
+            this.add_cart = merge(this.add_cart, this.addToCartData, groupData);
         }
     }
     addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
-            this._cartService.addCart(this.addToCartData, this.editCartData).then((response: any) => {
+            this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
