@@ -28,7 +28,6 @@ export class CartService {
                 //                        console.log("err", err);
                 //                    })
                 if (res) {
-                    console.log(res);
                     this.saveCartInLocal(data, resolve, res);
                 }
             }).catch((err) => {
@@ -39,7 +38,6 @@ export class CartService {
     }
     saveCartInLocal(data, resolve, res): any {
         let flag = 0;
-        console.log("data", data);
         this._local.get('CartData').then((value: any) => {
             if (!value || value.length == 0) {
                 delete data.access_token;
@@ -82,7 +80,6 @@ export class CartService {
                     resolve(res);
                 }
             }
-            console.log("valueCart", value);
         });
     }
     removeEditCartDataFromLocal(editCartData) {

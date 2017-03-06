@@ -40,7 +40,6 @@ export class CartPage implements OnInit {
         this._navCtrl.push(ProductPage,{'id':data.sku,"editCartData":data});
     }
     checkTypeOf(data){
-        console.log(typeof data)
         if(typeof data == 'object'){
             return data.default_title;
         } else{

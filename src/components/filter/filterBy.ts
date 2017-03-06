@@ -84,13 +84,10 @@ export class FilterBy {
         this._viewCtrl.dismiss();
     }
     applyFilter() {
-        console.log("apy");
-        console.log(this.checkedData);
         this._events.publish('filter:data', {data: {"filterBy": this.checkedData}});
         this._viewCtrl.dismiss();
     }
     clearAll() {
-        console.log("clear all");
         this.checkedData = [];
         this._filterService.resetFilterData();
     }

@@ -24,7 +24,6 @@ export class BundleProduct {
     constructor() {
     }
     ngOnInit() {
-        console.log("editCartData", this.editCartData)
         this.validateArray = [];
         let m_Flag = 0;
         forEach(this.bundle.bundle_items, (value, key) => {

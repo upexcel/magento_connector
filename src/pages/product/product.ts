@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifyMe } from '../../model/product/notify';
@@ -13,11 +13,8 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { TierPrice } from '../../model/product/checkTierPrice';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import uniqWith from 'lodash/uniqWith';
 import keys from 'lodash/keys';
-import clone from 'lodash/clone';
 import merge from 'lodash/merge';
-import isEqual from 'lodash/isEqual';
 import { Transfer } from 'ionic-native';
 
 @Component({
@@ -95,7 +92,6 @@ export class ProductPage implements OnInit {
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
-            console.log("editCartData**", this.editCartData)
             if (this.editCartData) {
                 this.cartButtonTitle = 'UPDATE CART'
             } else {

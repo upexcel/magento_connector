@@ -37,7 +37,6 @@ export class CategoryProductPage implements OnInit {
             this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
         });
         this._events.subscribe('filter:data', (filterData) => {
-            console.log('filterData',filterData)
             this.filterData = filterData;
             this.categoryProduct = null;
             this.page = 1;

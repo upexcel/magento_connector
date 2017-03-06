@@ -334,9 +334,8 @@ export class CustomOption {
 
     }
     calenderChanged(formId, is_require) {
-        var data; var hours; var min; var dateObj;
+        var data; var dateObj;
         this.formValidate(formId, false, is_require);
-        //        this.bundleJson();
         this.dateTimeJson = {};
         forEach(this.custom_option, (value) => {
             if (value.type == 'date_time' && value.vertualId) {

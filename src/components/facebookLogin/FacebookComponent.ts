@@ -34,12 +34,10 @@ export class FacebookComponent {
                     });
                 }, (err) => {
                     this.spin = false;
-                    console.log("ree")
                     error = err;
                 });
             }, (err) => {
                 this.spin = false;
-                console.log("ree")
                 error = err;
             });
 
