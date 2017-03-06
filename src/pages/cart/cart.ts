@@ -39,6 +39,9 @@ export class CartPage implements OnInit {
     edit(data) {
         this._navCtrl.push(ProductPage,{'id':data.sku,"editCartData":data});
     }
+    quantityPrice(total,qty){
+        return (total*1) * (qty*1);
+    }
     checkTypeOf(data){
         if(typeof data == 'object'){
             return data.default_title;

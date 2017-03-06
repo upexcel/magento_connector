@@ -19,7 +19,7 @@
                                 </ion-col>
                                 <ion-col width-20 class="aligncenter">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                    <input type="number" *ngIf="data.type !== 'grouped'" [(ngModel)]="data.qty" (change)="changeQuantity()" class="inputSize">
+                                    <input type="number" *ngIf="data.type !== 'grouped'" [(ngModel)]="data.qty" (change)="changeQuantity()" min="1" class="inputSize">
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -47,13 +47,13 @@
                                         <!--<input center type="number" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
                                     </div> 
                                 </ion-col>                       
-                                <ion-col width-80 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
+                                <ion-col width-67 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
                                          <span *ngFor="let subdata of data.customSubdata">
                                         <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata['value'])}}</span></p>      
                                     </span>
                                 </ion-col>
-                                <ion-col width-20 class="aligncenter cartPrice">
-                                    <p class="font10">{{data.currency_sign}}{{data.total}}</p>
+                                <ion-col width-33 class="aligncenter cartPrice">
+                                    <p class="font10" style="text-align: right;">{{data.currency_sign}}{{data.total}} <br><b>SubTotal</b>:{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p>
                                 </ion-col>
                             </ion-row>
                         </ion-col>
