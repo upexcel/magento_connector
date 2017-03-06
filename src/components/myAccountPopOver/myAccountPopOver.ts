@@ -31,7 +31,7 @@ import {
 @Component({
      selector: 'popover',
     template: `
-    <ion-list class="popover">
+    <ion-list class="popover no-margin">
       <button ion-item (click)="editAccount()">Edit</button>
       <button ion-item *ngIf="accountCartLength.length > 1" (click)="deleteAccount()">Delete</button>
     </ion-list>
