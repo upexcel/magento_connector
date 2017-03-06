@@ -146,12 +146,12 @@ export class MyEditAccountPage implements OnInit {
             value.default_shipping = '0';
         }
         this.upd_spin = true;
-        this.viewCtrl.dismiss();
         this._editaccount.updateAccount(value).then((res) => {
             this.upd_spin = false;
             this.editaccount = res;
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
+                this.viewCtrl.dismiss();
             } else {
                 this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
             }
