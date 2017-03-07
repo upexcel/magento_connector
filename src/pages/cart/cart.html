@@ -1,4 +1,4 @@
-<header [title]="'My Cart'" [pagename]="''"></header>
+<header [title]="'SHOPPING CART'" [pagename]="''"></header>
 <ion-content class="empty-cart" *ngIf="!res || res.length == 0">
     <img src="assets/image/empty-cart.png">
     <h3>Your Shopping Cart is empty</h3>
@@ -120,5 +120,14 @@
 </ion-content>
 
 <ion-footer>
-    <btn-full [titleFull]='"PLACE ORDER"' [classFull]="'botton'"></btn-full>
+        <ion-grid class="filterFooterBtnDiv">
+        <ion-row>
+            <ion-col width-50>
+                <btn-large [titleForLarge]='" Continue Shopping"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
+            </ion-col>
+            <ion-col width-50>
+                <btn-large [titleForLarge]='"PLACE ORDER"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond'" [spinForLarge]="false" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="applyFilter()"></btn-large>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
 </ion-footer>
