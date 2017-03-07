@@ -1,18 +1,18 @@
-import {Component, Input} from '@angular/core';
-import {NavController, ViewController, Events} from 'ionic-angular';
-import {ModalController, NavParams} from 'ionic-angular';
-import {FilterOption} from './filterOption';
-import {FilterByModel} from './../../model/filterBy/filterBy';
-import {Storage} from '@ionic/storage';
+import { Component, Input } from '@angular/core';
+import { NavController, ViewController, Events } from 'ionic-angular';
+import { ModalController, NavParams } from 'ionic-angular';
+import { FilterOption } from './filterOption';
+import { FilterByModel } from './../../model/filterBy/filterBy';
+import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import {FilterService} from './../../providers/filter-service/filterService';
+import { FilterService } from './../../providers/filter-service/filterService';
 @Component({
     selector: 'filter',
     templateUrl: 'filter.html'
 })
 export class FilterBy {
     @Input() product: any;
-    dualValue2: any;
+    dualValue2: any={};
     data: any;
     filter_title: string = "";
     checkedData: any = [];
@@ -26,7 +26,7 @@ export class FilterBy {
         this.categoryId = this._navParam.get('catedoryId');
         this.data = this._navParam.get('data');
         this._local.get('store_id').then((storeId) => {
-            this._filter.getFilterData({"id": this.categoryId, "store_id": storeId, "coll": this.data ? 1 : 0}).then((res) => {
+            this._filter.getFilterData({ "id": this.categoryId, "store_id": storeId, "coll": this.data ? 1 : 0 }).then((res) => {
                 forEach(res, (value, key) => {
                     if (value.filter_title != "price") {
                         this.res.push(value);
@@ -34,6 +34,10 @@ export class FilterBy {
                         this.price = value;
                     }
                 })
+                if (this.price) {
+                    this.dualValue2.lower = this.price.price.Min;
+                    this.dualValue2.upper = this.price.price.Max;
+                }
             })
         });
 
@@ -54,6 +58,7 @@ export class FilterBy {
                 })
             })
         })
+
     }
 
     range() {
@@ -77,14 +82,14 @@ export class FilterBy {
                 }
             })
         })
-        let modal = this._modalCtrl.create(FilterOption, {"data": {option: data, filter_title: title}});
+        let modal = this._modalCtrl.create(FilterOption, { "data": { option: data, filter_title: title } });
         modal.present();
     }
     dismiss() {
         this._viewCtrl.dismiss();
     }
     applyFilter() {
-        this._events.publish('filter:data', {data: {"filterBy": this.checkedData}});
+        this._events.publish('filter:data', { data: { "filterBy": this.checkedData } });
         this._viewCtrl.dismiss();
     }
     clearAll() {

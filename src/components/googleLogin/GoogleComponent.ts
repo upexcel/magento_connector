@@ -3,6 +3,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { SocialService } from '../../providers/social-service/social-service';
 import { GoogleData } from './googleData';
 import { Storage } from '@ionic/storage';
+import { ToastService } from './../../providers/toast-service/toastService';
+
 @Component({
     selector: 'google-login',
     template: `  <button ion-button color='danger' (click)="getGoogleData()" id="social">  
@@ -15,7 +17,7 @@ export class GoogleComponent {
     spin = false;
     @Output() usergoogleLogin: EventEmitter<any> = new EventEmitter();
     @Output() usergoogleError: EventEmitter<any> = new EventEmitter();
-    constructor(public _local: Storage, private _socialProvider: SocialService) { }
+    constructor(private _toast: ToastService,public _local: Storage, private _socialProvider: SocialService) { }
     getGoogleData() {
         if (this.spin == false) {
             this.spin = true;
@@ -24,6 +26,7 @@ export class GoogleComponent {
                 this.spin = false;
                 this.google_data = res;
                 this._local.get('website_id').then((website_id: string) => {
+                    this._toast.toast("Welcome " + this.google_data.givenName, 3000);
                     let body = { website_id: website_id, firstname: this.google_data.givenName, lastname: this.google_data.familyName, email: this.google_data.email, picture: this.google_data.imageUrl, social: "google", social_id: this.google_data.userId, token: { accessToken: this.google_data.serverAuthCode } };
                     this.usergoogleLogin.emit(body);
                 });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams ,ViewController} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CartFunction } from '../../model/cart/cartHandling'
 import { ProductPage } from './../product/product'
@@ -12,7 +12,7 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams) { }
+    constructor(private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams,public _viewCtrl: ViewController,) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
             this.res = value;
@@ -37,7 +37,12 @@ export class CartPage implements OnInit {
         });
     }
     edit(data) {
-        this._navCtrl.push(ProductPage,{'id':data.sku,"editCartData":data});
+        this._navCtrl.push(ProductPage,{'id':data.sku,"editCartData":data}).then(() => {
+        // first we find the index of the current view controller:
+        const index = this._viewCtrl.index;
+        // then we remove it from the navigation stack
+        this._navCtrl.remove(index);
+      });
     }
     quantityPrice(total,qty){
         return (total*1) * (qty*1);

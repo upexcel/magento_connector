@@ -1,7 +1,7 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
 import merge from 'lodash/merge';
-import {FileChooser} from 'ionic-native';
+import { FileChooser } from 'ionic-native';
 
 @Component({
     selector: 'custom',
@@ -25,10 +25,10 @@ export class CustomOption {
     curYear: any;
     validateArray: any = [];
     price: number;
-    date: any;
-    dateTimeJson: any;
+    date: any = {};
+    dateTimeJson: any = {};
     show;
-    constructor() {}
+    constructor() { }
     ngOnInit() {
         var dateObj = new Date();
         this.curYear = dateObj.getFullYear();
@@ -42,13 +42,14 @@ export class CustomOption {
             value.vertualArray = [];
             value.vertualId = false;
             value.date = false;
+            value.dateFormate = false;
             value.text = "";
 
             if (!this.editCartData) {
                 if (value.is_require == "1") {
-                    this.validateArray.push({"id": value.id, "validate": true});
+                    this.validateArray.push({ "id": value.id, "validate": true });
                 } else {
-                    this.validateArray.push({"id": value.id, "validate": false});
+                    this.validateArray.push({ "id": value.id, "validate": false });
                 }
             }
             forEach(value.option_type, (data) => {
@@ -78,44 +79,77 @@ export class CustomOption {
                         forEach(value.option_type, (opt) => {
                             if (cartData.value.defaultSet && cartData.value.option_type_id == opt.option_type_id) {
                                 opt.defaultSet = true;
+                                if (!this.checkObj[opt.option_id]) {
+                                    this.checkObj[opt.option_id] = [];
+                                }
+                                this.checkObj[opt.option_id].push(opt.option_type_id);
                             }
                         })
-                        this.validateArray.push({"id": value.id, "validate": false});
+                        this.validateArray.push({ "id": value.id, "validate": false });
                     }
-                    if ((value.type == "drop_down" || value.type == 'radio')) {
+                    else if ((value.type == "drop_down" || value.type == 'radio')) {
                         forEach(value.option_type, (opt) => {
                             if (opt.option_type_id == cartData.value.option_type_id) {
                                 if (cartData.id == value.id) {
                                     value.vertualId = opt;
+                                    if (value.type == 'radio') {
+                                        this.Radioobj[value.vertualId.option_id] = value.vertualId.option_type_id;
+                                    } else {
+                                        this.selectObj[value.vertualId.option_id] = value.vertualId.option_type_id;
+                                    }
                                 }
                             }
                         })
-                        this.validateArray.push({"id": value.id, "validate": false});
+                        this.validateArray.push({ "id": value.id, "validate": false });
                     }
-                    if (value.type == 'multiple') {
+                    else if (value.type == 'multiple') {
                         if (cartData.id == value.id) {
                             forEach(value.option_type, (opt) => {
                                 if (opt.option_type_id == cartData.value.option_type_id) {
                                     value.vertualArray.push(opt);
+                                    if (!this.multiObj[opt.option_id]) {
+                                        this.multiObj[opt.option_id] = [];
+                                    }
+                                    this.multiObj[opt.option_id].push(opt.option_type_id);
                                 }
                             })
-
                         }
-                        this.validateArray.push({"id": value.id, "validate": false});
+                        this.validateArray.push({ "id": value.id, "validate": false });
                     }
 
-                    if (value.type == "date" || value.type == "time" || value.type == "date_time") {
+                    else if (value.type == "date" || value.type == "time" || value.type == "date_time") {
                         if (cartData.id == value.id) {
                             value.vertualId = cartData.value;
+                            forEach(value.option_type, (opt) => {
+                                value.date = opt;
+                                value.dateFormateApi = cartData.dateFormateApi;
+                                if (value.type == "date") {
+                                    this.date[opt.option_id] = cartData.dateFormateApi;
+                                }
+                                else if (value.type == "time") {
+                                    this.timeJson[opt.option_id] = value.dateFormateApi;
+                                } else {
+                                    this.dateTimeJson[opt.option_id] = value.dateFormateApi;
+                                }
+                            })
                         }
-                        this.validateArray.push({"id": value.id, "validate": false});
+
+                        this.validateArray.push({ "id": value.id, "validate": false });
                     }
-                    if (value.type == 'area' || value.type == 'field') {
+                    else if (value.type == 'area' || value.type == 'field') {
                         if (cartData.id == value.id) {
                             value.text = cartData.value;
+                            forEach(value.option_type, (id) => {
+                                value.vertualId = id;
+                                if (value.type == 'field') {
+                                    this.textData[id.option_id] = value.text;
+                                } else {
+                                    this.textarea[id.option_id] = value.text;
+                                }
+                            })
                         }
-                        this.validateArray.push({"id": value.id, "validate": false});
-                    }
+                        this.validateArray.push({ "id": value.id, "validate": false });
+                    } else { console.log("some thing goes wrong"); }
 
                 })
             }
@@ -298,6 +332,7 @@ export class CustomOption {
                         forEach(optId, (id) => {
                             this.timeJson[id.option_id] = time;
                             value.date = id;
+                            value.dateFormate = time;
                         })
                     }
                 })
@@ -324,6 +359,7 @@ export class CustomOption {
                         forEach(optId, (id) => {
                             this.date[id.option_id] = dateJson;
                             value.date = id;
+                            value.dateFormate = dateJson;
                         })
                     }
                 })
@@ -352,6 +388,7 @@ export class CustomOption {
                         forEach(optId, (id) => {
                             this.dateTimeJson[id.option_id] = data;
                             value.date = id;
+                            value.dateFormate = data;
                         })
                     }
                 })
@@ -384,35 +421,37 @@ export class CustomOption {
         let opt = {};
         let validateCount = 0;
         let custonCartDisable = true;
+        console.log("this.custom_option", this.custom_option)
         forEach(this.custom_option, (value) => {
             if (value.type == 'checkbox') {
                 forEach(value.option_type, (opt) => {
                     if (opt.defaultSet) {
                         total = total + (opt.price) * 1;
-                        subdata.push({"key": value.title, 'value': opt, 'id': value.id, 'type': value.type})
+                        subdata.push({ "key": value.title, 'value': opt, 'id': value.id, 'type': value.type })
                     }
                 })
             }
             if ((value.type == "drop_down" || value.type == 'radio') && value.vertualId) {
                 total = total + value.vertualId.price * 1;
-                subdata.push({"key": value.title, 'value': value.vertualId, 'id': value.id, 'type': value.type})
+                subdata.push({ "key": value.title, 'value': value.vertualId, 'id': value.id, 'type': value.type })
             }
             if ((value.type == "date" || value.type == "time" || value.type == "date_time") && value.vertualId) {
                 if (value.date) {
                     total = total + (value.date.price) * 1;
                     let date = new Date(value.vertualId);
-                    subdata.push({"key": value.title, 'value': value.vertualId, 'dateFormate': date, 'id': value.id, 'type': value.type})
+                    subdata.push({ "key": value.title, 'value': value.vertualId, 'dateFormate': date, 'id': value.id, 'type': value.type, "dateFormateApi": value.dateFormate })
                 }
             }
             if (value.type == 'multiple' && value.vertualArray) {
                 forEach(value.vertualArray, (multiSelectValue, multiSelectKey) => {
                     total = total + multiSelectValue.price * 1;
-                    subdata.push({"key": value.title, 'value': multiSelectValue, 'id': value.id, 'type': value.type});
+                    subdata.push({ "key": value.title, 'value': multiSelectValue, 'id': value.id, 'type': value.type });
                 })
             }
             if ((value.type == 'area' || value.type == 'field') && value.vertualId) {
                 total = total + value.vertualId.price * 1;
-                subdata.push({"key": value.title, 'value': value.text, 'id': value.id, 'type': value.type})
+                console.log("key", value.title, 'value', value.text, 'id', value.id, 'type', value.type)
+                subdata.push({ "key": value.title, 'value': value.text, 'id': value.id, 'type': value.type })
             }
         })
 
@@ -425,7 +464,8 @@ export class CustomOption {
         if (validateCount == this.validateArray.length) {
             custonCartDisable = false;
         }
-        opt = {"dynemicPrice": total, "custom": opt, "customSubdata": subdata, "disable": custonCartDisable}
+        console.log("custom", opt, "customSubdata", subdata)
+        opt = { "dynemicPrice": total, "custom": opt, "customSubdata": subdata, "disable": custonCartDisable }
         this.onChange.emit(opt);
     }
 }

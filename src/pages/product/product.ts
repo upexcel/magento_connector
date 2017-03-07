@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events,ViewController } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifyMe } from '../../model/product/notify';
@@ -75,7 +75,7 @@ export class ProductPage implements OnInit {
     editCartData: any;
     cartButtonTitle: string;
     add_cart = {};
-    constructor(private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private viewCtrl: ViewController,private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -343,7 +343,6 @@ export class ProductPage implements OnInit {
             if (!this.disable) {
                 this.add_cart = merge(this.add_cart, this.addToCartData, this.customOptData, this.diffProductData);
             }
-            console.log("this.add_cart", this.add_cart)
         })
     }
 
@@ -453,7 +452,12 @@ export class ProductPage implements OnInit {
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
                     this._toast.toast("Product added to cart successfully", 3000, "top");
-                    this._navCtrl.push(CartPage);
+                    this._navCtrl.push(CartPage).then(() => {
+                        // first we find the index of the current view controller:
+                        const index = this.viewCtrl.index;
+                        // then we remove it from the navigation stack
+                        this._navCtrl.remove(index);
+                    });;
                 }
                 else {
                 }

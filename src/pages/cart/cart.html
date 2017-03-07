@@ -48,7 +48,10 @@
                                     </div> 
                                 </ion-col>                       
                                 <ion-col width-67 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
-                                         <span *ngFor="let subdata of data.customSubdata">
+                                         <span *ngFor="let subdata of data.subdata">
+                                        <p *ngIf="subdata"><span>{{subdata.key}} </span></p>      
+                                    </span>
+                                    <span *ngFor="let subdata of data.customSubdata">
                                         <p *ngIf="subdata"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata['value'])}}</span></p>      
                                     </span>
                                 </ion-col>

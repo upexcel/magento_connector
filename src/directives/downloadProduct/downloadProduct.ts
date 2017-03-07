@@ -31,7 +31,6 @@ export class DownloadProduct {
                 forEach(this.editCartData.subdata, (subdata: any) => {
                     if (subdata && subdata.value.link_id == value.link_id) {
                         value.download = true;
-                        console.log(subdata.value.download)
                     }
                 });
             }
@@ -52,7 +51,6 @@ export class DownloadProduct {
                 this.linkData[value.link_id] = value.link_file;
             }
         })
-        console.log(this.linkData)
         this.calculateTotal();
     }
     onChangeSample(object, i, event) {
@@ -65,7 +63,7 @@ export class DownloadProduct {
     }
     calculateTotal() {
         var total = 0;
-        let download = {};
+        let download = [];
         let disable;
         let count = 0;
         forEach(this.links, (value: any, key) => {
@@ -83,7 +81,6 @@ export class DownloadProduct {
         else {
             disable = true;
         }
-        console.log("download", download)
         this.linkData = { "options": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
         this.onChange.emit(this.linkData);
     }
