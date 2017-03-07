@@ -37,6 +37,12 @@ export class CartFunction implements OnInit {
         });
     }
     updateCart(newCartData) {
+        forEach(newCartData, (value) => {
+            if (!value.qty) {
+                value.qty = 1;
+            }
+        })
+
         this._events.publish('cartItems:length', newCartData.length);
         this.local.set('CartData', newCartData);
     }
