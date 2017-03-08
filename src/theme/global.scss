@@ -339,7 +339,7 @@ ion-input.uppercase input{
     float: right;
 }
 #sidemenuList{
-    border-left: 1px solid red;
+    border-left: 1px solid #387ef5;
     padding-left: 5px;
 }
 
@@ -379,7 +379,9 @@ filter{
         margin-bottom: 0px;
     }
 }
-
+.left-border{
+    border-left: 1px solid #ddd;
+}
 filter-option{
     .content-ios .scroll-content {
         padding-top: 0px !important;
@@ -407,18 +409,18 @@ filter {
 }
 .icon-badge {
     position: absolute;
-    top: -4px;
-    right: calc(50% - 20px);
+    top: -6px;
+    right: calc(70% - 18px);
     padding: 1px 6px;
     height: auto;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 10px;
+    line-height: 15px;
     background-color: #ef4e3a;
     color: #fff;
     z-index: 1;
     display: inline-block;
-    min-width: 10px;
-    border-radius: 10px;
+    min-width: 7px;
+    border-radius: 8px;
     vertical-align: baseline;
     text-align: center;
     white-space: nowrap;

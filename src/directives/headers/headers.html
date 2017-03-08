@@ -1,7 +1,8 @@
 <ion-header>
     <ion-navbar  color="primary">
         <button ion-button menuToggle icon-right *ngIf="pagename=='home' || menu==true">
-                <ion-icon name="menu"></ion-icon>
+                <!--<ion-icon name="menu"></ion-icon>-->
+                <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
         </button>
         <ion-title start>
             {{title}}
@@ -11,14 +12,19 @@
                                  <ion-icon name="more"></ion-icon>
                         </button>-->
             <button ion-button icon-only  (click)="changeView(viewChang)">
-                    <ion-icon name="list" *ngIf='viewChang=="Landscape" && view'></ion-icon>
-                <ion-icon name="logo-windows" *ngIf='viewChang=="portrait" && view'></ion-icon>
+                    <i class="fa fa-list-ul fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
+                <!--                    <ion-icon name="list" *ngIf='viewChang=="Landscape" && view'></ion-icon>-->
+                <i class="fa fa-th-large fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
+                <!--                <ion-icon name="logo-windows" *ngIf='viewChang=="portrait" && view'></ion-icon>-->
             </button>
             <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
-                    <ion-icon name="person"></ion-icon>
+                    <!--<ion-icon name="person"></ion-icon>-->
+                    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
             </button>
             <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (click)="gotoCart()">
-                    <ion-icon name="cart"></ion-icon><span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
+                    <!--<ion-icon name="cart"></ion-icon>-->
+                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                <span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
             </button>
         </ion-buttons>
     </ion-navbar>
