@@ -14,8 +14,8 @@
 </ion-list-header>
 
 <ion-list class="no-margin"  *ngFor="let linkSet of links">
-    <ion-item no-lines class="padLeft10" >
-        <ion-label>{{linkSet.title}} - Price {{currencySign}}{{linkSet.price | number}}</ion-label>
+          <ion-item no-lines class="padLeft10" >
+        <ion-label>{{linkSet.title}}  <span *ngIf='linkSet.price *1>0'>- Price {{currencySign}}{{linkSet.price | number}}</span></ion-label>
         <ion-checkbox class="marRight" color="dark" value="linkSet" [(ngModel)]="linkSet.download" (ngModelChange)="onChangeLink()" ></ion-checkbox>
     </ion-item>
     <ion-item no-lines class="minHeight">

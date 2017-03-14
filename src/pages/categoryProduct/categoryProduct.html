@@ -10,10 +10,10 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-spinner class="apiSpinner" *ngIf="!categoryProduct && !error"></ion-spinner>
+    <ion-spinner class="apiSpinner" *ngIf="spinner(categoryProduct) && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <category-view *ngIf="categoryProduct" [product]="categoryProduct.body"></category-view>
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll  (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>

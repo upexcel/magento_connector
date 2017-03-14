@@ -17,7 +17,7 @@
                         </ion-row>
                     </ion-slide>
                 </ion-slides>
-                <ion-row class="padLeft10" *ngIf="productData.body.data.type!='grouped'">
+                <ion-row class="padLeft10" >
                     <ion-col class='lineH0 no-padding'>
                         <ion-col class="padTB">
                             <h4 class="capitalize no-margin">{{productData.body.data.name}}</h4>
@@ -48,7 +48,7 @@
                                     <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                         <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                             <ion-label no-margin class="font12">
-                                                {{obj.label}}&nbsp;+{{productData.body.data.currency_sign}}{{obj.price}}
+                                                {{obj.label}}&nbsp;+<span *ngIf="obj.price*1>0">{{productData.body.data.currency_sign}}{{obj.price}}</span>
                                             </ion-label>
                                         </ion-option>
                                     </span>
@@ -63,7 +63,7 @@
                 </span>
 
                 <!--for bundle product-->
-                
+
                 <span *ngIf="type=='bundle'">
                     <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
                 </span>

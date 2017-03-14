@@ -151,29 +151,29 @@ filter{
     .capitalize{
         text-transform: capitalize !important;
     }
-.filterFooterBtnDiv{
-    padding:0px;
-    ion-col{
+    .filterFooterBtnDiv{
         padding:0px;
+        ion-col{
+            padding:0px;
+        }
+        .filterFooterBtn{
+            width: 100%;
+            padding:0px;
+            margin: 0px;
+        }
+        .filterFooterBtnFirst{
+            background-color: #e85151;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+        .filterFooterBtnFirst:hover{
+            background-color: #e85151 !important;
+        }
+        .filterFooterBtnSecond{
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
     }
-    .filterFooterBtn{
-        width: 100%;
-        padding:0px;
-        margin: 0px;
-    }
-    .filterFooterBtnFirst{
-        background-color: #e85151;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-    }
-    .filterFooterBtnFirst:hover{
-        background-color: #e85151 !important;
-    }
-    .filterFooterBtnSecond{
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-    }
-}
 }
 .filterFooterBtnDiv{
     padding:0px;
@@ -295,6 +295,9 @@ ion-input.uppercase input{
     height: 50px !important;
     margin: 0px !important;
 }
+.font17{
+    font-size: 17px !important;
+}
 .center{
     display: -webkit-box;
     display: -moz-box;
@@ -329,6 +332,7 @@ ion-input.uppercase input{
     margin-left: 50% !important;
 
 }
+
 #font13{
     font-size: 13px;
 }

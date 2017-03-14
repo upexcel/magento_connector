@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartPage } from '../cart/cart';
-import { NavController, NavParams, Events,ViewController } from 'ionic-angular';
+import { NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifyMe } from '../../model/product/notify';
@@ -75,7 +75,7 @@ export class ProductPage implements OnInit {
     editCartData: any;
     cartButtonTitle: string;
     add_cart = {};
-    constructor(private viewCtrl: ViewController,private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -451,7 +451,11 @@ export class ProductPage implements OnInit {
                 this.cartData = response;
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
-                    this._toast.toast("Product added to cart successfully", 3000, "top");
+                    if (this.editCartData) {
+                        this._toast.toast("Updated product instead  successfully", 3000, "top");
+                    } else {
+                        this._toast.toast("Product added to cart successfully", 3000, "top");
+                    }
                     this._navCtrl.push(CartPage).then(() => {
                         // first we find the index of the current view controller:
                         const index = this.viewCtrl.index;

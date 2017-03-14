@@ -48,11 +48,15 @@ export class CartPage implements OnInit {
         return (total * 1) * (qty * 1);
     }
     checkTypeOf(data) {
-        if (typeof data == 'object') {
-            return data.default_title;
+        if (typeof data['value'] == 'object') {
+            return data['value'].default_title;
         } else {
-            return data;
-        }
+            if (data['type'] == "date_time") {
+                let dateObj = new Date(data['value']);
+                return (dateObj.getDate() + "-" + (dateObj.getMonth() * 1 + 1) + "-" + dateObj.getFullYear() + "" + " "+ dateObj.getUTCHours() + ":" + dateObj.getUTCMinutes())
+            }else{
+            return data['value'];
+        }}
     }
     c_Shopping() {
         this._navCtrl.setRoot(HomePage);

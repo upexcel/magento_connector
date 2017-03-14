@@ -22,10 +22,11 @@ export class group {
     }
 
     quantityEdit() {
-        forEach(this.editCartData.option, (editCartOptionValue, editCartOptionkey)=>{
+        forEach(this.editCartData.options, (editCartOptionValue, editCartOptionkey)=>{
             forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue,key)=>{
                 if(editCartOptionkey == groupAssociatedProducsValue.product_id){
-                    this.grouped.group_associated_products[key]['quantity'] = editCartOptionValue;
+                    console.log(groupAssociatedProducsValue);
+                    groupAssociatedProducsValue.quantity = editCartOptionValue;
                 }
             });
         });
@@ -37,7 +38,7 @@ export class group {
         }
     }
     groupedData() {
-        let opt = [], id = {}, total = 0, flag = 0;
+        let opt:any = [], id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, function (value, key) {
             id[value.product_id] = value.quantity;
             if (value.quantity * 1 !== 0) {
@@ -46,7 +47,7 @@ export class group {
                 total = total + (value.quantity * 1) * (value.final_price * 1);
             }
         });
-        let obj = {"option": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
+        let obj = {"options": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
         this.sendData.emit(obj);
     }
 

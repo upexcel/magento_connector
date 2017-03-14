@@ -44,7 +44,6 @@ import { SortByModel } from '../model/sortBy/sortBy';
 import { FilterByModel } from '../model/filterBy/filterBy';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
-import { DownloadService } from '../providers/cart-service/download-service';
 import { FinalPrice } from '../providers/cart-service/final-price';
 import { ApiService } from '../providers/api-service/api-service';
 import { SocialService } from '../providers/social-service/social-service';
@@ -55,8 +54,6 @@ import { sliderService } from '../providers/slider-service/slider.service';
 import { homeProductsService } from '../providers/homeproducts-service/homeproducts.service';
 import { categoryService } from '../providers/category-service/category-service';
 import { CountryService } from '../providers/myAccount-service/country';
-import { GroupService } from '../providers/cart-service/groupService';
-import { bundleService } from '../providers/cart-service/bundleService';
 import { FilterService } from '../providers/filter-service/filterService';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -178,7 +175,6 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Storage,
         ApiService,
         CartService,
-        DownloadService,
         FinalPrice,
         SocialService,
         Login,
@@ -209,8 +205,6 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CartFunction,
         SortByModel,
         FilterByModel,
-        GroupService,
-        bundleService
     ]
 })
 export class AppModule {

@@ -20,7 +20,6 @@ export class SortBy {
     ngOnInit() {
         this.data = this._navParam.get('data');
         this.product_id = this._navParam.get('product_id');
-        console.log(this.data)
         if(this.data.previouseSortSection){
             this.slectedSort = this.data.previouseSortSection;
         } else {

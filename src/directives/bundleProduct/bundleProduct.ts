@@ -45,7 +45,7 @@ export class BundleProduct {
                         selection.defaultSet = false;
                     }
                 } else {
-                    forEach(this.editCartData.option, (cartValue, cartKey) => {
+                    forEach(this.editCartData.options, (cartValue, cartKey) => {
                         if (typeof (cartValue) == "object") {
                             forEach(cartValue, (cartValueOpt, cartKeyOpt) => {
                                 if (selection.selection_product_id == cartValueOpt) {
@@ -267,7 +267,7 @@ export class BundleProduct {
                 })
             }
         })
-        bundleDataToBeEmit = { "bundle_option_qty": bundle_option_qty, "option": data, "subData": bundle, "disable": obj.disable, "total": obj.total };
+        bundleDataToBeEmit = { "bundle_option_qty": bundle_option_qty, "options": data, "subData": bundle, "disable": obj.disable, "total": obj.total };
         setTimeout(() => {
             this.onChangeData.emit(bundleDataToBeEmit);
         }, 100);
