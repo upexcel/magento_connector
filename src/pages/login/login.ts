@@ -66,7 +66,8 @@ export class LoginPage implements OnInit {
             })
     }
     userFbLogin(body) {
-        this._socialAccount.getSocialAccount(body.data).then((res: any) => {
+        let data = body.data;
+        this._socialAccount.getSocialAccount(data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
             this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });

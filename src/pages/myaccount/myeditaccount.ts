@@ -70,7 +70,7 @@ export class MyEditAccountPage implements OnInit {
         this.entity_id = this._navParams.get("entity_id");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
-                this.getuser_details(this.id, this.entity_id, userData.secret);
+                this.getuser_details(this.id, this.entity_id, userData.secret,userData.firstname,userData.lastname);
             } else { }
         });
         this._local.get('store_id').then((store_id) => {
@@ -82,7 +82,7 @@ export class MyEditAccountPage implements OnInit {
 
     }
 
-    getuser_details(id, entity_id, secret) {
+    getuser_details(id, entity_id, secret,firstname?,lastname?) {
         this.spin = true;
         let body = {
             "secret": secret
@@ -116,8 +116,8 @@ export class MyEditAccountPage implements OnInit {
         } else {
             this.spin = false;
             this.updateform = this._fb.group({
-                firstname: ['', Validators.required],
-                lastname: ['', Validators.required],
+                firstname: [firstname, Validators.required],
+                lastname: [lastname, Validators.required],
                 city: ['', Validators.required],
                 company: [''],
                 telephone: ['', Validators.required],

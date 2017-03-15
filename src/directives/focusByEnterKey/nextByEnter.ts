@@ -13,9 +13,8 @@ export class FocusByEnterKey {
         if ((e.which == 13 || e.keyCode == 13)) {
             if (this.id != "btn") {
                 e.preventDefault();
-                var form = Zepto('#' + this.id)
-                form.find('input, select').focus();
-
+                var form = Zepto('#' + this.id);
+                form.find('input, select')[0].focus();
             }
             else { }
         }

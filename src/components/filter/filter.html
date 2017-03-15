@@ -32,7 +32,7 @@
                   <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
                 {{response.filter_title}}
                 <span></span>
-                <p> <span *ngFor="let sectedData of checkedData"><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}},</span> </span></p>    
+                <p> <span *ngFor="let sectedData of checkedData ; let i = index; "><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}}<span *ngIf="checkedData.length>1 && (i+1) !==checkedData.length">,</span></span> </span></p>    
             </a>
         </ion-list>
     </div>

@@ -299,8 +299,9 @@ export class ProductPage implements OnInit {
     alertSetApi(useremail) {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
-        let email = useremail
+        let email = useremail;
         this._notifyService.setNotification(sku, email).then((data: any) => {
+             this._toast.toast(data.body.message, 3000, "bottom");
             this.alertset = false;
             this.askEmail = true;
         });

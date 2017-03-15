@@ -5,15 +5,15 @@
         <ion-list inset>
             <ion-item>
                 <ion-label stacked>First Name <span color="danger">*</span></ion-label>
-                <ion-input id="firstName" [onReturn]='"lastName"' formControlName="firstname" autocorrect autocomplete clearInput></ion-input>
+                <ion-input  [onReturn]='"lastName"' formControlName="firstname" clearInput></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Last Name <span color="danger">*</span></ion-label>
-                <ion-input formControlName="lastname" id="lastName" [onReturn]='"Company"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input  [onReturn]='"Company"' id="lastName"  formControlName="lastname"  clearInput></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Company</ion-label>
-                <ion-input formControlName="company" id="Company" [onReturn]='"Fax"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input id="Company" [onReturn]='"Fax"'  formControlName="company" ></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Fax</ion-label>
@@ -33,7 +33,7 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Pin Code <span color="danger">*</span></ion-label>
-                <ion-input type="number" min="0" formControlName="zip" id="Pin" [onReturn]='"Country"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                 <ion-label stacked>Country<span color="danger">*</span></ion-label>
