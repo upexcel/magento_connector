@@ -9,29 +9,38 @@
             <ion-item >
                 <ion-grid no-padding>
                     <ion-row center>
-                        <ion-col class="aligncenter" width-20>
-                            <img src="{{data.img}}" alt="" class="maxht"/>
+                        <ion-col class="aligncenter" width-33>
+                            <ion-row center>
+                                <ion-col>
+                                    <img src="{{data.img}}" alt="" class="maxht"/>
+                                </ion-col> 
+                            </ion-row>
+                            <ion-row center>
+                                <ion-col class="font10">
+                              <p *ngIf="data.total*1 >0"><b>UnitPrice:</b>{{data.currency_sign}}{{data.total}} </p><p *ngIf="quantityPrice(data.total,data.qty) >0"><b>SubTotal</b> :{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p>
+                                </ion-col> 
+                            </ion-row>
                         </ion-col>
-                        <ion-col width-80>
+                        <ion-col width-67>
                             <ion-row>
-                                <ion-col width-50 class="size capitalize">
+                                <ion-col width-80 class="size capitalize">
                                     {{data.name}}
                                 </ion-col>
-                                <ion-col width-50 class="alignRight">
+                                <ion-col width-20 class="alignRight">
                                     <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
                                     <input type="number" placeholder="qty" *ngIf="data.type !== 'grouped'" [(ngModel)]="data.qty"  (change)="changeQuantity()" min="1" class="inputSize">
                                 </ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-col  width-50 *ngIf="data.type=='configurable'">
-                                         <span *ngFor="let subdata of data.subData">
+                                <ion-col *ngIf="data.type=='configurable'">
+                                          <span *ngFor="let subdata of data.subData">
                                         <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
                                     </span>
                                     <span *ngFor="let subdata of data.customSubdata">
                                         <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
                                     </span>
                                 </ion-col>
-                                <ion-col width-50 *ngIf="(data.subData && data.subData.length > 0) && data.type=='bundle'">
+                                <ion-col *ngIf="(data.subData && data.subData.length > 0) && data.type=='bundle'">
                                          <div *ngFor="let subData of data.subData">
                                         <div *ngFor="let subDataOption of subData">
                                             <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
@@ -41,13 +50,13 @@
                                         <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
                                     </span>
                                 </ion-col> 
-                                <ion-col width-50  *ngIf="(data.subData && data.subData.length > 0) && data.type=='grouped'" >
+                                <ion-col  *ngIf="(data.subData && data.subData.length > 0) && data.type=='grouped'" >
                                          <div *ngFor="let subData of data.subData" >
                                         <p style="width: 80%; display: inline-block; white-space: pre-line;"> {{subData.name}}: <b>{{subData.quantity}}</b> </p>
                                         <!--<input center type="number" placeholder="qty" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
                                     </div> 
                                 </ion-col>                       
-                                <ion-col width-50 *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
+                                <ion-col *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
                                          <span *ngFor="let subdata of data.subdata">
                                         <p *ngIf="subdata"><span class="capitalize">{{subdata.key}} </span></p>      
                                     </span>
@@ -55,9 +64,9 @@
                                         <p *ngIf="subdata" class="capitalize"><span color="dark" >{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
                                     </span>
                                 </ion-col>
-                                <ion-col width-50 class="alignRight no-padding cartPrice">
-                                    <div class="font10" style="text-align: right;"><p *ngIf="data.total*1 >0"><b>UnitPrice:</b>{{data.currency_sign}}{{data.total}} </p><p *ngIf="quantityPrice(data.total,data.qty) >0"><b>SubTotal</b> :{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p></div>
-                                </ion-col>
+                                <!--                                <ion-col width-50 class="alignRight no-padding cartPrice">
+                                                                    <div class="font10" style="text-align: right;"><p *ngIf="data.total*1 >0"><b>UnitPrice:</b>{{data.currency_sign}}{{data.total}} </p><p *ngIf="quantityPrice(data.total,data.qty) >0"><b>SubTotal</b> :{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p></div>
+                                                                </ion-col>-->
                             </ion-row>
                         </ion-col>
                     </ion-row>
@@ -111,16 +120,16 @@
                     </ion-col>
                 </ion-row>-->
         <ion-item class="borderRemove" *ngIf="res.length!=0">
-<!--            <ion-row>
-                <ion-col width-50 class="alignLeft">TOTAL</ion-col>
-                <ion-col width-50 class="alignRight">{{totalPay}}</ion-col>
-            </ion-row>-->
+            <!--            <ion-row>
+                            <ion-col width-50 class="alignLeft">TOTAL</ion-col>
+                            <ion-col width-50 class="alignRight">{{totalPay}}</ion-col>
+                        </ion-row>-->
         </ion-item>
     </ion-grid>
 </ion-content>
 
 <ion-footer>
-        <ion-grid class="filterFooterBtnDiv">
+    <ion-grid class="filterFooterBtnDiv">
         <ion-row>
             <ion-col width-50>
                 <btn-large [titleForLarge]='" CONTINUE SHOPPING"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst font17'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
