@@ -14,11 +14,14 @@ import { ChangepasswordPage } from '../pages/changePassword/changePassword';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
-import { MyEditAccountPage } from '../pages/myaccount/myeditaccount';
+import { MyEditAddressPage } from '../pages/myaccount/myeditaddress';
+import { MyEditAccount } from '../pages/myaccount/myEditAccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { OfflinePage } from '../pages/offline/offline'
+import { wishList } from '../pages/wishList/wishList';
+
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
 import { Login } from '../model/login/login';
@@ -107,9 +110,10 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         FilterOption,
         AccountPopoverPage,
         HomePage,
+        MyEditAccount,
         CategoryProductPage,
         OrderModalPage,
-        MyEditAccountPage,
+        MyEditAddressPage,
         MySavedAddressPage,
         LoginPage,
         LoadingModal,
@@ -136,7 +140,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         BundleProduct,
         DownloadProduct,
         CustomOption,
-        group
+        group,
+        wishList
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -155,19 +160,21 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         AccountPopoverPage,
         ForgotPage,
         HomePage,
+        MyEditAccount,
         CategoryProductPage,
         CategoryComponent,
         FilterBy,
         SortBy,
         CategoryFooter,
-        MyEditAccountPage,
+        MyEditAddressPage,
         MySavedAddressPage,
         LoginPage,
         FilterOption,
         PopoverPage,
         SubmitReview,
         Headers,
-        OfflinePage
+        OfflinePage,
+        wishList
     ],
     providers: [
         AppConfig,

@@ -1,0 +1,60 @@
+<header [title]="'WISH LIST'" [pagename]="'product'"></header>
+<ion-content>
+    <ion-list>
+        <ion-item-sliding>
+            <ion-item >
+                <ion-grid no-padding>
+                    <ion-row center>
+                        <ion-col class="aligncenter" width-33>
+                            <ion-row center>
+                                <ion-col>
+                                    <img imageDirective src="{{data.data.media_images[0]}}" alt="" class="maxht"/>
+                                     <img src="{{data.data.minify_image}}"/>
+                                </ion-col> 
+                            </ion-row>
+                            <ion-row center>
+                                <ion-col>
+                                    {{data.data.currency_sign}}{{data.data.final_price}}
+                                </ion-col> 
+                            </ion-row>
+                        </ion-col>
+                        <ion-col width-67>
+                            <ion-row>
+                                <ion-col class="size capitalize font20" style="white-space: initial;">
+                                    {{data.data.name}}
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col style="white-space: initial;">
+                                    {{data.data.short_description}}
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-item>
+                    <ion-textarea value="" placeholder="Please enter your comment" [(ngModel)]="text" style="border: 1px solid #d6d5d5;"(blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
+                </ion-item> 
+            </ion-item>
+
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)=edit(data)>
+                    <ion-icon name="create"></ion-icon>
+                    Edit
+                </button>
+                <button ion-button color="red" (click)=deleteProduct(data)>
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                </button>
+            </ion-item-options>
+            <ion-item-options side="left">
+                <button ion-button  (click)=deleteProduct(data)>
+                        <ion-icon name="cart"></ion-icon>
+                    Add To Cart
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+
+</ion-content>
+

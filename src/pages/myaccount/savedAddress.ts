@@ -19,8 +19,8 @@ import {
 } from '@ionic/storage';
 
 import {
-    MyEditAccountPage
-} from './myeditaccount';
+    MyEditAddressPage
+} from './myeditaddress';
 import {
     MyAccount
 } from './../../model/myaccount/myaccount';
@@ -95,7 +95,7 @@ export class MySavedAddressPage implements OnInit {
                 this.showAddress = true;
             } else {
                 this.showAddress = false;
-                this._navCtrl.push(MyEditAccountPage, {
+                this._navCtrl.push(MyEditAddressPage, {
                     "title": "Add New Address",
                     "entity_id": entity_id
                 })
@@ -131,7 +131,7 @@ export class MySavedAddressPage implements OnInit {
             this.addAddr = false;
         }, 1000);
         let entity_id = null;
-        this._navCtrl.push(MyEditAccountPage, {
+        this._navCtrl.push(MyEditAddressPage, {
             "title": "Add New Address",
             "entity_id": entity_id
         })

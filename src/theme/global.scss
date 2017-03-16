@@ -14,6 +14,9 @@
 .paddLeft10{
     padding-left: 10px;
 }
+.pad5{
+    padding: 5px;
+}
 .padd44{
     padding: 44px;
 }
@@ -174,6 +177,22 @@ filter{
             border-bottom-left-radius: 0px;
         }
     }
+}
+.relative{
+    position: relative;
+}
+.absolute{
+    position:absolute;
+}
+.wishlist{
+    right: 0px;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    background: #ec2a2a;
+}
+.lowercase{
+    text-transform: lowercase;
 }
 .filterFooterBtnDiv{
     padding:0px;

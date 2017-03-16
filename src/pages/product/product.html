@@ -73,7 +73,7 @@
                 </span>
                 <!--for custom product-->
                 <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
-
+                <!--show TierPrice Data-->
                 <div *ngIf="show_add_to_cart && show_add_to_cart.length > 0">
                     <ion-row *ngFor="let data of show_add_to_cart">
                         <ion-col class="padTB">
@@ -81,11 +81,14 @@
                         </ion-col>
                     </ion-row>
                 </div>
+
+                <!--product description-->
                 <ion-row>
                     <ion-col class="padTB">
                         <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>
                     </ion-col>
                 </ion-row>
+                <!--additionalInformation Data-->
                 <ion-list *ngIf="additionalInformationData.length > 0 ">
                     <h4 class="padLeft20 capitalize">Additional Information</h4>
                     <ion-item *ngFor="let info of additionalInformationData">
@@ -95,7 +98,7 @@
                         </ion-row>
                     </ion-item>
                 </ion-list>
-
+                <!--review directive-->
                 <product-review [skuData]="data.sku"> loading..</product-review>               
             </ion-col>
         </ion-row>

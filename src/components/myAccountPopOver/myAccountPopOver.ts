@@ -16,8 +16,8 @@ import {
     MyAccountAddressDataType
 } from './../../model/myaccount/myaccountData';
 import {
-    MyEditAccountPage
-} from './../../pages/myaccount/myeditaccount';
+    MyEditAddressPage
+} from './../../pages/myaccount/myeditaddress';
 import {
     ToastService
 } from './../../providers/toast-service/toastService';
@@ -56,7 +56,7 @@ export class AccountPopoverPage {
     }
     editAccount() {
         this.close();
-        this._navCtrl.push(MyEditAccountPage, {
+        this._navCtrl.push(MyEditAddressPage, {
             "title": "Edit Address",
             "id": this.id,
             "entity_id": this.entity_id

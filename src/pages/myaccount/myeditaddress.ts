@@ -47,9 +47,9 @@ import {
 } from 'ionic-angular';
 import reverse from 'lodash/reverse';
 @Component({
-    templateUrl: 'myeditaccount.html'
+    templateUrl: 'myeditaddress.html'
 })
-export class MyEditAccountPage implements OnInit {
+export class MyEditAddressPage implements OnInit {
     myaccount: MyAccountAddressDataType;
     editaccount: EditAccountDataType;
     spin: boolean;

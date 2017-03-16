@@ -1,18 +1,19 @@
-import {Component} from '@angular/core';
-import {ViewController, NavController} from 'ionic-angular';
-import {StartPage} from './../../pages/startpage/startpage';
-import {MySavedAddressPage} from './../../pages/myaccount/savedAddress';
-import {ChangepasswordPage} from './../../pages/changePassword/changePassword';
-import {OrderlistPage} from './../../pages/orderList/orderList';
-import {LogoutService} from './../../providers/logout/logout-service';
+import { Component } from '@angular/core';
+import { ViewController, NavController } from 'ionic-angular';
+import { StartPage } from './../../pages/startpage/startpage';
+import { MySavedAddressPage } from './../../pages/myaccount/savedAddress';
+import { ChangepasswordPage } from './../../pages/changePassword/changePassword';
+import { OrderlistPage } from './../../pages/orderList/orderList';
+import { LogoutService } from './../../providers/logout/logout-service';
+import { MyEditAccount } from './../../pages/myaccount/myEditAccount';
 
 @Component({
-    selector:'user-menu',
+    selector: 'user-menu',
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
-    msg:string="";
-    constructor(private _logout:LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+    msg: string = "";
+    constructor(private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
     }
     close() {
         this._viewCtrl.dismiss();
@@ -27,8 +28,11 @@ export class PopoverPage {
     gotoOrders() {
         this._navCtrl.push(OrderlistPage);
     }
-    logout() {      
-        this._logout.logout(this.msg,this._navCtrl);                  
+    gotoEditAccount() {
+        this._navCtrl.push(MyEditAccount);
+    }
+    logout() {
+        this._logout.logout(this.msg, this._navCtrl);
         this._navCtrl.setRoot(StartPage, { "message": this.msg });
     }
 }
