@@ -1,10 +1,10 @@
 <header [title]="'WISH LIST'" [pagename]="'product'"></header>
 <ion-content>
-    <ion-list>
-        <ion-item-sliding>
-            <ion-item >
+    <ion-list *ngIf="data && data.length > 0">
+        <ion-item-sliding *ngFor="let data of data">
+            <ion-item>
                 <ion-grid no-padding>
-                    <ion-row center>
+                    <ion-row center >
                         <ion-col class="aligncenter" width-33>
                             <ion-row center>
                                 <ion-col>
@@ -38,17 +38,17 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="primary" (click)=edit(data)>
+                <button ion-button color="primary" (click)=editWishList(data)>
                     <ion-icon name="create"></ion-icon>
                     Edit
                 </button>
-                <button ion-button color="red" (click)=deleteProduct(data)>
+                <button ion-button color="red" (click)=deleteProductWishList(data)>
                     <ion-icon name="trash"></ion-icon>
                     Delete
                 </button>
             </ion-item-options>
             <ion-item-options side="left">
-                <button ion-button  (click)=deleteProduct(data)>
+                <button ion-button  (click)=addToCart(data)>
                         <ion-icon name="cart"></ion-icon>
                     Add To Cart
                 </button>

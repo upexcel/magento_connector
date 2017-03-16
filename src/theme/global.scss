@@ -185,11 +185,12 @@ filter{
     position:absolute;
 }
 .wishlist{
-    right: 0px;
+    right: -5px;
+    top: -8px;
     color: #ffffff;
     border-radius: 50%;
-    padding: 4px;
-    background: #ec2a2a;
+    padding: 8px;
+    background: #ff4949;
 }
 .lowercase{
     text-transform: lowercase;

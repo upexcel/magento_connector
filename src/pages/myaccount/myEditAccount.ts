@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {
     NavController,
     PopoverController,
-    Events
 } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
@@ -21,7 +20,7 @@ export class MyEditAccount {
     updateAccount: any;
     editAccountspin: boolean = false;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService,  private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
