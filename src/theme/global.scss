@@ -431,6 +431,14 @@ filter {
 ::-webkit-scrollbar { 
     display: none; 
 }
+.none{
+    display: none; 
+}
+.no-footer{
+    .fixed-content, .scroll-content{
+        margin-bottom: 0px !important;
+    }
+}
 .icon-badge {
     position: absolute;
     top: -6px;
