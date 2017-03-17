@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { CartFunction } from '../../model/cart/cartHandling'
-import { ProductPage } from './../product/product'
-import { HomePage } from './../home/home'
+import { CartFunction } from '../../model/cart/cartHandling';
+import { ProductPage } from './../product/product';
+import { HomePage } from './../home/home';
+import { ActionSheetController } from 'ionic-angular';
+
 @Component({
     templateUrl: 'cart.html'
 })
@@ -12,7 +14,7 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController, ) { }
+    constructor(public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController, ) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
             this.res = value;
@@ -32,9 +34,26 @@ export class CartPage implements OnInit {
     }
 
     deleteProduct(data) {
-        this._cartFunction.deleteItem(data).then((res) => {
-            this.res = res;
+        let actionSheet = this._actionSheetCtrl.create({
+            title: 'Delete',
+            buttons: [{
+                text: 'Yes',
+                handler: () => {
+                    console.log('Archive clicked');
+                    this._cartFunction.deleteItem(data).then((res) => {
+                        this.res = res;
+                    });
+                }
+            }, {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }
+            ]
         });
+        actionSheet.present();
     }
     edit(data) {
         this._navCtrl.push(ProductPage, { 'id': data.sku, "editCartData": data }).then(() => {
@@ -53,10 +72,11 @@ export class CartPage implements OnInit {
         } else {
             if (data['type'] == "date_time") {
                 let dateObj = new Date(data['value']);
-                return (dateObj.getDate() + "-" + (dateObj.getMonth() * 1 + 1) + "-" + dateObj.getFullYear() + "" + " "+ dateObj.getUTCHours() + ":" + dateObj.getUTCMinutes())
-            }else{
-            return data['value'];
-        }}
+                return (dateObj.getDate() + "-" + (dateObj.getMonth() * 1 + 1) + "-" + dateObj.getFullYear() + "" + " " + dateObj.getUTCHours() + ":" + dateObj.getUTCMinutes())
+            } else {
+                return data['value'];
+            }
+        }
     }
     c_Shopping() {
         this._navCtrl.setRoot(HomePage);

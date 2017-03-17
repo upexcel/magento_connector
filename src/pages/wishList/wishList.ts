@@ -3,14 +3,14 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { ProductPage } from '../../pages/product/product';
-
+import { ActionSheetController } from 'ionic-angular';
 @Component({
     selector: 'wishList',
     templateUrl: 'wishList.html'
 })
 export class wishList {
     data: any;
-    constructor(public local: Storage, private _navParams: NavParams, public _nav: NavController) {
+    constructor(public _actionSheetCtrl: ActionSheetController, public local: Storage, private _navParams: NavParams, public _nav: NavController) {
         var list = this._navParams.get('data');
         this.local.get('wishList').then((res: any) => {
             var match = false;
@@ -39,17 +39,32 @@ export class wishList {
 
     }
     deleteProductWishList(data) {
-        console.log(data);
-        this.local.get('wishList').then((res: any) => {
-            forEach(res, (value, key) => {
-                console.log(value)
-                if (value && value.data.entity_id == data.data.entity_id) {
-                    res.splice(key, 1);
-                    this.data = res;
-                    this.local.set("wishList", res);
+        let actionSheet = this._actionSheetCtrl.create({
+            title: 'Delete',
+            buttons: [{
+                text: 'Yes',
+                handler: () => {
+                    console.log('Archive clicked');
+                    this.local.get('wishList').then((res: any) => {
+                        forEach(res, (value, key) => {
+                            if (value && value.data.entity_id == data.data.entity_id) {
+                                res.splice(key, 1);
+                                this.data = res;
+                                this.local.set("wishList", res);
+                            }
+                        })
+                    });
                 }
-            })
+            }, {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }
+            ]
         });
+        actionSheet.present();
     }
     editWishList(data) {
         this._nav.push(ProductPage, {
