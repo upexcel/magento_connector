@@ -32,6 +32,14 @@
 .paddLft25{
     padding-left: 25px;
 }
+.padding10{
+    padding: 10px;
+}
+.defaultaddress{
+    line-height: 1;
+    padding-right: 5px;
+    padding-bottom: 3px;
+}
 .down-arrow{
     padding-right: 5px;
     font-size: 20px;
@@ -244,13 +252,13 @@ ion-input.uppercase input{
     font-size: 14px;
 }
 .font12{
-    font-size: 12px;
+    font-size: 12px !important;
 }
 .font13{
     font-size: 13px;
 }
 .font10{
-    font-size: 10px;
+    font-size: 10px ;
 }
 .floatLeft{
     float: left;
@@ -293,14 +301,22 @@ ion-input.uppercase input{
 .padLeft10{
     padding-left: 10px;
 }
-
+.paddBut5{
+    padding-bottom: 5px;
+}
 .no-padding{
     padding: 0px !important;
 }
-
-.card {
-    box-shadow: none !important;
+.cartCheckOutQty{
+    text-align: right;
+    font-size: 10px;
+    color: #7d7c7c;
+    font-weight: 600;
+    padding: 0px 15px 0px;
 }
+/*.card {
+    box-shadow: none !important;
+}*/
 .floatRight{
     float: right !important;
 }
@@ -374,12 +390,16 @@ header .toolbar-ios{
 .content-ios .scroll-content {
     padding-top: 65px;
 }
+.backgroungW{
+     background: #fff;
+}
 sort{
     .content-ios .scroll-content {
         padding-top: 0px !important;
     }
     .scroll-content {
         padding-top: 0px !important;
+        background: #fff;
     }
     .label-md{
         margin-bottom: 0px;
@@ -419,10 +439,18 @@ filter-option{
 }
 .scroll-content {
     padding-top: 56px;
+    background: #f3f3f3;
+}
+
+cart{
+    .scroll-content {
+        background: #fff;
+    }   
 }
 filter {
     .scroll-content {
         padding-top: 0px;
+        background: #fff;
     }
 }
 .toolbar-ios ion-title {

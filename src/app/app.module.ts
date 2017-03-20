@@ -21,7 +21,7 @@ import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
-
+import { Checkout } from '../pages/checkOut/checkout';
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
 import { Login } from '../model/login/login';
@@ -58,6 +58,7 @@ import { homeProductsService } from '../providers/homeproducts-service/homeprodu
 import { categoryService } from '../providers/category-service/category-service';
 import { CountryService } from '../providers/myAccount-service/country';
 import { FilterService } from '../providers/filter-service/filterService';
+import { Address } from '../providers/address-service/address';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -141,7 +142,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         DownloadProduct,
         CustomOption,
         group,
-        wishList
+        wishList,
+        Checkout
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -174,11 +176,13 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         SubmitReview,
         Headers,
         OfflinePage,
-        wishList
+        wishList,
+        Checkout
     ],
     providers: [
         AppConfig,
         FilterService,
+        Address,
         Storage,
         ApiService,
         CartService,

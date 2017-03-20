@@ -85,47 +85,6 @@
         </ion-item-sliding>
     </ion-list>
 
-    <ion-grid>
-        <!--        <ion-row class="border">
-                    <ion-col width-50>SHIPPING &nbsp; 33$</ion-col>
-                    <ion-col width-50 >
-                        <ion-item class="selectlist" no-lines>
-                            <ion-label class="lable"></ion-label>
-                            <ion-select [(ngModel)]="res2"  [placeholder]="0">
-                                <ion-option [value]="obj" >
-                                    <ion-label class="lable">dsf</ion-label></ion-option>
-                            </ion-select>
-                            <ion-label class="lable">
-                                <ion-buttons class="alignright">
-                                    <ion-icon name="arrow-forward"></ion-icon>
-                                </ion-buttons>
-                            </ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="border">
-                    <ion-col width-50>PAYMENT METHOD</ion-col>
-                    <ion-col width-50 >
-                        <ion-item class="selectlist" no-lines>
-                            <ion-label class="lable">
-                                <ion-buttons class="alignright">
-                                    <ion-icon name="arrow-forward"></ion-icon>
-                                </ion-buttons>
-                            </ion-label>
-                            <ion-select [(ngModel)]="res1"  [placeholder]="0">
-                                <ion-option [value]="obj" >
-                                    <ion-label class="lable"></ion-label></ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>-->
-        <ion-item class="borderRemove" *ngIf="res.length!=0">
-            <!--            <ion-row>
-                            <ion-col width-50 class="alignLeft">TOTAL</ion-col>
-                            <ion-col width-50 class="alignRight">{{totalPay}}</ion-col>
-                        </ion-row>-->
-        </ion-item>
-    </ion-grid>
 </ion-content>
 
 <ion-footer>
@@ -135,7 +94,7 @@
                 <btn-large [titleForLarge]='" CONTINUE SHOPPING"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst font17'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
             </ion-col>
             <ion-col width-50>
-                <btn-large [titleForLarge]='"PLACE ORDER"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="false" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="applyFilter()"></btn-large>
+                <btn-large [titleForLarge]='"PLACE ORDER"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="false" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="placeOrder()"></btn-large>
             </ion-col>
         </ion-row>
     </ion-grid> 

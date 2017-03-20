@@ -66,7 +66,7 @@ export class CategoryProductPage implements OnInit {
     show_products(page: any, limit: any, product_id, sortByData?, filterData?) {
         let body;
         if (!sortByData) {
-            body = { "id": product_id, "page": page, "limit": limit, "filter": filterData };
+            body = { "id": product_id, "page": page, "limit": limit,"sort_by": "position", "sort_order": "asc", "filter": filterData };
         } else {
             body = { "id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "sort_order": sortByData.sort_order, "filter": filterData };
         }

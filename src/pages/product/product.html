@@ -1,14 +1,14 @@
 <header [pagename]="'product'" [title]='product'></header>
-    <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock!='Out of Stock','product':true}">
+    <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
         <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
         <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
-        <ion-grid  no-padding *ngIf="productData">
+        <ion-grid class="backgroungW" no-padding *ngIf="productData">
                    <ion-row  responsive-lg responsive-md responsive-sm>
                 <ion-col no-padding width-100 >
-                    <div class="imgbox">
+                    <div class="imgbox ">
                         <img src="{{images}}" class=" img cursorPointer"/>
                     </div>
-                    <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">
+                    <ion-slides  pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">
                                 <ion-slide>
                             <ion-row class="center">
                                 <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
@@ -104,6 +104,6 @@
             </ion-row>
         </ion-grid>
     </ion-content>
-    <ion-footer [ngClass]="{'none': productData && productData.body.data.in_stock!='Out of Stock','uppercase':true}">
+    <ion-footer [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock','uppercase':true}">
             <btn-full  [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
     </ion-footer>

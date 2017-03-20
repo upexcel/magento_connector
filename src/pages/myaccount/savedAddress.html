@@ -14,9 +14,10 @@
         <!--<btn-full [titleFull]='"Add New Address"' [spinFull]="addAddr" [id]="'btn'" [classFull]="'add_address botton'" (onBtnClick)="addNewAddress()"></btn-full>-->
     </ion-list>
     <ion-list *ngIf="showAddress">
-        <ion-card *ngFor="let address of reverseCartData ; let id=index">
+        <ion-card  *ngFor="let address of reverseCartData ; let id=index">
             <ion-card-content class="paddTop">
-                <ion-buttons end>
+                <!--<ion-radio class="padding10" value="{{address.firstname}}"></ion-radio>-->
+                <ion-buttons class="floatRight" end>
                     <button ion-button class="iconTransparent" color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id)">
                             <ion-icon name="more"></ion-icon>
                     </button>
@@ -84,11 +85,13 @@
                         </ion-col>
                     </ion-row>
                     <ion-row class="capitalize green">
-                        <ion-col class="alignright" *ngIf="address.default_shipping">
-                            default shipping
+                        <ion-col>
+                            <ion-label class="no-margin floatLeft defaultaddress"> Default Shipping</ion-label>
+                            <ion-checkbox color="dark" [disabled]="disable || spin" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
                         </ion-col>
-                        <ion-col class="alignright"  *ngIf="address.default_billing">
-                            default billing
+                        <ion-col>
+                            <ion-label class="no-margin floatLeft defaultaddress">Default Billing</ion-label>
+                            <ion-checkbox color="dark" [disabled]="disable || spin" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox>
                         </ion-col>
                     </ion-row>                    
                 </ion-grid>

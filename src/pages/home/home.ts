@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
-import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
-import {HomeProducts} from '../../model/home/homeProducts';
+import { Component, OnInit } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
+import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
+import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { MyAccount } from './../../model/myaccount/myaccount';
+import { Address } from './../../providers/address-service/address';
 @Component({
     templateUrl: 'home.html'
 })
@@ -22,7 +24,7 @@ export class HomePage implements OnInit {
     userToken: any;
     menu: boolean = true;
     c_Id;
-    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController, private _AppDataConfigService: AppDataConfigService) {
+    constructor(private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
             this.pagename = 'home';
@@ -33,6 +35,15 @@ export class HomePage implements OnInit {
         }
     }
     ngOnInit() {
+        setTimeout(() => {
+            this._appDataConfigService.getUserData().then((userData: any) => {
+                if (userData && userData.access_token) {
+                    this._myaccount.getMyAccount({ "secret": userData.secret }).then((res) => {
+                        this._address.setAddress(res);
+                    })
+                }})
+            },100)
+        
         this.homeProducts();
         this.checkBackButton();
         this._events.subscribe('api:review', (review) => {
@@ -41,7 +52,7 @@ export class HomePage implements OnInit {
     }
     homeProducts() {
         this.spin = true;
-        let body = {"type": "full"}
+        let body = { "type": "full" }
         this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
                 this.homeProduct = res;
@@ -103,7 +114,7 @@ export class HomePage implements OnInit {
 
     }
     doRefresh(refresher) {
-        this._AppDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
+        this._appDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
             this.homeProducts();
             setTimeout(() => {
                 refresher.complete();

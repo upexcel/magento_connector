@@ -1,16 +1,86 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<header [pagename]="'product'" [title]='"Checkout"'></header>
+<ion-content>
+    <h2 *ngIf="!cartData">You have no item in cart</h2>
+    <ion-card *ngIf="cartData && cartData.length!=0">
+        <ion-card-header>
+            Address
+        </ion-card-header>
+        <ion-card-content>
+            <span *ngFor="let addres of address">
+                <p color="primary" *ngIf="addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
+                <p color="primary" *ngIf="addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
+                <p color="primary" *ngIf="addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
+                <span *ngIf="addres.default_shipping || addres.default_billing"> <p color="gray">{{addres.firstname}} {{addres.lastname}}</p><p color="gray">
+                        <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_id}} {{addres.postcode}}</p></span>
+            </span>
+            <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
+
+        </ion-card-content>
+    </ion-card>
+    <ion-card  *ngFor="let data of cartData">
+        <ion-card-content  class="no-padding">
+                           <ion-grid no-padding>
+                <ion-row center>
+                    <ion-col class="aligncenter" width-33>
+                        <ion-row center>
+                            <ion-col>
+                                <img src="{{data.img}}" alt="" class="maxht"/>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="no-padding">
+                                <p class="font12" *ngIf="quantityPrice(data.total,data.qty) >0"><b>SubTotal</b> :{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p>
+                            </ion-col> 
+                        </ion-row>
+                    </ion-col>
+                    <ion-col width-67>
+                        <ion-row>
+                            <ion-col class="cartCheckOutQty capitalize">
+                               Quantity: {{data.qty}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="size capitalize">
+                                {{data.name}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col *ngIf="data.type=='configurable'">
+                                <span *ngFor="let subdata of data.subData">
+                                    <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
+                                </span>
+                                <span *ngFor="let subdata of data.customSubdata">
+                                    <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
+                                </span>
+                            </ion-col>
+                            <ion-col *ngIf="(data.subData && data.subData.length > 0) && data.type=='bundle'">
+                                <div *ngFor="let subData of data.subData">
+                                    <div *ngFor="let subDataOption of subData">
+                                        <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
+                                    </div> 
+                                </div> 
+                                <span *ngFor="let subdata of data.customSubdata">
+                                    <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
+                                </span>
+                            </ion-col> 
+                            <ion-col  *ngIf="(data.subData && data.subData.length > 0) && data.type=='grouped'" >
+                                <div *ngFor="let subData of data.subData" >
+                                    <p style="width: 80%; display: inline-block; white-space: pre-line;"> {{subData.name}}: <b>{{subData.quantity}}</b> </p>
+                                    <!--<input center type="number" placeholder="qty" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
+                                </div> 
+                            </ion-col>                       
+                            <ion-col *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
+                                <span *ngFor="let subdata of data.subdata">
+                                    <p *ngIf="subdata"><span class="capitalize">{{subdata.key}} </span></p>      
+                                </span>
+                                <span *ngFor="let subdata of data.customSubdata">
+                                    <p *ngIf="subdata" class="capitalize"><span color="dark" >{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -5,8 +5,12 @@ import { CartFunction } from '../../model/cart/cartHandling';
 import { ProductPage } from './../product/product';
 import { HomePage } from './../home/home';
 import { ActionSheetController } from 'ionic-angular';
+import { Checkout } from './../checkOut/checkout';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { ToastService } from './../../providers/toast-service/toastService';
 
 @Component({
+    selector: 'cart',
     templateUrl: 'cart.html'
 })
 export class CartPage implements OnInit {
@@ -14,7 +18,7 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController, ) { }
+    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController, ) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
             this.res = value;
@@ -80,5 +84,14 @@ export class CartPage implements OnInit {
     }
     c_Shopping() {
         this._navCtrl.setRoot(HomePage);
+    }
+    placeOrder() {
+        this._appConfigService.getUserData().then((userData: any) => {
+            if (userData) {
+                this._navCtrl.push(Checkout, { res: this.res });
+            } else {
+                this._toast.toast("Please Login First !!", 3000);
+            }
+        })
     }
 }

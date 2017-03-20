@@ -8,6 +8,7 @@ import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
 import { Network } from 'ionic-native';
 import { OfflinePage } from '../pages/offline/offline'
 import { Splashscreen } from 'ionic-native';
+
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
    `

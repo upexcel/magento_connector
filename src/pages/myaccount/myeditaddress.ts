@@ -90,9 +90,14 @@ export class MyEditAddressPage implements OnInit {
         if (entity_id != null) {
             this._myaccount.getMyAccount(body).then((res) => {
                 this.myaccount = res;
-                this.reverseCartData = reverse(this.myaccount.body);
+                this.reverseCartData = (this.myaccount.body);
                 this.spin = false;
                 if (this.myaccount.body.length != 0 && entity_id != null) {
+                    let d_billing;
+                    let d_shipping;
+                    console.log(this.reverseCartData,id)
+//                    console.log(this.reverseCartData,i)
+//                    if(this.reverseCartData[id].default_shipping)
                     this.updateform = this._fb.group({
                         firstname: [this.reverseCartData[id].firstname, Validators.required],
                         lastname: [this.reverseCartData[id].lastname, Validators.required],
