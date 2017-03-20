@@ -1,6 +1,9 @@
 .alignright{
     text-align: right;
 }
+.right15{
+    right: 15px;
+}
 .aligncenter{
     text-align: center;
 }
@@ -85,12 +88,20 @@ product{
         display: none;
     }
 }
+
+group ion-item .item-inner .input-wrapper ion-label{
+    margin: 0px !important;
+}
 table {
     border-collapse: collapse !important;
     width: 100% !important;
 }
-th, td {
+td {
     padding: 15px !important;
+
+}
+th {
+    padding: 0px 15px 5px !important;
     text-align: left;
     border-bottom: 1px solid #ddd ;
 }
@@ -129,6 +140,19 @@ login{
         padding-right: 10px;
         font-size: 25px;
     } 
+    .scroll-content {
+        background: #fff !important;
+    }
+}
+register{ 
+    .scroll-content {
+        background: #fff;
+    }  
+}
+edit-account{
+    .scroll-content {
+        background: #fff;
+    }     
 }
 .fb{
     background-color: #365899 !important;
@@ -200,8 +224,26 @@ filter{
     padding: 8px;
     background: transparent;
 }
+.productWishList{
+    float: right;
+    padding-right: 15px;
+}
+
+.lightRed{
+    color:rgba(226, 4, 4, 0.71);
+}
 .lowercase{
     text-transform: lowercase;
+}
+.fullCol{
+    -webkit-flex: 0 0 0% !important;
+    -ms-flex: 0 0 0%  !important;
+    flex: 0 0 0%  !important;
+    max-width: 100%  !important;
+}
+.ico{
+    font-size: 20px;
+    color: #a0a0a0;
 }
 .filterFooterBtnDiv{
     padding:0px;
@@ -391,7 +433,7 @@ header .toolbar-ios{
     padding-top: 65px;
 }
 .backgroungW{
-     background: #fff;
+    background: #fff;
 }
 sort{
     .content-ios .scroll-content {

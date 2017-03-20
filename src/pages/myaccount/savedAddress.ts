@@ -37,7 +37,7 @@ import {
     LoginPage
 } from './../../pages/login/login';
 import {
-    EditAccount
+    Edit
 } from './../../model/myaccount/editAccount';
 import {
     AccountPopoverPage
@@ -59,7 +59,7 @@ export class MySavedAddressPage implements OnInit {
     reverseCartData: any;
     disable: boolean = false;
     message: string = "Token expired";
-    constructor(private _address: Address, private _appConfigService: AppDataConfigService, private _editaccount: EditAccount, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    constructor(private _address: Address, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
                 this.getInitAdd(savedaddress);
@@ -175,7 +175,7 @@ export class MySavedAddressPage implements OnInit {
         if (address.add_shipping) {
             address['default_shipping'] = '1';
         }
-        this._editaccount.updateAccount(address).then((res) => {
+        this._editaccount.updateAddress(address).then((res) => {
             this.getInitAdd(true);
             this.disable = false;
         })

@@ -11,6 +11,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { EmailValidator } from '../../validation/emailValidate'
 
 @Component({
+    selector : 'register',
     templateUrl: 'register.html'
 })
 export class RegisterPage implements OnInit {

@@ -6,7 +6,7 @@
                     <div class="row margin10"> 
                         <div class="columnForGrid25">
                             <div class="imgBox relative">
-                                <span class=" absolute wishlist" (click)="wishList(feat_prod)">
+                                <span *ngIf="displayMode == 'Landscape'" class=" absolute wishlist" (click)="wishList(feat_prod)">
                                     <i class="fa fa-heart" aria-hidden="true" ></i>
                                 </span>
                                 <span (click)="gotoProduct(feat_prod.data.sku)">
@@ -16,8 +16,11 @@
                             </div>
                         </div>
                         <div class="columnForGrid75" (click)="gotoProduct(feat_prod.data.sku)">
-                            <ion-card-content class="margin10">
+                            <ion-card-content class="margin10 relative" >
                                 <div class="row rowForLandscape">
+                                    <span *ngIf="displayMode == 'Portrait'" class=" absolute right15 lightRed" (click)="wishList(feat_prod)">
+                                        <i class="fa fa-heart" aria-hidden="true" ></i>
+                                    </span>
                                     <div class="columnForGrid100">
                                         <div class="font013 capitalize cartTitle" >
                                             {{feat_prod.data.name}}

@@ -38,7 +38,7 @@ import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
 import { TotalOrder } from '../model/orderList/totalOrder';
 import { MyAccount } from '../model/myaccount/myaccount';
 import { Country } from '../model/myaccount/country';
-import { EditAccount } from '../model/myaccount/editAccount';
+import { Edit } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
 import { SocialAccount } from '../model/startPage/socialAccount';
 import { NotifyMe } from '../model/product/notify';
@@ -202,7 +202,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         TotalOrder,
         MyAccount,
         Country,
-        EditAccount,
+        Edit,
         SocialAccount,
         OrderIdDetail,
         ToastService,

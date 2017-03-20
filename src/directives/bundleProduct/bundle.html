@@ -1,7 +1,7 @@
 <div class="custom-options" *ngFor="let b_test1 of bundle.bundle_items ; let i = index">
      <ion-list   *ngIf="b_test1.type=='multi'">
         <ion-item>
-            <ion-label>{{b_test1.title}}<span color="danger" *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight none paddRight5" name="arrow-dropdown"></ion-icon></ion-label>
+            <ion-label>{{b_test1.title}}<span color="danger" *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight none ico paddRight5" name="arrow-dropdown"></ion-icon></ion-label>
             <ion-select [(ngModel)]="b_test1.vertualArray" (ngModelChange)="onChangeBundleMulti(b_test1.vertualArray,b_test1.id,i,b_test1.is_require )" multiple="true">
                 <ion-option *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} <span *ngIf="selection.selection_price*1 >0">+ {{bundle.data.currency_sign}}{{selection.selection_price | number}}</span></ion-option>
             </ion-select>
@@ -9,7 +9,7 @@
     </ion-list>
     <ion-list   *ngIf="b_test1.type=='select'">
         <ion-item>
-            <ion-label>{{b_test1.title}}<span color="danger" *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight none paddRight5" name="arrow-dropdown"></ion-icon></ion-label>
+            <ion-label>{{b_test1.title}}<span color="danger" *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight none ico paddRight5" name="arrow-dropdown"></ion-icon></ion-label>
             <ion-select [(ngModel)]="b_test1.vertualId" (ngModelChange)="onChangeBundleSelect(b_test1.vertualId,b_test1.id,b_test1.is_require )">
                 <ion-option  *ngFor="let selection of b_test1.selection" [value]="selection" >{{selection.selection_name}} <span *ngIf="selection.selection_price*1 > 0 " >+ {{bundle.data.currency_sign }} {{selection.selection_price | number}}</span> </ion-option>
             </ion-select>
@@ -17,7 +17,7 @@
     </ion-list>     
     <ion-list   radio-group [(ngModel)]="b_test1.vertualId" (ngModelChange)="onChangeRadio(b_test1.vertualId,b_test1.id,b_test1.is_require)" *ngIf="b_test1.type=='radio'">
                 <ion-list-header class="no-margin"  (click)="checkVisiblety(b_test1)" >
-            <span class="capitalize"> {{b_test1.title}}</span> <span color="danger"  *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight paddRight5" name="arrow-dropdown"></ion-icon>
+            <span class="capitalize"> {{b_test1.title}}</span> <span color="danger"  *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight ico paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="b_test1.visable"  *ngFor="let selection of b_test1.selection">
             <ion-label class="capitalize">{{selection.selection_name}} <span *ngIf="selection.selection_price*1 > 0 " >+ {{bundle.data.currency_sign}}{{selection.selection_price | number}}</span></ion-label>
@@ -26,7 +26,7 @@
     </ion-list>
     <ion-list   *ngIf="b_test1.type=='checkbox'">
         <ion-list-header (click)="checkVisiblety(b_test1)" class="no-margin paddLef15">
-            <span class="capitalize">  {{b_test1.title}}</span> <span color="danger" *ngIf="b_test1.is_require=='1'">*</span> <ion-icon class="floatRight paddRight5 " name="arrow-dropdown"></ion-icon>
+            <span class="capitalize">  {{b_test1.title}}</span> <span color="danger" *ngIf="b_test1.is_require=='1'">*</span> <ion-icon class="floatRight ico paddRight5 " name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="b_test1.visable" class="padLeft10"  *ngFor="let selection of b_test1.selection ; let j = index">
             <ion-checkbox  class="marRight" color="dark" value="selection" [(ngModel)]='selection.defaultSet'  (ngModelChange)="onChangeBundleCheck(b_test1.selection,b_test1.id,b_test1.is_require )" ></ion-checkbox>

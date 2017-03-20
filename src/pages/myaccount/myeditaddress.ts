@@ -21,7 +21,7 @@ import {
     MyAccount
 } from './../../model/myaccount/myaccount';
 import {
-    EditAccount
+    Edit
 } from './../../model/myaccount/editAccount';
 import {
     MyAccountAddressDataType
@@ -63,7 +63,7 @@ export class MyEditAddressPage implements OnInit {
     default_billing: any = 0;
     default_shipping: any = 0;
     reverseCartData: any;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _editaccount: EditAccount, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -151,7 +151,7 @@ export class MyEditAddressPage implements OnInit {
             value.default_shipping = '0';
         }
         this.upd_spin = true;
-        this._editaccount.updateAccount(value).then((res) => {
+        this._edit.updateAddress(value).then((res) => {
             this.upd_spin = false;
             this.editaccount = res;
             if (this.editaccount.status === 1) {
