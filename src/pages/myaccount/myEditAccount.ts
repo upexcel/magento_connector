@@ -49,25 +49,29 @@ export class MyEditAccount {
             EmailValidator.isValidMailFormat, Validators.required])],
             secret: [secret],
             websiteId: [websiteId],
-            email_check: [0]
+            email_check: ['0']
         })
     }
     update(updateform) {
         this.editAccountspin = true;
         if (this.email != updateform.email) {
+            this.email = updateform.email;
             updateform['email_check'] = 1;
         } else {
-            updateform['email_check'] = 0;
+            updateform['email_check'] = '0';
         }
         this._edit.editAccount(updateform).then((updateAccount) => {
-            console.log(updateAccount);
-            this._toast.toast("",3000);
+            this._toast.toast("", 3000);
             this.editAccountspin = false;
+            this._appConfigService.getUserData().then((userData: any) => {
+                userData.email=updateform.email;
+                userData.firstname=updateform.firstname;
+                userData.lastname=updateform.lastname;
+            this._local.set('userData', userData);
+            })
         }, (err) => {
             this.editAccountspin = false;
-            console.log(err);
         })
-        console.log(updateform)
     }
     logout() {
         this._logout.logout(this.message, this._navCtrl);
