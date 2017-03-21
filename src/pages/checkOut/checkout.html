@@ -1,4 +1,4 @@
-<header [pagename]="'product'" [title]='"Checkout"'></header>
+<header [pagename]="''" [title]='"Checkout"' [wishList]=false></header>
 <ion-content>
     <h2 *ngIf="!cartData">You have no item in cart</h2>
     <ion-card *ngIf="cartData && cartData.length!=0">
@@ -19,7 +19,7 @@
     </ion-card>
     <ion-card  *ngFor="let data of cartData">
         <ion-card-content  class="no-padding">
-                           <ion-grid no-padding>
+            <ion-grid no-padding>
                 <ion-row center>
                     <ion-col class="aligncenter" width-33>
                         <ion-row center>
@@ -36,7 +36,7 @@
                     <ion-col width-67>
                         <ion-row>
                             <ion-col class="cartCheckOutQty capitalize">
-                               Quantity: {{data.qty}}
+                                Quantity: {{data.qty}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -81,6 +81,115 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <ion-list no-margin radio-group>
+        <ion-list-header no-margin>
+            Free Shipping
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Free</ion-label>
+            <ion-radio checked="true" value="go"></ion-radio>
+        </ion-item>
+    </ion-list>
+
+    <ion-card>
+        <ion-card-header>
+            Do you have any gift items in your order?
+            <ion-checkbox class='checkoutGiftItem' [(ngModel)]="checkGift" (ngModelChange)="enableGift()"> </ion-checkbox>
+        </ion-card-header>
+        <ion-card-content *ngIf="checkGift">
+            <ion-list-header no-lines no-margin>
+                Gift Options for the Entire Order.
+            </ion-list-header>
+            <ion-item >
+                <ion-label> Add gift options for the Entire Order</ion-label>
+                <ion-checkbox [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
+            </ion-item>
+            <ion-list class='background1' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
+                <p>You can leave this box blank if you do not wish to add a gift message for whole order.</p> 
+                <ion-item>
+                    <ion-label class="capitalize" >From</ion-label>
+                    <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="capitalize" >To</ion-label>
+                    <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="capitalize"  >Message</ion-label>
+                    <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                </ion-item>
+            </ion-list>
+
+            <ion-list-header no-lines no-margin>
+                Gift Options for Individual Items
+            </ion-list-header>
+            <ion-item>
+                <ion-label>Add gift options for Individual Items</ion-label>
+                <ion-checkbox [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
+            </ion-item>
+            <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
+                <ion-row center  *ngFor="let data of cartData ; let i=index;">
+                         <ion-col class="aligncenter" width-33>
+                        <ion-row center>
+                            <ion-col>
+                                <img src="{{data.img}}" alt="" class="maxht"/>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="no-padding">
+                                <p class="font12" ><b>{{i+1}} of {{cartData.length}}</b></p>
+                            </ion-col> 
+                        </ion-row>
+                    </ion-col>
+                    <ion-col width-67>
+                        <h3>    {{data.name}}</h3>
+                        <ion-list class='background1'>
+                            <ion-item>
+                                <ion-label class="capitalize" >From</ion-label>
+                                <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="capitalize" >To</ion-label>
+                                <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="capitalize"  >Message</ion-label>
+                                <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Payment Information
+        </ion-card-header>
+        <ion-card-content>
+            <!--Purchase Order Number-->
+            <ion-list no-margin radio-group>
+
+                <ion-item>
+                    <ion-label>      
+                        Purchase Order
+                    </ion-label>
+                    <ion-radio  value="go"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="capitalize" >Purchase Order Number<span color="danger" >*</span>
+                    </ion-label>
+                    <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>      
+                        Check / Money order
+                    </ion-label>
+                    <ion-radio  value="go1"></ion-radio>
+                </ion-item>
+            </ion-list>
         </ion-card-content>
     </ion-card>
 </ion-content>

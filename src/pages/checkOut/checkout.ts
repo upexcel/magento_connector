@@ -9,6 +9,9 @@ import { Address } from './../../providers/address-service/address';
 export class Checkout implements OnInit {
     cartData: any;
     address: any;
+    checkGift:boolean=false;
+    checkGiftEntireOrder:boolean=true;
+    checkGiftIndividualOrder:boolean=false;
     constructor(private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
@@ -38,6 +41,9 @@ export class Checkout implements OnInit {
     }
     quantityPrice(total, qty) {
         return (total * 1) * (qty * 1);
+    }
+    enableGift(){
+        console.log('hi',this.checkGift)
     }
 }
 
