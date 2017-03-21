@@ -19,7 +19,7 @@ export class Headers implements AfterContentInit {
     @Input() view: boolean=false;
     @Input() pagename: string = '';
     @Input() menu: boolean = false;
-    @Input() wishList:boolean=false;
+    @Input() wishList:boolean=true;
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;

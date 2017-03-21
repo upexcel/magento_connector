@@ -1,4 +1,4 @@
-<header [title]="'WISH LIST'" [pagename]="'product'"></header>
+<header [title]="'WISH LIST'" [pagename]="'product'" [wishList]=false></header>
 <ion-content>
     <ion-list *ngIf="data && data.length > 0">
         <ion-item-sliding *ngFor="let data of data">
