@@ -1,6 +1,11 @@
 <header [title]="'WISH LIST'" [pagename]="'product'" [wishList]=false></header>
-<ion-content>
-    <ion-list *ngIf="data && data.length > 0">
+<ion-content class="empty-wishlist" *ngIf="!data || data.length == 0">
+    <img src="assets/image/empty-wishlist.jpg">
+    <h3>Your Whislist is empty</h3>
+    <btn-round [title]='"Continue Shopping"' [id]="'btn'" [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
+</ion-content>
+<ion-content *ngIf="data && data.length > 0">
+    <ion-list>
         <ion-item-sliding *ngFor="let data of data">
             <ion-item>
                 <ion-grid no-padding>
@@ -55,6 +60,7 @@
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
-
 </ion-content>
-
+<ion-footer [ngClass]="{'none': !data || data.length == 0,'uppercase':true}">
+    <btn-full  [titleFull]='"Continue Shopping"'  [id]="'btn'"  [classFull]="'botton'" (onBtnClick)="c_Shopping()"></btn-full>
+</ion-footer>

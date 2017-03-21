@@ -2,14 +2,14 @@
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
-    <ion-grid class="backgroungW" no-padding *ngIf="productData">
+    <ion-grid no-padding *ngIf="productData">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
-                <div class="imgbox ">
+                <div class="imgbox backgroungW">
                     <img src="{{images}}" class=" img cursorPointer"/>
                 </div>
-                <ion-slides  pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">
-                             <ion-slide>
+                <ion-slides class="backgroungW" pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">
+                            <ion-slide>
                         <ion-row class="center">
                             <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
                                      <img src="{{img}}" class="cursorPointer maxHt"/>
@@ -17,39 +17,43 @@
                         </ion-row>
                     </ion-slide>
                 </ion-slides>
-                <ion-row class="padLeft10" >
-                    <ion-col  class='lineH0 no-padding'>
-                        <ion-row>
-                            <ion-col class="no-margin" width-80 class="padTB">
-                                <h4 class="capitalize no-margin">{{productData.body.data.name}}</h4>
-                            </ion-col> 
-                            <ion-col class="no-margin" width-20 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
-                                     <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
-                            </ion-col>
+                <ion-card class="productTitleCard">
+                    <ion-card-content>
+                        <ion-row class="padLeft10" >
+                            <ion-col  class='no-margin lineH0 no-padding'>
+                                <ion-row>
+                                    <ion-col width-80 class="padTB no-margin">
+                                        <h2 class="capitalize no-margin productName">{{productData.body.data.name}}</h2>
+                                    </ion-col> 
+                                    <ion-col class="no-margin no-padding" width-20 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
+                                             <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col width-80 class="padTB no-margin">
+                                        <p class="stock">{{productData.body.data.in_stock}}</p>
+                                    </ion-col>
+                                    <ion-col class="no-margin" width-20>
+                                        <span class="productWishList" (click)="share(productData.body)">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </span>
+                                    </ion-col> 
+                                </ion-row>
+                            </ion-col>            
                         </ion-row>
-                        <ion-row>
-                            <ion-col class="no-margin" width-80 class="padTB">
-                                <p class="stock">{{productData.body.data.in_stock}}</p>
+                        <ion-row> 
+                            <ion-col width-80 class="padTB no-margin"> 
+                                <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price | number}}</span>
+                                <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{productData.body.data.currency_sign}} {{final_price | number}}</span>
                             </ion-col>
-                            <ion-col class="no-margin" width-20>
-                                <span class="productWishList" (click)="wishList(feat_prod)">
-                                    <i class="fa fa-share" aria-hidden="true"></i>
+                            <ion-col width-20 class="no-margin">
+                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
+                                    <i class="fa fa-heart" aria-hidden="true" ></i>
                                 </span>
-                            </ion-col> 
+                            </ion-col>
                         </ion-row>
-                    </ion-col>            
-                </ion-row>
-                <ion-row> 
-                    <ion-col width-80 class="padTB no-margin"> 
-                        <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price | number}}</span>
-                        <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{productData.body.data.currency_sign}} {{final_price | number}}</span>
-                    </ion-col>
-                    <ion-col width-20 class="no-margin">
-                        <span  class="productWishList lightRed"  (click)="wishList(feat_prod)">
-                            <i class="fa fa-heart" aria-hidden="true" ></i>
-                        </span>
-                    </ion-col>
-                </ion-row>
+                    </ion-card-content>
+                </ion-card>
                 <span *ngIf="type=='configurable'">
                     <ion-row  *ngFor="let key of keys">
                         <ion-col *ngIf="productData.body.associated_products">

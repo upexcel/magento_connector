@@ -3,7 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { ProductPage } from '../../pages/product/product';
-import { WishListService } from '../../providers/wishList/wishList-service'
+import { WishListService } from '../../providers/wishList/wishList-service';
+import { HomePage } from './../home/home';
+
 @Component({
     selector: 'wishList',
     templateUrl: 'wishList.html'
@@ -31,5 +33,8 @@ export class wishList {
         this._nav.push(ProductPage, {
             id: data.data.sku
         });
+    }
+    c_Shopping() {
+        this._nav.setRoot(HomePage);
     }
 }

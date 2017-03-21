@@ -119,7 +119,7 @@
     }
     .notifyBt{
         float: right;
-        margin: -12px 13px 0 0;
+        margin: -12px -10px 0px 0px;
     }
 
     .img{
@@ -216,6 +216,14 @@
     }
     .paddingZero{
         padding:0px;
+    }
+    .productTitleCard{
+        margin: 10px 0px 10px 0px;
+        width: 100%;
+        box-shadow: none;
+        .productName{
+            font-weight: bold;
+        }
     }
 
 }

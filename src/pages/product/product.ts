@@ -16,6 +16,7 @@ import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
 import merge from 'lodash/merge';
 import { Transfer } from 'ionic-native';
+import { WishListService } from '../../providers/wishList/wishList-service';
 
 @Component({
     selector: 'product',
@@ -75,7 +76,7 @@ export class ProductPage implements OnInit {
     editCartData: any;
     cartButtonTitle: string;
     add_cart = {};
-    constructor(private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -105,6 +106,15 @@ export class ProductPage implements OnInit {
                 this.products();
             });
         })
+    }
+    wishList(feat_prod) {
+        this._appConfigService.getUserData().then((userData: any) => {
+            if (userData && userData.access_token != null) {
+                this._wishListService.setWishListData(feat_prod);
+            } else {
+                this._toast.toast("Please login first", 3000);
+            }
+        });
     }
     products() {
         // get data from local storage of userData via funtion of getUserData
