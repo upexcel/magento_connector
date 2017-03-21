@@ -104,9 +104,9 @@
             </ion-list-header>
             <ion-item >
                 <ion-label> Add gift options for the Entire Order</ion-label>
-                <ion-checkbox [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
+                <ion-checkbox class="marRight" [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
             </ion-item>
-            <ion-list class='background1' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
+            <ion-list class='background1 border-bottom' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
                 <p>You can leave this box blank if you do not wish to add a gift message for whole order.</p> 
                 <ion-item>
                     <ion-label class="capitalize" >From</ion-label>
@@ -127,7 +127,7 @@
             </ion-list-header>
             <ion-item>
                 <ion-label>Add gift options for Individual Items</ion-label>
-                <ion-checkbox [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
+                <ion-checkbox class="marRight" [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
             </ion-item>
             <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
                 <ion-row center  *ngFor="let data of cartData ; let i=index;">
@@ -145,7 +145,7 @@
                     </ion-col>
                     <ion-col width-67>
                         <h3>    {{data.name}}</h3>
-                        <ion-list class='background1'>
+                        <ion-list class='background1 border-bottom'>
                             <ion-item>
                                 <ion-label class="capitalize" >From</ion-label>
                                 <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
@@ -172,18 +172,18 @@
             <!--Purchase Order Number-->
             <ion-list no-margin radio-group>
 
-                <ion-item>
+                <ion-item no-lines>
                     <ion-label>      
                         Purchase Order
                     </ion-label>
                     <ion-radio  value="go"></ion-radio>
                 </ion-item>
-                <ion-item>
+                <ion-item no-lines>
                     <ion-label class="capitalize" >Purchase Order Number<span color="danger" >*</span>
                     </ion-label>
                     <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
                 </ion-item>
-                <ion-item>
+                <ion-item no-lines>
                     <ion-label>      
                         Check / Money order
                     </ion-label>

@@ -4,6 +4,7 @@ import { MySavedAddressPage } from './../myaccount/savedAddress';
 import { Address } from './../../providers/address-service/address';
 
 @Component({
+    selector:'checkout',
     templateUrl: 'checkout.html'
 })
 export class Checkout implements OnInit {
