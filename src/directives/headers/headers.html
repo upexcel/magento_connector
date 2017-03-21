@@ -8,21 +8,17 @@
             {{title}}
         </ion-title>
         <ion-buttons end >
-            <!--            <button  ion-button icon-only  *ngIf="showPopOver &&  show" (click)="presentPopover($event)">
-                                 <ion-icon name="more"></ion-icon>
-                        </button>-->
             <button ion-button icon-only  (click)="changeView(viewChang)">
                     <i class="fa fa-list-ul fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
-                <!--                    <ion-icon name="list" *ngIf='viewChang=="Landscape" && view'></ion-icon>-->
                 <i class="fa fa-th-large fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
-                <!--                <ion-icon name="logo-windows" *ngIf='viewChang=="portrait" && view'></ion-icon>-->
             </button>
             <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
-                    <!--<ion-icon name="person"></ion-icon>-->
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
             </button>
+            <button ion-button icon-only class="lightRed" (click)="gotoWishList()" *ngIf="showPopOver">
+                    <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+            </button>
             <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (click)="gotoCart()">
-                    <!--<ion-icon name="cart"></ion-icon>-->
                     <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                 <span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
             </button>

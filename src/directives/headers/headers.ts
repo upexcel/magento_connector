@@ -5,6 +5,7 @@ import { LoginPage } from '../../pages/login/login';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { PopoverPage } from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
+import { wishList } from '../../pages/wishList/wishList';
 
 @Component({
     selector: 'header',
@@ -18,6 +19,7 @@ export class Headers implements AfterContentInit {
     @Input() view: boolean=false;
     @Input() pagename: string = '';
     @Input() menu: boolean = false;
+    @Input() wishList:boolean=false;
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
@@ -74,6 +76,9 @@ export class Headers implements AfterContentInit {
         popover.present({
             ev: myEvent
         });
+    }
+    gotoWishList(){
+        this._navCtrl.push(wishList);
     }
     gotoCart() {
         this._navCtrl.push(CartPage);

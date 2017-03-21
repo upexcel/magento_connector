@@ -59,6 +59,8 @@ import { categoryService } from '../providers/category-service/category-service'
 import { CountryService } from '../providers/myAccount-service/country';
 import { FilterService } from '../providers/filter-service/filterService';
 import { Address } from '../providers/address-service/address';
+import { WishListService } from '../providers/wishList/wishList-service';
+
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -183,6 +185,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         AppConfig,
         FilterService,
         Address,
+        WishListService,
         Storage,
         ApiService,
         CartService,
