@@ -19,7 +19,6 @@ import { Transfer } from 'ionic-native';
 import { WishListService } from '../../providers/wishList/wishList-service';
 import { config } from './../../providers/config/config';
 import { ModalController } from 'ionic-angular';
-import { ImgZoom } from './imgZoom'
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
@@ -121,10 +120,6 @@ export class ProductPage implements OnInit {
         });
     }
 
-    slideImgZoom(data) {
-        let modal = this._modalCtrl.create(ImgZoom,{"data":data});
-        modal.present();
-    }
     products() {
         // get data from local storage of userData via funtion of getUserData
         // in data variable access_token and sku is used to check user login in backend to send tier price
