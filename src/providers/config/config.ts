@@ -19,7 +19,8 @@ export const config = {
         "initialSlide": 1,
         "loop": true,
         "pager": true
-    }, "productSliderOptions": {
+    },
+    "productSliderOptions": {
         "autoplay": false,
         "initialSlide": 1,
         "loop": true,
