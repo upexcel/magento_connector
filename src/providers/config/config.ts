@@ -19,6 +19,12 @@ export const config = {
         "initialSlide": 1,
         "loop": true,
         "pager": true
+    }, "productSliderOptions": {
+        "autoplay": false,
+        "initialSlide": 1,
+        "loop": true,
+        "pager": true,
+        "hide":true
     },
-    "stopApiTime":100000
+    "stopApiTime": 100000
 }

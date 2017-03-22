@@ -5,18 +5,30 @@
     <ion-grid no-padding *ngIf="productData">
               <ion-row  responsive-lg responsive-md responsive-sm>
             <ion-col no-padding width-100 >
-                <div class="imgbox backgroungW">
-                    <img src="{{images}}" class=" img cursorPointer"/>
-                </div>
-                <ion-slides class="backgroungW" pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">
-                            <ion-slide>
-                        <ion-row class="center">
-                            <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
-                                     <img src="{{img}}" class="cursorPointer maxHt"/>
-                            </ion-col>
-                        </ion-row>
-                    </ion-slide>
-                </ion-slides>
+                <!--                <div class="imgbox backgroungW">
+                                    <img src="{{images}}" class=" img cursorPointer"/>
+                                </div>-->
+                <!--<ion-slides class="backgroungW" pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>0">-->
+                <!--                            <ion-slide>
+                                        <ion-row class="center">
+                                            <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
+                                                     <img src="{{img}}" class="cursorPointer maxHt"/>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-slide>-->
+
+                <!--</ion-slides>-->
+                <ion-grid no-padding >
+                    <ion-row no-padding class="slideOption" >
+                        <ion-col no-padding>
+                            <ion-slides *ngIf="productData && productData.body.data.media_images.length"  [options]="mySlideOptions">
+                                <ion-slide *ngFor = "let images of productData.body.data.media_images">
+                                    <img *ngIf="images" src="{{images}}" />
+                                </ion-slide>
+                            </ion-slides>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
                 <ion-card class="productTitleCard">
                     <ion-card-content>
                         <ion-row class="padLeft10" >

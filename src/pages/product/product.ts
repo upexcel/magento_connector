@@ -17,6 +17,7 @@ import keys from 'lodash/keys';
 import merge from 'lodash/merge';
 import { Transfer } from 'ionic-native';
 import { WishListService } from '../../providers/wishList/wishList-service';
+import { config } from './../../providers/config/config';
 
 @Component({
     selector: 'product',
@@ -76,6 +77,8 @@ export class ProductPage implements OnInit {
     editCartData: any;
     cartButtonTitle: string;
     add_cart = {};
+    mySlideOptions = config.productSliderOptions;
+    
     constructor(public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {

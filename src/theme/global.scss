@@ -90,9 +90,12 @@ edit-address{
     color: green;
 }
 product{
-    .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
-        display: none;
+    .swiper-pagination{
+        display: block !important; 
     }
+    /*    .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+            display: none;
+        }*/
 }
 
 group ion-item .item-inner .input-wrapper ion-label{
