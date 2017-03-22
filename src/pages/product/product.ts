@@ -18,7 +18,8 @@ import merge from 'lodash/merge';
 import { Transfer } from 'ionic-native';
 import { WishListService } from '../../providers/wishList/wishList-service';
 import { config } from './../../providers/config/config';
-
+import { ModalController } from 'ionic-angular';
+import { ImgZoom } from './imgZoom'
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
@@ -78,8 +79,8 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    
-    constructor(public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+
+    constructor(public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -118,6 +119,11 @@ export class ProductPage implements OnInit {
                 this._toast.toast("Please login first", 3000);
             }
         });
+    }
+
+    slideImgZoom(data) {
+        let modal = this._modalCtrl.create(ImgZoom,{"data":data});
+        modal.present();
     }
     products() {
         // get data from local storage of userData via funtion of getUserData
@@ -294,9 +300,6 @@ export class ProductPage implements OnInit {
         this.configurabilData();
     }
 
-    slideClick(img: string) {
-        this.images = img;
-    }
     userUpdated(event) {
         this.reviewData = event;
     }
@@ -314,7 +317,7 @@ export class ProductPage implements OnInit {
         let sku = this.productData.body.data.sku;
         let email = useremail;
         this._notifyService.setNotification(sku, email).then((data: any) => {
-             this._toast.toast(data.body.message, 3000, "bottom");
+            this._toast.toast(data.body.message, 3000, "bottom");
             this.alertset = false;
             this.askEmail = true;
         });

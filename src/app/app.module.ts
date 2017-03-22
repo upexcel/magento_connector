@@ -22,6 +22,8 @@ import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
 import { Checkout } from '../pages/checkOut/checkout';
+import { ImgZoom } from '../pages/product/imgZoom';
+
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
 import { Login } from '../model/login/login';
@@ -145,7 +147,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CustomOption,
         group,
         wishList,
-        Checkout
+        Checkout,
+        ImgZoom
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -179,7 +182,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Headers,
         OfflinePage,
         wishList,
-        Checkout
+        Checkout,
+        ImgZoom
     ],
     providers: [
         AppConfig,

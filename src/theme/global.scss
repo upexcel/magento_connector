@@ -153,7 +153,7 @@ login{
         background: #fff !important;
     }
 }
-register{ 
+register,img-zoom{ 
     .scroll-content {
         background: #fff;
     }  
@@ -162,6 +162,13 @@ edit-account,edit-address{
     .scroll-content {
         background: #fff !important;
     }     
+}
+img-zoom{
+    ion-slides{
+        bottom: 0;
+        position: absolute;
+        height: auto;
+    }
 }
 .fb{
     background-color: #365899 !important;
