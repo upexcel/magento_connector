@@ -7,6 +7,7 @@ import { ConfigDataType } from './configDataType';
 import { config } from './../../providers/config/config';
 import {HomePage} from './../home/home';
 @Component({
+    selector: 'tour',
     templateUrl: 'tour.html'
 })
 export class TourPage implements OnInit {

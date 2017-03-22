@@ -11,6 +11,7 @@ import { SocialAccountDataType } from './socialAccountDataType';
 import { SocialAccount } from './../../model/startPage/socialAccount';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
+    selector: 'start-page',
     templateUrl: 'startpage.html'
 })
 export class StartPage implements OnInit {
