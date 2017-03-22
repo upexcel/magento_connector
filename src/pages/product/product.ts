@@ -472,7 +472,7 @@ export class ProductPage implements OnInit {
                         const index = this.viewCtrl.index;
                         // then we remove it from the navigation stack
                         this._navCtrl.remove(index);
-                    });;
+                    });
                 }
                 else {
                 }

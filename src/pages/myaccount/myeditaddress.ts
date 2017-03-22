@@ -45,8 +45,9 @@ import {
 import {
     ViewController
 } from 'ionic-angular';
-import reverse from 'lodash/reverse';
+import { MySavedAddressPage } from './../myaccount/savedAddress';
 @Component({
+    selector: 'edit-address',
     templateUrl: 'myeditaddress.html'
 })
 export class MyEditAddressPage implements OnInit {
@@ -70,7 +71,7 @@ export class MyEditAddressPage implements OnInit {
         this.entity_id = this._navParams.get("entity_id");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
-                this.getuser_details(this.id, this.entity_id, userData.secret,userData.firstname,userData.lastname);
+                this.getuser_details(this.id, this.entity_id, userData.secret, userData.firstname, userData.lastname);
             } else { }
         });
         this._local.get('store_id').then((store_id) => {
@@ -82,7 +83,7 @@ export class MyEditAddressPage implements OnInit {
 
     }
 
-    getuser_details(id, entity_id, secret,firstname?,lastname?) {
+    getuser_details(id, entity_id, secret, firstname?, lastname?) {
         this.spin = true;
         let body = {
             "secret": secret
@@ -95,9 +96,9 @@ export class MyEditAddressPage implements OnInit {
                 if (this.myaccount.body.length != 0 && entity_id != null) {
                     let d_billing;
                     let d_shipping;
-                    console.log(this.reverseCartData,id)
-//                    console.log(this.reverseCartData,i)
-//                    if(this.reverseCartData[id].default_shipping)
+                    console.log(this.reverseCartData, id)
+                    //                    console.log(this.reverseCartData,i)
+                    //                    if(this.reverseCartData[id].default_shipping)
                     this.updateform = this._fb.group({
                         firstname: [this.reverseCartData[id].firstname, Validators.required],
                         lastname: [this.reverseCartData[id].lastname, Validators.required],
@@ -156,7 +157,11 @@ export class MyEditAddressPage implements OnInit {
             this.editaccount = res;
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
-                this.viewCtrl.dismiss();
+//                this.viewCtrl.dismiss();
+                this._navCtrl.push(MySavedAddressPage).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index);
+                });
             } else {
                 this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
             }

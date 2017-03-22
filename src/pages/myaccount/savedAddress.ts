@@ -5,7 +5,9 @@ import {
 import {
     NavController,
     PopoverController,
-    Events
+    Events,
+    NavParams,
+    ViewController
 } from 'ionic-angular';
 import {
     ToastService
@@ -59,7 +61,9 @@ export class MySavedAddressPage implements OnInit {
     reverseCartData: any;
     disable: boolean = false;
     message: string = "Token expired";
-    constructor(private _address: Address, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    alreadyCheckLength: boolean;
+    constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+        this.alreadyCheckLength = this._navParam.get('alreadyCheckLength');
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
                 this.getInitAdd(savedaddress);
@@ -114,8 +118,8 @@ export class MySavedAddressPage implements OnInit {
             this.error = true;
             //                this.logout();
         })
-
     }
+
     reverseData(entity_id?) {
         if (this.myaccount && this.myaccount.body.length != 0) {
             this.showAddress = true;
@@ -135,10 +139,23 @@ export class MySavedAddressPage implements OnInit {
             this.reverseCartData = (this.myaccount.body);
         } else {
             this.showAddress = false;
-            this._navCtrl.push(MyEditAddressPage, {
-                "title": "Add New Address",
-                "entity_id": entity_id
-            })
+            console.log("this.alreadyCheckLength",this.alreadyCheckLength)
+            if (!this.alreadyCheckLength) {
+                console.log("direct")
+                this._navCtrl.push(MyEditAddressPage, {
+                    "title": "Add New Address",
+                    "entity_id": entity_id
+                }).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index);
+                });
+            } else {
+            console.log("checkout")
+                this._navCtrl.push(MyEditAddressPage, {
+                    "title": "Add New Address",
+                    "entity_id": entity_id
+                })
+            }
         }
     }
     updateAdd(addressChange, change) {

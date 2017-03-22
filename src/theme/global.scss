@@ -80,6 +80,12 @@
     color: gray;
     margin-left: 5px;
 }
+.no-lineBot{
+    border-bottom: 0px!important;
+}
+edit-address{
+
+}
 .green{
     color: green;
 }
@@ -149,9 +155,9 @@ register{
         background: #fff;
     }  
 }
-edit-account{
+edit-account,edit-address{
     .scroll-content {
-        background: #fff;
+        background: #fff !important;
     }     
 }
 .fb{
