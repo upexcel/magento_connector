@@ -47,6 +47,7 @@ import { NotifyMe } from '../model/product/notify';
 import { CartFunction } from '../model/cart/cartHandling';
 import { SortByModel } from '../model/sortBy/sortBy';
 import { FilterByModel } from '../model/filterBy/filterBy';
+import { WishListModel } from '../model/wishList/wishList';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { FinalPrice } from '../providers/cart-service/final-price';
@@ -223,6 +224,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CartFunction,
         SortByModel,
         FilterByModel,
+        WishListModel
     ]
 })
 export class AppModule {

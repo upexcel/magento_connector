@@ -20,6 +20,8 @@ import { WishListService } from '../../providers/wishList/wishList-service';
 import { config } from './../../providers/config/config';
 import { ModalController } from 'ionic-angular';
 import { ImgZoom } from './imgZoom'
+import { WishListModel } from './../../model/wishList/wishList';
+
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
@@ -80,7 +82,7 @@ export class ProductPage implements OnInit {
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
 
-    constructor(public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -112,9 +114,30 @@ export class ProductPage implements OnInit {
         })
     }
     wishList(feat_prod) {
+        let data = this.add_cart;
+        data["product"] = feat_prod.data.entity_id;
+        data["productId"] = feat_prod.data.entity_id;
+        if (this.type != "grouped") {
+            data["qty"] = 1;
+            if (this.type == 'configurable') {
+                data["super_attribute"] = this.add_cart['options'];
+            } else if (this.type == "downloadable") {
+                //
+            }
+            else if (this.type == "bundle") {
+                data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
+                data["bundle_option"] = this.add_cart['options'];
+            }
+        } else {
+            data["qty"] = 0;
+            data["super_group"] = this.add_cart['options'];
+        }
+        console.log(data)
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod);
+                this._wishList.addWishlist(data).then((res) => {
+                    this._wishListService.setWishListData(feat_prod);
+                })
             } else {
                 this._toast.toast("Please login first", 3000);
             }
@@ -122,7 +145,7 @@ export class ProductPage implements OnInit {
     }
 
     slideImgZoom(data) {
-        let modal = this._modalCtrl.create(ImgZoom,{"data":data});
+        let modal = this._modalCtrl.create(ImgZoom, { "data": data });
         modal.present();
     }
     products() {

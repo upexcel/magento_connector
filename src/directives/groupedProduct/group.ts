@@ -47,7 +47,7 @@ export class group {
                 total = total + (value.quantity * 1) * (value.final_price * 1);
             }
         });
-        let obj = {"options": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
+        let obj = {"super_group": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
         this.sendData.emit(obj);
     }
 
