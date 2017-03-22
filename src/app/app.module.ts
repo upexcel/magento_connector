@@ -22,7 +22,6 @@ import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
 import { Checkout } from '../pages/checkOut/checkout';
-import { ImgZoom } from '../pages/product/imgZoom';
 
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
@@ -98,7 +97,7 @@ import { CustomOption } from '../directives/customOption/customOption';
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
-
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 @NgModule({
     declarations: [
         MyApp,
@@ -148,11 +147,12 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         CustomOption,
         group,
         wishList,
-        Checkout,
-        ImgZoom
+        Checkout
     ],
     imports: [
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        IonicImageViewerModule
+        
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -183,8 +183,7 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Headers,
         OfflinePage,
         wishList,
-        Checkout,
-        ImgZoom
+        Checkout
     ],
     providers: [
         AppConfig,
