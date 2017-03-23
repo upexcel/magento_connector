@@ -1,18 +1,42 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
-import {Storage} from '@ionic/storage';
-import {ActionSheetController} from 'ionic-angular';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {WishListModel} from './../../model/wishList/wishList';
+import { Storage } from '@ionic/storage';
+import { ActionSheetController } from 'ionic-angular';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { WishListModel } from './../../model/wishList/wishList';
 @Injectable()
 export class WishListService {
-    constructor(public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
+    constructor(public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) { }
     resetFilterData() {
     }
-    getWishListData(data){
-        this._wishList.getWishList(data).then((res)=>{
-            
+    getWishListData(data1) {
+        let dataOfRes: any = [];
+        let data = {};
+        this._wishList.getWishList(data1).then((response) => {
+            forEach(response.body.wishlist, (value, key) => {
+                if (value) {
+                    if (value['bundle_option']) {
+                        value["options"] = value.bundle_option;
+                    }
+                    else if (value['super_attribute']) {
+                        value["options"] = value.bundle_option;
+                    } else if (value['link']) {
+                        value["options"] = value.bundle_option;
+                    } else if (value["super_group"]) {
+                        value["options"] = value.bundle_option;
+                    } else {
+
+                    }
+                    value["entity_id"] = value.productId;
+                    data["media_images"] = ["assets/image/default.jpg"];
+                    value['data']=data
+
+                    dataOfRes.push(value);
+                }
+            })
+            console.log(dataOfRes)
+            this.local.set("wishList", dataOfRes);
         })
     }
     setWishListData(list, apiData) {
@@ -72,7 +96,7 @@ export class WishListService {
                             this.local.get('wishList').then((res: any) => {
                                 forEach(res, (value, key) => {
                                     if (value && value.data.entity_id == data.data.entity_id) {
-                                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                                        this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
                                             res.splice(key, 1);
                                             this.local.set("wishList", res);
                                             this._toast.toast("Your wishList is updated", 3000);
@@ -96,7 +120,7 @@ export class WishListService {
                 this.local.get('wishList').then((res: any) => {
                     forEach(res, (value, key) => {
                         if (value && value.data.entity_id == data.data.entity_id) {
-                            this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                            this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
                                 res.splice(key, 1);
                                 this.local.set("wishList", res);
                                 this._toast.toast("Your wishList is updated", 3000);
