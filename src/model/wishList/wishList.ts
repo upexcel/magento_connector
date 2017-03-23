@@ -6,6 +6,15 @@ declare let Promise: any;
 export class WishListModel implements OnInit {
     constructor(private _apiService: ApiService) { }
     ngOnInit() { }
+    getWishList(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api('account/getWishlist', data).subscribe((res) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });
+    }
 
     addWishlist(data) {
         return new Promise((resolve, reject) => {
@@ -18,7 +27,7 @@ export class WishListModel implements OnInit {
     }
     deleteWishlist(data) {
         return new Promise((resolve, reject) => {
-            this._apiService.api('account/removeWishlist ',data).subscribe((res) => {
+            this._apiService.api('account/removeWishlist ', data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
