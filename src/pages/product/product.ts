@@ -80,7 +80,6 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    secret:string;
     constructor(public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -96,11 +95,10 @@ export class ProductPage implements OnInit {
             this._local.get('store_id').then((store_id: any) => {
                 this.userData = userData;
                 this.store_id = store_id;
-                this.secret = this.userData['secret'];
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
-            if (this.editCartData) {
+            if (this.editCartData && !this._navParams.get('wishlist')) {
                 this.cartButtonTitle = 'UPDATE CART'
             } else {
                 this.cartButtonTitle = 'ADD TO CART'
@@ -116,13 +114,13 @@ export class ProductPage implements OnInit {
     wishList(feat_prod) {
         let data = {};
         data["productId"] = feat_prod.data.entity_id;
-        data["secret"] = this.secret;
+        data["secret"] = this.userData ? this.userData.secret : "";
         if (this.type != "grouped") {
             data["qty"] = 1;
             if (this.type == 'configurable') {
                 data["super_attribute"] = this.add_cart['options'];
             } else if (this.type == "downloadable") {
-                //
+                data["link"] = this.add_cart['options'];
             }
             else if (this.type == "bundle") {
                 data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
@@ -132,6 +130,7 @@ export class ProductPage implements OnInit {
             data["qty"] = 0;
             data["super_group"] = this.add_cart['options'];
         }
+        feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
                 this._wishListService.setWishListData(feat_prod,data);

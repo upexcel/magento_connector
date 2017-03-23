@@ -26,9 +26,7 @@ export class wishList {
         })
     }
     editWishList(data) {
-        this._nav.push(ProductPage, {
-            id: data.data.sku
-        });
+        this._nav.push(ProductPage, { 'id': data.data.sku, "editCartData": data, "wishlist":true });
     }
     addToCart(data) {
         this._nav.push(ProductPage, {

@@ -71,7 +71,7 @@ export class DownloadProduct {
                 count++;
                 total = total + (value.price * 1);
                 if (value != undefined) {
-                    download[value.link_id] = { "key": value.title, "value": value };
+                    download.push({ "key": value.title, "value": value });
                 }
             }
         })
