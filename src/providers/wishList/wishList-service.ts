@@ -4,13 +4,13 @@ import forEach from 'lodash/forEach';
 import {Storage} from '@ionic/storage';
 import {ActionSheetController} from 'ionic-angular';
 import {ToastService} from './../../providers/toast-service/toastService';
-
+import {WishListModel} from './../../model/wishList/wishList';
 @Injectable()
 export class WishListService {
-    constructor(private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
+    constructor(public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
     resetFilterData() {
     }
-    setWishListData(list) {
+    setWishListData(list, apiData) {
         this.local.get('wishList').then((res: any) => {
             var match = false;
             var response: any = [];
@@ -22,16 +22,25 @@ export class WishListService {
                     response.push(value)
                 })
                 if (!match) {
-                    response.push(list);
-                    this.local.set("wishList", response);
+                    this._wishList.addWishlist(apiData).then((res) => {
+                        list["wishlist_id"] = res.body["wishlist_id"];
+                        list["secret"] = apiData["secret"];
+                        response.push(list);
+                        this.local.set("wishList", response);
+                        this._toast.toast("Your wishList is updated", 3000);
+                    });
                 } else {
                     this.deleteProductWishList(list, true);
                 }
             } else {
-                this.local.set("wishList", [list]);
+                this._wishList.addWishlist(apiData).then((res) => {
+                    list["wishlist_id"] = res.body["wishlist_id"];
+                    list["secret"] = apiData["secret"];
+                    this.local.set("wishList", [list]);
+                    this._toast.toast("Your wishList is updated", 3000);
+                });
             }
         })
-        this._toast.toast("Your wishList is updated", 3000);
     }
     getWishList() {
         return new Promise((resolve, rejec) => {
@@ -58,9 +67,12 @@ export class WishListService {
                             this.local.get('wishList').then((res: any) => {
                                 forEach(res, (value, key) => {
                                     if (value && value.data.entity_id == data.data.entity_id) {
-                                        res.splice(key, 1);
-                                        this.local.set("wishList", res);
-                                        resolve(res);
+                                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                                            res.splice(key, 1);
+                                            this.local.set("wishList", res);
+                                            this._toast.toast("Your wishList is updated", 3000);
+                                            resolve(res);
+                                        });
                                     }
                                 })
                             });
@@ -79,9 +91,12 @@ export class WishListService {
                 this.local.get('wishList').then((res: any) => {
                     forEach(res, (value, key) => {
                         if (value && value.data.entity_id == data.data.entity_id) {
-                            res.splice(key, 1);
-                            this.local.set("wishList", res);
-                            resolve(res);
+                            this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                                res.splice(key, 1);
+                                this.local.set("wishList", res);
+                                this._toast.toast("Your wishList is updated", 3000);
+                                resolve(res);
+                            });
                         }
                     })
                 });

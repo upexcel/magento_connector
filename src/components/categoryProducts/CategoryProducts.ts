@@ -22,7 +22,7 @@ export class CategoryComponent {
     wishList(feat_prod) {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod);
+                this._wishListService.setWishListData(feat_prod,{"productId": feat_prod.data.entity_id,"secret": userData['secret']});
             } else {
                 this._toast.toast("Please login first", 3000);
             }

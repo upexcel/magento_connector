@@ -80,7 +80,7 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-
+    secret:string;
     constructor(public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -96,6 +96,7 @@ export class ProductPage implements OnInit {
             this._local.get('store_id').then((store_id: any) => {
                 this.userData = userData;
                 this.store_id = store_id;
+                this.secret = this.userData['secret'];
             })
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
@@ -113,9 +114,9 @@ export class ProductPage implements OnInit {
         })
     }
     wishList(feat_prod) {
-        let data = this.add_cart;
-        data["product"] = feat_prod.data.entity_id;
+        let data = {};
         data["productId"] = feat_prod.data.entity_id;
+        data["secret"] = this.secret;
         if (this.type != "grouped") {
             data["qty"] = 1;
             if (this.type == 'configurable') {
@@ -131,12 +132,9 @@ export class ProductPage implements OnInit {
             data["qty"] = 0;
             data["super_group"] = this.add_cart['options'];
         }
-        console.log(data)
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishList.addWishlist(data).then((res) => {
-                    this._wishListService.setWishListData(feat_prod);
-                })
+                this._wishListService.setWishListData(feat_prod,data);
             } else {
                 this._toast.toast("Please login first", 3000);
             }
@@ -360,7 +358,6 @@ export class ProductPage implements OnInit {
             });
             selectedItem = (array);
             let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData };
-            console.log("cartApiData", cartApiData);
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }
