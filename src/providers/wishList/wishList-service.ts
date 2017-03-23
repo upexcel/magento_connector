@@ -10,6 +10,11 @@ export class WishListService {
     constructor(public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
     resetFilterData() {
     }
+    getWishListData(data){
+        this._wishList.getWishList(data).then((res)=>{
+            
+        })
+    }
     setWishListData(list, apiData) {
         this.local.get('wishList').then((res: any) => {
             var match = false;
