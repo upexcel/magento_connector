@@ -45,10 +45,11 @@
                                 <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
                                 <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{productData.body.data.currency_sign}} {{final_price}}</span>
                             </ion-col>
-                            <ion-col width-20 class="no-margin">
-                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
+                            <ion-col width-20 class="no-margin no-padding">
+                                <div class="heart floatRight" [ngClass]="{'is_animating':myData}" (click)="wishList(productData.body); myData = !myData"></div>
+<!--                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
                                     <i class="fa fa-heart" aria-hidden="true" ></i>
-                                </span>
+                                </span>-->
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

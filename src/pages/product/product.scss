@@ -305,3 +305,23 @@ filter{
 
 
 }
+
+.heart {
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  background-image:url('./../assets/image/web_heart_animation.png');
+  background-position: left;
+  background-repeat:no-repeat;
+  background-size:2900%;
+}
+
+.is_animating {
+  animation: heart-burst .8s steps(28) 1;
+   background-position:right;
+}
+
+@keyframes heart-burst {
+  from {background-position:left;}
+  to { background-position:right;}
+}
