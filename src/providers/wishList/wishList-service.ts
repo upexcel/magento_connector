@@ -16,21 +16,25 @@ export class WishListService {
         this._wishList.getWishList(data1).then((response) => {
             forEach(response.body.wishlist, (value, key) => {
                 if (value) {
+                    data = {};
                     if (value['bundle_option']) {
                         value["options"] = value.bundle_option;
                     }
                     else if (value['super_attribute']) {
-                        value["options"] = value.bundle_option;
-                    } else if (value['link']) {
-                        value["options"] = value.bundle_option;
+                        value["options"] = value.super_attribute;
+                    } else if (value['links']) {
+                        value["options"] = value.links;
                     } else if (value["super_group"]) {
-                        value["options"] = value.bundle_option;
+                        value["options"] = value.super_group;
                     } else {
 
                     }
                     value["entity_id"] = value.productId;
-                    data["media_images"] = ["assets/image/default.jpg"];
-                    value['data']=data
+                    data["media_images"] = value.media_images;
+                    data["short_description"] = value.short_description;
+                    data["name"] = value.name;
+                    data["sku"] = value.sku;
+                    value['data'] = data
 
                     dataOfRes.push(value);
                 }
@@ -94,7 +98,7 @@ export class WishListService {
                         handler: () => {
                             this.local.get('wishList').then((res: any) => {
                                 forEach(res, (value, key) => {
-                                    if (value && value.data.entity_id == data.data.entity_id) {
+                                    if (value && value.wishlist_id == data.wishlist_id) {
                                         this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
                                             res.splice(key, 1);
                                             this.local.set("wishList", res);

@@ -28,8 +28,8 @@ export class DownloadProduct {
         forEach(this.data.body.links, (value: any, key) => {
             value.download = false;
             if (this.editCartData) {
-                forEach(this.editCartData.subdata, (subdata: any) => {
-                    if (subdata && subdata.value.link_id == value.link_id) {
+                forEach(this.editCartData.options, (options: any) => {
+                    if (options && options == value.link_id) {
                         value.download = true;
                     }
                 });
@@ -45,10 +45,10 @@ export class DownloadProduct {
 
     }
     onChangeLink() {
-        this.linkData = {};
+        this.linkData = [];
         forEach(this.links, (value: any, key) => {
             if (value.download) {
-                this.linkData[value.link_id] = value.link_file;
+                this.linkData.push(value.link_id * 1);
             }
         })
         this.calculateTotal();
