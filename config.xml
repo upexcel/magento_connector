@@ -75,6 +75,7 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="false" />
+    <preference name="loadUrlTimeoutValue" value="40000" />
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>

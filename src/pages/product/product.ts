@@ -120,7 +120,7 @@ export class ProductPage implements OnInit {
             if (this.type == 'configurable') {
                 data["super_attribute"] = this.add_cart['options'];
             } else if (this.type == "downloadable") {
-                data["link"] = this.add_cart['options'];
+                data["links"] = this.add_cart['options'];
             }
             else if (this.type == "bundle") {
                 data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
@@ -203,11 +203,11 @@ export class ProductPage implements OnInit {
                         this.add_cart = merge(this.add_cart, this.addToCartData);
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                        forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                            forEach(this.editCartData.subData, (subData) => {
-                                if (subData.key == attributesData.label) {
+                        forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
+                            forEach(this.editCartData.options, (opt, opt_key) => {
+                                if (opt_key == attributesDataKey) {
                                     forEach(attributesData.options, (optionData) => {
-                                        if (optionData.id == subData.value.id) {
+                                        if (optionData.id == opt) {
                                             attributesData.vertualKey = optionData;
                                             optionData.shown = true;
                                             this.onChangeConfigurableAttribute(optionData, attributesData.id);
@@ -338,15 +338,15 @@ export class ProductPage implements OnInit {
         });
     }
 
-//    bundle(bundlePrice) {
-//        this.bundlePrice = parseFloat(this.refPrice);
-//        this.dynemicDisplayPrice = this.refDisplayPrice;
-//        this.bundlePrice += (parseFloat(bundlePrice));
-//        this.dynemicDisplayPrice += (parseFloat(bundlePrice));
-//        this.final_price = (parseFloat(this.bundlePrice));
-//        console.log("final",this.final_price)
-//        this.display_price = this.dynemicDisplayPrice;
-//    }
+    //    bundle(bundlePrice) {
+    //        this.bundlePrice = parseFloat(this.refPrice);
+    //        this.dynemicDisplayPrice = this.refDisplayPrice;
+    //        this.bundlePrice += (parseFloat(bundlePrice));
+    //        this.dynemicDisplayPrice += (parseFloat(bundlePrice));
+    //        this.final_price = (parseFloat(this.bundlePrice));
+    //        console.log("final",this.final_price)
+    //        this.display_price = this.dynemicDisplayPrice;
+    //    }
     //configurabilData
     configurabilData() {
         let array: any = {};
@@ -421,7 +421,7 @@ export class ProductPage implements OnInit {
         }
         else {
             if (data) {
-                this.bundlePrice = (parseFloat(this.bundlePrice))+(parseFloat(data));
+                this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data));
                 this.dynemicDisplayPrice += (parseFloat(data));
             }
         }
