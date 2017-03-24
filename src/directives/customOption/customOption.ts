@@ -56,7 +56,7 @@ export class CustomOption {
                 data.defaultSet = false;
                 data.disable = false;
                 if (data.price_type == "percent") {
-                    let interest = ((this.price * 1) * (data.price * 1)) / 100;
+                    let interest = ((this.price) * (parseFloat(data.price))) / 100;
                     data.price = interest;
                     data.default_price = interest;
                 }
@@ -314,17 +314,17 @@ export class CustomOption {
             if (value.type == 'time' && value.vertualId) {
                 dateObj = new Date(value.vertualId);
                 array = value.vertualId.split(':');
-                if (array[0] * 1 > 12) {
+                if ((parseFloat(array[0])) > 12) {
                     hour = (array[0] * 1) - 12;
                     day_part = "pm";
                 }
                 else {
-                    hour = (array[0] * 1);
+                    hour = (parseFloat(array[0]));
                     day_part = "am";
                 }
                 time = {
                     "hour": hour,
-                    "minute": (array[1] * 1),
+                    "minute": (parseFloat(array[1])),
                     "day_part": day_part
                 }
                 forEach(value, (optId, optKey) => {
@@ -426,30 +426,30 @@ export class CustomOption {
             if (value.type == 'checkbox') {
                 forEach(value.option_type, (opt) => {
                     if (opt.defaultSet) {
-                        total = total + (opt.price) * 1;
+                        total = total + (parseFloat(opt.price));
                         subdata.push({ "key": value.title, 'value': opt, 'id': value.id, 'type': value.type })
                     }
                 })
             }
             if ((value.type == "drop_down" || value.type == 'radio') && value.vertualId) {
-                total = total + value.vertualId.price * 1;
+                total = total + (parseFloat(value.vertualId.price));
                 subdata.push({ "key": value.title, 'value': value.vertualId, 'id': value.id, 'type': value.type })
             }
             if ((value.type == "date" || value.type == "time" || value.type == "date_time") && value.vertualId) {
                 if (value.date) {
-                    total = total + (value.date.price) * 1;
+                    total = total + (parseFloat(value.date.price));
                     let date = new Date(value.vertualId);
                     subdata.push({ "key": value.title, 'value': value.vertualId, 'dateFormate': date, 'id': value.id, 'type': value.type, "dateFormateApi": value.dateFormate })
                 }
             }
             if (value.type == 'multiple' && value.vertualArray) {
                 forEach(value.vertualArray, (multiSelectValue, multiSelectKey) => {
-                    total = total + multiSelectValue.price * 1;
+                    total = total + (parseFloat(multiSelectValue.price));
                     subdata.push({ "key": value.title, 'value': multiSelectValue, 'id': value.id, 'type': value.type });
                 })
             }
             if ((value.type == 'area' || value.type == 'field') && value.vertualId) {
-                total = total + value.vertualId.price * 1;
+                total = total + (parseFloat(value.vertualId.price));
                 console.log("key", value.title, 'value', value.text, 'id', value.id, 'type', value.type)
                 subdata.push({ "key": value.title, 'value': value.text, 'id': value.id, 'type': value.type })
             }

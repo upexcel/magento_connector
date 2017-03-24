@@ -35,9 +35,9 @@ export class ProductPage implements OnInit {
     disable: boolean = true;
     images: string;
     final_price: number;
-    refPrice: number;
+    refPrice: any;
     refDisplayPrice: number;
-    display_price: number;
+    display_price: any;
     special_price: number;
     tier_price: Array<any>;
     keys: Array<string> = [];
@@ -58,10 +58,10 @@ export class ProductPage implements OnInit {
     img: string;
     name: string;
     type: string;
-    bundlePrice: number;
+    bundlePrice: any;
     configPrice = [];
     addToCartData;
-    customPrice: number;
+    customPrice: any;
     customDisplayPrice: number;
     dynemicDisplayPrice: number;
     product_custom_option: any;
@@ -133,7 +133,7 @@ export class ProductPage implements OnInit {
         feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod,data);
+                this._wishListService.setWishListData(feat_prod, data);
             } else {
                 this._toast.toast("Please login first", 3000);
             }
@@ -167,7 +167,7 @@ export class ProductPage implements OnInit {
                 this.final_price = this.productData.body.data.final_price;
                 this.refPrice = this.productData.body.data.final_price;
                 this.refDisplayPrice = this.productData.body.data.display_price;
-                this.bundlePrice = this.refPrice * 1;
+                this.bundlePrice = parseFloat(this.refPrice);
                 this.dynemicDisplayPrice = this.refDisplayPrice;
                 //gather data for send in add cart servive
                 this.sku = this.productData.body.data.sku;
@@ -296,7 +296,7 @@ export class ProductPage implements OnInit {
             }
         })
         forEach(this.configPrice, (value: any) => {
-            total += (value.price * 1);
+            total += (parseFloat(value.price));
         });
         this.diffrentTypeProductData(total);
         this.selectshow = false;
@@ -338,14 +338,15 @@ export class ProductPage implements OnInit {
         });
     }
 
-    bundle(bundlePrice) {
-        this.bundlePrice = this.refPrice * 1;
-        this.dynemicDisplayPrice = this.refDisplayPrice * 1;
-        this.bundlePrice += bundlePrice * 1;
-        this.dynemicDisplayPrice += bundlePrice * 1;
-        this.final_price = this.bundlePrice;
-        this.display_price = this.dynemicDisplayPrice;
-    }
+//    bundle(bundlePrice) {
+//        this.bundlePrice = parseFloat(this.refPrice);
+//        this.dynemicDisplayPrice = this.refDisplayPrice;
+//        this.bundlePrice += (parseFloat(bundlePrice));
+//        this.dynemicDisplayPrice += (parseFloat(bundlePrice));
+//        this.final_price = (parseFloat(this.bundlePrice));
+//        console.log("final",this.final_price)
+//        this.display_price = this.dynemicDisplayPrice;
+//    }
     //configurabilData
     configurabilData() {
         let array: any = {};
@@ -379,15 +380,16 @@ export class ProductPage implements OnInit {
 
     diffrentTypeProductData(data?) {
         if (this.customPrice != undefined) {
-            this.bundlePrice = this.customPrice * 1;
+            this.bundlePrice = parseFloat(this.customPrice);
         }
         else {
-            this.bundlePrice = this.refPrice * 1;
+            this.bundlePrice = this.refPrice;
         }
-        this.dynemicDisplayPrice = this.refDisplayPrice * 1;
+        this.dynemicDisplayPrice = this.refDisplayPrice;
         this.customFormValidate = data.disable;
         if (this.type != 'configurable' && this.type != 'bundle') {
             if (this.type == 'downloadable') {
+                console.log("data", data)
                 if (data.disable == false) {
                     this.ifCustomOption(null, data);
                 }
@@ -406,30 +408,30 @@ export class ProductPage implements OnInit {
                 }
                 this.disable = data.disable;
             }
-            this.bundlePrice += data.dynemicPrice * 1;
-            this.dynemicDisplayPrice += data.dynemicPrice * 1;
+            this.bundlePrice += (parseFloat(data.dynemicPrice));
+            this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
-            this.bundlePrice += data.total * 1;
-            this.dynemicDisplayPrice += data.total * 1;
+            this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.total));
+            this.dynemicDisplayPrice += (parseFloat(data.total));
             if (data.disable == false) {
                 this.ifCustomOption(null, data);
             }
         }
         else {
             if (data) {
-                this.bundlePrice += data * 1;
-                this.dynemicDisplayPrice += data * 1;
+                this.bundlePrice = (parseFloat(this.bundlePrice))+(parseFloat(data));
+                this.dynemicDisplayPrice += (parseFloat(data));
             }
         }
-        this.final_price = this.bundlePrice;
-        this.display_price = this.dynemicDisplayPrice;
+        this.final_price = (parseFloat(this.bundlePrice));
+        this.display_price = (this.dynemicDisplayPrice);
     }
 
     customData(customData) {
-        this.customPrice = this.bundlePrice * 1;
-        this.customDisplayPrice = this.refDisplayPrice * 1;
+        this.customPrice = parseFloat(this.bundlePrice);
+        this.customDisplayPrice = this.refDisplayPrice;
         this.customDisable = customData.disable;
         if (this.type == 'configurable') {
             if (this.config == false && customData.disable == false) {
@@ -454,8 +456,8 @@ export class ProductPage implements OnInit {
         else {
             this.disable = true;
         }
-        this.customPrice += customData.dynemicPrice * 1;
-        this.customDisplayPrice += customData.dynemicPrice * 1;
+        this.customPrice += (parseFloat(customData.dynemicPrice));
+        this.customDisplayPrice += (parseFloat(customData.dynemicPrice));
         this.final_price = this.customPrice;
         this.display_price = this.customDisplayPrice;
         this.addToCartData.total = this.final_price;
@@ -465,7 +467,7 @@ export class ProductPage implements OnInit {
     }
 
     group(groupData) {
-        let total = (this.refPrice * 1) + (groupData.total * 1);
+        let total = parseFloat(this.refPrice) + (parseFloat(groupData.total));
         this.add_cart = {};
         this.final_price = total;
         this.groupedData = groupData;

@@ -44,7 +44,7 @@ export class Checkout implements OnInit {
         }
     }
     quantityPrice(total, qty) {
-        return (total * 1) * (qty * 1);
+        return ((parseFloat(total)) * (parseFloat(qty)));
     }
     enableGift() {
         console.log('hi', this.checkGift)

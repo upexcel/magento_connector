@@ -35,7 +35,6 @@ export class WishListService {
                     dataOfRes.push(value);
                 }
             })
-            console.log(dataOfRes)
             this.local.set("wishList", dataOfRes);
         })
     }

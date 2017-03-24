@@ -182,17 +182,17 @@ export class BundleProduct {
         let total = 0;
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
-                total += ((value.vertualId.selection_qty * 1) * (value.vertualId.selection_price * 1));
+                total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.selection_price)));
             }
             if (value.type == "multi") {
                 forEach(value.vertualArray, (multiValue1) => {
-                    total += ((multiValue1.selection_qty * 1) * (multiValue1.selection_price * 1));
+                    total += ((multiValue1.selection_qty * 1) * (parseFloat(multiValue1.selection_price)));
                 })
             }
             if (value.type == "checkbox") {
                 forEach(value.selection, (checkboxValue1) => {
                     if (checkboxValue1.defaultSet == true) {
-                        total += ((checkboxValue1.selection_qty * 1) * (checkboxValue1.selection_price * 1));
+                        total += ((checkboxValue1.selection_qty * 1) * (parseFloat(checkboxValue1.selection_price)));
                     }
                 })
             }

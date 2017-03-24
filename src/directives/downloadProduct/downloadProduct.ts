@@ -69,7 +69,7 @@ export class DownloadProduct {
         forEach(this.links, (value: any, key) => {
             if (value.download) {
                 count++;
-                total = total + (value.price * 1);
+                total = total + (parseFloat(value.price));
                 if (value != undefined) {
                     download.push({ "key": value.title, "value": value });
                 }

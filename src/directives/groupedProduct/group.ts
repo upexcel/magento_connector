@@ -44,7 +44,7 @@ export class group {
             if (value.quantity * 1 !== 0) {
                 opt.push(value);
                 flag = 1;
-                total = total + (value.quantity * 1) * (value.final_price * 1);
+                total = total + (value.quantity * 1) * (parseFloat(value.final_price));
             }
         });
         let obj = {"options": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
