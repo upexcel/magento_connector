@@ -5,7 +5,7 @@ import { Events } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { WishListService } from '../../providers/wishList/wishList-service'
-
+import forEach from 'lodash/forEach';
 @Component({
     selector: 'category-view',
     templateUrl: 'categoryProducts.html'
@@ -18,11 +18,15 @@ export class CategoryComponent {
         this._events.subscribe('view:created', (view) => {
             this.viewChange(view);
         });
+        forEach(this.product, (value) => {
+            value.toggleWishList = false;
+        })
     }
     wishList(feat_prod) {
+        feat_prod.toggleWishList = !feat_prod.toggleWishList;
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod,{"productId": feat_prod.data.entity_id,"secret": userData['secret']});
+                this._wishListService.setWishListData(feat_prod, { "productId": feat_prod.data.entity_id, "secret": userData['secret'] });
             } else {
                 this._toast.toast("Please login first", 3000);
             }

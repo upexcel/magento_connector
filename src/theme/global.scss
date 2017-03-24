@@ -1,9 +1,9 @@
 .alignright{
     text-align: right;
 }
-.right15{
-    right: 15px;
-}
+.landscapWishListIco{
+    right: 0px;
+    top: -10px;}
 .aligncenter{
     text-align: center;
 }
@@ -239,11 +239,10 @@ filter{
     position:absolute;
 }
 .wishlist{
-    right: -5px;
-    top: -8px;
+    right: -15px;
+    top: -12px;
     color: rgba(226, 4, 4, 0.71);
     border-radius: 50%;
-    padding: 8px;
     background: transparent;
 }
 .productWishList{
