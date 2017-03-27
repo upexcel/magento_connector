@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController, Events, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { MySavedAddressPage } from './../myaccount/savedAddress';
 import { MyEditAddressPage } from './../myaccount/myeditaddress';
 import { Address } from './../../providers/address-service/address';
+import { checkoutService } from './../../providers/checkout/checkout-service';
+import forEach from 'lodash/forEach';
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -13,7 +15,8 @@ export class Checkout implements OnInit {
     checkGift: boolean = false;
     checkGiftEntireOrder: boolean = true;
     checkGiftIndividualOrder: boolean = false;
-    constructor(private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    shippingMethods:any;
+    constructor(private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
@@ -21,6 +24,18 @@ export class Checkout implements OnInit {
             if (!this.address || this.address.length == 0) {
                 this._navCtrl.push(MyEditAddressPage,{"alreadyCheckLength":true});
             }
+        });
+        this._checkoutService.getShippingMethods().then((res:any)=>{
+            this.shippingMethods = [];
+            forEach(res.body.shipping_methods,(value,key)=>{
+                value['shipping_method'] = key;
+                value['selectedShippingMethod'] = false;
+                this.shippingMethods.push(value);
+            });
+            console.log(this.shippingMethods)
+            console.log(res)
+        }, (err)=>{
+            console.log(err)
         })
     }
     ionViewWillEnter() {
