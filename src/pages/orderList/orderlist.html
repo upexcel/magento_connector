@@ -11,8 +11,8 @@
                  <div class="cd-timeline-icon">
                    <ion-icon color="primary" name="clock" *ngIf="data.status=='processing'"></ion-icon>
                         <ion-icon color="danger" name="close-circle" *ngIf="data.status=='holded'"></ion-icon>
-                        <ion-icon color="warning" name="alert" *ngIf="data.status=='pending'" ></ion-icon>
-                         <ion-icon color="primary" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
+                        <ion-icon color="alert_yellow" name="alert" *ngIf="data.status=='pending'" ></ion-icon>
+                         <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
                         
                     </div>
                     <div (click)="gotoOrderDetail(data.orderId)">

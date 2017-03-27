@@ -55,7 +55,6 @@ export class OrderModalPage implements OnInit {
                 })
                 this.items = clone(res_data);
             }
-            console.log("sd", this.orderid_detail)
         }).catch((err) => {
             this.spin = false;
 

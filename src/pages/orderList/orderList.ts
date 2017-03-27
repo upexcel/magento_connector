@@ -31,7 +31,7 @@ export class OrderlistPage implements OnInit {
     spin: boolean = false;
     error: boolean = false;
     startArray: number = 0;
-    endArray: number = 5;
+    endArray: number = 4;
     message: string = "Token expired";
     constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
     ngOnInit() {
@@ -79,7 +79,6 @@ export class OrderlistPage implements OnInit {
                         key: key
                     });
                 });
-                console.log("dfjokn", this.itemsValue);
                 this.values = slice(this.itemsValue, this.startArray, this.endArray);
             }
         })
@@ -91,8 +90,9 @@ export class OrderlistPage implements OnInit {
     }
     doInfinite(infiniteScroll) {
         if (this.itemsValue.length > this.endArray) {
-            this.endArray += 5;
+            this.endArray += 4;
             this.values = slice(this.itemsValue, this.startArray, this.endArray);
+            infiniteScroll.complete();
         } else {
             infiniteScroll.complete();
             infiniteScroll.enable(false);

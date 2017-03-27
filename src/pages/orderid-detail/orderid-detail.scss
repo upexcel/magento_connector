@@ -13,20 +13,20 @@
         height: 90px;
         margin: 0 auto;
         width: auto;
-        max-width: 100px;
+        max-width: 110px;
     }
     .item-md ion-thumbnail{
-        max-width: 100px;
+        max-width: 110px;
         height: 90px; 
-        width:100px;
+        width:110px;
     }
     .order_sum{
-        margin-left: 142px;
-        margin-top: -18px;
-    }
-    .order_sum p{
-        font-size: 14px;
-        margin-top: 3px;
+        p{
+            font-size: 12px;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            color: #666;
+        }
     }
     ion-list-header {
         background: $list_heade_order_grey;
@@ -55,5 +55,6 @@
     }
     .bold{
         font-weight: bold;
+        color:#757575;
     }
 }
