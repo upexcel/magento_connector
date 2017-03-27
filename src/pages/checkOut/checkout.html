@@ -83,13 +83,13 @@
             </ion-grid>
         </ion-card-content>
     </ion-card>
-    <ion-list no-margin radio-group>
+    <ion-list no-margin radio-group [(ngModel)]="selectedShippingMethod">
         <ion-list-header no-margin>
-            Free Shipping
+            Shipping Methods
         </ion-list-header>
-        <ion-item>
-            <ion-label>Free</ion-label>
-            <ion-radio checked="false" value="go"></ion-radio>
+        <ion-item *ngFor="let shipping of shippingMethods">
+            <ion-label>{{shipping.method_title}} {{shipping.price}}</ion-label>
+            <ion-radio [value]="shipping"></ion-radio>
         </ion-item>
     </ion-list>
 
