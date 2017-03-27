@@ -5,7 +5,7 @@ category-view{
         img{
             max-height: 90px;
         }
- 
+
         .cardForPortrait{
             width: 100%; 
             border-radius: 2px;
@@ -13,16 +13,16 @@ category-view{
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 0px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
         }
         .columnForGrid25{
-            -webkit-flex: 0 0 25%;
-            -ms-flex: 0 0 25%;
-            flex: 0 0 25%;
-            max-width: 25%;
+            -webkit-flex: 0 0 33%;
+            -ms-flex: 0 0 33%;
+            flex: 0 0 33%;
+            max-width: 33%;
         }
         .columnForGrid75{
-            -webkit-flex: 0 0 75%;
-            -ms-flex: 0 0 75%;
-            flex: 0 0 75%;
-            max-width: 75%;
+            -webkit-flex: 0 0 67%;
+            -ms-flex: 0 0 67%;
+            flex: 0 0 67%;
+            max-width: 67%;
         }
         .columnForGrid100{
             -webkit-flex: 0 0 100%;
@@ -53,15 +53,8 @@ category-view{
     /*@media screen and (orientation: landscape) {*/
     .landscape{
         img{
-            /*            max-width: 80%;
-                        background-attachment: fixed;
-                        background-repeat: no-repeat;
-                        background-size: cover;*/
-            max-height: 172px;
-            padding-left: 10px;
-            padding-right: 10px;
-            margin: 0px auto;
-            width: 85%;
+            max-height: 145px;
+            max-width: 100%;
         }
         .iconShow{
             top: 0;
@@ -79,12 +72,8 @@ category-view{
             height: 100% !important;
         }
         .imgBox{
-            display: table-cell;
-            max-height:200px;
-            /*            height: 150px;
-                        width: 90%;
-                        margin: 0px auto;
-                        overflow: hidden;*/
+/*            display: table-cell;*/
+            height: 150px;
 
         }
         .column {
@@ -160,4 +149,7 @@ category-view{
 .footerCateg{
     line-height: 2;
     background: white;
+}
+img{
+    margin: 0 auto;
 }
