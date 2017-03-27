@@ -1,16 +1,17 @@
-<header [title]="'My Orders'"></header>
+<header [title]="'My Order Details'"></header>
 <ion-content class="orderid-detail">
-        <h2 class="center" *ngIf="showOrderError">Your Order is under process</h2>
+        <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
+    <h2 class="center" *ngIf="showOrderError">Your Order is under process</h2>
     <ion-scroll scrollY="true" *ngIf="showOrder">
         <ion-list>
-            <ion-list-header>
-                Status: {{orderid_detail.data.status}}
+            <ion-list-header no-margin class="bold">
+                Status: <span class="capitalize">{{orderid_detail.body.status}}</span>
             </ion-list-header>
             <ion-item *ngFor="let item of items">
                 <ion-thumbnail item-left>
                     <img src="{{item.value.image}}" alt="No image">
                 </ion-thumbnail>
-                <h2>{{item.value.item_name}}<span id="item_price">{{item.value.price}}$</span></h2>
+                <h2>{{item.value.item_name}}<span id="item_price">${{item.value.price |number}}</span></h2>
                 <p>Size: {{item.value.Size}}</p>
                 <p>Quantity: {{item.value.qty_ordered}} </p>
                 <p>Color: {{item.value.Color}} </p>
@@ -18,86 +19,83 @@
             <ion-item>
                 <h3>Purchased Date</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.data.purchased_on | date: 'dd/MM/yyyy hh:mm'}}</p>
+                    <p>{{orderid_detail.body.purchased_on | date: 'dd/MM/yyyy hh:mm'}}</p>
                 </div>
             </ion-item>
             <ion-item>
                 <h3> Order Summary </h3>
                 <div class="order_sum">
-                    <p>TOTAL QUANTITY:<span id="order_sum_content" >{{orderid_detail.data.total_qty_ordered}}</span></p>
-                    <p>SUBTOTAL:<span id="order_sum_content" >${{orderid_detail.data.base_grand_total}}</span></p>
-                    <p>TAX:<span id="order_sum_content" >${{orderid_detail.data.tax_amount}}</span></p>
-                    <p>DELIVERY:<span id="order_sum_content">${{orderid_detail.data.shipping_amount}}</span></p>
+                    <p>TOTAL QUANTITY:<span id="order_sum_content" >{{orderid_detail.body.total_qty_ordered |number}}</span></p>
+                    <p>SUBTOTAL:<span id="order_sum_content" >${{orderid_detail.body.base_grand_total |number}}</span></p>
+                    <p>TAX:<span id="order_sum_content" >${{orderid_detail.body.tax_amount |number}}</span></p>
+                    <p>DELIVERY:<span id="order_sum_content">${{orderid_detail.body.shipping_amount |number}}</span></p>
                     <hr>
-                    <p>TOTAL:<span id="order_sum_content">${{orderid_detail.data.grand_total}}</span></p>
+                    <p>TOTAL:<span id="order_sum_content">${{orderid_detail.body.grand_total |number}}</span></p>
                 </div>
-                <hr>
             </ion-item>
         </ion-list>
-        <ion-list>
+        <ion-list *ngIf="orderid_detail.body.shipping_address">
 
-            <ion-list-header primary>
+            <ion-list-header primary no-margin>
                 Billing Information
             </ion-list-header>
 
-            <ion-item>
+            <ion-item no-lines *ngIf="orderid_detail.body.billing_address" >
                 <h3>Billing</h3>
                 <div class="order_sum" >
-                    <p>Name: {{orderid_detail.data.billing_address.name+" "+orderid_detail.data.billing_address.lastname}}</p>
-                    <p>Telephone:{{orderid_detail.data.billing_address.telephone}} </p>
-                    <p>Street:<span *ngFor="let street of orderid_detail.data.billing_address.street">{{bill_street}}</span></p>
-                    <p>City: {{orderid_detail.data.billing_address.city}}</p>
-                    <p>Region: {{orderid_detail.data.billing_address.region}}</p>
-                    <p>Pin code: {{orderid_detail.data.billing_address.postcode}}</p>
-                    <p>Country: {{orderid_detail.data.billing_address.county}}</p>
+                    <p>Name: {{orderid_detail.body.billing_address.name+" "+orderid_detail.body.billing_address.lastname}}</p>
+                    <p>Telephone:{{orderid_detail.body.billing_address.telephone}} </p>
+                    <p>Street:<span *ngFor="let street of orderid_detail.body.billing_address.street"><span *ngIf="street && street.length">{{street}}</span></span></p>
+                    <p>City: {{orderid_detail.body.billing_address.city}}</p>
+                    <p>Region: {{orderid_detail.body.billing_address.region}}</p>
+                    <p>Pin code: {{orderid_detail.body.billing_address.postcode}}</p>
+                    <p>Country: {{orderid_detail.body.billing_address.county}}</p>
                 </div>
-                <hr>
             </ion-item>
 
 
         </ion-list>
-        <ion-list no-lines>
+        <ion-list>
 
-            <ion-list-header color="primary">
+            <ion-list-header primary no-margin *ngIf="orderid_detail.body.shipping_address">
                 Shipping Information
             </ion-list-header>
 
-            <ion-item>
+            <ion-item *ngIf="orderid_detail.body.shipping_address"> 
                 <h3>Shipping</h3>
-                <div class="order_sum" >
-                    <p>Name: {{orderid_detail.data.shipping_address.name+" "+orderid_detail.data.shipping_address.lastname}}</p>
-                    <p>Telephone:{{orderid_detail.data.shipping_address.telephone}} </p>
-                    <p>Street:<span *ngFor="let street of orderid_detail.data.shipping_address.street">{{bill_street}}</span></p>
-                    <p>City: {{orderid_detail.data.shipping_address.city}}</p>
-                    <p>Region: {{orderid_detail.data.shipping_address.region}}</p>
-                    <p>Pin code: {{orderid_detail.data.shipping_address.postcode}}</p>
-                    <p>Country: {{orderid_detail.data.shipping_address.county}}</p>
+                <div class="order_sum">
+                    <p>Name: {{orderid_detail.body.shipping_address.name+" "+orderid_detail.body.shipping_address.lastname}}</p>
+                    <p>Telephone:{{orderid_detail.body.shipping_address.telephone}} </p>
+                    <p>Street:<span *ngFor="let street of orderid_detail.body.shipping_address.street">{{street}}</span></p>
+                    <p>City: {{orderid_detail.body.shipping_address.city}}</p>
+                    <p>Region: {{orderid_detail.body.shipping_address.region}}</p>
+                    <p>Pin code: {{orderid_detail.body.shipping_address.postcode}}</p>
+                    <p>Country: {{orderid_detail.body.shipping_address.county}}</p>
                 </div>
-                <hr>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="orderid_detail.body.shipping_method">
                 <h3>Shipping method</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.data.shipping_method}}</p>
+                    <p>{{orderid_detail.body.shipping_method}}</p>
                 </div>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="orderid_detail.body.shipping_description">
                 <h3>Shipping Description</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.data.shipping_description}}</p>
+                    <p>{{orderid_detail.body.shipping_description}}</p>
                 </div>
             </ion-item>
-            <ion-item id="pay_meth">
+            <ion-item id="pay_meth" *ngIf="orderid_detail.body.payment_method">
                 <h3>Payment method</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.data.payment_method}}</p>
+                    <p>{{orderid_detail.body.payment_method}}</p>
                 </div>
             </ion-item>
-   
+
         </ion-list>
     </ion-scroll>
 
 </ion-content>
 <ion-footer>     
-        <!--<btn-full  [titleFull]="'Track'" [id]="'btn'" [classFull]="'botton'" (onBtnClick)="track()"></btn-full>-->
+    <btn-full  [titleFull]="'Track'" [id]="'btn'" [classFull]="'botton'" (onBtnClick)="track()"></btn-full>
 </ion-footer>
