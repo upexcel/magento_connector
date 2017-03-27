@@ -62,8 +62,10 @@ export class MySavedAddressPage implements OnInit {
     disable: boolean = false;
     message: string = "Token expired";
     alreadyCheckLength: boolean;
+    saveAdd: boolean;
     constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this.alreadyCheckLength = this._navParam.get('alreadyCheckLength');
+        this.saveAdd = this._navParam.get('saveAdd');
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
                 this.getInitAdd(savedaddress);
@@ -76,7 +78,11 @@ export class MySavedAddressPage implements OnInit {
         });
     }
     ngOnInit() {
-        this.getInitAdd();
+        if (this.saveAdd) {
+            this.getInitAdd(true);
+        } else {
+            this.getInitAdd();
+        }
     }
     getInitAdd(eventData?) {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -139,9 +145,7 @@ export class MySavedAddressPage implements OnInit {
             this.reverseCartData = (this.myaccount.body);
         } else {
             this.showAddress = false;
-            console.log("this.alreadyCheckLength",this.alreadyCheckLength)
             if (!this.alreadyCheckLength) {
-                console.log("direct")
                 this._navCtrl.push(MyEditAddressPage, {
                     "title": "Add New Address",
                     "entity_id": entity_id
@@ -150,7 +154,6 @@ export class MySavedAddressPage implements OnInit {
                     this._navCtrl.remove(index);
                 });
             } else {
-            console.log("checkout")
                 this._navCtrl.push(MyEditAddressPage, {
                     "title": "Add New Address",
                     "entity_id": entity_id
@@ -161,7 +164,6 @@ export class MySavedAddressPage implements OnInit {
     updateAdd(addressChange, change) {
         this.disable = true;
         let address = addressChange;
-        //        console.log("address", address)
         forEach(this.reverseCartData, (value, key) => {
             if (change == 'default_shipping') {
                 if (address.id != value.id) {
@@ -225,7 +227,10 @@ export class MySavedAddressPage implements OnInit {
         this._navCtrl.push(MyEditAddressPage, {
             "title": "Add New Address",
             "entity_id": entity_id
-        })
+        }).then(() => {
+            const index = this.viewCtrl.index;
+            this._navCtrl.remove(index);
+        });
     }
     logout() {
         this._logout.logout(this.message, this._navCtrl);

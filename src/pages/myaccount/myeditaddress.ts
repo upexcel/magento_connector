@@ -96,8 +96,6 @@ export class MyEditAddressPage implements OnInit {
                 if (this.myaccount.body.length != 0 && entity_id != null) {
                     let d_billing;
                     let d_shipping;
-                    console.log(this.reverseCartData, id)
-                    //                    console.log(this.reverseCartData,i)
                     //                    if(this.reverseCartData[id].default_shipping)
                     this.updateform = this._fb.group({
                         firstname: [this.reverseCartData[id].firstname, Validators.required],
@@ -158,7 +156,7 @@ export class MyEditAddressPage implements OnInit {
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
 //                this.viewCtrl.dismiss();
-                this._navCtrl.push(MySavedAddressPage).then(() => {
+                this._navCtrl.push(MySavedAddressPage,{'saveAdd':true}).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
                 });
