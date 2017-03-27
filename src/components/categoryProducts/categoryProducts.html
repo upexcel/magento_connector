@@ -11,8 +11,8 @@
                                     <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.toggleWishList}"></div>
                                 </span>
                                 <span (click)="gotoProduct(feat_prod.data.sku)">
-                                    <img imageDirective src="{{feat_prod.data.small_image}}"/>
-                                    <img src="{{feat_prod.data.minify_image}}"/>
+                                    <img class="center" imageDirective src="{{feat_prod.data.small_image}}"/>
+                                    <img class="center" src="{{feat_prod.data.minify_image}}"/>
                                 </span>
                             </div>
                         </div>
