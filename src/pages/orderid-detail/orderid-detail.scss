@@ -1,16 +1,24 @@
 .orderid-detail{
-    ion-list {
-        margin: -1px 0 0 0;
-    }
+    /*    ion-list {
+            margin: -1px 0 0 0;
+        }*/
+
     ion-scroll {
         position: initial;
     }
     ion-label {
-        margin: 10px 0 0 0;
+        margin: 10px 0 10px 0;
     }
-    ion-thumbnail img {
-        max-width: 11.6rem;
-        max-height:110px;;
+    .item-md ion-thumbnail img{ 
+        height: 90px;
+        margin: 0 auto;
+        width: auto;
+        max-width: 100px;
+    }
+    .item-md ion-thumbnail{
+        max-width: 100px;
+        height: 90px; 
+        width:100px;
     }
     .order_sum{
         margin-left: 142px;
@@ -33,16 +41,19 @@
     }
     #order_sum_content{
         float: right;
-        margin-right: 50px
+        margin-right: 10px;
     }
     #item_price{
         float: right;
-        margin-right: 30px;
+        margin-right: 10px;
     }
     #pay_meth{
         min-height: 2rem;
     }
     .scroll-content {
         overflow: auto !important;
+    }
+    .bold{
+        font-weight: bold;
     }
 }

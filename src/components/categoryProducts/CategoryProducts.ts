@@ -23,10 +23,10 @@ export class CategoryComponent {
         })
     }
     wishList(feat_prod) {
-        feat_prod.toggleWishList = !feat_prod.toggleWishList;
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
                 this._wishListService.setWishListData(feat_prod, { "productId": feat_prod.data.entity_id, "secret": userData['secret'] });
+                feat_prod.toggleWishList = !feat_prod.toggleWishList;
             } else {
                 this._toast.toast("Please login first", 3000);
             }

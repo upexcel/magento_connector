@@ -20,6 +20,7 @@ export class OrderModalPage implements OnInit {
     items: any;
     showOrder: boolean = false;
     showOrderError: boolean = false;
+    spin: boolean = false;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
@@ -35,15 +36,17 @@ export class OrderModalPage implements OnInit {
         let body = {
             order_id: order_id, secret: secret
         }
+        this.spin = true;
         this._orderdetail.getHomeProducts(body).then((res) => {
             this.orderid_detail = res;
+            this.spin = false;
             if (this.orderid_detail.message == '') {
                 this.showOrderError = true;
             } else {
                 this.showOrder = true;
-                this.item = this.orderid_detail.data.items;
+                this.item = this.orderid_detail['body'].items;
                 var res_data: any = [];
-                forEach(this.item, function(value, key) {
+                forEach(this.item, (value, key) => {
                     var datas = {
                         value: value,
                         key: key
@@ -52,7 +55,10 @@ export class OrderModalPage implements OnInit {
                 })
                 this.items = clone(res_data);
             }
+            console.log("sd", this.orderid_detail)
         }).catch((err) => {
+            this.spin = false;
+
         });
     }
 
