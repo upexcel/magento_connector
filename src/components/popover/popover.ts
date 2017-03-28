@@ -6,7 +6,9 @@ import { ChangepasswordPage } from './../../pages/changePassword/changePassword'
 import { OrderlistPage } from './../../pages/orderList/orderList';
 import { LogoutService } from './../../providers/logout/logout-service';
 import { MyEditAccount } from './../../pages/myaccount/myEditAccount';
-
+import { Policy } from './../../pages/policies/policies';
+import { AboutUs } from './../../pages/aboutUs/aboutUs';
+import { ContactUs } from './../../pages/contactUs/contactUs';
 @Component({
     selector: 'user-menu',
     templateUrl: 'popover.html'
@@ -30,6 +32,17 @@ export class PopoverPage {
     }
     gotoEditAccount() {
         this._navCtrl.push(MyEditAccount);
+    }
+    gotoContactUs() {
+        this._navCtrl.push(ContactUs);
+
+    }
+    gotoAboutUs() {
+        this._navCtrl.push(AboutUs);
+    }
+    gotoPolicy() {
+        this._navCtrl.push(Policy);
+
     }
     logout() {
         this._logout.logout(this.msg, this._navCtrl);

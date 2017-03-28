@@ -22,6 +22,10 @@ import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
 import { Checkout } from '../pages/checkOut/checkout';
+import { Policy } from '../pages/policies/policies';
+import { AboutUs } from '../pages/aboutUs/aboutUs';
+import { ContactUs } from '../pages/contactUs/contactUs';
+
 
 //model
 import { AppConfig } from '../model/appConfig/appConfig';
@@ -47,6 +51,7 @@ import { CartFunction } from '../model/cart/cartHandling';
 import { SortByModel } from '../model/sortBy/sortBy';
 import { FilterByModel } from '../model/filterBy/filterBy';
 import { WishListModel } from '../model/wishList/wishList';
+import { CMS } from '../model/cms/cms';
 //service
 import { CartService } from '../providers/cart-service/cart-service';
 import { FinalPrice } from '../providers/cart-service/final-price';
@@ -148,7 +153,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         CustomOption,
         group,
         wishList,
-        Checkout
+        Checkout,
+        Policy,
+        AboutUs,
+        ContactUs
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -184,7 +192,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         Headers,
         OfflinePage,
         wishList,
-        Checkout
+        Checkout,
+        Policy,
+        AboutUs,
+        ContactUs
     ],
     providers: [
         AppConfig,
@@ -225,7 +236,8 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         SortByModel,
         FilterByModel,
         WishListModel,
-        checkoutService
+        checkoutService,
+        CMS
     ]
 })
 export class AppModule {
