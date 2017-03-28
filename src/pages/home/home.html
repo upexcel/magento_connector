@@ -1,15 +1,7 @@
 <header [title]='title' [pagename]='pagename' [view]="true" [menu]='menu'></header>
 <sidemenu [token]="userToken"></sidemenu>
 <ion-content  class="home">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
-            pullingIcon="arrow-dropdown"
-            pullingText="Pull to refresh"
-            refreshingSpinner="circles"
-            refreshingText="Refreshing...">
-
-        </ion-refresher-content>
-    </ion-refresher>
+    <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
     <get-slider></get-slider>
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
     <div *ngIf="homeProduct" >

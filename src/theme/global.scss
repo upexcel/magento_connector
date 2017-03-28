@@ -473,6 +473,7 @@ sort{
     .order-by{
         border:0px;
         font-size:20px!important;
+        vertical-align: middle;
     }
 }
 filter{
@@ -576,6 +577,9 @@ checkout{
     .border-bottom .item-block .item-inner{
         border-bottom: 1px solid #dedede!important;
     }
+}
+.refresher-active{
+    background: #ddd;
 }
 /*144 server css*/
 /*ion-app {

@@ -59,7 +59,7 @@ export class WishListService {
                         list["secret"] = apiData["secret"];
                         response.push(list);
                         this.local.set("wishList", response);
-                        this._toast.toast("Your wishList is updated", 3000);
+                        this._toast.toast(list.data.name+" has been added to your wishlist", 3000);
                     });
                 } else {
                     this.deleteProductWishList(list, true);
@@ -69,7 +69,7 @@ export class WishListService {
                     list["wishlist_id"] = res.body["wishlist_id"];
                     list["secret"] = apiData["secret"];
                     this.local.set("wishList", [list]);
-                    this._toast.toast("Your wishList is updated", 3000);
+                    this._toast.toast(list.data.name+" has been added to your wishlist", 3000);
                 });
             }
         })
