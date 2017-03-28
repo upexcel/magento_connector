@@ -118,17 +118,17 @@ export class ProductPage implements OnInit {
         if (this.type != "grouped") {
             data["qty"] = 1;
             if (this.type == 'configurable') {
-                data["super_attribute"] = this.add_cart['options'];
+                data["super_attribute"] = this.add_cart['super_attribute'];
             } else if (this.type == "downloadable") {
-                data["links"] = this.add_cart['options'];
+                data["links"] = this.add_cart['links'];
             }
             else if (this.type == "bundle") {
                 data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
-                data["bundle_option"] = this.add_cart['options'];
+                data["bundle_option"] = this.add_cart['bundle_option'];
             }
         } else {
             data["qty"] = 0;
-            data["super_group"] = this.add_cart['options'];
+            data["super_group"] = this.add_cart['super_attribute'];
         }
         feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
@@ -204,7 +204,7 @@ export class ProductPage implements OnInit {
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
                         forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
-                            forEach(this.editCartData.options, (opt, opt_key) => {
+                            forEach(this.editCartData.super_attribute, (opt, opt_key) => {
                                 if (opt_key == attributesDataKey) {
                                     forEach(attributesData.options, (optionData) => {
                                         if (optionData.id == opt) {
@@ -357,7 +357,7 @@ export class ProductPage implements OnInit {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "options": selectedItem, "subData": this.configSubData };
+            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "subData": this.configSubData };
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }

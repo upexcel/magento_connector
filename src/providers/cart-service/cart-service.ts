@@ -27,7 +27,7 @@ export class CartService {
                 //                        // error
                 //                        console.log("err", err);
                 //                    })
-                if (res) {
+                if (res && res.body) {
                     this.saveCartInLocal(data, resolve, res);
                 }
             }).catch((err) => {

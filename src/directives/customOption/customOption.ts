@@ -465,7 +465,7 @@ export class CustomOption {
             custonCartDisable = false;
         }
         console.log("custom", opt, "customSubdata", subdata)
-        opt = { "dynemicPrice": total, "custom": opt, "customSubdata": subdata, "disable": custonCartDisable }
+        opt = { "dynemicPrice": total, "options": opt, "customSubdata": subdata, "disable": custonCartDisable }
         this.onChange.emit(opt);
     }
 }

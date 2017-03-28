@@ -22,10 +22,9 @@ export class group {
     }
 
     quantityEdit() {
-        forEach(this.editCartData.options, (editCartOptionValue, editCartOptionkey)=>{
+        forEach(this.editCartData.super_attribute, (editCartOptionValue, editCartOptionkey)=>{
             forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue,key)=>{
                 if(editCartOptionkey == groupAssociatedProducsValue.product_id){
-                    console.log(groupAssociatedProducsValue);
                     groupAssociatedProducsValue.quantity = editCartOptionValue;
                 }
             });
@@ -47,7 +46,7 @@ export class group {
                 total = total + (value.quantity * 1) * (parseFloat(value.final_price));
             }
         });
-        let obj = {"options": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
+        let obj = {"super_attribute": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
         this.sendData.emit(obj);
     }
 

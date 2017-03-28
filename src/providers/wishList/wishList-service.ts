@@ -17,15 +17,8 @@ export class WishListService {
             forEach(response.body.wishlist, (value, key) => {
                 if (value) {
                     data = {};
-                    if (value['bundle_option']) {
-                        value["options"] = value.bundle_option;
-                    }
-                    else if (value['super_attribute']) {
-                        value["options"] = value.super_attribute;
-                    } else if (value['links']) {
-                        value["options"] = value.links;
-                    } else if (value["super_group"]) {
-                        value["options"] = value.super_group;
+                    if (value["super_group"]) {
+                        value["super_attribute"] = value.super_group;
                     } else {
 
                     }

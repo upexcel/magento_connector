@@ -28,7 +28,7 @@ export class DownloadProduct {
         forEach(this.data.body.links, (value: any, key) => {
             value.download = false;
             if (this.editCartData) {
-                forEach(this.editCartData.options, (options: any) => {
+                forEach(this.editCartData.links, (options: any) => {
                     if (options && options == value.link_id) {
                         value.download = true;
                     }
@@ -81,7 +81,7 @@ export class DownloadProduct {
         else {
             disable = true;
         }
-        this.linkData = { "options": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
+        this.linkData = { "links": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
         this.onChange.emit(this.linkData);
     }
 }
