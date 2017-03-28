@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="row rowForLandscape" (click)="gotoProduct(feat_prod.data.sku)">
                                     <div class="columnForGrid100">
-                                        <span  *ngIf="feat_prod.data.display_special_price >0" >{{feat_prod.data.currency_sign}}{{feat_prod.data.display_special_price}}</span>
+                                        <span color="red"  *ngIf="feat_prod.data.display_special_price >0" ><span *ngIf="feat_prod.data.display_special_price >0">Special Price</span> {{feat_prod.data.currency_sign}}{{feat_prod.data.display_special_price}}</span>
                                         <span   [ngClass]="{'line': feat_prod.data.display_special_price >0}" >{{feat_prod.data.currency_sign}}{{feat_prod.data.display_price}}</span>
                                     </div>
                                 </div>

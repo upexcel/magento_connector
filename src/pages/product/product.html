@@ -34,7 +34,7 @@
                                     </ion-col>
                                     <ion-col class="no-margin" width-20>
                                         <span class="productWishList" (click)="share(productData.body)">
-                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                            <!--<i class="fa fa-share" aria-hidden="true"></i>-->
                                         </span>
                                     </ion-col> 
                                 </ion-row>
@@ -43,7 +43,7 @@
                         <ion-row> 
                             <ion-col width-80 class="padTB no-margin"> 
                                 <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
-                                <span  [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" >{{productData.body.data.currency_sign}} {{final_price}}</span>
+                                <span color="{{((display_price*1) > (final_price*1))? 'red': ''}}" [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" ><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
                             </ion-col>
                             <ion-col width-20 class="no-margin no-padding">
                                 <div class="heart floatRight" [ngClass]="{'is_animating':myData}" (click)="wishList(productData.body); myData = !myData"></div>

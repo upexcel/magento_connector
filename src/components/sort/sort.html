@@ -1,6 +1,6 @@
 <ion-content>
     <ion-list-header>
-        SORT BY. <button outline ion-button class="order-by">  <ion-icon name="{{(orderBy == 'desc')? 'arrow-up':'arrow-down'}}" (click)="orderByChange()"></ion-icon></button>
+        SORT BY<button outline ion-button class="order-by">  <ion-icon name="{{(orderBy == 'desc')? 'arrow-up':'arrow-down'}}" (click)="orderByChange()"></ion-icon></button>
     </ion-list-header>
     <ion-list radio-group [(ngModel)]= "slectedSort" (ngModelChange)="dismiss(slectedSort)">
         <ion-item *ngFor="let sortData of sortRes">
