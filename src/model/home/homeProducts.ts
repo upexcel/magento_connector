@@ -10,9 +10,8 @@ export class HomeProducts implements OnInit {
     ngOnInit() { }
 
     getHomeProducts(data): Promise<HomeProductsDataType> {
-        let local = this.local;
         return new Promise((resolve, reject)=> {
-            local.get('homeProducts').then((homeProducts: string) => {
+            this.local.get('homeProducts').then((homeProducts: string) => {
                 if (homeProducts != null && homeProducts != undefined){
                     resolve(homeProducts);
                 }
