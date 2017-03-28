@@ -18,4 +18,16 @@ export class checkoutService {
             })
         });
     }
+    getPaymentMethods() {
+        return new Promise((resolve, reject) => {
+            this._appConfigService.getUserData().then((userData: any) => {
+                let data = {"secret": userData.secret};
+                this._apiService.api("cart/getPaymentMethods/", data).subscribe((res) => {
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            })
+        });
+    }
 }
