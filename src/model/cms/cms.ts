@@ -15,7 +15,7 @@ export class CMS implements OnInit {
                     resolve(aboutUsInfo);
                 }
                 else {
-                    this._apiService.api("", data).subscribe((res: any) => {
+                    this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
                         resolve(res);
                     }, (err) => {
                         reject(err);
@@ -47,7 +47,7 @@ export class CMS implements OnInit {
                     resolve(privacyInfo);
                 }
                 else {
-                    this._apiService.api("", data).subscribe((res: any) => {
+                    this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
                         resolve(res);
                     }, (err) => {
                         reject(err);
