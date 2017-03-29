@@ -1,4 +1,30 @@
 .product{
+    .fab[mini] {
+        margin: 8px;
+        width: 25px;
+        height: 25px;
+        line-height: 0px;
+        top: -10px;
+        right: 25px;
+    }
+    .fab-md {
+    color: #060606;
+    background-color: #ffffff;
+     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px rgba(0, 0, 0, 0); 
+}
+    .fab-in-list {
+        width: 25px;
+        height: 25px;
+    }
+    .fab ion-icon {
+        font-size: 1.8rem;
+    }
+    .fab-close-icon {
+        top: -7px;
+    }
+    ion-fab-list[side=left] {
+        margin: -18px 74px;
+    }
     ion-buttons {
         margin: 5px;
         text-align: right !important;
@@ -100,9 +126,9 @@
         margin-left: 5px;
         line-height: 2.6;
     }
-/*    .hide{
-        display: none;
-    }*/
+    /*    .hide{
+            display: none;
+        }*/
     .maxHt{
         max-height: 100px;
     }
@@ -307,21 +333,21 @@ filter{
 }
 
 .heart {
-  cursor: pointer;
-  height: 50px;
-  width: 50px;
-  background-image:url('./../assets/image/web_heart_animation.png');
-  background-position: left;
-  background-repeat:no-repeat;
-  background-size:2900%;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    background-image:url('./../assets/image/web_heart_animation.png');
+    background-position: left;
+    background-repeat:no-repeat;
+    background-size:2900%;
 }
 
 .is_animating {
-  animation: heart-burst .8s steps(28) 1;
-   background-position:right;
+    animation: heart-burst .8s steps(28) 1;
+    background-position:right;
 }
 
 @keyframes heart-burst {
-  from {background-position:left;}
-  to { background-position:right;}
+    from {background-position:left;}
+    to { background-position:right;}
 }
