@@ -24,19 +24,12 @@ export class CMS implements OnInit {
             });
         });
     }
-    getContactUsInfo(data) {
+    setContactUsInfo(data) {
         return new Promise((resolve, reject) => {
-            this.local.get('contactUsInfo').then((contactUsInfo: string) => {
-                if (contactUsInfo != null && contactUsInfo != undefined) {
-                    resolve(contactUsInfo);
-                }
-                else {
-                    this._apiService.api("/cart/cart", data).subscribe((res: any) => {
-                        resolve(res);
-                    }, (err) => {
-                        reject(err);
-                    });
-                }
+            this._apiService.api("web/contactus", data).subscribe((res: any) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
             });
         });
     }

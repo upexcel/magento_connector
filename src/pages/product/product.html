@@ -33,8 +33,16 @@
                                         <p class="stock">{{productData.body.data.in_stock}}</p>
                                     </ion-col>
                                     <ion-col class="no-margin" width-20>
-                                        <span class="productWishList" (click)="share(productData.body)">
+                                        <span class="productWishList" >
                                             <!--<i class="fa fa-share" aria-hidden="true"></i>-->
+                                            <ion-fab >
+                                                <button ion-fab mini ><ion-icon name="share"></ion-icon></button>
+                                                <ion-fab-list side="left">
+                                                    <button ion-fab><ion-icon name="logo-facebook" (click)="sharring('facebook')"></ion-icon></button>
+                                                    <button ion-fab><ion-icon name="logo-twitter" (click)="sharring('twitter')"></ion-icon></button>
+                                                    <button ion-fab><ion-icon name="logo-googleplus" (click)="sharring('googleplus')"></ion-icon></button>
+                                                </ion-fab-list>
+                                            </ion-fab>
                                         </span>
                                     </ion-col> 
                                 </ion-row>
@@ -47,9 +55,9 @@
                             </ion-col>
                             <ion-col width-20 class="no-margin no-padding">
                                 <div class="heart floatRight" [ngClass]="{'is_animating':myData}" (click)="wishList(productData.body); myData = !myData"></div>
-<!--                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
-                                    <i class="fa fa-heart" aria-hidden="true" ></i>
-                                </span>-->
+                                <!--                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
+                                                                    <i class="fa fa-heart" aria-hidden="true" ></i>
+                                                                </span>-->
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

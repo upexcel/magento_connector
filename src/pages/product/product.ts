@@ -20,6 +20,7 @@ import { WishListService } from '../../providers/wishList/wishList-service';
 import { config } from './../../providers/config/config';
 import { ModalController } from 'ionic-angular';
 import { WishListModel } from './../../model/wishList/wishList';
+//import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
     selector: 'product',
@@ -80,7 +81,7 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    constructor(public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor( public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -110,6 +111,21 @@ export class ProductPage implements OnInit {
                 this.products();
             });
         })
+    }
+    sharring(shareType) {
+        if (shareType == "facebook") {
+//            this._socialSharing.canShareViaEmail().then(() => {
+//                // Sharing via email is possible
+//            }).catch(() => {
+//                // Sharing via email is not possible
+//            });
+            // Share via email
+//            this._socialSharing.shareViaEmail('Body', 'Subject', 'recipient@example.org').then(() => {
+//                // Success!
+//            }).catch(() => {
+//                // Error!
+//            });
+        }
     }
     wishList(feat_prod) {
         let data = {};

@@ -14,7 +14,7 @@ export class FocusByEnterKey {
             if (this.id != "btn") {
                 e.preventDefault();
                 var form = Zepto('#' + this.id);
-                form.find('input, select')[0].focus();
+                form.find('input,textarea, select')[0].focus();
             }
             else { }
         }
