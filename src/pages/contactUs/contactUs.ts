@@ -6,9 +6,10 @@ import { CMS } from './../../model/cms/cms';
     templateUrl: 'contactUs.html'
 })
 export class ContactUs {
+    spinner=false;
     constructor(public _cms: CMS) {
-        this._cms.getPrivacyInfo({}).then((res) => {
-
-        })
+//        this._cms.getPrivacyInfo({}).then((res) => {
+//
+//        })
     }
 }

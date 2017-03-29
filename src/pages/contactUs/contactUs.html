@@ -1,5 +1,25 @@
 <header [title]='"Contact Us"' [wishList]=false></header>
 <ion-content>
     <ion-spinner class="apiSpinner" *ngIf="spinner"></ion-spinner>
-
+    <ion-list>
+        <ion-item>
+            <ion-label class="capitalize" floating>Name <span color="danger">*</span></ion-label>
+            <ion-input type="text" value="opt" [(ngModel)]="text" (keyup.enter)="text(opt)"  (blur)="text(opt,customOption.id)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="capitalize" floating>Email<span color="danger">*</span></ion-label>
+            <ion-input type="text" value="opt" [(ngModel)]="text" (keyup.enter)="text(opt)"  (blur)="text(opt,customOption.id)"></ion-input>
+        </ion-item>         
+        <ion-item>
+            <ion-label class="capitalize" floating>Telephone</ion-label>
+            <ion-input type="text" value="opt" [(ngModel)]="text" (keyup.enter)="text(opt)"  (blur)="text(opt,customOption.id)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="capitalize" floating >Comment<span color="danger">*</span></ion-label>
+            <ion-textarea value="opt" [(ngModel)]="text" (blur)="textArea(opt)"></ion-textarea> 
+        </ion-item>
+    </ion-list>
+    <span class="center">
+        <btn-round [title]='"Submit"' [spin]="spinner" [id]="'btn'" [category]="'click'" [color]="'primary'" [valid]="false" (onBtnClick)="signin(logform.value)" ></btn-round>
+    </span>
 </ion-content>
