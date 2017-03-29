@@ -5,11 +5,10 @@ import { config } from './../config/config';
 declare let Promise: any;
 @Injectable()
 export class SocialService {
-    platform: any;
     options: any;
-    constructor(platform: Platform) {
-        this.platform = platform;
-        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
+    constructor(public platform: Platform) {
+        //comment because creating apply error on browserInit
+//        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
         this.options = {
             webClientId: config.google_clientid
         }
