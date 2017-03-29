@@ -176,6 +176,41 @@ img-zoom{
         height: auto;
     }
 }
+about-us, policy{
+    h3, .h3 {
+        margin: 0;
+        margin-bottom: 10px;
+        color: #636363;
+        font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        font-style: normal;
+        line-height: 1.4;
+        text-rendering: optimizeSpeed;
+        text-transform: uppercase;
+    }
+    p{
+        color: #636363;
+        font-family: Georgia, Times, "Times New Roman", serif;
+        font-size: 14px;
+        font-style: italic;
+        line-height: 24px;
+    }
+    h2 {
+        color: #3399cc;
+    }
+    ul {
+        list-style: disc outside;
+        margin-bottom: 1.5em;
+    }
+    li {
+        color: #636363;
+        font-family: Georgia, Times, "Times New Roman", serif;
+        font-size: 14px;
+        font-style: italic;
+        line-height: 24px;
+    }
+}
 .fb{
     background-color: #365899 !important;
 }
