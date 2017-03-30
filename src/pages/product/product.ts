@@ -150,6 +150,11 @@ export class ProductPage implements OnInit {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
                 this._wishListService.setWishListData(feat_prod, data);
+                if(feat_prod.data.wishlist_item_id){
+                    feat_prod.data.wishlist_item_id = false;
+                } else{
+                    feat_prod.data.wishlist_item_id = true;
+                }
             } else {
                 this._toast.toast("Please login first", 3000);
             }

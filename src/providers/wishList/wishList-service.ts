@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
-import { Storage } from '@ionic/storage';
-import { ActionSheetController } from 'ionic-angular';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { WishListModel } from './../../model/wishList/wishList';
+import {Storage} from '@ionic/storage';
+import {ActionSheetController} from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {WishListModel} from './../../model/wishList/wishList';
+import {HomeProducts} from '../../model/home/homeProducts';
 @Injectable()
 export class WishListService {
-    constructor(public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) { }
+    constructor(private _homeProductsConfig: HomeProducts, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
     resetFilterData() {
     }
     getWishListData(data1) {
@@ -52,7 +53,8 @@ export class WishListService {
                         list["secret"] = apiData["secret"];
                         response.push(list);
                         this.local.set("wishList", response);
-                        this._toast.toast(list.data.name+" has been added to your wishlist", 3000);
+                        this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
+                        this._homeProductsConfig.getHomeProducts({"type": "full"});
                     });
                 } else {
                     this.deleteProductWishList(list, true);
@@ -62,7 +64,8 @@ export class WishListService {
                     list["wishlist_id"] = res.body["wishlist_id"];
                     list["secret"] = apiData["secret"];
                     this.local.set("wishList", [list]);
-                    this._toast.toast(list.data.name+" has been added to your wishlist", 3000);
+                    this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
+                    this._homeProductsConfig.getHomeProducts({"type": "full"});
                 });
             }
         })
@@ -92,10 +95,11 @@ export class WishListService {
                             this.local.get('wishList').then((res: any) => {
                                 forEach(res, (value, key) => {
                                     if (value && value.wishlist_id == data.wishlist_id) {
-                                        this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
+                                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
                                             res.splice(key, 1);
                                             this.local.set("wishList", res);
                                             this._toast.toast("Your wishList is updated", 3000);
+                                            this._homeProductsConfig.getHomeProducts({"type": "full"});
                                             resolve(res);
                                         });
                                     }
@@ -116,10 +120,11 @@ export class WishListService {
                 this.local.get('wishList').then((res: any) => {
                     forEach(res, (value, key) => {
                         if (value && value.data.entity_id == data.data.entity_id) {
-                            this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
+                            this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
                                 res.splice(key, 1);
                                 this.local.set("wishList", res);
                                 this._toast.toast("Your wishList is updated", 3000);
+                                this._homeProductsConfig.getHomeProducts({"type": "full"});
                                 resolve(res);
                             });
                         }

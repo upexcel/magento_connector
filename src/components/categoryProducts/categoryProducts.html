@@ -8,7 +8,7 @@
                             <div class="imgBox relative">
                                 <span *ngIf="displayMode == 'Landscape'" class=" absolute wishlist" (click)="wishList(feat_prod)">
                                     <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
-                                    <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.toggleWishList}"></div>
+                                    <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>
                                 </span>
                                 <span (click)="gotoProduct(feat_prod.data.sku)">
                                     <img class="center" imageDirective src="{{feat_prod.data.small_image}}"/>
@@ -25,7 +25,7 @@
                                         </div>    
                                     </div>
                                     <div *ngIf="displayMode == 'Portrait'" class=" absolute landscapWishListIco lightRed columnForGrid25" (click)="wishList(feat_prod)">
-                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.toggleWishList}"></div>
+                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>
                                         <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
                                     </div>
                                 </div>
