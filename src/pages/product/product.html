@@ -34,14 +34,8 @@
                                     </ion-col>
                                     <ion-col class="no-margin" width-20>
                                         <span class="productWishList" >
-                                            <!--<i class="fa fa-share" aria-hidden="true"></i>-->
-                                            <ion-fab >
-                                                <button ion-fab mini ><ion-icon name="share"></ion-icon></button>
-                                                <ion-fab-list side="left">
-                                                    <button ion-fab><ion-icon name="logo-facebook" (click)="sharring('facebook')"></ion-icon></button>
-                                                    <button ion-fab><ion-icon name="logo-twitter" (click)="sharring('twitter')"></ion-icon></button>
-                                                    <button ion-fab><ion-icon name="logo-googleplus" (click)="sharring('googleplus')"></ion-icon></button>
-                                                </ion-fab-list>
+                                            <ion-fab>
+                                                <button ion-fab mini (click)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon name="share"></ion-icon></button>
                                             </ion-fab>
                                         </span>
                                     </ion-col> 

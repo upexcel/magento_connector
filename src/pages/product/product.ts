@@ -20,7 +20,8 @@ import { WishListService } from '../../providers/wishList/wishList-service';
 import { config } from './../../providers/config/config';
 import { ModalController } from 'ionic-angular';
 import { WishListModel } from './../../model/wishList/wishList';
-//import { SocialSharing } from '@ionic-native/social-sharing';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { LoadingController } from 'ionic-angular';
 
 @Component({
     selector: 'product',
@@ -81,7 +82,7 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    constructor( public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -112,20 +113,22 @@ export class ProductPage implements OnInit {
             });
         })
     }
-    sharring(shareType) {
-        if (shareType == "facebook") {
-//            this._socialSharing.canShareViaEmail().then(() => {
-//                // Sharing via email is possible
-//            }).catch(() => {
-//                // Sharing via email is not possible
-//            });
-            // Share via email
-//            this._socialSharing.shareViaEmail('Body', 'Subject', 'recipient@example.org').then(() => {
-//                // Success!
-//            }).catch(() => {
-//                // Error!
-//            });
+    shareWithOptions(caption, img) {
+        let opt = {
+            message: 'share this',
+            subject: caption,
+            files: img,
+            url: 'https://www.website.com/foo/#bar?a=b',
+            chooserTitle: 'Pick an app'
         }
+        this._socialSharing.shareWithOptions(opt)
+            .then(() => console.log('Shared!'))
+            .catch((error: any) => console.error(error));
+        let loader = this.loadingCtrl.create({
+            content: "Please wait...",
+            duration: 4000
+        });
+        loader.present();
     }
     wishList(feat_prod) {
         let data = {};
