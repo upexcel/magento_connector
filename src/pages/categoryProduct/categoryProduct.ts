@@ -14,7 +14,7 @@ export class CategoryProductPage implements OnInit {
     title: string;
     limit: number = 10;
     page: number = 1;
-    categoryProduct: any = {};
+    categoryProduct: any;
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
@@ -65,6 +65,8 @@ export class CategoryProductPage implements OnInit {
         this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
     }
     ngOnDestroy() {
+        this._events.unsubscribe('sort:data');
+        this._events.unsubscribe('filter:data');
     }
     show_products(page: any, limit: any, product_id, sortByData?, filterData?) {
         let body;
@@ -73,7 +75,6 @@ export class CategoryProductPage implements OnInit {
         } else {
             body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "sort_order": sortByData.sort_order, "filter": filterData};
         }
-
         this._category.getCategoryProduct(body).then((res) => {
             this.categoryProduct = res;
         }).catch((err) => {

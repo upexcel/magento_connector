@@ -13,7 +13,6 @@ export class Address {
     setAddress(data) {
         if (data) {
             this.address=(data);
-            console.log("this.address",this.address)
         }
     }
     getAddress() {

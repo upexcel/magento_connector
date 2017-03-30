@@ -410,7 +410,6 @@ export class ProductPage implements OnInit {
         this.customFormValidate = data.disable;
         if (this.type != 'configurable' && this.type != 'bundle') {
             if (this.type == 'downloadable') {
-                console.log("data", data)
                 if (data.disable == false) {
                     this.ifCustomOption(null, data);
                 }
@@ -501,6 +500,7 @@ export class ProductPage implements OnInit {
     addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
+            this.add_cart['store_id'] = this.store_id;
             this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;

@@ -15,13 +15,11 @@ export class wishList {
     constructor(public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {
 
         this._wishListService.getWishList().then((data) => {
-            console.log("get", data);
             this.data = data;
         })
     }
     deleteProductWishList(data) {
         this._wishListService.deleteProductWishList(data).then((data) => {
-            console.log("delete", data);
             this.data = data;
         })
     }

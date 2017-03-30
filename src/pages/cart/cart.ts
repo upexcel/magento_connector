@@ -43,7 +43,6 @@ export class CartPage implements OnInit {
             buttons: [{
                 text: 'Yes',
                 handler: () => {
-                    console.log('Archive clicked');
                     this._cartFunction.deleteItem(data).then((res) => {
                         this.res = res;
                     });

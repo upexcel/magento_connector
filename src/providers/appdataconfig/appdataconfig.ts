@@ -8,11 +8,15 @@ import {config} from './../../providers/config/config';
 import {categoryService} from './../../providers/category-service/category-service';
 import {homeProductsService} from './../../providers/homeproducts-service/homeproducts.service';
 import {sliderService} from './../../providers/slider-service/slider.service';
-
+import forEach from 'lodash/forEach';
+import isEqual from 'lodash/isEqual';
 @Injectable()
 
 export class AppDataConfigService {
-    constructor(private _local: Storage, private _categoryService: categoryService, private _homeProductsService: homeProductsService, private _sliderService: sliderService, ) {}
+    appTemporaryData:any;
+    constructor(private _local: Storage, private _categoryService: categoryService, private _homeProductsService: homeProductsService, private _sliderService: sliderService, ) {
+        this.appTemporaryData = [];
+    }
     setUserData(userData) {
         this.cleanUp();
         this._local.set('userData', userData);
@@ -46,5 +50,29 @@ export class AppDataConfigService {
             this._local.remove(key);
             resolve();
         })
+    };
+    saveDataInService(apiData, responseData) {
+        this.appTemporaryData.push(
+        {
+            "apiData":apiData,
+            "responseData":responseData
+        });
+    };
+    checkDataInService(apiData) {
+        delete apiData.mobile_width;
+            let flag = 0;
+            let responseData;
+            forEach(this.appTemporaryData, (value, key) => {
+                delete value['apiData'].mobile_width;
+                if (isEqual(apiData, value.apiData)) {
+                    responseData = value['responseData'];
+                    flag = 1;
+                }
+            });
+            if (flag == 1) {
+                return responseData;
+            } else{
+                return false;
+            }
     };
 }

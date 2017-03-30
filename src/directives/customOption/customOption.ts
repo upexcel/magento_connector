@@ -421,7 +421,6 @@ export class CustomOption {
         let opt = {};
         let validateCount = 0;
         let custonCartDisable = true;
-        console.log("this.custom_option", this.custom_option)
         forEach(this.custom_option, (value) => {
             if (value.type == 'checkbox') {
                 forEach(value.option_type, (opt) => {
@@ -450,7 +449,6 @@ export class CustomOption {
             }
             if ((value.type == 'area' || value.type == 'field') && value.vertualId) {
                 total = total + (parseFloat(value.vertualId.price));
-                console.log("key", value.title, 'value', value.text, 'id', value.id, 'type', value.type)
                 subdata.push({ "key": value.title, 'value': value.text, 'id': value.id, 'type': value.type })
             }
         })
@@ -464,7 +462,6 @@ export class CustomOption {
         if (validateCount == this.validateArray.length) {
             custonCartDisable = false;
         }
-        console.log("custom", opt, "customSubdata", subdata)
         opt = { "dynemicPrice": total, "options": opt, "customSubdata": subdata, "disable": custonCartDisable }
         this.onChange.emit(opt);
     }
