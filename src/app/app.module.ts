@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 //storage
 import { Storage } from '@ionic/storage';
 //pages
@@ -237,7 +239,8 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         FilterByModel,
         WishListModel,
         checkoutService,
-        CMS
+        CMS,
+        SocialSharing
     ]
 })
 export class AppModule {
