@@ -48,7 +48,7 @@
                                 <span color="{{((display_price*1) > (final_price*1))? 'red': ''}}" [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" ><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
                             </ion-col>
                             <ion-col width-20 class="no-margin no-padding">
-                                <div class="heart floatRight" [ngClass]="{'is_animating':myData}" (click)="wishList(productData.body); myData = !myData"></div>
+                                <div class="heart floatRight" [ngClass]="{'is_animating':productData.body.data.wishlist_item_id}" (click)="wishList(productData.body)"></div>
                                 <!--                                <span  class="productWishList lightRed"  (click)="wishList(productData.body)">
                                                                     <i class="fa fa-heart" aria-hidden="true" ></i>
                                                                 </span>-->
