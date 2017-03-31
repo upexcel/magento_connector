@@ -163,6 +163,7 @@
     }
     ion-slides{
         height: auto;
+        min-height: 200px;
     }
     .nobr, .nowrap {
         white-space: nowrap;
@@ -328,7 +329,6 @@ filter{
     .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
         border: 0px;
     }
-
 
 }
 
