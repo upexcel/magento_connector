@@ -13,8 +13,8 @@ import isEqual from 'lodash/isEqual';
 @Injectable()
 
 export class AppDataConfigService {
-    appTemporaryData:any;
-    constructor(private _local: Storage, private _categoryService: categoryService, private _homeProductsService: homeProductsService, private _sliderService: sliderService, ) {
+    appTemporaryData: any;
+    constructor(public _local: Storage, private _categoryService: categoryService, private _homeProductsService: homeProductsService, private _sliderService: sliderService) {
         this.appTemporaryData = [];
     }
     setUserData(userData) {
@@ -53,26 +53,44 @@ export class AppDataConfigService {
     };
     saveDataInService(apiData, responseData) {
         this.appTemporaryData.push(
-        {
-            "apiData":apiData,
-            "responseData":responseData
-        });
+            {
+                "apiData": apiData,
+                "responseData": responseData
+            });
+    };
+    resetDataInService() {
+        this.appTemporaryData = [];
     };
     checkDataInService(apiData) {
         delete apiData.mobile_width;
-            let flag = 0;
-            let responseData;
-            forEach(this.appTemporaryData, (value, key) => {
-                delete value['apiData'].mobile_width;
-                if (isEqual(apiData, value.apiData)) {
-                    responseData = value['responseData'];
-                    flag = 1;
-                }
-            });
-            if (flag == 1) {
-                return responseData;
-            } else{
-                return false;
+        let flag = 0;
+        let responseData;
+        forEach(this.appTemporaryData, (value, key) => {
+            delete value['apiData'].mobile_width;
+            if (isEqual(apiData, value.apiData)) {
+                responseData = value['responseData'];
+                flag = 1;
             }
+        });
+        if (flag == 1) {
+            return responseData;
+        } else {
+            return false;
+        }
+    };
+    updateDataInServiceForWishlist(entity_id, wishlist_id) {
+        forEach(this.appTemporaryData, (value) => {
+            if (value['responseData']['body'].length) {
+                forEach(value['responseData']['body'], (categoryData) => {
+                    if (entity_id == categoryData['data']['entity_id']) {
+                        categoryData['data']['wishlist_item_id'] = wishlist_id;
+                    }
+                });
+            } else {
+                if (entity_id == value['responseData']['body']['data']['entity_id']) {
+                    value['responseData']['body']['data']['wishlist_item_id'] = wishlist_id;
+                }
+            }
+        });
     };
 }

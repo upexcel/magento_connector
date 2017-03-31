@@ -1,5 +1,5 @@
 export class SliderDataType {
-    body: any;
+    body:{url:any};
     status: number;
     message: string;
 }

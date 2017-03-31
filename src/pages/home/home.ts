@@ -72,9 +72,11 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
+        this.spin = true;
         let body = {"type": "full"}
         this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
+                this.spin = false;
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.body, this.start, this.end);
             }

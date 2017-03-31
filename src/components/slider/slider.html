@@ -2,7 +2,7 @@
     <ion-row no-padding class="slideOption" >
         <ion-col no-padding>
             <ion-slides  [options]="mySlideOptions" *ngIf="img" autoplay="{{mySlideOptions.autoplay}}" loop="{{mySlideOptions.loop}}" pager="{{mySlideOptions.pager}}">
-                <ion-slide *ngFor="let images of img.body">
+                <ion-slide *ngFor="let images of img.body.url">
                     <img src="{{images}}" class="sliderImg"/>
                 </ion-slide>
             </ion-slides>
