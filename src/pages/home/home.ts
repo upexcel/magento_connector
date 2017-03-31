@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
-import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
-import {HomeProducts} from '../../model/home/homeProducts';
+import { Component, OnInit } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
+import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
+import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {MyAccount} from './../../model/myaccount/myaccount';
-import {Address} from './../../providers/address-service/address';
-import {LogoutService} from './../../providers/logout/logout-service';
-import {StartPage} from './../../pages/startpage/startpage';
-import {WishListService} from './../../providers/wishList/wishList-service';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { MyAccount } from './../../model/myaccount/myaccount';
+import { Address } from './../../providers/address-service/address';
+import { LogoutService } from './../../providers/logout/logout-service';
+import { StartPage } from './../../pages/startpage/startpage';
+import { WishListService } from './../../providers/wishList/wishList-service';
+declare let navigator: any;
 
 @Component({
     templateUrl: 'home.html'
@@ -22,7 +23,6 @@ export class HomePage implements OnInit {
     start: number = 0;
     end: number = 4;
     backPressed: boolean = false;
-    public navigator: any;
     title: string = '';
     pagename: string = 'home';
     userToken: any;
@@ -43,12 +43,12 @@ export class HomePage implements OnInit {
         setTimeout(() => {
             this._appDataConfigService.getUserData().then((userData: any) => {
                 if (userData && userData.access_token) {
-                    this._wishList.getWishListData({"secret": userData.secret});
-                    this._myaccount.getMyAccount({"secret": userData.secret}).then((res) => {
+                    this._wishList.getWishListData({ "secret": userData.secret });
+                    this._myaccount.getMyAccount({ "secret": userData.secret }).then((res) => {
                         this._address.setAddress(res);
                     }, (err) => {
                         this._logout.logout("please Login Again", this._navCtrl);
-                        this._navCtrl.setRoot(StartPage, {"message": "please Login Again"});
+                        this._navCtrl.setRoot(StartPage, { "message": "please Login Again" });
                     })
                 }
             })
@@ -62,7 +62,7 @@ export class HomePage implements OnInit {
     }
     homeProducts() {
         this.spin = true;
-        let body = {"type": "full"}
+        let body = { "type": "full" }
         this._homeProductsConfig.getHomeProducts(body).then((res) => {
             if (res) {
                 this.homeProduct = res;
@@ -74,6 +74,7 @@ export class HomePage implements OnInit {
 
     checkBackButton() {
         this._platform.registerBackButtonAction(() => {
+            this._events.publish('user:exit', true);
             if (this._viewController.isLast() && this._viewController.isFirst()) {
                 if (!this.backPressed) {
                     this.backPressed = true;
@@ -81,7 +82,8 @@ export class HomePage implements OnInit {
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-                     navigator['app'].exitApp()
+                    navigator['app'].exitApp();
+
                 }
             } else {
                 this._navCtrl.pop();
