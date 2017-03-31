@@ -12,7 +12,7 @@ import { FilterService } from './../../providers/filter-service/filterService';
 })
 export class FilterBy {
     @Input() product: any;
-    dualValue2: any={};
+    dualValue2: any = {};
     data: any;
     filter_title: string = "";
     checkedData: any = [];
@@ -58,7 +58,10 @@ export class FilterBy {
                 })
             })
         })
-
+        this._events.subscribe('user:exit', (user) => {
+            this._events.unsubscribe('user:exit');
+            this._viewCtrl.dismiss();
+        })
     }
 
     range() {

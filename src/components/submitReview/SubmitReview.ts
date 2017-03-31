@@ -43,6 +43,10 @@ export class SubmitReview implements OnInit {
                 this.reviewDataNickname = "";
             }
         });
+        this._events.subscribe('user:exit', (user) => {
+            this._events.unsubscribe('user:exit');
+            this._viewCtrl.dismiss();
+        })
     }
     close() {
         this._viewCtrl.dismiss();
