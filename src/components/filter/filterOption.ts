@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, Events } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
 import forEach from 'lodash/forEach';
 import findIndex from 'lodash/findIndex';
@@ -14,7 +14,7 @@ export class FilterOption {
     option: any = [];
     checkData: any = [];
     data;
-    constructor(private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {
+    constructor(public _events: Events, private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {
         this.data = this._navParam.get('data');
         let preChecked = {};
         forEach(this.data.option, (value: any, key) => {
@@ -30,6 +30,10 @@ export class FilterOption {
         })
     }
     ngOnInit() {
+        this._events.subscribe('user:exit', (user) => {
+            this._events.unsubscribe('user:exit');
+            this._viewCtrl.dismiss();
+        })
     }
     onChangeCheck(value, key, event) {
         var data = {};
