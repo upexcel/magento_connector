@@ -1,13 +1,7 @@
-import {
-    Component,
-    
-    
-} from '@angular/core';
+import { Component } from '@angular/core';
 import {
     ViewController,
-    NavController,
-    
-    NavParams
+    NavController, NavParams
 } from 'ionic-angular';
 import {
     MyAccount
@@ -29,7 +23,7 @@ import {
 } from 'ionic-angular';
 
 @Component({
-     selector: 'popover',
+    selector: 'popover',
     template: `
     <ion-list class="popover no-margin">
       <button ion-item (click)="editAccount()">Edit</button>
@@ -42,17 +36,21 @@ export class AccountPopoverPage {
     secret: string;
     id: number;
     entity_id: number;
-    accountCartLength:any;
-    constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) {}
+    accountCartLength: any;
+    constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
             this.secret = userData.secret;
         });
-        if(this._navParams.data) {
+        if (this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
             this.accountCartLength = this._navParams.data.accountCartLen;
         }
+        this._events.subscribe('user:exit', (user) => {
+            this._events.unsubscribe('user:exit');
+            this._navCtrl.pop();
+        })
     }
     editAccount() {
         this.close();
@@ -69,11 +67,11 @@ export class AccountPopoverPage {
             secret: this.secret
         };
         this.viewCtrl.dismiss();
-        this._myaccount.deleteMyAddress(data).then((res) => { 
-                this._toast.toast("Deleted", 3000, "top");
-                this._events.publish('user:deleted', true);
-            })
-            .catch((err) => {})
+        this._myaccount.deleteMyAddress(data).then((res) => {
+            this._toast.toast("Deleted", 3000, "top");
+            this._events.publish('user:deleted', true);
+        })
+            .catch((err) => { })
     }
     close() {
         this.viewCtrl.dismiss();
