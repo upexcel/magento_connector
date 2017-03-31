@@ -70,7 +70,7 @@
                                     <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                         <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                             <ion-label no-margin class="font12">
-                                                {{obj.label}}&nbsp;+<span *ngIf="obj.price*1>0">{{productData.body.data.currency_sign}}{{obj.price}}</span>
+                                                {{obj.label}}&nbsp;<span *ngIf="obj.price*1>0">+{{productData.body.data.currency_sign}}{{obj.price}}</span>
                                             </ion-label>
                                         </ion-option>
                                     </span>

@@ -20,7 +20,7 @@
                         <span class="date_creation">{{data.created_at | date: 'hh:mm'}}</span>
                         <div class="cd-timeline-content">
                              <h2>Oder No: {{data.order_no}}</h2>
-                            <h2>Amount:  &#8377;{{data.grand_total}}</h2>
+                            <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number }}</h2>
                             <h2 text-capitalize>Status: {{data.status}}</h2>
                             <hr>
                         </div>
