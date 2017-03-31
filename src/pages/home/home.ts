@@ -71,6 +71,15 @@ export class HomePage implements OnInit {
             }
         })
     }
+    ionViewWillEnter() {
+        let body = {"type": "full"}
+        this._homeProductsConfig.getHomeProducts(body).then((res) => {
+            if (res) {
+                this.homeProduct = res;
+                this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+            }
+        });
+    }
 
     checkBackButton() {
         this._platform.registerBackButtonAction(() => {
@@ -81,7 +90,7 @@ export class HomePage implements OnInit {
                     setTimeout(() => this.backPressed = false, 2000);
                     return;
                 } else {
-                     navigator['app'].exitApp()
+                    navigator['app'].exitApp()
                 }
             } else {
                 this._navCtrl.pop();
