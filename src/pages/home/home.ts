@@ -18,7 +18,7 @@ declare let navigator: any;
 })
 export class HomePage implements OnInit {
     homeProduct: HomeProductsDataType;
-    spin: boolean = true;
+    spin: boolean = false;
     feature_products: any;
     start: number = 0;
     end: number = 4;
@@ -54,7 +54,7 @@ export class HomePage implements OnInit {
             })
         }, 100)
 
-        this.homeProducts();
+//        this.homeProducts();
         this.checkBackButton();
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
