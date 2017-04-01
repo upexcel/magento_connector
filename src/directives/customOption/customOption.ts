@@ -74,23 +74,27 @@ export class CustomOption {
             //                this.jsonFileData.push(obj);
             //            }
             if (this.editCartData) {
-                forEach(this.editCartData.customSubdata, (cartData) => {
+                forEach(this.editCartData.options, (cartData, cartKey) => {
                     if (value.type == 'checkbox') {
                         forEach(value.option_type, (opt) => {
-                            if (cartData.value.defaultSet && cartData.value.option_type_id == opt.option_type_id) {
-                                opt.defaultSet = true;
-                                if (!this.checkObj[opt.option_id]) {
-                                    this.checkObj[opt.option_id] = [];
-                                }
-                                this.checkObj[opt.option_id].push(opt.option_type_id);
+                            if (cartKey == opt.option_id) {
+                                forEach(cartData, (value) => {
+                                    if (value && value == opt.option_type_id) {
+                                        opt.defaultSet = true;
+                                        if (!this.checkObj[opt.option_id]) {
+                                            this.checkObj[opt.option_id] = [];
+                                        }
+                                        this.checkObj[opt.option_id].push(opt.option_type_id);
+                                    }
+                                })
                             }
                         })
                         this.validateArray.push({ "id": value.id, "validate": false });
                     }
                     else if ((value.type == "drop_down" || value.type == 'radio')) {
                         forEach(value.option_type, (opt) => {
-                            if (opt.option_type_id == cartData.value.option_type_id) {
-                                if (cartData.id == value.id) {
+                            if (cartKey == opt.option_id) {
+                                if (opt.option_type_id == cartData) {
                                     value.vertualId = opt;
                                     if (value.type == 'radio') {
                                         this.Radioobj[value.vertualId.option_id] = value.vertualId.option_type_id;
@@ -103,51 +107,60 @@ export class CustomOption {
                         this.validateArray.push({ "id": value.id, "validate": false });
                     }
                     else if (value.type == 'multiple') {
-                        if (cartData.id == value.id) {
-                            forEach(value.option_type, (opt) => {
-                                if (opt.option_type_id == cartData.value.option_type_id) {
-                                    value.vertualArray.push(opt);
-                                    if (!this.multiObj[opt.option_id]) {
-                                        this.multiObj[opt.option_id] = [];
+                        forEach(value.option_type, (opt) => {
+                            if (cartKey == opt.option_id) {
+                                forEach(cartData, (cartDataValue) => {
+                                    if (cartDataValue && cartDataValue == opt.option_type_id) {
+                                        value.vertualArray.push(opt);
+                                        if (!this.multiObj[opt.option_id]) {
+                                            this.multiObj[opt.option_id] = [];
+                                        }
+                                        this.multiObj[opt.option_id].push(opt.option_type_id);
                                     }
-                                    this.multiObj[opt.option_id].push(opt.option_type_id);
-                                }
-                            })
-                        }
+                                })
+                            }
+                        })
                         this.validateArray.push({ "id": value.id, "validate": false });
                     }
 
                     else if (value.type == "date" || value.type == "time" || value.type == "date_time") {
-                        if (cartData.id == value.id) {
-                            value.vertualId = cartData.value;
-                            forEach(value.option_type, (opt) => {
+                        forEach(value.option_type, (opt) => {
+                            if (cartKey == opt.option_id) {
                                 value.date = opt;
-                                value.dateFormateApi = cartData.dateFormateApi;
+                                value.dateFormateApi = cartData;
+                                value.dateFormate = cartData;
                                 if (value.type == "date") {
-                                    this.date[opt.option_id] = cartData.dateFormateApi;
+                                    value.vertualId = cartData.year + "-" + ((cartData.month < 9) ? ('0' + cartData.month) : cartData.month) + "-" + ((cartData.day < 9) ? ('0' + cartData.day) : cartData.day);
+                                    this.date[opt.option_id] = cartData;
                                 }
                                 else if (value.type == "time") {
-                                    this.timeJson[opt.option_id] = value.dateFormateApi;
+                                    if (cartData.day_part == "pm") {
+                                        let time = ((cartData.hour * 1) + 12) + ":" + ((cartData.minute < 9) ? ("0" + cartData.minute) : cartData.minute) ;
+                                        value.vertualId = time
+                                    } else {
+                                        value.vertualId = ((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ?  ("0" + cartData.minute) : cartData.minute) ;
+                                    }
+                                    this.timeJson[opt.option_id] = cartData;
                                 } else {
-                                    this.dateTimeJson[opt.option_id] = value.dateFormateApi;
+                                value.vertualId = cartData.year + "-" + ((cartData.month < 9) ? ('0' + cartData.month) : cartData.month) + "-" + ((cartData.day < 9) ? ('0' + cartData.day) : cartData.day)+'T'+((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ?  ("0" + cartData.minute) : cartData.minute)+':00Z';
+                                    this.dateTimeJson[opt.option_id] = cartData;
                                 }
-                            })
-                        }
-
+                            }
+                        })
                         this.validateArray.push({ "id": value.id, "validate": false });
                     }
                     else if (value.type == 'area' || value.type == 'field') {
-                        if (cartData.id == value.id) {
-                            value.text = cartData.value;
-                            forEach(value.option_type, (id) => {
+                        forEach(value.option_type, (id) => {
+                            if (cartKey == id.option_id) {
                                 value.vertualId = id;
+                                value.text = cartData;
                                 if (value.type == 'field') {
                                     this.textData[id.option_id] = value.text;
                                 } else {
                                     this.textarea[id.option_id] = value.text;
                                 }
-                            })
-                        }
+                            }
+                        })
                         this.validateArray.push({ "id": value.id, "validate": false });
                     } else { console.log("some thing goes wrong"); }
 
@@ -164,7 +177,7 @@ export class CustomOption {
     text(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
             if (value.type == "field") {
-                if (value.text.length > 0) {
+                if (value.text.length > 0) {FFF
                     this.formValidate(value.id, false, is_require);
                     value.vertualId = opt;
                     this.textData[value.vertualId.option_id] = value.text;
@@ -363,6 +376,7 @@ export class CustomOption {
                         })
                     }
                 })
+
             }
         });
         this.formValidate(formId, false, is_require);

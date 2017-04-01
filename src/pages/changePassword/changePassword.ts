@@ -10,6 +10,7 @@ import { User } from './userInterface';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 
 @Component({
+    selector:'change-pass',
     templateUrl: 'changepassword.html'
 })
 export class ChangepasswordPage implements OnInit {

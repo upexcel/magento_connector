@@ -149,13 +149,16 @@ export class ProductPage implements OnInit {
             data["qty"] = 0;
             data["super_group"] = this.add_cart['super_attribute'];
         }
+        if (Object.keys(this.add_cart['options']).length > 0) {
+            data["options"] = this.add_cart['options'];
+        }
         feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
                 this._wishListService.setWishListData(feat_prod, data);
-                if(feat_prod.data.wishlist_item_id){
+                if (feat_prod.data.wishlist_item_id) {
                     feat_prod.data.wishlist_item_id = false;
-                } else{
+                } else {
                     feat_prod.data.wishlist_item_id = true;
                 }
             } else {
