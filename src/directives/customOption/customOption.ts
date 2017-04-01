@@ -177,7 +177,7 @@ export class CustomOption {
     text(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
             if (value.type == "field") {
-                if (value.text.length > 0) {FFF
+                if (value.text.length > 0) {
                     this.formValidate(value.id, false, is_require);
                     value.vertualId = opt;
                     this.textData[value.vertualId.option_id] = value.text;
