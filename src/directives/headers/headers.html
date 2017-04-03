@@ -9,8 +9,8 @@
         </ion-title>
         <ion-buttons end >
             <button ion-button icon-only  (click)="changeView(viewChang)">
-                    <i class="fa fa-list-ul fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
-                <i class="fa fa-th-large fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
+                    <i class="fa fa-th-large fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
+                <i class="fa fa-list-ul fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
             </button>
             <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>

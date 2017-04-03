@@ -134,23 +134,27 @@ export class ProductPage implements OnInit {
         let data = {};
         data["productId"] = feat_prod.data.entity_id;
         data["secret"] = this.userData ? this.userData.secret : "";
-        if (this.type != "grouped") {
-            data["qty"] = 1;
-            if (this.type == 'configurable') {
-                data["super_attribute"] = this.add_cart['super_attribute'];
-            } else if (this.type == "downloadable") {
-                data["links"] = this.add_cart['links'];
+        if (Object.keys(this.add_cart).length > 0) {
+            if (this.type != "grouped") {
+                data["qty"] = 1;
+                if (this.type == 'configurable' && Object.keys(this.add_cart['super_attribute'])) {
+                    data["super_attribute"] = this.add_cart['super_attribute'];
+                } else if (this.type == "downloadable" && Object.keys(this.add_cart['links'])) {
+                    data["links"] = this.add_cart['links'];
+                }
+                else if (this.type == "bundle" && Object.keys(this.add_cart['bundle_option_qty'])) {
+                    data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
+                    data["bundle_option"] = this.add_cart['bundle_option'];
+                }
+            } else {
+                data["qty"] = 0;
+                if( Object.keys(this.add_cart['super_attribute'])){
+                data["super_group"] = this.add_cart['super_attribute'];
+                }
             }
-            else if (this.type == "bundle") {
-                data["bundle_option_qty"] = this.add_cart['bundle_option_qty'];
-                data["bundle_option"] = this.add_cart['bundle_option'];
+            if (this.add_cart['options'] && Object.keys(this.add_cart['options']).length > 0) {
+                data["options"] = this.add_cart['options'];
             }
-        } else {
-            data["qty"] = 0;
-            data["super_group"] = this.add_cart['super_attribute'];
-        }
-        if (Object.keys(this.add_cart['options']).length > 0) {
-            data["options"] = this.add_cart['options'];
         }
         feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
@@ -165,6 +169,7 @@ export class ProductPage implements OnInit {
                 this._toast.toast("Please login first", 3000);
             }
         });
+
     }
 
     products() {
