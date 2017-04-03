@@ -30,4 +30,13 @@ export class checkoutService {
             })
         });
     }
+    orderPlace(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api("onepage/placeOrder", data).subscribe((res) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });
+    }
 }

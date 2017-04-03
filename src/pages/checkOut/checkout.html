@@ -181,5 +181,14 @@
     </ion-card>
 </ion-content>
 <ion-footer >
-    <btn-full  [titleFull]='"Place Order"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="false" (onBtnClick)="orderPlace()"></btn-full>
+    <ion-grid class="filterFooterBtnDiv">
+        <ion-row>
+            <ion-col width-50 class="center">
+                <h3> $3000 </h3> 
+            </ion-col>
+            <ion-col width-50>
+                <btn-full  [titleFull]='"Place Order"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
 </ion-footer>

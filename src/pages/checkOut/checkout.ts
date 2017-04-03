@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { MySavedAddressPage } from './../myaccount/savedAddress';
 import { MyEditAddressPage } from './../myaccount/myeditaddress';
 import { Address } from './../../providers/address-service/address';
-import { checkoutService } from './../../providers/checkout/checkout-service';
+import { checkoutService } from './../../model/checkout/checkout-service';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
@@ -22,7 +22,11 @@ export class Checkout implements OnInit {
     shippingMethods: any;
     PaymentMethods: any;
     data = {};
-    constructor( private _toast: ToastService,public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    disable = true;
+    selectedPaymentMethod;
+    selectedShippingMethod;
+    validate = { "payment": false, "shipping": false, "shippingAddress": false };
+    constructor(private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
@@ -75,9 +79,19 @@ export class Checkout implements OnInit {
         })
     }
     ionViewWillEnter() {
+        this.selectedPaymentMethod=false;
+        this.selectedShippingMethod=false;
+        this.validate.shippingAddress = false;
+        this.validate.payment = false;
+        this.validate.shipping = false
         this._address.getAddress().then((address) => {
             this.address = address['body'];
         });
+        forEach(this.address, (address) => {
+            if (address && address.default_shipping) {
+                this.validate.shippingAddress = true;
+            }
+        })
         this._checkoutService.getShippingMethods().then((res: any) => {
             this.shippingMethods = [];
             forEach(res.body.shipping_methods, (value, key) => {
@@ -100,24 +114,51 @@ export class Checkout implements OnInit {
         }, (err) => {
             console.log(err)
         });
+        this.validateData();
     }
     changeAddress() {
         this._navCtrl.push(MySavedAddressPage);
     }
-    paymentMethod(selectedPaymentMethod){
-        this.data['payment_method']=selectedPaymentMethod['payment_method'];
+    paymentMethod(selectedPaymentMethod) {
+        this.validate.payment = false;
+        this.data['payment_method'] = selectedPaymentMethod['payment_method'];
+        if (selectedPaymentMethod && selectedPaymentMethod['payment_method']) {
+            this.validate.payment = true;
+        }
+        this.validateData();
     }
-    shippingMethod(selectedShippingMethod){
-         this.data['shipping_method']=selectedShippingMethod['shipping_method'];
+    shippingMethod(selectedShippingMethod) {
+        this.validate.shipping = false;
+        this.data['shipping_method'] = selectedShippingMethod['shipping_method'];
+        if (selectedShippingMethod && selectedShippingMethod['shipping_method']) {
+            this.validate.shipping = true;
+        }
+        this.validateData();
     }
-    orderPlace(){
-        this._checkoutService.orderPlace(this.data).then((res:any )=>{
-            if(res && res['body'].data.success){
-                console.log("success");
-            }else{
-            forEach(res['body'].data.product_error,(value)=>{
-                this._toast.toast(value);
-            })
+    validateData() {
+        let count = 0;
+        forEach(this.validate, (value) => {
+            if (value) {
+                count++;
+            }
+        })
+        if (count == Object.keys(this.validate).length) {
+            this.disable = false;
+        } else {
+            this.disable = true;
+        }
+    }
+    orderPlace() {
+        this._checkoutService.orderPlace(this.data).then((res: any) => {
+            if (res && res['body'].success) {
+                forEach(res && res['body'].success_data, (value) => {
+
+                })
+
+            } else {
+                forEach(res['body'].product_error, (value) => {
+                    this._toast.toast(value);
+                })
             }
         })
     }
