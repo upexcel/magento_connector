@@ -3,7 +3,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {MySavedAddressPage} from './../myaccount/savedAddress';
 import {MyEditAddressPage} from './../myaccount/myeditaddress';
 import {Address} from './../../providers/address-service/address';
-import {checkoutService} from './../../providers/checkout/checkout-service';
+import {checkoutService} from './../../model/checkout/checkout-service';
 import forEach from 'lodash/forEach';
 @Component({
     selector: 'checkout',

@@ -69,7 +69,7 @@ import { CountryService } from '../providers/myAccount-service/country';
 import { FilterService } from '../providers/filter-service/filterService';
 import { Address } from '../providers/address-service/address';
 import { WishListService } from '../providers/wishList/wishList-service';
-import { checkoutService } from '../providers/checkout/checkout-service';
+import { checkoutService } from '../model/checkout/checkout-service';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
