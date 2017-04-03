@@ -83,10 +83,11 @@
             </ion-grid>
         </ion-card-content>
     </ion-card>
-    <ion-list no-margin radio-group [(ngModel)]="selectedShippingMethod">
+    <ion-list no-margin radio-group [(ngModel)]="selectedShippingMethod" (ngModelChange)="shippingMethod(selectedShippingMethod)">
               <ion-list-header no-margin>
             Shipping Methods
         </ion-list-header>
+        <span *ngIf="!shippingMethods" class="center">  <ion-spinner ></ion-spinner></span>
         <ion-item *ngFor="let shipping of shippingMethods">
             <ion-label>{{shipping.method_title}} {{shipping.price}}</ion-label>
             <ion-radio [value]="shipping"></ion-radio>
@@ -169,33 +170,16 @@
             Payment Information
         </ion-card-header>
         <ion-card-content>
-            <ion-list no-margin radio-group [(ngModel)]="selectedPaymentMethod">
-                      <ion-item *ngFor="let payment of PaymentMethods">
+            <ion-list no-margin radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="paymentMethod(selectedPaymentMethod)">
+                      <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
+                <ion-item *ngFor="let payment of PaymentMethods">
                     <ion-label>{{payment.method_title}}</ion-label>
                     <ion-radio [value]="payment"></ion-radio>
                 </ion-item>
             </ion-list>
-            <!--Purchase Order Number-->
-            <!--            <ion-list no-margin radio-group>
-            
-                            <ion-item no-lines>
-                                <ion-label>      
-                                    Purchase Order
-                                </ion-label>
-                                <ion-radio  value="go"></ion-radio>
-                            </ion-item>
-                            <ion-item no-lines>
-                                <ion-label class="capitalize" >Purchase Order Number<span color="danger" >*</span>
-                                </ion-label>
-                                <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
-                            </ion-item>
-                            <ion-item no-lines>
-                                <ion-label>      
-                                    Check / Money order
-                                </ion-label>
-                                <ion-radio  value="go1"></ion-radio>
-                            </ion-item>
-                        </ion-list>-->
         </ion-card-content>
     </ion-card>
 </ion-content>
+<ion-footer >
+    <btn-full  [titleFull]='"Place Order"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="false" (onBtnClick)="orderPlace()"></btn-full>
+</ion-footer>
