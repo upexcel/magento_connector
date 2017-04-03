@@ -47,7 +47,7 @@ export class WishListService {
                     if (entity_id == list.data.entity_id) {
                         match = true;
                     }
-                    response.push(value)
+                    response.unshift(value)
                 })
                 if (!match) {
                     this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, true);
@@ -55,7 +55,7 @@ export class WishListService {
                     this._wishList.addWishlist(apiData).then((res) => {
                         list["wishlist_id"] = res.body["wishlist_id"];
                         list["secret"] = apiData["secret"];
-                        response.push(list);
+                        response.unshift(list);
                         this.local.set("wishList", response);
 //                        this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
                         this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
