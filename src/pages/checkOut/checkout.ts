@@ -8,7 +8,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { ToastService } from './../../providers/toast-service/toastService';
-
+import { PlacedOrder } from './../placedOrder/placedOrder';
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -149,18 +149,19 @@ export class Checkout implements OnInit {
         }
     }
     orderPlace() {
-        this._checkoutService.orderPlace(this.data).then((res: any) => {
-            if (res && res['body'].success) {
-                forEach(res && res['body'].success_data, (value) => {
-
-                })
-
-            } else {
-                forEach(res['body'].product_error, (value) => {
-                    this._toast.toast(value);
-                })
-            }
-        })
+        this._navCtrl.push(PlacedOrder);
+//        this._checkoutService.orderPlace(this.data).then((res: any) => {
+//            if (res && res['body'].success) {
+//                forEach(res && res['body'].success_data, (value) => {
+//
+//                })
+//
+//            } else {
+//                forEach(res['body'].product_error, (value) => {
+//                    this._toast.toast(value);
+//                })
+//            }
+//        })
     }
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {

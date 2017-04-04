@@ -27,6 +27,7 @@ import { Checkout } from '../pages/checkOut/checkout';
 import { Policy } from '../pages/policies/policies';
 import { AboutUs } from '../pages/aboutUs/aboutUs';
 import { ContactUs } from '../pages/contactUs/contactUs';
+import { PlacedOrder } from '../pages/placedOrder/placedOrder';
 
 
 //model
@@ -158,7 +159,8 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         Checkout,
         Policy,
         AboutUs,
-        ContactUs
+        ContactUs,
+        PlacedOrder
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -197,7 +199,8 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         Checkout,
         Policy,
         AboutUs,
-        ContactUs
+        ContactUs,
+        PlacedOrder
     ],
     providers: [
         AppConfig,
