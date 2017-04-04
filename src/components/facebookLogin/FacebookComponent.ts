@@ -8,7 +8,7 @@ import { ToastService } from './../../providers/toast-service/toastService';
 
 @Component({
     selector: 'facebook-login',
-    template: `  <button ion-button class="fb" (click)="getFacebookData()" id="social">
+    template: `  <button ion-button class="fb socialButton" (click)="getFacebookData()" id="social">
                  <ion-icon name="logo-facebook"></ion-icon>Login with Facebook <ion-spinner *ngIf="spin" class="spin">
             </ion-spinner>          
                  </button>`

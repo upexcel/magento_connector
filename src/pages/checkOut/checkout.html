@@ -188,7 +188,7 @@
                 <p>Price ({{cartData.length}} items)</p>
             </ion-col>
             <ion-col width-67 class="alignright paddRighttax10">
-                <p *ngIf="totalPrice">{{totalPrice}}</p>
+                <p *ngIf="totalPrice">${{totalPrice}}</p>
             </ion-col>
         </ion-row>
         <ion-row center>
@@ -198,7 +198,7 @@
             <ion-col width-67 class="alignright paddRight10">
                 <span class="alignright">
                     <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span>
-                <p *ngIf="!taxSpin"><span *ngIf="tax">{{(tax.discount)?tax.discount:0}}</span><span *ngIf="!tax">0</span></p>
+                <p *ngIf="!taxSpin">$<span *ngIf="tax">{{(tax.discount)?tax.discount:0}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
         <ion-row center>
@@ -207,7 +207,7 @@
             </ion-col>
             <ion-col width-67 class="alignright paddRight10">
                 <span class="alignright">
-                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin"><span *ngIf="tax">{{(tax.tax)?tax.tax:0}}</span><span *ngIf="!tax">0</span></p>
+                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin">$<span *ngIf="tax">{{(tax.tax)?tax.tax:0}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
 
@@ -216,7 +216,7 @@
                 <p><b>Grand Total</b></p>
             </ion-col>
             <ion-col width-67 class="alignright paddRight10">
-                <p><b>{{total ? total :totalPrice}}</b></p>
+                <p><b>${{total ? total :totalPrice}}</b></p>
             </ion-col>
         </ion-row>
     </ion-card>
@@ -226,7 +226,7 @@
         <ion-row>
             <ion-col width-50 class="center">
                 <span class="center">
-                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{total ? total :totalPrice}} </h3> 
+                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> ${{total ? total :totalPrice}} </h3> 
             </ion-col>
             <ion-col width-50>
                 <btn-full  [titleFull]='"PLace ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>

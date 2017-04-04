@@ -7,7 +7,7 @@ import { ToastService } from './../../providers/toast-service/toastService';
 
 @Component({
     selector: 'google-login',
-    template: `  <button ion-button color='danger' (click)="getGoogleData()" id="social">  
+    template: `  <button ion-button color='danger' class="socialButton" (click)="getGoogleData()" id="social">  
     <ion-icon  name="logo-google" > </ion-icon> Login with Google  <ion-spinner *ngIf="spin" class="spin">
             </ion-spinner>          
     </button>`

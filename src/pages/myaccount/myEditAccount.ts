@@ -61,7 +61,7 @@ export class MyEditAccount {
             updateform['email_check'] = '0';
         }
         this._edit.editAccount(updateform).then((updateAccount) => {
-            this._toast.toast("", 3000);
+            this._toast.toast(updateAccount['body'], 3000);
             this.editAccountspin = false;
             this._appConfigService.getUserData().then((userData: any) => {
                 userData.email=updateform.email;

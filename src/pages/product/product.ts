@@ -64,8 +64,8 @@ export class ProductPage implements OnInit {
     configPrice = [];
     addToCartData;
     customPrice: any;
-    customDisplayPrice: number;
-    dynemicDisplayPrice: number;
+    customDisplayPrice: any;
+    dynemicDisplayPrice: any;
     product_custom_option: any;
     config = true;
     product = "product";
@@ -370,16 +370,6 @@ export class ProductPage implements OnInit {
         });
     }
 
-    //    bundle(bundlePrice) {
-    //        this.bundlePrice = parseFloat(this.refPrice);
-    //        this.dynemicDisplayPrice = this.refDisplayPrice;
-    //        this.bundlePrice += (parseFloat(bundlePrice));
-    //        this.dynemicDisplayPrice += (parseFloat(bundlePrice));
-    //        this.final_price = (parseFloat(this.bundlePrice));
-    //        console.log("final",this.final_price)
-    //        this.display_price = this.dynemicDisplayPrice;
-    //    }
-    //configurabilData
     configurabilData() {
         let array: any = {};
         this.add_cart = {};
@@ -457,7 +447,7 @@ export class ProductPage implements OnInit {
             }
         }
         this.final_price = (parseFloat(this.bundlePrice));
-        this.display_price = (this.dynemicDisplayPrice);
+        this.display_price = (parseFloat(this.dynemicDisplayPrice));
     }
 
     customData(customData) {
@@ -488,9 +478,9 @@ export class ProductPage implements OnInit {
             this.disable = true;
         }
         this.customPrice += (parseFloat(customData.dynemicPrice));
-        this.customDisplayPrice += (parseFloat(customData.dynemicPrice));
-        this.final_price = this.customPrice;
-        this.display_price = this.customDisplayPrice;
+        this.customDisplayPrice = (parseFloat(this.customDisplayPrice)) + (parseFloat(customData.dynemicPrice));
+        this.final_price = (parseFloat(this.customPrice));
+        this.display_price = (parseFloat(this.customDisplayPrice));
         this.addToCartData.total = this.final_price;
         if (customData.disable == false) {
             this.ifCustomOption(customData, null);
@@ -517,9 +507,9 @@ export class ProductPage implements OnInit {
                 this.cartSpin = false;
                 if (this.cartData.body != undefined) {
                     if (this.editCartData) {
-                        this._toast.toast("Updated product instead  successfully", 3000, "top");
+                        this._toast.toast(this.product+ "updated to your shopping cart", 3000, "top");
                     } else {
-                        this._toast.toast("Product added to cart successfully", 3000, "top");
+                        this._toast.toast(this.product+ "added to your shopping cart", 3000, "top");
                     }
                     this._navCtrl.push(CartPage).then(() => {
                         // first we find the index of the current view controller:
