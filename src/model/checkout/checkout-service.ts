@@ -39,4 +39,13 @@ export class checkoutService {
             });
         });
     }
+    getTaxDetail(){
+           return new Promise((resolve, reject) => {
+//            this._apiService.api("").subscribe((res) => {
+//                resolve(res);
+//            }, (err) => {
+//                reject(err);
+//            });
+        });     
+    }
 }
