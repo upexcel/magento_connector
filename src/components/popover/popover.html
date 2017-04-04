@@ -1,5 +1,5 @@
 <ion-list no-lines>
-    <ion-item color='light' (click)="openMenu=!openMenu">
+    <ion-item color='light' (click)="openMenu=!openMenu" *ngIf="usermenu">
         Account <ion-icon color="primary" id="iconShow"  [name]="(openMenu)?'ios-remove-circle-outline' : 'ios-add-circle-outline'"  ></ion-icon>
     </ion-item>
     <span *ngIf="openMenu">
@@ -11,16 +11,16 @@
                 <i class="fa fa-info fa-lg pad5" aria-hidden="true"></i>
             Account Information
         </button>
-        <button ion-item icon-left (click)="gotoPass()">
+        <button ion-item icon-left (click)="gotoPass()" *ngIf="usermenu">
                 <i class="fa fa-key fa-lg" aria-hidden="true"></i>
             Change Password
         </button>
-        <button ion-item icon-left (click)="gotoOrders()">
+        <button ion-item icon-left (click)="gotoOrders()" *ngIf="usermenu">
                 <i class="fa fa-line-chart fa-lg" aria-hidden="true"></i>
             My Orders
         </button>
     </span>
-    <button  ion-item icon-left (click)="gotoPolicy()">
+    <button  ion-item icon-left (click)="gotoPolicy()" >
              <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i>
         Policies
     </button>
@@ -32,7 +32,7 @@
              <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
         Contact Us
     </button>
-    <button  ion-item icon-left (click)="logout()">
+    <button  ion-item icon-left (click)="logout()" *ngIf="usermenu">
              <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
         Logout
     </button>

@@ -41,8 +41,8 @@ export class AppDataConfigService {
                 this._homeProductsService.getHomeProducts(body);
                 this._categoryService.getCategoryList();
                 this._sliderService.getSlider();
-                this._local.remove("privacyInfo");
-                this._local.remove("aboutUsInfo");
+                this._local.remove("privacyInfo1");
+                this._local.remove("aboutUsInfo1");
                 this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);
             }
         });

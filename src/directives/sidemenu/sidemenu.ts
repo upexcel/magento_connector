@@ -3,7 +3,6 @@ import {CategoryListDataType} from './../../pages/home/categorylistDataType';
 import {CategoryList} from '../../model/home/categoryList';
 import {MenuController, NavController} from 'ionic-angular';
 import {CategoryProductPage} from '../../pages/categoryProduct/categoryProduct';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import forEach from 'lodash/forEach';
 @Component({
     selector: 'sidemenu',
@@ -15,17 +14,10 @@ export class SideMenu implements OnInit {
     public rootPage: any;
     public access_token;
     public usermenu: boolean;
-    constructor(private _appConfigService: AppDataConfigService, private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) {}
+    constructor( private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) {}
     ngOnInit() {
         this._menuCtrl.enable(true);
         this.categoryList();
-        this._appConfigService.getUserData().then((userData: any) => {
-            if (userData != null) {
-                this.usermenu = true;
-            } else {
-                this.usermenu = false;
-            }
-        });
 
     }
     categoryList() {

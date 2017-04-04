@@ -1,7 +1,7 @@
-<header [title]="'WISH LIST'" [pagename]="'product'" [wishList]=false></header>
+<header [title]="'My Wishlist'" [pagename]="'product'" [wishList]=false></header>
 <ion-content class="empty-wishlist" *ngIf="!data || data.length == 0">
     <img src="assets/image/empty-wishlist.jpg">
-    <h3>Your Whislist is empty</h3>
+    <h3>YOUR WISHLIST IS EMPTY</h3>
     <btn-round [title]='"Continue Shopping"' [id]="'btn'" [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
 </ion-content>
 <ion-content *ngIf="data && data.length > 0">
@@ -62,5 +62,5 @@
     </ion-list>
 </ion-content>
 <ion-footer [ngClass]="{'none': !data || data.length == 0,'uppercase':true}">
-    <btn-full  [titleFull]='"Continue Shopping"'  [id]="'btn'"  [classFull]="'botton'" (onBtnClick)="c_Shopping()"></btn-full>
+    <btn-full  [titleFull]='"CONTINUE SHOPPING"'  [id]="'btn'"  [classFull]="'botton'" (onBtnClick)="c_Shopping()"></btn-full>
 </ion-footer>

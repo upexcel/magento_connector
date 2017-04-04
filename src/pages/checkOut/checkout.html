@@ -1,4 +1,4 @@
-<header [pagename]="''" [title]='"Checkout"' [wishList]=false></header>
+<header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false></header>
 <ion-content>
     <h2 *ngIf="!cartData">You have no item in cart</h2>
     <ion-card *ngIf="cartData && cartData.length!=0">
@@ -180,43 +180,56 @@
         </ion-card-content>
     </ion-card>
     <ion-card>
-       <ion-card-header>
-           Price Details
-       </ion-card-header>
-       <ion-row center>
-           <ion-col width-33 class="paddLft20">
-               <p>Price ({{cartData.length}} items)</p>
-           </ion-col>
-           <ion-col width-67 class="alignright paddRight10">
-               <p>$3000</p>
-           </ion-col>
-       </ion-row>
-       <ion-row center>
-           <ion-col width-33 class="paddLft20">
-               <p>Delivery</p>
-           </ion-col>
-           <ion-col width-67 class="alignright paddRight10">
-               <p>$30</p>
-           </ion-col>
-       </ion-row>
-       <ion-row center>
-           <ion-col width-33 class="paddLft20">
-               <p><b>Grand Total</b></p>
-           </ion-col>
-           <ion-col width-67 class="alignright paddRight10">
-               <p><b>$3030</b></p>
-           </ion-col>
-       </ion-row>
-   </ion-card>
+        <ion-card-header>
+            Price Details
+        </ion-card-header>
+        <ion-row center>
+            <ion-col width-33 class="paddLft20">
+                <p>Price ({{cartData.length}} items)</p>
+            </ion-col>
+            <ion-col width-67 class="alignright paddRighttax10">
+                <p *ngIf="totalPrice">{{totalPrice}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col width-33 class="paddLft20">
+                <p>Discount</p>
+            </ion-col>
+            <ion-col width-67 class="alignright paddRight10">
+                <span class="alignright">
+                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span>
+                <p *ngIf="!taxSpin"><span *ngIf="tax">{{(tax.discount)?tax.discount:0}}</span><span *ngIf="!tax">0</span></p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col width-33 class="paddLft20">
+                <p>Tax</p>
+            </ion-col>
+            <ion-col width-67 class="alignright paddRight10">
+                <span class="alignright">
+                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin"><span *ngIf="tax">{{(tax.tax)?tax.tax:0}}</span><span *ngIf="!tax">0</span></p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row center>
+            <ion-col width-33 class="paddLft20">
+                <p><b>Grand Total</b></p>
+            </ion-col>
+            <ion-col width-67 class="alignright paddRight10">
+                <p><b>{{total ? total :totalPrice}}</b></p>
+            </ion-col>
+        </ion-row>
+    </ion-card>
 </ion-content>
 <ion-footer >
     <ion-grid class="filterFooterBtnDiv">
         <ion-row>
             <ion-col width-50 class="center">
-                <h3> $3000 </h3> 
+                <span class="center">
+                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{total ? total :totalPrice}} </h3> 
             </ion-col>
             <ion-col width-50>
-                <btn-full  [titleFull]='"Place Order"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
+                <btn-full  [titleFull]='"PLace ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
             </ion-col>
         </ion-row>
     </ion-grid> 

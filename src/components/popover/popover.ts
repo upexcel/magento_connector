@@ -9,13 +9,23 @@ import { MyEditAccount } from './../../pages/myaccount/myEditAccount';
 import { Policy } from './../../pages/policies/policies';
 import { AboutUs } from './../../pages/aboutUs/aboutUs';
 import { ContactUs } from './../../pages/contactUs/contactUs';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+
 @Component({
     selector: 'user-menu',
     templateUrl: 'popover.html'
 })
 export class PopoverPage {
     msg: string = "";
-    constructor(private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+    usermenu:boolean;
+    constructor(private _appConfigService: AppDataConfigService,private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+            this._appConfigService.getUserData().then((userData: any) => {
+            if (userData != null) {
+                this.usermenu = true;
+            } else {
+                this.usermenu = false;
+            }
+        });
     }
     close() {
         this._viewCtrl.dismiss();

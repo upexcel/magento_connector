@@ -87,7 +87,10 @@ export class CartPage implements OnInit {
     placeOrder() {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
-                this._navCtrl.push(Checkout, { res: this.res });
+                console.log(this.res)
+                if (this.res && this.res.length > 0) {
+                    this._navCtrl.push(Checkout, { res: this.res });
+                }
             } else {
                 this._toast.toast("Please Login First !!", 3000);
             }

@@ -25,6 +25,10 @@ export class Checkout implements OnInit {
     disable = true;
     selectedPaymentMethod;
     selectedShippingMethod;
+    tax: any;
+    taxSpin:boolean=false;
+    totalPrice:any=0;
+    total;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };
     constructor(private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
@@ -36,6 +40,7 @@ export class Checkout implements OnInit {
             }
         });
         this.placeOrder()
+        
     }
     placeOrder() {
         let products: any = {};
@@ -46,6 +51,7 @@ export class Checkout implements OnInit {
                     this.data["store_id"] = store_id ? store_id : "";
                     if (this.cartData && this.cartData.length > 0) {
                         forEach(this.cartData, (value, key) => {
+                            this.totalPrice +=parseFloat(value.total);
                             products = {};
                             products["product_id"] = value.productid;
                             if (value.type != "grouped") {
@@ -73,14 +79,15 @@ export class Checkout implements OnInit {
                             }
                             this.data['products'][key] = products;
                         })
+                        console.log("totalPrice",this.totalPrice)
                     }
                 }
             })
         })
     }
     ionViewWillEnter() {
-        this.selectedPaymentMethod=false;
-        this.selectedShippingMethod=false;
+        this.selectedPaymentMethod = false;
+        this.selectedShippingMethod = false;
         this.validate.shippingAddress = false;
         this.validate.payment = false;
         this.validate.shipping = false
@@ -116,6 +123,21 @@ export class Checkout implements OnInit {
         });
         this.validateData();
     }
+    taxDetails() {
+        this.taxSpin=true;
+        this.total=this.totalPrice;
+        this._checkoutService.getTaxDetail(this.data).then((res: any) => {
+            this.tax = res['body'];
+            this.taxSpin=false;
+            if(this.tax.tax){
+            this.total+= parseFloat(this.tax.tax)
+            }
+            if(this.tax.discount){
+            this.total+= parseFloat(this.tax.discount)
+            }
+            console.log("this.total",this.total)
+        });
+    }
     changeAddress() {
         this._navCtrl.push(MySavedAddressPage);
     }
@@ -144,24 +166,25 @@ export class Checkout implements OnInit {
         })
         if (count == Object.keys(this.validate).length) {
             this.disable = false;
+            this.taxDetails();
         } else {
             this.disable = true;
         }
     }
     orderPlace() {
         this._navCtrl.push(PlacedOrder);
-//        this._checkoutService.orderPlace(this.data).then((res: any) => {
-//            if (res && res['body'].success) {
-//                forEach(res && res['body'].success_data, (value) => {
-//
-//                })
-//
-//            } else {
-//                forEach(res['body'].product_error, (value) => {
-//                    this._toast.toast(value);
-//                })
-//            }
-//        })
+        //        this._checkoutService.orderPlace(this.data).then((res: any) => {
+        //            if (res && res['body'].success) {
+        //                forEach(res && res['body'].success_data, (value) => {
+        //
+        //                })
+        //
+        //            } else {
+        //                forEach(res['body'].product_error, (value) => {
+        //                    this._toast.toast(value);
+        //                })
+        //            }
+        //        })
     }
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {

@@ -9,13 +9,13 @@ export class CMS implements OnInit {
     ngOnInit() { }
     getAboutUsInfo(data) {
         return new Promise((resolve, reject) => {
-            this.local.get('aboutUsInfo').then((aboutUsInfo: string) => {
+            this.local.get('aboutUsInfo1').then((aboutUsInfo: string) => {
                 if (aboutUsInfo != null && aboutUsInfo != undefined) {
                     resolve(aboutUsInfo);
                 }
                 else {
                     this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
-                        this.local.set('aboutUsInfo', res);
+                        this.local.set('aboutUsInfo1', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
@@ -35,13 +35,13 @@ export class CMS implements OnInit {
     }
     getPrivacyInfo(data) {
         return new Promise((resolve, reject) => {
-            this.local.get('privacyInfo').then((privacyInfo: string) => {
+            this.local.get('privacyInfo1').then((privacyInfo: string) => {
                 if (privacyInfo != null && privacyInfo != undefined) {
                     resolve(privacyInfo);
                 }
                 else {
                     this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
-                        this.local.set('privacyInfo', res);
+                        this.local.set('privacyInfo1', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
