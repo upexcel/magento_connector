@@ -1,10 +1,25 @@
-<header [title]="''" [wishList]=false></header>
+<header [title]="'Order Placed'" [wishList]=false></header>
 <ion-content>
+    <ion-card>
+        <ion-card-content>
+            <div class="aligncenter">
+                <h1>YOUR ORDER HAS BEEN RECEIVED.</h1>
+                <h2>THANK YOU FOR YOUR PURCHASE!</h2>
+                <p>Your order # is: <b>{{orderId}}</b>.</p>
+                <p>You will receive an order confirmation email with details of your order and a link to track its progress.</p>
+                <p color="primary" (click)="viewOrderDetail()">View Details <i class="fa fa-lg fa-angle-right" aria-hidden="true"></i></p>
+            </div>
+        </ion-card-content>
+
+    </ion-card>
     <ion-list>
-        <ion-list-header no-margin>Delivered By Monday</ion-list-header>
-    <ion-item>
-        <h2>Yuvraj Singh</h2>
-        <p class="address">Excellenceechnologies, c84A, 2nd Floor, Noida, Uttar Pradesh-201301</p>
-    </ion-item>
-</ion-list>
+        <ion-list-header no-margin>Delivered</ion-list-header>
+        <ion-item>
+            <h2>{{shippingAddress.firstname}} {{shippingAddress.lastname}}</h2>
+            <p class="address"> <span *ngFor="let street of shippingAddress.street">{{street}} </span> {{shippingAddress.city}} {{shippingAddress.country_id}} {{shippingAddress.postcode}}</p>
+        </ion-item>
+    </ion-list>
+    <div class="center">
+        <btn-round [title]='"Continue Shopping"' [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
+    </div>
 </ion-content>

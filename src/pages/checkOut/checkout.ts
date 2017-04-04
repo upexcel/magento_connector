@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { MySavedAddressPage } from './../myaccount/savedAddress';
-import { MyEditAddressPage } from './../myaccount/myeditaddress';
-import { Address } from './../../providers/address-service/address';
-import { checkoutService } from './../../model/checkout/checkout-service';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavController, NavParams, ViewController} from 'ionic-angular';
+import {MySavedAddressPage} from './../myaccount/savedAddress';
+import {MyEditAddressPage} from './../myaccount/myeditaddress';
+import {Address} from './../../providers/address-service/address';
+import {checkoutService} from './../../model/checkout/checkout-service';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { PlacedOrder } from './../placedOrder/placedOrder';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {PlacedOrder} from './../placedOrder/placedOrder';
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -25,14 +25,15 @@ export class Checkout implements OnInit {
     disable = true;
     selectedPaymentMethod;
     selectedShippingMethod;
-    validate = { "payment": false, "shipping": false, "shippingAddress": false };
-    constructor(private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    shippingAddressForOrderPlaced;
+    validate = {"payment": false, "shipping": false, "shippingAddress": false};
+    constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address['body'];
             if (!this.address || this.address.length == 0) {
-                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true });
+                this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true});
             }
         });
         this.placeOrder()
@@ -79,8 +80,8 @@ export class Checkout implements OnInit {
         })
     }
     ionViewWillEnter() {
-        this.selectedPaymentMethod=false;
-        this.selectedShippingMethod=false;
+        this.selectedPaymentMethod = false;
+        this.selectedShippingMethod = false;
         this.validate.shippingAddress = false;
         this.validate.payment = false;
         this.validate.shipping = false
@@ -89,6 +90,7 @@ export class Checkout implements OnInit {
         });
         forEach(this.address, (address) => {
             if (address && address.default_shipping) {
+                this.shippingAddressForOrderPlaced = address;
                 this.validate.shippingAddress = true;
             }
         })
@@ -149,19 +151,26 @@ export class Checkout implements OnInit {
         }
     }
     orderPlace() {
-        this._navCtrl.push(PlacedOrder);
-//        this._checkoutService.orderPlace(this.data).then((res: any) => {
-//            if (res && res['body'].success) {
-//                forEach(res && res['body'].success_data, (value) => {
-//
-//                })
-//
-//            } else {
-//                forEach(res['body'].product_error, (value) => {
-//                    this._toast.toast(value);
-//                })
-//            }
-//        })
+        this._checkoutService.orderPlace(this.data).then((res: any) => {
+            if (res && res['body'].success) {
+                this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index).then(() => {
+                        let shouldRemoveIndex;
+                        forEach(this._navCtrl['_views'], (views) => {
+                            if (views['name'] == 'CartPage') {
+                                shouldRemoveIndex = views['index'];
+                            }
+                        })
+                        this._navCtrl.remove(shouldRemoveIndex)
+                    });
+                });
+            } else {
+                forEach(res['body'].product_error, (value) => {
+                    this._toast.toast(value);
+                })
+            }
+        })
     }
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {
