@@ -5,7 +5,6 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class CMS implements OnInit {
-    response: any;
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
     getAboutUsInfo(data) {
@@ -16,6 +15,7 @@ export class CMS implements OnInit {
                 }
                 else {
                     this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
+                        this.local.set('aboutUsInfo', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
@@ -41,6 +41,7 @@ export class CMS implements OnInit {
                 }
                 else {
                     this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
+                        this.local.set('privacyInfo', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
