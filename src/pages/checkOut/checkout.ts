@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams, ViewController} from 'ionic-angular';
-import {MySavedAddressPage} from './../myaccount/savedAddress';
-import {MyEditAddressPage} from './../myaccount/myeditaddress';
-import {Address} from './../../providers/address-service/address';
-import {checkoutService} from './../../model/checkout/checkout-service';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {Storage} from '@ionic/storage';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { MySavedAddressPage } from './../myaccount/savedAddress';
+import { MyEditAddressPage } from './../myaccount/myeditaddress';
+import { Address } from './../../providers/address-service/address';
+import { checkoutService } from './../../model/checkout/checkout-service';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {PlacedOrder} from './../placedOrder/placedOrder';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { PlacedOrder } from './../placedOrder/placedOrder';
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -26,22 +26,23 @@ export class Checkout implements OnInit {
     selectedPaymentMethod;
     selectedShippingMethod;
     tax: any;
-    taxSpin:boolean=false;
-    totalPrice:any=0;
+    taxSpin: boolean = false;
+    totalPrice: any = 0;
     total;
     shippingAddressForOrderPlaced;
-    validate = {"payment": false, "shipping": false, "shippingAddress": false};
-    constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
+    spin: boolean = false;
+    validate = { "payment": false, "shipping": false, "shippingAddress": false };
+    constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address['body'];
             if (!this.address || this.address.length == 0) {
-                this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true});
+                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true });
             }
         });
         this.placeOrder()
-        
+
     }
     placeOrder() {
         let products: any = {};
@@ -52,7 +53,7 @@ export class Checkout implements OnInit {
                     this.data["store_id"] = store_id ? store_id : "";
                     if (this.cartData && this.cartData.length > 0) {
                         forEach(this.cartData, (value, key) => {
-                            this.totalPrice +=parseFloat(value.total);
+                            this.totalPrice += parseFloat(value.total);
                             products = {};
                             products["product_id"] = value.productid;
                             if (value.type != "grouped") {
@@ -125,16 +126,16 @@ export class Checkout implements OnInit {
         this.validateData();
     }
     taxDetails() {
-        this.taxSpin=true;
-        this.total=this.totalPrice;
+        this.taxSpin = true;
+        this.total = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
             this.tax = res['body'];
-            this.taxSpin=false;
-            if(this.tax.tax){
-            this.total+= parseFloat(this.tax.tax)
+            this.taxSpin = false;
+            if (this.tax.tax) {
+                this.total += parseFloat(this.tax.tax)
             }
-            if(this.tax.discount){
-            this.total+= parseFloat(this.tax.discount)
+            if (this.tax.discount) {
+                this.total += parseFloat(this.tax.discount)
             }
         });
     }
@@ -172,26 +173,33 @@ export class Checkout implements OnInit {
         }
     }
     orderPlace() {
-        this._checkoutService.orderPlace(this.data).then((res: any) => {
-            if (res && res['body'].success) {
-                this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
-                    const index = this.viewCtrl.index;
-                    this._navCtrl.remove(index).then(() => {
-                        let shouldRemoveIndex;
-                        forEach(this._navCtrl['_views'], (views) => {
-                            if (views['name'] == 'CartPage') {
-                                shouldRemoveIndex = views['index'];
-                            }
-                        })
-                        this._navCtrl.remove(shouldRemoveIndex)
+        if (!this.spin) {
+            this.spin = true;
+            this._checkoutService.orderPlace(this.data).then((res: any) => {
+                if (res && res['body'].success) {
+                    this.spin = false;
+                    this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index).then(() => {
+                            let shouldRemoveIndex;
+                            forEach(this._navCtrl['_views'], (views) => {
+                                if (views['name'] == 'CartPage') {
+                                    shouldRemoveIndex = views['index'];
+                                }
+                            })
+                            this._navCtrl.remove(shouldRemoveIndex)
+                        });
                     });
-                });
-            } else {
-                forEach(res['body'].product_error, (value) => {
-                    this._toast.toast(value);
-                })
-            }
-        })
+                } else {
+                    this.spin = false;
+                    forEach(res['body'].product_error, (value) => {
+                        this._toast.toast(value, 3000);
+                    })
+                }
+            }, (err) => {
+                this.spin = false;
+            })
+        }
     }
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {

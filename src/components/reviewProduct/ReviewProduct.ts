@@ -13,6 +13,7 @@ import { Events } from 'ionic-angular';
 export class ProductReview implements OnInit {
     @Input() skuData: string;
     productReview: ProductReviewDataType;
+    productReviewSpin:boolean=false;
     getRating: GetRating;
     showReview: string;
     totalAttributeRatingKey: Array<any>;
@@ -42,9 +43,11 @@ export class ProductReview implements OnInit {
     fetchReview() {
         let self = this;
         this.graphRating = [];
+        this.productReviewSpin=true;
         this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
             this.productReview = review;
             this.listLoad = false;
+             this.productReviewSpin=false;
             if (this.productReview.body.total_review != 0) {
                 this.addCommingReview=this.addCommingReview+this.productReview.body.data.length;
                 forEach(this.getRating.body.attribute, function(title, titleKey) {
@@ -65,6 +68,7 @@ export class ProductReview implements OnInit {
 
             }
         }).catch((err) => {
+        this.productReviewSpin=false;
         });
     }
     moreReview() {

@@ -1,6 +1,6 @@
 <div *ngFor="let sampleSet of sample ; let i= index ">
     <ion-item no-lines class="padLeft10">
-        <ion-label>{{sampleSet.title}}</ion-label>
+        <ion-label class="fontColor capitalize">{{sampleSet.title}}</ion-label>
         <ion-checkbox  class="marRight" color="dark" value="sampleSet" [(ngModel)]="sampleData[i]" (ngModelChange)="onChangeSample(sampleSet,i,$event)"></ion-checkbox>
     </ion-item>
     <ion-item no-lines class="minHeight">
@@ -9,7 +9,7 @@
         </ion-label> 
     </ion-item>
 </div>
-<ion-list-header class="no-margin" no-lines *ngIf="links.length > 0">
+<ion-list-header class="no-margin fontColor capitalize" no-lines *ngIf="links.length > 0">
                  Check Items to Download  <span color="danger">*</span>
 </ion-list-header>
 
