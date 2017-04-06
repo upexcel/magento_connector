@@ -12,8 +12,8 @@ import { HomePage } from './../home/home';
 })
 export class wishList {
     data: any;
-    constructor(public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {
-
+    constructor(public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}
+    ionViewWillEnter(){
         this._wishListService.getWishList().then((data) => {
             this.data = data;
         })

@@ -5,10 +5,11 @@ import {Storage} from '@ionic/storage';
 import {ActionSheetController} from 'ionic-angular';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {WishListModel} from './../../model/wishList/wishList';
-import { homeProductsService } from './../../providers/homeproducts-service/homeproducts.service';
-import {AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import {homeProductsService} from './../../providers/homeproducts-service/homeproducts.service';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 @Injectable()
 export class WishListService {
+    seviceData: any;
     constructor(private _dataConfigService: AppDataConfigService, private _homeProductsService: homeProductsService, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
     resetFilterData() {
     }
@@ -34,62 +35,41 @@ export class WishListService {
                     dataOfRes.push(value);
                 }
             })
-            this.local.set("wishList", dataOfRes);
+            this.seviceData = dataOfRes;
         })
     }
     setWishListData(list, apiData) {
-        this.local.get('wishList').then((res: any) => {
-            var match = false;
-            var response: any = [];
-            if (res) {
-                forEach(res, (value, key) => {
-                    let entity_id = value.data.entity_id || value.entity_id
-                    if (entity_id == list.data.entity_id) {
-                        match = true;
-                    }
-                    response.unshift(value)
-                })
-                if (!match) {
-                    this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, true);
-                    this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, true);
-                    this._wishList.addWishlist(apiData).then((res) => {
-                        list["wishlist_id"] = res.body["wishlist_id"];
-                        list["secret"] = apiData["secret"];
-                        response.unshift(list);
-                        this.local.set("wishList", response);
-//                        this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
-                        this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
-                        this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
-                    });
-                } else {
-                    this.deleteProductWishList(list, true);
+        var match = false;
+        if (this.seviceData && this.seviceData.length > 0) {
+            forEach(this.seviceData, (value, key) => {
+                let entity_id = value.data.entity_id || value.entity_id
+                if (entity_id == list.data.entity_id) {
+                    match = true;
                 }
-            } else {
-                this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, true);
-                this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, true);
+            })
+            if (!match) {
+                this.seviceData.unshift(list);
                 this._wishList.addWishlist(apiData).then((res) => {
-                    list["wishlist_id"] = res.body["wishlist_id"];
-                    list["secret"] = apiData["secret"];
-                    this.local.set("wishList", [list]);
-//                    this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
+                    this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"])
                     this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
                     this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
                 });
+            } else {
+                this.deleteProductWishList(list, true);
             }
-        })
+        } else {
+            this.seviceData = [list];
+            this._wishList.addWishlist(apiData).then((res) => {
+                this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"])
+                //                    this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
+                this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
+                this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
+            });
+        }
     }
     getWishList() {
         return new Promise((resolve, rejec) => {
-            this.local.get('wishList').then((wishListData: any) => {
-                if (!wishListData || !wishListData.length) {
-                    //api coll 
-                    //                  this.local.set("wishList", api variable);   
-                    //                     resolve(api variable)
-                }
-                else {
-                    resolve(wishListData);
-                }
-            })
+            resolve(this.seviceData)
         })
     }
     deleteProductWishList(data, actionSheetDelete?) {
@@ -100,20 +80,17 @@ export class WishListService {
                     buttons: [{
                         text: 'Yes',
                         handler: () => {
-                            this.local.get('wishList').then((res: any) => {
-                                forEach(res, (value, key) => {
-                                    if (value && value.wishlist_id == data.wishlist_id) {
+                            forEach(this.seviceData, (value, key) => {
+                                if (value && value.wishlist_id == data.wishlist_id) {
+
+                                    this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
                                         this._homeProductsService.updateHomeProductWishlist(data.entity_id || data.data.entity_id, false);
                                         this._dataConfigService.updateDataInServiceForWishlist(data.entity_id || data.data.entity_id, false);
-                                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
-                                            res.splice(key, 1);
-                                            this.local.set("wishList", res);
-//                                            this._toast.toast("Your wishList is updated", 3000);
-                                            resolve(res);
-                                        });
-                                    }
-                                })
-                            });
+                                    });
+                                    this.seviceData.splice(key, 1);
+                                    resolve(this.seviceData);
+                                }
+                            })
                         }
                     }, {
                         text: 'No',
@@ -126,22 +103,29 @@ export class WishListService {
                 });
                 actionSheet.present();
             } else {
-                this.local.get('wishList').then((res: any) => {
-                    forEach(res, (value, key) => {
-                        let entity_id = value.data.entity_id || value.entity_id;
-                        if (value && entity_id == data.data.entity_id) {
+                forEach(this.seviceData, (value, key) => {
+                    let entity_id = value.data.entity_id || value.entity_id;
+                    if (value && entity_id == data.data.entity_id) {
+
+                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
                             this._homeProductsService.updateHomeProductWishlist(data.data.entity_id, false);
                             this._dataConfigService.updateDataInServiceForWishlist(data.data.entity_id, false);
-                            this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
-                                res.splice(key, 1);
-                                this.local.set("wishList", res);
-//                                this._toast.toast("Your wishList is updated", 3000);
-                                resolve(res);
-                            });
-                        }
-                    })
-                });
+                            //                                this._toast.toast("Your wishList is updated", 3000);
+                        });
+                        this.seviceData.splice(key, 1);
+                        resolve(this.seviceData);
+                    }
+                })
             }
         });
+    }
+    updateWishlistDataLocal(entityId, wishistId, secret) {
+        forEach(this.seviceData, (value, key) => {
+            let entity_id = value.data.entity_id || value.entity_id;
+            if (value && entity_id == entityId) {
+                value["wishlist_id"] = wishistId;
+                value["secret"] = secret;
+            }
+        })
     }
 }
