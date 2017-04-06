@@ -3,7 +3,7 @@ import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {HomePage} from './../home/home';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {Storage} from '@ionic/storage';
-import forEach from 'lodash/forEach';
+import { Events } from 'ionic-angular';
 @Component({
     selector: 'placed-order',
     templateUrl: 'placedOrder.html'
@@ -11,11 +11,12 @@ import forEach from 'lodash/forEach';
 export class PlacedOrder implements OnInit {
     shippingAddress: any;
     orderId: string;
-    constructor(public viewCtrl: ViewController, public _navParams: NavParams, public _navCtrl: NavController, public _local: Storage) {}
+    constructor(public _events: Events, public viewCtrl: ViewController, public _navParams: NavParams, public _navCtrl: NavController, public _local: Storage) {}
     ngOnInit() {
         this.shippingAddress = this._navParams.get('shippingAddress');
         this.orderId = this._navParams.get('orderId');
         this._local.remove('CartData');
+        this._events.publish('cartItems:length', 0);
     }
     c_Shopping() {
         this._navCtrl.setRoot(HomePage);
