@@ -31,6 +31,7 @@ export class Checkout implements OnInit {
     total;
     shippingAddressForOrderPlaced;
     spin: boolean = false;
+    currency_sign:string;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };
     constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
@@ -53,6 +54,7 @@ export class Checkout implements OnInit {
                     this.data["store_id"] = store_id ? store_id : "";
                     if (this.cartData && this.cartData.length > 0) {
                         forEach(this.cartData, (value, key) => {
+                            this.currency_sign=value.currency_sign;
                             this.totalPrice += parseFloat(value.total);
                             products = {};
                             products["product_id"] = value.productid;
