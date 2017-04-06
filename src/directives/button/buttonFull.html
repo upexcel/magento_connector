@@ -1,5 +1,5 @@
-    <button ion-button color="{{colorFull}}"  [ngClass]="classFull" type="submit" id="{{idFull}}"   full (click)="onClick()"  [disabled]="validFull" >
-        <span *ngIf="spinFull==false" class="capitalize">
+    <button ion-button color="{{colorFull}}"  class="uppercase" [ngClass]="classFull" type="submit" id="{{idFull}}"   full (click)="onClick()"  [disabled]="validFull" >
+        <span *ngIf="spinFull==false" >
                 {{titleFull}}
         </span>
             <ion-spinner *ngIf="spinFull" class="spin">
