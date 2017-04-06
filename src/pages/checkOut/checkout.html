@@ -198,7 +198,7 @@
             <ion-col width-67 class="alignright paddRight10">
                 <span class="alignright">
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span>
-                <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(tax.discount)?tax.discount:0}}</span><span *ngIf="!tax">0</span></p>
+                <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{((tax.discount)?tax.discount:0) |number}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
         <ion-row center>
@@ -207,7 +207,7 @@
             </ion-col>
             <ion-col width-67 class="alignright paddRight10">
                 <span class="alignright">
-                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(tax.tax)?tax.tax:0}}</span><span *ngIf="!tax">0</span></p>
+                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(!(tax.tax)?0:tax.tax) |number}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
 
@@ -216,7 +216,7 @@
                 <p><b>Grand Total</b></p>
             </ion-col>
             <ion-col width-67 class="alignright paddRight10">
-                <p><b>{{currency_sign}}{{total ? total :totalPrice}}</b></p>
+                <p><b>{{currency_sign}}{{(total ? total :totalPrice)|number}}</b></p>
             </ion-col>
         </ion-row>
     </ion-card>
@@ -226,7 +226,7 @@
         <ion-row>
             <ion-col width-50 class="center">
                 <span class="center">
-                    <ion-spinner *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{total ? total :totalPrice}} </h3> 
+                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :totalPrice) |number}} </h3> 
             </ion-col>
             <ion-col width-50>
                 <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
