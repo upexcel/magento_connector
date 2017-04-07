@@ -4,6 +4,7 @@ category-view{
     .portrait{
         img{
             max-height: 90px;
+            max-width: 99.5%;
         }
 
         .cardForPortrait{
@@ -72,7 +73,7 @@ category-view{
             height: 100% !important;
         }
         .imgBox{
-/*            display: table-cell;*/
+            /*            display: table-cell;*/
             height: 150px;
 
         }

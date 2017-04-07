@@ -64,10 +64,12 @@ export class MyEditAddressPage implements OnInit {
     default_billing: any = 0;
     default_shipping: any = 0;
     reverseCartData: any;
+    firstTime = 0;
     constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
+        this.firstTime = this._navParams.get("firstTime");
         this.entity_id = this._navParams.get("entity_id");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
@@ -119,21 +121,40 @@ export class MyEditAddressPage implements OnInit {
                 })
         } else {
             this.spin = false;
-            this.updateform = this._fb.group({
-                firstname: [firstname, Validators.required],
-                lastname: [lastname, Validators.required],
-                city: ['', Validators.required],
-                company: [''],
-                telephone: ['', Validators.required],
-                fax: [''],
-                street: ['', Validators.required],
-                zip: ['', Validators.required],
-                countryid: ['', Validators.required],
-                default_billing: [0],
-                default_shipping: [0],
-                entity_id: [''],
-                secret: [secret]
-            })
+            console.log("this.firstTime",this.firstTime)
+            if (this.firstTime) {
+                this.updateform = this._fb.group({
+                    firstname: [firstname, Validators.required],
+                    lastname: [lastname, Validators.required],
+                    city: ['', Validators.required],
+                    company: [''],
+                    telephone: ['', Validators.required],
+                    fax: [''],
+                    street: ['', Validators.required],
+                    zip: ['', Validators.required],
+                    countryid: ['', Validators.required],
+                    default_billing: [1],
+                    default_shipping: [1],
+                    entity_id: [''],
+                    secret: [secret]
+                })
+            } else {
+                this.updateform = this._fb.group({
+                    firstname: [firstname, Validators.required],
+                    lastname: [lastname, Validators.required],
+                    city: ['', Validators.required],
+                    company: [''],
+                    telephone: ['', Validators.required],
+                    fax: [''],
+                    street: ['', Validators.required],
+                    zip: ['', Validators.required],
+                    countryid: ['', Validators.required],
+                    default_billing: [0],
+                    default_shipping: [0],
+                    entity_id: [''],
+                    secret: [secret]
+                })
+            }
         }
     }
     update(value: any) {
@@ -155,8 +176,8 @@ export class MyEditAddressPage implements OnInit {
             this.editaccount = res;
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
-//                this.viewCtrl.dismiss();
-                this._navCtrl.push(MySavedAddressPage,{'saveAdd':true}).then(() => {
+                //                this.viewCtrl.dismiss();
+                this._navCtrl.push(MySavedAddressPage, { 'saveAdd': true }).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
                 });

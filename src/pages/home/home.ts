@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     userToken: any;
     menu: boolean = true;
     c_Id;
-    count=0;
+    count = 0;
     constructor(private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
     homeProducts(recoll?) {
         this.spin = true;
         let body = { "type": "full" }
-        this._homeProductsConfig.getHomeProducts(body,recoll).then((res) => {
+        this._homeProductsConfig.getHomeProducts(body, recoll).then((res) => {
             if (res) {
                 this.homeProduct = res;
                 this.feature_products = slice(this.homeProduct.body, this.start, this.end);
@@ -77,7 +77,7 @@ export class HomePage implements OnInit {
         this.spin = true;
         let body = { "type": "full" }
         this._appDataConfigService.getUserData().then((userData: any) => {
-            if (userData && userData.access_token && this.count==1) {
+            if (userData && userData.access_token && this.count == 1) {
                 this.homeProducts(true);
             } else {
                 this._homeProductsConfig.getHomeProducts(body).then((res) => {
@@ -146,7 +146,9 @@ export class HomePage implements OnInit {
     doRefresh(refresher) {
         this._appDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
             this.homeProducts();
-            refresher.complete();
+            setTimeout(() => {
+                refresher.complete();
+            }, 2000);
         });
     }
 }
