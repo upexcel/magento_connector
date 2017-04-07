@@ -210,8 +210,8 @@ export class MySavedAddressPage implements OnInit {
             ev: myEvent,
         });
     }
-    AccountPopoverPage(myEvent: any, id, entity_id) {
-        let data = { id: id, entity_id: entity_id, accountCartLen: this.myaccount.body }
+    AccountPopoverPage(myEvent: any, id, entity_id, addressData) {
+        let data = { id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing:addressData.default_billing}
         let popover = this._popoverCtrl.create(AccountPopoverPage, data);
         popover.present({
             ev: myEvent,
