@@ -12,6 +12,7 @@ import slice from 'lodash/slice';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
+import reverse from 'lodash/reverse';
 @Component({
     templateUrl: 'orderlist.html'
 })
@@ -75,7 +76,7 @@ export class OrderlistPage implements OnInit {
                 this.totalOrderList.body = groupBy(this.totalOrderList.body, 'date');
                 forEach(this.totalOrderList.body, (value, key) => {
                     this.itemsValue.unshift({
-                        value: value,
+                        value: reverse(value),
                         key: key
                     });
                 });

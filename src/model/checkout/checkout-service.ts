@@ -6,16 +6,13 @@ import {ApiService} from './../../providers/api-service/api-service';
 
 export class checkoutService {
     constructor(private _appConfigService: AppDataConfigService, private _local: Storage, private _apiService: ApiService) {}
-    getShippingMethods() {
+    getShippingMethods(data) {
         return new Promise((resolve, reject) => {
-            this._appConfigService.getUserData().then((userData: any) => {
-                let data = {"secret": userData.secret};
-                this._apiService.api("cart/getShippingMethods/", data).subscribe((res) => {
-                    resolve(res);
-                }, (err) => {
-                    reject(err);
-                });
-            })
+            this._apiService.api("cart/getShippingMethods/", data).subscribe((res) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
         });
     }
     getPaymentMethods() {
@@ -39,13 +36,13 @@ export class checkoutService {
             });
         });
     }
-    getTaxDetail(data){
-           return new Promise((resolve, reject) => {
-            this._apiService.api("cart/getTaxAmount",data).subscribe((res) => {
+    getTaxDetail(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api("cart/getTaxAmount", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
             });
-        });     
+        });
     }
 }

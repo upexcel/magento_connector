@@ -85,7 +85,6 @@ export class Checkout implements OnInit {
                             this.data['products'][key] = products;
                         })
                     }
-                    console.log("this.cartData", this.cartData);
                 }
             })
         })
@@ -107,7 +106,7 @@ export class Checkout implements OnInit {
                 }
             })
         }
-        this._checkoutService.getShippingMethods().then((res: any) => {
+        this._checkoutService.getShippingMethods(this.data).then((res: any) => {
             this.shippingMethods = [];
             forEach(res.body.shipping_methods, (value, key) => {
                 value['shipping_method'] = key;
@@ -161,7 +160,7 @@ export class Checkout implements OnInit {
     }
     shippingMethod(selectedShippingMethod) {
         this.validate.shipping = false;
-        this.data['shipping_method'] = selectedShippingMethod['shipping_method'];
+        this.data['shipping_method'] = selectedShippingMethod['code'];
         if (selectedShippingMethod && selectedShippingMethod['shipping_method']) {
             this.validate.shipping = true;
         }
