@@ -85,7 +85,7 @@ export class Checkout implements OnInit {
                             this.data['products'][key] = products;
                         })
                     }
-                    console.log("this.cartData",this.cartData);
+                    console.log("this.cartData", this.cartData);
                 }
             })
         })
@@ -142,6 +142,9 @@ export class Checkout implements OnInit {
             }
             if (this.tax.discount) {
                 this.total += parseFloat(this.tax.discount)
+            }
+            if (this.selectedShippingMethod) {
+                this.total += parseFloat(this.selectedShippingMethod['price']);
             }
         });
     }
