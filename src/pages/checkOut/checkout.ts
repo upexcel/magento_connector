@@ -59,7 +59,7 @@ export class Checkout implements OnInit {
                             products = {};
                             products["product_id"] = value.productid;
                             if (value.type != "grouped") {
-                                products["qty"] = 1;
+                                products["qty"] = value["qty"];
                                 if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
                                     products["super_attribute"] = value['super_attribute'];
                                 } else if (value.type == "downloadable" && Object.keys(value['links'])) {
