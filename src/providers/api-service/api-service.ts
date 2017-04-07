@@ -35,14 +35,15 @@ export class ApiService {
                 },
 
                 (error) => {
-                    if (error._body) {
+                    console.log(error, typeof error._body)
+                    if (error._body && typeof error._body !== 'object') {
                         this._toast.toast(JSON.parse(error._body).message, 3000);
                     } else if (error.message) {
                         this._toast.toast(error.message, 3000);
                     } else {
                         this._toast.toast(error, 3000);
                     }
-                    self._handleError(error, subject)
+//                    self._handleError(error, subject)
                 })
         });
         return subject;
