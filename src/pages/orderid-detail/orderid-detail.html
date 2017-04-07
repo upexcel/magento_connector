@@ -12,9 +12,10 @@
                     <img src="{{item.value.image}}" alt="No image">
                 </ion-thumbnail>
                 <h2>{{item.value.item_name}}<span id="item_price">{{orderid_detail.body.currency_symbol}}{{item.value.price |number}}</span></h2>
-                <p>Size: {{item.value.Size}}</p>
                 <p>Quantity: {{item.value.qty_ordered}} </p>
-                <p>Color: {{item.value.Color}} </p>
+                <span *ngFor="let option of item.value.options">
+                    <p>{{option.label}}: {{option.value}}</p>
+            </span>
             </ion-item>
             <ion-item no-lines>
                 <h3>Purchased Date</h3>
