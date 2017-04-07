@@ -379,7 +379,7 @@ export class ProductPage implements OnInit {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "subData": this.configSubData };
+            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "subData": this.configSubData, "total": this.final_price };
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }
