@@ -133,7 +133,7 @@ export class HomePage implements OnInit {
                         this.end += 4;
                         this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                         infiniteScroll.complete();
-                    }, 100);
+                    }, 30);
                 }
             }
             else {
