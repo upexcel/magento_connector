@@ -89,7 +89,7 @@
         </ion-list-header>
         <span *ngIf="!shippingMethods" class="center">  <ion-spinner ></ion-spinner></span>
         <ion-item *ngFor="let shipping of shippingMethods">
-            <ion-label>{{shipping.method_title}} {{currency_sign}}{{shipping.price}}</ion-label>
+            <ion-label>{{shipping.method_title}} {{currency_sign}}{{shipping.price |number}}</ion-label>
             <ion-radio [value]="shipping"></ion-radio>
         </ion-item>
     </ion-list>
