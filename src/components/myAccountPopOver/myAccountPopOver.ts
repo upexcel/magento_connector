@@ -27,7 +27,7 @@ import {
     template: `
     <ion-list class="popover no-margin">
       <button ion-item (click)="editAccount()">Edit</button>
-      <button ion-item *ngIf="accountCartLength.length > 1" (click)="deleteAccount()">Delete</button>
+      <button ion-item *ngIf="!(default_shipping || default_billing)" (click)="deleteAccount()">Delete</button>
     </ion-list>
  `
 })
@@ -37,6 +37,8 @@ export class AccountPopoverPage {
     id: number;
     entity_id: number;
     accountCartLength: any;
+    default_billing:number;
+    default_shipping:number;
     constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -46,6 +48,8 @@ export class AccountPopoverPage {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
             this.accountCartLength = this._navParams.data.accountCartLen;
+            this.default_shipping = this._navParams.data.default_shipping;
+            this.default_billing = this._navParams.data.default_billing;
         }
         this._events.subscribe('user:exit', (user) => {
             this._events.unsubscribe('user:exit');
@@ -70,8 +74,7 @@ export class AccountPopoverPage {
         this._myaccount.deleteMyAddress(data).then((res) => {
             this._toast.toast("Deleted", 3000, "top");
             this._events.publish('user:deleted', true);
-        })
-            .catch((err) => { })
+        },(err) => { })
     }
     close() {
         this.viewCtrl.dismiss();

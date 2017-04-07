@@ -35,7 +35,6 @@ export class ApiService {
                 },
 
                 (error) => {
-                    console.log(error, typeof error._body)
                     if (error._body && typeof error._body !== 'object') {
                         this._toast.toast(JSON.parse(error._body).message, 3000);
                     } else if (error.message) {
