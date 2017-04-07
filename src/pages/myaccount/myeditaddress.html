@@ -47,11 +47,11 @@
             </ion-item>
             <ion-item class="no-padding" no-lines>
                 <ion-label class="font13">Make it your default billing Address</ion-label>
-                <ion-checkbox color="dark" formControlName="default_billing" ></ion-checkbox>
+                <ion-checkbox color="dark" formControlName="default_billing" [checked]="firstTime" [disabled]="firstTime"></ion-checkbox>
             </ion-item>
             <ion-item class="no-padding" no-lines>
                 <ion-label class="font13">Make it your default shipping Address</ion-label>
-                <ion-checkbox color="dark" formControlName="default_shipping" ></ion-checkbox>
+                <ion-checkbox color="dark" formControlName="default_shipping" [checked]="firstTime" [disabled]="firstTime"></ion-checkbox>
             </ion-item>
         </ion-list>
         <div class="center">

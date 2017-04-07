@@ -30,11 +30,11 @@
                     </ion-col>
                     <ion-col width-67 class="order_sum">
                         <p>TOTAL QUANTITY:<span id="order_sum_content" >{{orderid_detail.body.total_qty_ordered |number}}</span></p>
-                        <p>SUBTOTAL:<span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.base_grand_total |number}}</span></p>
+                        <p>TOTAL:<span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{(orderid_detail.body.base_grand_total-orderid_detail.body.tax_amount) |number}}</span></p>
                         <p>TAX:<span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.tax_amount |number}}</span></p>
                         <p>DELIVERY:<span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.shipping_amount |number}}</span></p>
                         <hr>
-                        <p>TOTAL:<span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.grand_total |number}}</span></p>
+                        <p>GRAND TOTAL:<span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.grand_total |number}}</span></p>
                     </ion-col>
                 </ion-row>
             </ion-grid>

@@ -145,10 +145,11 @@ export class MySavedAddressPage implements OnInit {
             this.reverseCartData = (this.myaccount.body);
         } else {
             this.showAddress = false;
-            if (!this.alreadyCheckLength) {
+            if (this.myaccount && this.myaccount.body.length != 0) {
                 this._navCtrl.push(MyEditAddressPage, {
                     "title": "Add New Address",
-                    "entity_id": entity_id
+                    "entity_id": entity_id,
+                    "firstTime": 0
                 }).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
@@ -156,8 +157,12 @@ export class MySavedAddressPage implements OnInit {
             } else {
                 this._navCtrl.push(MyEditAddressPage, {
                     "title": "Add New Address",
-                    "entity_id": entity_id
-                })
+                    "entity_id": entity_id,
+                    "firstTime": 1
+                }).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index);
+                });
             }
         }
     }

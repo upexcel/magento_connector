@@ -39,7 +39,7 @@ export class Checkout implements OnInit {
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
-                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true });
+                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true,"firstTime":1,title:"Add New Address" });
             }
         });
         this.placeOrder()
