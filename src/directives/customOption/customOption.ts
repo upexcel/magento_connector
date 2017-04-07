@@ -185,8 +185,8 @@ export class CustomOption {
                     this.formValidate(value.id, true, is_require);
                     if (value.vertualId.option_id) {
                         this.textData[value.vertualId.option_id] = "";
+                        value.vertualId['price'] = 0;
                     }
-                    value.vertualId['price'] = 0;
                 }
             }
         });
