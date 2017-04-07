@@ -31,14 +31,14 @@ export class Checkout implements OnInit {
     total;
     shippingAddressForOrderPlaced;
     spin: boolean = false;
-    currency_sign:string;
+    currency_sign: string;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };
     constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
-            this.address = address['body'];
-            if (!this.address || this.address.length == 0) {
+            this.address = address;
+            if (!this.address || this.address['body'].length == 0) {
                 this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true });
             }
         });
@@ -54,8 +54,9 @@ export class Checkout implements OnInit {
                     this.data["store_id"] = store_id ? store_id : "";
                     if (this.cartData && this.cartData.length > 0) {
                         forEach(this.cartData, (value, key) => {
-                            this.currency_sign=value.currency_sign;
-                            this.totalPrice += parseFloat(value.total);
+                            value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                            this.currency_sign = value.currency_sign;
+                            this.totalPrice += parseFloat(value.subTotal);
                             products = {};
                             products["product_id"] = value.productid;
                             if (value.type != "grouped") {
@@ -84,6 +85,7 @@ export class Checkout implements OnInit {
                             this.data['products'][key] = products;
                         })
                     }
+                    console.log("this.cartData",this.cartData);
                 }
             })
         })
@@ -95,14 +97,16 @@ export class Checkout implements OnInit {
         this.validate.payment = false;
         this.validate.shipping = false
         this._address.getAddress().then((address) => {
-            this.address = address['body'];
+            this.address = address;
         });
-        forEach(this.address, (address) => {
-            if (address && address.default_shipping) {
-                this.shippingAddressForOrderPlaced = address;
-                this.validate.shippingAddress = true;
-            }
-        })
+        if (this.address) {
+            forEach(this.address['body'], (address) => {
+                if (address && address.default_shipping) {
+                    this.shippingAddressForOrderPlaced = address;
+                    this.validate.shippingAddress = true;
+                }
+            })
+        }
         this._checkoutService.getShippingMethods().then((res: any) => {
             this.shippingMethods = [];
             forEach(res.body.shipping_methods, (value, key) => {
@@ -215,9 +219,7 @@ export class Checkout implements OnInit {
             }
         }
     }
-    quantityPrice(total, qty) {
-        return ((parseFloat(total)) * (parseFloat(qty)));
-    }
+
     enableGift() {
         console.log('hi', this.checkGift)
     }

@@ -5,12 +5,12 @@
         <ion-card-header>
             Address
         </ion-card-header>
-        <ion-card-content>
-            <span *ngFor="let addres of address">
-                <p color="primary" *ngIf="addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
-                <p color="primary" *ngIf="addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
-                <p color="primary" *ngIf="addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
-                <span *ngIf="addres.default_shipping || addres.default_billing"> <p color="gray">{{addres.firstname}} {{addres.lastname}}</p><p color="gray">
+        <ion-card-content *ngIf="address">
+            <span *ngFor="let addres of address['body']">
+                <p color="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
+                <p color="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
+                <p color="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
+                <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p color="gray">{{addres.firstname}} {{addres.lastname}}</p><p color="gray">
                         <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_id}} {{addres.postcode}}</p></span>
             </span>
             <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
@@ -29,7 +29,7 @@
                         </ion-row>
                         <ion-row>
                             <ion-col class="no-padding">
-                                <p class="font12" *ngIf="quantityPrice(data.total,data.qty) >0"><b>SubTotal</b> :{{data.currency_sign}}{{quantityPrice(data.total,data.qty)}}</p>
+                                <p class="font12" *ngIf="data.subTotal >0"><b>SubTotal</b> :{{data.currency_sign}}{{data.subTotal}}</p>
                             </ion-col> 
                         </ion-row>
                     </ion-col>
