@@ -29,7 +29,7 @@ export class ApiService {
             }
             let options = new RequestOptions({ headers: headers });
             self._http.post(api_url, JSON.stringify(body), options)
-                .timeout(config.stopApiTime, new Error('Check Network Connection'))
+                // .timeout(config.stopApiTime, new Error('Check Network Connection'))
                 .subscribe((res: Response) => {
                     self._extractData(res, subject)
                 },

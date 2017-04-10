@@ -4,7 +4,7 @@ import { MyApp } from './app.component';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 //storage
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 //pages
 import { TourPage } from '../pages/takeTour/tour';
 import { StartPage } from '../pages/startpage/startpage';
@@ -107,6 +107,9 @@ import { CustomOption } from '../directives/customOption/customOption';
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { BrowserModule } from '@angular/platform-browser'
+import { HttpModule } from '@angular/http';
+
 @NgModule({
     declarations: [
         MyApp,
@@ -163,9 +166,11 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         PlacedOrder
     ],
     imports: [
+    BrowserModule,
+    HttpModule,
         IonicModule.forRoot(MyApp),
-        IonicImageViewerModule
-        
+        IonicImageViewerModule,
+        IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -207,7 +212,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
         FilterService,
         Address,
         WishListService,
-        Storage,
+        IonicStorageModule,
         ApiService,
         CartService,
         FinalPrice,
