@@ -46,9 +46,9 @@
                             <ion-col class="padTB no-margin paddTop5"> 
                                 <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
                                 <span color="{{((display_price*1) > (final_price*1))? 'red': ''}}" [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" ><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
-                                <span class="floatRight">
-                                <div class="heart" [ngClass]="{'is_animating':productData.body.data.wishlist_item_id}" (click)="wishList(productData.body)"></div>
-                            </span>
+                                <span class="floatRight " (click)="wishList(productData.body)">
+                              <ion-icon name="heart" class="heart" [ngClass]="{'is_animating':productData.body.data.wishlist_item_id}"></ion-icon>
+                                </span>
                                 </ion-col>
                         </ion-row>
                     </ion-card-content>

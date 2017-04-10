@@ -15,7 +15,7 @@
             <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
             </button>
-            <button ion-button icon-only class="lightRed" (click)="gotoWishList()" *ngIf="showPopOver && wishList">
+            <button ion-button icon-only  (click)="gotoWishList()" *ngIf="showPopOver && wishList">
                     <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
             </button>
             <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (click)="gotoCart()">

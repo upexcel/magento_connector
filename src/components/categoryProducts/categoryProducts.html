@@ -6,12 +6,13 @@
                     <div class="row margin10"> 
                         <div class="columnForGrid25">
                             <div class="imgBox relative">
-                                <span *ngIf="displayMode == 'Landscape'" class=" absolute wishlist" (click)="wishList(feat_prod)">
+                                <span *ngIf="displayMode == 'Landscape'" class=" absolute potrateWishListIco " (click)="wishList(feat_prod)">
                                     <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
-                                    <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>
+                                    <!--<div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
+                                    <ion-icon name="heart" class="heart " [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
                                 </span>
                                 <span (click)="gotoProduct(feat_prod.data.sku)">
-<!--                                    <img class="center" imageDirective src="{{feat_prod.data.small_image}}"/>-->
+                                    <!--                                    <img class="center" imageDirective src="{{feat_prod.data.small_image}}"/>-->
                                     <img class="center" src="{{feat_prod.data.minify_image}}"/>
                                 </span>
                             </div>
@@ -24,9 +25,11 @@
                                             {{feat_prod.data.name}}
                                         </div>    
                                     </div>
-                                    <div *ngIf="displayMode == 'Portrait'" class=" absolute landscapWishListIco lightRed columnForGrid25" (click)="wishList(feat_prod)">
-                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>
+                                    <div *ngIf="displayMode == 'Portrait'" class=" absolute landscapWishListIco  columnForGrid25" (click)="wishList(feat_prod)">
+<!--                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
                                         <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
+                                        <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
+
                                     </div>
                                 </div>
                                 <div class="row rowForLandscape" (click)="gotoProduct(feat_prod.data.sku)">
