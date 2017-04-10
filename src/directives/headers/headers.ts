@@ -16,10 +16,10 @@ export class Headers implements AfterContentInit {
     @Input() type: boolean;
     @Input() title: string = '';
     @Input() loading: boolean;
-    @Input() view: boolean=false;
+    @Input() view: boolean = false;
     @Input() pagename: string = '';
     @Input() menu: boolean = false;
-    @Input() wishList:boolean=true;
+    @Input() wishList: boolean = true;
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
@@ -28,6 +28,16 @@ export class Headers implements AfterContentInit {
     cartItems: number;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
+        this.checkAuthorization();
+        this._events.subscribe('cartItems:length', (data) => {
+            this.cartItems = data;
+            this._events.unsubscribe('cartItems:length');
+        });
+        this._events.subscribe('check:login', (data) => {
+            this.checkAuthorization();
+        });
+    }
+    checkAuthorization() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
             this.showLogin = false;
         } else {
@@ -45,16 +55,12 @@ export class Headers implements AfterContentInit {
             this.show = false;
         }
         this._local.get('CartData').then((value: any) => {
-            if(value){
+            if (value) {
                 this.cartItems = value.length;
             }
         });
-        this._events.subscribe('cartItems:length', (data) => {
-                this.cartItems = data;
-        });
     }
-    ngOnDestroy(){
-        this._events.subscribe('cartItems:length');
+    ngOnDestroy() {
     }
     changeView(view) {
         if (view == "portrait") {
@@ -67,6 +73,7 @@ export class Headers implements AfterContentInit {
     }
     openMenu() {
         this._menuCtrl.toggle();
+        this._events.publish('check:loginSideMenu', true);
     }
     gotoLogin() {
         this._navCtrl.push(LoginPage);
@@ -77,7 +84,7 @@ export class Headers implements AfterContentInit {
             ev: myEvent
         });
     }
-    gotoWishList(){
+    gotoWishList() {
         this._navCtrl.push(wishList);
     }
     gotoCart() {

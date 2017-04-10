@@ -26,7 +26,6 @@ export class DownloadProduct {
     ngOnInit() {
         this.currencySign = this.data.body.data.currency_sign;
         forEach(this.data.body.links, (value: any, key) => {
-            console.log("value",value)
             value.download = false;
             if (this.editCartData) {
                 forEach(this.editCartData.links, (options: any) => {

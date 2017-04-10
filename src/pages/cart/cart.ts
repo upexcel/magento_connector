@@ -8,6 +8,8 @@ import { ActionSheetController } from 'ionic-angular';
 import { Checkout } from './../checkOut/checkout';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { ToastService } from './../../providers/toast-service/toastService';
+import { LoginPage } from './../login/login';
+import { Events } from 'ionic-angular';
 
 @Component({
     selector: 'cart',
@@ -18,7 +20,7 @@ export class CartPage implements OnInit {
     lists: any = [];
     entery: boolean = false;
     totalPay: number;
-    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController, ) { }
+    constructor(public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
         this.local.get('CartData').then((value: any) => {
             this.res = value;
@@ -28,7 +30,9 @@ export class CartPage implements OnInit {
             //            });
         });
     }
-
+    ionViewWillEnter() {
+        this._events.publish('check:login', true);
+    }
 
     changeQuantity() {
         this._cartFunction.updateCart(this.res);
@@ -60,9 +64,7 @@ export class CartPage implements OnInit {
     }
     edit(data) {
         this._navCtrl.push(ProductPage, { 'id': data.sku, "editCartData": data }).then(() => {
-            // first we find the index of the current view controller:
             const index = this._viewCtrl.index;
-            // then we remove it from the navigation stack
             this._navCtrl.remove(index);
         });
     }
@@ -89,11 +91,12 @@ export class CartPage implements OnInit {
             if (userData) {
                 if (this.res && this.res.length > 0) {
                     this._navCtrl.push(Checkout, { res: this.res });
-                } else{
+                } else {
                     this._toast.toast("No product in cart. Please add first.", 3000);
                 }
             } else {
-                this._toast.toast("Please Login First !!", 3000);
+                this._navCtrl.push(LoginPage, { checkoutLogin: true, res: this.res });
+                //                this._toast.toast("Please Login First !!", 3000);
             }
         })
     }

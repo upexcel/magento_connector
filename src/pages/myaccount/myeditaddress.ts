@@ -121,7 +121,6 @@ export class MyEditAddressPage implements OnInit {
                 })
         } else {
             this.spin = false;
-            console.log("this.firstTime",this.firstTime)
             if (this.firstTime) {
                 this.updateform = this._fb.group({
                     firstname: [firstname, Validators.required],

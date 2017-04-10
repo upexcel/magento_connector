@@ -9,6 +9,8 @@ import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { PlacedOrder } from './../placedOrder/placedOrder';
+import { Events } from 'ionic-angular';
+
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -33,22 +35,21 @@ export class Checkout implements OnInit {
     spin: boolean = false;
     currency_sign: string;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };
-    constructor(private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
-                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true,"firstTime":1,title:"Add New Address" });
+                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true, "firstTime": 1, title: "Add New Address" });
             }
         });
-        this.placeOrder()
-
+        this.placeOrder();
     }
     placeOrder() {
         let products: any = {};
         this._appConfigService.getUserData().then((userData: any) => {
-            this.data["secret"] = userData['secret'];
+            this.data["secret"] = userData ? userData['secret'] : "";
             this._local.get('store_id').then((store_id: any) => {
                 if (userData) {
                     this.data["store_id"] = store_id ? store_id : "";

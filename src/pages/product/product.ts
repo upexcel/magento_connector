@@ -512,9 +512,7 @@ export class ProductPage implements OnInit {
                         this._toast.toast(this.product+ "added to your shopping cart", 3000, "top");
                     }
                     this._navCtrl.push(CartPage).then(() => {
-                        // first we find the index of the current view controller:
                         const index = this.viewCtrl.index;
-                        // then we remove it from the navigation stack
                         this._navCtrl.remove(index);
                     });
                 }

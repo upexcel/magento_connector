@@ -42,9 +42,7 @@ export class CategoryComponent {
         }
         //        else {
         //            window.addEventListener("orientationchange", (value) => {
-        //                console.log("value", value);
         //                var mql = window.matchMedia("(orientation: portrait)");
-        //                console.log("match medea", mql)
         //                if (mql.matches) {
         //                    // Portrait orientation
         //                    this.displayMode = "Portrait";

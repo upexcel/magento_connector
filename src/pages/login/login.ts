@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, Events } from 'ionic-angular';
+import { NavController, AlertController, Events, NavParams, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { RegisterPage } from '../register/register';
 import { HomePage } from './../home/home';
@@ -10,7 +10,9 @@ import { Login } from '../../model/login/login';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { SocialAccount } from './../../model/startPage/socialAccount';
-import { EmailValidator } from '../../validation/emailValidate'
+import { EmailValidator } from '../../validation/emailValidate';
+import { Checkout } from './../checkOut/checkout';
+
 @Component({
     selector: 'login',
     templateUrl: 'login.html'
@@ -23,9 +25,13 @@ export class LoginPage implements OnInit {
     show_form: boolean = false;
     data: LoginDataType;
     forgotPasswordEmail: any;
-    title: string = 'LOGIN'
-    constructor(private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
+    title: string = 'LOGIN';
+    checkoutLogin: boolean = false;
+    cartData: any;
+    constructor(public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
+        this.checkoutLogin = this._navParams.get('checkoutLogin');
+        this.cartData = this._navParams.get('res');
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
             this.logform = new FormGroup({
@@ -41,7 +47,6 @@ export class LoginPage implements OnInit {
                 website_id: new FormControl(website_id),
             });
         });
-
     }
     gotoreg() {
         this._navCtrl.push(RegisterPage);
@@ -55,7 +60,11 @@ export class LoginPage implements OnInit {
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(this.data.body);
-                this._navCtrl.setRoot(HomePage, { "access_token": this.data.body.access_token });
+                if (this.checkoutLogin) {
+                    this._navCtrl.pop(Checkout);
+                } else {
+                    this._navCtrl.setRoot(HomePage, { "access_token": this.data.body.access_token });
+                }
             }
             else {
                 this._toast.toast(res.message, 3000, "top");
@@ -69,13 +78,21 @@ export class LoginPage implements OnInit {
         let data = body.data;
         this._socialAccount.getSocialAccount(data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            if (this.checkoutLogin) {
+                this._navCtrl.pop(Checkout);
+            } else {
+                this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            }
         });
     }
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            if (this.checkoutLogin) {
+                this._navCtrl.pop(Checkout);
+            } else {
+                this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            }
         });
     }
     gotoforgotPage() {

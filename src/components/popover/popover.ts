@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, MenuController } from 'ionic-angular';
+import { ViewController, NavController, MenuController, Events } from 'ionic-angular';
 import { StartPage } from './../../pages/startpage/startpage';
 import { MySavedAddressPage } from './../../pages/myaccount/savedAddress';
 import { ChangepasswordPage } from './../../pages/changePassword/changePassword';
@@ -9,7 +9,7 @@ import { MyEditAccount } from './../../pages/myaccount/myEditAccount';
 import { Policy } from './../../pages/policies/policies';
 import { AboutUs } from './../../pages/aboutUs/aboutUs';
 import { ContactUs } from './../../pages/contactUs/contactUs';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 
 @Component({
     selector: 'user-menu',
@@ -17,9 +17,16 @@ import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfi
 })
 export class PopoverPage {
     msg: string = "";
-    usermenu:boolean;
-    constructor(private _appConfigService: AppDataConfigService,private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
-            this._appConfigService.getUserData().then((userData: any) => {
+    usermenu: boolean;
+    constructor(private _events: Events, private _appConfigService: AppDataConfigService, private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+        this.tokenCheck();
+        this._events.subscribe('check:loginSideMenu', (data) => {
+            this.tokenCheck();
+            this._events.unsubscribe('check:loginSideMenu');
+        });
+    }
+    tokenCheck() {
+        this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
                 this.usermenu = true;
             } else {

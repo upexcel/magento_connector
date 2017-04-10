@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar  color="primary">
-        <button ion-button menuToggle icon-right *ngIf="pagename=='home' || menu==true">
+        <button ion-button menuToggle icon-right (click)="openMenu()" *ngIf="pagename=='home' || menu==true">
                 <!--<ion-icon name="menu"></ion-icon>-->
                 <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
         </button>
