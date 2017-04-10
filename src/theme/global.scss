@@ -4,6 +4,9 @@
 .landscapWishListIco{
     right: 0px;
     top: -10px;}
+.potrateWishListIco{
+    right: -15px;
+}
 .aligncenter{
     text-align: center;
 }
@@ -295,7 +298,7 @@ filter{
 }
 
 .lightRed{
-    color:rgba(226, 4, 4, 0.71);
+    color:rgba(226, 4, 4, 0.71)!important;
 }
 .lowercase{
     text-transform: lowercase;

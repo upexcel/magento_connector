@@ -25,6 +25,11 @@
     ion-fab-list[side=left] {
         margin: -18px 74px;
     }
+    .heart {
+        cursor: pointer;
+        padding-right: 20px;
+        color:#adadad;
+    }
     ion-buttons {
         margin: 5px;
         text-align: right !important;
@@ -341,17 +346,11 @@ filter{
 
 }
 
-.heart {
-    cursor: pointer;
-    height: 34px;
-    width: 50px;
-    background-image:url('./../assets/image/web_heart_animation.png');
-    background-position: left;
-    background-repeat:no-repeat;
-    background-size:2900%;
-}
 
-.is_animating {
+
+
+
+/*.is_animating {
     animation: heart-burst .8s steps(28) 1;
     background-position:right;
 }
@@ -359,4 +358,4 @@ filter{
 @keyframes heart-burst {
     from {background-position:left;}
     to { background-position:right;}
-}
+}*/
