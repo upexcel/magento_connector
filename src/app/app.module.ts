@@ -23,6 +23,7 @@ import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
 import { MyReviews } from '../pages/myaccount/myReviews';
+import { ReviewDetails } from '../pages/myaccount/reviewDetails';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
 import { Checkout } from '../pages/checkOut/checkout';
@@ -47,6 +48,7 @@ import { Forgot } from '../model/forgot/forgot';
 import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
 import { TotalOrder } from '../model/orderList/totalOrder';
 import { MyAccount } from '../model/myaccount/myaccount';
+import { MyReviewData } from '../model/myaccount/myReviews';
 import { MyDownlodeData } from '../model/myaccount/myDownloadableProduct';
 import { Country } from '../model/myaccount/country';
 import { Edit } from '../model/myaccount/editAccount';
@@ -168,11 +170,12 @@ import { HttpModule } from '@angular/http';
         AboutUs,
         ContactUs,
         PlacedOrder,
-        Downloadable
+        Downloadable,
+        ReviewDetails
     ],
     imports: [
-    BrowserModule,
-    HttpModule,
+        BrowserModule,
+        HttpModule,
         IonicModule.forRoot(MyApp),
         IonicImageViewerModule,
         IonicStorageModule.forRoot()
@@ -212,7 +215,8 @@ import { HttpModule } from '@angular/http';
         ContactUs,
         PlacedOrder,
         Downloadable,
-        MyReviews
+        MyReviews,
+        ReviewDetails
     ],
     providers: [
         AppConfig,
@@ -256,7 +260,8 @@ import { HttpModule } from '@angular/http';
         checkoutService,
         CMS,
         SocialSharing,
-        MyDownlodeData
+        MyDownlodeData,
+        MyReviewData
     ]
 })
 export class AppModule {

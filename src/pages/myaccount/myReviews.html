@@ -1,4 +1,11 @@
-<header  [title]='"My Product Reviews"'></header>
+<header  [title]='"My Product Reviews"' [wishList]=false></header>
 <ion-content >
     <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+    <ion-list *ngIf="!spin">
+        <ion-item *ngFor=" let data of myReviewRes.success_data ">
+            <p><span class="color capitalize">{{data.review_title}}</span><span class="gray floatRight">{{data.review_date | date:'dd MMM yyyy'}}</span></p>
+            <p color="dark" class="whiteSpace capitalize">{{data.review_detail}}</p>
+            <a (click)="viewDetails(data)"><span class="color capitalize floatRight" > view details</span></a>
+        </ion-item>
+    </ion-list>        
 </ion-content>                    
