@@ -1,25 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import forEach from 'lodash/forEach';
 import findIndex from 'lodash/findIndex';
-import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular';
+import {Storage} from '@ionic/storage';
+import {Events} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
 
 declare let Promise: any;
 @Injectable()
 export class CartFunction implements OnInit {
-    constructor(private _events: Events, public local: Storage) { }
-    ngOnInit() { }
+    constructor(private _events: Events, public local: Storage, private _apiService: ApiService) {}
+    ngOnInit() {}
     addItem(newQuantity, data) {
     }
 
     totalPay(data) {
         let totalPay: number = 0;
-        forEach(data, function(value, key) {
+        forEach(data, function (value, key) {
             let pay = value['price'] * value["quantity"]
             totalPay = totalPay + pay;
 
         });
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             resolve(totalPay);
         });
     }
@@ -45,6 +46,15 @@ export class CartFunction implements OnInit {
 
         this._events.publish('cartItems:length', newCartData.length);
         this.local.set('CartData', newCartData);
+    }
+    applyCoupon(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api("cart/coupon", data).subscribe((res) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });
     }
 }
 
