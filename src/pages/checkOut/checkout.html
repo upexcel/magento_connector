@@ -21,7 +21,7 @@
         <ion-card-content  class="no-padding">
             <ion-grid no-padding>
                 <ion-row center>
-                    <ion-col class="aligncenter" width-33>
+                    <ion-col class="aligncenter" col-4>
                         <ion-row center>
                             <ion-col>
                                 <img src="{{data.img}}" alt="" class="maxht"/>
@@ -33,18 +33,18 @@
                             </ion-col> 
                         </ion-row>
                     </ion-col>
-                    <ion-col width-67>
-                        <ion-row>
+                    <ion-col col-8>
+                        <ion-row align-items-center>
                             <ion-col class="cartCheckOutQty capitalize">
                                 Quantity: {{data.qty}}
                             </ion-col>
                         </ion-row>
-                        <ion-row>
+                        <ion-row align-items-center>
                             <ion-col class="size capitalize">
                                 {{data.name}}
                             </ion-col>
                         </ion-row>
-                        <ion-row>
+                        <ion-row align-items-center>
                             <ion-col *ngIf="data.type=='configurable'">
                                 <span *ngFor="let subdata of data.subData">
                                     <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
@@ -132,7 +132,7 @@
             </ion-item>
             <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
                       <ion-row center  *ngFor="let data of cartData ; let i=index;">
-                     <ion-col class="aligncenter" width-33>
+                     <ion-col class="aligncenter" col-4>
                         <ion-row center>
                             <ion-col>
                                 <img src="{{data.img}}" alt="" class="maxht"/>
@@ -144,7 +144,7 @@
                             </ion-col> 
                         </ion-row>
                     </ion-col>
-                    <ion-col width-67>
+                    <ion-col col-8>
                         <h3>    {{data.name}}</h3>
                         <ion-list class='background1 border-bottom'>
                             <ion-item>
@@ -184,58 +184,58 @@
             Price Details
         </ion-card-header>
         <ion-row center>
-            <ion-col width-33 class="paddLft20">
+            <ion-col col-4 class="paddLft20">
                 <p>Price ({{cartData.length}} items)</p>
             </ion-col>
-            <ion-col width-67 class="alignright paddRighttax10">
+            <ion-col col-8 class="alignright paddRighttax10">
                 <p *ngIf="totalPrice">${{totalPrice}}</p>
             </ion-col>
         </ion-row>
         <ion-row center>
-            <ion-col width-33 class="paddLft20">
+            <ion-col col-4 class="paddLft20">
                 <p>Discount</p>
             </ion-col>
-            <ion-col width-67 class="alignright paddRight10">
+            <ion-col col-8 class="alignright paddRight10">
                 <span class="alignright">
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span>
                 <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{((tax.discount)?tax.discount:0) |number}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
         <ion-row center>
-            <ion-col width-33 class="paddLft20">
+            <ion-col col-4 class="paddLft20">
                 <p>Tax</p>
             </ion-col>
-            <ion-col width-67 class="alignright paddRight10">
+            <ion-col col-8 class="alignright paddRight10">
                 <span class="alignright">
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(!(tax.tax)?0:tax.tax) |number}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
         <ion-row center *ngIf="selectedShippingMethod">
-                 <ion-col width-33 class="paddLft20">
+                 <ion-col col-4 class="paddLft20">
                 <p>{{selectedShippingMethod.method_title}}</p>
             </ion-col>
-            <ion-col width-67 class="alignright paddRight10">
+            <ion-col col-8 class="alignright paddRight10">
                 <p>{{currency_sign}}{{(selectedShippingMethod.price)|number}}</p>
             </ion-col>
         </ion-row>
         <ion-row center>
-            <ion-col width-33 class="paddLft20">
+            <ion-col col-4 class="paddLft20">
                 <p><b>Grand Total</b></p>
             </ion-col>
-            <ion-col width-67 class="alignright paddRight10">
+            <ion-col col-8 class="alignright paddRight10">
                 <p><b>{{currency_sign}}{{(total ? total :totalPrice)|number}}</b></p>
             </ion-col>
         </ion-row>
     </ion-card>
 </ion-content>
 <ion-footer >
-    <ion-grid class="filterFooterBtnDiv">
+    <ion-grid class="filterFooterBtnDiv no-padding">
         <ion-row>
-            <ion-col width-50 class="center">
+            <ion-col col-6 class="center">
                 <span class="center">
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :totalPrice) |number}} </h3> 
             </ion-col>
-            <ion-col width-50>
+            <ion-col col-6>
                 <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
             </ion-col>
         </ion-row>

@@ -25,10 +25,10 @@
             </ion-item>
             <ion-grid>
                 <ion-row class="backgroungW">
-                    <ion-col width-33 class="center">
+                    <ion-col col-4 class="center">
                         <span class="bold"> Order Summary </span>
                     </ion-col>
-                    <ion-col width-67 class="order_sum">
+                    <ion-col col-8 class="order_sum">
                         <p>TOTAL QUANTITY: <span id="order_sum_content" >{{orderid_detail.body.total_qty_ordered |number}}</span></p>
                         <p>TOTAL: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{(orderid_detail.body.base_grand_total-orderid_detail.body.tax_amount) |number}}</span></p>
                         <p>TAX: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.tax_amount |number}}</span></p>
@@ -45,10 +45,10 @@
             </ion-list-header>
             <ion-grid *ngIf="orderid_detail.body.billing_address">
                 <ion-row class="backgroungW">
-                    <ion-col width-33 class="center">
+                    <ion-col col-4 class="center">
                         <span class="bold"> Billing </span>
                     </ion-col>
-                    <ion-col width-67 class="order_sum">
+                    <ion-col col-8 class="order_sum">
                         <p>Name: {{orderid_detail.body.billing_address.name+" "+orderid_detail.body.billing_address.lastname}}</p>
                         <p>Telephone: {{orderid_detail.body.billing_address.telephone}} </p>
                         <p>Street: <span *ngFor="let street of orderid_detail.body.billing_address.street"><span *ngIf="street && street.length">{{street}}</span></span></p>
@@ -67,10 +67,10 @@
         </ion-list-header>
         <ion-grid *ngIf="orderid_detail.body.shipping_address">
             <ion-row class="backgroungW">
-                <ion-col width-33 class="center">
+                <ion-col col-4 class="center">
                     <span class="bold"> Shipping </span>
                 </ion-col>
-                <ion-col width-67 class="order_sum">
+                <ion-col col-8 class="order_sum">
                     <p>Name: {{orderid_detail.body.shipping_address.name+" "+orderid_detail.body.shipping_address.lastname}}</p>
                     <p>Telephone: {{orderid_detail.body.shipping_address.telephone}} </p>
                     <p>Street: <span *ngFor="let street of orderid_detail.body.shipping_address.street">{{street}}</span></p>
@@ -83,30 +83,30 @@
         </ion-grid>
         <ion-grid *ngIf="orderid_detail.body.shipping_method">
             <ion-row class="backgroungW">
-                <ion-col width-33 class="center">
+                <ion-col col-4 class="center">
                     <span class="bold"> Shipping method </span>
                 </ion-col>
-                <ion-col width-67 class="order_sum">
+                <ion-col col-8 class="order_sum">
                     <p>{{orderid_detail.body.shipping_method}}</p>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-grid *ngIf="orderid_detail.body.shipping_description">
             <ion-row class="backgroungW">
-                <ion-col width-33 class="center">
+                <ion-col col-4 class="center">
                     <span class="bold"> Shipping Description </span>
                 </ion-col>
-                <ion-col width-67 class="order_sum">
+                <ion-col col-8 class="order_sum">
                     <p>{{orderid_detail.body.shipping_description}}</p>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-grid *ngIf="orderid_detail.body.payment_method">
             <ion-row class="backgroungW">
-                <ion-col width-33 class="center">
+                <ion-col col-4 class="center">
                     <span class="bold"> Shipping Description </span>
                 </ion-col>
-                <ion-col width-67 class="order_sum">
+                <ion-col col-8 class="order_sum">
                     <p>{{orderid_detail.body.payment_method}}</p>
                 </ion-col>
             </ion-row>

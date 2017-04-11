@@ -4,7 +4,7 @@
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-grid no-padding *ngIf="productData">
               <ion-row  responsive-lg responsive-md responsive-sm>
-            <ion-col no-padding width-100 >
+            <ion-col no-padding col-12>
                 <ion-grid no-padding >
                     <ion-row no-padding class="slideOption" >
                         <ion-col no-padding class='backgroungW'>
@@ -21,18 +21,18 @@
                         <ion-row class="padLeft10" >
                             <ion-col  class='no-margin lineH0 no-padding'>
                                 <ion-row>
-                                    <ion-col width-80 class="padTB no-margin">
+                                    <ion-col col-10 class="padTB no-margin">
                                         <h2 class="capitalize no-margin productName">{{productData.body.data.name}}</h2>
                                     </ion-col> 
-                                    <ion-col class="no-margin no-padding" width-20 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
+                                    <ion-col class="no-margin no-padding" col-2 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
                                              <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
-                                    <ion-col width-80 class="padTB no-margin">
+                                    <ion-col col-10 class="padTB no-margin">
                                         <p class="stock">{{productData.body.data.in_stock}}</p>
                                     </ion-col>
-                                    <ion-col class="no-margin" width-20>
+                                    <ion-col class="no-margin" col-2>
                                         <span class="productWishList" >
                                             <ion-fab>
                                                 <button ion-fab mini (click)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon name="share"></ion-icon></button>
@@ -112,8 +112,8 @@
                     <h4 class="padLeft20 capitalize">Additional Information</h4>
                     <ion-item *ngFor="let info of additionalInformationData">
                         <ion-row>
-                            <ion-col class="no-margin no-padding" width-20> <span class="additionalInformation capitalize">{{info.key}} : </span> </ion-col>
-                            <ion-col class="no-margin" width-80><span class='additionalInfo'>{{info.value}} </span></ion-col>
+                            <ion-col class="no-margin no-padding" col-2> <span class="additionalInformation capitalize">{{info.key}} : </span> </ion-col>
+                            <ion-col class="no-margin" col-10><span class='additionalInfo'>{{info.value}} </span></ion-col>
                         </ion-row>
                     </ion-item>
                 </ion-list>
