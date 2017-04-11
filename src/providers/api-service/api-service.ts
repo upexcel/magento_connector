@@ -42,7 +42,7 @@ export class ApiService {
                     } else {
                         this._toast.toast(error, 3000);
                     }
-//                    self._handleError(error, subject)
+                    self._handleError(error, subject)
                 })
         });
         return subject;
