@@ -21,6 +21,7 @@ import { MyEditAccount } from '../pages/myaccount/myEditAccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { MySavedAddressPage } from '../pages/myaccount/savedAddress';
+import { MyReviews } from '../pages/myaccount/myReviews';
 import { OfflinePage } from '../pages/offline/offline'
 import { wishList } from '../pages/wishList/wishList';
 import { Checkout } from '../pages/checkOut/checkout';
@@ -132,6 +133,7 @@ import { HttpModule } from '@angular/http';
         OrderModalPage,
         MyEditAddressPage,
         MySavedAddressPage,
+        MyReviews,
         LoginPage,
         LoadingModal,
         PopoverPage,
