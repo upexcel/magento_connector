@@ -1,6 +1,6 @@
 <header  [title]='"My Product Reviews"' [wishList]=false></header>
 <ion-content >
-    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+    <ion-spinner *ngIf="spin" class="apiSpinner"></ion-spinner>
     <ion-list  *ngIf="!spin && myReviewRes && myReviewRes.success">
         <ion-list-header>
             REVIEW.

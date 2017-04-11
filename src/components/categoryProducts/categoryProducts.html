@@ -1,11 +1,11 @@
 <ion-grid  *ngIf="product" [ngClass]="{'portrait': displayMode == 'Portrait', 'landscape': displayMode == 'Landscape'}" >
     <div class="card1">   
         <div class="rowForLandscape" wrap>
-            <div class="column cursorPointer"  *ngFor="let feat_prod of product" >
+            <div class="column cursorPointer relative"  *ngFor="let feat_prod of product" >
                  <div class="cardForPortrait">
                     <div class="row margin10"> 
                         <div class="columnForGrid25">
-                            <div class="imgBox relative">
+                            <div class="imgBox">
                                 <span *ngIf="displayMode == 'Landscape'" class=" absolute potrateWishListIco " (click)="wishList(feat_prod)">
                                     <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
                                     <!--<div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->

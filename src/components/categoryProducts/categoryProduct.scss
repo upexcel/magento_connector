@@ -58,6 +58,9 @@ category-view{
     }
     /*@media screen and (orientation: landscape) {*/
     .landscape{
+        .columnForGrid25{
+            width:100%
+        }
         img{
             max-height: 145px;
             max-width: 100%;
