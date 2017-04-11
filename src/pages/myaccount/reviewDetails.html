@@ -1,7 +1,7 @@
 <header  [title]='"Reviews Details"' [wishList]=false></header>
 <ion-content >
     <span class="center">
-        <img *ngIf="data" src="{{data.data.media_images[0]}}" class="cursorPointer" style="max-height: 400px;" imageViewer/>
+        <img *ngIf="data"  imageDirective src="{{data.data.small_image}}" class="cursorPointer" style="max-height: 400px;" imageViewer/>
     </span>
     <product-review  [skuData]="data.data.sku" > loading..</product-review>    
 </ion-content>   
