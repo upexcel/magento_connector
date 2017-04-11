@@ -211,7 +211,8 @@ import { HttpModule } from '@angular/http';
         AboutUs,
         ContactUs,
         PlacedOrder,
-        Downloadable
+        Downloadable,
+        MyReviews
     ],
     providers: [
         AppConfig,

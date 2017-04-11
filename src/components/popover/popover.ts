@@ -11,6 +11,7 @@ import { AboutUs } from './../../pages/aboutUs/aboutUs';
 import { ContactUs } from './../../pages/contactUs/contactUs';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Downloadable } from './../../pages/myaccount/downloadableProduct';
+import { MyReviews } from './../../pages/myaccount/myReviews';
 
 @Component({
     selector: 'user-menu',
@@ -52,6 +53,10 @@ export class PopoverPage {
     }
     gotoDownloadable() {
         this._navCtrl.push(Downloadable);
+        this._menuCtrl.close();
+    }
+    gotoMyReview() {
+        this._navCtrl.push(MyReviews);
         this._menuCtrl.close();
     }
     gotoEditAccount() {
