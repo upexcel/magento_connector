@@ -17,6 +17,7 @@ import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { CategoryProductPage } from '../pages/categoryProduct/categoryProduct';
 import { MyEditAddressPage } from '../pages/myaccount/myeditaddress';
+import { Downloadable } from '../pages/myaccount/downloadableProduct';
 import { MyEditAccount } from '../pages/myaccount/myEditAccount';
 import { LoginPage } from '../pages/login/login';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
@@ -45,6 +46,7 @@ import { Forgot } from '../model/forgot/forgot';
 import { CategoryProduct } from '../model/categoryProduct/categoryProduct';
 import { TotalOrder } from '../model/orderList/totalOrder';
 import { MyAccount } from '../model/myaccount/myaccount';
+import { MyDownlodeData } from '../model/myaccount/myDownloadableProduct';
 import { Country } from '../model/myaccount/country';
 import { Edit } from '../model/myaccount/editAccount';
 import { OrderIdDetail } from '../model/orderid-detail/orderid-detail';
@@ -163,7 +165,8 @@ import { HttpModule } from '@angular/http';
         Policy,
         AboutUs,
         ContactUs,
-        PlacedOrder
+        PlacedOrder,
+        Downloadable
     ],
     imports: [
     BrowserModule,
@@ -205,7 +208,8 @@ import { HttpModule } from '@angular/http';
         Policy,
         AboutUs,
         ContactUs,
-        PlacedOrder
+        PlacedOrder,
+        Downloadable
     ],
     providers: [
         AppConfig,
@@ -248,7 +252,8 @@ import { HttpModule } from '@angular/http';
         WishListModel,
         checkoutService,
         CMS,
-        SocialSharing
+        SocialSharing,
+        MyDownlodeData
     ]
 })
 export class AppModule {

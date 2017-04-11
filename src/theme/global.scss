@@ -303,6 +303,15 @@ filter{
 .lowercase{
     text-transform: lowercase;
 }
+.transparent{
+    .item-md:first-child{
+        background: transparent;
+        margin: 0px;
+    }
+}
+.dark{
+    color:#404040;
+}
 .fullCol{
     -webkit-flex: 0 0 0% !important;
     -ms-flex: 0 0 0%  !important;
@@ -622,7 +631,7 @@ filter {
 }
 wishList, cart{
     .list-md{
-            margin: -1px 0 40px 0;
+        margin: -1px 0 40px 0;
     }
 }
 header{

@@ -19,6 +19,10 @@
                 <i class="fa fa-line-chart fa-lg" aria-hidden="true"></i>
             My Orders
         </button>
+        <button ion-item icon-left (click)="gotoDownloadable()" *ngIf="usermenu">
+                <i class="fa fa-download" aria-hidden="true"></i>
+            My Downloadable Products
+        </button>
     </span>
     <button  ion-item icon-left (click)="gotoPolicy()" >
              <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i>

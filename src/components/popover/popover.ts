@@ -10,6 +10,7 @@ import { Policy } from './../../pages/policies/policies';
 import { AboutUs } from './../../pages/aboutUs/aboutUs';
 import { ContactUs } from './../../pages/contactUs/contactUs';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { Downloadable } from './../../pages/myaccount/downloadableProduct';
 
 @Component({
     selector: 'user-menu',
@@ -47,6 +48,10 @@ export class PopoverPage {
     }
     gotoOrders() {
         this._navCtrl.push(OrderlistPage);
+        this._menuCtrl.close();
+    }
+    gotoDownloadable() {
+        this._navCtrl.push(Downloadable);
         this._menuCtrl.close();
     }
     gotoEditAccount() {
