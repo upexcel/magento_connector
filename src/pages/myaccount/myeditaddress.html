@@ -4,11 +4,11 @@
     <form [formGroup]="updateform" *ngIf="spin==false">
         <ion-list inset>
             <ion-item>
-                <ion-label floating>First Name <span color="danger">*</span></ion-label>
+                <ion-label floating>First Name <span class="danger">*</span></ion-label>
                 <ion-input  [onReturn]='"lastName"' formControlName="firstname" clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Last Name <span color="danger">*</span></ion-label>
+                <ion-label floating>Last Name <span class="danger">*</span></ion-label>
                 <ion-input  [onReturn]='"Company"' id="lastName"  formControlName="lastname"  clearInput></ion-input>
             </ion-item>
             <ion-item>
@@ -20,23 +20,23 @@
                 <ion-input type="number" min="0" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Mobile Number <span color="danger">*</span></ion-label>
+                <ion-label floating>Mobile Number <span class="danger">*</span></ion-label>
                 <ion-input type="number" min="0" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Address <span color="danger">*</span></ion-label>
+                <ion-label floating>Address <span class="danger">*</span></ion-label>
                 <ion-input formControlName="street" id="Address" [onReturn]='"City"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>City <span color="danger">*</span></ion-label>
+                <ion-label floating>City <span class="danger">*</span></ion-label>
                 <ion-input formControlName="city" id="City" [onReturn]='"Pin"' autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Pin Code <span color="danger">*</span></ion-label>
+                <ion-label floating>Pin Code <span class="danger">*</span></ion-label>
                 <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
-                <ion-label stacked>Country<span color="danger">*</span></ion-label>
+                <ion-label stacked>Country<span class="danger">*</span></ion-label>
                 <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
                     <span *ngFor="let name of counrtyName.body.country">
                         <ion-option [value]="name"> 

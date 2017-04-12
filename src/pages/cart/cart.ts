@@ -97,7 +97,7 @@ export class CartPage implements OnInit {
 
     deleteProduct(data) {
         let actionSheet = this._actionSheetCtrl.create({
-            title: 'Delete',
+            title: 'Are you sure you want to remove'+data.data.name,
             buttons: [{
                 text: 'Yes',
                 handler: () => {

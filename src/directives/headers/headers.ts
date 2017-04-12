@@ -36,7 +36,6 @@ export class Headers implements AfterContentInit {
         });
         this._events.subscribe('wishList:length', (data) => {
             this.wishlist = data;
-            console.log("header",this.wishlist)
 //            this._events.unsubscribe('wishList:length');
         });
         this._events.subscribe('check:login', (data) => {

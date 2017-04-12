@@ -1,7 +1,7 @@
 <div *ngFor="let sampleSet of sample ; let i= index ">
     <ion-item no-lines class="padLeft10">
         <ion-label class="fontColor capitalize">{{sampleSet.title}}</ion-label>
-        <ion-checkbox  class="marRight" color="dark" value="sampleSet" [(ngModel)]="sampleData[i]" (ngModelChange)="onChangeSample(sampleSet,i,$event)"></ion-checkbox>
+        <ion-checkbox  class="marRight" class="dark" value="sampleSet" [(ngModel)]="sampleData[i]" (ngModelChange)="onChangeSample(sampleSet,i,$event)"></ion-checkbox>
     </ion-item>
     <ion-item no-lines class="minHeight">
         <ion-label class="paddLft25 no-margin">
@@ -10,13 +10,13 @@
     </ion-item>
 </div>
 <ion-list-header class="no-margin fontColor capitalize" no-lines *ngIf="links.length > 0">
-                 Check Items to Download  <span color="danger">*</span>
+                 Check Items to Download  <span class="danger">*</span>
 </ion-list-header>
 
 <ion-list class="no-margin"  *ngFor="let linkSet of links">
           <ion-item no-lines class="padLeft10" >
         <ion-label>{{linkSet.title}}  <span *ngIf='linkSet.price *1>0'>- Price {{currencySign}}{{linkSet.price | number}}</span></ion-label>
-        <ion-checkbox class="marRight" color="dark" value="linkSet" [(ngModel)]="linkSet.download" (ngModelChange)="onChangeLink()" ></ion-checkbox>
+        <ion-checkbox class="marRight" class="dark" value="linkSet" [(ngModel)]="linkSet.download" (ngModelChange)="onChangeLink()" ></ion-checkbox>
     </ion-item>
     <ion-item no-lines class="minHeight">
         <ion-label class="paddLft25 no-margin" style='padding-bottom: 10px;'>
