@@ -21,7 +21,6 @@ export class Downloadable {
                     value['date'] = (value.created_at.split(" "))[0];
                     value['time'] = (value.created_at.split(" "))[1];
                 });
-                console.log(res.body);
                 this.myDownloadableData = res['body'];
                 this.spin = false;
             })

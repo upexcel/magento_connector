@@ -224,7 +224,6 @@ export class Checkout implements OnInit {
     }
 
     enableGift() {
-        console.log('hi', this.checkGift)
     }
 }
 

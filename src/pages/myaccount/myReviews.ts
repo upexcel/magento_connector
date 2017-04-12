@@ -23,7 +23,6 @@ export class MyReviews {
                     this._myReviewData.getMyDownlodeData(data).then((res: any) => {
                         this.spin = false;
                         this.myReviewRes = res['body'];
-                        console.log("this.myReviewRes",this.myReviewRes)
                     }, (err) => { this.spin = false; })
                 } else { }
             });

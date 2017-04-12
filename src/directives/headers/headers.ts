@@ -25,21 +25,19 @@ export class Headers implements AfterContentInit {
     showLogin: boolean;
     show: boolean = true;
     viewChang: string = "Landscape";
-    cartItems: number;
-    wishlist:number;
+    cartItems: number = 0;
+    wishlist: number;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
-        this.checkAuthorization();
-        this._events.subscribe('cartItems:length', (data) => {
-            this.cartItems = data;
-            this._events.unsubscribe('cartItems:length');
-        });
-        this._events.subscribe('wishList:length', (data) => {
-            this.wishlist = data;
-//            this._events.unsubscribe('wishList:length');
-        });
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
+        });
+        this.checkAuthorization();
+        this._events.subscribe('wishList:length', (data) => {
+            this.wishlist = data;
+        });
+        this._events.subscribe('cartItems:length', (data) => {
+            this.cartItems = data;
         });
     }
     checkAuthorization() {
@@ -66,6 +64,8 @@ export class Headers implements AfterContentInit {
         });
     }
     ngOnDestroy() {
+//        this._events.unsubscribe('wishList:length');
+
     }
     changeView(view) {
         if (view == "portrait") {

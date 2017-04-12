@@ -22,7 +22,6 @@ export class CartService {
                 //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
                 //                    .then((data) => {
                 //                        // success
-                //                        console.log("data", data);
                 //                    }, (err) => {
                 //                        // error
                 //                        console.log("err", err);

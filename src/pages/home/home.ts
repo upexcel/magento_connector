@@ -12,6 +12,7 @@ import { LogoutService } from './../../providers/logout/logout-service';
 import { StartPage } from './../../pages/startpage/startpage';
 import { WishListService } from './../../providers/wishList/wishList-service';
 declare let navigator: any;
+import { Storage } from '@ionic/storage';
 
 @Component({
     templateUrl: 'home.html'
@@ -29,7 +30,7 @@ export class HomePage implements OnInit {
     menu: boolean = true;
     c_Id;
     count = 0;
-    constructor(private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(public local: Storage, private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
@@ -45,6 +46,13 @@ export class HomePage implements OnInit {
             this._appDataConfigService.getUserData().then((userData: any) => {
                 if (userData && userData.access_token) {
                     this._wishList.getWishListData({ "secret": userData.secret });
+                    this.local.get('CartData').then((CartData: any) => {
+                        if (CartData) {
+                            this._events.publish('cartItems:length', CartData.length);
+                        } else {
+                            this._events.publish('cartItems:length', 0);
+                        }
+                    })
                     this._myaccount.getMyAccount({ "secret": userData.secret }).then((res) => {
                         this._address.setAddress(res);
                     }, (err) => {
@@ -87,6 +95,14 @@ export class HomePage implements OnInit {
                         this.feature_products = slice(this.homeProduct.body, this.start, this.end);
                     }
                 });
+            }
+        })
+
+        this.local.get('CartData').then((CartData: any) => {
+            if (CartData) {
+                this._events.publish('cartItems:length', CartData.length);
+            } else {
+                this._events.publish('cartItems:length', 0);
             }
         })
     }
