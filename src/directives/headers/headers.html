@@ -17,6 +17,7 @@
             </button>
             <button ion-button icon-only  (click)="gotoWishList()" *ngIf="showPopOver && wishList">
                     <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                <span class="badge badge-assertive icon-badge" *ngIf="wishlist > 0">{{wishlist}}</span>
             </button>
             <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (click)="gotoCart()">
                     <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>

@@ -26,12 +26,18 @@ export class Headers implements AfterContentInit {
     show: boolean = true;
     viewChang: string = "Landscape";
     cartItems: number;
+    wishlist:number;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         this.checkAuthorization();
         this._events.subscribe('cartItems:length', (data) => {
             this.cartItems = data;
             this._events.unsubscribe('cartItems:length');
+        });
+        this._events.subscribe('wishList:length', (data) => {
+            this.wishlist = data;
+            console.log("header",this.wishlist)
+//            this._events.unsubscribe('wishList:length');
         });
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();

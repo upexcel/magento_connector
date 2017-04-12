@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
-import {Storage} from '@ionic/storage';
-import {ActionSheetController} from 'ionic-angular';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {WishListModel} from './../../model/wishList/wishList';
-import {homeProductsService} from './../../providers/homeproducts-service/homeproducts.service';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import { Storage } from '@ionic/storage';
+import { ActionSheetController, Events } from 'ionic-angular';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { WishListModel } from './../../model/wishList/wishList';
+import { homeProductsService } from './../../providers/homeproducts-service/homeproducts.service';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Injectable()
 export class WishListService {
     seviceData: any;
-    constructor(private _dataConfigService: AppDataConfigService, private _homeProductsService: homeProductsService, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
+    constructor(private _events: Events, private _dataConfigService: AppDataConfigService, private _homeProductsService: homeProductsService, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) { }
     resetFilterData() {
     }
     getWishListData(data1) {
@@ -36,6 +36,7 @@ export class WishListService {
                 }
             })
             this.seviceData = dataOfRes;
+            this._events.publish('wishList:length', this.seviceData.length);
         })
     }
     setWishListData(list, apiData) {
@@ -49,8 +50,10 @@ export class WishListService {
             })
             if (!match) {
                 this.seviceData.unshift(list);
+                this._events.publish('wishList:length', this.seviceData.length);
+                this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
                 this._wishList.addWishlist(apiData).then((res) => {
-                    this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"])
+                    this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"]);
                     this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
                     this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
                 });
@@ -59,9 +62,10 @@ export class WishListService {
             }
         } else {
             this.seviceData = [list];
+            this._events.publish('wishList:length', this.seviceData.length);
+            this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
             this._wishList.addWishlist(apiData).then((res) => {
                 this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"])
-                //                    this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
                 this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
                 this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
             });
@@ -82,12 +86,13 @@ export class WishListService {
                         handler: () => {
                             forEach(this.seviceData, (value, key) => {
                                 if (value && value.wishlist_id == data.wishlist_id) {
-
-                                    this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                                    this._toast.toast(data.data.name + " has been removed from your wishlist", 3000);
+                                    this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
                                         this._homeProductsService.updateHomeProductWishlist(data.entity_id || data.data.entity_id, false);
                                         this._dataConfigService.updateDataInServiceForWishlist(data.entity_id || data.data.entity_id, false);
                                     });
                                     this.seviceData.splice(key, 1);
+                                    this._events.publish('wishList:length', this.seviceData.length);
                                     resolve(this.seviceData);
                                 }
                             })
@@ -106,13 +111,13 @@ export class WishListService {
                 forEach(this.seviceData, (value, key) => {
                     let entity_id = value.data.entity_id || value.entity_id;
                     if (value && entity_id == data.data.entity_id) {
-
-                        this._wishList.deleteWishlist({"secret": value.secret, "itemId": value.wishlist_id}).then((deleteRes) => {
+                        this._toast.toast(data.data.name + "has been removed from your wishlist", 3000);
+                        this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
                             this._homeProductsService.updateHomeProductWishlist(data.data.entity_id, false);
                             this._dataConfigService.updateDataInServiceForWishlist(data.data.entity_id, false);
-                            //                                this._toast.toast("Your wishList is updated", 3000);
                         });
                         this.seviceData.splice(key, 1);
+                        this._events.publish('wishList:length', this.seviceData.length);
                         resolve(this.seviceData);
                     }
                 })
