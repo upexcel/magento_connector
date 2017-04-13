@@ -45,7 +45,7 @@ import {
 import {
     ViewController
 } from 'ionic-angular';
-import { MySavedAddressPage } from './../myaccount/savedAddress';
+import {MySavedAddressPage} from './../myaccount/savedAddress';
 @Component({
     selector: 'edit-address',
     templateUrl: 'myeditaddress.html'
@@ -65,7 +65,7 @@ export class MyEditAddressPage implements OnInit {
     default_shipping: any = 0;
     reverseCartData: any;
     firstTime = 0;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -73,11 +73,11 @@ export class MyEditAddressPage implements OnInit {
         this.entity_id = this._navParams.get("entity_id");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
-                this.getuser_details(this.id, this.entity_id, userData.secret, userData.firstname, userData.lastname);
-            } else { }
+                this.getuser_details(this.id, this.entity_id, userData.firstname, userData.lastname);
+            } else {}
         });
         this._local.get('store_id').then((store_id) => {
-            let data = { "store_id": store_id };
+            let data = {"store_id": store_id};
             this._country.getCountryName(data).then((name) => {
                 this.counrtyName = name;
             })
@@ -85,13 +85,10 @@ export class MyEditAddressPage implements OnInit {
 
     }
 
-    getuser_details(id, entity_id, secret, firstname?, lastname?) {
+    getuser_details(id, entity_id, firstname?, lastname?) {
         this.spin = true;
-        let body = {
-            "secret": secret
-        };
         if (entity_id != null) {
-            this._myaccount.getMyAccount(body).then((res) => {
+            this._myaccount.getMyAccount({}).then((res) => {
                 this.myaccount = res;
                 this.reverseCartData = (this.myaccount.body);
                 this.spin = false;
@@ -111,8 +108,7 @@ export class MyEditAddressPage implements OnInit {
                         countryid: [this.reverseCartData[id].country_id, Validators.required],
                         default_billing: [this.reverseCartData[id].default_billing],
                         default_shipping: [this.reverseCartData[id].default_shipping],
-                        entity_id: [entity_id],
-                        secret: [secret]
+                        entity_id: [entity_id]
                     })
                 }
             })
@@ -134,8 +130,7 @@ export class MyEditAddressPage implements OnInit {
                     countryid: ['', Validators.required],
                     default_billing: [1],
                     default_shipping: [1],
-                    entity_id: [''],
-                    secret: [secret]
+                    entity_id: ['']
                 })
             } else {
                 this.updateform = this._fb.group({
@@ -150,8 +145,7 @@ export class MyEditAddressPage implements OnInit {
                     countryid: ['', Validators.required],
                     default_billing: [0],
                     default_shipping: [0],
-                    entity_id: [''],
-                    secret: [secret]
+                    entity_id: ['']
                 })
             }
         }
@@ -176,7 +170,7 @@ export class MyEditAddressPage implements OnInit {
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
                 //                this.viewCtrl.dismiss();
-                this._navCtrl.push(MySavedAddressPage, { 'saveAdd': true }).then(() => {
+                this._navCtrl.push(MySavedAddressPage, {'saveAdd': true}).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
                 });

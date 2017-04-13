@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
-import { MySavedAddressPage } from './../myaccount/savedAddress';
-import { MyEditAddressPage } from './../myaccount/myeditaddress';
-import { Address } from './../../providers/address-service/address';
-import { checkoutService } from './../../model/checkout/checkout-service';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavController, NavParams, ViewController} from 'ionic-angular';
+import {MySavedAddressPage} from './../myaccount/savedAddress';
+import {MyEditAddressPage} from './../myaccount/myeditaddress';
+import {Address} from './../../providers/address-service/address';
+import {checkoutService} from './../../model/checkout/checkout-service';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { PlacedOrder } from './../placedOrder/placedOrder';
-import { Events } from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {PlacedOrder} from './../placedOrder/placedOrder';
+import {Events} from 'ionic-angular';
 declare let StripeCheckout: any;
 @Component({
     selector: 'checkout',
@@ -34,14 +34,14 @@ export class Checkout implements OnInit {
     shippingAddressForOrderPlaced;
     spin: boolean = false;
     currency_sign: string;
-    validate = { "payment": false, "shipping": false, "shippingAddress": false };
-    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    validate = {"payment": false, "shipping": false, "shippingAddress": false};
+    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
-                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true, "firstTime": 1, title: "Add New Address" });
+                this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true, "firstTime": 1, title: "Add New Address"});
             }
         });
         this.placeOrder();
@@ -53,7 +53,7 @@ export class Checkout implements OnInit {
             var handler = StripeCheckout.configure({
                 key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
                 locale: 'auto',
-                token: function(token: any) {
+                token: function (token: any) {
                     console.log("token", token.id);
                     // You can access the token ID with `token.id`.
                     // Get the token ID to your server-side code for use.
@@ -63,54 +63,49 @@ export class Checkout implements OnInit {
             handler.open({
                 name: 'Products',
                 amount: this.total,
-                image:"",
-                currency:this.currency_sign
+                image: "",
+                currency: this.currency_sign
             });
         }
     }
     placeOrder() {
         let products: any = {};
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.data["secret"] = userData ? userData['secret'] : "";
-            this._local.get('store_id').then((store_id: any) => {
-                if (userData) {
-                    this.data["store_id"] = store_id ? store_id : "";
-                    if (this.cartData && this.cartData.length > 0) {
-                        forEach(this.cartData, (value, key) => {
-                            value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
-                            this.currency_sign = value.currency_sign;
-                            this.totalPrice += parseFloat(value.subTotal);
-                            products = {};
-                            products["product_id"] = value.productid;
-                            if (value.type != "grouped") {
-                                products["qty"] = value["qty"];
-                                if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
-                                    products["super_attribute"] = value['super_attribute'];
-                                } else if (value.type == "downloadable" && Object.keys(value['links'])) {
-                                    products["links"] = value['links'];
-                                }
-                                else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
-                                    products["bundle_option_qty"] = value['bundle_option_qty'];
-                                    products["bundle_option"] = value['bundle_option'];
-                                }
-                            } else {
-                                products["qty"] = 0;
-                                if (Object.keys(value['super_attribute'])) {
-                                    products["super_group"] = value['super_attribute'];
-                                }
-                            }
-                            if (value['options'] && Object.keys(value['options']).length > 0) {
-                                products["options"] = value['options'];
-                            }
-                            if (!this.data['products']) {
-                                this.data['products'] = {};
-                            }
-                            this.data['products'][key] = products;
-                        })
+        this._local.get('store_id').then((store_id: any) => {
+            this.data["store_id"] = store_id ? store_id : "";
+            if (this.cartData && this.cartData.length > 0) {
+                forEach(this.cartData, (value, key) => {
+                    value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                    this.currency_sign = value.currency_sign;
+                    this.totalPrice += parseFloat(value.subTotal);
+                    products = {};
+                    products["product_id"] = value.productid;
+                    if (value.type != "grouped") {
+                        products["qty"] = value["qty"];
+                        if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
+                            products["super_attribute"] = value['super_attribute'];
+                        } else if (value.type == "downloadable" && Object.keys(value['links'])) {
+                            products["links"] = value['links'];
+                        }
+                        else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
+                            products["bundle_option_qty"] = value['bundle_option_qty'];
+                            products["bundle_option"] = value['bundle_option'];
+                        }
+                    } else {
+                        products["qty"] = 0;
+                        if (Object.keys(value['super_attribute'])) {
+                            products["super_group"] = value['super_attribute'];
+                        }
                     }
-                }
-            })
-        })
+                    if (value['options'] && Object.keys(value['options']).length > 0) {
+                        products["options"] = value['options'];
+                    }
+                    if (!this.data['products']) {
+                        this.data['products'] = {};
+                    }
+                    this.data['products'][key] = products;
+                })
+            }
+        });
     }
     ionViewWillEnter() {
         this.selectedPaymentMethod = false;
@@ -157,7 +152,7 @@ export class Checkout implements OnInit {
         this.taxSpin = true;
         this.total = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
-             this.disable = false;
+            this.disable = false;
             this.tax = res['body'];
             this.taxSpin = false;
             if (this.tax.tax) {
@@ -209,7 +204,7 @@ export class Checkout implements OnInit {
             this._checkoutService.orderPlace(this.data).then((res: any) => {
                 if (res && res['body'].success) {
                     this.spin = false;
-                    this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
+                    this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
                         const index = this.viewCtrl.index;
                         this._navCtrl.remove(index).then(() => {
                             let shouldRemoveIndex;

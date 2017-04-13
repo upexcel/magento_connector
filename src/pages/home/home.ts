@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
         setTimeout(() => {
             this._appDataConfigService.getUserData().then((userData: any) => {
                 if (userData && userData.access_token) {
-                    this._wishList.getWishListData({ "secret": userData.secret });
+                    this._wishList.getWishListData({});
                     this.local.get('CartData').then((CartData: any) => {
                         if (CartData) {
                             this._events.publish('cartItems:length', CartData.length);
@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
                             this._events.publish('cartItems:length', 0);
                         }
                     })
-                    this._myaccount.getMyAccount({ "secret": userData.secret }).then((res) => {
+                    this._myaccount.getMyAccount({}).then((res) => {
                         this._address.setAddress(res);
                     }, (err) => {
                         this._logout.logout("please Login Again", this._navCtrl);

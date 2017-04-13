@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController, Events } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { PopoverPage } from './../../components/popover/popover';
-import { OrderModalPage } from '../orderid-detail/orderid-detail';
-import { TotalOrder } from '../../model/orderList/totalOrder';
-import { Storage } from '@ionic/storage';
-import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
-import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
-import { LogoutService } from './../../providers/logout/logout-service';
+import {Component, OnInit} from '@angular/core';
+import {NavController, PopoverController, Events} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
+import {PopoverPage} from './../../components/popover/popover';
+import {OrderModalPage} from '../orderid-detail/orderid-detail';
+import {TotalOrder} from '../../model/orderList/totalOrder';
+import {Storage} from '@ionic/storage';
+import {OrderListDataType} from './../../model/orderList/orderlistDatatype';
+import {TotalOrderDataType} from './../../model/orderList/totalOrderDataType';
+import {LogoutService} from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
 import reverse from 'lodash/reverse';
@@ -19,13 +19,10 @@ import reverse from 'lodash/reverse';
 export class OrderlistPage implements OnInit {
     totalOrder: TotalOrderDataType;
     totalOrderList: OrderListDataType;
-    firstname: string;
-    lastname: string;
     res: any;
     values: any;
     dates: any = [];
     orders_error: any;
-    secret: any;
     access_token: any;
     no_orders: boolean = false;
     itemsValue: any = [];
@@ -34,20 +31,14 @@ export class OrderlistPage implements OnInit {
     startArray: number = 0;
     endArray: number = 4;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {}
     ngOnInit() {
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.secret = userData.secret;
-            this.firstname = userData.firstname;
-            this.lastname = userData.lastname;
-            this.total_orders();
-            this.selectedOrder_details();
-        });
+        this.total_orders();
+        this.selectedOrder_details();
     }
 
     total_orders() {
-        var body = { "secret": this.secret }
-        this._order.getTotalOrder(body).then((res) => {
+        this._order.getTotalOrder({}).then((res) => {
             this.totalOrder = res;
         })
             .catch(err => {
@@ -59,8 +50,7 @@ export class OrderlistPage implements OnInit {
         this.spin = true;
         let date: any = [];
         this.itemsValue = [];
-        let body = { "secret": this.secret }
-        this._order.getOrderList(body).then((res) => {
+        this._order.getOrderList({}).then((res) => {
             this.spin = false;
             this.totalOrderList = res;
             if (this.totalOrderList.body == 0) {
@@ -107,7 +97,7 @@ export class OrderlistPage implements OnInit {
         });
     }
     gotoOrderDetail(order_id) {
-        this._navCtrl.push(OrderModalPage, { "order_id": order_id });
+        this._navCtrl.push(OrderModalPage, {"order_id": order_id});
     }
     goback() {
         this._navCtrl.pop();
