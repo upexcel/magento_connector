@@ -22,6 +22,7 @@ import { ModalController } from 'ionic-angular';
 import { WishListModel } from './../../model/wishList/wishList';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoadingController } from 'ionic-angular';
+import { CartFunction } from '../../model/cart/cartHandling';
 
 @Component({
     selector: 'product',
@@ -82,7 +83,7 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    constructor(public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _cartFunction: CartFunction,public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -505,7 +506,8 @@ export class ProductPage implements OnInit {
             this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
                 this.cartData = response;
                 this.cartSpin = false;
-                if (this.cartData.body != undefined) {
+                if (this.cartData.body['success']) {
+                     this._cartFunction.setCart(response.body['success_data']);
                     if (this.editCartData) {
                         this._toast.toast(this.product+ "updated to your shopping cart", 3000, "top");
                     } else {

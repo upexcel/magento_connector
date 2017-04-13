@@ -6,6 +6,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { PopoverPage } from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
 import { wishList } from '../../pages/wishList/wishList';
+import { CartFunction } from '../../model/cart/cartHandling';
 
 @Component({
     selector: 'header',
@@ -27,7 +28,7 @@ export class Headers implements AfterContentInit {
     viewChang: string = "Landscape";
     cartItems: number = 0;
     wishlist: number;
-    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(private _cartFunction: CartFunction,private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
@@ -93,6 +94,7 @@ export class Headers implements AfterContentInit {
         this._navCtrl.push(wishList);
     }
     gotoCart() {
+        
         this._navCtrl.push(CartPage);
     }
 }

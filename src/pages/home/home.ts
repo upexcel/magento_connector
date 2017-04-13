@@ -13,6 +13,7 @@ import { StartPage } from './../../pages/startpage/startpage';
 import { WishListService } from './../../providers/wishList/wishList-service';
 declare let navigator: any;
 import { Storage } from '@ionic/storage';
+import { CartFunction } from './../../model/cart/cartHandling';
 
 @Component({
     templateUrl: 'home.html'
@@ -30,7 +31,7 @@ export class HomePage implements OnInit {
     menu: boolean = true;
     c_Id;
     count = 0;
-    constructor(public local: Storage, private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _cartFunction: CartFunction,public local: Storage, private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
@@ -81,6 +82,7 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
+        this._cartFunction.setCartData();
         this.count++;
         this.spin = true;
         let body = { "type": "full" }
