@@ -10,7 +10,7 @@ import forEach from 'lodash/forEach';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { PlacedOrder } from './../placedOrder/placedOrder';
 import { Events } from 'ionic-angular';
-
+declare let StripeCheckout: any;
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -45,6 +45,28 @@ export class Checkout implements OnInit {
             }
         });
         this.placeOrder();
+    }
+    openCheckout() {
+        if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
+            this.orderPlace();
+        } else {
+            var handler = StripeCheckout.configure({
+                key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
+                locale: 'auto',
+                token: function(token: any) {
+                    console.log("token", token.id);
+                    // You can access the token ID with `token.id`.
+                    // Get the token ID to your server-side code for use.
+                }
+            });
+
+            handler.open({
+                name: 'Products',
+                amount: this.total,
+                image:"",
+                currency:this.currency_sign
+            });
+        }
     }
     placeOrder() {
         let products: any = {};
@@ -135,6 +157,7 @@ export class Checkout implements OnInit {
         this.taxSpin = true;
         this.total = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
+             this.disable = false;
             this.tax = res['body'];
             this.taxSpin = false;
             if (this.tax.tax) {
@@ -175,7 +198,6 @@ export class Checkout implements OnInit {
             }
         })
         if (count == Object.keys(this.validate).length) {
-            this.disable = false;
             this.taxDetails();
         } else {
             this.disable = true;
