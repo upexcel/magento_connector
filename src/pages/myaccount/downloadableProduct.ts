@@ -17,7 +17,7 @@ export class Downloadable {
        this._appConfigService.getUserData().then((userData: any) => {
             let secret = userData ? userData['secret'] : "";
             this._myDownlodeData.getMyDownlodeData({"secret": secret}).then((res:any) => {
-                forEach(res['body']['data'], (value, key) => {
+                forEach(res['body'], (value, key) => {
                     value['date'] = (value.created_at.split(" "))[0];
                     value['time'] = (value.created_at.split(" "))[1];
                 });
