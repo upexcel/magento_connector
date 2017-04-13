@@ -94,77 +94,77 @@
         </ion-item>
     </ion-list>
 
-<!--    <ion-card>
-        <ion-card-header>
-            Do you have any gift items in your order?
-            <ion-checkbox class='checkoutGiftItem' [(ngModel)]="checkGift" (ngModelChange)="enableGift()"> </ion-checkbox>
-        </ion-card-header>
-        <ion-card-content *ngIf="checkGift">
-            <ion-list-header no-lines no-margin>
-                Gift Options for the Entire Order.
-            </ion-list-header>
-            <ion-item >
-                <ion-label> Add gift options for the Entire Order</ion-label>
-                <ion-checkbox class="marRight" [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
-            </ion-item>
-            <ion-list class='background1 border-bottom' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
-                      <p>You can leave this box blank if you do not wish to add a gift message for whole order.</p> 
+    <!--    <ion-card>
+            <ion-card-header>
+                Do you have any gift items in your order?
+                <ion-checkbox class='checkoutGiftItem' [(ngModel)]="checkGift" (ngModelChange)="enableGift()"> </ion-checkbox>
+            </ion-card-header>
+            <ion-card-content *ngIf="checkGift">
+                <ion-list-header no-lines no-margin>
+                    Gift Options for the Entire Order.
+                </ion-list-header>
+                <ion-item >
+                    <ion-label> Add gift options for the Entire Order</ion-label>
+                    <ion-checkbox class="marRight" [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
+                </ion-item>
+                <ion-list class='background1 border-bottom' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
+                          <p>You can leave this box blank if you do not wish to add a gift message for whole order.</p> 
+                    <ion-item>
+                        <ion-label class="capitalize" >From</ion-label>
+                        <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="capitalize" >To</ion-label>
+                        <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                    </ion-item>
+                    <ion-item class="no-lineBot">
+                        <ion-label class="capitalize"  >Message</ion-label>
+                        <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                    </ion-item>
+                </ion-list>
+    
+                <ion-list-header no-lines no-margin>
+                    Gift Options for Individual Items
+                </ion-list-header>
                 <ion-item>
-                    <ion-label class="capitalize" >From</ion-label>
-                    <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                    <ion-label>Add gift options for Individual Items</ion-label>
+                    <ion-checkbox class="marRight" [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
                 </ion-item>
-                <ion-item>
-                    <ion-label class="capitalize" >To</ion-label>
-                    <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
-                </ion-item>
-                <ion-item class="no-lineBot">
-                    <ion-label class="capitalize"  >Message</ion-label>
-                    <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
-                </ion-item>
-            </ion-list>
-
-            <ion-list-header no-lines no-margin>
-                Gift Options for Individual Items
-            </ion-list-header>
-            <ion-item>
-                <ion-label>Add gift options for Individual Items</ion-label>
-                <ion-checkbox class="marRight" [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
-            </ion-item>
-            <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
-                      <ion-row center  *ngFor="let data of cartData ; let i=index;">
-                     <ion-col class="aligncenter" col-4>
-                        <ion-row center>
-                            <ion-col>
-                                <img src="{{data.img}}" alt="" class="maxht"/>
-                            </ion-col> 
-                        </ion-row>
-                        <ion-row>
-                            <ion-col class="no-padding">
-                                <p class="font12" ><b>{{i+1}} of {{cartData.length}}</b></p>
-                            </ion-col> 
-                        </ion-row>
-                    </ion-col>
-                    <ion-col col-8>
-                        <h3>    {{data.name}}</h3>
-                        <ion-list class='background1 border-bottom'>
-                            <ion-item>
-                                <ion-label class="capitalize" >From</ion-label>
-                                <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label class="capitalize" >To</ion-label>
-                                <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
-                            </ion-item>
-                            <ion-item class="no-lineBot">
-                                <ion-label class="capitalize"  >Message</ion-label>
-                                <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
-                            </ion-item>
-                        </ion-list>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-card-content>
-    </ion-card>-->
+                <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
+                          <ion-row center  *ngFor="let data of cartData ; let i=index;">
+                         <ion-col class="aligncenter" col-4>
+                            <ion-row center>
+                                <ion-col>
+                                    <img src="{{data.img}}" alt="" class="maxht"/>
+                                </ion-col> 
+                            </ion-row>
+                            <ion-row>
+                                <ion-col class="no-padding">
+                                    <p class="font12" ><b>{{i+1}} of {{cartData.length}}</b></p>
+                                </ion-col> 
+                            </ion-row>
+                        </ion-col>
+                        <ion-col col-8>
+                            <h3>    {{data.name}}</h3>
+                            <ion-list class='background1 border-bottom'>
+                                <ion-item>
+                                    <ion-label class="capitalize" >From</ion-label>
+                                    <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label class="capitalize" >To</ion-label>
+                                    <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                                </ion-item>
+                                <ion-item class="no-lineBot">
+                                    <ion-label class="capitalize"  >Message</ion-label>
+                                    <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>-->
     <ion-card>
         <ion-card-header>
             Payment Information
@@ -236,7 +236,7 @@
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :totalPrice) |number}} </h3> 
             </ion-col>
             <ion-col col-6>
-                <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
+                <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="openCheckout()"></btn-full>
             </ion-col>
         </ion-row>
     </ion-grid> 
