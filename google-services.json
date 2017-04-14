@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "260184542051",
+    "firebase_url": "https://propane-library-114010.firebaseio.com",
+    "project_id": "propane-library-114010",
+    "storage_bucket": "propane-library-114010.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260184542051:android:69677ec2132e7345",
+        "android_client_info": {
+          "package_name": "com.ionicframework.invisionionic977878"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260184542051-90rmf745bgldilur0as3nglk1gpoegln.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ionicframework.invisionionic977878",
+            "certificate_hash": "bf639c87b03b26a8e57fce9c4fcdd5f68e2a3683"
+          }
+        },
+        {
+          "client_id": "260184542051-h84jscnah15adeecfh77g5p69c78vg9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4sfnVQzsRttphC1I8DC_6egKYfFMc7o8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260184542051-90rmf745bgldilur0as3nglk1gpoegln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
