@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import {Firebase} from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 //storage
 import { IonicStorageModule } from '@ionic/storage';
@@ -76,6 +78,7 @@ import { FilterService } from '../providers/filter-service/filterService';
 import { Address } from '../providers/address-service/address';
 import { WishListService } from '../providers/wishList/wishList-service';
 import { checkoutService } from '../model/checkout/checkout-service';
+import { fcmService } from '../providers/fcm-service/fcm-service';
 
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
@@ -261,7 +264,10 @@ import { HttpModule } from '@angular/http';
         CMS,
         SocialSharing,
         MyDownlodeData,
-        MyReviewData
+        MyReviewData,
+        Firebase,
+        LocalNotifications,
+        fcmService
     ]
 })
 export class AppModule {

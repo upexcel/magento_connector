@@ -75,7 +75,7 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="false" />
-    <!--<preference name="loadUrlTimeoutValue" value="20000" />-->
+    <preference name="loadUrlTimeoutValue" value="40000" />
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
@@ -93,8 +93,10 @@
         <variable name="APP_ID" value="1733669750287916" />
         <variable name="APP_NAME" value="Invision" />
     </plugin>
-    <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com" />
     </plugin>
+    <plugin name="cordova-plugin-firebase" spec="~0.1.20" />
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <plugin name="de.appplant.cordova.plugin.local-notification" spec="~0.8.4" />
 </widget>
