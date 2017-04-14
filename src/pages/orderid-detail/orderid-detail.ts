@@ -24,17 +24,15 @@ export class OrderModalPage implements OnInit {
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.getOrderDetails(this.order_id, userData.secret);
-        });
+            this.getOrderDetails(this.order_id);
     }
 
     close() {
         this._viewCtrl.dismiss();
     }
-    getOrderDetails(order_id, secret) {
+    getOrderDetails(order_id) {
         let body = {
-            order_id: order_id, secret: secret
+            order_id: order_id
         }
         this.spin = true;
         this._orderdetail.getHomeProducts(body).then((res) => {

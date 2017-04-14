@@ -26,7 +26,7 @@ export class MyApp implements OnInit {
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();
-        }, 1000);
+        },500);
     }
     ngOnInit() {
         this._platform.ready().then(() => {

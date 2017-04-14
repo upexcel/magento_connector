@@ -38,6 +38,7 @@ export class Checkout implements OnInit {
     constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
+        console.log("this.cartData", this.cartData)
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
@@ -63,54 +64,27 @@ export class Checkout implements OnInit {
             handler.open({
                 name: 'Products',
                 amount: this.total,
-                image:"",
-                currency:this.currency_sign
+                image: "",
+                currency: this.currency_sign
             });
         }
     }
     placeOrder() {
-        let products: any = {};
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.data["secret"] = userData ? userData['secret'] : "";
-            this._local.get('store_id').then((store_id: any) => {
-                if (userData) {
-                    this.data["store_id"] = store_id ? store_id : "";
-                    if (this.cartData && this.cartData.length > 0) {
-                        forEach(this.cartData, (value, key) => {
-                            value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
-                            this.currency_sign = value.currency_sign;
-                            this.totalPrice += parseFloat(value.subTotal);
-                            products = {};
-                            products["product_id"] = value.productid;
-                            if (value.type != "grouped") {
-                                products["qty"] = value["qty"];
-                                if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
-                                    products["super_attribute"] = value['super_attribute'];
-                                } else if (value.type == "downloadable" && Object.keys(value['links'])) {
-                                    products["links"] = value['links'];
-                                }
-                                else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
-                                    products["bundle_option_qty"] = value['bundle_option_qty'];
-                                    products["bundle_option"] = value['bundle_option'];
-                                }
-                            } else {
-                                products["qty"] = 0;
-                                if (Object.keys(value['super_attribute'])) {
-                                    products["super_group"] = value['super_attribute'];
-                                }
-                            }
-                            if (value['options'] && Object.keys(value['options']).length > 0) {
-                                products["options"] = value['options'];
-                            }
-                            if (!this.data['products']) {
-                                this.data['products'] = {};
-                            }
-                            this.data['products'][key] = products;
-                        })
-                    }
-                }
-            })
-        })
+        let products={};
+        this._local.get('store_id').then((store_id: any) => {
+            this.data["store_id"] = store_id ? store_id : "";
+            if (this.cartData && this.cartData.length > 0) {
+                forEach(this.cartData, (value, key) => {
+                    value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                    this.currency_sign = value.currency_sign;
+                    this.totalPrice += parseFloat(value.product_subtotal);
+                    value.info_buyRequest['info_buyRequest']['product_id']=value.info_buyRequest['info_buyRequest']['product'];
+                    products[key]=value.info_buyRequest['info_buyRequest'];
+                })
+                this.data['products']=products;
+                console.log("this.data", this.data);
+            }
+        });
     }
     ionViewWillEnter() {
         this.selectedPaymentMethod = false;
@@ -157,7 +131,7 @@ export class Checkout implements OnInit {
         this.taxSpin = true;
         this.total = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
-             this.disable = false;
+            this.disable = false;
             this.tax = res['body'];
             this.taxSpin = false;
             if (this.tax.tax) {

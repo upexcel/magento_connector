@@ -27,14 +27,15 @@ export class CartFunction implements OnInit {
     }
     setCartData() {
         return new Promise((resolve, reject) => {
-            this._apiService.api("cart/getCartItems", {}).subscribe((res) => {
+            this.local.get('store_id').then((store_id: any) => {
+            this._apiService.api("cart/getCartItems", {"store_id":store_id}).subscribe((res) => {
                 this.cartData = res['body'];
                 console.log("gsdikf set", this.cartData)
                 resolve(res);
             }, (err) => {
                 reject(err);
             });
-        });
+        });});
     }
     getCart() {
         console.log(this.cartData)

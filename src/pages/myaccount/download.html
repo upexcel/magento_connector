@@ -1,30 +1,36 @@
 <header  [title]='"MY DOWNLOADABLE PRODUCTS"' [wishList]=false></header>
-<ion-content>
+<ion-content class="empty-cart" *ngIf="!myDownloadableData || myDownloadableData.length == 0">
     <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
+    <h3 *ngIf="myDownloadableData && myDownloadableData.length == 0">No Products</h3>
+</ion-content>
+<ion-content *ngIf="myDownloadableData && myDownloadableData.length > 0">
     <span *ngIf="myDownloadableData">
-        <ion-card *ngFor="let data of myDownloadableData.data">
-            <img src="http://144.76.34.244:8080/magento/mobile/web/media/catalog/product//g/r/group.jpg"
-             />
+        <ion-card *ngFor="let data of myDownloadableData">
+            <img src="{{data.product_image}}"/>
             <ion-card-content>
                 <ion-card-title>
                     {{data.link_title}}
                 </ion-card-title>
-                <ion-grid>
+                <p>{{data.product_description}}</p>
+                <ion-grid class="no-padding">
                     <ion-row>
-                        <ion-col col-6>Date: {{data.date}}</ion-col>
-                        <ion-col col-6>Status: {{data.status}}</ion-col>
+                        <ion-col class="no-padding" col-6>Order: <b>#{{data.order_increment_id}}</b></ion-col>
+                        <ion-col class="no-padding" col-6>Date: {{data.date}}</ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col col-6>
-                            <button ion-button icon-left clear small class="no-padding" [disabled]="data.status == 'pending'">
-                                    <ion-icon name="download"></ion-icon> 
-                                <div><a class="no-underline" href="http://144.76.34.244:8080/magento/mobile/web/downloadable/download/link/id/{{data. link_hash}}/" download>Download</a></div>
+                        <ion-col class="no-padding" col-12>Status: {{data.status}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="no-padding" col-6>
+                            <button ion-button icon-left clear small class="no-padding" (click)="viewOrderDetail(data.order_increment_id)">
+                                <div><a class="no-underline">View Details&nbsp;</a></div>
+                                <ion-icon name="arrow-forward"></ion-icon>
                             </button>
                         </ion-col>
-                        <ion-col col-6>
-                            <button ion-button icon-right clear small class="no-padding" [disabled]="data.status == 'pending'">
-                                    <ion-icon name="share"></ion-icon> 
-                                <div> &nbsp;Share</div>
+                        <ion-col class="no-padding" col-6>
+                            <button ion-button icon-left clear small class="no-padding" [disabled]="data.status == 'pending'">
+                                <div><a class="no-underline" href="http://144.76.34.244:8080/magento/mobile/web/downloadable/download/link/id/{{data. link_hash}}/" download>Download &nbsp;</a></div>
+                                <ion-icon name="download"></ion-icon>
                             </button>
                         </ion-col>
                     </ion-row>

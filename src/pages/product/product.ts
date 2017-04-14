@@ -75,7 +75,6 @@ export class ProductPage implements OnInit {
     store_id: any;
     userData: any;
     groupedData: any;
-    configSubData: any = [];
     cartSpin: boolean = false;
     customOptData;
     diffProductData;
@@ -134,7 +133,6 @@ export class ProductPage implements OnInit {
     wishList(feat_prod) {
         let data = {};
         data["productId"] = feat_prod.data.entity_id;
-        data["secret"] = this.userData ? this.userData.secret : "";
         if (Object.keys(this.add_cart).length > 0) {
             if (this.type != "grouped") {
                 data["qty"] = 1;
@@ -210,7 +208,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "secret": this.userData ? this.userData.secret : "", "store_id": this.store_id };
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "store_id": this.store_id };
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, (value, key) => {
@@ -236,6 +234,7 @@ export class ProductPage implements OnInit {
                         this.add_cart = merge(this.add_cart, this.addToCartData);
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                        console.log("this.editCartData",this.editCartData)
                         forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
                             forEach(this.editCartData.super_attribute, (opt, opt_key) => {
                                 if (opt_key == attributesDataKey) {
@@ -290,7 +289,6 @@ export class ProductPage implements OnInit {
         var flag = 0;
         this.configPrice = [];
         this.selectedList = [];
-        this.configSubData = [];
         //mapping between select list
         forEach(this.productData.body.associated_products.attributes, (allConfigData, allConfigKey) => {
             if (typeof (allConfigData.vertualKey) == 'object') {
@@ -298,10 +296,6 @@ export class ProductPage implements OnInit {
                 count++;
                 this.configPrice.push({ price: allConfigData.vertualKey.price });
                 this.selectedList.push(allConfigData);
-                this.configSubData.push({
-                    key: allConfigData.label,
-                    value: allConfigData.vertualKey
-                });
                 if (allConfigData.label == "Color") {
                     setTimeout(() => {
                         let myDiv = document.getElementById('color');
@@ -380,7 +374,7 @@ export class ProductPage implements OnInit {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "subData": this.configSubData, "total": this.final_price };
+            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "total": this.final_price };
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }

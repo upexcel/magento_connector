@@ -53,7 +53,7 @@ export class WishListService {
                 this._events.publish('wishList:length', this.seviceData.length);
                 this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
                 this._wishList.addWishlist(apiData).then((res) => {
-                    this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"]);
+                    this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"]);
                     this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
                     this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
                 });
@@ -65,7 +65,7 @@ export class WishListService {
             this._events.publish('wishList:length', this.seviceData.length);
             this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
             this._wishList.addWishlist(apiData).then((res) => {
-                this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"], apiData["secret"])
+                this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"])
                 this._homeProductsService.updateHomeProductWishlist(list.data.entity_id, res.body["wishlist_id"]);
                 this._dataConfigService.updateDataInServiceForWishlist(list.data.entity_id, res.body["wishlist_id"]);
             });
@@ -87,7 +87,7 @@ export class WishListService {
                             forEach(this.seviceData, (value, key) => {
                                 if (value && value.wishlist_id == data.wishlist_id) {
                                     this._toast.toast(data.data.name + " has been removed from your wishlist", 3000);
-                                    this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
+                                    this._wishList.deleteWishlist({"itemId": value.wishlist_id }).then((deleteRes) => {
                                         this._homeProductsService.updateHomeProductWishlist(data.entity_id || data.data.entity_id, false);
                                         this._dataConfigService.updateDataInServiceForWishlist(data.entity_id || data.data.entity_id, false);
                                     });
@@ -112,7 +112,7 @@ export class WishListService {
                     let entity_id = value.data.entity_id || value.entity_id;
                     if (value && entity_id == data.data.entity_id) {
                         this._toast.toast(data.data.name + "has been removed from your wishlist", 3000);
-                        this._wishList.deleteWishlist({ "secret": value.secret, "itemId": value.wishlist_id }).then((deleteRes) => {
+                        this._wishList.deleteWishlist({ "itemId": value.wishlist_id }).then((deleteRes) => {
                             this._homeProductsService.updateHomeProductWishlist(data.data.entity_id, false);
                             this._dataConfigService.updateDataInServiceForWishlist(data.data.entity_id, false);
                         });
@@ -124,12 +124,11 @@ export class WishListService {
             }
         });
     }
-    updateWishlistDataLocal(entityId, wishistId, secret) {
+    updateWishlistDataLocal(entityId, wishistId) {
         forEach(this.seviceData, (value, key) => {
             let entity_id = value.data.entity_id || value.entity_id;
             if (value && entity_id == entityId) {
                 value["wishlist_id"] = wishistId;
-                value["secret"] = secret;
             }
         })
     }

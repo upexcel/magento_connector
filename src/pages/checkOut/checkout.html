@@ -20,61 +20,54 @@
     <ion-card  *ngFor="let data of cartData">
         <ion-card-content  class="no-padding">
             <ion-grid no-padding>
-                <ion-row center>
+                <ion-row center align-items-center>
                     <ion-col class="aligncenter" col-4>
                         <ion-row center>
                             <ion-col>
-                                <img src="{{data.img}}" alt="" class="maxht"/>
+                                <img src="{{data.product_image}}" alt="" class="maxht"/>
                             </ion-col> 
                         </ion-row>
-                        <ion-row>
-                            <ion-col class="no-padding">
-                                <p class="font12" *ngIf="data.subTotal >0"><b>SubTotal</b> :{{data.currency_sign}}{{data.subTotal}}</p>
+                        <ion-row center>
+                            <ion-col class="font10">
+                                <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
                             </ion-col> 
                         </ion-row>
                     </ion-col>
                     <ion-col col-8>
                         <ion-row align-items-center>
                             <ion-col class="cartCheckOutQty capitalize">
-                                Quantity: {{data.qty}}
+                                Quantity: {{data.product_qty}}
                             </ion-col>
                         </ion-row>
-                        <ion-row align-items-center>
-                            <ion-col class="size capitalize">
-                                {{data.name}}
+                        <ion-row>
+                            <ion-col  class="size capitalize">
+                                {{data.product_name}}
                             </ion-col>
                         </ion-row>
-                        <ion-row align-items-center>
-                            <ion-col *ngIf="data.type=='configurable'">
-                                <span *ngFor="let subdata of data.subData">
-                                    <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> -{{subdata["value"].label}}</p>
+                        <ion-row>
+                            <ion-col *ngIf="data.info_buyRequest.attributes_info">
+                                <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
+                                    <p class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>
                                 </span>
-                                <span *ngFor="let subdata of data.customSubdata">
-                                    <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
+                                <span *ngIf="data.options">
+                                    <span *ngFor="let subdata of data.options">
+                                        <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                    </span>
                                 </span>
                             </ion-col>
-                            <ion-col *ngIf="(data.subData && data.subData.length > 0) && data.type=='bundle'">
-                                <div *ngFor="let subData of data.subData">
-                                    <div *ngFor="let subDataOption of subData">
-                                        <span>{{subDataOption.key}} </span><p *ngIf="subDataOption && data.type=='bundle' " > - {{subDataOption.value.selection_name}}</p><p *ngIf='subDataOption'> {{subDataOption.name}}</p>
-                                    </div> 
-                                </div> 
-                                <span *ngFor="let subdata of data.customSubdata">
-                                    <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
-                                </span>
-                            </ion-col> 
-                            <ion-col  *ngIf="(data.subData && data.subData.length > 0) && data.type=='grouped'" >
-                                <div *ngFor="let subData of data.subData" >
-                                    <p style="width: 80%; display: inline-block; white-space: pre-line;"> {{subData.name}}: <b>{{subData.quantity}}</b> </p>
-                                    <!--<input center type="number" placeholder="qty" [(ngModel)]="subData.quantity" (change)="changeQuantity()" style="width: 36px; vertical-align: super">-->
-                                </div> 
-                            </ion-col>                       
-                            <ion-col *ngIf="data.type!='bundle' && data.type!='configurable' && data.type!='grouped'" > 
-                                <span *ngFor="let subdata of data.subdata">
-                                    <p *ngIf="subdata"><span class="capitalize">{{subdata.key}} </span></p>      
-                                </span>
-                                <span *ngFor="let subdata of data.customSubdata">
-                                    <p *ngIf="subdata" class="capitalize"><span color="dark" >{{subdata.key}} </span> - <span> {{ checkTypeOf(subdata)}}</span></p>      
+
+                            <ion-col >
+                                <span *ngIf="data.info_buyRequest.links">
+                                    <p>
+                                        {{data.info_buyRequest.links['title']}}:-
+                                    </p>
+                                    <span *ngFor="let subdata of data.info_buyRequest.links['label']">
+                                        <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
+                                            </span></p></span></span>
+                                <span *ngIf="data.info_buyRequest.options">
+                                    <span *ngFor="let options of data.info_buyRequest.options">
+                                        <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                    </span>
                                 </span>
                             </ion-col>
                         </ion-row>

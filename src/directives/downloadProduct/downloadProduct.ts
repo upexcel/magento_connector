@@ -63,16 +63,12 @@ export class DownloadProduct {
     }
     calculateTotal() {
         var total = 0;
-        let download = [];
         let disable;
         let count = 0;
         forEach(this.links, (value: any, key) => {
             if (value.download) {
                 count++;
                 total = total + (parseFloat(value.price));
-                if (value != undefined) {
-                    download.push({ "key": value.title, "value": value });
-                }
             }
         })
         if (count > 0) {
@@ -81,7 +77,7 @@ export class DownloadProduct {
         else {
             disable = true;
         }
-        this.linkData = { "links": this.linkData, "dynemicPrice": total, "disable": disable, "subdata": download };
+        this.linkData = { "links": this.linkData, "dynemicPrice": total, "disable": disable };
         this.onChange.emit(this.linkData);
     }
 }

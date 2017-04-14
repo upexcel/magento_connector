@@ -29,66 +29,55 @@ export class CartPage implements OnInit {
     discount: number = 0;
     tax: number = 0;
     grandtotalPrice: number = 0;
-    constructor(private sanitizer: DomSanitizer, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
+    constructor(public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
 
         let res = this._cartFunction.getCart();
-        forEach(res,(value,key)=>{
-           value.product_image = (value.product_image).replace(/"/g,"");
+        forEach(res, (value, key) => {
+            value.product_image = (value.product_image).replace(/"/g, "");
         })
-        
-        this.res = res;
-console.log("res",this.res)
 
+        this.res = res;
     }
     createData(cartData) {
         let products: any = {};
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.data["secret"] = userData ? userData['secret'] : "";
-            this.local.get('store_id').then((store_id: any) => {
-                if (userData) {
-                    this.data["store_id"] = store_id ? store_id : "";
-                    if (cartData && cartData.length > 0) {
-                        forEach(cartData, (value, key) => {
-                            value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
-                            this.currency_sign = value.currency_sign;
-                            this.totalPrice += parseFloat(value.subTotal);
-                            products = {};
-                            products["product_id"] = value.productid;
-                            if (value.type != "grouped") {
-                                products["qty"] = value["qty"];
-                                if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
-                                    products["super_attribute"] = value['super_attribute'];
-                                } else if (value.type == "downloadable" && Object.keys(value['links'])) {
-                                    products["links"] = value['links'];
-                                }
-                                else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
-                                    products["bundle_option_qty"] = value['bundle_option_qty'];
-                                    products["bundle_option"] = value['bundle_option'];
-                                }
-                            } else {
-                                products["qty"] = 0;
-                                if (Object.keys(value['super_attribute'])) {
-                                    products["super_group"] = value['super_attribute'];
-                                }
-                            }
-                            if (value['options'] && Object.keys(value['options']).length > 0) {
-                                products["options"] = value['options'];
-                            }
-                            if (!this.data['products']) {
-                                this.data['products'] = {};
-                            }
-                            this.data['products'][key] = products;
-                        })
+        this.local.get('store_id').then((store_id: any) => {
+            this.data["store_id"] = store_id ? store_id : "";
+            if (cartData && cartData.length > 0) {
+                forEach(cartData, (value, key) => {
+                    value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                    this.currency_sign = value.currency_sign;
+                    this.totalPrice += parseFloat(value.subTotal);
+                    products = {};
+                    products["product_id"] = value.productid;
+                    if (value.type != "grouped") {
+                        products["qty"] = value["qty"];
+                        if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
+                            products["super_attribute"] = value['super_attribute'];
+                        } else if (value.type == "downloadable" && Object.keys(value['links'])) {
+                            products["links"] = value['links'];
+                        }
+                        else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
+                            products["bundle_option_qty"] = value['bundle_option_qty'];
+                            products["bundle_option"] = value['bundle_option'];
+                        }
+                    } else {
+                        products["qty"] = 0;
+                        if (Object.keys(value['super_attribute'])) {
+                            products["super_group"] = value['super_attribute'];
+                        }
                     }
-                    this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
-                }
-            })
-        })
-    }
-    trutUrl(url) {
-        console.log("coll")
-        return this.sanitizer.bypassSecurityTrustUrl(url);
+                    if (value['options'] && Object.keys(value['options']).length > 0) {
+                        products["options"] = value['options'];
+                    }
+                    if (!this.data['products']) {
+                        this.data['products'] = {};
+                    }
+                    this.data['products'][key] = products;
+                })
+            }
+            this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
+        });
     }
     ionViewWillEnter() {
         this._events.publish('check:login', true);
@@ -123,7 +112,9 @@ console.log("res",this.res)
         actionSheet.present();
     }
     edit(data) {
-        this._navCtrl.push(ProductPage, { 'id': data.sku, "editCartData": data }).then(() => {
+        console.log("data Edit", data.info_buyRequest['info_buyRequest'])
+        data['type'] = data['product_type'];
+        this._navCtrl.push(ProductPage, { 'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'] }).then(() => {
             const index = this._viewCtrl.index;
             this._navCtrl.remove(index);
         });

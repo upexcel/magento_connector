@@ -29,17 +29,13 @@ export class MyEditAccount {
             this._local.get('website_id').then((website_id: any) => {
                 if (userData.access_token != null) {
                     this.email = userData.email;
-                    this.getuser_details(userData.secret, website_id, userData.firstname, userData.lastname, userData.email);
+                    this.getuser_details( website_id, userData.firstname, userData.lastname, userData.email);
                 } else { }
             });
         });
-        this._local.get('store_id').then((store_id) => {
-
-        });
-
     }
 
-    getuser_details(secret, websiteId, firstname?, lastname?, email?) {
+    getuser_details(websiteId, firstname?, lastname?, email?) {
         this.spin = true;
         this.spin = false;
         this.updateAccount = this._fb.group({
@@ -47,7 +43,6 @@ export class MyEditAccount {
             lastname: [lastname, Validators.required],
             email: [email, Validators.compose([Validators.maxLength(50),
             EmailValidator.isValidMailFormat, Validators.required])],
-            secret: [secret],
             websiteId: [websiteId],
             email_check: ['0']
         })

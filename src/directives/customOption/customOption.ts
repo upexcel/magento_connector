@@ -431,7 +431,6 @@ export class CustomOption {
     }
     bundleJson() {
         var total = 0;
-        let subdata: any = [];
         let opt = {};
         let validateCount = 0;
         let custonCartDisable = true;
@@ -440,30 +439,25 @@ export class CustomOption {
                 forEach(value.option_type, (opt) => {
                     if (opt.defaultSet) {
                         total = total + (parseFloat(opt.price));
-                        subdata.push({ "key": value.title, 'value': opt, 'id': value.id, 'type': value.type })
                     }
                 })
             }
             if ((value.type == "drop_down" || value.type == 'radio') && value.vertualId) {
                 total = total + (parseFloat(value.vertualId.price));
-                subdata.push({ "key": value.title, 'value': value.vertualId, 'id': value.id, 'type': value.type })
             }
             if ((value.type == "date" || value.type == "time" || value.type == "date_time") && value.vertualId) {
                 if (value.date) {
                     total = total + (parseFloat(value.date.price));
                     let date = new Date(value.vertualId);
-                    subdata.push({ "key": value.title, 'value': value.vertualId, 'dateFormate': date, 'id': value.id, 'type': value.type, "dateFormateApi": value.dateFormate })
                 }
             }
             if (value.type == 'multiple' && value.vertualArray) {
                 forEach(value.vertualArray, (multiSelectValue, multiSelectKey) => {
                     total = total + (parseFloat(multiSelectValue.price));
-                    subdata.push({ "key": value.title, 'value': multiSelectValue, 'id': value.id, 'type': value.type });
                 })
             }
             if ((value.type == 'area' || value.type == 'field') && value.vertualId) {
                 total = total + (parseFloat(value.vertualId.price));
-                subdata.push({ "key": value.title, 'value': value.text, 'id': value.id, 'type': value.type })
             }
         })
 
@@ -476,7 +470,7 @@ export class CustomOption {
         if (validateCount == this.validateArray.length) {
             custonCartDisable = false;
         }
-        opt = { "dynemicPrice": total, "options": opt, "customSubdata": subdata, "disable": custonCartDisable }
+        opt = { "dynemicPrice": total, "options": opt, "disable": custonCartDisable }
         this.onChange.emit(opt);
     }
 }

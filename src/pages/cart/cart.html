@@ -17,12 +17,11 @@
                             </ion-row>
                             <ion-row center>
                                 <ion-col class="font10">
-                                    <p *ngIf="data.product_qty*1 >0"><b>UnitPrice:</b>{{data.currency_sign}}{{data.product_price |number}} </p><p *ngIf="data.product_subtotal*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{data.product_subtotal|number}}</p>
+                                    <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
                                 </ion-col> 
                             </ion-row>
                         </ion-col>
                         <ion-col col-8>
-                            <ion-grid no-padding>
                                 <ion-row>
                                     <ion-col col-10 class="size capitalize">
                                         {{data.product_name}}
@@ -44,83 +43,83 @@
                                         </span>
                                     </ion-col>
 
-
-
                                     <ion-col >
                                         <span *ngIf="data.info_buyRequest.links">
-                                            <span *ngFor="let subdata of data.info_buyRequest.links">
-                                                <!--<p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>-->
-                                        </span></span>
-                                    <span *ngIf="data.info_buyRequest.options">
-                                        <span *ngFor="let options of data.info_buyRequest.options">
-                                            <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                            <p>
+                                                {{data.info_buyRequest.links['title']}}:-
+                                            </p>
+                                            <span *ngFor="let subdata of data.info_buyRequest.links['label']">
+                                                <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
+                                                    </span></p></span></span>
+                                        <span *ngIf="data.info_buyRequest.options">
+                                            <span *ngFor="let options of data.info_buyRequest.options">
+                                                <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                            </span>
                                         </span>
-                                    </span>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-        <ion-item-options side="right">
-            <button ion-button color="primary" (click)=edit(data.info_buyRequest)>
-                <ion-icon name="create"></ion-icon>
-                Edit
-            </button>
-            <button ion-button color="red" (click)=deleteProduct(data)>
-                <ion-icon name="trash"></ion-icon>
-                Delete
-            </button>
-        </ion-item-options>
-    </ion-item-sliding>
-</ion-list>
-<ion-item>
-    <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
-    <button ion-button item-right small [disabled]="!couponCode" (click)="applyCoupon(couponCode)">
-            Apply Coupon
-            <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
-    </button>
-</ion-item>
-<ion-card>
-    <ion-card-header>
-        Price Details
-    </ion-card-header>
-    <ion-grid>
-        <ion-row center>
-            <ion-col col-6 class="paddLef15">
-                <p>Price ({{res.length}} items)</p>
-            </ion-col>
-            <ion-col col-6 class="alignright paddRighttax10">
-                <p>{{currency_sign}}{{totalPrice}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-row center>
-            <ion-col col-6 class="paddLef15">
-                <p>Discount</p>
-            </ion-col>
-            <ion-col col-6 class="alignright paddRight10">
-                <p>{{currency_sign}}{{discount}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-row center>
-            <ion-col col-6 class="paddLef15">
-                <p>Tax</p>
-            </ion-col>
-            <ion-col col-6 class="alignright paddRight10">
-                <p>{{currency_sign}}{{tax}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-row center>
-            <ion-col col-6 class="paddLef15">
-                <p><b>Grand Total</b></p>
-            </ion-col>
-            <ion-col col-6 class="alignright paddRight10">
-                <p><b>{{currency_sign}}{{grandtotalPrice}}</b></p>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-card>
+                                    </ion-col>
+                                </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)=edit(data)>
+                    <ion-icon name="create"></ion-icon>
+                    Edit
+                </button>
+                <button ion-button color="red" (click)=deleteProduct(data)>
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-item>
+        <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
+        <button ion-button item-right small [disabled]="!couponCode" (click)="applyCoupon(couponCode)">
+                Apply Coupon
+                <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
+        </button>
+    </ion-item>
+    <ion-card>
+        <ion-card-header>
+            Price Details
+        </ion-card-header>
+        <ion-grid>
+            <ion-row center>
+                <ion-col col-6 class="paddLef15">
+                    <p>Price ({{res.length}} items)</p>
+                </ion-col>
+                <ion-col col-6 class="alignright paddRighttax10">
+                    <p>{{currency_sign}}{{totalPrice}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-6 class="paddLef15">
+                    <p>Discount</p>
+                </ion-col>
+                <ion-col col-6 class="alignright paddRight10">
+                    <p>{{currency_sign}}{{discount}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-6 class="paddLef15">
+                    <p>Tax</p>
+                </ion-col>
+                <ion-col col-6 class="alignright paddRight10">
+                    <p>{{currency_sign}}{{tax}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-6 class="paddLef15">
+                    <p><b>Grand Total</b></p>
+                </ion-col>
+                <ion-col col-6 class="alignright paddRight10">
+                    <p><b>{{currency_sign}}{{grandtotalPrice}}</b></p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 </ion-content>
 
 <ion-footer>

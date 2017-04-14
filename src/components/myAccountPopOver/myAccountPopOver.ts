@@ -16,9 +16,6 @@ import {
     ToastService
 } from './../../providers/toast-service/toastService';
 import {
-    AppDataConfigService
-} from './../../providers/appdataconfig/appdataconfig';
-import {
     Events
 } from 'ionic-angular';
 
@@ -33,17 +30,13 @@ import {
 })
 export class AccountPopoverPage {
     myaccount: MyAccountAddressDataType;
-    secret: string;
     id: number;
     entity_id: number;
     accountCartLength: any;
     default_billing:number;
     default_shipping:number;
-    constructor(public _events: Events, private _navParams: NavParams, private _appConfigService: AppDataConfigService, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
+    constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.secret = userData.secret;
-        });
         if (this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
@@ -67,8 +60,7 @@ export class AccountPopoverPage {
     deleteAccount() {
         this.close();
         let data = {
-            entity_id: this.entity_id,
-            secret: this.secret
+            entity_id: this.entity_id
         };
         this.viewCtrl.dismiss();
         this._myaccount.deleteMyAddress(data).then((res) => {

@@ -57,7 +57,6 @@ export class MySavedAddressPage implements OnInit {
     error: boolean = false;
     addAddr: boolean = false;
     showAddress: boolean;
-    secret: string;
     reverseCartData: any;
     disable: boolean = false;
     message: string = "Token expired";
@@ -87,8 +86,7 @@ export class MySavedAddressPage implements OnInit {
     getInitAdd(eventData?) {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
-                this.getuser_details(userData.secret, eventData);
-                this.secret = userData.secret;
+                this.getuser_details(eventData);
             } else {
                 this._navCtrl.push(LoginPage);
             }
@@ -96,19 +94,16 @@ export class MySavedAddressPage implements OnInit {
             .catch((err) => { })
     }
 
-    getuser_details(secret, eventData?) {
+    getuser_details(eventData) {
         this.spin = true;
         let entity_id = null;
-        let body = {
-            "secret": secret
-        };
         this._address.getAddress().then((address: any) => {
             if (address && address['body'].length > 0 && !eventData) {
                 this.myaccount = address;
                 this.spin = false;
                 this.reverseData(entity_id);
             } else {
-                this._myaccount.getMyAccount(body).then((res) => {
+                this._myaccount.getMyAccount({}).then((res) => {
                     this.spin = false;
                     this._address.resetAddress();
                     this._address.setAddress(res);
@@ -184,7 +179,6 @@ export class MySavedAddressPage implements OnInit {
                 }
             }
         })
-        address['secret'] = this.secret;
         address['zip'] = address.postcode;
         address['countryid'] = address.country_id;
         delete address.postcode;

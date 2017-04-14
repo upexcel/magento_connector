@@ -19,6 +19,7 @@ export class ApiService {
             var self = this;
             var headers;
             body.mobile_width = this._platform.width();
+            body['secret'] = userData ? userData['secret'] : "";
             //            body.mobile_width=420;
             let api_url = config.api_Url + path;
 

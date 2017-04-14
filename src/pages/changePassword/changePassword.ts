@@ -18,7 +18,6 @@ export class ChangepasswordPage implements OnInit {
     response: ChangePwdDataType;
     access_token: string;
     spin: boolean = false;
-    secret: string;
     public user: User;
     constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _changePwd: ChangePwd, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngOnInit() {
@@ -29,13 +28,12 @@ export class ChangepasswordPage implements OnInit {
         }
         this._appConfigService.getUserData().then((userData: any) => {
             this.access_token = userData.access_token;
-            this.secret = userData.secret;
         });
     }
 
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
-        let data = { "password": model.password, "newPassword": model.newPassword, "secret": this.secret, access_token: this.access_token }
+        let data = { "password": model.password, "newPassword": model.newPassword, access_token: this.access_token }
         this._changePwd.getPwd(data).then((res:any) => {
             this.spin = false;
             this.response = res;
