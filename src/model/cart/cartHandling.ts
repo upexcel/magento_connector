@@ -1,14 +1,14 @@
 import { Injectable, OnInit } from '@angular/core';
 import forEach from 'lodash/forEach';
-import findIndex from 'lodash/findIndex';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
+import { ToastService } from './../../providers/toast-service/toastService';
 
 declare let Promise: any;
 @Injectable()
 export class CartFunction implements OnInit {
-    constructor(private _events: Events, public local: Storage, private _apiService: ApiService) { }
+    constructor(private _toast: ToastService, private _events: Events, public local: Storage, private _apiService: ApiService) { }
     cartData: any;
     ngOnInit() { }
     addItem(newQuantity, data) {
@@ -27,45 +27,72 @@ export class CartFunction implements OnInit {
     }
     setCartData() {
         return new Promise((resolve, reject) => {
-            this.local.get('store_id').then((store_id: any) => {
-            this._apiService.api("cart/getCartItems", {"store_id":store_id}).subscribe((res) => {
+            this._apiService.api("cart/getCartItems", {}).subscribe((res) => {
                 this.cartData = res['body'];
                 console.log("gsdikf set", this.cartData)
+                this._events.publish('cartItems:length', this.cartData.length);
                 resolve(res);
             }, (err) => {
                 reject(err);
             });
-        });});
+        });
     }
     getCart() {
-        console.log(this.cartData)
+        forEach(this.cartData, (value, key) => {
+            value.product_image = (value.product_image).replace(/"/g, "");
+        })
+        this._events.publish('cartItems:length', this.cartData.length);
         return this.cartData;
     }
     setCart(data) {
         this.cartData = data;
+        this._events.publish('cartItems:length', this.cartData.length);
     }
     deleteItem(deletingItemData) {
         return new Promise((resolve, reject) => {
-            this.local.get('CartData').then((CartData: any) => {
-                let index = findIndex(CartData, deletingItemData);
-                if (index >= 0) {
-                    CartData.splice(index, 1)
+            this._apiService.api("cart/deleteCartItems", deletingItemData).subscribe((res) => {
+                if (res && res['body'].success) {
+                    this.cartData = res['body'].updated_cart;
+                    this._events.publish('cartItems:length', this.cartData.length);
+                } else {
+                    this._toast.toast("Delete fail", 3000);
+
                 }
-                this.local.set('CartData', CartData);
-                resolve(CartData);
-                this._events.publish('cartItems:length', CartData.length);
+                resolve(res);
+            }, (err) => {
+                reject(err);
             });
         });
     }
     updateCart(newCartData) {
-        forEach(newCartData, (value) => {
-            if (!value.qty) {
-                value.qty = 1;
-            }
-        })
+        return new Promise((resolve, reject) => {
+            this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
+                if (res && res['body'].success) {
+                    this.cartData = res['body'].updated_cart;
+                    this._events.publish('cartItems:length', this.cartData.length);
+                } else {
+                    this._toast.toast("update fail", 3000);
+                }
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });
 
-        this._events.publish('cartItems:length', newCartData.length);
-        this.local.set('CartData', newCartData);
+    }
+    editCart(data){
+            return new Promise((resolve, reject) => {
+            this._apiService.api("cart/updateCartItems", data).subscribe((res) => {
+                if (res && res['body'].success) {
+                    this.cartData = res['body'].updated_cart;
+                } else {
+                    this._toast.toast("edit fail", 3000);
+                }
+                resolve(res);
+            }, (err) => {
+                reject(err);
+            });
+        });    
     }
     applyCoupon(data) {
         return new Promise((resolve, reject) => {

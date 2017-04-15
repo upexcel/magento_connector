@@ -7,7 +7,7 @@ export class Country implements OnInit {
     constructor(public local: Storage, private _countryName: CountryService) { }
     ngOnInit() { }
 
-    getCountryName(data) {
+    getCountryName() {
         let local = this.local;
         return new Promise((resolve, reject)=> {
             local.get('countryName').then((countryName: string) => {
@@ -15,7 +15,7 @@ export class Country implements OnInit {
                     resolve(countryName);
                 }
                 else {
-                    this._countryName.getCountryName(data).then((res)=> {
+                    this._countryName.getCountryName().then((res)=> {
                         resolve(res);
                     }, (err)=>{
                         reject(err);

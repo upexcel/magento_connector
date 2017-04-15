@@ -18,11 +18,8 @@ export class CategoryFooter {
     @Input() previouseSortOrder: any;
     storeId:number;
     constructor(private _local: Storage, public _sort: SortByModel, public _popoverCtrl: PopoverController, public _modalCtrl: ModalController, private _navCtrl: NavController, public _viewCtrl: ViewController) {
-           this._local.get('store_id').then((storeId) => {
-               this.storeId=storeId;
-            this._sort.getSortData({ id: this.catedoryId, "store_id": storeId }).then((res) => {
+            this._sort.getSortData({ id: this.catedoryId }).then((res) => {
             })
-        })
      }
 
     sortModel() {

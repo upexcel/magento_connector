@@ -71,8 +71,6 @@ export class Checkout implements OnInit {
     }
     placeOrder() {
         let products={};
-        this._local.get('store_id').then((store_id: any) => {
-            this.data["store_id"] = store_id ? store_id : "";
             if (this.cartData && this.cartData.length > 0) {
                 forEach(this.cartData, (value, key) => {
                     value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
@@ -82,9 +80,7 @@ export class Checkout implements OnInit {
                     products[key]=value.info_buyRequest['info_buyRequest'];
                 })
                 this.data['products']=products;
-                console.log("this.data", this.data);
             }
-        });
     }
     ionViewWillEnter() {
         this.selectedPaymentMethod = false;

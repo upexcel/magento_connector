@@ -82,7 +82,7 @@ export class ProductPage implements OnInit {
     cartButtonTitle: string;
     add_cart = {};
     mySlideOptions = config.productSliderOptions;
-    constructor(private _cartFunction: CartFunction,public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
@@ -94,10 +94,7 @@ export class ProductPage implements OnInit {
     }
     ngOnInit() {
         this._appConfigService.getUserData().then((userData: any) => {
-            this._local.get('store_id').then((store_id: any) => {
-                this.userData = userData;
-                this.store_id = store_id;
-            })
+            this.userData = userData;
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
             if (this.editCartData && !this._navParams.get('wishlist')) {
@@ -147,8 +144,8 @@ export class ProductPage implements OnInit {
                 }
             } else {
                 data["qty"] = 0;
-                if( Object.keys(this.add_cart['super_attribute'])){
-                data["super_group"] = this.add_cart['super_attribute'];
+                if (Object.keys(this.add_cart['super_attribute'])) {
+                    data["super_group"] = this.add_cart['super_attribute'];
                 }
             }
             if (this.add_cart['options'] && Object.keys(this.add_cart['options']).length > 0) {
@@ -208,7 +205,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "store_id": this.store_id };
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "" };
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, (value, key) => {
@@ -234,7 +231,7 @@ export class ProductPage implements OnInit {
                         this.add_cart = merge(this.add_cart, this.addToCartData);
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                        console.log("this.editCartData",this.editCartData)
+                        console.log("this.editCartData", this.editCartData)
                         forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
                             forEach(this.editCartData.super_attribute, (opt, opt_key) => {
                                 if (opt_key == attributesDataKey) {
@@ -496,27 +493,31 @@ export class ProductPage implements OnInit {
     addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
-            this.add_cart['store_id'] = this.store_id;
-            this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
-                this.cartData = response;
-                this.cartSpin = false;
-                if (this.cartData.body['success']) {
-                     this._cartFunction.setCart(response.body['success_data']);
-                    if (this.editCartData) {
-                        this._toast.toast(this.product+ "updated to your shopping cart", 3000, "top");
-                    } else {
-                        this._toast.toast(this.product+ "added to your shopping cart", 3000, "top");
+            if (this.cartButtonTitle != 'UPDATE CART') {
+                this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
+                    this.cartData = response;
+                    this.cartSpin = false;
+                    if (this.cartData.body['success']) {
+                        this._cartFunction.setCart(response.body['success_data']);
+                        this._toast.toast(this.product + "added to your shopping cart", 3000, "top");
+                        this._navCtrl.push(CartPage).then(() => {
+                            const index = this.viewCtrl.index;
+                            this._navCtrl.remove(index);
+                        });
                     }
-                    this._navCtrl.push(CartPage).then(() => {
-                        const index = this.viewCtrl.index;
-                        this._navCtrl.remove(index);
-                    });
-                }
-                else {
-                }
-            }, (err) => {
-                this.cartSpin = false;
-            });
+                    else {
+                    }
+                }, (err) => {
+                    this.cartSpin = false;
+                });
+            } else {
+                this._cartFunction.editCart(this.editCartData).then(() => {
+                    this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
+                    this.cartSpin = false;
+                }, (err) => {
+                    this.cartSpin = false;
+                });
+            }
         }
     }
 }

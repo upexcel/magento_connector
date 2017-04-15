@@ -25,8 +25,7 @@ export class FilterBy {
     ngOnInit() {
         this.categoryId = this._navParam.get('catedoryId');
         this.data = this._navParam.get('data');
-        this._local.get('store_id').then((storeId) => {
-            this._filter.getFilterData({ "id": this.categoryId, "store_id": storeId, "coll": this.data ? 1 : 0 }).then((res) => {
+            this._filter.getFilterData({ "id": this.categoryId, "coll": this.data ? 1 : 0 }).then((res) => {
                 forEach(res, (value, key) => {
                     if (value.filter_title != "price") {
                         this.res.push(value);
@@ -39,8 +38,6 @@ export class FilterBy {
                     this.dualValue2.upper = this.price.price.Max;
                 }
             })
-        });
-
         this.checkedData = [];
         if (this.data) {
             this._filterService.setFilterData(this.data);

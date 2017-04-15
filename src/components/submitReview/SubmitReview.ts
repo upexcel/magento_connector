@@ -85,10 +85,8 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             selectedRating[this.keys[i]] = (ratingValueChangeAsApi[i] != undefined) ? ratingValueChangeAsApi[i] : this.option[this.keys[i]][0];
         };
-        this._local.get('store_id').then((store_id) => {
             let data = {
                 sku: this.skuValue,
-                "store_id": store_id,
                 "title": this.reviewDataTitle,
                 "details": this.reviewDataDetails,
                 "nickname": this.reviewDataNickname,
@@ -110,7 +108,6 @@ export class SubmitReview implements OnInit {
             }).catch((res) => {
                 this.submitSuccessful = false;
             })
-        })
     }
 
 

@@ -16,13 +16,10 @@ export class MyReviews {
     ngOnInit() {
     }
     ionViewWillEnter() {
-        this._local.get('store_id').then((store_id: any) => {
-            let data = {"store_id": store_id}
-            this._myReviewData.getMyDownlodeData(data).then((res: any) => {
+            this._myReviewData.getMyDownlodeData().then((res: any) => {
                 this.spin = false;
                 this.myReviewRes = res['body'];
             }, (err) => {this.spin = false;})
-        });
     }
     viewDetails(data) {
         this._nav.push(ReviewDetails, {data: data});

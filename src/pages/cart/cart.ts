@@ -32,72 +32,54 @@ export class CartPage implements OnInit {
     constructor(public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
 
-        let res = this._cartFunction.getCart();
-        forEach(res, (value, key) => {
-            value.product_image = (value.product_image).replace(/"/g, "");
-        })
-
-        this.res = res;
+        this.res = this._cartFunction.getCart();
+        this.createData(this.res)
     }
     createData(cartData) {
+        console.log("coll")
+        this.totalPrice = 0;
+        this.discount = 0;
+        this.grandtotalPrice = 0;
         let products: any = {};
-        this.local.get('store_id').then((store_id: any) => {
-            this.data["store_id"] = store_id ? store_id : "";
-            if (cartData && cartData.length > 0) {
-                forEach(cartData, (value, key) => {
-                    value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
-                    this.currency_sign = value.currency_sign;
-                    this.totalPrice += parseFloat(value.subTotal);
-                    products = {};
-                    products["product_id"] = value.productid;
-                    if (value.type != "grouped") {
-                        products["qty"] = value["qty"];
-                        if (value.type == 'configurable' && Object.keys(value['super_attribute'])) {
-                            products["super_attribute"] = value['super_attribute'];
-                        } else if (value.type == "downloadable" && Object.keys(value['links'])) {
-                            products["links"] = value['links'];
-                        }
-                        else if (value.type == "bundle" && Object.keys(value['bundle_option_qty'])) {
-                            products["bundle_option_qty"] = value['bundle_option_qty'];
-                            products["bundle_option"] = value['bundle_option'];
-                        }
-                    } else {
-                        products["qty"] = 0;
-                        if (Object.keys(value['super_attribute'])) {
-                            products["super_group"] = value['super_attribute'];
-                        }
-                    }
-                    if (value['options'] && Object.keys(value['options']).length > 0) {
-                        products["options"] = value['options'];
-                    }
-                    if (!this.data['products']) {
-                        this.data['products'] = {};
-                    }
-                    this.data['products'][key] = products;
-                })
-            }
-            this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
-        });
+        if (cartData && cartData.length > 0) {
+            forEach(cartData, (value, key) => {
+                value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                this.currency_sign = value.currency_sign;
+                this.totalPrice += parseFloat(value.product_subtotal);
+                value.info_buyRequest['info_buyRequest']['product_id'] = value.info_buyRequest['info_buyRequest']['product'];
+                products[key] = value.info_buyRequest['info_buyRequest'];
+            })
+            this.data['products'] = products;
+        }
+        this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
+        console.log("cart data", this.totalPrice, this.grandtotalPrice)
     }
     ionViewWillEnter() {
         this._events.publish('check:login', true);
     }
 
-    changeQuantity() {
-        this._cartFunction.updateCart(this.res);
-        //        this._cartFunction.totalPay(this.res).then((response) => {
-        //            this.totalPay = response;
-        //        });
+    changeQuantity(data) {
+        let cartData = {}
+        let qty = {};
+        qty[data.product_id] = {};
+        qty[data.product_id]['qty'] = data.product_qty;
+        cartData['update_cart'] = qty;
+        this._cartFunction.updateCart(cartData).then((res) => {
+            this.res = this._cartFunction.getCart();
+            this.createData(this.res)
+        })
     }
 
     deleteProduct(data) {
+        console.log("data delete", data['product_id'])
         let actionSheet = this._actionSheetCtrl.create({
-            title: 'Are you sure you want to remove ' + data.name,
+            title: 'Are you sure you want to remove ' + data.product_name,
             buttons: [{
                 text: 'Yes',
                 handler: () => {
-                    this._cartFunction.deleteItem(data).then((res) => {
-                        this.res = res;
+                    this._cartFunction.deleteItem({ "product_id": data['product_id'] }).then((res) => {
+                        this.res = this._cartFunction.getCart();
+                        this.createData(this.res)
                     });
                 }
             }, {
@@ -112,7 +94,6 @@ export class CartPage implements OnInit {
         actionSheet.present();
     }
     edit(data) {
-        console.log("data Edit", data.info_buyRequest['info_buyRequest'])
         data['type'] = data['product_type'];
         this._navCtrl.push(ProductPage, { 'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'] }).then(() => {
             const index = this._viewCtrl.index;

@@ -76,12 +76,9 @@ export class MyEditAddressPage implements OnInit {
                 this.getuser_details(this.id, this.entity_id, userData.firstname, userData.lastname);
             } else {}
         });
-        this._local.get('store_id').then((store_id) => {
-            let data = {"store_id": store_id};
-            this._country.getCountryName(data).then((name) => {
+            this._country.getCountryName().then((name) => {
                 this.counrtyName = name;
             })
-        });
 
     }
 
