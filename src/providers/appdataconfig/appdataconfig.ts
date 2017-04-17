@@ -65,10 +65,14 @@ export class AppDataConfigService {
     };
     checkDataInService(apiData) {
         delete apiData.mobile_width;
+        delete apiData.secret;
+        delete apiData.store_id;
         let flag = 0;
         let responseData;
         forEach(this.appTemporaryData, (value, key) => {
             delete value['apiData'].mobile_width;
+            delete value['apiData'].secret;
+            delete value['apiData'].store_id;
             if (isEqual(apiData, value.apiData)) {
                 responseData = value['responseData'];
                 flag = 1;
