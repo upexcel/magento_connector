@@ -17,24 +17,22 @@ export class ApiService {
         var subject = new Subject();
         this._local.get('userData').then((userData) => {
             this._local.get('store_id').then((store_id: any) => {
-                var self = this;
                 var headers;
                 body.mobile_width = this._platform.width();
                 body['secret'] = userData ? userData['secret'] : "";
                 body['store_id'] = store_id ? store_id : "";
                 //            body.mobile_width=420;
                 let api_url = config.api_Url + path;
-
                 if (userData !== null) {
                     headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token });
                 } else {
                     headers = new Headers({ 'Content-Type': config.content_type, 'APP_ID': config.APP_ID });
                 }
                 let options = new RequestOptions({ headers: headers });
-                self._http.post(api_url, JSON.stringify(body), options)
-                    // .timeout(config.stopApiTime, new Error('Check Network Connection'))
+                this._http.post(api_url, JSON.stringify(body), options)
+//                    .timeout(config.stopApiTime, new Error('Check Network Connection'))
                     .subscribe((res: Response) => {
-                        self._extractData(res, subject)
+                        this._extractData(res, subject)
                     },
 
                     (error) => {
@@ -45,7 +43,7 @@ export class ApiService {
                         } else {
                             this._toast.toast(error, 3000);
                         }
-                        self._handleError(error, subject)
+                        this._handleError(error, subject)
                     })
             });
         });

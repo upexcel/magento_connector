@@ -28,9 +28,7 @@ export class CartFunction implements OnInit {
     setCartData() {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/getCartItems", {}).subscribe((res) => {
-                this.cartData = res['body'];
-                console.log("gsdikf set", this.cartData)
-                this._events.publish('cartItems:length', this.cartData.length);
+                this.setCart(res['body']);
                 resolve(res);
             }, (err) => {
                 reject(err);
@@ -38,6 +36,7 @@ export class CartFunction implements OnInit {
         });
     }
     getCart() {
+        console.log("getcoll")
         forEach(this.cartData, (value, key) => {
             value.product_image = (value.product_image).replace(/"/g, "");
         })
@@ -80,8 +79,8 @@ export class CartFunction implements OnInit {
         });
 
     }
-    editCart(data){
-            return new Promise((resolve, reject) => {
+    editCart(data) {
+        return new Promise((resolve, reject) => {
             this._apiService.api("cart/updateCartItems", data).subscribe((res) => {
                 if (res && res['body'].success) {
                     this.cartData = res['body'].updated_cart;
@@ -92,7 +91,7 @@ export class CartFunction implements OnInit {
             }, (err) => {
                 reject(err);
             });
-        });    
+        });
     }
     applyCoupon(data) {
         return new Promise((resolve, reject) => {

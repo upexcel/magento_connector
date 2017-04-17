@@ -70,17 +70,17 @@ export class Checkout implements OnInit {
         }
     }
     placeOrder() {
-        let products={};
-            if (this.cartData && this.cartData.length > 0) {
-                forEach(this.cartData, (value, key) => {
-                    value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
-                    this.currency_sign = value.currency_sign;
-                    this.totalPrice += parseFloat(value.product_subtotal);
-                    value.info_buyRequest['info_buyRequest']['product_id']=value.info_buyRequest['info_buyRequest']['product'];
-                    products[key]=value.info_buyRequest['info_buyRequest'];
-                })
-                this.data['products']=products;
-            }
+        let products = {};
+        if (this.cartData && this.cartData.length > 0) {
+            forEach(this.cartData, (value, key) => {
+                value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                this.currency_sign = value.currency_sign;
+                this.totalPrice += parseFloat(value.product_subtotal);
+                value.info_buyRequest['info_buyRequest']['product_id'] = value.info_buyRequest['info_buyRequest']['product'];
+                products[key] = value.info_buyRequest['info_buyRequest'];
+            })
+            this.data['products'] = products;
+        }
     }
     ionViewWillEnter() {
         this.selectedPaymentMethod = false;
@@ -139,6 +139,8 @@ export class Checkout implements OnInit {
             if (this.selectedShippingMethod) {
                 this.total += parseFloat(this.selectedShippingMethod['price']);
             }
+        }, (err) => {
+            this.taxSpin = false;
         });
     }
     changeAddress() {

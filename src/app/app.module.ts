@@ -79,7 +79,7 @@ import { Address } from '../providers/address-service/address';
 import { WishListService } from '../providers/wishList/wishList-service';
 import { checkoutService } from '../model/checkout/checkout-service';
 import { fcmService } from '../providers/fcm-service/fcm-service';
-
+import { EventService } from '../providers/headerEvents/headerEvents';
 //components
 import { LoadingModal } from '../components/loading-modal/loading-modal';
 import { PopoverPage } from '../components/popover/popover';
@@ -267,7 +267,8 @@ import { HttpModule } from '@angular/http';
         MyReviewData,
         Firebase,
         LocalNotifications,
-        fcmService
+        fcmService,
+        EventService
     ]
 })
 export class AppModule {

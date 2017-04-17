@@ -7,6 +7,7 @@ import { PopoverPage } from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
 import { wishList } from '../../pages/wishList/wishList';
 import { CartFunction } from '../../model/cart/cartHandling';
+import { EventService } from './../../providers/headerEvents/headerEvents';
 
 @Component({
     selector: 'header',
@@ -26,20 +27,28 @@ export class Headers implements AfterContentInit {
     showLogin: boolean;
     show: boolean = true;
     viewChang: string = "Landscape";
-    cartItems: number = 0;
+    cartItems: number;
     wishlist: number;
-    constructor(private _cartFunction: CartFunction,private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
         });
         this.checkAuthorization();
         this._events.subscribe('wishList:length', (data) => {
-            this.wishlist = data;
+            this._eventService.setWishList(data);
+            this.wishlist = this._eventService.getWishListConuter();
         });
         this._events.subscribe('cartItems:length', (data) => {
-            this.cartItems = data;
+            if (data) {
+                this.cartItems = data;
+                this._eventService.setCartCounter(data);
+                this.cartItems = this._eventService.getCartCounter();
+            }
+            console.log("this.cartItems", this.cartItems)
         });
+        this.wishlist = this._eventService.getWishListConuter();
+        this.cartItems = this._eventService.getCartCounter();
     }
     checkAuthorization() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
@@ -65,7 +74,7 @@ export class Headers implements AfterContentInit {
         });
     }
     ngOnDestroy() {
-//        this._events.unsubscribe('wishList:length');
+        //        this._events.unsubscribe('wishList:length');
 
     }
     changeView(view) {
@@ -94,7 +103,7 @@ export class Headers implements AfterContentInit {
         this._navCtrl.push(wishList);
     }
     gotoCart() {
-        
+
         this._navCtrl.push(CartPage);
     }
 }
