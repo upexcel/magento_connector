@@ -4,7 +4,7 @@ import { HomePage } from './../home/home'
 import { Storage } from '@ionic/storage';
 import { PopoverPage } from './../../components/popover/popover';
 import { ChangePwd } from '../../model/changePassword/accountChangePwd';
-import { ChangePwdDataType } from './changePwdDataType';
+import {ChangePwdDataType} from '../../model/changePassword/changePwdDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { User } from './userInterface';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';

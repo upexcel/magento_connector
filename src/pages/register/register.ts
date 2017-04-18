@@ -5,7 +5,7 @@ import { HomePage } from './../home/home';
 import { Storage } from '@ionic/storage';
 import { Register } from '../../model/register/register';
 import { Login } from '../../model/login/login';
-import { LoginDataType } from '../login/loginDataType';
+import {LoginDataType} from '../../model/login/loginDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { EmailValidator } from '../../validation/emailValidate'

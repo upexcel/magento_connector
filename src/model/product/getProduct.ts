@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {ApiService} from './../../providers/api-service/api-service';
-import {productDataType} from './../../pages/product/productDataType';
+import {productDataType} from './productDataType';
 import {ProductReviewDataType} from './productReviewDataType';
 import {SubmitReviewDataType} from './submitReview';
 import {GetRating} from './getRatingDataType';

@@ -3,7 +3,7 @@ import { ViewController, NavController } from 'ionic-angular';
 import {AppConfig} from '../../model/appConfig/appConfig';
 import {ApiService } from './../../providers/api-service/api-service';
 import { Storage } from '@ionic/storage';
-import { ConfigDataType } from './configDataType';
+import {ConfigDataType} from '../../model/appConfig/configDataType';
 import { config } from './../../providers/config/config';
 import {HomePage} from './../home/home';
 @Component({

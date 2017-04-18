@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {CategoryListDataType  } from './../../pages/home/categorylistDataType';
+import {CategoryListDataType  } from './categorylistDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 import { categoryService } from './../../providers/category-service/category-service';

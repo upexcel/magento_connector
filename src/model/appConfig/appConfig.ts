@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { ConfigDataType } from './../../pages/takeTour/configDataType';
+import { ConfigDataType } from './configDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';

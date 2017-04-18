@@ -1,26 +1,22 @@
-import { Injectable, OnInit}    from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { CountryService } from './../../providers/myAccount-service/country';
-declare let Promise: any;
-@Injectable()
-export class Country implements OnInit {
-    constructor(public local: Storage, private _countryName: CountryService) { }
-    ngOnInit() { }
+import {
+    Injectable
+} from '@angular/core';
+import {
+    Storage
+} from '@ionic/storage';
+import { ApiService } from './../../providers/api-service/api-service';
 
-    getCountryName() {
-        let local = this.local;
+@Injectable()
+
+export class Country {
+    constructor(private _local: Storage, private _apiService: ApiService) {}
+    getCountryName(){
         return new Promise((resolve, reject)=> {
-            local.get('countryName').then((countryName: string) => {
-                if (countryName != null && countryName != undefined){
-                    resolve(countryName);
-                }
-                else {
-                    this._countryName.getCountryName().then((res)=> {
-                        resolve(res);
-                    }, (err)=>{
-                        reject(err);
-                    });
-                }
+            this._apiService.api("web/getAllowedCountries", {}).subscribe((res) => {
+                this._local.set('countryName', res);
+                resolve(res);
+            }, (err) => {
+                reject(err);
             });
         });
     }

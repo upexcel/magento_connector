@@ -5,7 +5,7 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifyMe } from '../../model/product/notify';
 import { CartService } from './../../providers/cart-service/cart-service';
-import { productDataType } from './../product/productDataType';
+import {productDataType} from '../../model/product/productDataType';
 import { Product } from '../../model/product/getProduct';
 import { cartDataType } from './../product/cartDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
