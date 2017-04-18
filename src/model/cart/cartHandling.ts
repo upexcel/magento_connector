@@ -9,7 +9,7 @@ declare let Promise: any;
 @Injectable()
 export class CartFunction implements OnInit {
     constructor(private _toast: ToastService, private _events: Events, public local: Storage, private _apiService: ApiService) { }
-    cartData: any;
+    cartData: Array<any> = [];
     ngOnInit() { }
     addItem(newQuantity, data) {
     }
@@ -39,7 +39,7 @@ export class CartFunction implements OnInit {
         forEach(this.cartData, (value, key) => {
             value.product_image = (value.product_image).replace(/"/g, "");
         })
-        this._events.publish('cartItems:length', this.cartData.length);
+        this._events.publish('cartItems:length', this.cartData ? this.cartData.length : 0);
         return this.cartData;
     }
     setCart(data) {
@@ -50,9 +50,8 @@ export class CartFunction implements OnInit {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/deleteCartItems", deletingItemData).subscribe((res) => {
                 if (res && res['body'].success) {
-                    console.log("delete",res['body'].success_data)
-                    this.cartData = res['body'].success_data;
-//                    this._events.publish('cartItems:length', this.cartData.length);
+                    this.cartData = res['body'].updated_cart;
+                    this._events.publish('cartItems:length', this.cartData ? this.cartData.length : 0);
                 } else {
                     this._toast.toast("Delete fail", 3000);
 
@@ -67,8 +66,8 @@ export class CartFunction implements OnInit {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
                 if (res && res['body'].success) {
-                    this.cartData = res['body'].updated_cart;
-//                    this._events.publish('cartItems:length', this.cartData.length);
+                    this.cartData = res['body'].success_data;
+                    this._events.publish('cartItems:length', this.cartData ? this.cartData.length : 0);
                 } else {
                     this._toast.toast("update fail", 3000);
                 }

@@ -45,7 +45,7 @@ import {
 import {
     ViewController
 } from 'ionic-angular';
-import {MySavedAddressPage} from './../myaccount/savedAddress';
+import { MySavedAddressPage } from './../myaccount/savedAddress';
 @Component({
     selector: 'edit-address',
     templateUrl: 'myeditaddress.html'
@@ -65,7 +65,7 @@ export class MyEditAddressPage implements OnInit {
     default_shipping: any = 0;
     reverseCartData: Array<any>;
     firstTime = 0;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -74,12 +74,11 @@ export class MyEditAddressPage implements OnInit {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData.access_token != null) {
                 this.getuser_details(this.id, this.entity_id, userData.firstname, userData.lastname);
-            } else {}
+            } else { }
         });
-            this._country.getCountryName().then((name) => {
-                console.log("this.counrtyName",this.counrtyName)
-                this.counrtyName = name;
-            })
+        this._country.getCountryName().then((name) => {
+            this.counrtyName = name;
+        })
 
     }
 
@@ -88,7 +87,6 @@ export class MyEditAddressPage implements OnInit {
         if (entity_id != null) {
             this._myaccount.getMyAccount({}).then((res) => {
                 this.myaccount = res;
-                console.log("rev",this.myaccount.body)
                 this.reverseCartData = (this.myaccount.body);
                 this.spin = false;
                 if (this.myaccount.body.length != 0 && entity_id != null) {
@@ -169,7 +167,7 @@ export class MyEditAddressPage implements OnInit {
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
                 //                this.viewCtrl.dismiss();
-                this._navCtrl.push(MySavedAddressPage, {'saveAdd': true}).then(() => {
+                this._navCtrl.push(MySavedAddressPage, { 'saveAdd': true }).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
                 });

@@ -1,24 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams, ViewController, LoadingController} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
-import {CartFunction} from '../../model/cart/cartHandling';
-import {ProductPage} from './../product/product';
-import {HomePage} from './../home/home';
-import {ActionSheetController} from 'ionic-angular';
-import {Checkout} from './../checkOut/checkout';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {LoginPage} from './../login/login';
-import {Events} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { CartFunction } from '../../model/cart/cartHandling';
+import { ProductPage } from './../product/product';
+import { HomePage } from './../home/home';
+import { ActionSheetController } from 'ionic-angular';
+import { Checkout } from './../checkOut/checkout';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { LoginPage } from './../login/login';
+import { Events } from 'ionic-angular';
 import forEach from 'lodash/forEach';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'cart',
     templateUrl: 'cart.html'
 })
 export class CartPage implements OnInit {
-    res: Array<any>=[];
-    lists:  Array<any>=[];
+    res: Array<any> = [];
+    lists: Array<any> = [];
     entery: boolean = false;
     totalPay: number;
     couponCode: string;
@@ -29,7 +29,7 @@ export class CartPage implements OnInit {
     discount: number = 0;
     tax: number = 0;
     grandtotalPrice: number = 0;
-    constructor(public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
+    constructor(public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
 
         this.res = this._cartFunction.getCart();
@@ -62,9 +62,17 @@ export class CartPage implements OnInit {
         qty[data.product_id] = {};
         qty[data.product_id]['qty'] = data.product_qty;
         cartData['update_cart'] = qty;
+        let loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+        });
+        loading.present();
         this._cartFunction.updateCart(cartData).then((res) => {
             this.res = this._cartFunction.getCart();
-            this.createData(this.res)
+            this.createData(this.res);
+            loading.dismiss();
+        }, (err) => {
+            loading.dismiss();
+
         })
     }
 
@@ -78,7 +86,7 @@ export class CartPage implements OnInit {
                         content: 'Please wait...'
                     });
                     loading.present();
-                    this._cartFunction.deleteItem({"product_id": data['product_id']}).then((res) => {
+                    this._cartFunction.deleteItem({ "product_id": data['product_id'] }).then((res) => {
                         this.res = this._cartFunction.getCart();
                         this.createData(this.res);
                         loading.dismiss();
@@ -98,7 +106,7 @@ export class CartPage implements OnInit {
     }
     edit(data) {
         data['type'] = data['product_type'];
-        this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest']}).then(() => {
+        this._navCtrl.push(ProductPage, { 'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'] }).then(() => {
             const index = this._viewCtrl.index;
             this._navCtrl.remove(index);
         });
@@ -125,12 +133,13 @@ export class CartPage implements OnInit {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
                 if (this.res && this.res.length > 0) {
-                    this._navCtrl.push(Checkout, {res: this.res});
+                    console.log("res",this.res)
+//                    this._navCtrl.push(Checkout, { res: this.res });
                 } else {
                     this._toast.toast("No product in cart. Please add first.", 3000);
                 }
             } else {
-                this._navCtrl.push(LoginPage, {checkoutLogin: true, res: this.res});
+                this._navCtrl.push(LoginPage, { checkoutLogin: true, res: this.res });
                 //                this._toast.toast("Please Login First !!", 3000);
             }
         })
