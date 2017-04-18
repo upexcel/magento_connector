@@ -74,7 +74,7 @@ export class Checkout implements OnInit {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
                 this.currency_sign = value.currency_sign;
                 this.totalPrice += parseFloat(value.product_subtotal);
-                value.info_buyRequest['info_buyRequest']['product_id'] = value.info_buyRequest['info_buyRequest']['product'];
+                value.info_buyRequest['info_buyRequest']['product_id'] = value['product_id'];
                 products[key] = value.info_buyRequest['info_buyRequest'];
             })
             this.data['products'] = products;
@@ -117,7 +117,6 @@ export class Checkout implements OnInit {
                     });
             });
         }, (err) => {
-            console.log(err)
         });
         this.validateData();
     }
