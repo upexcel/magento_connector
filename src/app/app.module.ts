@@ -4,7 +4,9 @@ import { MyApp } from './app.component';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import {Firebase} from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { BrowserModule } from '@angular/platform-browser'
+import { HttpModule } from '@angular/http';
 //storage
 import { IonicStorageModule } from '@ionic/storage';
 //pages
@@ -94,29 +96,26 @@ import { CategoryFooter } from '../components/categoryFooter/categoryFooter';
 import { FilterBy } from '../components/filter/filterBy';
 import { FilterOption } from '../components/filter/filterOption';
 import { SortBy } from '../components/sort/sort';
-
+import { Headers } from '../components/headers/headers';
+import { SideMenu } from '../components/sidemenu/sidemenu';
+import { Button } from '../components/button/buttonRound.directive';
+import { ButtonFull } from '../components/button/buttonFull.directive';
+import { ButtonTour } from '../components/button/takeTourButton.directive';
+import { ButtonForLarge } from '../components/button/buttonLarge.directive';
+import { group } from '../components/groupedProduct/group';
+import { BundleProduct } from '../components/bundleProduct/bundleProduct';
+import { DownloadProduct } from '../components/downloadProduct/downloadProduct';
+import { CustomOption } from '../components/customOption/customOption';
 //directives
 import { FocusByEnterKey } from '../directives/focusByEnterKey/nextByEnter';
-import { Headers } from '../directives/headers/headers';
-import { SideMenu } from '../directives/sidemenu/sidemenu';
 import { EqualValidator } from '../directives/password/equalValidator';
 import { ImageDirective } from '../directives/image/image.directive';
 import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
-import { Button } from '../directives/button/buttonRound.directive';
-import { ButtonFull } from '../directives/button/buttonFull.directive';
-import { ButtonTour } from '../directives/button/takeTourButton.directive';
-import { ButtonForLarge } from '../directives/button/buttonLarge.directive';
-import { group } from '../directives/groupedProduct/group';
-import { BundleProduct } from '../directives/bundleProduct/bundleProduct';
-import { DownloadProduct } from '../directives/downloadProduct/downloadProduct';
-import { CustomOption } from '../directives/customOption/customOption';
 
 //pipe
 import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
-import { IonicImageViewerModule } from 'ionic-img-viewer';
-import { BrowserModule } from '@angular/platform-browser'
-import { HttpModule } from '@angular/http';
+
 
 @NgModule({
     declarations: [
