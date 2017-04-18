@@ -38,7 +38,6 @@ export class Checkout implements OnInit {
     constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
-        console.log("this.cartData", this.cartData)
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
@@ -55,7 +54,6 @@ export class Checkout implements OnInit {
                 key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
                 locale: 'auto',
                 token: function(token: any) {
-                    console.log("token", token.id);
                     // You can access the token ID with `token.id`.
                     // Get the token ID to your server-side code for use.
                 }

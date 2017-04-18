@@ -87,12 +87,9 @@ export class MyApp implements OnInit {
         this.firebase.onNotificationOpen().subscribe(res => {
             if (res.tap) {
                 // background mode
-                console.log("background");
-                console.log(res);
+
             } else if (!res.tap) {
                 // foreground mode
-                console.log("foreground");
-                console.log(res);
                 this.setLocalPush();
             }
         });

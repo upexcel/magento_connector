@@ -36,7 +36,6 @@ export class CartFunction implements OnInit {
         });
     }
     getCart() {
-        console.log("getcoll")
         forEach(this.cartData, (value, key) => {
             value.product_image = (value.product_image).replace(/"/g, "");
         })

@@ -231,7 +231,6 @@ export class ProductPage implements OnInit {
                         this.add_cart = merge(this.add_cart, this.addToCartData);
                     }
                     if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                        console.log("this.editCartData", this.editCartData)
                         forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
                             forEach(this.editCartData.super_attribute, (opt, opt_key) => {
                                 if (opt_key == attributesDataKey) {
