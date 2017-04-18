@@ -36,7 +36,6 @@ export class CartPage implements OnInit {
         this.createData(this.res)
     }
     createData(cartData) {
-        console.log("coll")
         this.totalPrice = 0;
         this.discount = 0;
         this.grandtotalPrice = 0;
@@ -52,7 +51,6 @@ export class CartPage implements OnInit {
             this.data['products'] = products;
         }
         this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
-        console.log("cart data", this.totalPrice, this.grandtotalPrice)
     }
     ionViewWillEnter() {
         this._events.publish('check:login', true);
@@ -71,7 +69,6 @@ export class CartPage implements OnInit {
     }
 
     deleteProduct(data) {
-        console.log("data delete", data['product_id'])
         let actionSheet = this._actionSheetCtrl.create({
             title: 'Are you sure you want to remove ' + data.product_name,
             buttons: [{
@@ -93,7 +90,6 @@ export class CartPage implements OnInit {
                 text: 'No',
                 role: 'cancel',
                 handler: () => {
-                    console.log('Cancel clicked');
                 }
             }
             ]

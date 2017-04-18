@@ -27,7 +27,7 @@ export class Headers implements AfterContentInit {
     showLogin: boolean;
     show: boolean = true;
     viewChang: string = "Landscape";
-    cartItems: number;
+    cartItems: number = 0;
     wishlist: number;
     constructor(public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
@@ -40,12 +40,9 @@ export class Headers implements AfterContentInit {
             this.wishlist = this._eventService.getWishListConuter();
         });
         this._events.subscribe('cartItems:length', (data) => {
-            if (data) {
-                this.cartItems = data;
-                this._eventService.setCartCounter(data);
-                this.cartItems = this._eventService.getCartCounter();
-            }
-            console.log("this.cartItems", this.cartItems)
+            this.cartItems = data;
+            this._eventService.setCartCounter(data);
+            this.cartItems = this._eventService.getCartCounter();
         });
         this.wishlist = this._eventService.getWishListConuter();
         this.cartItems = this._eventService.getCartCounter();
