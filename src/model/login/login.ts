@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import { LoginDataType } from './../../pages/login/loginDataType';
+import { LoginDataType } from './loginDataType';
 import { fcmService } from './../../providers/fcm-service/fcm-service';
 declare let Promise: any;
 @Injectable()

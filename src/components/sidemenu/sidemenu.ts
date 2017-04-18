@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CategoryListDataType } from './../../pages/home/categorylistDataType';
+import {CategoryListDataType} from '../../model/home/categorylistDataType';
 import { CategoryList } from '../../model/home/categoryList';
-import { MenuController, NavController, Events } from 'ionic-angular';
+import { MenuController, NavController } from 'ionic-angular';
 import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct';
 import forEach from 'lodash/forEach';
 @Component({
@@ -14,7 +14,7 @@ export class SideMenu implements OnInit {
     public rootPage: any;
     public access_token;
     public usermenu: boolean;
-    constructor(private _events: Events, private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) { }
+    constructor(private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) { }
     ngOnInit() {
         this._menuCtrl.enable(true);
         this.categoryList();

@@ -6,7 +6,7 @@ declare let Promise: any;
 export class SocialAccount implements OnInit {
     constructor(private _apiService: ApiService, private _fcmService:fcmService) {}
     ngOnInit() {}
-    getSocialAccount(data): Promise<SocialAccount> {
+    getSocialAccount(data) {
         return new Promise((resolve, reject)=> {
             this._apiService.api("customer/social_account", data).subscribe((res) => {
                 this._fcmService.saveFCMTokenOnServer();

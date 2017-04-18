@@ -1,6 +1,6 @@
 import { Injectable, OnInit}    from '@angular/core';
 import {ApiService } from './../../providers/api-service/api-service';
-import {ChangePwdDataType  } from './../../pages/changePassword/changePwdDataType';
+import {ChangePwdDataType  } from './changePwdDataType';
 declare let Promise: any;
 @Injectable()
 export class ChangePwd implements OnInit {
