@@ -14,7 +14,6 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
     templateUrl: 'changepassword.html'
 })
 export class ChangepasswordPage implements OnInit {
-    changepassform: any;
     response: ChangePwdDataType;
     access_token: string;
     spin: boolean = false;

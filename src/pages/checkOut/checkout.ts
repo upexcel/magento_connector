@@ -16,22 +16,22 @@ declare let StripeCheckout: any;
     templateUrl: 'checkout.html'
 })
 export class Checkout implements OnInit {
-    cartData: any;
-    address: any;
+    cartData: Array<any>;
+    address: object;
     checkGift: boolean = false;
     checkGiftEntireOrder: boolean = true;
     checkGiftIndividualOrder: boolean = false;
-    shippingMethods: any;
-    PaymentMethods: any;
-    data = {};
+    shippingMethods:  Array<any>;
+    PaymentMethods:  Array<any>;
+    data: object = {};
     disable = true;
-    selectedPaymentMethod;
-    selectedShippingMethod;
+    selectedPaymentMethod:any;
+    selectedShippingMethod:any;
     tax: any;
     taxSpin: boolean = false;
     totalPrice: any = 0;
     total;
-    shippingAddressForOrderPlaced;
+    shippingAddressForOrderPlaced:string;
     spin: boolean = false;
     currency_sign: string;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };

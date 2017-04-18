@@ -60,12 +60,12 @@ export class MyEditAddressPage implements OnInit {
     id: any;
     entity_id: any;
     message: string = "Token expired";
-    counrtyName: any;
+    counrtyName: object;
     default_billing: any = 0;
     default_shipping: any = 0;
-    reverseCartData: any;
+    reverseCartData: Array<any>;
     firstTime = 0;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -77,6 +77,7 @@ export class MyEditAddressPage implements OnInit {
             } else {}
         });
             this._country.getCountryName().then((name) => {
+                console.log("this.counrtyName",this.counrtyName)
                 this.counrtyName = name;
             })
 
@@ -87,6 +88,7 @@ export class MyEditAddressPage implements OnInit {
         if (entity_id != null) {
             this._myaccount.getMyAccount({}).then((res) => {
                 this.myaccount = res;
+                console.log("rev",this.myaccount.body)
                 this.reverseCartData = (this.myaccount.body);
                 this.spin = false;
                 if (this.myaccount.body.length != 0 && entity_id != null) {

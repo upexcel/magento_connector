@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {MyReviewData} from './../../model/myaccount/myReviews';
-import {Storage} from '@ionic/storage';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {ReviewDetails} from './reviewDetails';
 import {NavController} from 'ionic-angular';
 
@@ -10,11 +8,9 @@ import {NavController} from 'ionic-angular';
     templateUrl: 'myReviews.html'
 })
 export class MyReviews {
-    myReviewRes: any;
+    myReviewRes: object;
     spin: boolean = true;
-    constructor(public _nav: NavController, private _appConfigService: AppDataConfigService, private _local: Storage, public _myReviewData: MyReviewData) {}
-    ngOnInit() {
-    }
+    constructor(public _nav: NavController, public _myReviewData: MyReviewData) {}
     ionViewWillEnter() {
             this._myReviewData.getMyDownlodeData().then((res: any) => {
                 this.spin = false;

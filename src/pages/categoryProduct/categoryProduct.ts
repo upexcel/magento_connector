@@ -9,8 +9,7 @@ import {Storage} from '@ionic/storage';
     templateUrl: 'categoryProduct.html'
 })
 export class CategoryProductPage implements OnInit {
-    products: any;
-    product_id: any;
+    product_id: string;
     title: string;
     limit: number = 10;
     page: number = 1;
@@ -18,10 +17,10 @@ export class CategoryProductPage implements OnInit {
     access_token: string;
     showPopOver: boolean = false;
     error: boolean = false;
-    c_Id: any;
+    c_Id: string;
     sortByData: any;
-    filterData: any = [];
-    previouseSortSection: any;
+    filterData: Array<any>=[];
+    previouseSortSection: string;
     previouseSortOrder: string;
     infinite: any;
     enableInfinite: boolean = true;

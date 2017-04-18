@@ -15,7 +15,7 @@ import { CartFunction } from '../../model/cart/cartHandling';
     templateUrl: 'wishList.html'
 })
 export class wishList {
-    data: any;
+    data: object;
     constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}
     ionViewWillEnter() {
         this._wishListService.getWishList().then((data) => {

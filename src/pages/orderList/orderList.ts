@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, PopoverController, Events} from 'ionic-angular';
+import {NavController, PopoverController} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
@@ -9,7 +9,6 @@ import {OrderListDataType} from './../../model/orderList/orderlistDatatype';
 import {TotalOrderDataType} from './../../model/orderList/totalOrderDataType';
 import {LogoutService} from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
 import reverse from 'lodash/reverse';
@@ -19,19 +18,17 @@ import reverse from 'lodash/reverse';
 export class OrderlistPage implements OnInit {
     totalOrder: TotalOrderDataType;
     totalOrderList: OrderListDataType;
-    res: any;
-    values: any;
-    dates: any = [];
-    orders_error: any;
-    access_token: any;
+    values: Array<any>;
+    orders_error: string;
+    access_token: string;
     no_orders: boolean = false;
-    itemsValue: any = [];
+    itemsValue: Array<any>=[];
     spin: boolean = false;
     error: boolean = false;
     startArray: number = 0;
     endArray: number = 4;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {}
+    constructor( private _logout: LogoutService, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {}
     ngOnInit() {
         this.total_orders();
         this.selectedOrder_details();

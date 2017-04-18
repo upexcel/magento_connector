@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
     backPressed: boolean = false;
     title: string = '';
     pagename: string = 'home';
-    userToken: any;
+    userToken: string;
     menu: boolean = true;
     c_Id;
     count = 0;

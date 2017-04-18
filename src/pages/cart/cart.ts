@@ -17,8 +17,8 @@ import {DomSanitizer} from '@angular/platform-browser';
     templateUrl: 'cart.html'
 })
 export class CartPage implements OnInit {
-    res: any = [];
-    lists: any = [];
+    res: Array<any>=[];
+    lists:  Array<any>=[];
     entery: boolean = false;
     totalPay: number;
     couponCode: string;

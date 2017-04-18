@@ -50,8 +50,9 @@ export class CartFunction implements OnInit {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/deleteCartItems", deletingItemData).subscribe((res) => {
                 if (res && res['body'].success) {
-                    this.cartData = res['body'].updated_cart;
-                    this._events.publish('cartItems:length', this.cartData.length);
+                    console.log("delete",res['body'].success_data)
+                    this.cartData = res['body'].success_data;
+//                    this._events.publish('cartItems:length', this.cartData.length);
                 } else {
                     this._toast.toast("Delete fail", 3000);
 
@@ -67,7 +68,7 @@ export class CartFunction implements OnInit {
             this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
                 if (res && res['body'].success) {
                     this.cartData = res['body'].updated_cart;
-                    this._events.publish('cartItems:length', this.cartData.length);
+//                    this._events.publish('cartItems:length', this.cartData.length);
                 } else {
                     this._toast.toast("update fail", 3000);
                 }

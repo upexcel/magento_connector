@@ -10,7 +10,7 @@ import forEach from 'lodash/forEach';
 })
 export class Downloadable {
    spin: boolean= true;
-   myDownloadableData:any;
+   myDownloadableData:object;
    constructor(public _navCtrl: NavController, public _myDownlodeData: MyDownlodeData, private _appConfigService: AppDataConfigService) {}
    ngOnInit(){
        this.spin = true;

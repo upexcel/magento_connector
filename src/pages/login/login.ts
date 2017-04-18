@@ -21,13 +21,12 @@ export class LoginPage implements OnInit {
     logform: FormGroup;
     login: boolean = false;
     response: string;
-    website_id: any;
     show_form: boolean = false;
     data: LoginDataType;
-    forgotPasswordEmail: any;
+    forgotPasswordEmail: object;
     title: string = 'LOGIN';
     checkoutLogin: boolean = false;
-    cartData: any;
+    cartData: Array<any>;
     constructor(public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this.checkoutLogin = this._navParams.get('checkoutLogin');

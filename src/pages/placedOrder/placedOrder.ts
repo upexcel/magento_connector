@@ -9,11 +9,12 @@ import { Events } from 'ionic-angular';
     templateUrl: 'placedOrder.html'
 })
 export class PlacedOrder implements OnInit {
-    shippingAddress: any;
+    shippingAddress: object;
     orderId: string;
     constructor(public _events: Events, public viewCtrl: ViewController, public _navParams: NavParams, public _navCtrl: NavController, public _local: Storage) {}
     ngOnInit() {
         this.shippingAddress = this._navParams.get('shippingAddress');
+        console.log("shippingAddress", this.shippingAddress)
         this.orderId = this._navParams.get('orderId');
         this._local.remove('CartData');
         this._events.publish('cartItems:length', 0);

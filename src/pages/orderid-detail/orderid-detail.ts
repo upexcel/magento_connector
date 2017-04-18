@@ -4,7 +4,6 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { PopoverPage } from './../../components/popover/popover';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import clone from 'lodash/clone';
 import { OrderIdDetail } from './../../model/orderid-detail/orderid-detail';
 import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
@@ -16,15 +15,14 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 export class OrderModalPage implements OnInit {
     orderid_detail: OrderIdDetailDataType;
     order_id: number;
-    item: any;
-    items: any;
+    items: Array<any>;
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-            this.getOrderDetails(this.order_id);
+        this.getOrderDetails(this.order_id);
     }
 
     close() {
@@ -42,16 +40,14 @@ export class OrderModalPage implements OnInit {
                 this.showOrderError = true;
             } else {
                 this.showOrder = true;
-                this.item = this.orderid_detail['body'].items;
-                var res_data: any = [];
-                forEach(this.item, (value, key) => {
+                this.items = [];
+                forEach(this.orderid_detail['body'].items, (value, key) => {
                     var datas = {
                         value: value,
                         key: key
                     };
-                    res_data.push(datas);
+                    this.items.push(datas);
                 })
-                this.items = clone(res_data);
             }
         }).catch((err) => {
             this.spin = false;
@@ -65,7 +61,7 @@ export class OrderModalPage implements OnInit {
             ev: myEvent,
         });
     }
-    track(){
-        
+    track() {
+
     }
 }

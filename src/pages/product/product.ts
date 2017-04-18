@@ -54,7 +54,7 @@ export class ProductPage implements OnInit {
     alertset: boolean = false;
     qty: number = 1;
     productid: string;
-    additionalInformationData: any = [];
+    additionalInformationData: Array<any>=[];
     customDisable: boolean = false;
     //gather data for send in add cart servive
     sku: string;
@@ -62,7 +62,7 @@ export class ProductPage implements OnInit {
     name: string;
     type: string;
     bundlePrice: any;
-    configPrice = [];
+    configPrice: Array<any>=[];
     addToCartData;
     customPrice: any;
     customDisplayPrice: any;
@@ -72,7 +72,6 @@ export class ProductPage implements OnInit {
     product = "product";
     downlodeFormValidate = true;
     virtual = false;
-    store_id: any;
     userData: any;
     groupedData: any;
     cartSpin: boolean = false;
@@ -80,7 +79,7 @@ export class ProductPage implements OnInit {
     diffProductData;
     editCartData: any;
     cartButtonTitle: string;
-    add_cart = {};
+    add_cart: object= {};
     mySlideOptions = config.productSliderOptions;
     constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
