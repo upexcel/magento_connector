@@ -18,6 +18,7 @@
     "@angular/http": "4.0.0",
     "@angular/platform-browser": "4.0.0",
     "@angular/platform-browser-dynamic": "4.0.0",
+    "@ionic-native/background-mode": "^3.5.0",
     "@ionic-native/core": "3.4.2",
     "@ionic-native/firebase": "^3.4.4",
     "@ionic-native/instagram": "^3.4.3",

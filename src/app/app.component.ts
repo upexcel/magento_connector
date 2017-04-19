@@ -11,6 +11,7 @@ import {Splashscreen} from 'ionic-native';
 import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {fcmService} from '../providers/fcm-service/fcm-service';
+import {BackgroundMode} from '@ionic-native/background-mode';
 
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
@@ -20,18 +21,19 @@ import {fcmService} from '../providers/fcm-service/fcm-service';
 export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
-    constructor(private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
             this._fcmService.initFCM();
             this.fcm();
+            this.backgroundMode.enable();
         });
         this.addConnectivityListeners();
     }
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();
-        },500);
+        }, 500);
     }
     ngOnInit() {
         this._platform.ready().then(() => {

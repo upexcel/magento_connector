@@ -7,6 +7,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpModule } from '@angular/http';
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 //storage
 import { IonicStorageModule } from '@ionic/storage';
 //pages
@@ -265,7 +267,8 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Firebase,
         LocalNotifications,
         fcmService,
-        EventService
+        EventService,
+        BackgroundMode
     ]
 })
 export class AppModule {
