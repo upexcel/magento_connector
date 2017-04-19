@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams, ViewController} from 'ionic-angular';
-import {MySavedAddressPage} from './../myaccount/savedAddress';
-import {MyEditAddressPage} from './../myaccount/myeditaddress';
-import {Address} from './../../providers/address-service/address';
-import {checkoutService} from './../../model/checkout/checkout-service';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {Storage} from '@ionic/storage';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { MySavedAddressPage } from './../myaccount/savedAddress';
+import { MyEditAddressPage } from './../myaccount/myeditaddress';
+import { Address } from './../../providers/address-service/address';
+import { checkoutService } from './../../model/checkout/checkout-service';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {PlacedOrder} from './../placedOrder/placedOrder';
-import {Events} from 'ionic-angular';
-declare let StripeCheckout: any;
+import { ToastService } from './../../providers/toast-service/toastService';
+import { PlacedOrder } from './../placedOrder/placedOrder';
+import { Events } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
+//declare let RazorpayCheckout: any;
+declare let StripeCheckout:any;
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -34,19 +36,56 @@ export class Checkout implements OnInit {
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
-    validate = {"payment": false, "shipping": false, "shippingAddress": false};
-    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
+    validate = { "payment": false, "shipping": false, "shippingAddress": false };
+    constructor(private platform: Platform, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
-                this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true, "firstTime": 1, title: "Add New Address"});
+                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true, "firstTime": 1, title: "Add New Address" });
             }
         });
         this.placeOrder();
     }
     openCheckout() {
+        // .razorpay.cordova implimented
+        //        var options = {
+        //            description: 'Credits towards consultation',
+        //            image: 'https://i.imgur.com/3g7nmJC.png',
+        //            currency: 'INR',
+        //            key: 'rzp_test_1DP5mmOlF5G5ag',
+        //            amount: '5000',
+        //            name: 'foo',
+        //            prefill: {
+        //                email: 'pranav@razorpay.com',
+        //                contact: '8879524924',
+        //                name: 'Pranav Gupta'
+        //            },
+        //            theme: {
+        //                color: '#F37254'
+        //            },
+        //            modal: {
+        //                ondismiss: function() {
+        //                    alert('dismissed')
+        //                }
+        //            }
+        //        };
+        //
+        //        var successCallback = function(payment_id) {
+        //            alert('payment_id: ' + payment_id);
+        //        };
+        //
+        //        var cancelCallback = function(error) {
+        //            alert(error.description + ' (Error ' + error.code + ')');
+        //        };
+        //
+        //        this.platform.ready().then(() => {
+        //            if (this.platform.is('cordova')) {
+        //                RazorpayCheckout.open(options, successCallback, cancelCallback);
+        //            }
+        //        })
+
         if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
             this.orderPlace();
         } else {
@@ -185,7 +224,7 @@ export class Checkout implements OnInit {
             this._checkoutService.orderPlace(this.data).then((res: any) => {
                 if (res && res['body'].success) {
                     this.spin = false;
-                    this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
+                    this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
                         const index = this.viewCtrl.index;
                         this._navCtrl.remove(index).then(() => {
                             let shouldRemoveIndex;
