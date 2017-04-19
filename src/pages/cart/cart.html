@@ -4,76 +4,73 @@
     <h3>Your Shopping Cart is empty</h3>
 </ion-content>
 <ion-content class="cart" *ngIf="res && res.length > 0">
-    <ion-list>
-        <ion-item-sliding  *ngFor="let data of res">
-            <ion-item >
-                <ion-grid no-padding>
-                    <ion-row center align-items-center>
-                        <ion-col class="aligncenter" col-4>
-                            <ion-row center>
-                                <ion-col>
-                                    <img src="{{data.product_image}}" alt="" class="maxht"/>
-                                </ion-col> 
-                            </ion-row>
-                            <ion-row center>
-                                <ion-col class="font10">
-                                    <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
-                                </ion-col> 
-                            </ion-row>
-                        </ion-col>
-                        <ion-col col-8>
-                                <ion-row>
-                                    <ion-col col-10 class="size capitalize">
-                                        {{data.product_name}}
-                                    </ion-col>
-                                    <ion-col col-2 class="alignRight">
-                                        <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
-                                        <input type="number" placeholder="qty"  [(ngModel)]="data.product_qty"  (change)="changeQuantity(data)" min="1" class="inputSize">
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col *ngIf="data.info_buyRequest.attributes_info">
-                                        <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
-                                            <p class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>
-                                        </span>
-                                        <span *ngIf="data.options">
-                                            <span *ngFor="let subdata of data.options">
-                                                <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
-                                            </span>
-                                        </span>
-                                    </ion-col>
+    <span class="backgroundGray">
+        <ion-card  *ngFor="let data of res">
+            <ion-grid no-padding>
+                <ion-row center align-items-center>
+                    <ion-col class="aligncenter" col-4>
+                        <ion-row center>
+                            <ion-col>
+                                <img src="{{data.product_image}}" alt="" class="maxht"/>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row center>
+                            <ion-col class="font10">
+                                <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
+                            </ion-col> 
+                        </ion-row>
+                    </ion-col>
+                    <ion-col col-8>
+                        <ion-row>
+                            <ion-col col-10 class="size capitalize">
+                                {{data.product_name}}
+                            </ion-col>
+                            <ion-col col-2 class="alignRight">
+                                <p class="font20 lineHeight" id="marLeft20 marTop10"></p>
+                                <input type="number" placeholder="qty"  [(ngModel)]="data.product_qty"  (change)="changeQuantity(data)" min="1" class="inputSize">
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col *ngIf="data.info_buyRequest.attributes_info">
+                                <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
+                                    <p class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>
+                                </span>
+                                <span *ngIf="data.options">
+                                    <span *ngFor="let subdata of data.options">
+                                        <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
 
-                                    <ion-col >
-                                        <span *ngIf="data.info_buyRequest.links">
-                                            <p>
-                                                {{data.info_buyRequest.links['title']}}:-
-                                            </p>
-                                            <span *ngFor="let subdata of data.info_buyRequest.links['label']">
-                                                <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
-                                                    </span></p></span></span>
-                                        <span *ngIf="data.info_buyRequest.options">
-                                            <span *ngFor="let options of data.info_buyRequest.options">
-                                                <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
-                                            </span>
-                                        </span>
-                                    </ion-col>
-                                </ion-row>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button color="primary" (click)=edit(data)>
-                    <ion-icon name="create"></ion-icon>
-                    Edit
-                </button>
-                <button ion-button color="red" (click)=deleteProduct(data)>
-                    <ion-icon name="trash"></ion-icon>
-                    Delete
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+                            <ion-col >
+                                <span *ngIf="data.info_buyRequest.links">
+                                    <p>
+                                        {{data.info_buyRequest.links['title']}}:-
+                                    </p>
+                                    <span *ngFor="let subdata of data.info_buyRequest.links['label']">
+                                        <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
+                                            </span></p></span></span>
+                                <span *ngIf="data.info_buyRequest.options">
+                                    <span *ngFor="let options of data.info_buyRequest.options">
+                                        <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="cartRowborder">
+                    <ion-col col-6 class="center" (click)=edit(data)>
+                        Edit
+                    </ion-col>
+                    <ion-col col-6 class="center borderLeft" (click)=deleteProduct(data)>
+                        Delete
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </span>
     <ion-item>
         <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
         <button ion-button item-right small [disabled]="!couponCode" (click)="applyCoupon(couponCode)">
@@ -87,34 +84,34 @@
         </ion-card-header>
         <ion-grid>
             <ion-row center>
-                <ion-col col-6 class="paddLef15">
+                <ion-col col-8 class="paddLef15">
                     <p>Price ({{res.length}} items)</p>
                 </ion-col>
-                <ion-col col-6 class="alignright paddRighttax10">
+                <ion-col col-4 class="alignright paddRighttax10">
                     <p>{{currency_sign}}{{totalPrice}}</p>
                 </ion-col>
             </ion-row>
             <ion-row center>
-                <ion-col col-6 class="paddLef15">
+                <ion-col col-8 class="paddLef15">
                     <p>Discount</p>
                 </ion-col>
-                <ion-col col-6 class="alignright paddRight10">
+                <ion-col col-4 class="alignright paddRight10">
                     <p>{{currency_sign}}{{discount}}</p>
                 </ion-col>
             </ion-row>
             <ion-row center>
-                <ion-col col-6 class="paddLef15">
+                <ion-col col-8 class="paddLef15">
                     <p>Tax</p>
                 </ion-col>
-                <ion-col col-6 class="alignright paddRight10">
+                <ion-col col-4 class="alignright paddRight10">
                     <p>{{currency_sign}}{{tax}}</p>
                 </ion-col>
             </ion-row>
             <ion-row center>
-                <ion-col col-6 class="paddLef15">
+                <ion-col col-8 class="paddLef15">
                     <p><b>Grand Total</b></p>
                 </ion-col>
-                <ion-col col-6 class="alignright paddRight10">
+                <ion-col col-4 class="alignright paddRight10">
                     <p><b>{{currency_sign}}{{grandtotalPrice}}</b></p>
                 </ion-col>
             </ion-row>

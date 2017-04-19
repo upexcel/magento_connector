@@ -573,11 +573,31 @@ filter-option{
     background: #f3f3f3
 }
 
-cart{
+cart, wishList{
     .scroll-content {
-        background: #fff;
+        /*background: #fff;*/
         margin-bottom: 60px;
-    }   
+    }  
+    .card-md {
+        margin: 10px 0px 12px 0px;
+        font-size: 1.4rem;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 2px 0 rgba(51, 51, 51, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+    .cartRowborder{
+        border: 1px solid #e0e0e0;
+        line-height: 4;
+    }
+    .borderLeft{
+        border-left: 1px solid #e0e0e0;
+    }
+    .maxHt{
+        max-height: 150px!important;
+    }
+    h3{
+        font-size: 1.8rem!important;
+    }
 }
 filter {
     .scroll-content {
