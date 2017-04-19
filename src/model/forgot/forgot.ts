@@ -5,9 +5,8 @@ import {ForgotDataType} from './forgotData';
 export class Forgot {
     constructor(private _apiService: ApiService) { }
     getForgot(data):Promise<ForgotDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("customer/forgot/", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("customer/forgot/", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

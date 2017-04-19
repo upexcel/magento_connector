@@ -113,7 +113,6 @@ import { ImageDirective } from '../directives/image/image.directive';
 import { ImageFallBackDirective } from '../directives/image/imagefallback.directive';
 
 //pipe
-import { ConvertCodeToName } from '../pipe/cart/attribute';
 import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
 
 
@@ -146,7 +145,6 @@ import { ReviewDisplayPipe } from '../pipe/reviewdisplay/reviewdisplay';
         Headers,
         SliderComponent,
         SideMenu,
-        ConvertCodeToName,
         ReviewDisplayPipe,
         GoogleComponent,
         FacebookComponent,

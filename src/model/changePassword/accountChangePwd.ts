@@ -7,9 +7,8 @@ export class ChangePwd implements OnInit {
     constructor( private _apiService: ApiService) { }
     ngOnInit() { }
     getPwd(data): Promise<ChangePwdDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("account/changepassword/", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("account/changepassword/", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

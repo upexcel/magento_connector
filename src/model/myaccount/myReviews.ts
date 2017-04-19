@@ -5,9 +5,8 @@ import { MyAccountAddressDataType } from './myaccountData';
 export class MyReviewData {
     constructor(private _apiService: ApiService) { }
     getMyDownlodeData(): Promise<MyAccountAddressDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("account/getReviews",{}).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("account/getReviews",{}).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

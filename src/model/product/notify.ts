@@ -7,10 +7,9 @@ export class NotifyMe implements OnInit {
     constructor(private _apiService: ApiService) { }
     ngOnInit() { }
     setNotification(sku,userEmail):Promise<notifyDatatype> {
-        let apiservice = this._apiService;
         let data={sku:sku,email:userEmail}
-        return new Promise(function(resolve, reject) {
-            apiservice.api("product/productNotification", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("product/productNotification", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

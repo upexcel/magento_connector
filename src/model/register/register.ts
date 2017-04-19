@@ -8,11 +8,9 @@ export class Register implements OnInit {
     ngOnInit() { }
 
     getRegister(data) {
-        let local = this.local;
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("customer/register/", data).subscribe((res) => {
-                local.set('register_customer', res);
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("customer/register/", data).subscribe((res) => {
+                this.local.set('register_customer', res);
                 resolve(res);
             }, (err) => {
                 reject(err);

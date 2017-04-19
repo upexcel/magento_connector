@@ -58,15 +58,14 @@ export class SubmitReview implements OnInit {
     submitReview() {
         let reviweDataJson = {};
         let selectedRating = {};
-        let self = this;
         this.submitSuccessful = true;
         let ratingValueChangeAsApi: any = [];
         let finalSelectRating: Array<any> = [];
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, function(ratingValue: number, ratingKey) {
-            forEach(self.option, function(optionValue, optionKey) {
+        forEach(reviweDataJson, (ratingValue: number, ratingKey)=> {
+            forEach(this.option, (optionValue, optionKey)=> {
                 if (ratingKey == optionKey) {
                     forEach(optionValue, (Value, key: number) => {
                         if (key == ratingValue - 1) {
@@ -79,7 +78,7 @@ export class SubmitReview implements OnInit {
                 }
             })
         })
-        forEach(finalSelectRating, function(value, key) {
+        forEach(finalSelectRating, (value, key)=> {
             ratingValueChangeAsApi.push(value.value);
         })
         for (let i = 0; i < this.keys.length; i++) {

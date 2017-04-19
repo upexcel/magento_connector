@@ -27,9 +27,8 @@ export class Product implements OnInit {
         });
     }
     getProductReview(data): Promise<ProductReviewDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function (resolve, reject) {
-            apiservice.api("product/review", data).subscribe((res) => {
+        return new Promise( (resolve, reject)=> {
+            this._apiService.api("product/review", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
@@ -37,9 +36,8 @@ export class Product implements OnInit {
         });
     }
     getSubmitReview(data): Promise<SubmitReviewDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function (resolve, reject) {
-            apiservice.api("product/submitreview", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("product/submitreview", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
@@ -47,9 +45,8 @@ export class Product implements OnInit {
         });
     }
     getReview(data): Promise<GetRating> {
-        let apiservice = this._apiService;
-        return new Promise(function (resolve, reject) {
-            apiservice.api("product/getrating", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("product/getrating", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

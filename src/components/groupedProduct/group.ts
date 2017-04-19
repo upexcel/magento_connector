@@ -22,9 +22,9 @@ export class group {
     }
 
     quantityEdit() {
-        forEach(this.editCartData.super_attribute, (editCartOptionValue, editCartOptionkey)=>{
-            forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue,key)=>{
-                if(editCartOptionkey == groupAssociatedProducsValue.product_id){
+        forEach(this.editCartData.super_attribute, (editCartOptionValue, editCartOptionkey) => {
+            forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue, key) => {
+                if (editCartOptionkey == groupAssociatedProducsValue.product_id) {
                     groupAssociatedProducsValue.quantity = editCartOptionValue;
                 }
             });
@@ -37,8 +37,8 @@ export class group {
         }
     }
     groupedData() {
-        let opt:any = [], id = {}, total = 0, flag = 0;
-        forEach(this.grouped.group_associated_products, function (value, key) {
+        let opt: any = [], id = {}, total = 0, flag = 0;
+        forEach(this.grouped.group_associated_products, (value, key) => {
             id[value.product_id] = value.quantity;
             if (value.quantity * 1 !== 0) {
                 opt.push(value);

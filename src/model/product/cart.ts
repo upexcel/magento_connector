@@ -7,9 +7,8 @@ export class Cart implements OnInit {
     constructor(private _apiService: ApiService) { }
     ngOnInit() { }
     getCart(data): Promise<cartDataType> {
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("cart/cart", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("cart/cart", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

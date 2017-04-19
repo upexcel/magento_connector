@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
-import { MySavedAddressPage } from './../myaccount/savedAddress';
-import { MyEditAddressPage } from './../myaccount/myeditaddress';
-import { Address } from './../../providers/address-service/address';
-import { checkoutService } from './../../model/checkout/checkout-service';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavController, NavParams, ViewController} from 'ionic-angular';
+import {MySavedAddressPage} from './../myaccount/savedAddress';
+import {MyEditAddressPage} from './../myaccount/myeditaddress';
+import {Address} from './../../providers/address-service/address';
+import {checkoutService} from './../../model/checkout/checkout-service';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { PlacedOrder } from './../placedOrder/placedOrder';
-import { Events } from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {PlacedOrder} from './../placedOrder/placedOrder';
+import {Events} from 'ionic-angular';
 declare let StripeCheckout: any;
 @Component({
     selector: 'checkout',
@@ -21,27 +21,27 @@ export class Checkout implements OnInit {
     checkGift: boolean = false;
     checkGiftEntireOrder: boolean = true;
     checkGiftIndividualOrder: boolean = false;
-    shippingMethods:  Array<any>;
-    PaymentMethods:  Array<any>;
+    shippingMethods: Array<any>;
+    PaymentMethods: Array<any>;
     data: object = {};
     disable = true;
-    selectedPaymentMethod:any;
-    selectedShippingMethod:any;
+    selectedPaymentMethod: any;
+    selectedShippingMethod: any;
     tax: any;
     taxSpin: boolean = false;
     totalPrice: any = 0;
     total;
-    shippingAddressForOrderPlaced:string;
+    shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
-    validate = { "payment": false, "shipping": false, "shippingAddress": false };
-    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    validate = {"payment": false, "shipping": false, "shippingAddress": false};
+    constructor(public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
             this.address = address;
             if (!this.address || this.address['body'].length == 0) {
-                this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true, "firstTime": 1, title: "Add New Address" });
+                this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true, "firstTime": 1, title: "Add New Address"});
             }
         });
         this.placeOrder();
@@ -50,10 +50,13 @@ export class Checkout implements OnInit {
         if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
             this.orderPlace();
         } else {
+            this.spin = true;
             var handler = StripeCheckout.configure({
                 key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
                 locale: 'auto',
-                token: function(token: any) {
+                token: (token: any) => {
+                    console.log(token)
+                    this.spin = false;
                     // You can access the token ID with `token.id`.
                     // Get the token ID to your server-side code for use.
                 }
@@ -63,7 +66,11 @@ export class Checkout implements OnInit {
                 name: 'Products',
                 amount: this.total,
                 image: "",
-                currency: this.currency_sign
+                currency: this.currency_sign,
+                closed: () => {
+                    this.spin = false;
+                    this._toast.toast('Payment cancel by user', 3000);
+                }
             });
         }
     }
@@ -178,7 +185,7 @@ export class Checkout implements OnInit {
             this._checkoutService.orderPlace(this.data).then((res: any) => {
                 if (res && res['body'].success) {
                     this.spin = false;
-                    this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
+                    this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
                         const index = this.viewCtrl.index;
                         this._navCtrl.remove(index).then(() => {
                             let shouldRemoveIndex;

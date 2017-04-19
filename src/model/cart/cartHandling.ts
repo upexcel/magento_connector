@@ -16,12 +16,12 @@ export class CartFunction implements OnInit {
 
     totalPay(data) {
         let totalPay: number = 0;
-        forEach(data, function(value, key) {
+        forEach(data, (value, key)=> {
             let pay = value['price'] * value["quantity"]
             totalPay = totalPay + pay;
 
         });
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject)=> {
             resolve(totalPay);
         });
     }

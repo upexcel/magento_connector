@@ -365,7 +365,7 @@ export class ProductPage implements OnInit {
         this.add_cart = {};
         let selectedItem: string;
         if (this.type == "configurable") {
-            forEach(this.selectedList, function(listdata) {
+            forEach(this.selectedList, (listdata)=> {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);

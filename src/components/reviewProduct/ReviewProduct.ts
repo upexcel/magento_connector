@@ -30,18 +30,16 @@ export class ProductReview implements OnInit {
         });
     }
     ngOnInit() {
-        let self = this;
         this._getProduct.getReview({}).then((getReview) => {
             this.getRating = getReview;
-            forEach(this.getRating.body.attribute, function(title, titleKey) {
-                self.reviewTitle.push(title);
-                self.reviewKeys.push(titleKey);
+            forEach(this.getRating.body.attribute, (title, titleKey)=> {
+                this.reviewTitle.push(title);
+                this.reviewKeys.push(titleKey);
             });
             this.fetchReview();
         }).catch((err) => { });
     }
     fetchReview() {
-        let self = this;
         this.graphRating = [];
         this.productReviewSpin = true;
             this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
@@ -50,11 +48,11 @@ export class ProductReview implements OnInit {
                 this.productReviewSpin = false;
                 if (this.productReview.body.total_review != 0) {
                     this.addCommingReview = this.addCommingReview + this.productReview.body.data.length;
-                    forEach(this.getRating.body.attribute, function(title, titleKey) {
-                        forEach(self.productReview.body.total_attribute_rating, function(raw, key) {
-                            forEach(raw, function(rating, key) {
+                    forEach(this.getRating.body.attribute, (title, titleKey)=> {
+                        forEach(this.productReview.body.total_attribute_rating, (raw, key)=> {
+                            forEach(raw, (rating, key)=> {
                                 if (titleKey == key) {
-                                    self.graphRating.push({
+                                    this.graphRating.push({
                                         value: title,
                                         key: rating
                                     })

@@ -6,9 +6,8 @@ import {OrderListDataType} from './orderlistDatatype'
 export class TotalOrder {
     constructor(private _apiService: ApiService) { }
     getTotalOrder(data):Promise<TotalOrderDataType>{
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("order/totalorder", data).subscribe((res) => {
+        return new Promise((resolve, reject)=> {
+            this._apiService.api("order/totalorder", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
@@ -16,9 +15,8 @@ export class TotalOrder {
         });
     }
     getOrderList(data):Promise<OrderListDataType>{
-      let apiservice = this._apiService;
-      return new Promise(function(resolve, reject) {
-          apiservice.api("order/alllist", data).subscribe((res) => {
+      return new Promise((resolve, reject)=> {
+          this._apiService.api("order/alllist", data).subscribe((res) => {
               resolve(res);
           }, (err) => {
               reject(err);
