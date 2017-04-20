@@ -4,7 +4,7 @@ import {Storage} from '@ionic/storage';
 import {CartFunction} from '../../model/cart/cartHandling';
 import {ProductPage} from './../product/product';
 import {HomePage} from './../home/home';
-import {ActionSheetController} from 'ionic-angular';
+import {ActionSheetController, AlertController} from 'ionic-angular';
 import {Checkout} from './../checkOut/checkout';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {ToastService} from './../../providers/toast-service/toastService';
@@ -28,7 +28,7 @@ export class CartPage implements OnInit {
     discount: number = 0;
     tax: number = 0;
     grandtotalPrice: number = 0;
-    constructor(public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
+    constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
     ngOnInit() {
 
         this.res = this._cartFunction.getCart();
@@ -42,6 +42,7 @@ export class CartPage implements OnInit {
         if (cartData && cartData.length > 0) {
             forEach(cartData, (value, key) => {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+                value['vertualQty'] = value.product_qty;
                 this.currency_sign = value.currency_sign;
                 this.totalPrice += parseFloat(value.product_subtotal);
                 value.info_buyRequest['info_buyRequest']['product_id'] = value.info_buyRequest['info_buyRequest']['product'];
@@ -56,23 +57,75 @@ export class CartPage implements OnInit {
     }
 
     changeQuantity(data) {
-        let cartData = {}
-        let qty = {};
-        qty[data.product_id] = {};
-        qty[data.product_id]['qty'] = data.product_qty;
-        cartData['update_cart'] = qty;
-        let loading = this.loadingCtrl.create({
-            content: 'Please wait...'
-        });
-        loading.present();
-        this._cartFunction.updateCart(cartData).then((res) => {
-            this.res = this._cartFunction.getCart();
-            this.createData(this.res);
-            loading.dismiss();
-        }, (err) => {
-            loading.dismiss();
+        console.log(data)
+        if (data.product_qty == "More") {
+            let prompt = this.alertCtrl.create({
+                title: 'Enter Product Quantity',
+                //                message: "Enter a name for this new album you're so keen on adding",
+                inputs: [
+                    {
+                        name: 'qty',
+                        placeholder: 'quantity',
+                        type: 'number'
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        handler: promptData => {
+                            data.product_qty = data['vertualQty'];
+                        }
+                    },
+                    {
+                        text: 'Ok',
+                        handler: promptData => {
+                            if (promptData.qty == '0') {
+                                return false;
+                            } else {
+                                data.product_qty = promptData.qty;
+                                data['vertualQty'] = promptData.qty;
+                                let cartData = {}
+                                let qty = {};
+                                qty[data.product_id] = {};
+                                qty[data.product_id]['qty'] = data.product_qty;
+                                cartData['update_cart'] = qty;
+                                let loading = this.loadingCtrl.create({
+                                    content: 'Please wait...'
+                                });
+                                loading.present();
+                                this._cartFunction.updateCart(cartData).then((res) => {
+                                    this.res = this._cartFunction.getCart();
+                                    this.createData(this.res);
+                                    loading.dismiss();
+                                }, (err) => {
+                                    loading.dismiss();
+                                })
+                            }
+                        }
+                    }
+                ]
+            });
+            prompt.present();
+        } else {
+            let cartData = {}
+            let qty = {};
+            data['vertualQty'] = data.product_qty;
+            qty[data.product_id] = {};
+            qty[data.product_id]['qty'] = data.product_qty;
+            cartData['update_cart'] = qty;
+            let loading = this.loadingCtrl.create({
+                content: 'Please wait...'
+            });
+            loading.present();
+            this._cartFunction.updateCart(cartData).then((res) => {
+                this.res = this._cartFunction.getCart();
+                this.createData(this.res);
+                loading.dismiss();
+            }, (err) => {
+                loading.dismiss();
 
-        })
+            })
+        }
     }
 
     deleteProduct(data) {

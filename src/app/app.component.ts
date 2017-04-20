@@ -87,20 +87,20 @@ export class MyApp implements OnInit {
     }
     fcm() {
         this.firebase.onNotificationOpen().subscribe(res => {
+            console.log(res);
             if (res.tap) {
                 // background mode
 
             } else if (!res.tap) {
                 // foreground mode
-                this.setLocalPush();
+                this.setLocalPush(res);
             }
         });
     }
-    setLocalPush() {
+    setLocalPush(res) {
         this.localNotifications.schedule({
-            id: 1,
-            text: 'Single ILocalNotification',
-            data: {secret: 'key'}
+            title: res.title,
+            text: res.body
         });
     }
 }
