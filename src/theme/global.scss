@@ -250,6 +250,9 @@ input .item-inner {
 .lineHeight2-5{
     line-height: 2.5 !important;
 }
+.fontWeight{
+    font-weight: bold;
+}
 filter{
     a div div.input-wrapper{
         text-transform: capitalize;
@@ -570,10 +573,12 @@ filter-option{
     background: #f3f3f3;
 }
 .background1{
-    background: #f3f3f3
+    background: #f3f3f3;
 }
-
-cart, wishList{
+.primary{
+    color:#387ef5 !important;
+}
+cart, wishList, checkout{
     .scroll-content {
         /*background: #fff;*/
         margin-bottom: 60px;

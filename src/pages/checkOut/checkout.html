@@ -2,15 +2,15 @@
 <ion-content>
     <h2 *ngIf="!cartData">You have no item in cart</h2>
     <ion-card *ngIf="cartData && cartData.length!=0">
-        <ion-card-header>
+        <ion-card-header class="fontWeight">
             Address
         </ion-card-header>
         <ion-card-content *ngIf="address">
             <span *ngFor="let addres of address['body']">
-                <p color="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
-                <p color="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
-                <p color="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
-                <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p color="gray">{{addres.firstname}} {{addres.lastname}}</p><p color="gray">
+                <p class="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
+                <p class="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
+                <p class="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
+                <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p class="gray capitalize">{{addres.firstname}} {{addres.lastname}}</p><p class="gray capitalize">
                         <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_id}} {{addres.postcode}}</p></span>
             </span>
             <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
