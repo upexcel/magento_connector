@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
-import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
-import { HomeProducts } from '../../model/home/homeProducts';
+import {Component, OnInit} from '@angular/core';
+import {Platform} from 'ionic-angular';
+import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
+import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
+import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { MyAccount } from './../../model/myaccount/myaccount';
-import { Address } from './../../providers/address-service/address';
-import { LogoutService } from './../../providers/logout/logout-service';
-import { StartPage } from './../../pages/startpage/startpage';
-import { WishListService } from './../../providers/wishList/wishList-service';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {MyAccount} from './../../model/myaccount/myaccount';
+import {Address} from './../../providers/address-service/address';
+import {WishListService} from './../../providers/wishList/wishList-service';
 declare let navigator: any;
-import { Storage } from '@ionic/storage';
-import { CartFunction } from './../../model/cart/cartHandling';
+import {Storage} from '@ionic/storage';
+import {CartFunction} from './../../model/cart/cartHandling';
+import {ApiService} from './../../providers/api-service/api-service';
 
 @Component({
     templateUrl: 'home.html'
@@ -31,7 +30,7 @@ export class HomePage implements OnInit {
     menu: boolean = true;
     c_Id;
     count = 0;
-    constructor(private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _logout: LogoutService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
@@ -43,23 +42,14 @@ export class HomePage implements OnInit {
         }
     }
     ngOnInit() {
+        this._apiService.setNavControllerForService(this._navCtrl);
         setTimeout(() => {
             this._appDataConfigService.getUserData().then((userData: any) => {
                 if (userData && userData.access_token) {
                     this._wishList.getWishListData({});
-                    this.local.get('CartData').then((CartData: any) => {
-                        if (CartData) {
-                            this._events.publish('cartItems:length', CartData.length);
-                        } else {
-                            this._events.publish('cartItems:length', 0);
-                        }
-                    })
                     this._myaccount.getMyAccount({}).then((res) => {
                         this._address.setAddress(res);
-                    }, (err) => {
-                        this._logout.logout("please Login Again", this._navCtrl);
-                        this._navCtrl.setRoot(StartPage, { "message": "please Login Again" });
-                    })
+                    }, (err) => {})
                 }
             })
         }, 100)
@@ -72,7 +62,7 @@ export class HomePage implements OnInit {
     }
     homeProducts(recoll?) {
         this.spin = true;
-        let body = { "type": "full" }
+        let body = {"type": "full"}
         this._homeProductsConfig.getHomeProducts(body, recoll).then((res) => {
             if (res) {
                 this.homeProduct = res;
@@ -85,7 +75,7 @@ export class HomePage implements OnInit {
         this._cartFunction.setCartData();
         this.count++;
         this.spin = true;
-        let body = { "type": "full" }
+        let body = {"type": "full"}
         this._appDataConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token && this.count == 1) {
                 this.homeProducts(true);

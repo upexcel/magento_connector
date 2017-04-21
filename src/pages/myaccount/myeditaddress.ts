@@ -15,9 +15,6 @@ import {
     FormBuilder, Validators
 } from '@angular/forms';
 import {
-    Storage
-} from '@ionic/storage';
-import {
     MyAccount
 } from './../../model/myaccount/myaccount';
 import {
@@ -30,9 +27,6 @@ import {
     EditAccountDataType
 } from './../../model/myaccount/editAccountData';
 
-import {
-    LogoutService
-} from './../../providers/logout/logout-service';
 import {
     ToastService
 } from './../../providers/toast-service/toastService';
@@ -65,7 +59,7 @@ export class MyEditAddressPage implements OnInit {
     default_shipping: any = 0;
     reverseCartData: Array<any>;
     firstTime = 0;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
         this.id = this._navParams.get("id");
@@ -109,9 +103,7 @@ export class MyEditAddressPage implements OnInit {
                     })
                 }
             })
-                .catch(err => {
-                    this.logout();
-                })
+                .catch(err => { })
         } else {
             this.spin = false;
             if (this.firstTime) {
@@ -184,9 +176,6 @@ export class MyEditAddressPage implements OnInit {
         popover.present({
             ev: myEvent,
         });
-    }
-    logout() {
-        this._logout.logout(this.message, this._navCtrl);
     }
 
 }

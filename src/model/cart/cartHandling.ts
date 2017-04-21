@@ -42,7 +42,6 @@ export class CartFunction implements OnInit {
         return this.cartData;
     }
     setCart(data) {
-        console.log(data)
         this.cartData = data;
         let length = (this.cartData.cart_items) ? this.cartData.cart_items.length : data.length;
         this._events.publish('cartItems:length', length);
