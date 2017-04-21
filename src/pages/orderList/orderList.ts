@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController, PopoverController} from 'ionic-angular';
-import {ApiService} from './../../providers/api-service/api-service';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {TotalOrder} from '../../model/orderList/totalOrder';
-import {Storage} from '@ionic/storage';
 import {OrderListDataType} from './../../model/orderList/orderlistDatatype';
 import {TotalOrderDataType} from './../../model/orderList/totalOrderDataType';
-import {LogoutService} from './../../providers/logout/logout-service';
 import slice from 'lodash/slice';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
@@ -28,7 +25,7 @@ export class OrderlistPage implements OnInit {
     startArray: number = 0;
     endArray: number = 4;
     message: string = "Token expired";
-    constructor( private _logout: LogoutService, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) {}
+    constructor(private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {}
     ngOnInit() {
         this.total_orders();
         this.selectedOrder_details();
@@ -37,10 +34,7 @@ export class OrderlistPage implements OnInit {
     total_orders() {
         this._order.getTotalOrder({}).then((res) => {
             this.totalOrder = res;
-        })
-            .catch(err => {
-                this.logout();
-            });
+        }).catch(err => { });
     }
 
     selectedOrder_details() {
@@ -73,7 +67,6 @@ export class OrderlistPage implements OnInit {
             .catch((err) => {
                 console.log("err", err)
                 this.error = true;
-                //                this.logout();
             })
     }
     doInfinite(infiniteScroll) {
@@ -98,8 +91,5 @@ export class OrderlistPage implements OnInit {
     }
     goback() {
         this._navCtrl.pop();
-    }
-    logout() {
-        this._logout.logout(this.message, this._navCtrl);
     }
 }

@@ -10,16 +10,8 @@ import {
     ViewController
 } from 'ionic-angular';
 import {
-    ToastService
-} from './../../providers/toast-service/toastService';
-import {
     PopoverPage
 } from './../../components/popover/popover';
-
-import {
-    Storage
-} from '@ionic/storage';
-
 import {
     MyEditAddressPage
 } from './myeditaddress';
@@ -33,9 +25,6 @@ import {
     AppDataConfigService
 } from './../../providers/appdataconfig/appdataconfig';
 import {
-    LogoutService
-} from './../../providers/logout/logout-service';
-import {
     LoginPage
 } from './../../pages/login/login';
 import {
@@ -45,7 +34,6 @@ import {
     AccountPopoverPage
 } from './../../components/myAccountPopOver/myAccountPopOver';
 import { Address } from './../../providers/address-service/address';
-import reverse from 'lodash/reverse';
 import forEach from 'lodash/forEach';
 @Component({
     selector: 'saved-address',
@@ -62,7 +50,7 @@ export class MySavedAddressPage implements OnInit {
     message: string = "Token expired";
     alreadyCheckLength: boolean;
     saveAdd: boolean;
-    constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this.alreadyCheckLength = this._navParam.get('alreadyCheckLength');
         this.saveAdd = this._navParam.get('saveAdd');
         this._events.subscribe('api:savedaddress', (savedaddress) => {
@@ -112,12 +100,10 @@ export class MySavedAddressPage implements OnInit {
                 })
                     .catch(err => {
                         this.error = true;
-                        //                this.logout();
                     })
             }
         }).catch(err => {
             this.error = true;
-            //                this.logout();
         })
     }
 
@@ -230,8 +216,5 @@ export class MySavedAddressPage implements OnInit {
             const index = this.viewCtrl.index;
             this._navCtrl.remove(index);
         });
-    }
-    logout() {
-        this._logout.logout(this.message, this._navCtrl);
     }
 }
