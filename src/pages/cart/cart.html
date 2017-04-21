@@ -3,9 +3,9 @@
     <img src="assets/image/empty-cart.png">
     <h3>Your Shopping Cart is empty</h3>
 </ion-content>
-<ion-content class="cart" *ngIf="res && res.length > 0">
+<ion-content class="cart" *ngIf="res && res.cart_items && res.cart_items.length > 0">
     <span class="backgroundGray">
-        <ion-card  *ngFor="let data of res">
+        <ion-card  *ngFor="let data of res.cart_items">
             <ion-grid no-padding>
                 <ion-row center align-items-center>
                     <ion-col class="aligncenter" col-4>
@@ -92,7 +92,7 @@
         <ion-grid>
             <ion-row center>
                 <ion-col col-8 class="paddLef15">
-                    <p>Price ({{res.length}} items)</p>
+                    <p>Price ({{res.cart_items.length}} items)</p>
                 </ion-col>
                 <ion-col col-4 class="alignright paddRighttax10">
                     <p>{{currency_sign}}{{totalPrice}}</p>

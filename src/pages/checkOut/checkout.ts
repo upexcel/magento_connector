@@ -18,7 +18,7 @@ declare let StripeCheckout:any;
     templateUrl: 'checkout.html'
 })
 export class Checkout implements OnInit {
-    cartData: Array<any>;
+    cartData: any;
     address: object;
     checkGift: boolean = false;
     checkGiftEntireOrder: boolean = true;
@@ -32,7 +32,8 @@ export class Checkout implements OnInit {
     tax: any;
     taxSpin: boolean = false;
     totalPrice: any = 0;
-    total;
+    grandTotal:any;
+    discount:any;
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
@@ -94,7 +95,6 @@ export class Checkout implements OnInit {
                 key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
                 locale: 'auto',
                 token: (token: any) => {
-                    console.log(token)
                     this.spin = false;
                     // You can access the token ID with `token.id`.
                     // Get the token ID to your server-side code for use.
@@ -103,7 +103,7 @@ export class Checkout implements OnInit {
 
             handler.open({
                 name: 'Products',
-                amount: this.total,
+                amount: this.grandTotal,
                 image: "",
                 currency: this.currency_sign,
                 closed: () => {
@@ -115,11 +115,14 @@ export class Checkout implements OnInit {
     }
     placeOrder() {
         let products = {};
-        if (this.cartData && this.cartData.length > 0) {
-            forEach(this.cartData, (value, key) => {
+        this.totalPrice = this.cartData.subtotal_without_discount;
+        this.tax = this.cartData.tax;
+        this.discount = this.cartData.discount;
+        this.grandTotal = this.cartData.grandtotal;
+        if (this.cartData.cart_items && this.cartData.cart_items.length > 0) {
+            forEach(this.cartData.cart_items, (value, key) => {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
                 this.currency_sign = value.currency_sign;
-                this.totalPrice += parseFloat(value.product_subtotal);
                 value.info_buyRequest['info_buyRequest']['product_id'] = value['product_id'];
                 products[key] = value.info_buyRequest['info_buyRequest'];
             })
@@ -168,20 +171,10 @@ export class Checkout implements OnInit {
     }
     taxDetails() {
         this.taxSpin = true;
-        this.total = this.totalPrice;
+        this.grandTotal = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
             this.disable = false;
-            this.tax = res['body'];
             this.taxSpin = false;
-            if (this.tax.tax) {
-                this.total += parseFloat(this.tax.tax)
-            }
-            if (this.tax.discount) {
-                this.total += parseFloat(this.tax.discount)
-            }
-            if (this.selectedShippingMethod) {
-                this.total += parseFloat(this.selectedShippingMethod['price']);
-            }
         }, (err) => {
             this.taxSpin = false;
         });

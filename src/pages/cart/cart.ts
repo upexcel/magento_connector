@@ -16,7 +16,7 @@ import forEach from 'lodash/forEach';
     templateUrl: 'cart.html'
 })
 export class CartPage implements OnInit {
-    res: Array<any> = [];
+    res: any;
     lists: Array<any> = [];
     entery: boolean = false;
     totalPay: number;
@@ -30,38 +30,33 @@ export class CartPage implements OnInit {
     grandtotalPrice: number = 0;
     constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
     ngOnInit() {
-
         this.res = this._cartFunction.getCart();
         this.createData(this.res)
     }
     createData(cartData) {
-        this.totalPrice = 0;
-        this.discount = 0;
-        this.grandtotalPrice = 0;
+        this.totalPrice = cartData.subtotal_without_discount;
+        this.discount = cartData.discount;
+        this.grandtotalPrice = cartData.grandtotal;
+        this.tax = cartData.tax;
         let products: any = {};
-        if (cartData && cartData.length > 0) {
-            forEach(cartData, (value, key) => {
-                value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
+        if (cartData && cartData.cart_items && cartData.cart_items.length > 0) {
+            forEach(cartData.cart_items, (value, key) => {
                 value['vertualQty'] = value.product_qty;
                 this.currency_sign = value.currency_sign;
-                this.totalPrice += parseFloat(value.product_subtotal);
                 value.info_buyRequest['info_buyRequest']['product_id'] = value.info_buyRequest['info_buyRequest']['product'];
                 products[key] = value.info_buyRequest['info_buyRequest'];
             })
             this.data['products'] = products;
         }
-        this.grandtotalPrice = this.totalPrice + this.discount + this.tax;
     }
     ionViewWillEnter() {
         this._events.publish('check:login', true);
     }
 
     changeQuantity(data) {
-        console.log(data)
         if (data.product_qty == "More") {
             let prompt = this.alertCtrl.create({
                 title: 'Enter Product Quantity',
-                //                message: "Enter a name for this new album you're so keen on adding",
                 inputs: [
                     {
                         name: 'qty',
@@ -163,9 +158,6 @@ export class CartPage implements OnInit {
             this._navCtrl.remove(index);
         });
     }
-    quantityPrice(total, qty) {
-        return (total * 1) * (qty * 1);
-    }
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {
             return data['value'].default_title;
@@ -184,8 +176,7 @@ export class CartPage implements OnInit {
     placeOrder() {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
-                if (this.res && this.res.length > 0) {
-                    console.log("res", this.res)
+                if (this.res && this.res.cart_items && this.res.cart_items.length > 0) {
                     this._navCtrl.push(Checkout, {res: this.res});
                 } else {
                     this._toast.toast("No product in cart. Please add first.", 3000);
@@ -201,6 +192,12 @@ export class CartPage implements OnInit {
             this.couponCodeSpin = true;
             this.data['couponcode'] = couponCode.trim();
             this._cartFunction.applyCoupon(this.data).then((res) => {
+                this.res['subtotal_without_discount'] = res.subtotal_without_discount;
+                this.res['discount'] = res.discount;
+                this.res['grandtotalPrice'] = res.grandtotal;
+                this.res['tax'] = res.tax;
+                this.res['shipping_amount'] = res.shipping_amount;
+                this.res['subtotal_with_discount'] = res.subtotal_with_discount;
                 this.discount = res.body['discount'];
                 this.grandtotalPrice = res.body['grandtotal'];
                 this.tax = res.body['tax'];
