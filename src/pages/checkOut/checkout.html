@@ -1,7 +1,7 @@
 <header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false></header>
 <ion-content>
     <h2 *ngIf="!cartData">You have no item in cart</h2>
-    <ion-card *ngIf="cartData && cartData.length!=0">
+    <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
         <ion-card-header class="fontWeight">
             Address
         </ion-card-header>
@@ -17,7 +17,7 @@
 
         </ion-card-content>
     </ion-card>
-    <ion-card  *ngFor="let data of cartData">
+    <ion-card  *ngFor="let data of cartData.cart_items">
         <ion-card-content  class="no-padding">
             <ion-grid no-padding>
                 <ion-row center align-items-center>
@@ -178,7 +178,7 @@
         </ion-card-header>
         <ion-row center>
             <ion-col col-4 class="paddLft20">
-                <p>Price ({{cartData.length}} items)</p>
+                <p>Price ({{cartData.cart_items.length}} items)</p>
             </ion-col>
             <ion-col col-8 class="alignright paddRighttax10">
                 <p *ngIf="totalPrice">${{totalPrice}}</p>
@@ -191,7 +191,7 @@
             <ion-col col-8 class="alignright paddRight10">
                 <span class="alignright">
                     <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span>
-                <p *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{((tax.discount)?tax.discount:0) |number}}</span><span *ngIf="!tax">0</span></p>
+                <p *ngIf="!taxSpin">{{currency_sign}}{{discount}}</p>
             </ion-col>
         </ion-row>
         <ion-row center>
@@ -216,7 +216,7 @@
                 <p><b>Grand Total</b></p>
             </ion-col>
             <ion-col col-8 class="alignright paddRight10">
-                <p><b>{{currency_sign}}{{(total ? total :totalPrice)|number}}</b></p>
+                <p><b>{{currency_sign}}{{grandTotal}}</b></p>
             </ion-col>
         </ion-row>
     </ion-card>
