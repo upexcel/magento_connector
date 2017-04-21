@@ -10,12 +10,9 @@ import 'rxjs/add/operator/timeout';
 import { Subject } from 'rxjs/Rx';
 import { Platform } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
-import { App } from 'ionic-angular';
-import { StartPage } from './../../pages/startpage/startpage';
-
 @Injectable()
 export class ApiService {
-    constructor(private app: App, private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) { }
+    constructor(private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) { }
     api(path, body) {
         var subject = new Subject();
         this._local.get('userData').then((userData) => {
@@ -33,25 +30,20 @@ export class ApiService {
                 }
                 let options = new RequestOptions({ headers: headers });
                 this._http.post(api_url, JSON.stringify(body), options)
-                    //                    .timeout(config.stopApiTime, new Error('Check Network Connection'))
+//                    .timeout(config.stopApiTime, new Error('Check Network Connection'))
                     .subscribe((res: Response) => {
                         this._extractData(res, subject)
                     },
 
                     (error) => {
-                        var nav = this.app.getActiveNav();
-//                        this._dataConfigService.resetDataInService();
-//                        this._local.clear();
-                        console.log("error",nav)
-                        nav.push(StartPage);
-//                        if (error._body && typeof error._body !== 'object') {
-//                            this._toast.toast(JSON.parse(error._body).message, 3000);
-//                        } else if (error.message) {
-//                            this._toast.toast(error.message, 3000);
-//                        } else {
-//                            this._toast.toast(error, 3000);
-//                        }
-//                        this._handleError(error, subject)
+                        if (error._body && typeof error._body !== 'object') {
+                            this._toast.toast(JSON.parse(error._body).message, 3000);
+                        } else if (error.message) {
+                            this._toast.toast(error.message, 3000);
+                        } else {
+                            this._toast.toast(error, 3000);
+                        }
+                        this._handleError(error, subject)
                     })
             });
         });
