@@ -158,12 +158,12 @@
                 </ion-grid>
             </ion-card-content>
         </ion-card>-->
-    <ion-card>
-        <ion-card-header>
-            Payment Information
-        </ion-card-header>
+    <ion-card no-padding>
         <ion-card-content>
-            <ion-list no-margin radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="paymentMethod(selectedPaymentMethod)">
+            <ion-list-header no-margin>
+                Payment Information
+            </ion-list-header>
+            <ion-list no-lines no-margin radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="paymentMethod(selectedPaymentMethod)">
                       <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
                 <ion-item *ngFor="let payment of PaymentMethods">
                     <ion-label>{{payment.method_title}}</ion-label>
