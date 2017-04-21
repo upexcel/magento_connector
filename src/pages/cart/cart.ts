@@ -38,6 +38,7 @@ export class CartPage implements OnInit {
         this.discount = cartData.discount;
         this.grandtotalPrice = cartData.grandtotal;
         this.tax = cartData.tax;
+        this.couponCode = cartData.coupon_code;
         let products: any = {};
         if (cartData && cartData.cart_items && cartData.cart_items.length > 0) {
             forEach(cartData.cart_items, (value, key) => {
