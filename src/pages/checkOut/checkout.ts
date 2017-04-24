@@ -47,7 +47,7 @@ export class Checkout implements OnInit {
                 this._navCtrl.push(MyEditAddressPage, { "alreadyCheckLength": true, "firstTime": 1, title: "Add New Address" });
             }
         });
-        this.placeOrder();
+        this.createPlaceOrderData();
     }
     openCheckout() {
         // .razorpay.cordova implimented
@@ -113,7 +113,7 @@ export class Checkout implements OnInit {
             });
         }
     }
-    placeOrder() {
+    createPlaceOrderData() {
         let products = {};
         this.totalPrice = this.cartData.subtotal_without_discount;
         this.tax = this.cartData.tax;
@@ -171,7 +171,6 @@ export class Checkout implements OnInit {
     }
     taxDetails() {
         this.taxSpin = true;
-        this.grandTotal = this.totalPrice;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
             this.disable = false;
             this.taxSpin = false;
