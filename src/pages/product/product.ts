@@ -497,7 +497,7 @@ export class ProductPage implements OnInit {
                     this.cartSpin = false;
                     if (this.cartData.body['success']) {
                         this._cartFunction.setCart(response.body['success_data']);
-                        this._toast.toast(this.product + "added to your shopping cart", 3000, "top");
+                        this._toast.toast(this.product + " added to your shopping cart", 3000, "top");
                         this._navCtrl.push(CartPage).then(() => {
                             const index = this.viewCtrl.index;
                             this._navCtrl.remove(index);
@@ -510,7 +510,7 @@ export class ProductPage implements OnInit {
                 });
             } else {
                 this._cartFunction.editCart(this.editCartData).then(() => {
-                    this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
+                    this._toast.toast(this.product + " updated to your shopping cart", 3000, "top");
                     this.cartSpin = false;
                 }, (err) => {
                     this.cartSpin = false;

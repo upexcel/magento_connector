@@ -167,10 +167,6 @@ export class MySavedAddressPage implements OnInit {
         })
         address['zip'] = address.postcode;
         address['countryid'] = address.country_id;
-        delete address.postcode;
-        delete address.region;
-        delete address.country_id;
-        delete address.region_id;
         address['default_billing'] = '0';
         address['default_shipping'] = '0';
         if (address.add_billing) {

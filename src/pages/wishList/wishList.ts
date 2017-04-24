@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, LoadingController} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
-import {ProductPage} from '../../pages/product/product';
-import {WishListService} from '../../providers/wishList/wishList-service';
-import {HomePage} from './../home/home';
-import {CartService} from './../../providers/cart-service/cart-service';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {CartPage} from '../cart/cart';
+import { Component } from '@angular/core';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { ProductPage } from '../../pages/product/product';
+import { WishListService } from '../../providers/wishList/wishList-service';
+import { HomePage } from './../home/home';
+import { CartService } from './../../providers/cart-service/cart-service';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { CartPage } from '../cart/cart';
 import { CartFunction } from '../../model/cart/cartHandling';
 
 @Component({
@@ -15,7 +15,7 @@ import { CartFunction } from '../../model/cart/cartHandling';
 })
 export class wishList {
     data: object;
-    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}
+    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) { }
     ionViewWillEnter() {
         this._wishListService.getWishList().then((data) => {
             this.data = data;
@@ -27,10 +27,10 @@ export class wishList {
         })
     }
     editWishList(data) {
-        this._nav.push(ProductPage, {'id': data.data.sku, "editCartData": data, "wishlist": true});
+        this._nav.push(ProductPage, { 'id': data.data.sku, "editCartData": data, "wishlist": true });
     }
     addToCart(data) {
-        data['productid'] = data['productId'];
+        data['productid'] = data['productId'] || data['productid']|| data['product'];
         let loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });
