@@ -84,6 +84,10 @@
                 Apply Coupon
                 <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
         </button>
+        <button ion-button item-right small  icon-only color="danger" [disabled]="!couponCode" (click)="applyCoupon('delete')">
+                <ion-icon name="trash"></ion-icon>
+                <ion-spinner *ngIf="deleteCouponCodeSpin" class="spin"></ion-spinner>
+        </button>
     </ion-item>
     <ion-card>
         <ion-card-header>
