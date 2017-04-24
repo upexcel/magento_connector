@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, MenuController, PopoverController, NavParams, ViewController, LoadingController, Events} from 'ionic-angular';
+import {NavController, MenuController, PopoverController, NavParams, LoadingController, Events} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
 import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
@@ -24,7 +24,7 @@ export class CategoryProductPage implements OnInit {
     previouseSortOrder: string;
     infinite: any;
     enableInfinite: boolean = true;
-    constructor(private _viewCtrl: ViewController, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         this.c_Id = _navParams.get('name');
