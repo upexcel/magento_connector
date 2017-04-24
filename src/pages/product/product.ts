@@ -5,7 +5,7 @@ import { ApiService } from './../../providers/api-service/api-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifyMe } from '../../model/product/notify';
 import { CartService } from './../../providers/cart-service/cart-service';
-import {productDataType} from '../../model/product/productDataType';
+import { productDataType } from '../../model/product/productDataType';
 import { Product } from '../../model/product/getProduct';
 import { cartDataType } from './../product/cartDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
@@ -54,7 +54,7 @@ export class ProductPage implements OnInit {
     alertset: boolean = false;
     qty: number = 1;
     productid: string;
-    additionalInformationData: Array<any>=[];
+    additionalInformationData: Array<any> = [];
     customDisable: boolean = false;
     //gather data for send in add cart servive
     sku: string;
@@ -62,7 +62,7 @@ export class ProductPage implements OnInit {
     name: string;
     type: string;
     bundlePrice: any;
-    configPrice: Array<any>=[];
+    configPrice: Array<any> = [];
     addToCartData;
     customPrice: any;
     customDisplayPrice: any;
@@ -79,8 +79,11 @@ export class ProductPage implements OnInit {
     diffProductData;
     editCartData: any;
     cartButtonTitle: string;
-    add_cart: object= {};
+    add_cart: object = {};
     mySlideOptions = config.productSliderOptions;
+    quote_id: string;
+    item_id: string;
+    editProductQuantity: number;
     constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({ email: ['', Validators.required] });
         this._appConfigService.getUserData().then((userData: any) => {
@@ -96,6 +99,9 @@ export class ProductPage implements OnInit {
             this.userData = userData;
             this.id = this._navParams.get('id');
             this.editCartData = this._navParams.get('editCartData');
+            this.quote_id = this._navParams.get('quote_id');
+            this.editProductQuantity = this._navParams.get('editProductQuantity');
+            this.item_id = this._navParams.get('item_id');
             if (this.editCartData && !this._navParams.get('wishlist')) {
                 this.cartButtonTitle = 'UPDATE CART'
             } else {
@@ -204,7 +210,7 @@ export class ProductPage implements OnInit {
                 let additionalInformation = this.productData.body.data.additional_information;
                 this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "" };
+                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id };
                 //get additional_information if exit
                 if (additionalInformation != undefined) {
                     forEach(additionalInformation, (value, key) => {
@@ -224,6 +230,7 @@ export class ProductPage implements OnInit {
                     }
                 }
                 //add a vertual key
+                console.log(this.editCartData)
                 if (this.editCartData) {
                     if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
                         this.disable = false;
@@ -365,7 +372,7 @@ export class ProductPage implements OnInit {
         this.add_cart = {};
         let selectedItem: string;
         if (this.type == "configurable") {
-            forEach(this.selectedList, (listdata)=> {
+            forEach(this.selectedList, (listdata) => {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
@@ -509,9 +516,19 @@ export class ProductPage implements OnInit {
                     this.cartSpin = false;
                 });
             } else {
-                this._cartFunction.editCart(this.editCartData).then(() => {
-                    this._toast.toast(this.product + " updated to your shopping cart", 3000, "top");
+                this.add_cart['qty'] = this.editProductQuantity;
+                this.add_cart['quantity'] = this.editProductQuantity;
+                this._cartFunction.editCart(this.add_cart).then((res) => {
+                    this.cartData = res;
                     this.cartSpin = false;
+                    if (this.cartData.body['success_data']) {
+                        this._cartFunction.setCart(res.body['success_data']);
+                        this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
+                        this._navCtrl.push(CartPage).then(() => {
+                            const index = this.viewCtrl.index;
+                            this._navCtrl.remove(index);
+                        });
+                    }
                 }, (err) => {
                     this.cartSpin = false;
                 });

@@ -28,6 +28,7 @@ export class CartPage implements OnInit {
     discount: number = 0;
     tax: number = 0;
     grandtotalPrice: number = 0;
+    deleteCouponCodeSpin: boolean = false;
     constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
     ngOnInit() {
         this.res = this._cartFunction.getCart();
@@ -154,7 +155,7 @@ export class CartPage implements OnInit {
     }
     edit(data) {
         data['type'] = data['product_type'];
-        this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest']}).then(() => {
+        this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'], "item_id": data['item_id'], "quote_id": data['quote_id'], "editProductQuantity": data['product_qty']}).then(() => {
             const index = this._viewCtrl.index;
             this._navCtrl.remove(index);
         });
@@ -190,7 +191,11 @@ export class CartPage implements OnInit {
     }
     applyCoupon(couponCode) {
         if (couponCode && couponCode.trim().length > 0) {
-            this.couponCodeSpin = true;
+            if (couponCode == 'delete') {
+                this.deleteCouponCodeSpin = true;
+            } else {
+                this.couponCodeSpin = true;
+            }
             this.data['couponcode'] = couponCode.trim();
             this._cartFunction.applyCoupon(this.data).then((res) => {
                 this.res['subtotal_without_discount'] = res.subtotal_without_discount;
@@ -204,14 +209,22 @@ export class CartPage implements OnInit {
                 this.tax = res.body['tax'];
                 this.totalPrice = res.body['subtotal_without_discount'];
                 this.couponCodeSpin = false;
-                this._toast.toast('Coupon Applied', 3000);
+                this.deleteCouponCodeSpin = false;
+                if (couponCode == 'delete') {
+                    this._toast.toast('Coupon Removed', 3000);
+                    this.couponCode = '';
+                } else {
+                    this._toast.toast('Coupon Applied', 3000);
+                }
             }, (err) => {
                 this._toast.toast(JSON.parse(err._body).message, 3000);
                 this.couponCodeSpin = false;
+                this.deleteCouponCodeSpin = false;
                 this.couponCode = '';
             })
         } else {
             this._toast.toast('enter a valid coupon code', 3000);
+            this.couponCode = '';
         }
     }
 }
