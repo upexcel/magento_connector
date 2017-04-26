@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavParams, ViewController, PopoverController, Events } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { PopoverPage } from './../../components/popover/popover';
-import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { OrderIdDetail } from './../../model/orderid-detail/orderid-detail';
-import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+//import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 
 @Component({
     templateUrl: 'orderid-detail.html'

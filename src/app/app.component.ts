@@ -28,6 +28,11 @@ export class MyApp implements OnInit {
             this._fcmService.initFCM();
             this.fcm();
             this.backgroundMode.enable();
+            this.localNotifications.on("click", (data) => {
+                setTimeout(() => {
+                    this.nav.push(OrderModalPage, { order_id: data['data'] });
+                }, 100)
+            })
         });
         this.addConnectivityListeners();
     }
@@ -92,26 +97,20 @@ export class MyApp implements OnInit {
     }
     fcm() {
         this.firebase.onNotificationOpen().subscribe(res => {
-            console.log("fcm", res);
             if (res.tap) {
-                console.log("click fcm if ", res);
+                setTimeout(() => {
+                    this.nav.push(OrderModalPage, { order_id: res.increment_id });
+                }, 100)
                 // background mode
 
             } else if (!res.tap) {
-                this.setLocalPush(res);
+                this.localNotifications.schedule({
+                    title: res.title,
+                    text: res.body,
+                    data: res.increment_id
+                });
             }
         });
     }
-    setLocalPush(res) {
-        this.localNotifications.schedule({
-            title: res.title,
-            text: res.body,
-            data: res.increment_id
-        });
 
-        this.localNotifications.on("click", () => {
-            console.log("click coll")
-            this.nav.push(OrderModalPage, { order_id: res.increment_id });
-        })
-    }
 }
