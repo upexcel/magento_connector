@@ -1,17 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Platform, NavController} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {StartPage} from '../pages/startpage/startpage';
-import {HomePage} from '../pages/home/home';
-import {Storage} from '@ionic/storage';
-import {AppDataConfigService} from '../providers/appdataconfig/appdataconfig';
-import {Network} from 'ionic-native';
-import {OfflinePage} from '../pages/offline/offline'
-import {Splashscreen} from 'ionic-native';
-import {Firebase} from '@ionic-native/firebase';
-import {LocalNotifications} from '@ionic-native/local-notifications';
-import {fcmService} from '../providers/fcm-service/fcm-service';
-import {BackgroundMode} from '@ionic-native/background-mode';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Platform, NavController } from 'ionic-angular';
+import { StatusBar } from 'ionic-native';
+import { StartPage } from '../pages/startpage/startpage';
+import { HomePage } from '../pages/home/home';
+import { Storage } from '@ionic/storage';
+import { AppDataConfigService } from '../providers/appdataconfig/appdataconfig';
+import { Network } from 'ionic-native';
+import { OfflinePage } from '../pages/offline/offline'
+import { Splashscreen } from 'ionic-native';
+import { Firebase } from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { fcmService } from '../providers/fcm-service/fcm-service';
+import { BackgroundMode } from '@ionic-native/background-mode';
+import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
@@ -40,6 +41,10 @@ export class MyApp implements OnInit {
             StatusBar.styleDefault();
             this.appCheckConfig();
         });
+        //                if(this.modal && this.modal.index === 0) {
+        //            /* closes modal */
+        //            this.modal.dismiss();
+        //        }
     }
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
@@ -87,12 +92,12 @@ export class MyApp implements OnInit {
     }
     fcm() {
         this.firebase.onNotificationOpen().subscribe(res => {
-            console.log(res);
+            console.log("fcm", res);
             if (res.tap) {
+                console.log("click fcm if ", res);
                 // background mode
 
             } else if (!res.tap) {
-                // foreground mode
                 this.setLocalPush(res);
             }
         });
@@ -100,7 +105,13 @@ export class MyApp implements OnInit {
     setLocalPush(res) {
         this.localNotifications.schedule({
             title: res.title,
-            text: res.body
+            text: res.body,
+            data: res.increment_id
         });
+
+        this.localNotifications.on("click", () => {
+            console.log("click coll")
+            this.nav.push(OrderModalPage, { order_id: res.increment_id });
+        })
     }
 }

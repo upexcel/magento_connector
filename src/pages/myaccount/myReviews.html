@@ -2,10 +2,6 @@
 <ion-content >
     <ion-spinner *ngIf="spin" class="apiSpinner"></ion-spinner>
     <ion-list  *ngIf="!spin && myReviewRes && myReviewRes.success">
-        <ion-list-header>
-            REVIEW.
-        </ion-list-header>
-
         <ion-item *ngFor=" let data of myReviewRes.success_data ">
             <ion-avatar item-left>
                 <img src="{{data.data.media_images[0]}}">

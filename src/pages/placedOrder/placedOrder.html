@@ -1,5 +1,14 @@
-<header [title]="'ORDER PLACED'" [wishList]=false></header>
-<ion-content>
+<ion-header class="primaryBackground">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (click)="root()">
+        <button ion-button icon-only  (click)="changeView(viewChang)">
+                <ion-icon name="arrow-round-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        ORDER PLACED
+    </ion-title>
+</ion-header>
+<ion-content class='no-margin'>
     <ion-card>
         <ion-card-content>
             <div class="aligncenter">

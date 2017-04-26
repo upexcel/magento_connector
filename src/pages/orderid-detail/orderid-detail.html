@@ -5,7 +5,7 @@
     <ion-scroll scrollY="true" *ngIf="showOrder">
         <ion-list no-lines>
             <ion-list-header no-margin class="bold">
-                Status: <span class="capitalize">{{orderid_detail.body.status}}</span>
+                Status: <span class="capitalize"><span *ngIf="orderid_detail.body.status !='canceled'">{{orderid_detail.body.status}}</span><span *ngIf="orderid_detail.body.status == 'canceled'">Cancelled</span></span>
             </ion-list-header>
             <ion-item no-lines *ngFor="let item of items">
                       <ion-thumbnail item-left>
@@ -20,7 +20,7 @@
             <ion-item no-lines>
                 <h3>Purchased Date</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.body.purchased_on | date: 'dd/MM/yyyy hh:mm'}}</p>
+                    <p>{{orderid_detail.body.purchased_on | date: 'dd/MM/yyyy && hh:mm'}}</p>
                 </div>
             </ion-item>
             <ion-grid>

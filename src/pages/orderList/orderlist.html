@@ -13,7 +13,7 @@
                         <ion-icon color="danger" name="close-circle" *ngIf="data.status=='holded'"></ion-icon>
                         <ion-icon color="alert_yellow" name="alert" *ngIf="data.status=='pending'" ></ion-icon>
                          <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
-                        
+                         <ion-icon color="red" name="close" *ngIf="data.status=='canceled'" ></ion-icon>
                     </div>
                     <div (click)="gotoOrderDetail(data.orderId)">
                         <span class="order_key">#{{data.orderId}}</span>
@@ -21,7 +21,7 @@
                         <div class="cd-timeline-content">
                              <h2>Oder No: {{data.order_no}}</h2>
                             <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number }}</h2>
-                            <h2 text-capitalize>Status: {{data.status}}</h2>
+                            <h2 text-capitalize>Status: <span *ngIf="data.status !='canceled'">{{data.status}}</span><span *ngIf="data.status == 'canceled'">Cancelled</span></h2>
                             <hr>
                         </div>
                     </div>

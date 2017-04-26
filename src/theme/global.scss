@@ -284,6 +284,12 @@ filter{
         }
     }
 }
+
+placed-order{
+    .scroll-content{
+        margin-top:0px !important;
+    }
+}
 .relative{
     position: relative;
 }
@@ -577,6 +583,22 @@ filter-option{
 }
 .primary{
     color:#387ef5 !important;
+}
+.primaryBackground{
+    background: #387ef5 !important;
+}
+.text{
+    line-height:2.5;
+    .toolbar-title-md{
+        color:white !important;
+    }
+
+}
+.placeOrderIconButt{
+    .button-md{
+        box-shadow:none;
+        height: 4rem;
+    }
 }
 cart, wishList, checkout{
     .scroll-content {

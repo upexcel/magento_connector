@@ -218,15 +218,7 @@ export class Checkout implements OnInit {
                     this.spin = false;
                     this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
                         const index = this.viewCtrl.index;
-                        this._navCtrl.remove(index).then(() => {
-                            let shouldRemoveIndex;
-                            forEach(this._navCtrl['_views'], (views) => {
-                                if (views['name'] == 'CartPage') {
-                                    shouldRemoveIndex = views['index'];
-                                }
-                            })
-                            this._navCtrl.remove(shouldRemoveIndex)
-                        });
+                        this._navCtrl.remove(index);
                     });
                 } else {
                     this.spin = false;

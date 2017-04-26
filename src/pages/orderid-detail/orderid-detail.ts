@@ -13,13 +13,13 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 })
 
 export class OrderModalPage implements OnInit {
-    orderid_detail: OrderIdDetailDataType;
+    orderid_detail: any;
     order_id: number;
     items: Array<any>;
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
-    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this.getOrderDetails(this.order_id);
