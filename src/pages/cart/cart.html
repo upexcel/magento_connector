@@ -68,7 +68,10 @@
                 </ion-row>
 
                 <ion-row class="cartRowborder">
-                    <ion-col col-6 class="center" (click)=edit(data)>
+                    <ion-col col-6 class="center" (click)=edit(data) *ngIf="!data.info_buyRequest.super_product_config">
+                        Edit
+                    </ion-col>
+                    <ion-col col-6 class="center line" *ngIf="data.info_buyRequest.super_product_config && data.info_buyRequest.super_product_config.product_type == 'grouped'">
                         Edit
                     </ion-col>
                     <ion-col col-6 class="center borderLeft" (click)=deleteProduct(data)>
