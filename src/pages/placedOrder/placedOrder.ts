@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
-import { HomePage } from './../home/home';
 import { OrderModalPage } from '../orderid-detail/orderid-detail';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';

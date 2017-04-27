@@ -1,18 +1,18 @@
-import {Injectable, OnInit} from '@angular/core';
-import {ApiService} from './../../providers/api-service/api-service';
-import {productDataType} from './productDataType';
-import {ProductReviewDataType} from './productReviewDataType';
-import {SubmitReviewDataType} from './submitReview';
-import {GetRating} from './getRatingDataType';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import { Injectable, OnInit } from '@angular/core';
+import { ApiService } from './../../providers/api-service/api-service';
+import { productDataType } from './productDataType';
+import { ProductReviewDataType } from './productReviewDataType';
+import { SubmitReviewDataType } from './submitReview';
+import { GetRating } from './getRatingDataType';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 declare let Promise: any;
 @Injectable()
 export class Product implements OnInit {
-    constructor(private _dataConfigService: AppDataConfigService, private _apiService: ApiService) {}
-    ngOnInit() {}
+    constructor(private _dataConfigService: AppDataConfigService, private _apiService: ApiService) { }
+    ngOnInit() { }
     getProduct(data): Promise<productDataType> {
         let apiservice = this._apiService;
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             var serviceData = this._dataConfigService.checkDataInService(data);
             if (serviceData) {
                 resolve(serviceData);
@@ -27,7 +27,7 @@ export class Product implements OnInit {
         });
     }
     getProductReview(data): Promise<ProductReviewDataType> {
-        return new Promise( (resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             this._apiService.api("product/review", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
@@ -36,7 +36,7 @@ export class Product implements OnInit {
         });
     }
     getSubmitReview(data): Promise<SubmitReviewDataType> {
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             this._apiService.api("product/submitreview", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
@@ -45,7 +45,7 @@ export class Product implements OnInit {
         });
     }
     getReview(data): Promise<GetRating> {
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             this._apiService.api("product/getrating", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {

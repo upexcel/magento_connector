@@ -33,8 +33,8 @@ export class AccountPopoverPage {
     id: number;
     entity_id: number;
     accountCartLength: any;
-    default_billing:number;
-    default_shipping:number;
+    default_billing: number;
+    default_shipping: number;
     constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
         if (this._navParams.data) {
@@ -51,11 +51,11 @@ export class AccountPopoverPage {
     }
     editAccount() {
         this.close();
-        this._navCtrl.push(MyEditAddressPage, {
+         this._events.publish('user:edit', {"data":{
             "title": "Edit Address",
             "id": this.id,
             "entity_id": this.entity_id
-        })
+        }});
     }
     deleteAccount() {
         this.close();
@@ -66,7 +66,7 @@ export class AccountPopoverPage {
         this._myaccount.deleteMyAddress(data).then((res) => {
             this._toast.toast("Deleted", 3000, "top");
             this._events.publish('user:deleted', true);
-        },(err) => { })
+        }, (err) => { })
     }
     close() {
         this.viewCtrl.dismiss();

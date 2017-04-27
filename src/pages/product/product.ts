@@ -115,6 +115,17 @@ export class ProductPage implements OnInit {
             });
         })
     }
+    doRefresh(refresher) {
+        this.productData = null;
+        this._appConfigService.resetDataInService();
+        this.products().then((res) => {
+            console.log("res", res)
+            if (res) {
+                refresher.complete();
+            }
+        })
+
+    }
     shareWithOptions(caption, img) {
         let opt = {
             message: 'share this',
@@ -188,99 +199,101 @@ export class ProductPage implements OnInit {
             };
         }
         //getProduct is use to fire product/get api to get product
-        this._getProduct.getProduct(this.data).then((res) => {
-            this.productData = res;
-            if (res) {
-                this.spin = false;
-                this.product = this.productData.body.data.name;
-                this.productid = this.productData.body.data.entity_id;
-                this.images = this.productData.body.data.media_images[0];
-                this.special_price = this.productData.body.data.special_price;
-                this.display_price = this.productData.body.data.display_price;
-                this.final_price = this.productData.body.data.final_price;
-                this.refPrice = this.productData.body.data.final_price;
-                this.refDisplayPrice = this.productData.body.data.display_price;
-                this.bundlePrice = parseFloat(this.refPrice);
-                this.dynemicDisplayPrice = this.refDisplayPrice;
-                //gather data for send in add cart servive
-                this.sku = this.productData.body.data.sku;
-                this.img = this.productData.body.data.media_images[0];
-                this.name = this.productData.body.data.name;
-                this.type = this.productData.body.data.type;
-                let additionalInformation = this.productData.body.data.additional_information;
-                this.product_custom_option = this.productData.body.data.product_custom_option;
+        return new Promise((resolve, reject) => {
+            this._getProduct.getProduct(this.data).then((res) => {
+                this.productData = res;
+                resolve(this.productData);
+                if (res) {
+                    this.spin = false;
+                    this.product = this.productData.body.data.name;
+                    this.productid = this.productData.body.data.entity_id;
+                    this.images = this.productData.body.data.media_images[0];
+                    this.special_price = this.productData.body.data.special_price;
+                    this.display_price = this.productData.body.data.display_price;
+                    this.final_price = this.productData.body.data.final_price;
+                    this.refPrice = this.productData.body.data.final_price;
+                    this.refDisplayPrice = this.productData.body.data.display_price;
+                    this.bundlePrice = parseFloat(this.refPrice);
+                    this.dynemicDisplayPrice = this.refDisplayPrice;
+                    //gather data for send in add cart servive
+                    this.sku = this.productData.body.data.sku;
+                    this.img = this.productData.body.data.media_images[0];
+                    this.name = this.productData.body.data.name;
+                    this.type = this.productData.body.data.type;
+                    let additionalInformation = this.productData.body.data.additional_information;
+                    this.product_custom_option = this.productData.body.data.product_custom_option;
 
-                this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id };
-                //get additional_information if exit
-                if (additionalInformation != undefined) {
-                    forEach(additionalInformation, (value, key) => {
-                        if (value != false) {
-                            this.additionalInformationData.push({
-                                "key": key,
-                                "value": value
-                            });
-                        }
-                    })
+                    this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id };
+                    //get additional_information if exit
+                    if (additionalInformation != undefined) {
+                        forEach(additionalInformation, (value, key) => {
+                            if (value != false) {
+                                this.additionalInformationData.push({
+                                    "key": key,
+                                    "value": value
+                                });
+                            }
+                        })
 
-                }
-                if (this.productData.body.associated_products) {
-                    this.keys = keys(this.productData.body.associated_products.attributes);
-                    if (this.keys.length == 0) {
-                        this.disable = false;
                     }
-                }
-                //add a vertual key
-                console.log(this.editCartData)
-                if (this.editCartData) {
-                    if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
-                        this.disable = false;
-                        this.add_cart = merge(this.add_cart, this.addToCartData);
-                    }
-                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                        forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
-                            forEach(this.editCartData.super_attribute, (opt, opt_key) => {
-                                if (opt_key == attributesDataKey) {
-                                    forEach(attributesData.options, (optionData) => {
-                                        if (optionData.id == opt) {
-                                            attributesData.vertualKey = optionData;
-                                            optionData.shown = true;
-                                            this.onChangeConfigurableAttribute(optionData, attributesData.id);
-                                            this.disable = false;
-                                        }
-                                    })
-                                }
-                            })
-                        });
-                    }
-                } else {
                     if (this.productData.body.associated_products) {
-                        if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                            forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                                attributesData.vertualKey = false;
-                            });
+                        this.keys = keys(this.productData.body.associated_products.attributes);
+                        if (this.keys.length == 0) {
+                            this.disable = false;
                         }
                     }
+                    //add a vertual key
+                    console.log(this.editCartData)
+                    if (this.editCartData) {
+                        if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
+                            this.disable = false;
+                            this.add_cart = merge(this.add_cart, this.addToCartData);
+                        }
+                        if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                            forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
+                                forEach(this.editCartData.super_attribute, (opt, opt_key) => {
+                                    if (opt_key == attributesDataKey) {
+                                        forEach(attributesData.options, (optionData) => {
+                                            if (optionData.id == opt) {
+                                                attributesData.vertualKey = optionData;
+                                                optionData.shown = true;
+                                                this.onChangeConfigurableAttribute(optionData, attributesData.id);
+                                                this.disable = false;
+                                            }
+                                        })
+                                    }
+                                })
+                            });
+                        }
+                    } else {
+                        if (this.productData.body.associated_products) {
+                            if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                                forEach(this.productData.body.associated_products.attributes, (attributesData) => {
+                                    attributesData.vertualKey = false;
+                                });
+                            }
+                        }
+                    }
+
+                    // here we are using tierPrice servive to get offer of tire price .
+                    this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
+                    if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
+                        this.disable = false;
+                    }
+                    if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
+                        this.customFormValidate = true;
+                        this.customDisable = true;
+                        this.virtual = false;
+                        this.disable = true;
+                    }
+                    this.ifCustomOption(null, null);
                 }
 
-                // here we are using tierPrice servive to get offer of tire price .
-                this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
-                if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
-                    this.disable = false;
-                }
-                if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
-                    this.customFormValidate = true;
-                    this.customDisable = true;
-                    this.virtual = false;
-                    this.disable = true;
-                }
-                this.ifCustomOption(null, null);
-            }
-
-        }, (err) => {
-            this.error = true;
-        }).catch((err) => {
+            }, (err) => {
+                this.error = true;
+            }).catch((err) => {
+            });
         });
-
     }
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
         if (!configurableSelectedObject) {

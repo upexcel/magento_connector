@@ -62,6 +62,16 @@ export class MySavedAddressPage implements OnInit {
             if (deleted) {
                 this.getInitAdd(deleted);
             }
+            this._events.unsubscribe('user:deleted');
+        });
+        this._events.subscribe('user:edit', (edit) => {
+            if (edit) {
+                this._navCtrl.push(MyEditAddressPage, edit.data).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index);
+                });
+                this._events.unsubscribe('user:edit');
+            }
         });
     }
     ngOnInit() {
@@ -187,7 +197,7 @@ export class MySavedAddressPage implements OnInit {
         });
     }
     AccountPopoverPage(myEvent: any, id, entity_id, addressData) {
-        let data = { id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing:addressData.default_billing}
+        let data = { id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing: addressData.default_billing }
         let popover = this._popoverCtrl.create(AccountPopoverPage, data);
         popover.present({
             ev: myEvent,

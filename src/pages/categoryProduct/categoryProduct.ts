@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, MenuController, PopoverController, NavParams, LoadingController, Events} from 'ionic-angular';
-import {PopoverPage} from './../../components/popover/popover';
-import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {LoginPage} from '../login/login';
-import {Storage} from '@ionic/storage';
+import { Component, OnInit } from '@angular/core';
+import { NavController, MenuController, PopoverController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { PopoverPage } from './../../components/popover/popover';
+import { CategoryProduct } from './../../model/categoryProduct/categoryProduct';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { LoginPage } from '../login/login';
+import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'categoryProduct.html'
 })
@@ -19,11 +19,12 @@ export class CategoryProductPage implements OnInit {
     error: boolean = false;
     c_Id: string;
     sortByData: any;
-    filterData: Array<any>=[];
+    filterData: Array<any> = [];
     previouseSortSection: string;
     previouseSortOrder: string;
     infinite: any;
     enableInfinite: boolean = true;
+    doRefreshCheck = true;
     constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
@@ -68,17 +69,20 @@ export class CategoryProductPage implements OnInit {
         this._events.unsubscribe('filter:data');
     }
     show_products(page: any, limit: any, product_id, sortByData?, filterData?) {
-        let body;
-        if (!sortByData) {
-            body = {"id": product_id, "page": page, "limit": limit, "sort_by": "position", "sort_order": "asc", "filter": filterData};
-        } else {
-            body = {"id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "sort_order": sortByData.sort_order, "filter": filterData};
-        }
-        this._category.getCategoryProduct(body).then((res) => {
-            this.categoryProduct = res;
-        }).catch((err) => {
-            this.error = true;
-        });
+        return new Promise((resolve, reject) => {
+            let body;
+            if (!sortByData) {
+                body = { "id": product_id, "page": page, "limit": limit, "sort_by": "position", "sort_order": "asc", "filter": filterData };
+            } else {
+                body = { "id": sortByData.product_id, "page": page, "limit": limit, "sort_by": sortByData.sortBy, "sort_order": sortByData.sort_order, "filter": filterData };
+            }
+            this._category.getCategoryProduct(body, this.doRefreshCheck).then((res) => {
+                this.categoryProduct = res;
+                resolve(this.categoryProduct);
+            }).catch((err) => {
+                this.error = true;
+            });
+        })
     }
     doInfinite(infiniteScroll, check?) {
         this.infinite = infiniteScroll;
@@ -91,9 +95,9 @@ export class CategoryProductPage implements OnInit {
             ++this.page;
             let body;
             if (!this.sortByData) {
-                body = {"id": this.product_id, "page": this.page, "limit": this.limit, "sort_by": "position", "sort_order": "asc", "filter": this.filterData};
+                body = { "id": this.product_id, "page": this.page, "limit": this.limit, "sort_by": "position", "sort_order": "asc", "filter": this.filterData };
             } else {
-                body = {"id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "sort_order": this.sortByData.sort_order, "filter": this.filterData};
+                body = { "id": this.sortByData.product_id, "page": this.page, "limit": this.limit, "sort_by": this.sortByData.sortBy, "sort_order": this.sortByData.sort_order, "filter": this.filterData };
             }
             this._category.getCategoryProduct(body).then((res) => {
                 this.categoryProduct.body = this.categoryProduct.body.concat(res.body);
@@ -129,10 +133,17 @@ export class CategoryProductPage implements OnInit {
     }
     doRefresh(refresher) {
         this.page = 1;
-        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
-        setTimeout(() => {
-            refresher.complete();
-        }, 2000);
+        this.enableInfinite = false;
+        this.categoryProduct = null;
+        this.doRefreshCheck = false;
+        this._appConfigService.resetDataInService();
+        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData).then((res) => {
+            console.log("res", res)
+            if (res) {
+                refresher.complete();
+            }
+        })
+
     }
     gotoLogin() {
         this._navCtrl.push(LoginPage);

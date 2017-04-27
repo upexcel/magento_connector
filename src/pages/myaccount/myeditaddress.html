@@ -1,4 +1,13 @@
-<header class="myaccount" [title]='title' [wishList]=false></header>
+<ion-header class="primaryBackground">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (click)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-round-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        {{title}}
+    </ion-title>
+</ion-header>
 <ion-content class="myaccount">
     <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
     <form [formGroup]="updateform" *ngIf="spin==false">
@@ -46,12 +55,12 @@
                 </ion-select>
             </ion-item>
             <ion-item class="no-padding" no-lines>
-                <ion-label class="font13">Make it your default billing Address</ion-label>
-                <ion-checkbox color="dark" formControlName="default_billing" [checked]="firstTime" [disabled]="firstTime"></ion-checkbox>
+                <ion-label class="font13">Make it your default billing Address  {{checkBilling}}</ion-label>
+                <ion-checkbox color="dark" formControlName="default_billing" [checked]="firstTime " [disabled]="firstTime || checkBilling"></ion-checkbox>
             </ion-item>
             <ion-item class="no-padding" no-lines>
-                <ion-label class="font13">Make it your default shipping Address</ion-label>
-                <ion-checkbox color="dark" formControlName="default_shipping" [checked]="firstTime" [disabled]="firstTime"></ion-checkbox>
+                <ion-label class="font13">Make it your default shipping Address  {{checkShipping}}</ion-label>
+                <ion-checkbox color="dark" formControlName="default_shipping" [checked]="firstTime " [disabled]="firstTime || checkShipping"></ion-checkbox>
             </ion-item>
         </ion-list>
         <div class="center">

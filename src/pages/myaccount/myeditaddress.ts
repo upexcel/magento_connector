@@ -59,6 +59,8 @@ export class MyEditAddressPage implements OnInit {
     default_shipping: any = 0;
     reverseCartData: Array<any>;
     firstTime = 0;
+    checkBilling = 0;
+    checkShipping = 0;
     constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this.title = this._navParams.get("title");
@@ -75,7 +77,12 @@ export class MyEditAddressPage implements OnInit {
         })
 
     }
-
+    root() {
+        this._navCtrl.push(MySavedAddressPage).then(() => {
+            const index = this.viewCtrl.index;
+            this._navCtrl.remove(index);
+        });
+    }
     getuser_details(id, entity_id, firstname?, lastname?) {
         this.spin = true;
         if (entity_id != null) {
@@ -86,6 +93,8 @@ export class MyEditAddressPage implements OnInit {
                 if (this.myaccount.body.length != 0 && entity_id != null) {
                     let d_billing;
                     let d_shipping;
+                    this.checkBilling = this.reverseCartData[id].default_billing;
+                    this.checkShipping = this.reverseCartData[id].default_shipping;
                     //                    if(this.reverseCartData[id].default_shipping)
                     this.updateform = this._fb.group({
                         firstname: [this.reverseCartData[id].firstname, Validators.required],
