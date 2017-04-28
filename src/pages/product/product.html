@@ -1,6 +1,6 @@
 <header [pagename]="'product'" [title]='product'></header>
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
             pullingText="Pull to refresh"

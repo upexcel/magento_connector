@@ -12,7 +12,7 @@ import { PlacedOrder } from './../placedOrder/placedOrder';
 import { Events } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 //declare let RazorpayCheckout: any;
-declare let StripeCheckout:any;
+declare let StripeCheckout: any;
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -32,8 +32,8 @@ export class Checkout implements OnInit {
     tax: any;
     taxSpin: boolean = false;
     totalPrice: any = 0;
-    grandTotal:any;
-    discount:any;
+    grandTotal: any;
+    discount: any;
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
@@ -49,7 +49,8 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
-    openCheckout() {
+    openCheckout(orderData, successData) {
+        let data = {};
         // .razorpay.cordova implimented
         //        var options = {
         //            description: 'Credits towards consultation',
@@ -87,31 +88,55 @@ export class Checkout implements OnInit {
         //            }
         //        })
 
-        if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
-            this.orderPlace();
-        } else {
-            this.spin = true;
-            var handler = StripeCheckout.configure({
-                key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
-                locale: 'auto',
-                token: (token: any) => {
-                    this.spin = false;
-                    // You can access the token ID with `token.id`.
-                    // Get the token ID to your server-side code for use.
-                }
-            });
 
-            handler.open({
-                name: 'Products',
-                amount: this.grandTotal,
-                image: "",
-                currency: this.currency_sign,
-                closed: () => {
+        data['increment_id'] = orderData.increment_id;
+        data['customer_id'] = orderData.customer_id;
+        var submittedForm = false;
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
+            locale: 'auto',
+            token: (token: any) => {
+                data['success'] = "true";
+                data['stripe'] = {};
+                data['stripe']['id'] = token['card'].id;
+                data['stripe']['object'] = token['card'].object;
+                data['stripe'] = token;
+                submittedForm = true;
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+                this._checkoutService.updateStripePayment(data).then((res) => {
+                    if (res['body'].success) {
+                        this._navCtrl.push(PlacedOrder, successData).then(() => {
+                            const index = this.viewCtrl.index;
+                            this._navCtrl.remove(index);
+                        });
+                    } else {
+                        this.spin = false;
+                        this._navCtrl.popToRoot();
+                    }
+
+                }, (err) => {
                     this.spin = false;
-                    this._toast.toast('Payment cancel by user', 3000);
+                    console.log(err);
+                })
+            }
+        });
+        handler.open({
+            name: 'Products',
+            amount: (parseFloat(this.grandTotal) * 100),
+            image: "",
+            currency: "USD",
+            closed: () => {
+                if (submittedForm == false) {
+                    data['success'] = "false";
+                    this._checkoutService.updateStripePayment(data).then((res) => {
+                        this._toast.toast('Payment cancel by user', 3000);
+                        this._navCtrl.popToRoot();
+                    })
                 }
-            });
-        }
+                this.spin = false;
+            }
+        });
     }
     createPlaceOrderData() {
         let products = {};
@@ -165,6 +190,11 @@ export class Checkout implements OnInit {
                         "payment_method": key
                     });
             });
+            this.PaymentMethods.push(
+                {
+                    "method_title": "Stripe",
+                    "payment_method": "stripe"
+                });
         }, (err) => {
         });
         this.validateData();
@@ -215,11 +245,16 @@ export class Checkout implements OnInit {
             this.spin = true;
             this._checkoutService.orderPlace(this.data).then((res: any) => {
                 if (res && res['body'].success) {
-                    this.spin = false;
-                    this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
-                        const index = this.viewCtrl.index;
-                        this._navCtrl.remove(index);
-                    });
+                    if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
+                        this.spin = false;
+                        this._navCtrl.push(PlacedOrder, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] }).then(() => {
+                            const index = this.viewCtrl.index;
+                            this._navCtrl.remove(index);
+                        });
+                    } else {
+                        this.openCheckout(res['body'].success_data, { "shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id'] });
+                    }
+
                 } else {
                     this.spin = false;
                     forEach(res['body'].product_error, (value) => {
