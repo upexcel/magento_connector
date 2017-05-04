@@ -38,7 +38,7 @@ import {Policy} from '../pages/policies/policies';
 import {AboutUs} from '../pages/aboutUs/aboutUs';
 import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
-
+import { Search } from '../pages/search/search';
 
 //model
 import {AppConfig} from '../model/appConfig/appConfig';
@@ -172,7 +172,8 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         ContactUs,
         PlacedOrder,
         Downloadable,
-        ReviewDetails
+        ReviewDetails,
+        Search
     ],
     imports: [
         BrowserModule,
@@ -217,6 +218,7 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         PlacedOrder,
         Downloadable,
         MyReviews,
+        Search,
         ReviewDetails
     ],
     providers: [

@@ -25,19 +25,19 @@ export class FilterBy {
     ngOnInit() {
         this.categoryId = this._navParam.get('catedoryId');
         this.data = this._navParam.get('data');
-            this._filter.getFilterData({ "id": this.categoryId, "coll": this.data ? 1 : 0 }).then((res) => {
-                forEach(res, (value, key) => {
-                    if (value.filter_title != "price") {
-                        this.res.push(value);
-                    } else {
-                        this.price = value;
-                    }
-                })
-                if (this.price) {
-                    this.dualValue2.lower = this.price.price.Min;
-                    this.dualValue2.upper = this.price.price.Max;
+        this._filter.getFilterData({ "id": this.categoryId, "coll": this.data ? 1 : 0 }).then((res) => {
+            forEach(res, (value, key) => {
+                if (value.filter_title != "price") {
+                    this.res.push(value);
+                } else {
+                    this.price = value;
                 }
             })
+            if (this.price) {
+                this.dualValue2.lower = this.price.price.Min;
+                this.dualValue2.upper = this.price.price.Max;
+            }
+        })
         this.checkedData = [];
         if (this.data) {
             this._filterService.setFilterData(this.data);
@@ -89,6 +89,9 @@ export class FilterBy {
         this._viewCtrl.dismiss();
     }
     applyFilter() {
+        console.log("this.checkedData",this.checkedData,this.dualValue2)
+        this.checkedData.push({"price":this.dualValue2});
+        console.log(this.checkedData)
         this._events.publish('filter:data', { data: { "filterBy": this.checkedData } });
         this._viewCtrl.dismiss();
     }

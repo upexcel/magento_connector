@@ -4,11 +4,11 @@
     <form [formGroup]="contactData" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     <ion-list>
         <ion-item>
-            <ion-label class="capitalize" floating>Name <span color="danger">*</span></ion-label>
+            <ion-label class="capitalize" floating>Name <span class="danger">*</span></ion-label>
             <ion-input type="text"  id="name" [onReturn]='"email"' formControlName="name" ></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label class="capitalize" floating>Email<span color="danger">*</span></ion-label>
+            <ion-label class="capitalize" floating>Email<span class="danger">*</span></ion-label>
             <ion-input type="text"  id="email" [onReturn]='"telephone"' formControlName="email"></ion-input>
         </ion-item>         
         <ion-item>
@@ -16,7 +16,7 @@
             <ion-input type="number"  id="telephone" [onReturn]='"comment"' formControlName="telephone" ></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label class="capitalize" floating >Comment<span color="danger">*</span></ion-label>
+            <ion-label class="capitalize" floating >Comment<span class="danger">*</span></ion-label>
             <ion-textarea  id="comment"  formControlName="comment" ></ion-textarea> 
         </ion-item>
     </ion-list>

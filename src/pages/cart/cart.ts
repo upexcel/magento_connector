@@ -135,7 +135,7 @@ export class CartPage implements OnInit {
                         content: 'Please wait...'
                     });
                     loading.present();
-                    this._cartFunction.deleteItem({"product_id": data['product_id']}).then((res) => {
+                    this._cartFunction.deleteItem({"item_id": data['item_id']}).then((res) => {
                         this.res = this._cartFunction.getCart();
                         this.createData(this.res);
                         loading.dismiss();

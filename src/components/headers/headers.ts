@@ -6,9 +6,10 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { PopoverPage } from './../../components/popover/popover';
 import { CartPage } from '../../pages/cart/cart';
 import { wishList } from '../../pages/wishList/wishList';
+import { Search } from '../../pages/search/search';
 import { CartFunction } from '../../model/cart/cartHandling';
 import { EventService } from './../../providers/headerEvents/headerEvents';
-
+import { ModalController } from 'ionic-angular';
 @Component({
     selector: 'header',
     templateUrl: 'headers.html'
@@ -29,7 +30,7 @@ export class Headers implements AfterContentInit {
     viewChang: string = "Landscape";
     cartItems: number = 0;
     wishlist: number;
-    constructor(public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
     ngAfterContentInit() {
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
@@ -102,5 +103,9 @@ export class Headers implements AfterContentInit {
     gotoCart() {
 
         this._navCtrl.push(CartPage);
+    }
+    gotoSearch() {
+        let modal = this.modalCtrl.create(Search);
+        modal.present();
     }
 }
