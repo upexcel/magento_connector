@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams, ViewController, LoadingController} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
-import {CartFunction} from '../../model/cart/cartHandling';
-import {ProductPage} from './../product/product';
-import {HomePage} from './../home/home';
-import {ActionSheetController, AlertController} from 'ionic-angular';
-import {Checkout} from './../checkOut/checkout';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {LoginPage} from './../login/login';
-import {Events} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { CartFunction } from '../../model/cart/cartHandling';
+import { ProductPage } from './../product/product';
+import { HomePage } from './../home/home';
+import { ActionSheetController, AlertController } from 'ionic-angular';
+import { Checkout } from './../checkOut/checkout';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { ToastService } from './../../providers/toast-service/toastService';
+import { LoginPage } from './../login/login';
+import { Events } from 'ionic-angular';
 import forEach from 'lodash/forEach';
 @Component({
     selector: 'cart',
@@ -29,7 +29,7 @@ export class CartPage implements OnInit {
     tax: number = 0;
     grandtotalPrice: number = 0;
     deleteCouponCodeSpin: boolean = false;
-    constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) {}
+    constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
         this.res = this._cartFunction.getCart();
         this.createData(this.res)
@@ -135,7 +135,7 @@ export class CartPage implements OnInit {
                         content: 'Please wait...'
                     });
                     loading.present();
-                    this._cartFunction.deleteItem({"item_id": data['item_id']}).then((res) => {
+                    this._cartFunction.deleteItem({ "item_id": data['item_id'] }).then((res) => {
                         this.res = this._cartFunction.getCart();
                         this.createData(this.res);
                         loading.dismiss();
@@ -155,7 +155,7 @@ export class CartPage implements OnInit {
     }
     edit(data) {
         data['type'] = data['product_type'];
-        this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'], "item_id": data['item_id'], "quote_id": data['quote_id'], "editProductQuantity": data['product_qty']}).then(() => {
+        this._navCtrl.push(ProductPage, { 'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'], "item_id": data['item_id'], "quote_id": data['quote_id'], "editProductQuantity": data['product_qty'] }).then(() => {
             const index = this._viewCtrl.index;
             this._navCtrl.remove(index);
         });
@@ -179,12 +179,12 @@ export class CartPage implements OnInit {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
                 if (this.res && this.res.cart_items && this.res.cart_items.length > 0) {
-                    this._navCtrl.push(Checkout, {res: this.res});
+                    this._navCtrl.push(Checkout, { res: this.res });
                 } else {
                     this._toast.toast("No product in cart. Please add first.", 3000);
                 }
             } else {
-                this._navCtrl.push(LoginPage, {checkoutLogin: true, res: this.res});
+                this._navCtrl.push(LoginPage, { checkoutLogin: true, res: this.res });
                 this._toast.toast("Please Login First !!", 3000);
             }
         })
@@ -217,7 +217,12 @@ export class CartPage implements OnInit {
                     this._toast.toast('Coupon Applied', 3000);
                 }
             }, (err) => {
-                this._toast.toast(JSON.parse(err._body).message, 3000);
+                if (couponCode == 'delete') {
+                    this._toast.toast('Coupon Removed', 3000);
+                    this.couponCode = '';
+                } else {
+                    this._toast.toast(JSON.parse(err._body).message, 3000);
+                }
                 this.couponCodeSpin = false;
                 this.deleteCouponCodeSpin = false;
                 this.couponCode = '';
