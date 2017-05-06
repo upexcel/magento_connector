@@ -18,9 +18,9 @@
         <ion-label>{{linkSet.title}}  <span *ngIf='linkSet.price *1>0'>- Price {{currencySign}}{{linkSet.price | number}}</span></ion-label>
         <ion-checkbox class="marRight" class="dark" value="linkSet" [(ngModel)]="linkSet.download" (ngModelChange)="onChangeLink()" ></ion-checkbox>
     </ion-item>
-    <ion-item no-lines class="minHeight">
+<!--     <ion-item no-lines class="minHeight">
         <ion-label class="paddLft25 no-margin" style='padding-bottom: 10px;'>
             <a href="{{linkSet.sample_file_downaload}}" download>(sample)</a>
         </ion-label> 
-    </ion-item>
+    </ion-item> -->
 </ion-list>

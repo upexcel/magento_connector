@@ -35,6 +35,8 @@ import {
 } from './../../components/myAccountPopOver/myAccountPopOver';
 import { Address } from './../../providers/address-service/address';
 import forEach from 'lodash/forEach';
+import debounce from 'lodash/debounce';
+
 @Component({
     selector: 'saved-address',
     templateUrl: 'savedAddress.html'
@@ -56,29 +58,39 @@ export class MySavedAddressPage implements OnInit {
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
                 this.getInitAdd(savedaddress);
+                console.log("58")
             }
         });
         this._events.subscribe('user:deleted', (deleted) => {
             if (deleted) {
                 this.getInitAdd(deleted);
+                console.log("64")
             }
-            this._events.unsubscribe('user:deleted');
+           
         });
         this._events.subscribe('user:edit', (edit) => {
             if (edit) {
                 this._navCtrl.push(MyEditAddressPage, edit.data).then(() => {
                     const index = this.viewCtrl.index;
                     this._navCtrl.remove(index);
+                    this._events.unsubscribe('user:edit');
                 });
-                this._events.unsubscribe('user:edit');
+                
             }
         });
+    }
+      ngOnDestroy() {
+        this._events.unsubscribe('user:edit');
+        this._events.unsubscribe('user:deleted');
+        this._events.unsubscribe('api:savedaddress');
     }
     ngOnInit() {
         if (this.saveAdd) {
             this.getInitAdd(true);
+            console.log("81")
         } else {
             this.getInitAdd();
+            console.log("83")
         }
     }
     getInitAdd(eventData?) {
@@ -175,6 +187,7 @@ export class MySavedAddressPage implements OnInit {
                 }
             }
         })
+        console.log("updateAdd",address.country_id)
         address['zip'] = address.postcode;
         address['countryid'] = address.country_id;
         address['default_billing'] = '0';
@@ -187,6 +200,7 @@ export class MySavedAddressPage implements OnInit {
         }
         this._editaccount.updateAddress(address).then((res) => {
             this.getInitAdd(true);
+            console.log("195")
             this.disable = false;
         })
     }
@@ -205,6 +219,7 @@ export class MySavedAddressPage implements OnInit {
     }
     doRefresh(refresher) {
         this.getInitAdd(true);
+        console.log("214")
         setTimeout(() => {
             refresher.complete();
         }, 2000);

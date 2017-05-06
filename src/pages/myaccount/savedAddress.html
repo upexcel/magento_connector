@@ -56,7 +56,7 @@
                             </ion-buttons>
                         </ion-col>
                         <ion-col  col-10 class="no-padding">
-                            <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_id}}-{{address.postcode}}</p>                        
+                            <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_name}} <span *ngIf="address.region">{{address.region}}</span>-{{address.postcode}}</p>                        
                         </ion-col>
                     </ion-row>
                     <ion-row *ngIf="address.company">

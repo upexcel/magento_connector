@@ -49,8 +49,8 @@ export class ApiService {
                             //                        } else {
                             //                            this._toast.toast(error, 3000);
                             //                        }
-                            this._handleError(error, subject)
                         }
+                        this._handleError(error, subject)
                     })
 
             });

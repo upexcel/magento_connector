@@ -49,7 +49,7 @@ export class CartFunction implements OnInit {
     deleteItem(deletingItemData) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/deleteCartItems", deletingItemData).subscribe((res) => {
-                if (res && res['body'].success) {
+                if (res && res['body']['success']) {
                     this.cartData = res['body'].updated_cart;
                     let length = (this.cartData.cart_items) ? this.cartData.cart_items.length : this.cartData.length;
                     this._events.publish('cartItems:length', length);
@@ -66,7 +66,7 @@ export class CartFunction implements OnInit {
     updateCart(newCartData) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
-                if (res && res['body'].success) {
+                if (res && res['body']['success']) {
                     this.cartData = res['body'].success_data;
                     this._events.publish('cartItems:length', this.cartData ? this.cartData.cart_items.length : 0);
                 } else {
@@ -82,9 +82,9 @@ export class CartFunction implements OnInit {
     editCart(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/editCartItem", data).subscribe((res) => {
-                console.log('res',res)
-                if (res && res['body'].success) {
-                    this.cartData = res['body'].success_data;
+                console.log('res',res,res['body']['success_data'])
+                if (res && res['body']['success_data']) {
+                    this.cartData = res['body']['success_data'];
                 } else {
                     this._toast.toast("edit fail", 3000);
                 }

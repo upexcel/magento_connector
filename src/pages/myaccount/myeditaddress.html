@@ -46,13 +46,27 @@
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                 <ion-label stacked>Country<span class="danger">*</span></ion-label>
-                <ion-select  formControlName="countryid" id="Country" [onReturn]='"btn"'>
+                <ion-select  formControlName="countryid" id="Country">
                     <span *ngFor="let name of counrtyName.body.country">
                         <ion-option [value]="name"> 
-                            {{name}}
+                            {{name['country_name']}}
                         </ion-option>
                     </span>   
                 </ion-select>
+            </ion-item>
+            <ion-item class="no-padding paddRt" *ngIf="counrtyName && updateform.value.countryid.country_region">
+                <ion-label stacked>State<span class="danger">*</span></ion-label>
+                <ion-select  formControlName="region" >
+                    <span *ngFor="let name of updateform.value.countryid.country_region">
+                        <ion-option [value]="name"> 
+                            {{name['name']}}
+                        </ion-option>
+                    </span>   
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="updateform.value.countryid && !updateform.value.countryid.country_region" >
+                <ion-label floating>State <span class="danger">*</span></ion-label>
+                <ion-input formControlName="region"  autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item class="no-padding" no-lines>
                 <ion-label class="font13">Make it your default billing Address </ion-label>

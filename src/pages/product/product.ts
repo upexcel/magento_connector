@@ -289,9 +289,9 @@ export class ProductPage implements OnInit {
                     this.ifCustomOption(null, null);
                 }
 
-            }, (err) => {
+            },(err) => {
+                this._toast.toast("Please Refresh This Page !!", 3000, "bottom");
                 this.error = true;
-            }).catch((err) => {
             });
         });
     }

@@ -35,7 +35,7 @@ export class wishList {
             content: 'Please wait...'
         });
         loading.present();
-        this._cartService.addCart(data, '').then((response: any) => {
+        this._cartService.addCart(data, '',true).then((response: any) => {
             loading.dismiss();
             if (response.body['success']) {
                 this._cartFunction.setCart(response.body['success_data']);
