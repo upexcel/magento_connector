@@ -4,7 +4,6 @@ import { NavParams } from 'ionic-angular';
 import forEach from 'lodash/forEach';
 import findIndex from 'lodash/findIndex';
 import { FilterBy } from './filterBy';
-import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'filter-option',
@@ -16,9 +15,8 @@ export class FilterOption {
     option: any = [];
     checkData: any = [];
     data;
-    constructor(private _model: ModelService,public _events: Events, private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {
+    constructor(public _events: Events, private _navParam: NavParams, private _nav: NavController, private _viewCtrl: ViewController) {
         this.data = this._navParam.get('data');
-         this._model.setState("FilterOption");
         let preChecked = {};
         forEach(this.data.option, (value: any, key) => {
             this.option.push({
@@ -33,11 +31,6 @@ export class FilterOption {
         })
     }
     ngOnInit() {
-        this._events.subscribe('user:exit', (user) => {
-            this._events.unsubscribe('user:exit');
-            this._events.publish('break:Event',false)
-            this._nav.pop(); 
-            })
     }
     onChangeCheck(value, key, event) {
         var data = {};
@@ -50,11 +43,9 @@ export class FilterOption {
         }
     }
     done() {
-        this._model.unsetState("FilterOption");
         this._nav.setRoot(FilterBy, { "data": { "data": this.checkData, "title": this.data.filter_title, "return": true } });
     }
     dismiss() {
-        this._model.unsetState("FilterOption");        
         this._nav.pop();
     }
 

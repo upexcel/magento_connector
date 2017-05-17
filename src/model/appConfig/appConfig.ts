@@ -1,5 +1,5 @@
-import { Injectable, OnInit}    from '@angular/core';
-import {ApiService } from './../../providers/api-service/api-service';
+import { Injectable, OnInit } from '@angular/core';
+import { ApiService } from './../../providers/api-service/api-service';
 import { ConfigDataType } from './configDataType';
 import { Storage } from '@ionic/storage';
 import keys from 'lodash/keys';
@@ -11,7 +11,7 @@ export class AppConfig implements OnInit {
     ngOnInit() { }
 
     getAppConfig(): Promise<ConfigDataType> {
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             this.local.get('web_config').then((web_config: string) => {
                 if (keys(web_config).length > 0) {
                     resolve(web_config);

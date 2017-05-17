@@ -28,7 +28,7 @@ export class MyEditAccount {
             this._local.get('website_id').then((website_id: any) => {
                 if (userData.access_token != null) {
                     this.email = userData.email;
-                    this.getuser_details( website_id, userData.firstname, userData.lastname, userData.email);
+                    this.getuser_details(website_id, userData.firstname, userData.lastname, userData.email);
                 } else { }
             });
         });
@@ -58,10 +58,10 @@ export class MyEditAccount {
             this._toast.toast(updateAccount['body'], 3000);
             this.editAccountspin = false;
             this._appConfigService.getUserData().then((userData: any) => {
-                userData.email=updateform.email;
-                userData.firstname=updateform.firstname;
-                userData.lastname=updateform.lastname;
-            this._local.set('userData', userData);
+                userData.email = updateform.email;
+                userData.firstname = updateform.firstname;
+                userData.lastname = updateform.lastname;
+                this._local.set('userData', userData);
             })
         }, (err) => {
             this.editAccountspin = false;

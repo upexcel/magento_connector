@@ -4,13 +4,13 @@ import { HomePage } from './../home/home'
 import { Storage } from '@ionic/storage';
 import { PopoverPage } from './../../components/popover/popover';
 import { ChangePwd } from '../../model/changePassword/accountChangePwd';
-import {ChangePwdDataType} from '../../model/changePassword/changePwdDataType';
+import { ChangePwdDataType } from '../../model/changePassword/changePwdDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { User } from './userInterface';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 
 @Component({
-    selector:'change-pass',
+    selector: 'change-pass',
     templateUrl: 'changepassword.html'
 })
 export class ChangepasswordPage implements OnInit {
@@ -33,11 +33,11 @@ export class ChangepasswordPage implements OnInit {
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
         let data = { "password": model.password, "newPassword": model.newPassword, access_token: this.access_token }
-        this._changePwd.getPwd(data).then((res:any) => {
+        this._changePwd.getPwd(data).then((res: any) => {
             this.spin = false;
             this.response = res;
             this._toast.toast(res.body, 3000, "bottom");
-            if(res.body !== 'Incorrect Old Password.'){
+            if (res.body !== 'Incorrect Old Password.') {
                 this._navCtrl.setRoot(HomePage);
             }
         }).catch(err => {

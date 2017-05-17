@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalController, NavController, NavParams, AlertController} from 'ionic-angular';
-import {LoginPage} from '../login/login';
-import {TourPage} from '../takeTour/tour';
-import {Storage} from '@ionic/storage';
-import {AppConfig} from '../../model/appConfig/appConfig';
-import {config} from './../../providers/config/config';
-import {SocialService} from '../../providers/social-service/social-service';
-import {HomePage} from '../../pages/home/home';
-import {SocialAccountDataType} from '../../model/startPage/socialAccountDataType';
-import {SocialAccount} from './../../model/startPage/socialAccount';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import { Component, OnInit } from '@angular/core';
+import { ModalController, NavController, NavParams, AlertController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
+import { TourPage } from '../takeTour/tour';
+import { Storage } from '@ionic/storage';
+import { AppConfig } from '../../model/appConfig/appConfig';
+import { config } from './../../providers/config/config';
+import { SocialService } from '../../providers/social-service/social-service';
+import { HomePage } from '../../pages/home/home';
+import { SocialAccountDataType } from '../../model/startPage/socialAccountDataType';
+import { SocialAccount } from './../../model/startPage/socialAccount';
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 @Component({
     selector: 'start-page',
     templateUrl: 'startpage.html'
@@ -54,14 +54,14 @@ export class StartPage implements OnInit {
         this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
+            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
+            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
         });
     }
     showSocialLoginError(error) {

@@ -1,10 +1,10 @@
-import {Component, OnInit,NgZone} from '@angular/core';
-import {NavController, PopoverController,Events} from 'ionic-angular';
-import {PopoverPage} from './../../components/popover/popover';
-import {OrderModalPage} from '../orderid-detail/orderid-detail';
-import {TotalOrder} from '../../model/orderList/totalOrder';
-import {OrderListDataType} from './../../model/orderList/orderlistDatatype';
-import {TotalOrderDataType} from './../../model/orderList/totalOrderDataType';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { NavController, PopoverController, Events } from 'ionic-angular';
+import { PopoverPage } from './../../components/popover/popover';
+import { OrderModalPage } from '../orderid-detail/orderid-detail';
+import { TotalOrder } from '../../model/orderList/totalOrder';
+import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
+import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
 import slice from 'lodash/slice';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
@@ -19,21 +19,21 @@ export class OrderlistPage implements OnInit {
     orders_error: string;
     access_token: string;
     no_orders: boolean = false;
-    itemsValue: Array<any>=[];
+    itemsValue: Array<any> = [];
     spin: boolean = false;
     error: boolean = false;
     startArray: number = 0;
     endArray: number = 4;
     message: string = "Token expired";
-    constructor(private _ngZone: NgZone,public events:Events, private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {}
+    constructor(private _ngZone: NgZone, public events: Events, private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) { }
     ngOnInit() {
         this.total_orders();
         this.selectedOrder_details();
         this.events.subscribe('user:fcm', (orderid) => {
-        this._ngZone.run(() => {
-        this.total_orders();
-        this.selectedOrder_details();
-         });
+            this._ngZone.run(() => {
+                this.total_orders();
+                this.selectedOrder_details();
+            });
             this.events.unsubscribe('user:fcm');
         });
     }
@@ -94,7 +94,7 @@ export class OrderlistPage implements OnInit {
         });
     }
     gotoOrderDetail(order_id) {
-        this._navCtrl.push(OrderModalPage, {"order_id": order_id});
+        this._navCtrl.push(OrderModalPage, { "order_id": order_id });
     }
     goback() {
         this._navCtrl.pop();

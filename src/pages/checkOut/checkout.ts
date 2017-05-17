@@ -202,9 +202,9 @@ export class Checkout implements OnInit {
     taxDetails() {
         this.taxSpin = true;
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
-            let resposnseTax=res['body'];
-            this.tax=resposnseTax['tax'];
-            this.grandTotal=resposnseTax['quote']['grand_total'];
+            let resposnseTax = res['body'];
+            this.tax = resposnseTax['tax'];
+            this.grandTotal = resposnseTax['quote']['grand_total'];
             this.disable = false;
             this.taxSpin = false;
         }, (err) => {

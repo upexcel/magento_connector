@@ -5,7 +5,6 @@ import { Events } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { WishListService } from '../../providers/wishList/wishList-service'
-import forEach from 'lodash/forEach';
 @Component({
     selector: 'category-view',
     templateUrl: 'categoryProducts.html'
@@ -23,9 +22,9 @@ export class CategoryComponent {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
                 this._wishListService.setWishListData(feat_prod, { "productId": feat_prod.data.entity_id });
-                if(feat_prod.data.wishlist_item_id){
+                if (feat_prod.data.wishlist_item_id) {
                     feat_prod.data.wishlist_item_id = false;
-                } else{
+                } else {
                     feat_prod.data.wishlist_item_id = true;
                 }
             } else {

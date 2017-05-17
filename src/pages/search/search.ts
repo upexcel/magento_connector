@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ViewController, NavParams, AlertController} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { ViewController, NavParams, AlertController } from 'ionic-angular';
 
 @Component({
     selector: 'search-page',
@@ -13,8 +13,8 @@ export class Search implements OnInit {
 
     ngOnInit() {
 
-        }
-         dismiss() {
+    }
+    dismiss() {
         this._viewCtrl.dismiss();
-    }  
+    }
 }

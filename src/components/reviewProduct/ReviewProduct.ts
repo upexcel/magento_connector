@@ -12,7 +12,7 @@ import { Events } from 'ionic-angular';
 })
 export class ProductReview implements OnInit {
     @Input() skuData: string;
-    @Input() additionalInformationData:Array<any>;
+    @Input() additionalInformationData: Array<any>;
     productReview: ProductReviewDataType;
     productReviewSpin: boolean = true;
     getRating: GetRating;
@@ -33,7 +33,7 @@ export class ProductReview implements OnInit {
     ngOnInit() {
         this._getProduct.getReview({}).then((getReview) => {
             this.getRating = getReview;
-            forEach(this.getRating.body.attribute, (title, titleKey)=> {
+            forEach(this.getRating.body.attribute, (title, titleKey) => {
                 this.reviewTitle.push(title);
                 this.reviewKeys.push(titleKey);
             });
@@ -43,32 +43,32 @@ export class ProductReview implements OnInit {
     fetchReview() {
         this.graphRating = [];
         this.productReviewSpin = true;
-            this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
-                this.productReview = review;
-                this.listLoad = false;
-                this.productReviewSpin = false;
-                if (this.productReview.body.total_review != 0) {
-                    this.addCommingReview = this.addCommingReview + this.productReview.body.data.length;
-                    forEach(this.getRating.body.attribute, (title, titleKey)=> {
-                        forEach(this.productReview.body.total_attribute_rating, (raw, key)=> {
-                            forEach(raw, (rating, key)=> {
-                                if (titleKey == key) {
-                                    this.graphRating.push({
-                                        value: title,
-                                        key: rating
-                                    })
-                                }
-                            });
+        this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
+            this.productReview = review;
+            this.listLoad = false;
+            this.productReviewSpin = false;
+            if (this.productReview.body.total_review != 0) {
+                this.addCommingReview = this.addCommingReview + this.productReview.body.data.length;
+                forEach(this.getRating.body.attribute, (title, titleKey) => {
+                    forEach(this.productReview.body.total_attribute_rating, (raw, key) => {
+                        forEach(raw, (rating, key) => {
+                            if (titleKey == key) {
+                                this.graphRating.push({
+                                    value: title,
+                                    key: rating
+                                })
+                            }
                         });
                     });
-                    this.reviewShow = true;
-                }
-                else {
+                });
+                this.reviewShow = true;
+            }
+            else {
 
-                }
-            }).catch((err) => {
-                this.productReviewSpin = false;
-            });
+            }
+        }).catch((err) => {
+            this.productReviewSpin = false;
+        });
     }
     moreReview() {
         if (this.listLoad != true) {

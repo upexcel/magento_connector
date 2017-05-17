@@ -26,7 +26,7 @@ export class CategoryProductPage implements OnInit {
     infinite: any;
     enableInfinite: boolean = true;
     doRefreshCheck = true;
-    constructor( private _toast: ToastService,private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
+    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id');
         this.title = _navParams.get('name');
         this.c_Id = _navParams.get('name');
@@ -80,10 +80,10 @@ export class CategoryProductPage implements OnInit {
             this._category.getCategoryProduct(body, this.doRefreshCheck).then((res) => {
                 this.categoryProduct = res;
                 resolve(this.categoryProduct);
-            },(err) => {
+            }, (err) => {
                 this.error = true
                 this._toast.toast("Please Try Again", 3000, "top");
-                          });
+            });
         })
     }
     doInfinite(infiniteScroll, check?) {
@@ -107,10 +107,10 @@ export class CategoryProductPage implements OnInit {
                 if (res.body.length < 10) {
                     infiniteScroll.complete();
                 }
-            },(err) => {
+            }, (err) => {
                 infiniteScroll.complete();
                 infiniteScroll.enable(false);
-                this._toast.toast("Please Try Again", 3000, "top");         
+                this._toast.toast("Please Try Again", 3000, "top");
 
             });
         } else {

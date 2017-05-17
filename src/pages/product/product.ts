@@ -119,7 +119,6 @@ export class ProductPage implements OnInit {
         this.productData = null;
         this._appConfigService.resetDataInService();
         this.products().then((res) => {
-            console.log("res", res)
             if (res) {
                 refresher.complete();
             }
@@ -243,7 +242,6 @@ export class ProductPage implements OnInit {
                         }
                     }
                     //add a vertual key
-                    console.log(this.editCartData)
                     if (this.editCartData) {
                         if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
                             this.disable = false;

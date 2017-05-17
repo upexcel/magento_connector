@@ -12,7 +12,7 @@ export class Address {
     }
     setAddress(data) {
         if (data) {
-            this.address=(data);
+            this.address = (data);
         }
     }
     getAddress() {

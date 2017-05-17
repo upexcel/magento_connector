@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, NavController,Events } from 'ionic-angular';
+import { Platform, NavController, Events, IonicApp, App } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { StartPage } from '../pages/startpage/startpage';
 import { HomePage } from '../pages/home/home';
@@ -13,6 +13,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { fcmService } from '../providers/fcm-service/fcm-service';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
+import { ToastService } from '../providers/toast-service/toastService';
+declare let navigator: any;
 
 @Component({
     template: `<ion-nav #myNav [root]="_rootPage"></ion-nav>
@@ -22,12 +24,14 @@ import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
-    constructor(public events: Events,private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    backPressed: boolean = false;
+    constructor(private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
             this._fcmService.initFCM();
             this.fcm();
             this.backgroundMode.enable();
+            this.checkBackButton();
             this.localNotifications.on("click", (data) => {
                 setTimeout(() => {
                     this.nav.push(OrderModalPage, { order_id: data['data'] });
@@ -36,6 +40,35 @@ export class MyApp implements OnInit {
         });
         this.addConnectivityListeners();
     }
+
+    checkBackButton() {
+        this._platform.registerBackButtonAction(() => {
+            let ready = true;
+            if (this.nav.canGoBack()) {
+                let activePortal = this.ionicApp._loadingPortal.getActive() ||
+                    this.ionicApp._modalPortal.getActive() ||
+                    this.ionicApp._toastPortal.getActive() ||
+                    this.ionicApp._overlayPortal.getActive();
+                if (activePortal) {
+                    ready = false;
+                    activePortal.dismiss();
+                    activePortal.onDidDismiss(() => { ready = true; });
+                } else {
+                    this.nav.pop();
+                }
+            } else {
+                if (!this.backPressed) {
+                    this.backPressed = true;
+                    this._toast.toast('Press Again To Exit App', 3000);
+                    setTimeout(() => this.backPressed = false, 2000);
+                    return;
+                } else {
+                    navigator['app'].exitApp();
+                }
+            }
+        }, 100);
+    }
+
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();
@@ -46,10 +79,6 @@ export class MyApp implements OnInit {
             StatusBar.styleDefault();
             this.appCheckConfig();
         });
-        //                if(this.modal && this.modal.index === 0) {
-        //            /* closes modal */
-        //            this.modal.dismiss();
-        //        }
     }
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
@@ -110,7 +139,7 @@ export class MyApp implements OnInit {
                     data: res.increment_id
                 });
             }
-            this.events.publish('user:fcm',res['increment_id']);
+            this.events.publish('user:fcm', res['increment_id']);
         });
     }
 
