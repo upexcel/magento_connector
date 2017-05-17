@@ -11,7 +11,7 @@ export class ButtonFull {
     @Input() idFull: string = "";
     @Input() classFull: string = "";
     @Output() onBtnClick = new EventEmitter();
-    constructor() {  }
+    constructor() { }
     onClick() {
         this.onBtnClick.emit();
     }

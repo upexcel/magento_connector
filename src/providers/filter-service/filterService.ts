@@ -8,7 +8,7 @@ export class FilterService {
     count: number = 0;
     index: number;
     constructor() { }
-    resetFilterData(){
+    resetFilterData() {
         this.filterData = [];
         this.count = 0;
     }

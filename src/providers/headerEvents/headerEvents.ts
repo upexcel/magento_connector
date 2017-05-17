@@ -1,21 +1,21 @@
-import { Injectable }    from '@angular/core';
+import { Injectable } from '@angular/core';
 @Injectable()
 export class EventService {
-    cartCounter:number=0;
-    wishList:number=0;
+    cartCounter: number = 0;
+    wishList: number = 0;
     constructor() {
     }
-    getCartCounter(){
+    getCartCounter() {
         return this.cartCounter;
     }
-    setCartCounter(data){
-        this.cartCounter=data;
+    setCartCounter(data) {
+        this.cartCounter = data;
     }
-    
-    getWishListConuter(){
+
+    getWishListConuter() {
         return this.wishList;
     }
-    setWishList(data){
-        this.wishList=data;
+    setWishList(data) {
+        this.wishList = data;
     }
 }

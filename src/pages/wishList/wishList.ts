@@ -30,12 +30,12 @@ export class wishList {
         this._nav.push(ProductPage, { 'id': data.data.sku, "editCartData": data, "wishlist": true });
     }
     addToCart(data) {
-        data['productid'] = data['productId'] || data['productid']|| data['product'];
+        data['productid'] = data['productId'] || data['productid'] || data['product'];
         let loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });
         loading.present();
-        this._cartService.addCart(data, '',true).then((response: any) => {
+        this._cartService.addCart(data, '', true).then((response: any) => {
             loading.dismiss();
             if (response.body['success']) {
                 this._cartFunction.setCart(response.body['success_data']);

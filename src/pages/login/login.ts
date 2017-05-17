@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { RegisterPage } from '../register/register';
 import { HomePage } from './../home/home';
 import { ForgotPage } from './../forgot/forgot';
-import {LoginDataType} from '../../model/login/loginDataType';
+import { LoginDataType } from '../../model/login/loginDataType';
 import { Storage } from '@ionic/storage';
 import { Login } from '../../model/login/login';
 import { ToastService } from './../../providers/toast-service/toastService';

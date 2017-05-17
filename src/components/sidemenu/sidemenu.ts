@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {CategoryListDataType} from '../../model/home/categorylistDataType';
+import { CategoryListDataType } from '../../model/home/categorylistDataType';
 import { CategoryList } from '../../model/home/categoryList';
 import { MenuController, NavController } from 'ionic-angular';
 import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct';

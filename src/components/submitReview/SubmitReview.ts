@@ -9,7 +9,6 @@ import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
-import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'submit-review',
@@ -29,7 +28,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(private _model: ModelService,private _toast: ToastService, private _appConfigService: AppDataConfigService, public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -37,7 +36,6 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
-        this._model.setState("SubmitReview");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
                 this.reviewDataNickname = userData.firstname;
@@ -46,14 +44,8 @@ export class SubmitReview implements OnInit {
                 this.reviewDataNickname = "";
             }
         });
-        this._events.subscribe('user:exit', (user) => {
-            this._events.unsubscribe('user:exit');
-            this._viewCtrl.dismiss();
-        })
     }
     close() {
-        this._model.unsetState("SubmitReview");
-        this._model.unsetState("SubmitReview");
         this._viewCtrl.dismiss();
     }
     onSelectRatting(rating, title) {
@@ -69,8 +61,8 @@ export class SubmitReview implements OnInit {
         for (let i = 0; i < this.keys.length; i++) {
             reviweDataJson[this.keys[i]] = this.selectedRating[i];
         };
-        forEach(reviweDataJson, (ratingValue: number, ratingKey)=> {
-            forEach(this.option, (optionValue, optionKey)=> {
+        forEach(reviweDataJson, (ratingValue: number, ratingKey) => {
+            forEach(this.option, (optionValue, optionKey) => {
                 if (ratingKey == optionKey) {
                     forEach(optionValue, (Value, key: number) => {
                         if (key == ratingValue - 1) {
@@ -83,36 +75,35 @@ export class SubmitReview implements OnInit {
                 }
             })
         })
-        forEach(finalSelectRating, (value, key)=> {
+        forEach(finalSelectRating, (value, key) => {
             ratingValueChangeAsApi.push(value.value);
         })
         for (let i = 0; i < this.keys.length; i++) {
             selectedRating[this.keys[i]] = (ratingValueChangeAsApi[i] != undefined) ? ratingValueChangeAsApi[i] : this.option[this.keys[i]][0];
         };
-            let data = {
-                sku: this.skuValue,
-                "title": this.reviewDataTitle,
-                "details": this.reviewDataDetails,
-                "nickname": this.reviewDataNickname,
-                "rating_options": selectedRating
-            };
-            this._getProduct.getSubmitReview(data).then((res) => {
-                this.submitSuccessful = false;
-                this.submitReviewData = res;
-                if (this.submitReviewData) {
-                    this._model.unsetState("SubmitReview");
-                    this._viewCtrl.dismiss();
-                    if (this.submitReviewData.body.review_status == "1") {
-                        this._toast.toast("Thanks for your review!", 3000);
-                    }
-                    else {
-                        this._toast.toast("Thanks for your review! Your Rating is Pending approval by admin.", 3000);
-                    }
+        let data = {
+            sku: this.skuValue,
+            "title": this.reviewDataTitle,
+            "details": this.reviewDataDetails,
+            "nickname": this.reviewDataNickname,
+            "rating_options": selectedRating
+        };
+        this._getProduct.getSubmitReview(data).then((res) => {
+            this.submitSuccessful = false;
+            this.submitReviewData = res;
+            if (this.submitReviewData) {
+                this._viewCtrl.dismiss();
+                if (this.submitReviewData.body.review_status == "1") {
+                    this._toast.toast("Thanks for your review!", 3000);
                 }
-                this._events.publish('api:review', true);
-            }).catch((res) => {
-                this.submitSuccessful = false;
-            })
+                else {
+                    this._toast.toast("Thanks for your review! Your Rating is Pending approval by admin.", 3000);
+                }
+            }
+            this._events.publish('api:review', true);
+        }).catch((res) => {
+            this.submitSuccessful = false;
+        })
     }
 
 

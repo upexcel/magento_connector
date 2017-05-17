@@ -12,7 +12,7 @@ import {
     PopoverPage
 } from './../../components/popover/popover';
 import {
-    FormBuilder,FormControl, Validators
+    FormBuilder, FormControl, Validators
 } from '@angular/forms';
 import {
     MyAccount
@@ -62,7 +62,7 @@ export class MyEditAddressPage implements OnInit {
     firstTime = 0;
     checkBilling = 0;
     checkShipping = 0;
-    countryObj:any;
+    countryObj: any;
     constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this._events.unsubscribe('user:edit');
@@ -75,11 +75,11 @@ export class MyEditAddressPage implements OnInit {
         this.spin = true;
         this._country.getCountryName().then((name) => {
             this.counrtyName = name;
-                this._appConfigService.getUserData().then((userData: any) => {
-        if (userData.access_token != null) {
-                this.getuser_details(this.id, this.entity_id, userData.firstname, userData.lastname);
-        } else { }
-        });
+            this._appConfigService.getUserData().then((userData: any) => {
+                if (userData.access_token != null) {
+                    this.getuser_details(this.id, this.entity_id, userData.firstname, userData.lastname);
+                } else { }
+            });
         })
 
     }
@@ -89,25 +89,25 @@ export class MyEditAddressPage implements OnInit {
             this._navCtrl.remove(index);
         });
     }
-    onChangeCountry(countryid,updateform?){
-     this.countryObj=countryid;
-     if(updateform){
-                         this.updateform = this._fb.group({
-                        firstname: [updateform.firstname, Validators.required],
-                        lastname: [updateform.lastname, Validators.required],
-                        city: [updateform.city, Validators.required],
-                        company: [updateform.company],
-                        telephone: [updateform.telephone, Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(10)])],
-                        fax: [updateform.fax],
-                        street: [updateform.street, Validators.required],
-                        zip: [updateform.zip, Validators.required],
-                        region:['', Validators.required],
-                        countryid: [updateform.countryid, Validators.required],
-                        default_billing: [updateform.default_billing],
-                        default_shipping: [updateform.default_shipping],
-                        entity_id: [updateform.entity_id]
-                    })
-                         }
+    onChangeCountry(countryid, updateform?) {
+        this.countryObj = countryid;
+        if (updateform) {
+            this.updateform = this._fb.group({
+                firstname: [updateform.firstname, Validators.required],
+                lastname: [updateform.lastname, Validators.required],
+                city: [updateform.city, Validators.required],
+                company: [updateform.company],
+                telephone: [updateform.telephone, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
+                fax: [updateform.fax],
+                street: [updateform.street, Validators.required],
+                zip: [updateform.zip, Validators.required],
+                region: ['', Validators.required],
+                countryid: [updateform.countryid, Validators.required],
+                default_billing: [updateform.default_billing],
+                default_shipping: [updateform.default_shipping],
+                entity_id: [updateform.entity_id]
+            })
+        }
     }
     getuser_details(id, entity_id, firstname?, lastname?) {
         this.spin = true;
@@ -122,15 +122,15 @@ export class MyEditAddressPage implements OnInit {
                     let d_shipping;
                     this.checkBilling = this.reverseCartData[id].default_billing;
                     this.checkShipping = this.reverseCartData[id].default_shipping;
-                    let data={};
-                    let region={};
-                    data['country_code']=this.reverseCartData[id].country_id;
-                    var cId=find(this.counrtyName['body']['country'],data);
-                    region['name']=this.reverseCartData[id].region;
-                    if(cId['country_region'].length >0){
-                        rName=find(cId['country_region'],region);
-                    }else{
-                        rName=this.reverseCartData[id].region;
+                    let data = {};
+                    let region = {};
+                    data['country_code'] = this.reverseCartData[id].country_id;
+                    var cId = find(this.counrtyName['body']['country'], data);
+                    region['name'] = this.reverseCartData[id].region;
+                    if (cId['country_region'].length > 0) {
+                        rName = find(cId['country_region'], region);
+                    } else {
+                        rName = this.reverseCartData[id].region;
                     }
 
                     this.onChangeCountry(cId);
@@ -139,11 +139,11 @@ export class MyEditAddressPage implements OnInit {
                         lastname: [this.reverseCartData[id].lastname, Validators.required],
                         city: [this.reverseCartData[id].city, Validators.required],
                         company: [this.reverseCartData[id].company],
-                        telephone: [this.reverseCartData[id].telephone,  Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(10)])],
+                        telephone: [this.reverseCartData[id].telephone, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
                         fax: [this.reverseCartData[id].fax],
                         street: [this.reverseCartData[id].street, Validators.required],
                         zip: [this.reverseCartData[id].postcode, Validators.required],
-                        region:[rName, Validators.required],
+                        region: [rName, Validators.required],
                         countryid: [cId, Validators.required],
                         default_billing: [this.reverseCartData[id].default_billing],
                         default_shipping: [this.reverseCartData[id].default_shipping],
@@ -160,7 +160,7 @@ export class MyEditAddressPage implements OnInit {
                     lastname: [lastname, Validators.required],
                     city: ['', Validators.required],
                     company: [''],
-                    telephone: ['',  Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(10)])],
+                    telephone: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
                     fax: [''],
                     street: ['', Validators.required],
                     zip: ['', Validators.required],
@@ -176,7 +176,7 @@ export class MyEditAddressPage implements OnInit {
                     lastname: [lastname, Validators.required],
                     city: ['', Validators.required],
                     company: [''],
-                    telephone: ['',  Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(10)])],
+                    telephone: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
                     fax: [''],
                     street: ['', Validators.required],
                     zip: ['', Validators.required],
@@ -190,12 +190,12 @@ export class MyEditAddressPage implements OnInit {
         }
     }
     update(value: any) {
-        let data=value;
-        if(data['countryid']['country_region'].length > 0){
-        data['region_id']=data['region']['region_id']*1;
-        data['region']=data['region']['region_id']*1;
+        let data = value;
+        if (data['countryid']['country_region'].length > 0) {
+            data['region_id'] = data['region']['region_id'] * 1;
+            data['region'] = data['region']['region_id'] * 1;
         }
-        data['countryid']=data['countryid']['country_code'];
+        data['countryid'] = data['countryid']['country_code'];
         if (data.default_billing) {
             data.default_billing = '1';
         }

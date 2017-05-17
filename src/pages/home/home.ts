@@ -1,39 +1,33 @@
-import {Component, OnInit,ElementRef,Renderer} from '@angular/core';
-import {Platform,ModalController,AlertController} from 'ionic-angular';
-import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
-import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
-import {HomeProducts} from '../../model/home/homeProducts';
+import { Component, OnInit } from '@angular/core';
+import { ModalController, } from 'ionic-angular';
+import { Events, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
+import { HomeProducts } from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import {ToastService} from './../../providers/toast-service/toastService';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {MyAccount} from './../../model/myaccount/myaccount';
-import {Address} from './../../providers/address-service/address';
-import {WishListService} from './../../providers/wishList/wishList-service';
-declare let navigator: any;
-import {Storage} from '@ionic/storage';
-import {CartFunction} from './../../model/cart/cartHandling';
-import {ApiService} from './../../providers/api-service/api-service';
-import { ModelService } from './../../providers/moniterModel/moniterModel';
-declare let $:any;
+import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import { MyAccount } from './../../model/myaccount/myaccount';
+import { Address } from './../../providers/address-service/address';
+import { WishListService } from './../../providers/wishList/wishList-service';
+import { Storage } from '@ionic/storage';
+import { CartFunction } from './../../model/cart/cartHandling';
+import { ApiService } from './../../providers/api-service/api-service';
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
     homeProduct: HomeProductsDataType;
-    private el: ElementRef;
     spin: boolean = false;
     feature_products: any;
     start: number = 0;
     end: number = 4;
-    backPressed: boolean = false;
     title: string = '';
     pagename: string = 'home';
     userToken: string;
     menu: boolean = true;
     c_Id;
     count = 0;
-    constructor(public alertCtrl: AlertController,private _model: ModelService,public _modalCtrl: ModalController,private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
-    
+    constructor(public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
             this.pagename = 'home';
@@ -51,20 +45,17 @@ export class HomePage implements OnInit {
                     this._wishList.getWishListData({});
                     this._myaccount.getMyAccount({}).then((res) => {
                         this._address.setAddress(res);
-                    }, (err) => {})
+                    }, (err) => { })
                 }
             })
-        }, 100)
-
-        //        this.homeProducts();
-        this.checkBackButton();
+        }, 100);
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
     }
     homeProducts(recoll?) {
         this.spin = true;
-        let body = {"type": "full"}
+        let body = { "type": "full" }
         this._homeProductsConfig.getHomeProducts(body, recoll).then((res) => {
             if (res) {
                 this.homeProduct = res;
@@ -77,7 +68,7 @@ export class HomePage implements OnInit {
         this._cartFunction.setCartData();
         this.count++;
         this.spin = true;
-        let body = {"type": "full"}
+        let body = { "type": "full" }
         this._appDataConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token && this.count == 1) {
                 this.homeProducts(true);
@@ -93,43 +84,6 @@ export class HomePage implements OnInit {
         })
     }
 
-    checkBackButton() {
-
-        this._platform.registerBackButtonAction(() => {
-            // console.log("_el", this.renderer.setElementStyle(this._el.nativeElement.querySelector('ion-alert'), 'display', 'none'));
-            this._events.publish('user:exit', true);
-            if (this._viewController.isLast() && this._viewController.isFirst()) {
-                if (!this.backPressed) {
-                    this.backPressed = true;
-                    this._toast.toast('Press Again To Exit App', 3000);
-                    setTimeout(() => this.backPressed = false, 2000);
-                    return;
-                } else {
-                    navigator['app'].exitApp();
-                }
-            } else {
-                   if(this._model.isActive()) {
-                   /* closes modal */
-                   this._model.modelData();
-                   console.log("_modalCtrl")
-               }else{
-// window.history.back();
-                //    if(this.alertCtrl){
-                       console.log("enter if")
-                //         // this.alertCtrl.dismiss();
-                //          // $('ion-alert').css({'display':'none'});
-                // this.alertCtrl =null; 
-                      
-                //    }else{
-                //          console.log("pop")
-                        this._navCtrl.pop();
-                //    }
-        
-               }
-               console.log("this._model.isActive()",this._model.isActive()); 
-            }
-        }, 100);
-    }
     doInfinite(infiniteScroll) {
         if (this.homeProduct.body.length % 2 == 0) {
             if (this.homeProduct.body.length > this.end) {

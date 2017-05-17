@@ -1,24 +1,9 @@
 import { Component } from '@angular/core';
-import {
-    ViewController,
-    NavController, NavParams
-} from 'ionic-angular';
-import {
-    MyAccount
-} from './../../model/myaccount/myaccount';
-import {
-    MyAccountAddressDataType
-} from './../../model/myaccount/myaccountData';
-import {
-    MyEditAddressPage
-} from './../../pages/myaccount/myeditaddress';
-import {
-    ToastService
-} from './../../providers/toast-service/toastService';
-import {
-    Events
-} from 'ionic-angular';
-import { ModelService } from './../../providers/moniterModel/moniterModel';
+import { ViewController, NavController, NavParams } from 'ionic-angular';
+import { MyAccount } from './../../model/myaccount/myaccount';
+import { MyAccountAddressDataType } from './../../model/myaccount/myaccountData';
+import { ToastService} from './../../providers/toast-service/toastService';
+import { Events } from 'ionic-angular';
 
 @Component({
     selector: 'popover',
@@ -36,9 +21,8 @@ export class AccountPopoverPage {
     accountCartLength: any;
     default_billing: number;
     default_shipping: number;
-    constructor(private _model: ModelService,public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
+    constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
-        this._model.setState("AccountPopoverPage");
         if (this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
@@ -46,25 +30,22 @@ export class AccountPopoverPage {
             this.default_shipping = this._navParams.data.default_shipping;
             this.default_billing = this._navParams.data.default_billing;
         }
-        this._events.subscribe('user:exit', (user) => {
-            this._events.unsubscribe('user:exit');
-            this._navCtrl.pop();
-        })
     }
     editAccount() {
         this.close();
-         this._events.publish('user:edit', {"data":{
-            "title": "Edit Address",
-            "id": this.id,
-            "entity_id": this.entity_id
-        }});
+        this._events.publish('user:edit', {
+            "data": {
+                "title": "Edit Address",
+                "id": this.id,
+                "entity_id": this.entity_id
+            }
+        });
     }
     deleteAccount() {
         this.close();
         let data = {
             entity_id: this.entity_id
         };
-        this._model.unsetState("AccountPopoverPage");
         this.viewCtrl.dismiss();
         this._myaccount.deleteMyAddress(data).then((res) => {
             this._toast.toast("Deleted", 3000, "top");
@@ -72,7 +53,6 @@ export class AccountPopoverPage {
         }, (err) => { })
     }
     close() {
-        this._model.unsetState("AccountPopoverPage");
         this.viewCtrl.dismiss();
     }
 }

@@ -6,7 +6,6 @@ import { FilterByModel } from './../../model/filterBy/filterBy';
 import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { FilterService } from './../../providers/filter-service/filterService';
-import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'filter',
@@ -21,9 +20,7 @@ export class FilterBy {
     categoryId: any;
     res: any = [];
     price: any;
-    constructor(private _model: ModelService,public _events: Events, private _filterService: FilterService, private _navParam: NavParams, private _local: Storage, public _filter: FilterByModel, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
-    console.log("event set");
-    this._model.setState("FilterBy");
+    constructor(public _events: Events, private _filterService: FilterService, private _navParam: NavParams, private _local: Storage, public _filter: FilterByModel, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
     }
     ngOnInit() {
 
@@ -31,7 +28,7 @@ export class FilterBy {
         this.data = this._navParam.get('data');
         this._filter.getFilterData({ "id": this.categoryId, "coll": this.data ? 1 : 0 }).then((res) => {
             forEach(res, (value, key) => {
-                value['title']= value['filter_title'].replace(/_/g, " ");
+                value['title'] = value['filter_title'].replace(/_/g, " ");
                 if (value.filter_title != "price") {
                     this.res.push(value);
                 } else {
@@ -60,31 +57,16 @@ export class FilterBy {
                 })
             })
         })
-        this._events.subscribe('user:exit', (user) => {
-            console.log("dsnjkbfkhsdbkdbkds")
-            var breakEvent=true;
-        this._events.subscribe('break:Event', (event) => {
-            console.log("collllllllllll",event);
-         breakEvent=event;
-        })
-        console.log("*********",breakEvent)
-           // setTimeout(()=>{
-            if(breakEvent){
-                this._viewCtrl.dismiss();
-            }    
-        // },500);
-
-        })
     }
 
     range() {
     }
-    subOptionLength(data){
-        let count=0;
-         forEach(data[data['filter_title']], (value: any, key) => {
-             count++;
+    subOptionLength(data) {
+        let count = 0;
+        forEach(data[data['filter_title']], (value: any, key) => {
+            count++;
         })
-    return count;
+        return count;
     }
     openModal(title) {
         var data = '';
@@ -109,15 +91,11 @@ export class FilterBy {
         modal.present();
     }
     dismiss() {
-        this._model.unsetState("FilterBy");
         this._viewCtrl.dismiss();
     }
     applyFilter() {
-        console.log("this.checkedData",this.checkedData,this.dualValue2)
-        this.checkedData.push({"price":this.dualValue2});
-        console.log(this.checkedData)
+        this.checkedData.push({ "price": this.dualValue2 });
         this._events.publish('filter:data', { data: { "filterBy": this.checkedData } });
-        this._model.unsetState("FilterBy");
         this._viewCtrl.dismiss();
     }
     clearAll() {

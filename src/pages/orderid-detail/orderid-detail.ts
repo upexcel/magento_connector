@@ -1,5 +1,5 @@
-import { Component, OnInit ,ViewChild,NgZone} from '@angular/core';
-import { NavParams, ViewController, PopoverController, Events ,Content} from 'ionic-angular';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { NavParams, ViewController, PopoverController, Events, Content } from 'ionic-angular';
 import { ApiService } from './../../providers/api-service/api-service';
 import { PopoverPage } from './../../components/popover/popover';
 import forEach from 'lodash/forEach';
@@ -17,17 +17,16 @@ export class OrderModalPage implements OnInit {
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
-    constructor(private _ngZone: NgZone,public events: Events,private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this.getOrderDetails(this.order_id);
         this.events.subscribe('user:fcm', (orderid) => {
-            console.log("orderid",orderid)
-        this.showOrder=false;
-        this._ngZone.run(() => {
-        this.getOrderDetails(orderid);
-      });
-        this.events.unsubscribe('user:fcm');
+            this.showOrder = false;
+            this._ngZone.run(() => {
+                this.getOrderDetails(orderid);
+            });
+            this.events.unsubscribe('user:fcm');
         });
     }
 
@@ -39,11 +38,10 @@ export class OrderModalPage implements OnInit {
             order_id: order_id
         }
         this.spin = true;
-        this._orderdetail.getHomeProducts(body).then((res:any) => {
-            console.log(res,"rerrerererer");
-            this.orderid_detail=null;
+        this._orderdetail.getHomeProducts(body).then((res: any) => {
+            this.orderid_detail = null;
             this.orderid_detail = res;
-            this.orderid_detail.body.status=res['body'].status;
+            this.orderid_detail.body.status = res['body'].status;
             this.spin = false;
             this.content.resize();
             // this._viewCtrl.fireWillEnter();

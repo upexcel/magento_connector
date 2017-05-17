@@ -135,14 +135,14 @@ export class CustomOption {
                                 }
                                 else if (value.type == "time") {
                                     if (cartData.day_part == "pm") {
-                                        let time = ((cartData.hour * 1) + 12) + ":" + ((cartData.minute < 9) ? ("0" + cartData.minute) : cartData.minute) ;
+                                        let time = ((cartData.hour * 1) + 12) + ":" + ((cartData.minute < 9) ? ("0" + cartData.minute) : cartData.minute);
                                         value.vertualId = time
                                     } else {
-                                        value.vertualId = ((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ?  ("0" + cartData.minute) : cartData.minute) ;
+                                        value.vertualId = ((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ? ("0" + cartData.minute) : cartData.minute);
                                     }
                                     this.timeJson[opt.option_id] = cartData;
                                 } else {
-                                value.vertualId = cartData.year + "-" + ((cartData.month < 9) ? ('0' + cartData.month) : cartData.month) + "-" + ((cartData.day < 9) ? ('0' + cartData.day) : cartData.day)+'T'+((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ?  ("0" + cartData.minute) : cartData.minute)+':00Z';
+                                    value.vertualId = cartData.year + "-" + ((cartData.month < 9) ? ('0' + cartData.month) : cartData.month) + "-" + ((cartData.day < 9) ? ('0' + cartData.day) : cartData.day) + 'T' + ((cartData.hour < 9) ? ("0" + cartData.hour) : cartData.hour) + ":" + ((cartData.minute < 9) ? ("0" + cartData.minute) : cartData.minute) + ':00Z';
                                     this.dateTimeJson[opt.option_id] = cartData;
                                 }
                             }
