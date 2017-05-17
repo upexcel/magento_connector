@@ -1,6 +1,6 @@
 import {Component, OnInit,ElementRef,Renderer} from '@angular/core';
-import {Platform,ModalController,} from 'ionic-angular';
-import {Events, NavController, NavParams, ViewController,AlertController} from 'ionic-angular';
+import {Platform,ModalController,AlertController} from 'ionic-angular';
+import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
 import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
 import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
@@ -113,14 +113,17 @@ export class HomePage implements OnInit {
                    this._model.modelData();
                    console.log("_modalCtrl")
                }else{
-
-                   // if( $('.alert-wrapper')){
-                   //     console.log("enter if")
-                       $('ion-alert').css({'display':'none'});
-                   // }else{/
-                         console.log("pop")
+// window.history.back();
+                //    if(this.alertCtrl){
+                       console.log("enter if")
+                //         // this.alertCtrl.dismiss();
+                //          // $('ion-alert').css({'display':'none'});
+                // this.alertCtrl =null; 
+                      
+                //    }else{
+                //          console.log("pop")
                         this._navCtrl.pop();
-                   // }
+                //    }
         
                }
                console.log("this._model.isActive()",this._model.isActive()); 
