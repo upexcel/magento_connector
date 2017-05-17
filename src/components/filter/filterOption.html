@@ -14,6 +14,7 @@
 <ion-content>
     <ion-item *ngFor="let opt of option ">
         <ion-label >{{opt.value.filter_name}}</ion-label>
+        <ion-badge item-right>{{opt.value.filter_product_count}}</ion-badge>
         <ion-checkbox color="dark"  value="opt" [(ngModel)]='opt.value.checked' (ngModelChange)="onChangeCheck(opt.value.filter_name,opt.key,$event)"></ion-checkbox>
     </ion-item>
 </ion-content>

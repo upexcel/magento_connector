@@ -85,6 +85,7 @@ import {WishListService} from '../providers/wishList/wishList-service';
 import {checkoutService} from '../model/checkout/checkout-service';
 import {fcmService} from '../providers/fcm-service/fcm-service';
 import {EventService} from '../providers/headerEvents/headerEvents';
+import { ModelService } from '../providers/moniterModel/moniterModel';
 //components
 import {LoadingModal} from '../components/loading-modal/loading-modal';
 import {PopoverPage} from '../components/popover/popover';
@@ -269,6 +270,7 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         LocalNotifications,
         fcmService,
         EventService,
+        ModelService,
         BackgroundMode    ]
 })
 export class AppModule {}

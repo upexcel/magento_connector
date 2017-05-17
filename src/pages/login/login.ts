@@ -71,6 +71,7 @@ export class LoginPage implements OnInit {
         })
             .catch(err => {
                 this.login = false;
+                this._toast.toast(JSON.parse(err._body).message, 3000);
             })
     }
     userFbLogin(body) {

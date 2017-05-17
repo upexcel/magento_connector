@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, PopoverController} from 'ionic-angular';
+import {Component, OnInit,NgZone} from '@angular/core';
+import {NavController, PopoverController,Events} from 'ionic-angular';
 import {PopoverPage} from './../../components/popover/popover';
 import {OrderModalPage} from '../orderid-detail/orderid-detail';
 import {TotalOrder} from '../../model/orderList/totalOrder';
@@ -25,10 +25,17 @@ export class OrderlistPage implements OnInit {
     startArray: number = 0;
     endArray: number = 4;
     message: string = "Token expired";
-    constructor(private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {}
+    constructor(private _ngZone: NgZone,public events:Events, private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {}
     ngOnInit() {
         this.total_orders();
         this.selectedOrder_details();
+        this.events.subscribe('user:fcm', (orderid) => {
+        this._ngZone.run(() => {
+        this.total_orders();
+        this.selectedOrder_details();
+         });
+            this.events.unsubscribe('user:fcm');
+        });
     }
 
     total_orders() {

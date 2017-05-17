@@ -45,8 +45,8 @@
                 <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete clearInput></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
-                <ion-label stacked>Country<span class="danger">*</span></ion-label>
-                <ion-select  formControlName="countryid" id="Country">
+                <ion-label  >Country<span class="danger">*</span></ion-label>
+                <ion-select  formControlName="countryid" id="Country" (ionChange)="onChangeCountry(updateform.value.countryid,updateform.value)"  >
                     <span *ngFor="let name of counrtyName.body.country">
                         <ion-option [value]="name"> 
                             {{name['country_name']}}
@@ -54,17 +54,17 @@
                     </span>   
                 </ion-select>
             </ion-item>
-            <ion-item class="no-padding paddRt" *ngIf="counrtyName && updateform.value.countryid.country_region">
-                <ion-label stacked>State<span class="danger">*</span></ion-label>
+            <ion-item class="no-padding paddRt" *ngIf="countryObj && countryObj.country_region">
+                <ion-label >State<span class="danger">*</span></ion-label>
                 <ion-select  formControlName="region" >
-                    <span *ngFor="let name of updateform.value.countryid.country_region">
+                    <span *ngFor="let name of countryObj.country_region">
                         <ion-option [value]="name"> 
                             {{name['name']}}
                         </ion-option>
                     </span>   
                 </ion-select>
             </ion-item>
-            <ion-item *ngIf="updateform.value.countryid && !updateform.value.countryid.country_region" >
+            <ion-item *ngIf="countryObj && !countryObj.country_region" >
                 <ion-label floating>State <span class="danger">*</span></ion-label>
                 <ion-input formControlName="region"  autocorrect autocomplete clearInput></ion-input>
             </ion-item>

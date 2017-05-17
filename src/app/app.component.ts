@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController,Events } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { StartPage } from '../pages/startpage/startpage';
 import { HomePage } from '../pages/home/home';
@@ -22,7 +22,7 @@ import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
-    constructor(private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(public events: Events,private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
             this._fcmService.initFCM();
@@ -110,6 +110,7 @@ export class MyApp implements OnInit {
                     data: res.increment_id
                 });
             }
+            this.events.publish('user:fcm',res['increment_id']);
         });
     }
 

@@ -28,13 +28,15 @@
                 </ion-item>        
             </ion-list>
         </div>
-        <ion-list class="no-margin" *ngFor="let response of res">
+        <span *ngFor="let response of res">
+        <ion-list class="no-margin" *ngIf="subOptionLength(response)">
                   <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
-                {{response.filter_title}}
+                {{response.title}}
                 <span></span>
                 <p> <span *ngFor="let sectedData of checkedData ; let i = index; "><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}}<span *ngIf="checkedData.length>1 && (i+1) !==checkedData.length">,</span></span> </span></p>    
             </a>
         </ion-list>
+        </span>
     </div>
 </ion-content>
 <ion-footer>

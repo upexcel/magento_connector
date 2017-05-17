@@ -5,6 +5,7 @@ import {FilterBy} from '../filter/filterBy';
 import {PopoverController} from 'ionic-angular';
 import {SortBy} from '../sort/sort';
 import {SortByModel} from './../../model/sortBy/sortBy';
+import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'category-footer',
@@ -16,7 +17,7 @@ export class CategoryFooter {
     @Input() previouseSortSection: any;
     @Input() previouseSortOrder: any;
     storeId: number;
-    constructor(public _sort: SortByModel, public _popoverCtrl: PopoverController, public _modalCtrl: ModalController, private _navCtrl: NavController, public _viewCtrl: ViewController) {
+    constructor(private _model: ModelService,public _sort: SortByModel, public _popoverCtrl: PopoverController, public _modalCtrl: ModalController, private _navCtrl: NavController, public _viewCtrl: ViewController) {
         setTimeout(() => {
             this._sort.getSortData({id: this.catedoryId}).then((res) => {});
         }, 500);

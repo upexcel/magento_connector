@@ -18,6 +18,7 @@ import {
 import {
     Events
 } from 'ionic-angular';
+import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'popover',
@@ -35,8 +36,9 @@ export class AccountPopoverPage {
     accountCartLength: any;
     default_billing: number;
     default_shipping: number;
-    constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
+    constructor(private _model: ModelService,public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
     ngOnInit() {
+        this._model.setState("AccountPopoverPage");
         if (this._navParams.data) {
             this.id = this._navParams.data.id;
             this.entity_id = this._navParams.data.entity_id;
@@ -62,6 +64,7 @@ export class AccountPopoverPage {
         let data = {
             entity_id: this.entity_id
         };
+        this._model.unsetState("AccountPopoverPage");
         this.viewCtrl.dismiss();
         this._myaccount.deleteMyAddress(data).then((res) => {
             this._toast.toast("Deleted", 3000, "top");
@@ -69,6 +72,7 @@ export class AccountPopoverPage {
         }, (err) => { })
     }
     close() {
+        this._model.unsetState("AccountPopoverPage");
         this.viewCtrl.dismiss();
     }
 }

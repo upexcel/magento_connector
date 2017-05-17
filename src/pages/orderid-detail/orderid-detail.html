@@ -18,7 +18,7 @@
             </span>
             </ion-item>
             <ion-item no-lines>
-                <h3>Purchased Date</h3>
+                <h3> Purchase Date and Time</h3>
                 <div class="order_sum">
                     <p>{{orderid_detail.body.purchased_on | date: 'dd/MM/yyyy && hh:mm'}}</p>
                 </div>
@@ -81,20 +81,20 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-grid *ngIf="orderid_detail.body.shipping_method">
+  <!--       <ion-grid *ngIf="orderid_detail.body.shipping_method">
             <ion-row class="backgroungW">
                 <ion-col col-4 class="center">
                     <span class="bold"> Shipping Method </span>
-                </ion-col>
-                <ion-col col-8 class="order_sum">
+                </ion-col> -->
+              <!--   <ion-col col-8 class="order_sum">
                     <p>{{orderid_detail.body.shipping_method}}</p>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                </ion-col> -->
+            <!-- </ion-row> -->
+        <!-- </ion-grid> -->
         <ion-grid *ngIf="orderid_detail.body.shipping_description">
             <ion-row class="backgroungW">
                 <ion-col col-4 class="center">
-                    <span class="bold capitalize"> Shipping Description </span>
+                    <span class="bold capitalize"> Shipping Method </span>
                 </ion-col>
                 <ion-col col-8 class="order_sum">
                     <p>{{orderid_detail.body.shipping_description}}</p>

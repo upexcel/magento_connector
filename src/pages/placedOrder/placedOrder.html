@@ -21,13 +21,13 @@
         </ion-card-content>
 
     </ion-card>
-    <ion-list>
+<!--     <ion-list>
         <ion-list-header no-margin>Delivered</ion-list-header>
         <ion-item >
             <h2 class="capitalize">{{shippingAddress.firstname}} {{shippingAddress.lastname}}</h2>
             <p class="address capitalize"> <span *ngFor="let street of shippingAddress.street">{{street}} </span> {{shippingAddress.city}} {{shippingAddress.country_id}} {{shippingAddress.postcode}}</p>
         </ion-item>
-    </ion-list>
+    </ion-list> -->
     <div class="center">
         <btn-round [title]='"Continue Shopping"' [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
     </div>

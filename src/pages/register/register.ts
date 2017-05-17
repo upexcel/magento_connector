@@ -45,6 +45,7 @@ export class RegisterPage implements OnInit {
             }
         }).catch(err => {
             this.spin = false;
+            this._toast.toast(JSON.parse(err._body).message, 3000);
         })
 
 
@@ -64,6 +65,7 @@ export class RegisterPage implements OnInit {
         })
             .catch(err => {
                 this.spin = false;
+                 this._toast.toast(JSON.parse(err._body).message, 3000);
             });
     }
 }

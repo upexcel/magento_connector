@@ -71,7 +71,7 @@
                                         <ion-icon name="radio-button-on" dark id="color"></ion-icon>
                                     </ion-buttons>
                                 </ion-label>
-                                <ion-select [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
+                                <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
                                     <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                         <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                             <ion-label no-margin class="font12">

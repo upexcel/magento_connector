@@ -1,22 +1,6 @@
 <header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false></header>
 <ion-content>
     <h2 *ngIf="!cartData">You have no item in cart</h2>
-    <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
-        <ion-card-header class="fontWeight">
-            Address
-        </ion-card-header>
-        <ion-card-content *ngIf="address">
-            <span *ngFor="let addres of address['body']">
-                <p class="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
-                <p class="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
-                <p class="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
-                <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p class="gray capitalize">{{addres.firstname}} {{addres.lastname}}</p><p class="gray capitalize">
-                        <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_id}} {{addres.postcode}}</p></span>
-            </span>
-            <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
-
-        </ion-card-content>
-    </ion-card>
     <ion-card  *ngFor="let data of cartData.cart_items">
         <ion-card-content  class="no-padding">
             <ion-grid no-padding>
@@ -47,11 +31,11 @@
                         <ion-row>
                             <ion-col *ngIf="data.info_buyRequest.attributes_info">
                                 <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
-                                    <p class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>
+                                    <p class="capitalize"><span class="gray">{{subdata.label}} </span> -{{subdata["value"]}}</p>
                                 </span>
                                 <span *ngIf="data.options">
                                     <span *ngFor="let subdata of data.options">
-                                        <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                        <p *ngIf="subdata" class="capitalize"><span  class="gray">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
                                     </span>
                                 </span>
                             </ion-col>
@@ -62,11 +46,11 @@
                                         {{data.info_buyRequest.links['title']}}:-
                                     </p>
                                     <span *ngFor="let subdata of data.info_buyRequest.links['label']">
-                                        <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
+                                        <p *ngIf="subdata" class="capitalize"><span class="gray">{{subdata}}
                                             </span></p></span></span>
                                 <span *ngIf="data.info_buyRequest.options">
                                     <span *ngFor="let options of data.info_buyRequest.options">
-                                        <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                        <p *ngIf="options" class="capitalize"><span  class="gray">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
                                     </span>
                                 </span>
                             </ion-col>
@@ -74,6 +58,22 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
+        </ion-card-content>
+    </ion-card>
+        <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
+        <ion-card-header class="fontWeight">
+            Address
+        </ion-card-header>
+        <ion-card-content *ngIf="address">
+            <span *ngFor="let addres of address['body']">
+                <p class="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
+                <p class="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
+                <p class="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
+                <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p class="gray capitalize">{{addres.firstname}} {{addres.lastname}}</p><p class="gray capitalize">
+                        <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_name}} {{addres.region}} {{addres.postcode}}</p></span>
+            </span>
+            <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
+
         </ion-card-content>
     </ion-card>
     <ion-list no-margin radio-group [(ngModel)]="selectedShippingMethod" (ngModelChange)="shippingMethod(selectedShippingMethod)">
@@ -226,7 +226,7 @@
         <ion-row>
             <ion-col col-6 class="center">
                 <span class="center">
-                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :totalPrice) |number}} </h3> 
+                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :grandTotal) |number}} </h3> 
             </ion-col>
             <ion-col col-6>
                 <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>

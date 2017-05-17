@@ -3,6 +3,6 @@
     <span class="center">
         <img *ngIf="data"  imageDirective src="{{data.data.small_image}}" class="cursorPointer" style="max-height: 400px;" imageViewer/>
     </span>
-    <product-review  [skuData]="data.data.sku" > loading..</product-review>    
+    <product-review  *ngIf="data" [skuData]="data.data.sku" > loading..</product-review>    
 </ion-content>   
 

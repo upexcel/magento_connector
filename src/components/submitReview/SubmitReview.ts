@@ -9,6 +9,8 @@ import { Storage } from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
 import { ToastService } from './../../providers/toast-service/toastService';
+import { ModelService } from './../../providers/moniterModel/moniterModel';
+
 @Component({
     selector: 'submit-review',
     templateUrl: 'submitReview.html'
@@ -27,7 +29,7 @@ export class SubmitReview implements OnInit {
     submitReviewData: SubmitReviewDataType;
     hideByLogin: boolean = true;
     submitSuccessful: boolean = false;
-    constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
+    constructor(private _model: ModelService,private _toast: ToastService, private _appConfigService: AppDataConfigService, public _events: Events, public _viewCtrl: ViewController, _params: NavParams, private _local: Storage, private _getProduct: Product, private _toastCtrl: ToastController) {
         this.skuValue = _params.get('sku');
         this.title = _params.get('title');
         this.keys = _params.get('keys');
@@ -35,6 +37,7 @@ export class SubmitReview implements OnInit {
         this.max_review = _params.get('max_review');
     }
     ngOnInit() {
+        this._model.setState("SubmitReview");
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
                 this.reviewDataNickname = userData.firstname;
@@ -49,6 +52,8 @@ export class SubmitReview implements OnInit {
         })
     }
     close() {
+        this._model.unsetState("SubmitReview");
+        this._model.unsetState("SubmitReview");
         this._viewCtrl.dismiss();
     }
     onSelectRatting(rating, title) {
@@ -95,6 +100,7 @@ export class SubmitReview implements OnInit {
                 this.submitSuccessful = false;
                 this.submitReviewData = res;
                 if (this.submitReviewData) {
+                    this._model.unsetState("SubmitReview");
                     this._viewCtrl.dismiss();
                     if (this.submitReviewData.body.review_status == "1") {
                         this._toast.toast("Thanks for your review!", 3000);

@@ -40,11 +40,11 @@
                         <ion-row>
                             <ion-col *ngIf="data.info_buyRequest.attributes_info">
                                 <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
-                                    <p class="capitalize"><span color="dark">{{subdata.label}} </span> -{{subdata["value"]}}</p>
+                                    <p class="capitalize"><span class="gray">{{subdata.label}} </span> -{{subdata["value"]}}</p>
                                 </span>
                                 <span *ngIf="data.options">
                                     <span *ngFor="let subdata of data.options">
-                                        <p *ngIf="subdata" class="capitalize"><span  color="dark">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                        <p *ngIf="subdata" class="capitalize"><span  class="gray">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
                                     </span>
                                 </span>
                             </ion-col>
@@ -55,11 +55,11 @@
                                         {{data.info_buyRequest.links['title']}}:-
                                     </p>
                                     <span *ngFor="let subdata of data.info_buyRequest.links['label']">
-                                        <p *ngIf="subdata" class="capitalize"><span color="dark">{{subdata}}
+                                        <p *ngIf="subdata" class="capitalize"><span class="gray">{{subdata}}
                                             </span></p></span></span>
                                 <span *ngIf="data.info_buyRequest.options">
                                     <span *ngFor="let options of data.info_buyRequest.options">
-                                        <p *ngIf="options" class="capitalize"><span  color="dark">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                        <p *ngIf="options" class="capitalize"><span  class="gray">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
                                     </span>
                                 </span>
                             </ion-col>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { SortByModel } from './../../model/sortBy/sortBy';
 import forEach from 'lodash/forEach';
 import { Events } from 'ionic-angular';
+import { ModelService } from './../../providers/moniterModel/moniterModel';
 
 @Component({
     selector: 'sort',
@@ -15,9 +16,10 @@ export class SortBy {
     product_id: any;
     slectedSort: string;
     orderBy: string;
-    constructor(public _events: Events, public _sort: SortByModel, private _navParam: NavParams, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
+    constructor(private _model: ModelService,public _events: Events, public _sort: SortByModel, private _navParam: NavParams, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
     }
     ngOnInit() {
+        this._model.setState("SortBy");
         this.data = this._navParam.get('data');
         this.product_id = this._navParam.get('product_id');
         if (this.data.previouseSortSection) {
@@ -51,16 +53,20 @@ export class SortBy {
             this.orderBy = 'asc';
         }
         this._events.publish('sort:data', { data: { "sortBy": this.slectedSort, "sort_order": this.orderBy, "product_id": this.data.catedoryId } });
+        this._model.unsetState("SortBy");
         this._viewCtrl.dismiss();
     }
 
     dismiss(slectedSort) {
+        console.log("dismiss")
         if (slectedSort == this.data.previouseSortSection) {
             this._viewCtrl.dismiss();
         } else {
             this._viewCtrl.dismiss();
             this._events.publish('sort:data', { data: { "sortBy": slectedSort, "sort_order": this.orderBy, "product_id": this.data.catedoryId } });
         }
+        this._model.unsetState("SortBy");
+        this._viewCtrl.dismiss();
     }
 
 }

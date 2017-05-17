@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Component, OnInit,ElementRef,Renderer} from '@angular/core';
+import {Platform,ModalController,} from 'ionic-angular';
+import {Events, NavController, NavParams, ViewController,AlertController} from 'ionic-angular';
 import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
 import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
@@ -13,12 +13,14 @@ declare let navigator: any;
 import {Storage} from '@ionic/storage';
 import {CartFunction} from './../../model/cart/cartHandling';
 import {ApiService} from './../../providers/api-service/api-service';
-
+import { ModelService } from './../../providers/moniterModel/moniterModel';
+declare let $:any;
 @Component({
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
     homeProduct: HomeProductsDataType;
+    private el: ElementRef;
     spin: boolean = false;
     feature_products: any;
     start: number = 0;
@@ -30,8 +32,8 @@ export class HomePage implements OnInit {
     menu: boolean = true;
     c_Id;
     count = 0;
-    constructor(private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
-
+    constructor(public alertCtrl: AlertController,private _model: ModelService,public _modalCtrl: ModalController,private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) {
             this.pagename = 'home';
@@ -92,7 +94,9 @@ export class HomePage implements OnInit {
     }
 
     checkBackButton() {
+
         this._platform.registerBackButtonAction(() => {
+            // console.log("_el", this.renderer.setElementStyle(this._el.nativeElement.querySelector('ion-alert'), 'display', 'none'));
             this._events.publish('user:exit', true);
             if (this._viewController.isLast() && this._viewController.isFirst()) {
                 if (!this.backPressed) {
@@ -104,7 +108,22 @@ export class HomePage implements OnInit {
                     navigator['app'].exitApp();
                 }
             } else {
-                this._navCtrl.pop();
+                   if(this._model.isActive()) {
+                   /* closes modal */
+                   this._model.modelData();
+                   console.log("_modalCtrl")
+               }else{
+
+                   // if( $('.alert-wrapper')){
+                   //     console.log("enter if")
+                       $('ion-alert').css({'display':'none'});
+                   // }else{/
+                         console.log("pop")
+                        this._navCtrl.pop();
+                   // }
+        
+               }
+               console.log("this._model.isActive()",this._model.isActive()); 
             }
         }, 100);
     }
