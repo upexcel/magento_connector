@@ -18,8 +18,8 @@ export class ContactUs implements OnInit {
     ngOnInit() {
         this._appDataConfigService.getUserData().then((userData: any) => {
             this.contactData = this._fb.group({
-                name: [userData["firstname"], Validators.required],
-                email: [userData['email'], Validators.compose([Validators.maxLength(50),
+                name: [(userData["firstname"])? userData["firstname"]: "", Validators.required],
+                email: [(userData['email'])? userData['email']: "", Validators.compose([Validators.maxLength(50),
                 EmailValidator.isValidMailFormat, Validators.required])],
                 telephone: ['', Validators.compose([Validators.minLength(10)])],
                 comment: ['', Validators.required]
