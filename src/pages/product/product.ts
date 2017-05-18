@@ -247,21 +247,23 @@ export class ProductPage implements OnInit {
                             this.disable = false;
                             this.add_cart = merge(this.add_cart, this.addToCartData);
                         }
-                        if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                            forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
-                                forEach(this.editCartData.super_attribute, (opt, opt_key) => {
-                                    if (opt_key == attributesDataKey) {
-                                        forEach(attributesData.options, (optionData) => {
-                                            if (optionData.id == opt) {
-                                                attributesData.vertualKey = optionData;
-                                                optionData.shown = true;
-                                                this.onChangeConfigurableAttribute(optionData, attributesData.id);
-                                                this.disable = false;
-                                            }
-                                        })
-                                    }
-                                })
-                            });
+                        if (this.productData.body.associated_products) {
+                            if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                                forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
+                                    forEach(this.editCartData.super_attribute, (opt, opt_key) => {
+                                        if (opt_key == attributesDataKey) {
+                                            forEach(attributesData.options, (optionData) => {
+                                                if (optionData.id == opt) {
+                                                    attributesData.vertualKey = optionData;
+                                                    optionData.shown = true;
+                                                    this.onChangeConfigurableAttribute(optionData, attributesData.id);
+                                                    this.disable = false;
+                                                }
+                                            })
+                                        }
+                                    })
+                                });
+                            }
                         }
                     } else {
                         if (this.productData.body.associated_products) {
@@ -287,7 +289,7 @@ export class ProductPage implements OnInit {
                     this.ifCustomOption(null, null);
                 }
 
-            },(err) => {
+            }, (err) => {
                 this._toast.toast("Please Refresh This Page !!", 3000, "bottom");
                 this.error = true;
             });
