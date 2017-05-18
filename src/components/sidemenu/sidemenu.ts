@@ -4,6 +4,8 @@ import { CategoryList } from '../../model/home/categoryList';
 import { MenuController, NavController } from 'ionic-angular';
 import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct';
 import forEach from 'lodash/forEach';
+import { FilterService } from './../../providers/filter-service/filterService';
+
 @Component({
     selector: 'sidemenu',
     templateUrl: 'sidemenu.html'
@@ -14,7 +16,7 @@ export class SideMenu implements OnInit {
     public rootPage: any;
     public access_token;
     public usermenu: boolean;
-    constructor(private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) { }
+    constructor(private _filterService: FilterService,private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) { }
     ngOnInit() {
         this._menuCtrl.enable(true);
         this.categoryList();
@@ -42,6 +44,7 @@ export class SideMenu implements OnInit {
             })
         }, 100);
         this._menuCtrl.close();
+        this._filterService.resetFilterData();
         this._navCtrl.push(CategoryProductPage, { "id": gchild_id, "name": gchild_name });
     }
     toggle(_toggleData) {

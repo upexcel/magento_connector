@@ -5,19 +5,19 @@
         <ion-card-content  class="no-padding">
             <ion-grid no-padding>
                 <ion-row center align-items-center>
-                    <ion-col class="aligncenter" col-4>
+                    <ion-col class="aligncenter" col-5>
                         <ion-row center>
                             <ion-col>
                                 <img src="{{data.product_image}}" alt="" class="maxht"/>
                             </ion-col> 
                         </ion-row>
                         <ion-row center>
-                            <ion-col class="font10">
+                            <ion-col class="font10" col-12>
                                 <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
                             </ion-col> 
                         </ion-row>
                     </ion-col>
-                    <ion-col col-8>
+                    <ion-col col-7>
                         <ion-row align-items-center>
                             <ion-col class="cartCheckOutQty capitalize">
                                 Quantity: {{data.product_qty}}

@@ -20,7 +20,9 @@ export class OrderModalPage implements OnInit {
     constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
+         this._ngZone.run(() => {
         this.getOrderDetails(this.order_id);
+         });
         this.events.subscribe('user:fcm', (orderid) => {
             this.showOrder = false;
             this._ngZone.run(() => {

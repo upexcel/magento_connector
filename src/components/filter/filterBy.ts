@@ -92,6 +92,7 @@ export class FilterBy {
     }
     dismiss() {
         this._viewCtrl.dismiss();
+        
     }
     applyFilter() {
         this.checkedData.push({ "price": this.dualValue2 });
