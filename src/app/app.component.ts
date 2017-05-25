@@ -31,6 +31,10 @@ export class MyApp implements OnInit {
             this._fcmService.initFCM();
             this.fcm();
             this.backgroundMode.enable();
+            this.backgroundMode.setDefaults({
+            title: 'excellence_magento_app',
+            text: 'You have running service!'
+            });
             this.checkBackButton();
             this.localNotifications.on("click", (data) => {
                 setTimeout(() => {

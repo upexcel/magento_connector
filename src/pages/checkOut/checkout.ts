@@ -171,7 +171,7 @@ export class Checkout implements OnInit {
                 }
             })
         }
-        this._checkoutService.getShippingMethods(this.data).then((res: any) => {
+        this._checkoutService.getShippingMethods({}).then((res: any) => {
             this.shippingMethods = [];
             forEach(res.body.shipping_methods, (value, key) => {
                 value['shipping_method'] = key;
