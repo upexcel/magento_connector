@@ -1,39 +1,51 @@
 {
   "project_info": {
-    "project_number": "260184542051",
-    "firebase_url": "https://propane-library-114010.firebaseio.com",
-    "project_id": "propane-library-114010",
-    "storage_bucket": "propane-library-114010.appspot.com"
+    "project_number": "985302084212",
+    "firebase_url": "https://magento-excellence.firebaseio.com",
+    "project_id": "magento-excellence",
+    "storage_bucket": "magento-excellence.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260184542051:android:69677ec2132e7345",
+        "mobilesdk_app_id": "1:985302084212:android:cab4f0fb45c2213b",
         "android_client_info": {
-          "package_name": "com.ionicframework.invisionionic977878"
+          "package_name": "com.magento.excellence"
         }
       },
       "oauth_client": [
         {
-          "client_id": "260184542051-90rmf745bgldilur0as3nglk1gpoegln.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
+          "client_id": "985302084212-dc3amb0ustcnpt3ni3lglpehntvbhf14.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ionicframework.invisionionic977878",
-            "certificate_hash": "bf639c87b03b26a8e57fce9c4fcdd5f68e2a3683"
+            "package_name": "com.magento.excellence",
+            "certificate_hash": "af821f50eb722a17e7b75607a0e8f1464bcbf7a7"
           }
         },
         {
-          "client_id": "260184542051-h84jscnah15adeecfh77g5p69c78vg9c.apps.googleusercontent.com",
+          "client_id": "985302084212-j276qq631lqfqook9asfddiimbgnhbl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magento.excellence",
+            "certificate_hash": "4c0ecf2ec94141d648864ba11eb815bd236bc740"
+          }
+        },
+        {
+          "client_id": "985302084212-3snccrl62b8jrn0i9ak7no57tduj6aav.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "985302084212-llvrilfoub2kg256odd3tcher1gs32r0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magento.excellence",
+            "certificate_hash": "bf639c87b03b26a8e57fce9c4fcdd5f68e2a3683"
+          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA4sfnVQzsRttphC1I8DC_6egKYfFMc7o8"
+          "current_key": "AIzaSyAvCeUdUvFHBLr-U3DzTAAr5N-riYwLjr8"
         }
       ],
       "services": {
@@ -44,7 +56,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "260184542051-90rmf745bgldilur0as3nglk1gpoegln.apps.googleusercontent.com",
+              "client_id": "985302084212-3snccrl62b8jrn0i9ak7no57tduj6aav.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -20,6 +20,7 @@ export class SocialService {
                 Facebook.login(['email']).then((success) => {
                     resolve(success);
                 }).catch((res) => {
+                    console.log('fblogin',res)
                     reject(res);
                 })
             } else {
@@ -35,6 +36,8 @@ export class SocialService {
                 (profileData) => {
                     resolve(profileData);
                 }).catch((res) => {
+
+                    console.log('fbprofile',res)
                     reject(res);
                 })
         });
@@ -44,12 +47,13 @@ export class SocialService {
         return new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
                 GooglePlus.login({
-                    //                    'scopes': '',
-                    //                    'webClientId': "260184542051-m17hkjsdekbghlb4mqii8ujkqb7ncoc4.apps.googleusercontent.com",
-                    //                    'offline': false,
+                'scopes': '',
+                'webClientId': "",
+                'offline': true,
                 }).then((success) => {
                     resolve(success);
                 }).catch((res) => {
+                   console.log("res",res)
                     reject(res);
                 })
             } else {

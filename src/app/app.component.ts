@@ -11,7 +11,6 @@ import { Splashscreen } from 'ionic-native';
 import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { fcmService } from '../providers/fcm-service/fcm-service';
-import { BackgroundMode } from '@ionic-native/background-mode';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { ToastService } from '../providers/toast-service/toastService';
 declare let navigator: any;
@@ -25,16 +24,11 @@ export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
     backPressed: boolean = false;
-    constructor(private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private backgroundMode: BackgroundMode, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
             this._fcmService.initFCM();
             this.fcm();
-            this.backgroundMode.enable();
-            this.backgroundMode.setDefaults({
-            title: 'excellence_magento_app',
-            text: 'You have running service!'
-            });
             this.checkBackButton();
             this.localNotifications.on("click", (data) => {
                 setTimeout(() => {
