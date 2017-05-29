@@ -260,6 +260,9 @@ export class Checkout implements OnInit {
 
                 } else {
                     this.spin = false;
+                    if(res['body'] && res['body'].error_msg){
+                        this._toast.toast(res['body'].error_msg, 3000);
+                    }
                     forEach(res['body'].product_error, (value) => {
                         this._toast.toast(value, 3000);
                     })
