@@ -8,7 +8,6 @@ import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
-import {BackgroundMode} from '@ionic-native/background-mode';
 
 //storage
 import {IonicStorageModule} from '@ionic/storage';
@@ -268,7 +267,6 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         Firebase,
         LocalNotifications,
         fcmService,
-        EventService,
-        BackgroundMode    ]
+        EventService    ]
 })
 export class AppModule {}
