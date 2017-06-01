@@ -24,6 +24,7 @@ export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
     backPressed: boolean = false;
+    rootPageName: string;
     constructor(private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             this.hideSplashScreen();
@@ -38,10 +39,11 @@ export class MyApp implements OnInit {
         });
         this.addConnectivityListeners();
         this.events.subscribe('goHome:home', ()=>{
-            if(this.nav['_root']['name'] == 'HomePage' || this._rootPage['name'] == 'HomePage'){
+            if(this.rootPageName == 'HomePage'){
                 this.nav.setRoot(HomePage);
             } else{
-                this._rootPage = HomePage;    
+                this._rootPage = HomePage;
+                this.rootPageName = 'HomePage';    
             }            
         })
     }
@@ -89,10 +91,12 @@ export class MyApp implements OnInit {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
                 this._rootPage = StartPage;
+                this.rootPageName = 'StartPage';
             }
             else {
                 this._appConfigService.cleanUp();
                 this._rootPage = HomePage;
+                this.rootPageName = 'HomePage';
             }
         });
         this._appConfigService.getUserData().then((userData) => {
