@@ -106,4 +106,6 @@
   </plugin>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <engine name="android" spec="~6.1.2"/>
+  <allow-navigation href="http://192.168.1.133:8101"/>
+  <allow-navigation href="http://192.168.1.133:8100"/>
 </widget>

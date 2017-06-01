@@ -37,6 +37,13 @@ export class MyApp implements OnInit {
             })
         });
         this.addConnectivityListeners();
+        this.events.subscribe('goHome:home', ()=>{
+            if(this.nav['_root']['name'] == 'HomePage' || this._rootPage['name'] == 'HomePage'){
+                this.nav.setRoot(HomePage);
+            } else{
+                this._rootPage = HomePage;    
+            }            
+        })
     }
 
     checkBackButton() {

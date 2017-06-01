@@ -45,7 +45,7 @@
         </ion-item>
     </ion-list> 
 </div>
-<div *ngIf="!reviewShow && !additionalInformationData" [ngClass]="{'empty-review': !additionalInformationData ,center:true}">
+<div *ngIf="!reviewShow" [ngClass]="{'empty-review': (additionalInformationData.length == 0) ,center:true}">
     <ion-spinner *ngIf="productReviewSpin"></ion-spinner>
 </div>
 <btn-full *ngIf="!productReviewSpin" [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>
