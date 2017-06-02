@@ -1,7 +1,14 @@
 iframe{
     height:100% !important;
 }
-
+ edit-address{
+.scroll-content {
+        margin-top: 0px !important;
+    }    
+    .item-ios{
+    padding-left: 0px !important;;
+    }
+    }
 .alignright{
     text-align: right;
 }
@@ -314,6 +321,7 @@ placed-order{
 .absolute{
     position:absolute;
 }
+
 .wishlist{
     right: -15px;
     top: -12px;
@@ -323,7 +331,7 @@ placed-order{
 }
 .productWishList{
     float: right;
-    padding-right: 15px;
+    padding-right: 10px;
 }
 
 .lightRed{
@@ -411,8 +419,15 @@ ion-input.uppercase input{
 .font10{
     font-size: 10px ;
 }
+.padL10{
+    padding-left:10px;
+}
+.widthA{
+    width:auto;
+}
 .floatLeft{
     float: left;
+
 }
 .floatRight{
     float: right;
@@ -538,7 +553,7 @@ ion-input.uppercase input{
 }
 
 header .toolbar-ios{
-    padding: 10px 10px 0 0;
+    padding-top:20px;
     min-height: 65px;
 }
 .content-ios .scroll-content {
@@ -593,7 +608,7 @@ filter-option{
     }
 }
 .scroll-content {
-    padding-top: 56px;
+    //padding-top: 56px;
     background: #f3f3f3;
 }
 .background1{
@@ -659,9 +674,15 @@ edit-address ,filter {
         background: #fff;
     }
 }
-.toolbar-ios ion-title {
-    padding: 10px 0px 1px !important;
-} 
+.header {
+   .toolbar-ios{
+   // padding: 4px !important;
+}  
+}
+.toolbar-ios {
+ion-title{
+    padding: 15px 90px 1px !important;
+}}
 ::-webkit-scrollbar { 
     display: none; 
 }
@@ -752,6 +773,10 @@ body {
 category-view .landscape .column {
     flex: 137px!important;
 }
+.toolbar-ios ion-title{
+    padding-top: 15px;
+}
+
 ion-slides{
     height: auto;
 }*/

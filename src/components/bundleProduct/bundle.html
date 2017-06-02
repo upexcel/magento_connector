@@ -16,7 +16,7 @@
         </ion-item>
     </ion-list>     
     <ion-list   radio-group [(ngModel)]="b_test1.vertualId" (ngModelChange)="onChangeRadio(b_test1.vertualId,b_test1.id,b_test1.is_require)" *ngIf="b_test1.type=='radio'">
-                <ion-list-header class="no-margin "  (click)="checkVisiblety(b_test1)" >
+                <ion-list-header class="no-margin "  (tap)="checkVisiblety(b_test1)" >
             <span class="capitalize fontColor"> {{b_test1.title}}</span> <span class="danger"  *ngIf="b_test1.is_require=='1'">*</span><ion-icon class="floatRight ico paddRight5" name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="b_test1.visable"  *ngFor="let selection of b_test1.selection">
@@ -25,7 +25,7 @@
         </ion-item>
     </ion-list>
     <ion-list   *ngIf="b_test1.type=='checkbox'">
-        <ion-list-header (click)="checkVisiblety(b_test1)"  class="no-margin paddLef15 ">
+        <ion-list-header (tap)="checkVisiblety(b_test1)"  class="no-margin paddLef15 ">
             <span class="capitalize fontColor">  {{b_test1.title}}</span> <span class="danger" *ngIf="b_test1.is_require=='1'">*</span> <ion-icon class="floatRight ico paddRight5 " name="arrow-dropdown"></ion-icon>
         </ion-list-header>
         <ion-item [hidden]="b_test1.visable" class="padLeft10"  *ngFor="let selection of b_test1.selection ; let j = index">

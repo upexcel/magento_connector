@@ -9,8 +9,8 @@ import { Events } from 'ionic-angular';
     selector: 'popover',
     template: `
     <ion-list class="popover no-margin">
-      <button ion-item (click)="editAccount()">Edit</button>
-      <button ion-item *ngIf="!(default_shipping || default_billing)" (click)="deleteAccount()">Delete</button>
+      <button ion-item (tap)="editAccount()">Edit</button>
+      <button ion-item *ngIf="!(default_shipping || default_billing)" (tap)="deleteAccount()">Delete</button>
     </ion-list>
  `
 })

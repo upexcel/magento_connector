@@ -23,7 +23,10 @@
                 </ion-col>
                 <ion-col class="bar">
                     <ion-buttons  *ngFor="let rating of graphRating">
-                        <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span><span><progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></span>
+                    <ion-row>
+                        <ion-col col-4> <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span> </ion-col>
+                       <ion-col col-8> <progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></ion-col>
+                       </ion-row>
                     </ion-buttons>
                 </ion-col>
             </ion-row>
@@ -32,11 +35,11 @@
     </ion-card>
     <ion-list>
         <ion-item *ngFor=" let data of productReview.body.data ">
-            <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at | date:'dd MMM yyyy'}}</span></p>
+            <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at |customdate: 'DD/MM/YYYY'}}</span></p>
             <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
             <p><span class="color uppercase" >by {{data.nickname}}</span></p>
         </ion-item>
-        <ion-item (click)="moreReview()" *ngIf="addCommingReview < productReview.body.total_review">
+        <ion-item (tap)="moreReview()" *ngIf="addCommingReview < productReview.body.total_review">
             <ion-buttons>
                 <span *ngIf="listLoad==false" class="capitalize">All {{productReview.body.total_review}} Review </span>
                 <ion-spinner *ngIf="listLoad"></ion-spinner>&nbsp;

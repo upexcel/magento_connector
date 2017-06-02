@@ -17,7 +17,7 @@
             <ion-card-content class="paddTop">
                 <!--<ion-radio class="padding10" value="{{address.firstname}}"></ion-radio>-->
                 <ion-buttons class="floatRight" end>
-                    <button ion-button class="iconTransparent" color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id, address)">
+                    <button ion-button class="iconTransparent" color="light" icon-only small (tap)="AccountPopoverPage($event,id,address.entity_id, address)">
                             <ion-icon name="more"></ion-icon>
                     </button>
                 </ion-buttons>
@@ -82,18 +82,19 @@
                         <ion-col  col-10 class="no-padding">
                             <p class="lineHeight">Fax: {{address.fax}}</p>              
                         </ion-col>
-                    </ion-row>
-                    <ion-row class="capitalize green">
-                        <ion-col>
-                            <ion-label class="no-margin floatLeft defaultaddress"> Default Shipping</ion-label>
-                            <ion-checkbox color="dark" [disabled]="disable || spin" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
-                        </ion-col>
-                        <ion-col>
-                            <ion-label class="no-margin floatLeft defaultaddress">Default Billing</ion-label>
-                            <ion-checkbox color="dark" [disabled]="disable || spin" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox>
-                        </ion-col>
-                    </ion-row>                    
+                    </ion-row>                   
                 </ion-grid>
+                    <ion-item >
+                    <span item-start class="no-margin">
+                     <h2 class="padL10 widthA floatLeft"> Default Shipping</h2>
+                            <ion-checkbox color="dark" class=" floatLeft idthA no-margin" [disabled]="disable || spin" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>   
+                    </span>
+                            <span item-end class="no-margin">
+                                       <h2 class="floatLeft widthA">Default Billing</h2>
+                            <ion-checkbox class=" widthA no-margin floatLeft" color="dark" [disabled]="disable || spin" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox>  
+                            </span>
+                    </ion-item>
+
             </ion-card-content>
         </ion-card>
     </ion-list>

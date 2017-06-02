@@ -117,6 +117,8 @@ import {ImageFallBackDirective} from '../directives/image/imagefallback.directiv
 
 //pipe
 import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
+import {CustomDatePipe} from '../pipe/date/dateFormate';
+
 @NgModule({
     declarations: [
         MyApp,
@@ -147,6 +149,7 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         SliderComponent,
         SideMenu,
         ReviewDisplayPipe,
+        CustomDatePipe,
         GoogleComponent,
         FacebookComponent,
         ProductReview,

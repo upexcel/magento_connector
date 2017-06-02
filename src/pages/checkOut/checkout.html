@@ -72,7 +72,7 @@
                 <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p class="gray capitalize">{{addres.firstname}} {{addres.lastname}}</p><p class="gray capitalize">
                         <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_name}} {{addres.region}} {{addres.postcode}}</p></span>
             </span>
-            <a  class="floatRight paddBut5" color="lightRed" (click)=changeAddress()>Change Address</a>
+            <a  class="floatRight paddBut5" color="lightRed" (tap)=changeAddress()>Change Address</a>
 
         </ion-card-content>
     </ion-card>

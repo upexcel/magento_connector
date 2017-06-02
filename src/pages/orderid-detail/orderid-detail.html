@@ -20,7 +20,7 @@
             <ion-item no-lines>
                 <h3> Purchase Date and Time</h3>
                 <div class="order_sum">
-                    <p>{{orderid_detail.body.purchased_on | date: 'dd/MM/yyyy && hh:mm'}}</p>
+                    <p>{{orderid_detail.body.purchased_on | customdate: 'DD/MM/YYYY && HH:mm'}}</p>
                 </div>
             </ion-item>
             <ion-grid>

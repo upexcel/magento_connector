@@ -14,7 +14,6 @@ import { ModalController } from 'ionic-angular';
     selector: 'header',
     templateUrl: 'headers.html'
 })
-
 export class Headers implements AfterContentInit {
     @Input() type: boolean;
     @Input() title: string = '';

@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
     spin: boolean = false;
     feature_products: any;
     start: number = 0;
-    end: number = 4;
+    end: number = 10;
     title: string = '';
     pagename: string = 'home';
     userToken: string;
