@@ -84,7 +84,7 @@ export class MyEditAddressPage implements OnInit {
 
     }
     root() {
-        this._navCtrl.push(MySavedAddressPage).then(() => {
+        this._navCtrl.push(MySavedAddressPage, { 'againOpenEditAddressPage': false }).then(() => {
             const index = this.viewCtrl.index;
             this._navCtrl.remove(index);
         });

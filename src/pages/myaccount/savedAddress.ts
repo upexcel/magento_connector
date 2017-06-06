@@ -52,8 +52,10 @@ export class MySavedAddressPage implements OnInit {
     message: string = "Token expired";
     alreadyCheckLength: boolean;
     saveAdd: boolean;
+    againOpenEditAddressPage: boolean = true;
     constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this.alreadyCheckLength = this._navParam.get('alreadyCheckLength');
+        this.againOpenEditAddressPage = this._navParam.get('againOpenEditAddressPage');
         this.saveAdd = this._navParam.get('saveAdd');
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
@@ -144,24 +146,26 @@ export class MySavedAddressPage implements OnInit {
             this.reverseCartData = (this.myaccount.body);
         } else {
             this.showAddress = false;
-            if (this.myaccount && this.myaccount.body.length != 0) {
-                this._navCtrl.push(MyEditAddressPage, {
-                    "title": "Add New Address",
-                    "entity_id": entity_id,
-                    "firstTime": 0
-                }).then(() => {
-                    const index = this.viewCtrl.index;
-                    this._navCtrl.remove(index);
-                });
-            } else {
-                this._navCtrl.push(MyEditAddressPage, {
-                    "title": "Add New Address",
-                    "entity_id": entity_id,
-                    "firstTime": 1
-                }).then(() => {
-                    const index = this.viewCtrl.index;
-                    this._navCtrl.remove(index);
-                });
+            if(this.againOpenEditAddressPage || this.againOpenEditAddressPage == undefined){
+                if (this.myaccount && this.myaccount.body.length != 0) {
+                    this._navCtrl.push(MyEditAddressPage, {
+                        "title": "Add New Address",
+                        "entity_id": entity_id,
+                        "firstTime": 0
+                    }).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index);
+                    });
+                } else {
+                    this._navCtrl.push(MyEditAddressPage, {
+                        "title": "Add New Address",
+                        "entity_id": entity_id,
+                        "firstTime": 1
+                    }).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index);
+                    });
+                }
             }
         }
     }
