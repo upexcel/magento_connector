@@ -9,7 +9,10 @@ import slice from 'lodash/slice';
 import forEach from 'lodash/forEach';
 import groupBy from 'lodash/groupBy';
 import reverse from 'lodash/reverse';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 @Component({
+    selector: 'order-list',
     templateUrl: 'orderlist.html'
 })
 export class OrderlistPage implements OnInit {

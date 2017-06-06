@@ -3,8 +3,8 @@
     <form [formGroup]="forgotform" *ngIf="show_form">
         <ion-item>
             <ion-label floating>Email</ion-label>
-            <ion-input type="email" id="email" [onReturn]='"btn"' formControlName="email" autocorrect autocomplete clearInput></ion-input>
+            <ion-input type="email" id="email" [onReturn]='"btn"' formControlName="email" autocorrect autocomplete></ion-input>
         </ion-item>
-        <btn-full *ngIf="btnShow" [titleFull]='"SUBMIT REVIEWS"' [spinFull]="spin" [id]="'btn'"  [validFull]="!forgotform.valid" [classFull]="'botton buttForgotPwd'" (onBtnClick)="forgot(forgotform.value)"></btn-full>
+        <btn-full *ngIf="btnShow" [titleFull]='"SUBMIT"' [spinFull]="spin" [id]="'btn'"  [validFull]="!forgotform.valid" [classFull]="'botton buttForgotPwd'" (onBtnClick)="forgot(forgotform.value)"></btn-full>
     </form>
 </ion-content>

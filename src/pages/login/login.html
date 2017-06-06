@@ -3,11 +3,11 @@
     <form  [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item >
             <ion-label  floating>Email</ion-label>
-            <ion-input  id="email" [onReturn]='"Password"' type="email"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input  id="email" [onReturn]='"Password"' type="email"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item >
             <ion-label  floating>Password</ion-label>
-            <ion-input type="password" id="Password" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input type="password" id="Password" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-grid class="magTop60">
             <ion-row class="center" >
@@ -32,7 +32,7 @@
         </ion-row>
     </ion-grid>
     <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
-    <h5 align='center' class="marTop100">Don't have an account?</h5>
+    <h5 align='center' class="">Don't have an account?</h5>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">

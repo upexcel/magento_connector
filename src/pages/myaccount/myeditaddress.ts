@@ -6,7 +6,8 @@ import {
     NavController,
     PopoverController,
     NavParams,
-    Events
+    Events,
+    Platform
 } from 'ionic-angular';
 import {
     PopoverPage
@@ -41,6 +42,7 @@ import {
 } from 'ionic-angular';
 import find from 'lodash/find';
 import { MySavedAddressPage } from './../myaccount/savedAddress';
+
 @Component({
     selector: 'edit-address',
     templateUrl: 'myeditaddress.html'
@@ -63,7 +65,7 @@ export class MyEditAddressPage implements OnInit {
     checkBilling = 0;
     checkShipping = 0;
     countryObj: any;
-    constructor(public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
+    constructor(private _platform: Platform,public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) { }
     ngOnInit() {
         this._events.unsubscribe('user:edit');
         this._events.unsubscribe('user:deleted');
@@ -82,6 +84,9 @@ export class MyEditAddressPage implements OnInit {
             });
         })
 
+    }
+    platform(){
+       return this._platform.is('ios');
     }
     root() {
         this._navCtrl.push(MySavedAddressPage).then(() => {

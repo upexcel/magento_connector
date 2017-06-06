@@ -4,7 +4,7 @@
             Filter by
         </ion-title>
         <ion-buttons start>
-            <button ion-button (click)="dismiss()">
+            <button ion-button (tap)="dismiss()">
                     <span ion-text color="primary" showWhen="ios">Cancel</span>
                 <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
             </button>
@@ -30,7 +30,7 @@
         </div>
         <span *ngFor="let response of res">
         <ion-list class="no-margin" *ngIf="subOptionLength(response)">
-                  <a ion-item class="capitalize" (click)="openModal(response.filter_title)">
+                  <a ion-item class="capitalize" (tap)="openModal(response.filter_title)">
                 {{response.title}}
                 <span></span>
                 <p> <span *ngFor="let sectedData of checkedData ; let i = index; "><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}}<span *ngIf="checkedData.length>1 && (i+1) !==checkedData.length">,</span></span> </span></p>    

@@ -1,12 +1,24 @@
 <ion-header class="primaryBackground">
-    <ion-buttons start class="floatLeft placeOrderIconButt" (click)="root()">
+    <ion-toolbar color="primary" *ngIf="platform()">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
-                <ion-icon name="arrow-round-back"></ion-icon>
+                <ion-icon name="arrow-back"></ion-icon>
         </button>
     </ion-buttons>
     <ion-title class="uppercase text">
         {{title}}
     </ion-title>
+    </ion-toolbar>
+    <span *ngIf="!platform()">
+        <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        {{title}}
+    </ion-title>
+    </span>
 </ion-header>
 <ion-content class="myaccount">
     <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
@@ -14,11 +26,11 @@
         <ion-list inset>
             <ion-item>
                 <ion-label floating>First Name <span class="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"lastName"' formControlName="firstname" clearInput></ion-input>
+                <ion-input  [onReturn]='"lastName"' formControlName="firstname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Last Name <span class="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"Company"' id="lastName"  formControlName="lastname"  clearInput></ion-input>
+                <ion-input  [onReturn]='"Company"' id="lastName"  formControlName="lastname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Company</ion-label>
@@ -26,23 +38,23 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Fax</ion-label>
-                <ion-input type="number" min="0" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input type="number" min="0" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Mobile Number <span class="danger">*</span></ion-label>
-                <ion-input type="number" min="0" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input type="number" min="0" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Address <span class="danger">*</span></ion-label>
-                <ion-textarea formControlName="street" id="Address" [onReturn]='"City"' autocorrect autocomplete clearInput></ion-textarea>
+                <ion-textarea formControlName="street" id="Address" [onReturn]='"City"' autocorrect autocomplete></ion-textarea>
             </ion-item>
             <ion-item>
                 <ion-label floating>City <span class="danger">*</span></ion-label>
-                <ion-input formControlName="city" id="City" [onReturn]='"Pin"' autocorrect autocomplete clearInput></ion-input>
+                <ion-input formControlName="city" id="City" [onReturn]='"Pin"' autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Pin Code <span class="danger">*</span></ion-label>
-                <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete clearInput></ion-input>
+                <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                 <ion-label  >Country<span class="danger">*</span></ion-label>
@@ -66,7 +78,7 @@
             </ion-item>
             <ion-item *ngIf="countryObj && !countryObj.country_region" >
                 <ion-label floating>State <span class="danger">*</span></ion-label>
-                <ion-input formControlName="region"  autocorrect autocomplete clearInput></ion-input>
+                <ion-input formControlName="region"  autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item class="no-padding" no-lines>
                 <ion-label class="font13">Make it your default billing Address </ion-label>

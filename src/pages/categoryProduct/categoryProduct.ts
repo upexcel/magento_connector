@@ -7,6 +7,7 @@ import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { ToastService } from './../../providers/toast-service/toastService';
 @Component({
+    selector:'categoryProduct',
     templateUrl: 'categoryProduct.html'
 })
 export class CategoryProductPage implements OnInit {

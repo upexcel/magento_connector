@@ -13,6 +13,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { fcmService } from '../providers/fcm-service/fcm-service';
 import { OrderModalPage } from '../pages/orderid-detail/orderid-detail';
 import { ToastService } from '../providers/toast-service/toastService';
+import { Keyboard } from '@ionic-native/keyboard';
+
 declare let navigator: any;
 
 @Component({
@@ -24,8 +26,10 @@ export class MyApp implements OnInit {
     @ViewChild('myNav') nav: NavController
     public _rootPage: any;
     backPressed: boolean = false;
-    constructor(private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    rootPageName: string;
+    constructor(public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
+            this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
             this._fcmService.initFCM();
             this.fcm();
@@ -37,6 +41,14 @@ export class MyApp implements OnInit {
             })
         });
         this.addConnectivityListeners();
+        this.events.subscribe('goHome:home', ()=>{
+            if(this.rootPageName == 'HomePage'){
+                this.nav.setRoot(HomePage);
+            } else{
+                this._rootPage = HomePage;
+                this.rootPageName = 'HomePage';    
+            }            
+        })
     }
 
     checkBackButton() {
@@ -82,10 +94,12 @@ export class MyApp implements OnInit {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
                 this._rootPage = StartPage;
+                this.rootPageName = 'StartPage';
             }
             else {
                 this._appConfigService.cleanUp();
                 this._rootPage = HomePage;
+                this.rootPageName = 'HomePage';
             }
         });
         this._appConfigService.getUserData().then((userData) => {
@@ -123,7 +137,12 @@ export class MyApp implements OnInit {
 
     }
     fcm() {
+        this.firebase.grantPermission();
+        this.firebase.hasPermission().then((data)=>{
+            console.log(data)
+        })
         this.firebase.onNotificationOpen().subscribe(res => {
+        console.log("resL:ocalNotify",res)
             if (res.tap) {
                 setTimeout(() => {
                     this.nav.push(OrderModalPage, { order_id: res.increment_id });

@@ -2,7 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import forEach from 'lodash/forEach';
 import merge from 'lodash/merge';
 import { FileChooser } from 'ionic-native';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 @Component({
     selector: 'custom',
     templateUrl: 'custom.html'

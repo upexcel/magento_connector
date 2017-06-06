@@ -33,14 +33,14 @@ export class group {
     }
     quantityDefault() {
         for (let i = 0; i < this.grouped.group_associated_products.length; i++) {
-            this.grouped.group_associated_products[i]['quantity'] = 0;
+            // this.grouped.group_associated_products[i]['quantity'] = 0;
         }
     }
     groupedData() {
         let opt: any = [], id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, (value, key) => {
             id[value.product_id] = value.quantity;
-            if (value.quantity * 1 !== 0) {
+            if (value.quantity && value.quantity * 1 !== 0) {
                 opt.push(value);
                 flag = 1;
                 total = total + (value.quantity * 1) * (parseFloat(value.final_price));

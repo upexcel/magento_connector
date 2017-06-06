@@ -6,6 +6,7 @@ import forEach from 'lodash/forEach';
 import { OrderIdDetail } from './../../model/orderid-detail/orderid-detail';
 //import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 @Component({
+    selector:'orderid-detail',
     templateUrl: 'orderid-detail.html'
 })
 

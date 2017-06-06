@@ -6,6 +6,7 @@ import { Forgot } from '../../model/forgot/forgot';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { NavController, NavParams } from 'ionic-angular';
 @Component({
+    selector:'forgot',
     templateUrl: 'forgot.html'
 })
 export class ForgotPage implements OnInit {
@@ -32,15 +33,21 @@ export class ForgotPage implements OnInit {
     }
     forgot(value: any) {
         this.spin = true;
-        this._forgot.getForgot(value).then((res) => {
+        this._forgot.getForgot(value).then((res:any) => {
             this.spin = false;
-            if (res.message == "success") {
-                this.btnShow = false;
+            if (res.body.message == "success") {
+                // this.btnShow = false;
                 this._toast.toast("Check your inbox to retrieve your password!", 3000, "top");
             }
             this._toast.toast(res.message, 3000, "top");
+        }, (err)=>{
+            if (err.status === 500) {
+                this.spin = false;
+                this._toast.toast(JSON.parse(err['_body']).message, 3000);
+            }
         }).catch(err => {
             if (err.status === 500) {
+                this.spin = false;
             }
         });
     }

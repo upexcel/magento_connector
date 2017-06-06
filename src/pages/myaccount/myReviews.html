@@ -10,13 +10,13 @@
             <h3>{{data.review_title}}</h3>
             <p text-wrap>{{data.review_detail}}</p>
             <span item-right>
-             <p>{{data.review_date | date:'dd MMM yyyy'}}</p>
-            <a (click)="viewDetails(data)"><span class="color capitalize" > view details</span></a>               
+             <p>{{data.review_date | customdate:'DD MMM YYYY'}}</p>
+            <a (tap)="viewDetails(data)"><span class="color capitalize" > view details</span></a>               
             </span>
            
         </ion-item>
-    </ion-list>    
-    <h3 *ngIf="myReviewRes && !myReviewRes.success">
-        You have no reviews.
-    </h3>
+        <h3 *ngIf="myReviewRes && !myReviewRes.success_data" class="center">
+            You have no reviews.
+        </h3>
+    </ion-list>
 </ion-content>                    

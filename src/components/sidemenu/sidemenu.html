@@ -11,7 +11,7 @@
                     <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
                     <ion-list *ngIf="list1.showDetails">
                         <span *ngFor="let glist of list1.children">
-                            <ion-item  *ngIf="glist.include_in_menu=='true'" id="sidemenuList" (click)="gotoCategoryProduct(glist.id,glist.name)">
+                            <ion-item  *ngIf="glist.include_in_menu=='true'" id="sidemenuList" (tap)="gotoCategoryProduct(glist.id,glist.name)">
                                 {{glist.name}}
                             </ion-item>
                         </span>
