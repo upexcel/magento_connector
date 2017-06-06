@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
         this._homeProductsConfig.getHomeProducts(body, recoll).then((res) => {
             if (res) {
                 this.homeProduct = res;
-                this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                this.feature_products =this.homeProduct? slice(this.homeProduct.body, this.start, this.end) : [];
                 this.spin = false;
             }
         })
@@ -77,7 +77,7 @@ export class HomePage implements OnInit {
                     if (res) {
                         this.spin = false;
                         this.homeProduct = res;
-                        this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                        this.feature_products = this.homeProduct? slice(this.homeProduct.body, this.start, this.end) : [];
                     }
                 });
             }
@@ -85,11 +85,12 @@ export class HomePage implements OnInit {
     }
 
     doInfinite(infiniteScroll) {
+    if(this.homeProduct){
         if (this.homeProduct.body.length % 2 == 0) {
             if (this.homeProduct.body.length > this.end) {
                 setTimeout(() => {
                     this.end += 4;
-                    this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                    this.feature_products =this.homeProduct? slice(this.homeProduct.body, this.start, this.end) : [];
                     infiniteScroll.complete();
                 }, 100);
             } else {
@@ -107,7 +108,7 @@ export class HomePage implements OnInit {
                 else {
                     setTimeout(() => {
                         this.end += 4;
-                        this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                        this.feature_products =this.homeProduct? slice(this.homeProduct.body, this.start, this.end) :[];
                         infiniteScroll.complete();
                     }, 30);
                 }
@@ -116,7 +117,7 @@ export class HomePage implements OnInit {
                 infiniteScroll.complete();
                 infiniteScroll.enable(false);
             }
-        }
+        }}
 
     }
     doRefresh(refresher) {

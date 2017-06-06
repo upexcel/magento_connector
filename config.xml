@@ -3,7 +3,7 @@
     <name>excellence_magento</name>
     <description>Ready to use mobile app extension for Magento store. Now, online store owners can just install this plugin to their Magento store, create mobile app and get ready for sale.</description>
     <author email="excellencetechnologies08@gmail.com" href="http://ionicframework.com/">Manish prakash</author>
-    <content original-src="index.html" src="http://192.168.1.105:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -86,11 +86,11 @@
     </feature>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.1.105:8100" />
+    <allow-navigation href="http://192.168.1.6:8100" />
+    <allow-navigation href="http://192.168.1.104:8100" />
     <engine name="android" spec="~6.1.2" />
     <engine name="ios" spec="^4.4.0" />
-    <plugin name="com.cesidiodibenedetto.filechooser" spec="https://github.com/caixiangsap/filechooser.git" />
     <plugin name="cordova-plugin-app-event" spec="^1.2.0" />
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-facebook4" spec="^1.7.4">

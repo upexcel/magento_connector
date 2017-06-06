@@ -2,7 +2,7 @@
 <ion-content class="empty-cart" *ngIf="!res || res.length == 0">
     <img src="assets/image/empty-cart.png">
     <h3>Your Shopping Cart is empty</h3>
-</ion-content>
+</ion-content> m
 <ion-content class="cart" *ngIf="res && res.cart_items && res.cart_items.length > 0">
     <span class="backgroundGray">
         <ion-card  *ngFor="let data of res.cart_items">
@@ -18,14 +18,14 @@
                             <ion-col class="font10" col-12>
                                 <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
                             </ion-col> 
-                        </ion-row>
+                        </ion-row> 
                     </ion-col>
                     <ion-col col-7>
                         <ion-row>
-                            <ion-col col-9 class="size capitalize">
+                            <ion-col col-8 class="size capitalize">
                                 {{data.product_name}}
                             </ion-col>
-                            <ion-col col-3 class="alignRight">
+                            <ion-col col-4 class="alignRight">
                                 <select [(ngModel)]="data.product_qty" (change)="changeQuantity(data)" class="qtySelectlist">
                                     <option>1</option>
                                     <option>2</option>

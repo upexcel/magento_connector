@@ -1,6 +1,17 @@
 iframe{
     height:100% !important;
 }
+ my-download ,edit-account ,my-reviews{
+ .item-ios{ 
+    padding-left: 0px !important;;
+    }
+    }
+
+    product-review{
+    span.item-ios{
+    margin:0px !important;
+    padding-left:0px !important;
+    }} 
  edit-address{
 .scroll-content {
         margin-top: 0px !important;
@@ -743,6 +754,9 @@ checkout{
     .border-bottom .item-block .item-inner{
         border-bottom: 1px solid #dedede!important;
     }
+}
+.email-border-bottom{
+     border-bottom: 1.5px solid #c8c7cc!important;
 }
 .refresher-active{
     background: #ddd;

@@ -1,35 +1,33 @@
 <div *ngIf="reviewShow">    
     <ion-card class="card" >
         <ion-card-content class="no-padding">
-            <ion-row>
-                <ion-col>
-                    <ion-row>
-                        <ion-col>
+            <ion-item style="padding-right: 0px;">
+                <span item-start style="margin: 0px;">
+          
                             <p class="margin-but totalReviewAvg20">{{productReview.body.rating | singleDecimal}} /&nbsp;{{getRating.body.max_review}}</p>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="overflow" *ngIf="productReview.body.rating">
+                     
+                    <span class="overflow" *ngIf="productReview.body.rating">
                         <div class="ratingContainer">
                             <div class="ratingColor"></div>
                             <div class="ratingAverage" [style.width]=" productReview.body.rating * 20 + '%'"></div>
                             <div class="star"></div>
                         </div>
-                    </ion-row>
+                    </span>
                     <ion-row>
                         <ion-col>
                             <p class="gray">{{productReview.body.total_review}} Review(s)</p>
                         </ion-col>
                     </ion-row>
-                </ion-col>
-                <ion-col class="bar">
+                </span>
+                <span class="bar" style="margin-left: 0px;" item-end>
                     <ion-buttons  *ngFor="let rating of graphRating">
-                    <ion-row>
-                        <ion-col col-4> <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span> </ion-col>
-                       <ion-col col-8> <progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></ion-col>
-                       </ion-row>
+                    <ion-item style="padding-left: 0px;">
+                        <span item-start style="margin: 0px;">  <ion-icon name="star" ></ion-icon> <span>{{rating.value}} </span> </span>
+                       <span item-end style="margin: 0px;"> <progress max="{{getRating.body.max_review}}" value="{{rating.key}}" ></progress></span>
+                       </ion-item>
                     </ion-buttons>
-                </ion-col>
-            </ion-row>
+                </span>
+            </ion-item>
         </ion-card-content>
 
     </ion-card>
@@ -48,7 +46,7 @@
         </ion-item>
     </ion-list> 
 </div>
-<div *ngIf="!reviewShow && !additionalInformationData" [ngClass]="{'empty-review': !additionalInformationData ,center:true}">
+<div *ngIf="!reviewShow" [ngClass]="{'empty-review': (additionalInformationData && additionalInformationData.length == 0) ,center:true}">
     <ion-spinner *ngIf="productReviewSpin"></ion-spinner>
 </div>
 <btn-full *ngIf="!productReviewSpin" [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton'" (onBtnClick)="addReview()"></btn-full>

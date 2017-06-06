@@ -1,5 +1,9 @@
+.ios{
+    .datetime-ios{
+        padding: 0px 1.3em 0px 0px;
+    }
+}
 .product {
-
     .share{
     font-size: 1.8em;
     }   
@@ -307,6 +311,7 @@ progress[value] {
     -webkit-appearance: none;
     appearance: none;
     height: 10px;
+    width:8em;
 }
 progress[value]::-webkit-progress-bar {
     background-color: #eee;
