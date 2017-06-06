@@ -46,7 +46,7 @@
         "cordova-plugin-whitelist": "^1.2.2",
         "cordova-plugin-x-socialsharing": "^5.1.8",
         "cordova-plugin-x-toast": "^2.6.0",
-        "de.appplant.cordova.plugin.local-notification": "git+https://github.com/katzer/cordova-plugin-local-notifications.git",
+        "de.appplant.cordova.plugin.local-notification": "git+https://github.com/EddyVerbruggen/cordova-plugin-local-notifications.git",
         "es6-promise-plugin": "^4.1.0",
         "intl": "^1.2.5",
         "ionic-angular": "3.3.0",
@@ -93,13 +93,13 @@
                 "APP_ID": "1733669750287916",
                 "APP_NAME": "Invision"
             },
-            "de.appplant.cordova.plugin.local-notification": {},
             "cordova-plugin-x-socialsharing": {},
             "cordova-plugin-google-analytics": {},
             "cordova-plugin-googleplus": {
                 "REVERSED_CLIENT_ID": "985302084212-vfbei5p9hummk7fiqlme58n7ci8426gr.apps.googleusercontent.com"
             },
-            "cordova-plugin-firebase": {}
+            "cordova-plugin-firebase": {},
+            "de.appplant.cordova.plugin.local-notification": {}
         },
         "platforms": [
             "android",

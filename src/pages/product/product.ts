@@ -117,6 +117,7 @@ export class ProductPage implements OnInit {
     }
     doRefresh(refresher) {
         this.productData = null;
+        this.spin = true;
         this._appConfigService.resetDataInService();
         this.products().then((res) => {
             if (res) {
