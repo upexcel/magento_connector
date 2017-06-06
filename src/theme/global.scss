@@ -240,9 +240,11 @@ change-pass,edit-account,edit-address{
         background: #fff !important;
     }    
     .eye{
-    right: 15px;
-    top: 24px;
-    z-index: 999;
+        right: 15px;
+        top: 24px;
+        z-index: 999;
+        font-size:2em;
+        padding: 5px 10px 5px 10px;
     } 
 }
 img-zoom{
