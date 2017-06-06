@@ -84,16 +84,23 @@
                         </ion-col>
                     </ion-row>                   
                 </ion-grid>
-                    <ion-item >
-                    <span item-start class="no-margin">
-                     <h2 class="padL10 widthA floatLeft"> Default Shipping</h2>
-                            <ion-checkbox color="dark" class=" floatLeft idthA no-margin" [disabled]="disable || spin" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>   
-                    </span>
-                            <span item-end class="no-margin">
-                                       <h2 class="floatLeft widthA">Default Billing</h2>
-                            <ion-checkbox class=" widthA no-margin floatLeft" color="dark" [disabled]="disable || spin" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox>  
-                            </span>
-                    </ion-item>
+                    <ion-grid>
+                     <ion-row>
+                        <ion-col col-2 class="no-padding"></ion-col>
+                         <ion-col col-10 class="no-padding">
+                         <h2 class="widthA floatLeft"> Default Shipping</h2>
+                             <ion-checkbox color="dark" class=" floatRight idthA no-margin" [disabled]="disable || spin" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
+                         </ion-col>
+                         </ion-row>
+                    <ion-row class="padTop10">
+                         <ion-col col-2 class="no-padding"></ion-col>
+                         <ion-col col-10 class="no-padding">
+                            <h2 class="floatLeft widthA">Default Billing</h2>
+                            <ion-checkbox class=" widthA no-margin floatRight" color="dark" [disabled]="disable || spin" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox> 
+                             
+                         </ion-col>
+                     </ion-row>
+                    </ion-grid>
 
             </ion-card-content>
         </ion-card>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget
     android-packageName="com.magento.excellence"
-    ios-CFBundleIdentifier="com.excellence.magento"version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    ios-CFBundleIdentifier="com.excellence.magento" id="com.excellence.magento" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>excellence_magento</name>
   <description>Ready to use mobile app extension for Magento store. Now, online store owners can just install this plugin to their Magento store, create mobile app and get ready for sale.</description>
   <author email="excellencetechnologies08@gmail.com" href="http://ionicframework.com/">Manish prakash</author>

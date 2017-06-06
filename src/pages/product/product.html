@@ -1,13 +1,13 @@
 <header [pagename]="'product'" [title]='product'></header>
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
- <!--    <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
+    <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
             pullingText="Pull to refresh"
             refreshingSpinner="circles"
             refreshingText="Refreshing...">
         </ion-refresher-content>
-    </ion-refresher> --> 
+    </ion-refresher> 
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-grid no-padding *ngIf="productData">

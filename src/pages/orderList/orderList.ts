@@ -37,8 +37,10 @@ export class OrderlistPage implements OnInit {
                 this.total_orders();
                 this.selectedOrder_details();
             });
-            this.events.unsubscribe('user:fcm');
         });
+    }
+    ngOnDestroy() {
+        this.events.unsubscribe('user:fcm');
     }
 
     total_orders() {
