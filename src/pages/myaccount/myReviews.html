@@ -10,8 +10,8 @@
             <h3>{{data.review_title}}</h3>
             <p text-wrap>{{data.review_detail}}</p>
             <span item-right>
-             <p>{{data.review_date | date:'dd MMM yyyy'}}</p>
-            <a (click)="viewDetails(data)"><span class="color capitalize" > view details</span></a>               
+             <p>{{data.review_date | customdate:'DD MMM YYYY'}}</p>
+            <a (tap)="viewDetails(data)"><span class="color capitalize" > view details</span></a>               
             </span>
            
         </ion-item>

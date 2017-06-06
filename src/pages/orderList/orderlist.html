@@ -4,7 +4,7 @@
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
     <ion-list no-lines *ngFor="let dataItem of values">
-              <ion-list-header no-margin >{{dataItem.key| date: 'dd/MM/yyyy'}}</ion-list-header>
+              <ion-list-header no-margin >{{dataItem.key |customdate: 'DD/MM/YYYY'}}</ion-list-header>
         <ion-item class="orders">
             <section id="cd-timeline" class="cd-container"  *ngFor="let data of dataItem.value">
                      <div class="cd-timeline-block">
@@ -15,9 +15,9 @@
                          <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
                          <ion-icon color="red" name="close" *ngIf="data.status=='canceled'" ></ion-icon>
                     </div>
-                    <div (click)="gotoOrderDetail(data.orderId)">
+                    <div (tap)="gotoOrderDetail(data.orderId)">
                         <span class="order_key">#{{data.orderId}}</span>
-                        <span class="date_creation">{{data.created_at | date: 'hh:mm'}}</span>
+                        <span class="date_creation">{{data.created_at |customdate: 'HH:mm'}}</span>
                         <div class="cd-timeline-content">
                              <h2>Oder No: {{data.order_no}}</h2>
                             <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number }}</h2>

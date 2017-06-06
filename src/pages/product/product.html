@@ -7,7 +7,7 @@
             refreshingSpinner="circles"
             refreshingText="Refreshing...">
         </ion-refresher-content>
-    </ion-refresher>
+    </ion-refresher> 
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-grid no-padding *ngIf="productData">
@@ -33,7 +33,7 @@
                                         <h2 class="capitalize no-margin productName">{{productData.body.data.name}}</h2>
                                     </ion-col> 
                                     <ion-col class="no-margin no-padding" col-2 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
-                                             <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
+                                             <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (tap)="notifySet()"></btn-full>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
@@ -42,9 +42,9 @@
                                     </ion-col>
                                     <ion-col class="no-margin" col-2>
                                         <span class="productWishList" >
-                                            <ion-fab>
-                                                <button ion-fab mini (click)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon name="share"></ion-icon></button>
-                                            </ion-fab>
+                                            <span>
+                                                <button (tap)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon class="share"name="share"></ion-icon></button>
+                                            </span>
                                         </span>
                                     </ion-col> 
                                 </ion-row>
@@ -55,7 +55,7 @@
                                 <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
                                 <span [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
                                 <span class="floatRight">
-                                    <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (click)="wishList(productData.body)"></ion-icon>
+                                    <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (tap)="wishList(productData.body)"></ion-icon>
                                 </span>
                             </ion-col>
                         </ion-row>
@@ -74,8 +74,8 @@
                                 <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
                                     <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
                                         <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                            <ion-label no-margin class="font12">
-                                                {{obj.label}}&nbsp;<span *ngIf="obj.price*1>0">+{{productData.body.data.currency_sign}}{{obj.price}}</span>
+                                            <ion-label no-margin class="font12" *ngIf="obj.label">
+                                                {{obj.label}}&nbsp;<span *ngIf="obj && obj.price*1 > 0 " >+{{productData.body.data.currency_sign}}{{obj.price}}</span>
                                             </ion-label>
                                         </ion-option>
                                     </span>
@@ -85,7 +85,7 @@
                     </ion-row>
                 </span>
                 <!--for group product-->
-                <span *ngIf="type=='grouped'">
+                <span *ngIf="type=='grouped' && (productData || editCartData)">
                     <group [grouped]="productData.body" [editCartData]="editCartData" (sendData)="group($event)"></group>
                 </span>
 
@@ -116,7 +116,7 @@
                     </ion-col>
                 </ion-row>
                 <!--additionalInformation Data-->
-                <ion-list *ngIf="additionalInformationData.length > 0 ">
+                <ion-list *ngIf="additionalInformationData  && additionalInformationData.length > 0 ">
                     <h4 class="padLeft20 capitalize">Additional Information</h4>
                     <ion-item *ngFor="let info of additionalInformationData">
                         <ion-row>
@@ -126,7 +126,8 @@
                     </ion-item>
                 </ion-list>
                 <!--review directive-->
-                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData"> loading..</product-review>               
+                <span *ngIf="data && data.sku">
+                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData"> loading..</product-review> </span>              
             </ion-col>
         </ion-row>
     </ion-grid>

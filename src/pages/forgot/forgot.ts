@@ -6,6 +6,7 @@ import { Forgot } from '../../model/forgot/forgot';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { NavController, NavParams } from 'ionic-angular';
 @Component({
+    selector:'forgot',
     templateUrl: 'forgot.html'
 })
 export class ForgotPage implements OnInit {

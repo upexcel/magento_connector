@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {IonicApp, IonicModule} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {SocialSharing} from '@ionic-native/social-sharing';
+import { Keyboard } from '@ionic-native/keyboard';
 import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
@@ -116,6 +117,8 @@ import {ImageFallBackDirective} from '../directives/image/imagefallback.directiv
 
 //pipe
 import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
+import {CustomDatePipe} from '../pipe/date/dateFormate';
+
 @NgModule({
     declarations: [
         MyApp,
@@ -146,6 +149,7 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         SliderComponent,
         SideMenu,
         ReviewDisplayPipe,
+        CustomDatePipe,
         GoogleComponent,
         FacebookComponent,
         ProductReview,
@@ -262,6 +266,7 @@ import {ReviewDisplayPipe} from '../pipe/reviewdisplay/reviewdisplay';
         checkoutService,
         CMS,
         SocialSharing,
+        Keyboard,
         MyDownlodeData,
         MyReviewData,
         Firebase,

@@ -5,13 +5,13 @@
         <ion-list inset>
             <ion-item>
                 <ion-label floating>First Name <span color="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"lastName"' formControlName="firstname" clearInput></ion-input>
+                <ion-input  [onReturn]='"lastName"' formControlName="firstname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Last Name <span color="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"email"' id="lastName"  formControlName="lastname"  clearInput></ion-input>
+                <ion-input  [onReturn]='"email"' id="lastName"  formControlName="lastname"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item class="email-border-bottom">
                 <ion-label floating>Email<span  color="danger">*</span></ion-label>
                 <ion-input type="email" id="email" [onReturn]='"btn"' class="lowercase" formControlName="email" ></ion-input>
             </ion-item>

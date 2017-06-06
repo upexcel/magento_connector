@@ -1,12 +1,14 @@
 <ion-header class="primaryBackground">
-    <ion-buttons start class="floatLeft placeOrderIconButt" (click)="root()">
+    <ion-toolbar color="primary">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
-                <ion-icon name="arrow-round-back"></ion-icon>
+                <ion-icon name="arrow-back"></ion-icon>
         </button>
     </ion-buttons>
     <ion-title class="uppercase text">
         ORDER PLACED
     </ion-title>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-card>
@@ -16,7 +18,7 @@
                 <h2>THANK YOU FOR YOUR PURCHASE!</h2>
                 <p>Your order # is: <b>{{orderId}}</b>.</p>
                 <p>You will receive an order confirmation email with details of your order and a link to track its progress.</p>
-                <p class="primary" (click)="viewOrderDetail()">View Details <i class="fa fa-lg fa-angle-right" aria-hidden="true"></i></p>
+                <p class="primary" (tap)="viewOrderDetail()">View Details <i class="fa fa-lg fa-angle-right" aria-hidden="true"></i></p>
             </div>
         </ion-card-content>
 
