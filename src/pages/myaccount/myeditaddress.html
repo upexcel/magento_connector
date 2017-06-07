@@ -1,8 +1,8 @@
 <ion-header class="primaryBackground">
-    <ion-toolbar color="primary" *ngIf="platform()">
+    <ion-toolbar color="primary" *ngIf="platform()" style="padding-top: 20px;">
     <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
-                <ion-icon name="arrow-back"></ion-icon>
+                <ion-icon name="arrow-back"></ion-icon> Back
         </button>
     </ion-buttons>
     <ion-title class="uppercase text">
@@ -38,11 +38,11 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Fax</ion-label>
-                <ion-input type="number" min="0" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete></ion-input>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Mobile Number <span class="danger">*</span></ion-label>
-                <ion-input type="number" min="0" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete></ion-input>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Address <span class="danger">*</span></ion-label>
@@ -54,7 +54,7 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Pin Code <span class="danger">*</span></ion-label>
-                <ion-input type="number" min="0" formControlName="zip" id="Pin"  autocorrect autocomplete></ion-input>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="zip" id="Pin"  autocorrect autocomplete></ion-input>
             </ion-item>
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                 <ion-label  >Country<span class="danger">*</span></ion-label>

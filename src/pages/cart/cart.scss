@@ -16,7 +16,7 @@ cart{
         white-space: normal;
     }
     .select-icon {
-        display: none;
+        //display: none;
     }
     .maxht{
         max-height: 150px;
@@ -45,9 +45,10 @@ cart{
         width: 42px;    
     }
     .qtySelectlist{
-        width: 3em; 
-        margin-right: 10px;
-        width: 100%;
+        max-width: 100%;
+        .select-text{
+            text-align:right;
+        }
     }
     .alignRight{
         text-align: right;

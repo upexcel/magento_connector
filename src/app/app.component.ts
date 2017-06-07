@@ -29,7 +29,7 @@ export class MyApp implements OnInit {
     rootPageName: string;
     constructor(public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
-            this.keyboard.hideKeyboardAccessoryBar(false);
+            // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
             this._fcmService.initFCM();
             this.fcm();

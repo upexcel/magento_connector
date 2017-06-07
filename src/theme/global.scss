@@ -1,3 +1,12 @@
+.ios{
+    ion-item.ng-dirty.ng-invalid{
+        border-color: red!important;
+    }
+    ion-item.ng-dirty.ng-valid{
+        border-color: blue!important;
+    }
+}
+
 iframe{
     height:100% !important;
 }
@@ -731,9 +740,17 @@ edit-address ,filter {
 }  
 }
 .toolbar-ios {
-ion-title{
-    padding: 15px 60px 1px !important;
-}}
+    ion-title{
+        padding: 15px 90px 1px !important;
+    }
+}
+sidemenu{
+    .toolbar-ios {
+        ion-title{
+            padding: 15px 60px 1px !important;
+        }
+    }
+}
 ::-webkit-scrollbar { 
     display: none; 
 }

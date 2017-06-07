@@ -20,7 +20,7 @@
                         <span *ngIf="group.price *1 >0"> {{grouped.data.currency_sign}}{{group.price | number}}</span></span>
                     <span *ngIf="group.final_price *1 >0">{{grouped.data.currency_sign}}{{group.final_price | number}}</span></td>
                 <td>
-                    <input type="number" min="1" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
+                    <input type="number" min="1" pattern="[0-9]*" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
                 </td>
             </tr>
         </tbody>

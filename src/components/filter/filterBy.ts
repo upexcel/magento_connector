@@ -35,7 +35,7 @@ export class FilterBy {
                     this.price = value;
                 }
             })
-        this._filterService.getFilterPrice().then((res) => {
+        this._filterService.getFilterPrice().then((res:any) => {
             if(res && res.lower){
                 this.dualValue2.lower = res.lower;
                 this.dualValue2.upper = res.upper; 

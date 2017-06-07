@@ -22,18 +22,18 @@
                     </ion-col>
                     <ion-col col-7>
                         <ion-row>
-                            <ion-col col-8 class="size capitalize">
+                            <ion-col col-8 class="size capitalize no-padding">
                                 {{data.product_name}}
                             </ion-col>
-                            <ion-col col-4 class="alignRight">
-                                <select [(ngModel)]="data.product_qty" (change)="changeQuantity(data)" class="qtySelectlist">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option *ngIf="data.product_qty > 4">{{data.product_qty}}</option>
-                                    <option>More</option>
-                                </select>
+                            <ion-col col-4 class="no-padding">
+                                <ion-select interface="action-sheet" [(ngModel)]="data.product_qty" (ngModelChange)="changeQuantity(data)" class="qtySelectlist">
+                                    <ion-option>1</ion-option>
+                                    <ion-option>2</ion-option>
+                                    <ion-option>3</ion-option>
+                                    <ion-option>4</ion-option>
+                                    <ion-option *ngIf="data.product_qty > 4">{{data.product_qty}}</ion-option>
+                                    <ion-option>More</ion-option>
+                                </ion-select>
                                 <!--<input type="number" placeholder="qty"  [(ngModel)]="data.product_qty"  (change)="changeQuantity(data)" min="1" class="inputSize">-->
                             </ion-col>
                         </ion-row>
