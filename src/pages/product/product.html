@@ -126,7 +126,7 @@
                     </ion-item>
                 </ion-list>
                 <!--review directive-->
-                <span *ngIf="reviewLoader && data">
+                <span *ngIf="reviewLoader && (data && data.sku)">
                 <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData"> loading..</product-review> </span>              
             </ion-col>
         </ion-row>

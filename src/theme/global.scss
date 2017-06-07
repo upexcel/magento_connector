@@ -2,6 +2,9 @@ iframe{
     height:100% !important;
 }
  .ios{
+    .sortIcon{
+        font-size: 3rem;
+    }
  my-download ,edit-account ,my-reviews{
  .item-ios{ 
     padding-left: 0px !important;;
@@ -23,6 +26,9 @@ iframe{
  } 
 
 .md{
+    .sortIcon{
+        font-size: 2rem;
+    }
 my-download ,edit-account ,my-reviews,home,about-us,cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,start-page,tour,wishList,categoryProduct,saved-address{
     .scroll-content {
         margin-top: 60px !important;   
@@ -117,6 +123,9 @@ edit-address{
 }   
 .marRight{
     margin-right: 5px !important;
+}  
+.marRight10{
+    margin-right: 10px !important;
 }
 .cartPrice{
     margin: 0px auto;
