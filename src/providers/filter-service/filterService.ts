@@ -7,10 +7,15 @@ export class FilterService {
     filterData: any = [];
     count: number = 0;
     index: number;
+    price:any;
     constructor() { }
     resetFilterData() {
         this.filterData = [];
         this.count = 0;
+        this.price={};
+    }
+    setFilterPrice(price){
+        this.price=price;
     }
     setFilterData(data) {
         if (this.filterData && this.filterData.length > 0) {
@@ -38,6 +43,11 @@ export class FilterService {
     getFilterData() {
         return new Promise((resolve, reject) => {
             resolve(this.filterData)
+        })
+    }
+    getFilterPrice() {
+        return new Promise((resolve, reject) => {
+            resolve(this.price);
         })
     }
 }

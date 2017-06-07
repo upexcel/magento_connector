@@ -35,10 +35,17 @@ export class FilterBy {
                     this.price = value;
                 }
             })
-            if (this.price) {
-                this.dualValue2.lower = this.price.price.Min;
+        this._filterService.getFilterPrice().then((res) => {
+            if(res && res.lower){
+                this.dualValue2.lower = res.lower;
+                this.dualValue2.upper = res.upper; 
+                }else{
+                if (this.price) {
+                 this.dualValue2.lower = this.price.price.Min;
                 this.dualValue2.upper = this.price.price.Max;
-            }
+                this._filterService.setFilterPrice(this.dualValue2);
+                }  }         
+        });
         })
         this.checkedData = [];
         if (this.data) {
@@ -60,6 +67,7 @@ export class FilterBy {
     }
 
     range() {
+    this._filterService.setFilterPrice(this.dualValue2);  
     }
     subOptionLength(data) {
         let count = 0;
@@ -95,6 +103,7 @@ export class FilterBy {
         
     }
     applyFilter() {
+        this._filterService.setFilterPrice(this.dualValue2);
         this.checkedData.push({ "price": this.dualValue2 });
         this._events.publish('filter:data', { data: { "filterBy": this.checkedData } });
         this._viewCtrl.dismiss();
