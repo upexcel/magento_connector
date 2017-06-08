@@ -38,6 +38,11 @@ iframe{
     .sortIcon{
         font-size: 2rem;
     }
+    cart{
+    .button-inner {
+    -webkit-justify-content: center !important;;
+    -ms-flex-pack: center !important;;
+    justify-content: center !important;}}
 my-download ,edit-account ,my-reviews,home,about-us,cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,start-page,tour,wishList,categoryProduct,saved-address{
     .scroll-content {
         margin-top: 60px !important;   

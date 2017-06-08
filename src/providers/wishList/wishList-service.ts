@@ -111,7 +111,7 @@ export class WishListService {
                 forEach(this.seviceData, (value, key) => {
                     let entity_id = value.data.entity_id || value.entity_id;
                     if (value && entity_id == data.data.entity_id) {
-                        this._toast.toast(data.data.name + "has been removed from your wishlist", 3000);
+                        this._toast.toast(data.data.name + " has been removed from your wishlist", 3000);
                         this._wishList.deleteWishlist({"itemId": value.wishlist_id}).then((deleteRes) => {
                             this._homeProductsService.updateHomeProductWishlist(data.data.entity_id, false);
                             this._dataConfigService.updateDataInServiceForWishlist(data.data.entity_id, false);
