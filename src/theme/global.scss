@@ -31,9 +31,17 @@ iframe{
     .item-ios{
     padding-left: 0px !important;;
     }
-    }
- } 
-
+    }  
+    } 
+    tour{
+        .scroll-content {
+        margin-top: 0px !important; 
+        overflow: auto !important;  
+    } }
+    start-page{
+         .scroll-content {
+        overflow: auto !important;  
+    }  }
 .md{
     .sortIcon{
         font-size: 2rem;
@@ -43,10 +51,11 @@ iframe{
     -webkit-justify-content: center !important;;
     -ms-flex-pack: center !important;;
     justify-content: center !important;}}
-my-download ,edit-account ,my-reviews,home,about-us,cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,start-page,tour,wishList,categoryProduct,saved-address{
+my-download ,edit-account ,my-reviews,home,about-us,cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address{
     .scroll-content {
         margin-top: 60px !important;   
     }  
+} 
 }
 orderid-detail{
      .scroll-content {
@@ -59,10 +68,11 @@ orderid-detail{
 edit-address{
     padding: 0px !important;
 }
-    sidemenu ,home{.toolbar-title {
+    sidemenu ,home{
+    .toolbar-title {
      padding: 4px 12px 10px 10px !important;
-    }}
-}
+    }
+    }
 
 .alignright{
     text-align: right;
