@@ -136,7 +136,6 @@ export class Checkout implements OnInit {
                         this._navCtrl.popToRoot();
                     })
                 }
-                console.log("ooooooo");
                 this._keyboard.close();
                 this.spin = false;
             }

@@ -201,7 +201,7 @@ export class CartPage implements OnInit {
                 res=res['body'];
                 this.res['subtotal_without_discount'] = res.subtotal_without_discount;
                 this.res['discount'] = res.discount;
-                this.res['grandtotalPrice'] = res.grandtotal;
+                this.res['grandtotal'] = res.grandtotal;
                 this.res['tax'] = res.tax;
                 this.res['shipping_amount'] = res.shipping_amount;
                 this.res['subtotal_with_discount'] = res.subtotal_with_discount;
