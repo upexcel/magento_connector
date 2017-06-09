@@ -89,7 +89,7 @@
     <allow-navigation href="http://192.168.1.6:8100" />
     <allow-navigation href="http://192.168.1.104:8100" />
     <allow-navigation href="*" />
-    <engine name="android" spec="~6.1.2" />
+    <engine name="android" spec="^6.1.2" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-app-event" spec="^1.2.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />

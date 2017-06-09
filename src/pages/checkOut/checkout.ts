@@ -11,6 +11,7 @@ import { ToastService } from './../../providers/toast-service/toastService';
 import { PlacedOrder } from './../placedOrder/placedOrder';
 import { Events } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
+import { Keyboard } from '@ionic-native/keyboard';
 //declare let RazorpayCheckout: any;
 declare let StripeCheckout: any;
 @Component({
@@ -38,7 +39,7 @@ export class Checkout implements OnInit {
     spin: boolean = false;
     currency_sign: string;
     validate = { "payment": false, "shipping": false, "shippingAddress": false };
-    constructor(private platform: Platform, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
+    constructor(private _keyboard: Keyboard,private platform: Platform, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) { }
     ngOnInit() {
         this.cartData = this._navParams.get('res');
         this._address.getAddress().then((address) => {
@@ -131,9 +132,12 @@ export class Checkout implements OnInit {
                     data['success'] = "false";
                     this._checkoutService.updateStripePayment(data).then((res) => {
                         this._toast.toast('Payment cancel by user', 3000);
+                        this._keyboard.close();
                         this._navCtrl.popToRoot();
                     })
                 }
+                console.log("ooooooo");
+                this._keyboard.close();
                 this.spin = false;
             }
         });

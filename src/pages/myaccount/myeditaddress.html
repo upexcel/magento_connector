@@ -1,5 +1,5 @@
 <ion-header class="primaryBackground">
-    <ion-toolbar color="primary" *ngIf="platform()" style="padding-top: 20px;">
+    <ion-toolbar color="primary" showWhen="ios" style="padding-top: 20px;">
     <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
                 <ion-icon name="arrow-back"></ion-icon> Back
@@ -9,7 +9,7 @@
         {{title}}
     </ion-title>
     </ion-toolbar>
-    <span *ngIf="!platform()">
+    <span showWhen="android">
         <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
                 <ion-icon name="arrow-back"></ion-icon>

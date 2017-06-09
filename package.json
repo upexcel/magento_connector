@@ -30,7 +30,7 @@
         "@ionic-native/status-bar": "3.10.2",
         "@ionic/cli-plugin-proxy": "^1.2.0",
         "@ionic/storage": "2.0.1",
-        "cordova-android": "~6.1.2",
+        "cordova-android": "^6.1.2",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-app-event": "^1.2.0",
         "cordova-plugin-console": "^1.0.7",

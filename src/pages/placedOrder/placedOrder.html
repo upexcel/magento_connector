@@ -1,14 +1,24 @@
 <ion-header class="primaryBackground">
-    <ion-toolbar color="primary">
+    <ion-toolbar color="primary" showWhen="ios" style="padding-top: 20px;">
     <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
         <button ion-button icon-only >
-                <ion-icon name="arrow-back"></ion-icon>
+                <ion-icon name="arrow-back"></ion-icon> Back
         </button>
     </ion-buttons>
     <ion-title class="uppercase text">
         ORDER PLACED
     </ion-title>
     </ion-toolbar>
+    <span showWhen="android">
+        <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+       ORDER PLACED
+    </ion-title>
+    </span>
 </ion-header>
 <ion-content>
     <ion-card>
