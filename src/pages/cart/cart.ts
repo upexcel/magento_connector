@@ -197,17 +197,18 @@ export class CartPage implements OnInit {
                 this.couponCodeSpin = true;
             }
             this.data['couponcode'] = couponCode.trim();
-            this._cartFunction.applyCoupon(this.data).then((res) => {
+            this._cartFunction.applyCoupon(this.data).then((res:any) => {
+                res=res['body'];
                 this.res['subtotal_without_discount'] = res.subtotal_without_discount;
                 this.res['discount'] = res.discount;
                 this.res['grandtotalPrice'] = res.grandtotal;
                 this.res['tax'] = res.tax;
                 this.res['shipping_amount'] = res.shipping_amount;
                 this.res['subtotal_with_discount'] = res.subtotal_with_discount;
-                this.discount = res.body['discount'];
-                this.grandtotalPrice = res.body['grandtotal'];
-                this.tax = res.body['tax'];
-                this.totalPrice = res.body['subtotal_without_discount'];
+                this.discount = res['discount'];
+                this.grandtotalPrice = res['grandtotal'];
+                this.tax = res['tax'];
+                this.totalPrice = res['subtotal_without_discount'];
                 this.couponCodeSpin = false;
                 this.deleteCouponCodeSpin = false;
                 if (couponCode == 'delete') {
