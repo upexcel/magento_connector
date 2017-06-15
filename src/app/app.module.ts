@@ -39,6 +39,7 @@ import {AboutUs} from '../pages/aboutUs/aboutUs';
 import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
 import { Search } from '../pages/search/search';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 //model
 import {AppConfig} from '../model/appConfig/appConfig';
@@ -176,7 +177,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         PlacedOrder,
         Downloadable,
         ReviewDetails,
-        Search
+        Search,
+        ResetPasswordPage
     ],
     imports: [
         BrowserModule,
@@ -222,7 +224,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         Downloadable,
         MyReviews,
         Search,
-        ReviewDetails
+        ReviewDetails,
+        ResetPasswordPage
     ],
     providers: [
         AppConfig,

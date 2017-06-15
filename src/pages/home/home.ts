@@ -66,11 +66,13 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
-        this._cartFunction.setCartData();
         this.count++;
         this.spin = true;
         let body = { "type": "full" }
         this._appDataConfigService.getUserData().then((userData: any) => {
+            if (userData && userData.access_token){
+                this._cartFunction.setCartData();
+            }
             if (userData && userData.access_token && this.count == 1) {
                 this.homeProducts(true);
             } else {
