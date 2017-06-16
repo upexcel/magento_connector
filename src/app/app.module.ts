@@ -34,8 +34,7 @@ import {ReviewDetails} from '../pages/myaccount/reviewDetails';
 import {OfflinePage} from '../pages/offline/offline'
 import {wishList} from '../pages/wishList/wishList';
 import {Checkout} from '../pages/checkOut/checkout';
-import {Policy} from '../pages/policies/policies';
-import {AboutUs} from '../pages/aboutUs/aboutUs';
+import { cmsPages } from '../pages/cmsPages/cmsPages';
 import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
 import { Search } from '../pages/search/search';
@@ -171,8 +170,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         group,
         wishList,
         Checkout,
-        Policy,
-        AboutUs,
+        cmsPages,
         ContactUs,
         PlacedOrder,
         Downloadable,
@@ -217,8 +215,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         OfflinePage,
         wishList,
         Checkout,
-        Policy,
-        AboutUs,
+        cmsPages,
         ContactUs,
         PlacedOrder,
         Downloadable,

@@ -6,12 +6,12 @@ import { ChangepasswordPage } from './../../pages/changePassword/changePassword'
 import { OrderlistPage } from './../../pages/orderList/orderList';
 import { LogoutService } from './../../providers/logout/logout-service';
 import { MyEditAccount } from './../../pages/myaccount/myEditAccount';
-import { Policy } from './../../pages/policies/policies';
-import { AboutUs } from './../../pages/aboutUs/aboutUs';
+import { cmsPages } from './../../pages/cmsPages/cmsPages';
 import { ContactUs } from './../../pages/contactUs/contactUs';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { Downloadable } from './../../pages/myaccount/downloadableProduct';
 import { MyReviews } from './../../pages/myaccount/myReviews';
+import { CMS } from './../../model/cms/cms';
 
 @Component({
     selector: 'user-menu',
@@ -20,13 +20,29 @@ import { MyReviews } from './../../pages/myaccount/myReviews';
 export class PopoverPage {
     msg: string = "";
     usermenu: boolean;
-    constructor(private _events: Events, private _appConfigService: AppDataConfigService, private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
+    staticPagesList:any;
+    constructor(public _cms: CMS, private _events: Events, private _appConfigService: AppDataConfigService, private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
         this.tokenCheck();
         this._events.subscribe('check:loginSideMenu', (data) => {
             this.tokenCheck();
             this._events.unsubscribe('check:loginSideMenu');
         });
+        this.getStaticPageList();
     }
+
+    getStaticPageList() {
+        this._cms.getStaticPageList().then((res) => {
+            this.staticPagesList = res['body'];
+        }, (err)=>{
+            console.log(err);
+        })
+    }
+
+    gotoPage(pageDetails) {
+        this._navCtrl.push(cmsPages, {pageDetails});
+        this._menuCtrl.close();
+    }
+
     tokenCheck() {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
@@ -65,14 +81,6 @@ export class PopoverPage {
     }
     gotoContactUs() {
         this._navCtrl.push(ContactUs);
-        this._menuCtrl.close();
-    }
-    gotoAboutUs() {
-        this._navCtrl.push(AboutUs);
-        this._menuCtrl.close();
-    }
-    gotoPolicy() {
-        this._navCtrl.push(Policy);
         this._menuCtrl.close();
     }
     logout() {

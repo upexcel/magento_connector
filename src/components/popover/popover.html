@@ -28,13 +28,9 @@
             My Downloadable Products
         </button>
     </span>
-    <button  ion-item icon-left (tap)="gotoPolicy()" >
-             <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i>
-        Privacy Policy
-    </button>
-    <button  ion-item icon-left (tap)="gotoAboutUs()">
-             <i class="fa fa-info fa-lg pad5" aria-hidden="true"></i>
-        About Us
+    <button *ngFor="let page of staticPagesList;" ion-item icon-left (tap)="gotoPage(page)" >
+             <i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
+        {{page.title}}
     </button>
     <button  ion-item icon-left (tap)="gotoContactUs()">
              <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
