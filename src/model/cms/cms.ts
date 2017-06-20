@@ -7,20 +7,29 @@ import { Storage } from '@ionic/storage';
 export class CMS implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) { }
     ngOnInit() { }
-    getAboutUsInfo(data) {
+    getStaticPageList() {
         return new Promise((resolve, reject) => {
-            this.local.get('aboutUsInfo1').then((aboutUsInfo: string) => {
-                if (aboutUsInfo != null && aboutUsInfo != undefined) {
-                    resolve(aboutUsInfo);
+            this.local.get('getStaticPageList').then((getStaticPageList) => {
+                if (getStaticPageList != null && getStaticPageList != undefined) {
+                    resolve(getStaticPageList);
                 }
                 else {
-                    this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
-                        this.local.set('aboutUsInfo1', res);
+                    this._apiService.api("web/getStaticPageList", {}).subscribe((res: any) => {
+                        this.local.set('getStaticPageList', res);
                         resolve(res);
                     }, (err) => {
                         reject(err);
                     });
                 }
+            });
+        });
+    }
+    getStaticPageData(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
+                resolve(res);
+            }, (err) => {
+                reject(err);
             });
         });
     }
@@ -30,23 +39,6 @@ export class CMS implements OnInit {
                 resolve(res);
             }, (err) => {
                 reject(err);
-            });
-        });
-    }
-    getPrivacyInfo(data) {
-        return new Promise((resolve, reject) => {
-            this.local.get('privacyInfo1').then((privacyInfo: string) => {
-                if (privacyInfo != null && privacyInfo != undefined) {
-                    resolve(privacyInfo);
-                }
-                else {
-                    this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
-                        this.local.set('privacyInfo1', res);
-                        resolve(res);
-                    }, (err) => {
-                        reject(err);
-                    });
-                }
             });
         });
     }

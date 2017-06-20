@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-packageName="com.magento.excellence" id="com.excellence.magento" ios-CFBundleIdentifier="com.excellence.magento" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>excellence_magento</name>
+<widget android-packageName="com.magento.excellence" id="com.excellence.magento" ios-CFBundleIdentifier="com.excellence.magento" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>etech magento app</name>
     <description>Ready to use mobile app extension for Magento store. Now, online store owners can just install this plugin to their Magento store, create mobile app and get ready for sale.</description>
-    <author email="excellencetechnologies08@gmail.com" href="http://ionicframework.com/">Manish prakash</author>
+    <author email="support@xmagestore.com" href="http://ionicframework.com/">Manish prakash</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -89,7 +89,7 @@
     <allow-navigation href="http://192.168.1.6:8100" />
     <allow-navigation href="http://192.168.1.104:8100" />
     <allow-navigation href="*" />
-    <engine name="android" spec="~6.1.2" />
+    <engine name="android" spec="^6.1.2" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-app-event" spec="^1.2.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />

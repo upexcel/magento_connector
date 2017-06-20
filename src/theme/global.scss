@@ -51,9 +51,9 @@ iframe{
     -webkit-justify-content: center !important;;
     -ms-flex-pack: center !important;;
     justify-content: center !important;}}
-my-download ,edit-account ,my-reviews,home,about-us,cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address{
+my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
     .scroll-content {
-        margin-top: 60px !important;   
+        margin-top: 56px !important;   
     }  
 } 
 }
@@ -268,7 +268,7 @@ tour,register,img-zoom, about-us, policy{
         background: #fff;
     }  
 }
-change-pass,edit-account,edit-address{
+change-pass,edit-account,edit-address, page-reset-password{
     .scroll-content {
         background: #fff !important;
     }    

@@ -173,7 +173,7 @@ export class CartPage implements OnInit {
         }
     }
     c_Shopping() {
-        this._navCtrl.setRoot(HomePage);
+        this._navCtrl.popToRoot();
     }
     placeOrder() {
         this._appConfigService.getUserData().then((userData: any) => {

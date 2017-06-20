@@ -40,16 +40,6 @@ export class HomePage implements OnInit {
     }
     ngOnInit() {
         this._apiService.setNavControllerForService(this._navCtrl);
-        setTimeout(() => {
-            this._appDataConfigService.getUserData().then((userData: any) => {
-                if (userData && userData.access_token) {
-                    this._wishList.getWishListData({});
-                    this._myaccount.getMyAccount({}).then((res) => {
-                        this._address.setAddress(res);
-                    }, (err) => { })
-                }
-            })
-        }, 100);
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
@@ -66,13 +56,20 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
-        this._cartFunction.setCartData();
         this.count++;
         this.spin = true;
         let body = { "type": "full" }
         this._appDataConfigService.getUserData().then((userData: any) => {
+            if (userData && userData.access_token){
+                this._cartFunction.setCartData().then((resp) => {
+                }, (err) => { })
+            }
             if (userData && userData.access_token && this.count == 1) {
-                this.homeProducts(true);
+                this.homeProducts(false);
+                this._wishList.getWishListData({});
+                this._myaccount.getMyAccount({}).then((res) => {
+                this._address.setAddress(res);
+                }, (err) => { })
             } else {
                 this._homeProductsConfig.getHomeProducts(body).then((res) => {
                     if (res) {

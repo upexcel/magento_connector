@@ -3,7 +3,6 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ProductPage } from '../../pages/product/product';
 import { WishListService } from '../../providers/wishList/wishList-service';
-import { HomePage } from './../home/home';
 import { CartService } from './../../providers/cart-service/cart-service';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { CartPage } from '../cart/cart';
@@ -55,6 +54,6 @@ export class wishList {
         });
     }
     c_Shopping() {
-        this._nav.setRoot(HomePage);
+        this._nav.popToRoot();
     }
 }
