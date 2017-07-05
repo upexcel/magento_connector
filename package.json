@@ -23,6 +23,7 @@
         "@ionic-native/core": "3.10.2",
         "@ionic-native/firebase": "^3.4.4",
         "@ionic-native/google-maps": "^3.12.1",
+        "@ionic-native/in-app-browser": "^3.13.1",
         "@ionic-native/keyboard": "^3.12.1",
         "@ionic-native/local-notifications": "^3.4.4",
         "@ionic-native/photo-viewer": "^3.1.1",

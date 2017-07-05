@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-packageName="com.magento.excellence" id="com.excellence.magento" ios-CFBundleIdentifier="com.excellence.magento" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>etech magento app</name>
+    <name> magento connector</name>
     <description>Ready to use mobile app extension for Magento store. Now, online store owners can just install this plugin to their Magento store, create mobile app and get ready for sale.</description>
     <author email="support@xmagestore.com" href="http://ionicframework.com/">Manish prakash</author>
     <content src="index.html" />

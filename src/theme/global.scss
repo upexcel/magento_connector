@@ -5,6 +5,12 @@
     ion-item.ng-dirty.ng-valid{
         border-color: blue!important;
     }
+    ion-spinner * {
+  width: 28px;
+  height: 28px;
+  stroke: #000000 !important;
+  fill: #000000 !important;
+}
 }
 
 iframe{
@@ -188,7 +194,11 @@ search-page{
         line-height: 2.5;
 
     }
+
 }
+    .padding5{
+    padding:5px;
+    }
 .green{
     color: green;
 }

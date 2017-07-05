@@ -80,7 +80,6 @@ export class CartPage implements OnInit {
                                 return false;
                             } else {
                                 data.product_qty = promptData.qty;
-                                data['vertualQty'] = promptData.qty;
                                 let cartData = {}
                                 let qty = {};
                                 qty[data.product_id] = {};
@@ -91,8 +90,14 @@ export class CartPage implements OnInit {
                                 });
                                 loading.present();
                                 this._cartFunction.updateCart(cartData).then((res) => {
-                                    this.res = this._cartFunction.getCart();
-                                    this.createData(this.res);
+                                      if (res && res['body']['success']) {
+                                      this.res = this._cartFunction.getCart(); 
+                                      this.createData(this.res);
+                                      data['vertualQty']= data['product_qty'];
+                                      }else{
+                                         data['product_qty']=data['vertualQty'];
+                                      } 
+                                   
                                     loading.dismiss();
                                 }, (err) => {
                                     loading.dismiss();
@@ -106,7 +111,6 @@ export class CartPage implements OnInit {
         } else {
             let cartData = {}
             let qty = {};
-            data['vertualQty'] = data.product_qty;
             qty[data.product_id] = {};
             qty[data.product_id]['qty'] = data.product_qty;
             cartData['update_cart'] = qty;
@@ -115,8 +119,10 @@ export class CartPage implements OnInit {
             });
             loading.present();
             this._cartFunction.updateCart(cartData).then((res) => {
+                data['vertualQty']= data['product_qty'];
                 this.res = this._cartFunction.getCart();
                 this.createData(this.res);
+                data.product_qty=qty[data.product_id]['qty'];            
                 loading.dismiss();
             }, (err) => {
                 loading.dismiss();
@@ -215,6 +221,7 @@ export class CartPage implements OnInit {
                     this._toast.toast('Coupon Removed', 3000);
                     this.couponCode = '';
                 } else {
+                    
                     this._toast.toast('Coupon Applied', 3000);
                 }
             }, (err) => {

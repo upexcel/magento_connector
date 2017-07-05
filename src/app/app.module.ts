@@ -9,6 +9,7 @@ import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 //storage
 import {IonicStorageModule} from '@ionic/storage';
@@ -37,7 +38,7 @@ import {Checkout} from '../pages/checkOut/checkout';
 import { cmsPages } from '../pages/cmsPages/cmsPages';
 import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
-import { Search } from '../pages/search/search';
+import { SearchItemPage } from '../pages/search-item/search-item';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 //model
@@ -67,6 +68,7 @@ import {SortByModel} from '../model/sortBy/sortBy';
 import {FilterByModel} from '../model/filterBy/filterBy';
 import {WishListModel} from '../model/wishList/wishList';
 import {CMS} from '../model/cms/cms';
+import { SearchModel } from '../model/search/search';
 //service
 import {CartService} from '../providers/cart-service/cart-service';
 import {FinalPrice} from '../providers/cart-service/final-price';
@@ -175,8 +177,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         PlacedOrder,
         Downloadable,
         ReviewDetails,
-        Search,
-        ResetPasswordPage
+        ResetPasswordPage,
+        SearchItemPage
     ],
     imports: [
         BrowserModule,
@@ -220,9 +222,9 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         PlacedOrder,
         Downloadable,
         MyReviews,
-        Search,
         ReviewDetails,
-        ResetPasswordPage
+        ResetPasswordPage,
+        SearchItemPage
     ],
     providers: [
         AppConfig,
@@ -265,6 +267,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         WishListModel,
         checkoutService,
         CMS,
+        SearchModel,
         SocialSharing,
         Keyboard,
         MyDownlodeData,
@@ -272,6 +275,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         Firebase,
         LocalNotifications,
         fcmService,
-        EventService    ]
+        EventService,
+        InAppBrowser    ]
 })
 export class AppModule {}

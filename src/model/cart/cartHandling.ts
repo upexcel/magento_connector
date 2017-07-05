@@ -66,13 +66,15 @@ export class CartFunction implements OnInit {
     updateCart(newCartData) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
+
                 if (res && res['body']['success']) {
                     this.cartData = res['body'].success_data;
                     this._events.publish('cartItems:length', this.cartData ? this.cartData.cart_items.length : 0);
                 } else {
-                    this._toast.toast("update fail", 3000);
+                    this._toast.toast(res['body']['message'], 3000);
                 }
                 resolve(res);
+
             }, (err) => {
                 reject(err);
             });
