@@ -1,4 +1,4 @@
-<header [pagename]="'product'" [title]='product'></header>
+<header [pagename]="'product'" [search]='true' [title]='product'></header>
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
     <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content

@@ -21,7 +21,6 @@ export class ResetPasswordPage implements OnInit {
 		    }
 	}
 	resetPassword(model, isValid: boolean) {
-		console.log(model, isValid)
         this.spin = true;
         // let data = { "password": model.password, "newPassword": model.newPassword, access_token: this.access_token }
         // this._changePwd.getPwd(data).then((res: any) => {

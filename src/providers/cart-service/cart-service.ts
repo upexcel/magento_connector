@@ -18,6 +18,7 @@ export class CartService {
             if (editCartData) {
                 //                this.removeEditCartDataFromLocal(editCartData);
             }
+            console.log("data",data);
             this._cart.getCart(data).then((res) => {
                 //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
                 //                    .then((data) => {
@@ -34,7 +35,8 @@ export class CartService {
                 if (wishListAdd) {
                     this._toast.toast("Please specify options", 3000, "top");
                 } else {
-                    this._toast.toast("Add to cart fail please try again", 3000, "top");
+
+                    this._toast.toast(JSON.parse(err._body)["message"], 3000, "top");
                 }
 
                 reject(err);

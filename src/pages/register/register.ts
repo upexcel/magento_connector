@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,NgZone} from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HomePage } from './../home/home';
@@ -9,7 +9,7 @@ import {LoginDataType} from '../../model/login/loginDataType';
 import { ToastService } from './../../providers/toast-service/toastService';
 import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
 import { EmailValidator } from '../../validation/emailValidate'
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 @Component({
     selector : 'register',
     templateUrl: 'register.html'
@@ -18,8 +18,9 @@ export class RegisterPage implements OnInit {
     regForm: FormGroup;
     spin: boolean = false;
     clear: boolean = false;
+    browser:any;
     data: LoginDataType;
-    constructor(private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
+    constructor(private _ngZone: NgZone,private iab: InAppBrowser,private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) { }
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -67,5 +68,12 @@ export class RegisterPage implements OnInit {
                 this.spin = false;
                  this._toast.toast(JSON.parse(err._body).message, 3000);
             });
+    }
+    privacyPolicy(){
+         this._ngZone.run(() => {
+            this.browser = this.iab.create('https://xmagestore.com/privacy_policy.html', '_blank', 'hardwareback=yes ,location=yes');
+         });
+    
+    // this.browser.show();
     }
 }

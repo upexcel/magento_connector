@@ -1,6 +1,6 @@
 <ion-item  class="group no-padding" no-lines>
     <table cellspacing="10">
-        <thead>
+        <thead *ngIf="grouped && grouped.group_associated_products.length>0">
             <tr class="capitalize">
                 <th class="tableData">
                     name

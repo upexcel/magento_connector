@@ -5,6 +5,12 @@
     ion-item.ng-dirty.ng-valid{
         border-color: blue!important;
     }
+    ion-spinner * {
+  width: 28px;
+  height: 28px;
+  stroke: #000000 !important;
+  fill: #000000 !important;
+}
 }
 
 iframe{
@@ -16,7 +22,7 @@ iframe{
     }
  my-download ,edit-account ,my-reviews{
  .item-ios{ 
-    padding-left: 0px !important;;
+    padding-left: 0px !important;
     }
     }
     product-review{
@@ -43,6 +49,13 @@ iframe{
         overflow: auto !important;  
     }  }
 .md{
+.width80{
+    width:80%;
+}
+user-menu ,sidemenu{
+.item .item-inner{
+    border-width: 1px !important;
+}}
     .sortIcon{
         font-size: 2rem;
     }
@@ -188,7 +201,11 @@ search-page{
         line-height: 2.5;
 
     }
+
 }
+    .padding5{
+    padding:5px;
+    }
 .green{
     color: green;
 }
@@ -752,13 +769,14 @@ edit-address ,filter {
 .header {
    .toolbar-ios{
    // padding: 4px !important;
-}  
-}
-.toolbar-ios {
+} 
+ .toolbar-ios {
     ion-title{
         padding: 15px 90px 1px !important;
     }
 }
+}
+
 sidemenu{
     .toolbar-ios {
         ion-title{
@@ -822,6 +840,8 @@ header{
         }
     }
 }
+
+
 checkout{
     .border-bottom .item-block .item-inner{
         border-bottom: 1px solid #dedede!important;

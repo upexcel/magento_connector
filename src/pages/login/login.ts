@@ -12,6 +12,7 @@ import { AppDataConfigService } from './../../providers/appdataconfig/appdatacon
 import { SocialAccount } from './../../model/startPage/socialAccount';
 import { EmailValidator } from '../../validation/emailValidate';
 import { Checkout } from './../checkOut/checkout';
+import { CartFunction } from '../../model/cart/cartHandling';
 
 @Component({
     selector: 'login',
@@ -27,10 +28,12 @@ export class LoginPage implements OnInit {
     title: string = 'LOGIN';
     checkoutLogin: boolean = false;
     cartData: Array<any>;
-    constructor(public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
+    constructor( private _cartFunction: CartFunction,public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) { }
     ngOnInit() {
         this.checkoutLogin = this._navParams.get('checkoutLogin');
         this.cartData = this._navParams.get('res');
+        console.log(" this.cartData",this.cartData)
+        console.log("this.checkoutLogin",this.checkoutLogin)
         this._local.get('website_id').then((website_id: any) => {
             this.show_form = true;
             this.logform = new FormGroup({
@@ -60,6 +63,7 @@ export class LoginPage implements OnInit {
                 this.data = res;
                 this._appConfigService.setUserData(this.data.body);
                 if (this.checkoutLogin) {
+                    this._cartFunction.resetCart();
                     this._navCtrl.pop(Checkout);
                 } else {
                     this._navCtrl.setRoot(HomePage, { "access_token": this.data.body.access_token });

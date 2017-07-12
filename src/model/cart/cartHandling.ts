@@ -34,24 +34,32 @@ export class CartFunction implements OnInit {
         });
     }
     getCart() {
+        let length;
+        if(this.cartData){
         forEach(this.cartData.cart_items, (value, key) => {
             value.product_image = (value.product_image).replace(/"/g, "");
         })
-        let length = (this.cartData.cart_items) ? this.cartData.cart_items.length : this.cartData.length;
+         length = (this.cartData && this.cartData.cart_items) ? this.cartData.cart_items.length : this.cartData.length;
+       }else{
+        length=0;
+       }
         this._events.publish('cartItems:length', length);
         return this.cartData;
     }
     setCart(data) {
         this.cartData = data;
-        let length = (this.cartData.cart_items) ? this.cartData.cart_items.length : data.length;
+        let length = (this.cartData &&  this.cartData.cart_items) ? this.cartData.cart_items.length : data.length;
         this._events.publish('cartItems:length', length);
+    }
+    resetCart(){
+         this.cartData=null;
     }
     deleteItem(deletingItemData) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/deleteCartItems", deletingItemData).subscribe((res) => {
                 if (res && res['body']['success']) {
                     this.cartData = res['body'].updated_cart;
-                    let length = (this.cartData.cart_items) ? this.cartData.cart_items.length : this.cartData.length;
+                    let length = (this.cartData &&  this.cartData.cart_items) ? this.cartData.cart_items.length : this.cartData.length;
                     this._events.publish('cartItems:length', length);
                 } else {
                     this._toast.toast("Delete fail", 3000);
@@ -66,13 +74,16 @@ export class CartFunction implements OnInit {
     updateCart(newCartData) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/updateCartItems", newCartData).subscribe((res) => {
+
                 if (res && res['body']['success']) {
                     this.cartData = res['body'].success_data;
+                    this._toast.toast("The quantity has been successfully updated", 3000);
                     this._events.publish('cartItems:length', this.cartData ? this.cartData.cart_items.length : 0);
                 } else {
-                    this._toast.toast("update fail", 3000);
+                    this._toast.toast(res['body']['message'], 3000);
                 }
                 resolve(res);
+
             }, (err) => {
                 reject(err);
             });
