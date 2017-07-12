@@ -25,7 +25,6 @@ export class OrderModalPage implements OnInit {
         this.getOrderDetails(this.order_id);
          });
         this.events.subscribe('user:fcm', (orderid) => {
-            console.log(orderid);
             this.showOrder = false;
             this._ngZone.run(() => {
                 this.getOrderDetails(orderid);

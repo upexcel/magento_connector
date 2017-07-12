@@ -29,12 +29,15 @@ export class CartPage implements OnInit {
     tax: number = 0;
     grandtotalPrice: number = 0;
     deleteCouponCodeSpin: boolean = false;
+    placeOrderSpin:boolean=false;
     constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public _events: Events, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, private _cartFunction: CartFunction, public local: Storage, public _navCtrl: NavController, public navParams: NavParams, public _viewCtrl: ViewController) { }
     ngOnInit() {
         this.res = this._cartFunction.getCart();
+        console.log("get cart service",this.res);
         this.createData(this.res)
     }
     createData(cartData) {
+        if(cartData){
         this.totalPrice = cartData.subtotal_without_discount;
         this.discount = cartData.discount;
         this.grandtotalPrice = cartData.grandtotal;
@@ -49,7 +52,7 @@ export class CartPage implements OnInit {
                 products[key] = value.info_buyRequest['info_buyRequest'];
             })
             this.data['products'] = products;
-        }
+        }}
     }
     ionViewWillEnter() {
         this._events.publish('check:login', true);
@@ -182,6 +185,8 @@ export class CartPage implements OnInit {
         this._navCtrl.popToRoot();
     }
     placeOrder() {
+        if(!this.placeOrderSpin){
+        this.placeOrderSpin=true;
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData) {
                 if (this.res && this.res.cart_items && this.res.cart_items.length > 0) {
@@ -189,11 +194,14 @@ export class CartPage implements OnInit {
                 } else {
                     this._toast.toast("No product in cart. Please add first.", 3000);
                 }
+                this.placeOrderSpin=false;
             } else {
+                this.placeOrderSpin=false;
                 this._navCtrl.push(LoginPage, { checkoutLogin: true, res: this.res });
                 this._toast.toast("Please Login First !!", 3000);
             }
         })
+    }
     }
     applyCoupon(couponCode) {
         if (couponCode && couponCode.trim().length > 0) {

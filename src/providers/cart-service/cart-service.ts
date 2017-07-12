@@ -18,6 +18,7 @@ export class CartService {
             if (editCartData) {
                 //                this.removeEditCartDataFromLocal(editCartData);
             }
+            console.log("data",data);
             this._cart.getCart(data).then((res) => {
                 //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
                 //                    .then((data) => {

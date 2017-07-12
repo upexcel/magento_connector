@@ -139,10 +139,8 @@ export class MyApp implements OnInit {
     fcm() {
         this.firebase.grantPermission();
         this.firebase.hasPermission().then((data)=>{
-            console.log(data)
         })
         this.firebase.onNotificationOpen().subscribe(res => {
-        console.log("resL:ocalNotify",res)
             if (res.tap) {
                 setTimeout(() => {
                     this.nav.push(OrderModalPage, { order_id: res.increment_id });
