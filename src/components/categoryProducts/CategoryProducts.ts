@@ -63,7 +63,7 @@ export class CategoryComponent {
     }
     /** 
 *    gotoProduct
-* function ues move ProductPage
+* function use to move ProductPage
 **/
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {

@@ -32,7 +32,7 @@ export class CustomOption {
     constructor() {}
     /** 
 *    ngOnInit
-* function ues set editable data into fileds
+* function use to set editable data into fileds
 **/
     ngOnInit() {
         var dateObj = new Date();
@@ -181,7 +181,7 @@ export class CustomOption {
     }
     /** 
 *    text
-* function ues for text box event
+* function use for text box event
 **/
     text(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
@@ -203,7 +203,7 @@ export class CustomOption {
     }
     /** 
 *    textArea
-* function ues for textArea event
+* function use for textArea event
 **/
     textArea(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
@@ -225,7 +225,7 @@ export class CustomOption {
     }
     /** 
 *    onChangeSelect
-* function ues for  select list event
+* function use for  select list event
 **/
     onChangeSelect(data, formId, is_require) {
         this.selectObj = {};
@@ -239,7 +239,7 @@ export class CustomOption {
     }
     /** 
 *    onChangeRadio
-* function ues for sradio event
+* function use for radio event
 **/
     onChangeRadio(formId, is_require) {
         this.Radioobj = {};
@@ -253,7 +253,7 @@ export class CustomOption {
     }
     /** 
 *    onChangeMulti
-* function ues for multi select list event
+* function use for multi select list event
 **/
     onChangeMulti(data, formId, i, is_require) {
         this.multiObj = {};
@@ -277,7 +277,7 @@ export class CustomOption {
     }
     /** 
 *    onChangeCheck
-* function ues on check event  
+* function use on check event  
 **/
     onChangeCheck(selection, event, formId, is_require) {
         this.checkObj = {};
@@ -351,7 +351,7 @@ export class CustomOption {
     }
     /** 
 *    timeChanged
-* function ues for time change event
+* function use for time change event
 **/
     timeChanged(formId, is_require) {
         let array = [];
@@ -392,7 +392,7 @@ export class CustomOption {
     }
     /** 
 *    dateChanged
-* function ues for function ues for date change event
+* function use for date change event
 **/
     dateChanged(formId, is_require) {
         this.date = {};
@@ -426,7 +426,7 @@ export class CustomOption {
     }
     /** 
 *    calenderChanged
-* function ues for time and date change filed event
+* function use for time and date change filed event
 **/
     calenderChanged(formId, is_require) {
         var data; var dateObj;
@@ -457,7 +457,7 @@ export class CustomOption {
     }
     /** 
 *    checkVisiblety
-* function ues for check Visiblety
+* function use for check Visiblety
 **/
     checkVisiblety(obj) {
         if (obj.visable == false) {
@@ -469,7 +469,7 @@ export class CustomOption {
     }
     /** 
 *    formValidate
-* function ues for validation custom product
+* function use for validation custom product
 **/
     formValidate(data, flag, is_require) {
         if (is_require == "0") {
@@ -484,7 +484,7 @@ export class CustomOption {
     }
     /** 
 *    bundleJson
-* function ues for emit custom product data with total price
+* function use for emit custom product data with total price
 **/
     bundleJson() {
         var total = 0;

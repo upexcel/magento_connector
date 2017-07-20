@@ -68,14 +68,14 @@ export class FilterBy {
     }
     /** 
 *    range
-* function ues for set price range on service
+* function use  for set price range on service
 **/
     range() {
         this._filterService.setFilterPrice(this.dualValue2);
     }
     /** 
 *    subOptionLength
-* function ues to check sub option length
+* function use  to check sub option length
 **/
     subOptionLength(data) {
         let count = 0;
@@ -86,7 +86,7 @@ export class FilterBy {
     }
           /* 
  *    openModl
- * function ues for crate model for sub dat 
+ * function use  for crate model for filter sub data 
  **/
     openModal(title) {
         var data = '';

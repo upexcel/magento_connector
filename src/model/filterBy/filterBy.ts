@@ -9,7 +9,7 @@ export class FilterByModel implements OnInit {
     ngOnInit() {}
     /**
     * getFilterData
-    * coll category/filterby/ api
+    * call category/filterby/ api
     **/
     getFilterData(data): Promise<any> {
         return new Promise((resolve, reject) => {

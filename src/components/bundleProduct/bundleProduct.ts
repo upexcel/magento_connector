@@ -74,7 +74,7 @@ export class BundleProduct {
     }
     /** 
  *    fistTimeCreateData
- * function call as calllback 
+ * function call as callback 
  **/
     fistTimeCreateData(selection, value, m_Flag, cb) {
         if (selection.defaultSet == true) {
@@ -110,7 +110,7 @@ export class BundleProduct {
     }
     /* 
 *    onChangeBundleSelct
-* function call when any event perforn by select list
+* function call when any event perform by select list
 **/
     onChangeBundleSelect(bundleSelect, formId, is_require) {
         this.bundleSelected = {};
@@ -125,7 +125,7 @@ export class BundleProduct {
     }
     /**
 *    onChangeBundleMult
-* function call when any event perforn by multipul select list
+* function call when any event perform by multipul select list
 **/
     onChangeBundleMulti(bundleMulti, formId, i, is_require) {
         this.bundleMultiSelected = {};
@@ -151,7 +151,7 @@ export class BundleProduct {
     }
     /* 
 *    onChangeBundleChek
-* function call when any event perforn by checkbox
+* function call when any event perform by checkbox
 **/
     onChangeBundleCheck(selection, formId, is_require) {
         this.checkObj = {};
@@ -188,7 +188,7 @@ export class BundleProduct {
     }
     /* 
 *    onChangeRado
-* function call when any event perforn by radio
+* function call when any event perform by radio
 **/
     onChangeRadio(selection, formId, is_require) {
         this.radioChecked = {};
@@ -227,7 +227,10 @@ export class BundleProduct {
         obj["total"] = total;
         //        this.onChange.emit(total);
         this.bundleData(obj);
-    }     /**  *    formValidate * function call for check validation **/
+    }     /**
+            * formValidate
+            * function call for check validation
+            **/
     formValidate(data, flag, is_require) {
         let validateCount = 0;
         let obj;
@@ -252,7 +255,11 @@ export class BundleProduct {
         }
         this.calculateTotal(obj);
 
-    }     /**  *    checkVisiblety * function call for check validation **/
+    }   
+      /**
+     * checkVisiblety
+     *  function call for check validation
+     **/
     checkVisiblety(obj) {
         if (obj.visable == false) {
             obj.visable = true;

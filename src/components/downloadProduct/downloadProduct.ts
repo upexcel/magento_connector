@@ -25,7 +25,7 @@ export class DownloadProduct {
     constructor() {}
     /** 
 *    ngOnInit
-* function ues set editable data into fileds
+* function use to set editable data into fileds
 **/
     ngOnInit() {
         this.currencySign = this.data.body.data.currency_sign;
@@ -50,7 +50,7 @@ export class DownloadProduct {
     }
     /** 
 *    onChangeLink
-* function ues for onChangeLink event
+* function use  for onChangeLink event
 **/
     onChangeLink() {
         this.linkData = [];
@@ -63,7 +63,7 @@ export class DownloadProduct {
     }
           /* 
  *    onChangeSamle
- * function ues on click sample lnk
+ * function use  on click sample lnk
  **/
     onChangeSample(object, i, event) {
         if (event) {
@@ -75,7 +75,7 @@ export class DownloadProduct {
     }
     /** 
 *    calculateTotal
-* function ues for sub total 
+* function use  for sub total 
 **/
     calculateTotal() {
         var total = 0;

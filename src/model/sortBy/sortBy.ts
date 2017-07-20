@@ -10,7 +10,7 @@ export class SortByModel implements OnInit {
     ngOnInit() {}
     /**
 * getSortData
-*use to call category/sortby api if it is not in already fired
+*use to call category/sortby api if it is not already fired
 **/
     getSortData(data): Promise<any> {
         return new Promise((resolve, reject) => {

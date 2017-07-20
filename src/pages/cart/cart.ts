@@ -82,7 +82,7 @@ export class CartPage implements OnInit {
 /**    
 * changeQuantity    
 *    
-* function call when change quantity on cart page and pass item object(data) as parameter    
+* function use for quantity change     
 **/
     changeQuantity(data) {
         //check ,is user select pop up to write quantity
@@ -209,9 +209,9 @@ export class CartPage implements OnInit {
         actionSheet.present();
         }
     /**
-* e    di    t
+* edit
 *
-* function edit call when user click on edit button which hold data as item obj    ect
+* function edit call when user click on edit button with data (item object) argument
 **/
 
     edit(data) {
@@ -225,9 +225,9 @@ export class CartPage implements OnInit {
         }
 
     /**
-* checkTyp    eO    f
+* checkTypeOf
 *
-* function checkTypeOf is use for checking varible type (object or something els    e) 
+* function checkTypeOf is use for checking varible type (object or something else) 
 **/
 
     checkTypeOf(data) {

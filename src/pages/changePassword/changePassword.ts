@@ -32,9 +32,9 @@ export class ChangepasswordPage implements OnInit {
         });
         }    
 /**
-* show_prod    uc    ts
+* show_products
 *
-* function col for change password hold two parameter model have form v    alue
+* function col for change password hold two parameter model have form value
 **/
 
     changepassword(model: User, isValid: boolean) {
