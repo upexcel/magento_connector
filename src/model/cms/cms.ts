@@ -1,12 +1,16 @@
-import { Injectable, OnInit } from '@angular/core';
-import { ApiService } from './../../providers/api-service/api-service';
+import {Injectable, OnInit} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
 declare let Promise: any;
-import { Storage } from '@ionic/storage';
+import {Storage} from '@ionic/storage';
 
 @Injectable()
 export class CMS implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService) { }
-    ngOnInit() { }
+    constructor(public local: Storage, private _apiService: ApiService) {}
+    ngOnInit() {}
+    /**
+    *getStaticPageList
+    *use to  call web/getStaticPageList api if not in local
+    **/
     getStaticPageList() {
         return new Promise((resolve, reject) => {
             this.local.get('getStaticPageList').then((getStaticPageList) => {
@@ -24,6 +28,10 @@ export class CMS implements OnInit {
             });
         });
     }
+    /**
+    *getStaticPageData
+    *use to  call web/getStaticPageContent api
+    **/
     getStaticPageData(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("web/getStaticPageContent", data).subscribe((res: any) => {
@@ -33,6 +41,10 @@ export class CMS implements OnInit {
             });
         });
     }
+    /**
+    *setContactUsInfo
+    *use to  call web/contactus api
+    **/
     setContactUsInfo(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("web/contactus", data).subscribe((res: any) => {

@@ -1,12 +1,14 @@
 // equal-validator.directive.ts
 
-import { Directive, forwardRef, Attribute } from '@angular/core';
-import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
-
+import {Directive, forwardRef, Attribute} from '@angular/core';
+import {Validator, AbstractControl, NG_VALIDATORS} from '@angular/forms';
+/*
+*this directive is use for valiidation of password and conform password
+*/
 @Directive({
     selector: '[validateEqual][formControlName],[validateEqual][formControl],[validateEqual][ngModel]',
     providers: [
-        { provide: NG_VALIDATORS, useExisting: forwardRef(() => EqualValidator), multi: true }
+        {provide: NG_VALIDATORS, useExisting: forwardRef(() => EqualValidator), multi: true}
     ]
 })
 export class EqualValidator implements Validator {
@@ -19,7 +21,7 @@ export class EqualValidator implements Validator {
         return this.reverse === 'true' ? true : false;
     }
 
-    validate(c: AbstractControl): { [key: string]: any } {
+    validate(c: AbstractControl): {[key: string]: any} {
         // self value
         let v = c.value;
 
@@ -41,7 +43,7 @@ export class EqualValidator implements Validator {
 
         // value not equal and reverse
         if (e && v !== e.value && this.isReverse) {
-            e.setErrors({ validateEqual: false });
+            e.setErrors({validateEqual: false});
         }
 
         return null;

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Events } from 'ionic-angular';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
-import { Forgot } from '../../model/forgot/forgot';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { NavController, NavParams } from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {Events} from 'ionic-angular';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Storage} from '@ionic/storage';
+import {Forgot} from '../../model/forgot/forgot';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {NavController, NavParams} from 'ionic-angular';
 @Component({
-    selector:'forgot',
+    selector: 'forgot',
     templateUrl: 'forgot.html'
 })
 export class ForgotPage implements OnInit {
@@ -22,28 +22,28 @@ export class ForgotPage implements OnInit {
     ngOnInit() {
         this._local.get('website_id').then((value: any) => {
             this.show_form = true;
-            this.fb_coll(value);
+            this.fb_calll(value);
         });
     }
-    fb_coll(value) {
+    fb_calll(value) { //function use for validation email 
         this.forgotform = this._fb.group({
             email: [this.email, Validators.required],
-            website_id: [value]
+            website_id: [value]    //insert website_id in form object
         });
     }
     forgot(value: any) {
         this.spin = true;
-        this._forgot.getForgot(value).then((res:any) => {
+        this._forgot.getForgot(value).then((res: any) => { //call customer/forgot/ api 
             this.spin = false;
             if (res.body.message == "success") {
                 // this.btnShow = false;
                 this._toast.toast("Check your inbox to retrieve your password!", 3000, "top");
             }
             this._toast.toast(res.message, 3000, "top");
-        }, (err)=>{
+        }, (err) => {
             if (err.status === 500) {
                 this.spin = false;
-                this._toast.toast(JSON.parse(err['_body']).message, 3000);
+                this._toast.toast(JSON.parse(err['_body']).message, 3000);//show error message 
             }
         }).catch(err => {
             if (err.status === 500) {

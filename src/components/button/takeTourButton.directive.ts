@@ -1,9 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'btn-tour',
     templateUrl: 'buttonTakeTour.html'
 })
+/** 
+*
+* take tour button directive with dynamic title,spinner,color,validation,class
+**/
 export class ButtonTour {
     @Input() titleTour: string = "";
     @Input() colorTour: string = "primary";

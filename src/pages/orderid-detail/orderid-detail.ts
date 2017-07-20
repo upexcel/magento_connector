@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
-import { NavParams, ViewController, PopoverController, Events, Content } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { PopoverPage } from './../../components/popover/popover';
+import {Component, OnInit, ViewChild, NgZone} from '@angular/core';
+import {NavParams, ViewController, PopoverController, Events, Content} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
 import forEach from 'lodash/forEach';
-import { OrderIdDetail } from './../../model/orderid-detail/orderid-detail';
+import {OrderIdDetail} from './../../model/orderid-detail/orderid-detail';
 //import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 @Component({
-    selector:'orderid-detail',
+    selector: 'orderid-detail',
     templateUrl: 'orderid-detail.html'
 })
 
@@ -18,12 +17,12 @@ export class OrderModalPage implements OnInit {
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
-    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {}
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-         this._ngZone.run(() => {
-        this.getOrderDetails(this.order_id);
-         });
+        this._ngZone.run(() => { // update content 
+            this.getOrderDetails(this.order_id);
+        });
         this.events.subscribe('user:fcm', (orderid) => {
             this.showOrder = false;
             this._ngZone.run(() => {
@@ -40,7 +39,7 @@ export class OrderModalPage implements OnInit {
             order_id: order_id
         }
         this.spin = true;
-        this._orderdetail.getHomeProducts(body).then((res: any) => {
+        this._orderdetail.getHomeProducts(body).then((res: any) => { // fire order/get/ api to get selected order details
             this.orderid_detail = null;
             this.orderid_detail = res;
             this.orderid_detail.body.status = res['body'].status;
@@ -52,6 +51,7 @@ export class OrderModalPage implements OnInit {
             } else {
                 this.showOrder = true;
                 this.items = [];
+                // create formate to use in html
                 forEach(this.orderid_detail['body'].items, (value, key) => {
                     var datas = {
                         value: value,
@@ -66,12 +66,6 @@ export class OrderModalPage implements OnInit {
         });
     }
 
-    presentPopover(myEvent: any) {
-        let popover = this._popoverCtrl.create(PopoverPage);
-        popover.present({
-            ev: myEvent,
-        });
-    }
     track() {
 
     }

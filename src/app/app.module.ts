@@ -113,6 +113,7 @@ import {DownloadProduct} from '../components/downloadProduct/downloadProduct';
 import {CustomOption} from '../components/customOption/customOption';
 //directives
 import {FocusByEnterKey} from '../directives/focusByEnterKey/nextByEnter';
+import {HeaderScroller} from '../directives/header-scroller';
 import {EqualValidator} from '../directives/password/equalValidator';
 import {ImageDirective} from '../directives/image/image.directive';
 import {ImageFallBackDirective} from '../directives/image/imagefallback.directive';
@@ -157,6 +158,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         ProductReview,
         SubmitReview,
         FocusByEnterKey,
+        HeaderScroller,
         EqualValidator,
         ImageDirective,
         OfflinePage,

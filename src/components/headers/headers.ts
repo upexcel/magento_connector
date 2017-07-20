@@ -1,16 +1,15 @@
-import { Component, AfterContentInit, Input } from '@angular/core';
-import { PopoverController, MenuController, NavController, NavParams, Events } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { LoginPage } from '../../pages/login/login';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { PopoverPage } from './../../components/popover/popover';
-import { CartPage } from '../../pages/cart/cart';
-import { wishList } from '../../pages/wishList/wishList';
-import { Search } from '../../pages/search/search';
-import { SearchItemPage } from '../../pages/search-item/search-item'
-import { CartFunction } from '../../model/cart/cartHandling';
-import { EventService } from './../../providers/headerEvents/headerEvents';
-import { ModalController } from 'ionic-angular';
+import {Component, AfterContentInit, Input} from '@angular/core';
+import {PopoverController, MenuController, NavController, NavParams, Events} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
+import {LoginPage} from '../../pages/login/login';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {PopoverPage} from './../../components/popover/popover';
+import {CartPage} from '../../pages/cart/cart';
+import {wishList} from '../../pages/wishList/wishList';
+import {SearchItemPage} from '../../pages/search-item/search-item'
+import {CartFunction} from '../../model/cart/cartHandling';
+import {EventService} from './../../providers/headerEvents/headerEvents';
+import {ModalController} from 'ionic-angular';
 @Component({
     selector: 'header',
     templateUrl: 'headers.html'
@@ -20,11 +19,11 @@ export class Headers implements AfterContentInit {
     @Input() title: string = '';
     @Input() loading: boolean;
     @Input() view: boolean = false;
-    @Input() search:boolean=false;
+    @Input() search: boolean = false;
     @Input() pagename: string = '';
     @Input() menu: boolean = false;
     @Input() wishList: boolean = true;
-    @Input() itemName:string='';
+    @Input() itemName: string = '';
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
@@ -32,10 +31,11 @@ export class Headers implements AfterContentInit {
     viewChang: string = "Landscape";
     cartItems: number = 0;
     wishlist: number;
-    searchBar:boolean=false;
+    searchBar: boolean = false;
     data: any;
-    constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) { }
+    constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) {}
     ngAfterContentInit() {
+        // coll via cart component  
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
         });
@@ -52,14 +52,18 @@ export class Headers implements AfterContentInit {
         this.wishlist = this._eventService.getWishListConuter();
         this.cartItems = this._eventService.getCartCounter();
     }
-      goToSearchItemPage(){
-        this.searchBar=false;
-        this._navCtrl.push(SearchItemPage,{"data":this.data});
-       }
-      dismiss() {
-       this.searchBar=false;
+    goToSearchItemPage() {
+        this.searchBar = false;
+        this._navCtrl.push(SearchItemPage, {"data": this.data});
+    }
+    dismiss() {
+        this.searchBar = false;
     }
 
+    /*
+    *checkAuthorization
+    * use to check user is login or not and according authorization show icon
+    */
     checkAuthorization() {
         if (this.title == "LOGIN" || this.title == 'SIGN UP' || this.title == 'My Orders') {
             this.showLogin = false;
@@ -77,6 +81,7 @@ export class Headers implements AfterContentInit {
         if (this.type == true) {
             this.show = false;
         }
+        // get data length for show on cart icon on header
         this._local.get('CartData').then((value: any) => {
             if (value) {
                 this.cartItems = value.length;
@@ -117,7 +122,7 @@ export class Headers implements AfterContentInit {
         this._navCtrl.push(CartPage);
     }
     gotoSearch() {
-       this.searchBar=true; 
+        this.searchBar = true;
         // let modal = this.modalCtrl.create(Search);
         // modal.present();
     }

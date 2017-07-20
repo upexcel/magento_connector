@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
-import forEach from 'lodash/forEach';
-import reverse from 'lodash/reverse';
 
 @Injectable()
 export class Address {
     address: any;
-    constructor() { }
+    constructor() {}
     resetAddress() {
         this.address;
     }

@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { ProductPage } from '../../pages/product/product';
-import { NavController } from 'ionic-angular';
-import { Events } from 'ionic-angular';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { WishListService } from '../../providers/wishList/wishList-service'
+import {Component, Input} from '@angular/core';
+import {ProductPage} from '../../pages/product/product';
+import {NavController} from 'ionic-angular';
+import {Events} from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {WishListService} from '../../providers/wishList/wishList-service'
 @Component({
     selector: 'category-view',
     templateUrl: 'categoryProducts.html'
@@ -18,10 +18,14 @@ export class CategoryComponent {
             this.viewChange(view);
         });
     }
+    /** 
+*    wishList
+* function ues for set WishList Data
+**/
     wishList(feat_prod) {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod, { "productId": feat_prod.data.entity_id });
+                this._wishListService.setWishListData(feat_prod, {"productId": feat_prod.data.entity_id});
                 if (feat_prod.data.wishlist_item_id) {
                     feat_prod.data.wishlist_item_id = false;
                 } else {
@@ -32,6 +36,10 @@ export class CategoryComponent {
             }
         });
     }
+    /** 
+*    viewChange
+* function ues for toggle view
+**/
     viewChange(view) {
         if (view == "portrait") {
             this.displayMode = "Landscape";
@@ -53,6 +61,10 @@ export class CategoryComponent {
         //            }, false);
         //        }
     }
+    /** 
+*    gotoProduct
+* function ues move ProductPage
+**/
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
             id: product

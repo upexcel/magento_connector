@@ -1,14 +1,14 @@
-import { Platform } from 'ionic-angular';
-import { Injectable } from '@angular/core';
-import { GooglePlus, Facebook } from 'ionic-native'
-import { config } from './../config/config';
+import {Platform} from 'ionic-angular';
+import {Injectable} from '@angular/core';
+import {GooglePlus, Facebook} from 'ionic-native'
+import {config} from './../config/config';
 declare let Promise: any;
 @Injectable()
 export class SocialService {
     options: any;
     constructor(public platform: Platform) {
         //comment because creating apply error on browserInit
-//        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
+        //        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
         this.options = {
             webClientId: config.google_clientid
         }
@@ -20,7 +20,6 @@ export class SocialService {
                 Facebook.login(['email']).then((success) => {
                     resolve(success);
                 }).catch((res) => {
-                    console.log('fblogin',res)
                     reject(res);
                 })
             } else {
@@ -37,7 +36,6 @@ export class SocialService {
                     resolve(profileData);
                 }).catch((res) => {
 
-                    console.log('fbprofile',res)
                     reject(res);
                 })
         });
@@ -47,13 +45,12 @@ export class SocialService {
         return new Promise((resolve, reject) => {
             if (this.platform.is('cordova')) {
                 GooglePlus.login({
-                'scopes': '',
-                'webClientId': "",
-                'offline': true,
+                    'scopes': '',
+                    'webClientId': "",
+                    'offline': true,
                 }).then((success) => {
                     resolve(success);
                 }).catch((res) => {
-                   console.log("res",res)
                     reject(res);
                 })
             } else {

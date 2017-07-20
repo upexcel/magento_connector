@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
 import isEqual from 'lodash/isEqual';
-import { Cart } from '../../model/product/cart';
-import { ToastService } from './../../providers/toast-service/toastService';
+import {Cart} from '../../model/product/cart';
+import {ToastService} from './../../providers/toast-service/toastService';
 declare let Promise: any;
 import findIndex from 'lodash/findIndex';
-import { Events } from 'ionic-angular';
+import {Events} from 'ionic-angular';
 @Injectable()
 
 export class CartService {
@@ -18,7 +18,6 @@ export class CartService {
             if (editCartData) {
                 //                this.removeEditCartDataFromLocal(editCartData);
             }
-            console.log("data",data);
             this._cart.getCart(data).then((res) => {
                 //        fileTransfer.upload(uri, "http://144.76.34.244:5005/v2/picture/upload", options)
                 //                    .then((data) => {
@@ -43,6 +42,10 @@ export class CartService {
             });
         });
     }
+    /**
+    *saveCartInLocal
+    * save cart data in local storage and resolve response
+    **/
     saveCartInLocal(data, resolve, res): any {
         let flag = 0;
         this._local.get('CartData').then((value: any) => {
@@ -89,6 +92,11 @@ export class CartService {
             }
         });
     }
+    /**
+    *removeEditCartDataFromLocal
+    *
+    *remove edit cart data from local storage and update stotage
+    **/
     removeEditCartDataFromLocal(editCartData) {
         this._local.get('CartData').then((CartData: any) => {
             let index = findIndex(CartData, editCartData);

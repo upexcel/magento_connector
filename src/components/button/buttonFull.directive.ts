@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 @Component({
     selector: 'btn-full',
     templateUrl: 'buttonFull.html'
 })
+ /**  * * full width button directive with dynamic title,spinner,color,validation,class **/
 export class ButtonFull {
     @Input() titleFull: string = "";
     @Input() colorFull: string = "primary";
@@ -11,7 +12,7 @@ export class ButtonFull {
     @Input() idFull: string = "";
     @Input() classFull: string = "";
     @Output() onBtnClick = new EventEmitter();
-    constructor() { }
+    constructor() {}
     onClick() {
         this.onBtnClick.emit();
     }

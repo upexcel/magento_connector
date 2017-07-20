@@ -1,6 +1,7 @@
+<!-- coll header component -->
 <header [title]='title' [pagename]="'home'" [search]='true' [view]="true" ></header>
 
-<ion-content class="home1">
+<ion-content class="home1"  header-scroller>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -19,4 +20,5 @@
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
+<!-- coll header component -->
 <category-footer [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>

@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import forEach from 'lodash/forEach';
 import merge from 'lodash/merge';
-import { FileChooser } from 'ionic-native';
+import {FileChooser} from 'ionic-native';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 @Component({
@@ -29,7 +29,11 @@ export class CustomOption {
     date: any = {};
     dateTimeJson: any = {};
     show;
-    constructor() { }
+    constructor() {}
+    /** 
+*    ngOnInit
+* function ues set editable data into fileds
+**/
     ngOnInit() {
         var dateObj = new Date();
         this.curYear = dateObj.getFullYear();
@@ -48,9 +52,9 @@ export class CustomOption {
 
             if (!this.editCartData) {
                 if (value.is_require == "1") {
-                    this.validateArray.push({ "id": value.id, "validate": true });
+                    this.validateArray.push({"id": value.id, "validate": true});
                 } else {
-                    this.validateArray.push({ "id": value.id, "validate": false });
+                    this.validateArray.push({"id": value.id, "validate": false});
                 }
             }
             forEach(value.option_type, (data) => {
@@ -90,7 +94,7 @@ export class CustomOption {
                                 })
                             }
                         })
-                        this.validateArray.push({ "id": value.id, "validate": false });
+                        this.validateArray.push({"id": value.id, "validate": false});
                     }
                     else if ((value.type == "drop_down" || value.type == 'radio')) {
                         forEach(value.option_type, (opt) => {
@@ -105,7 +109,7 @@ export class CustomOption {
                                 }
                             }
                         })
-                        this.validateArray.push({ "id": value.id, "validate": false });
+                        this.validateArray.push({"id": value.id, "validate": false});
                     }
                     else if (value.type == 'multiple') {
                         forEach(value.option_type, (opt) => {
@@ -121,7 +125,7 @@ export class CustomOption {
                                 })
                             }
                         })
-                        this.validateArray.push({ "id": value.id, "validate": false });
+                        this.validateArray.push({"id": value.id, "validate": false});
                     }
 
                     else if (value.type == "date" || value.type == "time" || value.type == "date_time") {
@@ -148,7 +152,7 @@ export class CustomOption {
                                 }
                             }
                         })
-                        this.validateArray.push({ "id": value.id, "validate": false });
+                        this.validateArray.push({"id": value.id, "validate": false});
                     }
                     else if (value.type == 'area' || value.type == 'field') {
                         forEach(value.option_type, (id) => {
@@ -162,8 +166,8 @@ export class CustomOption {
                                 }
                             }
                         })
-                        this.validateArray.push({ "id": value.id, "validate": false });
-                    } else { console.log("some thing goes wrong"); }
+                        this.validateArray.push({"id": value.id, "validate": false});
+                    } else {console.log("some thing goes wrong");}
 
                 })
             }
@@ -175,6 +179,10 @@ export class CustomOption {
             }, 100);
         }
     }
+    /** 
+*    text
+* function ues for text box event
+**/
     text(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
             if (value.type == "field") {
@@ -193,6 +201,10 @@ export class CustomOption {
         });
         this.bundleJson();
     }
+    /** 
+*    textArea
+* function ues for textArea event
+**/
     textArea(opt, formId, is_require) {
         forEach(this.custom_option, (value) => {
             if (value.type == "area") {
@@ -211,6 +223,10 @@ export class CustomOption {
         });
         this.bundleJson();
     }
+    /** 
+*    onChangeSelect
+* function ues for  select list event
+**/
     onChangeSelect(data, formId, is_require) {
         this.selectObj = {};
         forEach(this.custom_option, (value) => {
@@ -221,6 +237,10 @@ export class CustomOption {
         this.formValidate(formId, false, is_require);
         this.bundleJson();
     }
+    /** 
+*    onChangeRadio
+* function ues for sradio event
+**/
     onChangeRadio(formId, is_require) {
         this.Radioobj = {};
         forEach(this.custom_option, (value) => {
@@ -231,6 +251,10 @@ export class CustomOption {
         this.formValidate(formId, false, is_require);
         this.bundleJson();
     }
+    /** 
+*    onChangeMulti
+* function ues for multi select list event
+**/
     onChangeMulti(data, formId, i, is_require) {
         this.multiObj = {};
         forEach(this.custom_option, (value) => {
@@ -251,6 +275,10 @@ export class CustomOption {
         }
         this.bundleJson();
     }
+    /** 
+*    onChangeCheck
+* function ues on check event  
+**/
     onChangeCheck(selection, event, formId, is_require) {
         this.checkObj = {};
         var countCheck = 0;
@@ -282,8 +310,12 @@ export class CustomOption {
         }
         this.bundleJson();
     }
+    /*
+    *file
+    *function use to uplode file 
+    */
     file(event, opt, formId, is_require) {
-        let fileArray: any = [];
+        // let fileArray: any = [];
         this.formValidate(formId, false, is_require);
         //        const fileTransfer = new Transfer();
         //        var options: any;
@@ -317,6 +349,10 @@ export class CustomOption {
         //            });
         this.bundleJson();
     }
+    /** 
+*    timeChanged
+* function ues for time change event
+**/
     timeChanged(formId, is_require) {
         let array = [];
         let time = {};
@@ -354,6 +390,10 @@ export class CustomOption {
         });
         this.bundleJson();
     }
+    /** 
+*    dateChanged
+* function ues for function ues for date change event
+**/
     dateChanged(formId, is_require) {
         this.date = {};
         let dateJson; var dateObj; var day; var year; var months;
@@ -384,6 +424,10 @@ export class CustomOption {
         this.bundleJson();
 
     }
+    /** 
+*    calenderChanged
+* function ues for time and date change filed event
+**/
     calenderChanged(formId, is_require) {
         var data; var dateObj;
         this.formValidate(formId, false, is_require);
@@ -411,6 +455,10 @@ export class CustomOption {
         });
         this.bundleJson();
     }
+    /** 
+*    checkVisiblety
+* function ues for check Visiblety
+**/
     checkVisiblety(obj) {
         if (obj.visable == false) {
             obj.visable = true;
@@ -419,6 +467,10 @@ export class CustomOption {
             obj.visable = false;
         }
     }
+    /** 
+*    formValidate
+* function ues for validation custom product
+**/
     formValidate(data, flag, is_require) {
         if (is_require == "0") {
             flag = false;
@@ -430,6 +482,10 @@ export class CustomOption {
             }
         })
     }
+    /** 
+*    bundleJson
+* function ues for emit custom product data with total price
+**/
     bundleJson() {
         var total = 0;
         let opt = {};
@@ -449,7 +505,7 @@ export class CustomOption {
             if ((value.type == "date" || value.type == "time" || value.type == "date_time") && value.vertualId) {
                 if (value.date) {
                     total = total + (parseFloat(value.date.price));
-                    let date = new Date(value.vertualId);
+                    // let date = new Date(value.vertualId);
                 }
             }
             if (value.type == 'multiple' && value.vertualArray) {
@@ -471,7 +527,7 @@ export class CustomOption {
         if (validateCount == this.validateArray.length) {
             custonCartDisable = false;
         }
-        opt = { "dynemicPrice": total, "options": opt, "disable": custonCartDisable }
+        opt = {"dynemicPrice": total, "options": opt, "disable": custonCartDisable}
         this.onChange.emit(opt);
     }
 }

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { ViewController, NavController, NavParams } from 'ionic-angular';
-import { MyAccount } from './../../model/myaccount/myaccount';
-import { MyAccountAddressDataType } from './../../model/myaccount/myaccountData';
-import { ToastService} from './../../providers/toast-service/toastService';
-import { Events } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ViewController, NavController, NavParams} from 'ionic-angular';
+import {MyAccount} from './../../model/myaccount/myaccount';
+import {MyAccountAddressDataType} from './../../model/myaccount/myaccountData';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {Events} from 'ionic-angular';
 
 @Component({
     selector: 'popover',
@@ -21,7 +21,7 @@ export class AccountPopoverPage {
     accountCartLength: any;
     default_billing: number;
     default_shipping: number;
-    constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) { }
+    constructor(public _events: Events, private _navParams: NavParams, private _toast: ToastService, public viewCtrl: ViewController, private _navCtrl: NavController, private _myaccount: MyAccount) {}
     ngOnInit() {
         if (this._navParams.data) {
             this.id = this._navParams.data.id;
@@ -50,7 +50,7 @@ export class AccountPopoverPage {
         this._myaccount.deleteMyAddress(data).then((res) => {
             this._toast.toast("Deleted", 3000, "top");
             this._events.publish('user:deleted', true);
-        }, (err) => { })
+        }, (err) => {})
     }
     close() {
         this.viewCtrl.dismiss();

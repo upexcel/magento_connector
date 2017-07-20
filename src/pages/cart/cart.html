@@ -1,8 +1,9 @@
+<!-- coll header directive -->
 <header [title]="'SHOPPING CART'" [pagename]="''" [wishList]=false></header>
 <ion-content class="empty-cart" *ngIf="!res || res.length == 0">
     <img src="assets/image/empty-cart.png">
     <h3>Your Shopping Cart is empty</h3>
-</ion-content> m
+</ion-content> 
 <ion-content class="cart" *ngIf="res && res.cart_items && res.cart_items.length > 0">
     <span class="backgroundGray">
         <ion-card  *ngFor="let data of res.cart_items">
@@ -137,9 +138,11 @@
     <ion-grid class="filterFooterBtnDiv no-padding">
         <ion-row>
             <ion-col col-6>
+            <!-- col button directive -->
                 <btn-large [titleForLarge]='" CONTINUE SHOPPING"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst font17'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
             </ion-col>
             <ion-col col-6>
+            <!-- col button directive -->
                 <btn-large [titleForLarge]='"CHECKOUT"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="placeOrderSpin" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="placeOrder()"></btn-large>
             </ion-col>
         </ion-row>

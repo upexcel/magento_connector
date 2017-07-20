@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { ProductPage } from '../../pages/product/product';
-import { WishListService } from '../../providers/wishList/wishList-service';
-import { CartService } from './../../providers/cart-service/cart-service';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { CartPage } from '../cart/cart';
-import { CartFunction } from '../../model/cart/cartHandling';
+import {Component} from '@angular/core';
+import {NavController, NavParams, LoadingController} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
+import {ProductPage} from '../../pages/product/product';
+import {WishListService} from '../../providers/wishList/wishList-service';
+import {CartService} from './../../providers/cart-service/cart-service';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {CartPage} from '../cart/cart';
+import {CartFunction} from '../../model/cart/cartHandling';
 
 @Component({
     selector: 'wishList',
@@ -14,20 +14,36 @@ import { CartFunction } from '../../model/cart/cartHandling';
 })
 export class wishList {
     data: object;
-    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) { }
+    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}    
+/** ionViewWillEnter    
+*    
+* function call for every view enter and get updatated wish lis data    
+**/
     ionViewWillEnter() {
         this._wishListService.getWishList().then((data) => {
             this.data = data;
         })
-    }
+    }    
+/** deleteProductWishList    
+*    
+* function call to delete selected wistlist    
+**/
     deleteProductWishList(data) {
         this._wishListService.deleteProductWishList(data).then((data) => {
             this.data = data;
         })
-    }
+    }    
+/** editWishList    
+*    
+* function call for edit wishList    
+**/
     editWishList(data) {
-        this._nav.push(ProductPage, { 'id': data.data.sku, "editCartData": data, "wishlist": true });
-    }
+        this._nav.push(ProductPage, {'id': data.data.sku, "editCartData": data, "wishlist": true});
+    }    
+/** addToCart    
+*    
+* function use to move item wishlist to cart    
+**/
     addToCart(data) {
         data['productid'] = data['productId'] || data['productid'] || data['product'];
         let loading = this.loadingCtrl.create({
@@ -52,7 +68,11 @@ export class wishList {
                 id: data.data.sku
             });
         });
-    }
+    }    
+/** c_Shopping    
+*    
+* function use to move on root page    
+**/
     c_Shopping() {
         this._nav.popToRoot();
     }

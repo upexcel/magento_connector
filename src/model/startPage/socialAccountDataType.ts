@@ -1,3 +1,3 @@
-export class SocialAccountDataType{
-    
+export class SocialAccountDataType {
+
 }

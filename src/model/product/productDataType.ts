@@ -19,13 +19,13 @@ export class productDataType {
             "short_description": string,
             "long_description": string,
             "media_images": Array<string>,
-            "small_image"?:any,
-            "minify_image"?:any,
+            "small_image"?: any,
+            "minify_image"?: any,
             "additional_information"?: {},
             "in_stock": string,
-            "final_price" : number,
-            "currency_sign":string,
-            "product_custom_option"?:any
+            "final_price": number,
+            "currency_sign": string,
+            "product_custom_option"?: any
         };
 
         "associated_products"?: {
@@ -44,8 +44,8 @@ export class productDataType {
                 "inclTaxTitle"?: string,
             }
         },
-        "bundle_items"?:{
-            options ? : any
+        "bundle_items"?: {
+            options?: any
         },
         "samples"?: string,
         "links"?: Array<any>

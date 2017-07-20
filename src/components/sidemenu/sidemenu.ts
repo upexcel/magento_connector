@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CategoryListDataType } from '../../model/home/categorylistDataType';
-import { CategoryList } from '../../model/home/categoryList';
-import { MenuController, NavController, Platform } from 'ionic-angular';
-import { CategoryProductPage } from '../../pages/categoryProduct/categoryProduct';
+import {Component, OnInit, Input} from '@angular/core';
+import {CategoryListDataType} from '../../model/home/categorylistDataType';
+import {CategoryList} from '../../model/home/categoryList';
+import {MenuController, NavController, Platform} from 'ionic-angular';
+import {CategoryProductPage} from '../../pages/categoryProduct/categoryProduct';
 import forEach from 'lodash/forEach';
-import { FilterService } from './../../providers/filter-service/filterService';
+import {FilterService} from './../../providers/filter-service/filterService';
 
 @Component({
     selector: 'sidemenu',
@@ -16,16 +16,19 @@ export class SideMenu implements OnInit {
     public rootPage: any;
     public access_token;
     public usermenu: boolean;
-    constructor(private _platform: Platform, private _filterService: FilterService,private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) { }
+    constructor(private _platform: Platform, private _filterService: FilterService, private _categoryList: CategoryList, private _menuCtrl: MenuController, private _navCtrl: NavController) {}
     ngOnInit() {
         this._menuCtrl.enable(true);
         this.categoryList();
     }
 
-    platform(){
-       return this._platform.is('ios');
+    platform() {
+        return this._platform.is('ios');
     }
-    
+    /*
+  *categoryList
+  *get category list
+  */
     categoryList() {
         this._categoryList.getCategoryList().then((res) => {
             if (res) {
@@ -50,7 +53,7 @@ export class SideMenu implements OnInit {
         }, 100);
         this._menuCtrl.close();
         this._filterService.resetFilterData();
-        this._navCtrl.push(CategoryProductPage, { "id": gchild_id, "name": gchild_name });
+        this._navCtrl.push(CategoryProductPage, {"id": gchild_id, "name": gchild_name});
     }
     toggle(_toggleData) {
         if (_toggleData.children.length > 0) {
@@ -64,7 +67,7 @@ export class SideMenu implements OnInit {
         }
         else {
             this._menuCtrl.close();
-            this._navCtrl.push(CategoryProductPage, { "id": _toggleData.id, "name": _toggleData.name });
+            this._navCtrl.push(CategoryProductPage, {"id": _toggleData.id, "name": _toggleData.name});
         }
 
     }

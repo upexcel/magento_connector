@@ -6,7 +6,10 @@ declare let Promise: any;
 @Injectable()
 export class OrderIdDetail {
     constructor(public local: Storage, private _apiService: ApiService) {}
-
+    /**
+    *getHomeProducts
+    *use to call order/get/ api
+    **/
     getHomeProducts(data): Promise<OrderIdDetailDataType> {
         return new Promise((resolve, reject) => {
             this._apiService.api("order/get/", data).subscribe((res) => {

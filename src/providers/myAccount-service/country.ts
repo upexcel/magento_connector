@@ -1,11 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Country } from '../../model/myaccount/country';
+import {Injectable, OnInit} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {Country} from '../../model/myaccount/country';
 declare let Promise: any;
 @Injectable()
 export class CountryService implements OnInit {
-    constructor(public local: Storage, private _countryName: Country) { }
-    ngOnInit() { }
+    constructor(public local: Storage, private _countryName: Country) {}
+    ngOnInit() {}
 
     getCountryName() {
         let local = this.local;

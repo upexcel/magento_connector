@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController, NavParams, AlertController } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { TourPage } from '../takeTour/tour';
-import { Storage } from '@ionic/storage';
-import { AppConfig } from '../../model/appConfig/appConfig';
-import { config } from './../../providers/config/config';
-import { SocialService } from '../../providers/social-service/social-service';
-import { HomePage } from '../../pages/home/home';
-import { SocialAccountDataType } from '../../model/startPage/socialAccountDataType';
-import { SocialAccount } from './../../model/startPage/socialAccount';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import {Component, OnInit} from '@angular/core';
+import {ModalController, NavController, NavParams, AlertController} from 'ionic-angular';
+import {LoginPage} from '../login/login';
+import {TourPage} from '../takeTour/tour';
+import {Storage} from '@ionic/storage';
+import {AppConfig} from '../../model/appConfig/appConfig';
+import {config} from './../../providers/config/config';
+import {SocialService} from '../../providers/social-service/social-service';
+import {HomePage} from '../../pages/home/home';
+import {SocialAccountDataType} from '../../model/startPage/socialAccountDataType';
+import {SocialAccount} from './../../model/startPage/socialAccount';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 @Component({
     selector: 'start-page',
     templateUrl: 'startpage.html'
@@ -27,16 +27,16 @@ export class StartPage implements OnInit {
     }
 
     ngOnInit() {
-        this.messsage_expired = this._navparam.get("message");
-        this.options = {
+        this.messsage_expired = this._navparam.get("message");// get expire message
+        this.options = {    //  get value from config 
             clientid: config.google_clientid
         }
-        this._appConfigService.resetDataInService();
-        this._appConfig.getAppConfig().then((res) => {
+        this._appConfigService.resetDataInService();//reset data from service
+        this._appConfig.getAppConfig().then((res) => { // get data from local
             this.data = res;
-            this._local.set('website_id', this.data.body.website_id);
-            this._local.set('store_id', this.data.body.store_id);
-            this._local.set('require_login', this.data.body.store_id);
+            this._local.set('website_id', this.data.body.website_id);//set website_id on local
+            this._local.set('store_id', this.data.body.store_id);//set store_id on local
+            this._local.set('require_login', this.data.body.store_id);//set require_login on local
             this.check = true;
         })
             .catch((err) => {
@@ -44,24 +44,34 @@ export class StartPage implements OnInit {
             });
     }
     gotologin() {
-        this._navCtrl.push(LoginPage);
+        this._navCtrl.push(LoginPage);//move to Login Page
     }
     presentProfileModal() {
         let profileModal = this._modelCtrl.create(TourPage);
         profileModal.present();
     }
+    /**
+    * userFbLogin
+    *
+    * Use of this source code is to facebook login and move page to home page
+    **/
     userFbLogin(body) {
         this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
         });
     }
+    /**
+    * userGoogleLogin
+    *
+    * Use of this source code is to google login and move page to home page
+    **/
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
-            this._navCtrl.setRoot(HomePage, { "access_token": res.body.access_token });
+            this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
         });
     }
     showSocialLoginError(error) {
