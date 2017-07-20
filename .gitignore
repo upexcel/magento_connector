@@ -44,3 +44,6 @@ nbproject/private/private.xml
 res/
 /varwwwhtmlinvision/modulepaths.json
 varwwwhtmlinvision/
+resources/
+resources/android/icon/*.png
+resources/android/splash/*.png
