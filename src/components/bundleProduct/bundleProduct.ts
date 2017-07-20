@@ -269,7 +269,7 @@ export class BundleProduct {
         }
     }     /**    
           *  bundleData   
-          * function ues to emit bundle data   
+          * function use to emit bundle data   
           **/
     bundleData(obj?) {
         let data = {};
