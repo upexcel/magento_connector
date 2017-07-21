@@ -32,7 +32,9 @@ export class PopoverPage {
         });
         this.getStaticPageList();
     }
-
+    /*
+     * this function is use for get static page list
+     */
     getStaticPageList() {
         this._cms.getStaticPageList().then((res) => {
             this.staticPagesList = res['body'];
@@ -45,7 +47,9 @@ export class PopoverPage {
         this._navCtrl.push(cmsPages, {pageDetails});
         this._menuCtrl.close();
     }
-
+    /*
+     * this function is use for check authorization 
+     */
     tokenCheck() {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {

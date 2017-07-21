@@ -75,7 +75,7 @@ export class ProductReview implements OnInit {
     }
     /*
     *moreReview
-    *function use for move next page for review
+    *function use for move on next page for review
     */
     moreReview() {
         if (this.listLoad != true) {

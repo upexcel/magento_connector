@@ -11,7 +11,9 @@ export class CartFunction implements OnInit {
     constructor(private _toast: ToastService, private _events: Events, public local: Storage, private _apiService: ApiService) {}
     cartData: any;
     ngOnInit() {}
-
+    /*
+     * calulate total price
+     */
     totalPay(data) {
         let totalPay: number = 0;
         forEach(data, (value, key) => {
@@ -24,7 +26,7 @@ export class CartFunction implements OnInit {
         });
     }
     /**
-    * setCartData is use to call cart/getCartItems api 
+    * setCartData is use to call service for cart/getCartItems api 
     **/
     setCartData() {
         return new Promise((resolve, reject) => {
@@ -53,7 +55,7 @@ export class CartFunction implements OnInit {
         return this.cartData;
     }
     /**
-    *this function is use for set cart data and through cartItems event 
+    *this function is use for set cart data and fire cartItems event 
     **/
     setCart(data) {
         this.cartData = data;
@@ -68,7 +70,7 @@ export class CartFunction implements OnInit {
         this.cartData = null;
     }
     /**
-    * deleteItem function use to delete cart item
+    * deleteItem function use for  delete cart item
     **/
     deleteItem(deletingItemData) {
         return new Promise((resolve, reject) => {
@@ -88,7 +90,7 @@ export class CartFunction implements OnInit {
         });
     }
     /**
-    * updateCart function use to update cart item
+    * updateCart function use for update cart item
     **/
     updateCart(newCartData) {
         return new Promise((resolve, reject) => {
@@ -108,10 +110,10 @@ export class CartFunction implements OnInit {
             });
         });
 
-        }
+    }
     /**
-* editCart function use to edit cart i    tem
-**/
+    * editCart function use for edit cart item
+    **/
     editCart(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/editCartItem", data).subscribe((res) => {
@@ -125,10 +127,10 @@ export class CartFunction implements OnInit {
                 reject(err);
             });
         });
-        }
-/*    *
-* applyCoupon function use to call cart/coupon ap    i
-**/
+    }
+    /*    *
+    * applyCoupon function use for call apiservice for cart/coupon api
+    **/
     applyCoupon(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("cart/coupon", data).subscribe((res) => {

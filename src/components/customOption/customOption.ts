@@ -32,7 +32,7 @@ export class CustomOption {
     constructor() {}
     /** 
 *    ngOnInit
-* function use to set editable data into fileds
+* function use to set editable cart data into custom option fileds
 **/
     ngOnInit() {
         var dateObj = new Date();

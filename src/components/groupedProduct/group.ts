@@ -23,7 +23,7 @@ export class group {
     }
     /*
     *quantityEdit
-    *function use for quantity Edit
+    *function use for edit quantity
     */
     quantityEdit() {
         forEach(this.editCartData.super_attribute, (editCartOptionValue, editCartOptionkey) => {
@@ -40,6 +40,10 @@ export class group {
             // this.grouped.group_associated_products[i]['quantity'] = 0;
         }
     }
+    /**
+     * groupedData
+     * function use for create group product data
+     **/
     groupedData() {
         let opt: any = [], id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, (value, key) => {

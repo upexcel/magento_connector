@@ -27,7 +27,7 @@ export class SideMenu implements OnInit {
     }
     /*
   *categoryList
-  *get category list
+  *calling service for get category list
   */
     categoryList() {
         this._categoryList.getCategoryList().then((res) => {

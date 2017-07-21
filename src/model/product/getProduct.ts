@@ -12,7 +12,7 @@ export class Product implements OnInit {
     ngOnInit() {}
     /**
    * getProduct
-   *use to call product/get/ api 
+   *use for call product/get/ api 
    **/
     getProduct(data): Promise<productDataType> {
         let apiservice = this._apiService;
@@ -32,7 +32,7 @@ export class Product implements OnInit {
     }
     /**
     * getProductReview
-    *use to call product/review api 
+    *use for call product/review api 
     **/
     getProductReview(data): Promise<ProductReviewDataType> {
         return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ export class Product implements OnInit {
     }
     /**
    * getSubmitReview
-   *use to call product/submitreview api 
+   *use for call product/submitreview api 
    **/
     getSubmitReview(data): Promise<SubmitReviewDataType> {
         return new Promise((resolve, reject) => {
@@ -58,7 +58,7 @@ export class Product implements OnInit {
     }
     /**
    * getReview
-   *use to call product/getrating api 
+   *use for call product/getrating api 
    **/
     getReview(data): Promise<GetRating> {
         return new Promise((resolve, reject) => {

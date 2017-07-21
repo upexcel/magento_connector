@@ -34,7 +34,7 @@ export class FilterOption {
     }
     /*
     *onChangeCheck()
-    *use to handle event occur in check list
+    *use to handle data for filter
     */
     onChangeCheck(value, key, event) {
         var data = {};

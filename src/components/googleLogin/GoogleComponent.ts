@@ -20,7 +20,7 @@ export class GoogleComponent {
     constructor(private _toast: ToastService, public _local: Storage, private _socialProvider: SocialService) {}
     /** 
 *    getGoogleData
-* function ues for get google login data
+* function use  for get google login data
 **/
     getGoogleData() {
         if (this.spin == false) {

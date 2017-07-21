@@ -8,7 +8,7 @@ export class HomeProducts {
     constructor(public local: Storage, private _homeProductsService: homeProductsService) {}
     /**
     *getHomeProducts
-    *use to call service to get home product
+    * call get home product service 
     **/
     getHomeProducts(data, recoll?): Promise<HomeProductsDataType> {
         return new Promise((resolve, reject) => {

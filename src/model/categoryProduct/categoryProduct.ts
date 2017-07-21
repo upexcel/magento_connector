@@ -7,7 +7,7 @@ declare let Promise: any;
 export class CategoryProduct {
     constructor(public _dataConfigService: AppDataConfigService, private _apiService: ApiService) {}
     /**
-    *getCategoryProduct is use for get category product if exist in service or call category/products/ api 
+    *getCategoryProduct is use for get category product, if data not exist in service then call category/products/ api 
     **/
     getCategoryProduct(data, doRefresh?): Promise<CategoryProductDataType> {
         let apiservice = this._apiService;

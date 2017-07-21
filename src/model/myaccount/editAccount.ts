@@ -6,7 +6,7 @@ export class Edit {
     constructor(private _apiService: ApiService) {}
     /**
     *updateAddress
-    *use to call address/edit
+    * call address/edit api
     **/
     updateAddress(data): Promise<EditAccountDataType> {
         return new Promise((resolve, reject) => {
@@ -18,9 +18,9 @@ export class Edit {
         });
     }
     /**
-*editAccount
-*use to call account/edit
-**/
+    *editAccount
+    *    call account/edit api
+    **/
     editAccount(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("account/edit", data).subscribe((res) => {

@@ -16,7 +16,7 @@ export class SliderComponent implements OnInit {
     }
     /*
     *slider()
-    *get slider data
+    *calling service for get slider data
     */
     slider() {
         this._sliderConfig.getSlider().then((res) => {

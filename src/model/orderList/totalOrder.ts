@@ -5,7 +5,10 @@ import {OrderListDataType} from './orderlistDatatype'
 @Injectable()
 export class TotalOrder {
 
-    constructor(private _apiService: ApiService) {}       /*getTotalOrd   *use to call order/totalorder a   **/
+    constructor(private _apiService: ApiService) {}
+    /*getTotalOrd  
+     *  call order/totalorder api
+     **/
     getTotalOrder(data): Promise<TotalOrderDataType> {
         return new Promise((resolve, reject) => {
             this._apiService.api("order/totalorder", data).subscribe((res) => {
@@ -18,7 +21,7 @@ export class TotalOrder {
 
     /**
     *getOrderList
-    *use to call order/alllist api
+    * call order/alllist api
     **/
     getOrderList(data): Promise<OrderListDataType> {
         return new Promise((resolve, reject) => {

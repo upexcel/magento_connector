@@ -31,6 +31,9 @@ export class AccountPopoverPage {
             this.default_billing = this._navParams.data.default_billing;
         }
     }
+    /*
+     * use for edit user account (publish event)
+     */
     editAccount() {
         this.close();
         this._events.publish('user:edit', {
@@ -41,6 +44,9 @@ export class AccountPopoverPage {
             }
         });
     }
+    /*
+     * use for delete user account
+     */
     deleteAccount() {
         this.close();
         let data = {

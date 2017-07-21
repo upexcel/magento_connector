@@ -28,7 +28,8 @@ export class CategoryProductPage implements OnInit {
         _menuCtrl.enable(true);
     }
     ngOnInit() {
-        this._events.subscribe('sort:data', (data) => {    //catch event of sort  
+        //catch event for sorting
+        this._events.subscribe('sort:data', (data) => {      
             this.enableInfinite = false;
             this.sortByData = data.data;
             this.page = 1;
@@ -125,7 +126,7 @@ export class CategoryProductPage implements OnInit {
             this.enableInfinite = true
         }
     }
-    //functon use in ion-spinner to check varible is empty or not
+    //functon use in ion-spinner to check variable is empty or not
     spinner(categoryProduct) {
         if (categoryProduct && Object.keys(categoryProduct).length > 0) {
             return false;

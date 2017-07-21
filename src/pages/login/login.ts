@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     cartData: Array<any>;
     constructor(private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
     ngOnInit() {
-        this.checkoutLogin = this._navParams.get('checkoutLogin');// give true if page is redirect checkout to login
+        this.checkoutLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
         //this.cartData = this._navParams.get('res');//hold cart data use when user is not login
         this._local.get('website_id').then((website_id: any) => { //get website_id
             this.show_form = true;
@@ -52,10 +52,13 @@ export class LoginPage implements OnInit {
     gotoreg() {
         this._navCtrl.push(RegisterPage);//move to RegisterPage
     }
-    signin(logvalue: any) { //function calll when login click
+    /*
+     * function call when login click
+     */
+    signin(logvalue: any) { 
         this.login = true;
         this.forgotPasswordEmail = logvalue.email;
-        this._login.getLogin(logvalue).then((res) => { //calll login api
+        this._login.getLogin(logvalue).then((res) => { //call login api
             this.login = false;
             this.data = res;
             if (this.data.status === 1) {
@@ -77,7 +80,10 @@ export class LoginPage implements OnInit {
                 this._toast.toast(JSON.parse(err._body).message, 3000);
             })
     }
-    userFbLogin(body) {    //function use for facebook login
+    /*
+     * function use for facebook login
+     */
+    userFbLogin(body) {
         let data = body.data;
         this._socialAccount.getSocialAccount(data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
@@ -88,7 +94,10 @@ export class LoginPage implements OnInit {
             }
         });
     }
-    userGoogleLogin(body) { //function use for google login
+    /*
+     * function use for google login
+     */
+    userGoogleLogin(body) { 
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this._appConfigService.setUserData(res.body);
             if (this.checkoutLogin) {

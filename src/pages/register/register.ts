@@ -34,8 +34,10 @@ export class RegisterPage implements OnInit {
             });
         });
     }
-
-    signup(regvalue: any) {//function use for register 
+    /*
+     * function use for register
+     */
+    signup(regvalue: any) { 
         this.spin = true;
         this._register.getRegister(regvalue).then((res) => { //call api
             this.spin = false;
@@ -51,7 +53,10 @@ export class RegisterPage implements OnInit {
 
 
     }
-    signin(logvalue: any) { //function use for login 
+    /*
+     * function use for login 
+     */
+    signin(logvalue: any) {
         this._login.getLogin(logvalue).then((res) => {//call api for login
             this.data = res;
             if (this.data.status === 1) {
@@ -70,8 +75,11 @@ export class RegisterPage implements OnInit {
                 this._toast.toast(JSON.parse(err._body).message, 3000);
             });
     }
+    /*
+     * open link in inapp browser
+     */
     privacyPolicy() {
-        this._ngZone.run(() => {    //open link in inapp browser
+        this._ngZone.run(() => {   
             this.browser = this.iab.create('https://xmagestore.com/privacy_policy.html', '_blank', 'hardwareback=yes ,location=yes');
         });
 

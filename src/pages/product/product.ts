@@ -129,7 +129,10 @@ export class ProductPage implements OnInit {
         })
 
     }
-    shareWithOptions(caption, img) { //function use for share options
+    /*
+     * function use for share options
+     */
+    shareWithOptions(caption, img) {
         let opt = {
             message: 'share this',
             subject: caption,
@@ -137,7 +140,7 @@ export class ProductPage implements OnInit {
             url: 'https://www.website.com/foo/#bar?a=b',
             chooserTitle: 'Pick an app'
         }
-        this._socialSharing.shareWithOptions(opt)        //calll shareWithOptions service 
+        this._socialSharing.shareWithOptions(opt)        //call shareWithOptions service 
             .then(() => console.log('Shared!'))
             .catch((error: any) => console.error(error));
         let loader = this.loadingCtrl.create({
@@ -146,6 +149,9 @@ export class ProductPage implements OnInit {
         });
         loader.present();
     }
+    /*
+     * use to set product in wishlist
+     */
     wishList(feat_prod) {
         let data = {};
         data["productId"] = feat_prod.data.entity_id;
@@ -186,7 +192,9 @@ export class ProductPage implements OnInit {
         });
 
     }
-
+    /*
+     * this function is use for get product data a
+     */
     products() {
         // get data from local storage of userData via funtion of getUserData
         // in data variable access_token and sku is used to check user login in backend to send tier price
@@ -303,7 +311,9 @@ export class ProductPage implements OnInit {
             });
         });
     }
-    //function call when any change occurs in select list.it has configurableSelectedObject hold item object and key
+    /*
+     *function call when any change occurs in select list.it has configurableSelectedObject hold item object and key
+     */
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
         if (!configurableSelectedObject) {
             return;
@@ -370,15 +380,20 @@ export class ProductPage implements OnInit {
         this.reviewData = event;
     }
     public askEmail: boolean;
-
-    notifySet() { // this function is used to set notification for product stock
+    /*
+     * this function is used to set notification for product stock
+     */
+    notifySet() {
         if (this.userEmail) {
             this.alertSetApi(this.userEmail)
         } else {
             this._toast.toast("Please Login First !!", 3000, "bottom");
         }
     }
-    alertSetApi(useremail) {//use to set notification
+    /*
+     * use to set notification
+     */
+    alertSetApi(useremail) {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
         let email = useremail;
@@ -388,8 +403,10 @@ export class ProductPage implements OnInit {
             this.askEmail = true;
         });
     }
-
-    configurabilData() {    // function use for creating data for api use 
+    /*
+     * function use for creating data for api use 
+     */
+    configurabilData() {   
         let array: any = {};
         this.add_cart = {};
         let selectedItem: string;
@@ -403,8 +420,11 @@ export class ProductPage implements OnInit {
             this.ifCustomOption("", this.add_cart)
         }
     }
-    //simple+vertual+downloadble 
-    ifCustomOption(customOpt, diffProduct) {    //customOpt have customOption if exist and diffProduct have other data
+    /*
+     * simple+vertual+downloadble 
+     * customOpt have customOption if exist and diffProduct have other data
+     */
+    ifCustomOption(customOpt, diffProduct) {    
         this.add_cart = {};
         if (diffProduct != null) {
             this.diffProductData = diffProduct;
@@ -505,8 +525,10 @@ export class ProductPage implements OnInit {
             this.ifCustomOption(customData, null);//map with other data selection
         }
     }
-
-    group(groupData) {    //fuunction use for group product
+    /*
+     * function use for group product
+     */
+    group(groupData) { 
         let total = parseFloat(this.refPrice) + (parseFloat(groupData.total));
         this.add_cart = {};
         this.final_price = total;
@@ -517,7 +539,10 @@ export class ProductPage implements OnInit {
             this.add_cart = merge(this.add_cart, this.addToCartData, groupData);
         }
     }
-    addToCartService() {    //function use for add to cart and edit cart data
+    /*
+     * function use for add to cart and edit cart data
+     */
+    addToCartService() { 
         if (!this.cartSpin) {
             this.cartSpin = true;
             if (this.cartButtonTitle != 'UPDATE CART') {

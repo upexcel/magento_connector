@@ -33,9 +33,9 @@ export class WishListModel implements OnInit {
         });
     }
     /**
-*deleteWishlist
-*use to call account/removeWishlist api
-**/
+    *deleteWishlist
+    *use to call account/removeWishlist api
+    **/
     deleteWishlist(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api('account/removeWishlist ', data).subscribe((res) => {

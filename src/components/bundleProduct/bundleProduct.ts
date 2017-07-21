@@ -74,7 +74,7 @@ export class BundleProduct {
     }
     /** 
  *    fistTimeCreateData
- * function call as callback 
+ * function for set default value in fields 
  **/
     fistTimeCreateData(selection, value, m_Flag, cb) {
         if (selection.defaultSet == true) {
@@ -258,7 +258,7 @@ export class BundleProduct {
     }   
       /**
      * checkVisiblety
-     *  function call for check validation
+     *  function call for check Visiblety
      **/
     checkVisiblety(obj) {
         if (obj.visable == false) {
@@ -269,7 +269,7 @@ export class BundleProduct {
         }
     }     /**    
           *  bundleData   
-          * function ues to emit bundle data   
+          * function use for emit bundle data   
           **/
     bundleData(obj?) {
         let data = {};

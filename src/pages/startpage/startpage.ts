@@ -34,9 +34,9 @@ export class StartPage implements OnInit {
         this._appConfigService.resetDataInService();//reset data from service
         this._appConfig.getAppConfig().then((res) => { // get data from local
             this.data = res;
-            this._local.set('website_id', this.data.body.website_id);//set website_id on local
-            this._local.set('store_id', this.data.body.store_id);//set store_id on local
-            this._local.set('require_login', this.data.body.store_id);//set require_login on local
+            this._local.set('website_id', this.data.body.website_id);//set website_id on local storage
+            this._local.set('store_id', this.data.body.store_id);//set store_id on local storage
+            this._local.set('require_login', this.data.body.store_id);//set require_login on local storage
             this.check = true;
         })
             .catch((err) => {

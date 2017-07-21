@@ -8,9 +8,9 @@ export class Login implements OnInit {
     constructor(private _apiService: ApiService, private _fcmService: fcmService) {}
     ngOnInit() {}
     /**
-*getLogin
-*use to call customer/login/
-**/
+    *getLogin
+    * call customer/login/ api
+    **/
     getLogin(data): Promise<LoginDataType> {
         return new Promise((resolve, reject) => {
             this._apiService.api('customer/login/', data).subscribe((res) => {

@@ -4,7 +4,7 @@ declare var Zepto: any;
     selector: '[onReturn]'
 })
 /**
-*this diective is use for fouce on next input filed by click enter
+*this diective is use for fouce on next input filed by press enter key
 */
 export class FocusByEnterKey {
     private el: ElementRef;

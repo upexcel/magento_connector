@@ -25,7 +25,7 @@ export class DownloadProduct {
     constructor() {}
     /** 
 *    ngOnInit
-* function use to set editable data into fileds
+* function use to set editable cart data into downloadable fileds
 **/
     ngOnInit() {
         this.currencySign = this.data.body.data.currency_sign;
@@ -50,7 +50,7 @@ export class DownloadProduct {
     }
     /** 
 *    onChangeLink
-* function use  for onChangeLink event
+* function use for get data and calculate price on checkbox event
 **/
     onChangeLink() {
         this.linkData = [];
@@ -63,7 +63,7 @@ export class DownloadProduct {
     }
           /* 
  *    onChangeSamle
- * function use  on click sample lnk
+ * function use for select sample data by checkbox
  **/
     onChangeSample(object, i, event) {
         if (event) {

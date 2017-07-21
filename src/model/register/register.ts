@@ -6,7 +6,9 @@ declare let Promise: any;
 export class Register implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService) {}
     ngOnInit() {}
-
+    /*
+     * use for customer/register api call
+     */
     getRegister(data) {
         return new Promise((resolve, reject) => {
             this._apiService.api("customer/register/", data).subscribe((res) => {

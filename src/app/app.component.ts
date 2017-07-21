@@ -52,7 +52,7 @@ export class MyApp implements OnInit {
     }
 /**
 *checkBackButton
-*use when back button click 
+*use when back button click (handle back button event)
 **/
     checkBackButton() {
         this._platform.registerBackButtonAction(() => {
@@ -83,7 +83,7 @@ export class MyApp implements OnInit {
     }
 /**
 *hideSplashScreen
-* use for Splashscreen
+* use for Splashscreen hide
 **/
     hideSplashScreen() {
         setTimeout(() => {
@@ -98,7 +98,7 @@ export class MyApp implements OnInit {
     }
         /**
     *appCheckConfig
-    *redirect page
+    *redirect page as root page 
     **/
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
@@ -152,7 +152,7 @@ export class MyApp implements OnInit {
     }
     /**
 *fcm
-* use for NotificationOpen
+* use for handle NotificationOpen
 **/
     fcm() {
         this.firebase.grantPermission();

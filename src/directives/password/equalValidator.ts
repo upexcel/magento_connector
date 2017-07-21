@@ -3,7 +3,7 @@
 import {Directive, forwardRef, Attribute} from '@angular/core';
 import {Validator, AbstractControl, NG_VALIDATORS} from '@angular/forms';
 /*
-*this directive is use for valiidation of password and conform password
+*this directive is use for validation of password and conform password
 */
 @Directive({
     selector: '[validateEqual][formControlName],[validateEqual][formControl],[validateEqual][ngModel]',

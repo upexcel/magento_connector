@@ -9,7 +9,7 @@ export class CMS implements OnInit {
     ngOnInit() {}
     /**
     *getStaticPageList
-    *use to  call web/getStaticPageList api if not in local
+    *use to call web/getStaticPageList api if not in local
     **/
     getStaticPageList() {
         return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ export class CMS implements OnInit {
     }
     /**
     *getStaticPageData
-    *use to  call web/getStaticPageContent api
+    *use for call web/getStaticPageContent api
     **/
     getStaticPageData(data) {
         return new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ export class CMS implements OnInit {
     }
     /**
     *setContactUsInfo
-    *use to  call web/contactus api
+    *use for call web/contactus api
     **/
     setContactUsInfo(data) {
         return new Promise((resolve, reject) => {

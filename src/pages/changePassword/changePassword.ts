@@ -31,16 +31,16 @@ export class ChangepasswordPage implements OnInit {
             this.access_token = userData.access_token; //access_token use for authentication
         });
         }    
-/**
-* show_products
-*
-* function col for change password hold two parameter model have form value
-**/
+    /**
+    * show_products
+    *
+    * function call for change password 
+    **/
 
     changepassword(model: User, isValid: boolean) {
         this.spin = true;
         let data = {"password": model.password, "newPassword": model.newPassword, access_token: this.access_token ? this.access_token : 'false'}
-        this._changePwd.getPwd(data).then((res: any) => { //col apin changePassword
+        this._changePwd.getPwd(data).then((res: any) => { //call apin changePassword
             this.spin = false;
             this.response = res;
             this._toast.toast(res.body, 3000, "bottom");

@@ -6,7 +6,7 @@ export class Forgot {
     constructor(private _apiService: ApiService) {}
     /**
     *getForgot
-    *use to  call customer/forgot/
+    *use for call customer/forgot/ api
     **/
     getForgot(data): Promise<ForgotDataType> {
         return new Promise((resolve, reject) => {

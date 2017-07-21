@@ -143,12 +143,15 @@ export class Checkout implements OnInit {
             }
         });
     }
+    /*
+     * create data for place order
+     */
     createPlaceOrderData() {
         let products = {};
-        this.totalPrice = this.cartData.subtotal_without_discount; //get subtotal without discount from service
+        this.totalPrice = this.cartData.subtotal_without_discount; //get subtotal price without discount from service
         this.tax = this.cartData.tax; //get tax amount on cart
-        this.discount = this.cartData.discount; // get discount on cart
-        this.grandTotal = this.cartData.grandtotal;  // get grandtotal on cart
+        this.discount = this.cartData.discount; // get discount price on cart
+        this.grandTotal = this.cartData.grandtotal;  // get grandtotal price on cart
         if (this.cartData.cart_items && this.cartData.cart_items.length > 0) {
             forEach(this.cartData.cart_items, (value, key) => {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
@@ -159,7 +162,9 @@ export class Checkout implements OnInit {
             this.data['products'] = products;
         }
     }
-    // call when view will enter
+    /*
+     *  call when view will enter
+     */
     ionViewWillEnter() {
 
         this.selectedPaymentMethod = false;
@@ -206,9 +211,12 @@ export class Checkout implements OnInit {
         });
         this.validateData(); // call function for check validation
     }
+    /*
+     * call cart/getTaxAmount api to get tax detail
+     */
     taxDetails() {
         this.taxSpin = true;
-        this._checkoutService.getTaxDetail(this.data).then((res: any) => { // calll cart/getTaxAmount api to get tax detail
+        this._checkoutService.getTaxDetail(this.data).then((res: any) => {
             let resposnseTax = res['body'];
             this.tax = resposnseTax['tax'];
             this.grandTotal = resposnseTax['quote']['grand_total'];
@@ -222,7 +230,10 @@ export class Checkout implements OnInit {
         //move to MySavedAddressPage
         this._navCtrl.push(MySavedAddressPage);
     }
-    paymentMethod(selectedPaymentMethod) { //call when paymentMethod selected
+    /*
+     * call when paymentMethod selected(manage payment Method)
+     */
+    paymentMethod(selectedPaymentMethod) {
         this.validate.payment = false;
         this.data['payment_method'] = selectedPaymentMethod['payment_method'];
         if (selectedPaymentMethod && selectedPaymentMethod['payment_method']) {
@@ -230,7 +241,10 @@ export class Checkout implements OnInit {
         }
         this.validateData();
     }
-    shippingMethod(selectedShippingMethod) { //call when shippingMethod selected
+    /*
+     * call when shippingMethod selected(manage shipping Method)
+     */
+    shippingMethod(selectedShippingMethod) {
         this.validate.shipping = false;
         this.data['shipping_method'] = selectedShippingMethod['code'];
         if (selectedShippingMethod && selectedShippingMethod['shipping_method']) {
@@ -238,7 +252,10 @@ export class Checkout implements OnInit {
         }
         this.validateData();
     }
-    validateData() { //function use to validate
+    /*
+     * function use for validation
+     */
+    validateData() {
         let count = 0;
         forEach(this.validate, (value) => {
             if (value) {
@@ -251,7 +268,10 @@ export class Checkout implements OnInit {
             this.disable = true;
         }
     }
-    orderPlace() { //function use to order place
+    /*
+     * function use for order place
+     */
+    orderPlace() {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
             this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place

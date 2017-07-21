@@ -25,13 +25,13 @@ export class CartPage implements OnInit {
     couponCodeSpin: boolean = false;
     //hold currency_sign
     currency_sign;
-    //hold subtotal without discount
+    //hold subtotal price without discount
     totalPrice: number = 0;
-    // hold discount
+    // hold discount price
     discount: number = 0;
     //hold tax
     tax: number = 0;
-    //hold grandtotal
+    //hold grandtotal price
     grandtotalPrice: number = 0;
     //handle spinner on delete Coupon
     deleteCouponCodeSpin: boolean = false;
@@ -47,9 +47,9 @@ export class CartPage implements OnInit {
     createData(cartData) {
         //check cart data is exist or not
         if (cartData) {
-            //get subtotal without discount from service
+            //get subtotal price without discount.
             this.totalPrice = cartData.subtotal_without_discount;
-            // get discount on cart
+            // get discount price on cart
             this.discount = cartData.discount;
             // get grandtotal on cart
             this.grandtotalPrice = cartData.grandtotal;
@@ -75,15 +75,15 @@ export class CartPage implements OnInit {
     }
     // function call when view will enter
     ionViewWillEnter() {
-// throw event which will receive by header to check and refresh new cart length
+        // throw event which will receive by header to check and refresh new cart length
 
         this._events.publish('check:login', true);
-    }    
-/**    
-* changeQuantity    
-*    
-* function use for quantity change     
-**/
+    }
+    /**    
+    * changeQuantity    
+    *    
+    * function use for quantity change (update quantity)    
+    **/
     changeQuantity(data) {
         //check ,is user select pop up to write quantity
         if (data.product_qty == "More") {        //if yes
@@ -130,7 +130,7 @@ export class CartPage implements OnInit {
                                         //update vertualQty value
                                         data['vertualQty'] = data['product_qty'];
                                     } else {
-                                        // if quantity not exist then copy vertualQty(old quantity) on data['product_qty']
+                                        // if quantity not exist then copy old quantity on data['product_qty']
                                         data['product_qty'] = data['vertualQty'];
                                     }
 
@@ -170,12 +170,12 @@ export class CartPage implements OnInit {
 
             })
         }
-    }    
-/**    
-* deleteProduct    
-*    
-* function call when product deleted on cart page and data is use as parameter which hold item object    
-**/
+    }
+    /**    
+    * deleteProduct    
+    *    
+    * function call when product deleted on cart page and data is use as parameter which hold item object    
+    **/
 
     deleteProduct(data) {
         let actionSheet = this._actionSheetCtrl.create({    //create actionSheetCtrl
@@ -207,12 +207,12 @@ export class CartPage implements OnInit {
             ]
         });
         actionSheet.present();
-        }
+    }
     /**
-* edit
-*
-* function edit call when user click on edit button with data (item object) argument
-**/
+    * edit
+    *
+    * function edit call when user click on edit button with data (item object) argument
+    **/
 
     edit(data) {
         //product_type
@@ -222,13 +222,13 @@ export class CartPage implements OnInit {
             const index = this._viewCtrl.index; // close this page 
             this._navCtrl.remove(index);
         });
-        }
+    }
 
     /**
-* checkTypeOf
-*
-* function checkTypeOf is use for checking varible type (object or something else) 
-**/
+    * checkTypeOf
+    *
+    * function checkTypeOf is use for checking varible type (object or something else) 
+    **/
 
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {
@@ -270,12 +270,12 @@ export class CartPage implements OnInit {
                 }
             })
         }
-        }
+    }
 
-/** applyCoupon
-*
-* function call when coupan will apply with couponCode name come as argument
-**/
+    /** applyCoupon
+    *
+    * function call when coupan will apply with couponCode name come as argument
+    **/
 
     applyCoupon(couponCode) {
         if (couponCode && couponCode.trim().length > 0) {

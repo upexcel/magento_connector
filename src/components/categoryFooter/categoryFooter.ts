@@ -23,7 +23,7 @@ export class CategoryFooter {
     }
     /** 
     *    sortModel
-    * function ues for create sort model
+    * function use  for create sorting data model
     **/
     sortModel() {
         let popover = this._popoverCtrl.create(SortBy, {data: {"catedoryId": this.catedoryId, "storeId": this.storeId, "previouseSortSection": this.previouseSortSection, "previouseSortOrder": this.previouseSortOrder}});
@@ -31,7 +31,7 @@ export class CategoryFooter {
     }
     /** 
 *    filterModal
-* function ues for create filter model
+* function use  for create filter data model
 **/
     filterModal() {
         let modal = this._modalCtrl.create(FilterBy, {"catedoryId": this.catedoryId});
@@ -39,7 +39,7 @@ export class CategoryFooter {
     }
     /** 
 *    dismiss
-* function ues to dismiss view
+* function use  to dismiss view
 **/
     dismiss() {
         this._viewCtrl.dismiss();

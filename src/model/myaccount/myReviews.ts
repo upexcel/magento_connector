@@ -4,6 +4,9 @@ import {MyAccountAddressDataType} from './myaccountData';
 @Injectable()
 export class MyReviewData {
     constructor(private _apiService: ApiService) {}
+    /*
+     * call account/getReviews api
+     */
     getMyDownlodeData(): Promise<MyAccountAddressDataType> {
         return new Promise((resolve, reject) => {
             this._apiService.api("account/getReviews", {}).subscribe((res) => {

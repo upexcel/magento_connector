@@ -8,7 +8,7 @@ export class Cart implements OnInit {
     ngOnInit() {}
     /**
     *getCart
-    *use to call cart/cart api
+    *use for call cart/cart api
     **/
     getCart(data): Promise<cartDataType> {
         return new Promise((resolve, reject) => {

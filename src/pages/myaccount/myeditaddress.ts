@@ -85,8 +85,11 @@ export class MyEditAddressPage implements OnInit {
         })
 
     }
+    /*
+     *         return this._platform.is('ios');
+     */
     platform() {
-        return this._platform.is('ios'); //check platform
+        return this._platform.is('ios'); 
     }
     root() {
         this._navCtrl.push(MySavedAddressPage, {'againOpenEditAddressPage': false}).then(() => {
@@ -114,7 +117,10 @@ export class MyEditAddressPage implements OnInit {
             })
         }
     }
-    getuser_details(id, entity_id, firstname?, lastname?) {  //use for update view 
+    /*
+     * use for get user details
+     */
+    getuser_details(id, entity_id, firstname?, lastname?) { 
         this.spin = true;
         var rName;
         if (entity_id != null) {    // form use as edit perpose
@@ -192,7 +198,10 @@ export class MyEditAddressPage implements OnInit {
             }
         }
     }
-    update(value: any) { // submit form
+    /*
+     * function use for submit form
+     */
+    update(value: any) {
         let data = value;
         //create data for api use
         if (data['countryid']['country_region'].length > 0) {

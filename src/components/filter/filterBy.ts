@@ -66,14 +66,14 @@ export class FilterBy {
             })
         })
     }
-    /** 
+/** 
 *    range
-* function use  for set price range on service
+* function use for call service  for price range.
 **/
     range() {
         this._filterService.setFilterPrice(this.dualValue2);
     }
-    /** 
+/** 
 *    subOptionLength
 * function use  to check sub option length
 **/
@@ -84,10 +84,10 @@ export class FilterBy {
         })
         return count;
     }
-          /* 
- *    openModl
- * function use  for crate model for filter sub data 
- **/
+/* 
+*    openModal
+* function use  for crate model for filter sub data 
+**/
     openModal(title) {
         var data = '';
         this.filter_title = title;
@@ -111,15 +111,20 @@ export class FilterBy {
         modal.present();
     }
     dismiss() {
-        this._viewCtrl.dismiss();
-
+        this._viewCtrl.dismiss();//distroy view
     }
+    /**
+     *function call when filter is apply and call filterService
+     **/
     applyFilter() {
         this._filterService.setFilterPrice(this.dualValue2);
         this.checkedData.push({"price": this.dualValue2});
         this._events.publish('filter:data', {data: {"filterBy": this.checkedData}});
         this._viewCtrl.dismiss();
     }
+    /**
+    *function call for reset FilterData
+    **/
     clearAll() {
         this.checkedData = [];
         this._filterService.resetFilterData();

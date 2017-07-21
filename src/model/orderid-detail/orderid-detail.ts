@@ -8,7 +8,7 @@ export class OrderIdDetail {
     constructor(public local: Storage, private _apiService: ApiService) {}
     /**
     *getHomeProducts
-    *use to call order/get/ api
+    *use for call order/get/ api
     **/
     getHomeProducts(data): Promise<OrderIdDetailDataType> {
         return new Promise((resolve, reject) => {

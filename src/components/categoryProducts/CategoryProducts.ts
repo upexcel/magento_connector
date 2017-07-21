@@ -20,7 +20,7 @@ export class CategoryComponent {
     }
     /** 
 *    wishList
-* function ues for set WishList Data
+* function use for set WishList Data
 **/
     wishList(feat_prod) {
         this._appConfigService.getUserData().then((userData: any) => {
@@ -38,7 +38,7 @@ export class CategoryComponent {
     }
     /** 
 *    viewChange
-* function ues for toggle view
+* function use  for toggle view(Landscape,Portrait)
 **/
     viewChange(view) {
         if (view == "portrait") {
@@ -63,7 +63,7 @@ export class CategoryComponent {
     }
     /** 
 *    gotoProduct
-* function use to move ProductPage
+* function use to move on ProductPage
 **/
     gotoProduct(product) {
         this._navCtrl.push(ProductPage, {
