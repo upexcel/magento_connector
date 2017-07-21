@@ -73,9 +73,9 @@ export class BundleProduct {
         })
     }
     /** 
- *    fistTimeCreateData
- * function for set default value in fields 
- **/
+    *    fistTimeCreateData
+    * function for set default value in fields
+    **/
     fistTimeCreateData(selection, value, m_Flag, cb) {
         if (selection.defaultSet == true) {
             m_Flag = 1;
@@ -109,9 +109,9 @@ export class BundleProduct {
         cb(m_Flag)
     }
     /* 
-*    onChangeBundleSelct
-* function call when any event perform by select list
-**/
+    *    onChangeBundleSelct
+    * function call when any event perform by select list
+    **/
     onChangeBundleSelect(bundleSelect, formId, is_require) {
         this.bundleSelected = {};
         this.bundleSelectedQty = {};
@@ -124,9 +124,9 @@ export class BundleProduct {
         this.formValidate(formId, false, is_require);
     }
     /**
-*    onChangeBundleMult
-* function call when any event perform by multipul select list
-**/
+    *    onChangeBundleMult
+    * function call when any event perform by multipul select list
+    **/
     onChangeBundleMulti(bundleMulti, formId, i, is_require) {
         this.bundleMultiSelected = {};
         this.bundleMultiQty = {};
@@ -150,9 +150,9 @@ export class BundleProduct {
         }
     }
     /* 
-*    onChangeBundleChek
-* function call when any event perform by checkbox
-**/
+    *    onChangeBundleChek
+    * function call when any event perform by checkbox
+    **/
     onChangeBundleCheck(selection, formId, is_require) {
         this.checkObj = {};
         this.bundleCheckQty = {};
@@ -187,9 +187,9 @@ export class BundleProduct {
         }
     }
     /* 
-*    onChangeRado
-* function call when any event perform by radio
-**/
+    *    onChangeRado
+    * function call when any event perform by radio
+    **/
     onChangeRadio(selection, formId, is_require) {
         this.radioChecked = {};
         this.bundleRadioQty = {};
@@ -202,9 +202,9 @@ export class BundleProduct {
         this.formValidate(formId, false, is_require);
     }
     /* 
-*    calculateTotl
-* function call to calculate bundle item total price
-**/
+    *    calculateTotl
+    * function call to calculate bundle item total price
+    **/
     calculateTotal(obj) {
         let total = 0;
         forEach(this.bundle.bundle_items, (value) => {
@@ -255,11 +255,11 @@ export class BundleProduct {
         }
         this.calculateTotal(obj);
 
-    }   
-      /**
-     * checkVisiblety
-     *  function call for check Visiblety
-     **/
+    }
+    /**
+    * checkVisiblety
+    *  function call for check Visiblety
+    **/
     checkVisiblety(obj) {
         if (obj.visable == false) {
             obj.visable = true;
