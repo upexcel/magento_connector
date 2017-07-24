@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './../../providers/api-service/api-service';
-import {MyAccountAddressDataType} from './myaccountData';
 @Injectable()
-export class MyReviewData {
+export class SearchModel {
     constructor(private _apiService: ApiService) {}
-    /*
-     * call account/getReviews api
-     */
-    getMyDownlodeData(): Promise<MyAccountAddressDataType> {
+    /**
+    * getSearchProduct
+    *use for callproduct/productSearch/ api 
+    **/
+    getSearchProduct(data) {
         return new Promise((resolve, reject) => {
-            this._apiService.api("account/getReviews", {}).subscribe((res) => {
+            this._apiService.api("product/productSearch/", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import forEach from 'lodash/forEach';
 
 @Component({
@@ -19,8 +19,12 @@ export class group {
                 this.groupedData();
             }
         }, 100);
-    }
 
+    }
+    /*
+    *quantityEdit
+    *function use for edit quantity
+    */
     quantityEdit() {
         forEach(this.editCartData.super_attribute, (editCartOptionValue, editCartOptionkey) => {
             forEach(this.grouped.group_associated_products, (groupAssociatedProducsValue, key) => {
@@ -36,6 +40,10 @@ export class group {
             // this.grouped.group_associated_products[i]['quantity'] = 0;
         }
     }
+    /**
+     * groupedData
+     * function use for create group product data
+     **/
     groupedData() {
         let opt: any = [], id = {}, total = 0, flag = 0;
         forEach(this.grouped.group_associated_products, (value, key) => {
@@ -46,7 +54,7 @@ export class group {
                 total = total + (value.quantity * 1) * (parseFloat(value.final_price));
             }
         });
-        let obj = { "super_attribute": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total };
+        let obj = {"super_attribute": id, "subData": opt, "disable": (flag > 0) ? false : true, "total": total};
         this.sendData.emit(obj);
     }
 

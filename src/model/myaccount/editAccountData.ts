@@ -1,4 +1,4 @@
-export class EditAccountDataType{
+export class EditAccountDataType {
     "data": string;
     "status": number;
     "message"?: any;

@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from './../../providers/api-service/api-service';
-import { CategoryProductDataType } from './categoryProductData';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import {Injectable} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
+import {CategoryProductDataType} from './categoryProductData';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 declare let Promise: any;
 @Injectable()
 export class CategoryProduct {
-    constructor(public _dataConfigService: AppDataConfigService, private _apiService: ApiService) { }
+    constructor(public _dataConfigService: AppDataConfigService, private _apiService: ApiService) {}
+    /**
+    *getCategoryProduct is use for get category product, if data not exist in service then call category/products/ api 
+    **/
     getCategoryProduct(data, doRefresh?): Promise<CategoryProductDataType> {
         let apiservice = this._apiService;
         return new Promise((resolve, reject) => {

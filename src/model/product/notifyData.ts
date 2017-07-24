@@ -1,4 +1,4 @@
-export class notifyDatatype{
-    body:''
+export class notifyDatatype {
+    body: ''
     status: number
 } 

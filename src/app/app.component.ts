@@ -50,7 +50,10 @@ export class MyApp implements OnInit {
             }            
         })
     }
-
+/**
+*checkBackButton
+*use when back button click (handle back button event)
+**/
     checkBackButton() {
         this._platform.registerBackButtonAction(() => {
             let ready = true;
@@ -78,7 +81,10 @@ export class MyApp implements OnInit {
             }
         }, 100);
     }
-
+/**
+*hideSplashScreen
+* use for Splashscreen hide
+**/
     hideSplashScreen() {
         setTimeout(() => {
             Splashscreen.hide();
@@ -90,6 +96,10 @@ export class MyApp implements OnInit {
             this.appCheckConfig();
         });
     }
+        /**
+    *appCheckConfig
+    *redirect page as root page 
+    **/
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
@@ -109,6 +119,10 @@ export class MyApp implements OnInit {
         });
 
     }
+    /**
+*addConnectivityListeners
+* moniter network connection 
+**/
     addConnectivityListeners() {
         var isOnline = true;
         var onOnline = () => {
@@ -136,13 +150,15 @@ export class MyApp implements OnInit {
         window.addEventListener('offline', onOffline, false);
 
     }
+    /**
+*fcm
+* use for handle NotificationOpen
+**/
     fcm() {
         this.firebase.grantPermission();
         this.firebase.hasPermission().then((data)=>{
-            console.log(data)
         })
         this.firebase.onNotificationOpen().subscribe(res => {
-        console.log("resL:ocalNotify",res)
             if (res.tap) {
                 setTimeout(() => {
                     this.nav.push(OrderModalPage, { order_id: res.increment_id });

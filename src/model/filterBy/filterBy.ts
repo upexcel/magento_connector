@@ -1,12 +1,16 @@
-import { Injectable, OnInit } from '@angular/core';
-import { ApiService } from './../../providers/api-service/api-service';
+import {Injectable, OnInit} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
 declare let Promise: any;
 @Injectable()
 export class FilterByModel implements OnInit {
     response: any;
     id;
-    constructor(private _apiService: ApiService) { }
-    ngOnInit() { }
+    constructor(private _apiService: ApiService) {}
+    ngOnInit() {}
+    /**
+    * getFilterData
+    * call category/filterby/ api
+    **/
     getFilterData(data): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.id == data.id || data.coll != 0) {

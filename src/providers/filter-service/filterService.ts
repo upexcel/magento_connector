@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import forEach from 'lodash/forEach';
 
@@ -7,17 +7,18 @@ export class FilterService {
     filterData: any = [];
     count: number = 0;
     index: number;
-    price:any;
-    constructor() { }
+    price: any;
+    constructor() {}
     resetFilterData() {
         this.filterData = [];
         this.count = 0;
-        this.price={};
+        this.price = {};
     }
-    setFilterPrice(price){
-        this.price=price;
+    //set filter price range
+    setFilterPrice(price) {
+        this.price = price;
     }
-    setFilterData(data) {
+    setFilterData(data) {  //set filter data 
         if (this.filterData && this.filterData.length > 0) {
             this.count = 0;
             forEach(this.filterData, (value, key: any) => {
@@ -40,7 +41,7 @@ export class FilterService {
             this.filterData = [data];
         }
     }
-    getFilterData() {
+    getFilterData() { //get filter data
         return new Promise((resolve, reject) => {
             resolve(this.filterData)
         })

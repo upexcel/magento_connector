@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ProductReviewDataType } from '../../model/product/productReviewDataType';
-import { GetRating } from '../../model/product/getRatingDataType';
-import { Product } from '../../model/product/getProduct';
-import { ModalController } from 'ionic-angular';
-import { SubmitReview } from '../submitReview/SubmitReview';
+import {Component, Input, OnInit} from '@angular/core';
+import {ProductReviewDataType} from '../../model/product/productReviewDataType';
+import {GetRating} from '../../model/product/getRatingDataType';
+import {Product} from '../../model/product/getProduct';
+import {ModalController} from 'ionic-angular';
+import {SubmitReview} from '../submitReview/SubmitReview';
 import forEach from 'lodash/forEach';
-import { Events } from 'ionic-angular';
+import {Events} from 'ionic-angular';
 @Component({
     selector: 'product-review',
     templateUrl: 'reviewProduct.html'
@@ -38,12 +38,15 @@ export class ProductReview implements OnInit {
                 this.reviewKeys.push(titleKey);
             });
             this.fetchReview();
-        }).catch((err) => { });
+        }).catch((err) => {});
     }
+    /*
+    *fetchReview function use to fetch all review data
+    */
     fetchReview() {
         this.graphRating = [];
         this.productReviewSpin = true;
-        this._getProduct.getProductReview({ "sku": this.skuData, "page": this.countPage }).then((review) => {
+        this._getProduct.getProductReview({"sku": this.skuData, "page": this.countPage}).then((review) => {
             this.productReview = review;
             this.listLoad = false;
             this.productReviewSpin = false;
@@ -70,6 +73,10 @@ export class ProductReview implements OnInit {
             this.productReviewSpin = false;
         });
     }
+    /*
+    *moreReview
+    *function use for move on next page for review
+    */
     moreReview() {
         if (this.listLoad != true) {
             this.countPage = this.countPage + 1;
@@ -77,8 +84,13 @@ export class ProductReview implements OnInit {
         }
         this.listLoad = true;
     }
+
+    /*
+    *addReview
+    *create model for add review 
+    */
     addReview() {
-        let profileModal = this._modalCtrl.create(SubmitReview, { sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.body.options, max_review: this.getRating.body.max_review });
+        let profileModal = this._modalCtrl.create(SubmitReview, {sku: this.skuData, title: this.reviewTitle, keys: this.reviewKeys, option: this.getRating.body.options, max_review: this.getRating.body.max_review});
         profileModal.present();
     }
 }

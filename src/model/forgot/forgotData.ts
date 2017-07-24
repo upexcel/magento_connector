@@ -1,5 +1,5 @@
-export class ForgotDataType{
-  data:string;
-  message:string;
-  status:string;
+export class ForgotDataType {
+    data: string;
+    message: string;
+    status: string;
 }

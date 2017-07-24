@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
-import { ViewController } from 'ionic-angular';
-import { SubmitReviewDataType } from '../../model/product/submitReview';
-import { Product } from '../../model/product/getProduct';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {NavParams} from 'ionic-angular';
+import {ToastController} from 'ionic-angular';
+import {ViewController} from 'ionic-angular';
+import {SubmitReviewDataType} from '../../model/product/submitReview';
+import {Product} from '../../model/product/getProduct';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
-import { Events } from 'ionic-angular';
-import { ToastService } from './../../providers/toast-service/toastService';
+import {Events} from 'ionic-angular';
+import {ToastService} from './../../providers/toast-service/toastService';
 
 @Component({
     selector: 'submit-review',
@@ -45,13 +45,20 @@ export class SubmitReview implements OnInit {
             }
         });
     }
+    /** 
+    *    close
+    * function use for close view
+    **/
     close() {
         this._viewCtrl.dismiss();
     }
     onSelectRatting(rating, title) {
         this.selectedRating = rating;
     }
-
+    /** 
+    *    submitReview
+    * function use for submit review
+    **/
     submitReview() {
         let reviweDataJson = {};
         let selectedRating = {};

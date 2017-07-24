@@ -36,9 +36,10 @@ export class WishListService {
                 }
             })
             this.seviceData = dataOfRes;
-            this._events.publish('wishList:length',  this.seviceData ? this.seviceData.length : 0);
+            this._events.publish('wishList:length', this.seviceData ? this.seviceData.length : 0);
         })
     }
+    //synchronize wishlist api data with local
     setWishListData(list, apiData) {
         var match = false;
         if (this.seviceData && this.seviceData.length > 0) {
@@ -50,7 +51,7 @@ export class WishListService {
             })
             if (!match) {
                 this.seviceData.unshift(list);
-                this._events.publish('wishList:length',  this.seviceData ? this.seviceData.length : 0);
+                this._events.publish('wishList:length', this.seviceData ? this.seviceData.length : 0);
                 this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
                 this._wishList.addWishlist(apiData).then((res) => {
                     this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"]);
@@ -62,7 +63,7 @@ export class WishListService {
             }
         } else {
             this.seviceData = [list];
-            this._events.publish('wishList:length',  this.seviceData ? this.seviceData.length : 0);
+            this._events.publish('wishList:length', this.seviceData ? this.seviceData.length : 0);
             this._toast.toast(list.data.name + " has been added to your wishlist", 3000);
             this._wishList.addWishlist(apiData).then((res) => {
                 this.updateWishlistDataLocal(list.data.entity_id, res.body["wishlist_id"])
@@ -76,6 +77,11 @@ export class WishListService {
             resolve(this.seviceData)
         })
     }
+    /**
+    *deleteProductWishList
+    *
+    *delete product from wishlist
+    **/
     deleteProductWishList(data, actionSheetDelete?) {
         return new Promise((resolve, reject) => {
             if (!actionSheetDelete) {
@@ -117,13 +123,18 @@ export class WishListService {
                             this._dataConfigService.updateDataInServiceForWishlist(data.data.entity_id, false);
                         });
                         this.seviceData.splice(key, 1);
-                        this._events.publish('wishList:length',  this.seviceData ? this.seviceData.length : 0);
+                        this._events.publish('wishList:length', this.seviceData ? this.seviceData.length : 0);
                         resolve(this.seviceData);
                     }
                 })
             }
         });
     }
+    /**
+    *updateWishlistDataLocal
+    *
+    *update wish list data from local
+    **/
     updateWishlistDataLocal(entityId, wishistId) {
         forEach(this.seviceData, (value, key) => {
             let entity_id = value.data.entity_id || value.entity_id;

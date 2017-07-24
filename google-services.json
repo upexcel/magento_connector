@@ -56,6 +56,13 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "985302084212-vfbei5p9hummk7fiqlme58n7ci8426gr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.excellence.magento"
+              }
+            },
+            {
               "client_id": "985302084212-3snccrl62b8jrn0i9ak7no57tduj6aav.apps.googleusercontent.com",
               "client_type": 3
             }

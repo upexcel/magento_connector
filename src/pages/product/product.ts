@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { CartPage } from '../cart/cart';
-import { NavController, NavParams, Events, ViewController } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NotifyMe } from '../../model/product/notify';
-import { CartService } from './../../providers/cart-service/cart-service';
-import { productDataType } from '../../model/product/productDataType';
-import { Product } from '../../model/product/getProduct';
-import { cartDataType } from './../product/cartDataType';
-import { ToastService } from './../../providers/toast-service/toastService';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import { TierPrice } from '../../model/product/checkTierPrice';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {CartPage} from '../cart/cart';
+import {NavController, NavParams, Events, ViewController} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NotifyMe} from '../../model/product/notify';
+import {CartService} from './../../providers/cart-service/cart-service';
+import {productDataType} from '../../model/product/productDataType';
+import {Product} from '../../model/product/getProduct';
+import {cartDataType} from './../product/cartDataType';
+import {ToastService} from './../../providers/toast-service/toastService';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {TierPrice} from '../../model/product/checkTierPrice';
+import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
 import merge from 'lodash/merge';
-import { Transfer } from 'ionic-native';
-import { WishListService } from '../../providers/wishList/wishList-service';
-import { config } from './../../providers/config/config';
-import { ModalController } from 'ionic-angular';
-import { WishListModel } from './../../model/wishList/wishList';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { LoadingController } from 'ionic-angular';
-import { CartFunction } from '../../model/cart/cartHandling';
+import {Transfer} from 'ionic-native';
+import {WishListService} from '../../providers/wishList/wishList-service';
+import {config} from './../../providers/config/config';
+import {ModalController} from 'ionic-angular';
+import {WishListModel} from './../../model/wishList/wishList';
+import {SocialSharing} from '@ionic-native/social-sharing';
+import {LoadingController} from 'ionic-angular';
+import {CartFunction} from '../../model/cart/cartHandling';
 
 @Component({
     selector: 'product',
@@ -84,53 +84,54 @@ export class ProductPage implements OnInit {
     quote_id: string;
     item_id: string;
     editProductQuantity: number;
-    reviewLoader:boolean=true;
+    reviewLoader: boolean = true;
     constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
-        this.logform = this.emailTest.group({ email: ['', Validators.required] });
-        this._appConfigService.getUserData().then((userData: any) => {
-            if (userData) {
-                this.userEmail = userData.email;
-            } else {
-                this.userEmail = '';
-            }
-        })
+        this.logform = this.emailTest.group({email: ['', Validators.required]});
     }
     ngOnInit() {
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.userData = userData;
-            this.id = this._navParams.get('id');
-            this.editCartData = this._navParams.get('editCartData');
+        this._appConfigService.getUserData().then((userData: any) => { //get user data
+            if (userData) {
+                this.userEmail = userData.email; //get user email
+            } else {
+                this.userEmail = '';    //if not set blank string 
+            }
+            this.userData = userData;//make it globle
+            this.id = this._navParams.get('id');//get id
+            this.editCartData = this._navParams.get('editCartData');    //data come for edit
             this.quote_id = this._navParams.get('quote_id');
-            this.editProductQuantity = this._navParams.get('editProductQuantity');
-            this.item_id = this._navParams.get('item_id');
-            if (this.editCartData && !this._navParams.get('wishlist')) {
+            this.editProductQuantity = this._navParams.get('editProductQuantity');    //hold quantity of editable item
+            this.item_id = this._navParams.get('item_id');    //hold item id
+            if (this.editCartData && !this._navParams.get('wishlist')) {    //inset title name
                 this.cartButtonTitle = 'UPDATE CART'
             } else {
                 this.cartButtonTitle = 'ADD TO CART'
             }
-            // coll products function when it lode first time
+            // calll products function when it lode first time
             this.products();
-            //coll when any review is added 
+            //calll when any review is added 
             this._events.subscribe('api:review', (review) => {
                 // this.products();
-                 this.reviewLoader=false;
-                    setTimeout(()=>{
-                         this.reviewLoader=true;
-                    });  
+                this.reviewLoader = false;
+                setTimeout(() => {
+                    this.reviewLoader = true;
+                });
             });
         })
     }
     doRefresh(refresher) {
         this.productData = null;
         this.spin = true;
-        this._appConfigService.resetDataInService();
+        this._appConfigService.resetDataInService();    //clear data service (clear local hold data)
         this.products().then((res) => {
             if (res) {
-                refresher.complete();
+                refresher.complete();    //complete refresher
             }
         })
 
     }
+    /*
+     * function use for share options
+     */
     shareWithOptions(caption, img) {
         let opt = {
             message: 'share this',
@@ -139,7 +140,7 @@ export class ProductPage implements OnInit {
             url: 'https://www.website.com/foo/#bar?a=b',
             chooserTitle: 'Pick an app'
         }
-        this._socialSharing.shareWithOptions(opt)
+        this._socialSharing.shareWithOptions(opt)        //call shareWithOptions service 
             .then(() => console.log('Shared!'))
             .catch((error: any) => console.error(error));
         let loader = this.loadingCtrl.create({
@@ -148,6 +149,9 @@ export class ProductPage implements OnInit {
         });
         loader.present();
     }
+    /*
+     * use to set product in wishlist
+     */
     wishList(feat_prod) {
         let data = {};
         data["productId"] = feat_prod.data.entity_id;
@@ -188,7 +192,9 @@ export class ProductPage implements OnInit {
         });
 
     }
-
+    /*
+     * this function is use for get product data a
+     */
     products() {
         // get data from local storage of userData via funtion of getUserData
         // in data variable access_token and sku is used to check user login in backend to send tier price
@@ -210,30 +216,30 @@ export class ProductPage implements OnInit {
                 resolve(this.productData);
                 if (res) {
                     this.spin = false;
-                    this.product = this.productData.body.data.name;
-                    this.productid = this.productData.body.data.entity_id;
-                    this.images = this.productData.body.data.media_images[0];
-                    this.special_price = this.productData.body.data.special_price;
-                    this.display_price = this.productData.body.data.display_price;
-                    this.final_price = this.productData.body.data.final_price;
-                    this.refPrice = this.productData.body.data.final_price;
-                    this.refDisplayPrice = this.productData.body.data.display_price;
-                    this.bundlePrice = parseFloat(this.refPrice);
-                    this.dynemicDisplayPrice = this.refDisplayPrice;
+                    this.product = this.productData.body.data.name;//product name
+                    this.productid = this.productData.body.data.entity_id;//entity id
+                    this.images = this.productData.body.data.media_images[0];//first image
+                    this.special_price = this.productData.body.data.special_price;//special price
+                    this.display_price = this.productData.body.data.display_price;//display price
+                    this.final_price = this.productData.body.data.final_price;//final price
+                    this.refPrice = this.productData.body.data.final_price;//final price refirence variable
+                    this.refDisplayPrice = this.productData.body.data.display_price;//display price refirence variable
+                    this.bundlePrice = parseFloat(this.refPrice);//parse final price refirence variable
+                    this.dynemicDisplayPrice = this.refDisplayPrice;//display price refirence variable
                     //gather data for send in add cart servive
-                    this.sku = this.productData.body.data.sku;
-                    this.img = this.productData.body.data.media_images[0];
-                    this.name = this.productData.body.data.name;
-                    this.type = this.productData.body.data.type;
-                    let additionalInformation = this.productData.body.data.additional_information;
-                    this.product_custom_option = this.productData.body.data.product_custom_option;
-
-                    this.addToCartData = { productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id };
+                    this.sku = this.productData.body.data.sku;//sku id
+                    this.img = this.productData.body.data.media_images[0];//first image
+                    this.name = this.productData.body.data.name;//product name
+                    this.type = this.productData.body.data.type;//product type
+                    let additionalInformation = this.productData.body.data.additional_information;//additional_information if exist
+                    this.product_custom_option = this.productData.body.data.product_custom_option;//product_custom_option if exist
+                    //create comman data use in cart/cart api
+                    this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id};
                     //get additional_information if exit
                     if (additionalInformation != undefined) {
                         forEach(additionalInformation, (value, key) => {
                             if (value != false) {
-                                this.additionalInformationData.push({
+                                this.additionalInformationData.push({ //create data to itterable formate in html
                                     "key": key,
                                     "value": value
                                 });
@@ -244,17 +250,21 @@ export class ProductPage implements OnInit {
                     if (this.productData.body.associated_products) {
                         this.keys = keys(this.productData.body.associated_products.attributes);
                         if (this.keys.length == 0) {
-                            this.disable = false;
+                            this.disable = false;    //button not disable
                         }
                     }
                     //add a vertual key
-                    if (this.editCartData) {
+                    if (this.editCartData) { //if data come for edit
+                        //check type of product
                         if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
+                            //button not disable
                             this.disable = false;
+                            //comman data merge with add_cart
                             this.add_cart = merge(this.add_cart, this.addToCartData);
                         }
-                        if (this.productData.body.associated_products) {
+                        if (this.productData.body.associated_products) { //if associated_products exist
                             if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                                //set data  in product page for edit 
                                 forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
                                     forEach(this.editCartData.super_attribute, (opt, opt_key) => {
                                         if (opt_key == attributesDataKey) {
@@ -275,7 +285,7 @@ export class ProductPage implements OnInit {
                         if (this.productData.body.associated_products) {
                             if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
                                 forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                                    attributesData.vertualKey = false;
+                                    attributesData.vertualKey = false;//set vertualKey as false in associated_products attributes
                                 });
                             }
                         }
@@ -301,6 +311,9 @@ export class ProductPage implements OnInit {
             });
         });
     }
+    /*
+     *function call when any change occurs in select list.it has configurableSelectedObject hold item object and key
+     */
     onChangeConfigurableAttribute(configurableSelectedObject, key) {
         if (!configurableSelectedObject) {
             return;
@@ -315,16 +328,16 @@ export class ProductPage implements OnInit {
             if (typeof (allConfigData.vertualKey) == 'object') {
                 ++flag;
                 count++;
-                this.configPrice.push({ price: allConfigData.vertualKey.price });
+                this.configPrice.push({price: allConfigData.vertualKey.price}); //hold  price of selected item
                 this.selectedList.push(allConfigData);
-                if (allConfigData.label == "Color") {
+                if (allConfigData.label == "callor") {
                     setTimeout(() => {
-                        let myDiv = document.getElementById('color');
-                        myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || "";
+                        let myDiv = document.getElementById('callor');//change icon callor of configurable callor filed
+                        myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || ""; //remove space from lable
                     }, 100)
                 }
             }
-            if (key != allConfigKey) {
+            if (key != allConfigKey) {    //check all select list is selected or not
                 forEach(allConfigData.options, (allConfigValue) => {
                     allConfigValue.shown = false;
                     forEach(configurableSelectedObject.products, (currVal) => {
@@ -343,7 +356,7 @@ export class ProductPage implements OnInit {
                 })
             }
         })
-        forEach(this.configPrice, (value: any) => {
+        forEach(this.configPrice, (value: any) => {        //total price come form configurable product when you select the list
             total += (parseFloat(value.price));
         });
         this.diffrentTypeProductData(total);
@@ -367,14 +380,19 @@ export class ProductPage implements OnInit {
         this.reviewData = event;
     }
     public askEmail: boolean;
-
-    notifySet() { // this function is used to set notification for product stock
+    /*
+     * this function is used to set notification for product stock
+     */
+    notifySet() {
         if (this.userEmail) {
             this.alertSetApi(this.userEmail)
         } else {
             this._toast.toast("Please Login First !!", 3000, "bottom");
         }
     }
+    /*
+     * use to set notification
+     */
     alertSetApi(useremail) {
         this.alertset = true;
         let sku = this.productData.body.data.sku;
@@ -385,8 +403,10 @@ export class ProductPage implements OnInit {
             this.askEmail = true;
         });
     }
-
-    configurabilData() {
+    /*
+     * function use for creating data for api use 
+     */
+    configurabilData() {   
         let array: any = {};
         this.add_cart = {};
         let selectedItem: string;
@@ -395,13 +415,16 @@ export class ProductPage implements OnInit {
                 array[listdata.id] = listdata.vertualKey.id;
             });
             selectedItem = (array);
-            let cartApiData = { "productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "total": this.final_price };
+            let cartApiData = {"productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "total": this.final_price};
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }
     }
-    //simple+vertual+downloadble 
-    ifCustomOption(customOpt, diffProduct) {
+    /*
+     * simple+vertual+downloadble 
+     * customOpt have customOption if exist and diffProduct have other data
+     */
+    ifCustomOption(customOpt, diffProduct) {    
         this.add_cart = {};
         if (diffProduct != null) {
             this.diffProductData = diffProduct;
@@ -466,67 +489,72 @@ export class ProductPage implements OnInit {
         this.display_price = (parseFloat(this.dynemicDisplayPrice));
     }
 
-    customData(customData) {
+    customData(customData) {   //function handle customData and its validation
         this.customPrice = parseFloat(this.bundlePrice);
         this.customDisplayPrice = this.refDisplayPrice;
         this.customDisable = customData.disable;
-        if (this.type == 'configurable') {
+        if (this.type == 'configurable') {//check product type
             if (this.config == false && customData.disable == false) {
-                this.disable = false;
+                this.disable = false;//validation
             }
             else {
-                this.disable = true;
+                this.disable = true;//button disable
             }
         } else if (this.type == 'downloadable') {
             if (this.downlodeFormValidate == false && customData.disable == false) {
-                this.disable = false;
+                this.disable = false;//validation
             }
             else {
-                this.disable = true;
+                this.disable = true;//validation
             }
         } else if (this.type == 'virtual') {
-            this.disable = customData.disable;
+            this.disable = customData.disable;//validation
         }
         else if (this.type == 'simple') {
-            this.disable = customData.disable;
+            this.disable = customData.disable; //validation
         }
         else {
-            this.disable = true;
-        }
+            this.disable = true;//validation
+        }//handle price custom option
         this.customPrice += (parseFloat(customData.dynemicPrice));
         this.customDisplayPrice = (parseFloat(this.customDisplayPrice)) + (parseFloat(customData.dynemicPrice));
         this.final_price = (parseFloat(this.customPrice));
         this.display_price = (parseFloat(this.customDisplayPrice));
         this.addToCartData.total = this.final_price;
         if (customData.disable == false) {
-            this.ifCustomOption(customData, null);
+            this.ifCustomOption(customData, null);//map with other data selection
         }
     }
-
-    group(groupData) {
+    /*
+     * function use for group product
+     */
+    group(groupData) { 
         let total = parseFloat(this.refPrice) + (parseFloat(groupData.total));
         this.add_cart = {};
         this.final_price = total;
         this.groupedData = groupData;
-        this.disable = groupData.disable;
+        this.disable = groupData.disable;//grop data validate
         if (groupData.disable == false) {
             this.addToCartData.subData = [];
             this.add_cart = merge(this.add_cart, this.addToCartData, groupData);
         }
     }
-    addToCartService() {
+    /*
+     * function use for add to cart and edit cart data
+     */
+    addToCartService() { 
         if (!this.cartSpin) {
             this.cartSpin = true;
             if (this.cartButtonTitle != 'UPDATE CART') {
-                this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {
+                this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {//call service fire api for cart add
                     this.cartData = response;
                     this.cartSpin = false;
                     if (this.cartData.body['success']) {
-                        this._cartFunction.setCart(response.body['success_data']);
+                        this._cartFunction.setCart(response.body['success_data']);//set data
                         this._toast.toast(this.product + " added to your shopping cart", 3000, "top");
-                        this._navCtrl.push(CartPage).then(() => {
+                        this._navCtrl.push(CartPage).then(() => {    //move to CartPage
                             const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index);
+                            this._navCtrl.remove(index); //remove product page
                         });
                     }
                     else {
@@ -537,15 +565,15 @@ export class ProductPage implements OnInit {
             } else {
                 this.add_cart['qty'] = this.editProductQuantity;
                 this.add_cart['quantity'] = this.editProductQuantity;
-                this._cartFunction.editCart(this.add_cart).then((res) => {
+                this._cartFunction.editCart(this.add_cart).then((res) => {//call service fire api for cart edit
                     this.cartData = res;
                     this.cartSpin = false;
                     if (this.cartData.body['success_data']) {
-                        this._cartFunction.setCart(res.body['success_data']);
+                        this._cartFunction.setCart(res.body['success_data']);//set data
                         this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
-                        this._navCtrl.push(CartPage).then(() => {
+                        this._navCtrl.push(CartPage).then(() => {//move to CartPage
                             const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index);
+                            this._navCtrl.remove(index);//remove product page
                         });
                     }
                 }, (err) => {

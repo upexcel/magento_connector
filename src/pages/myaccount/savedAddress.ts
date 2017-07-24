@@ -33,9 +33,8 @@ import {
 import {
     AccountPopoverPage
 } from './../../components/myAccountPopOver/myAccountPopOver';
-import { Address } from './../../providers/address-service/address';
+import {Address} from './../../providers/address-service/address';
 import forEach from 'lodash/forEach';
-import debounce from 'lodash/debounce';
 
 @Component({
     selector: 'saved-address',
@@ -54,9 +53,9 @@ export class MySavedAddressPage implements OnInit {
     saveAdd: boolean;
     againOpenEditAddressPage: boolean = true;
     constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
-        this.alreadyCheckLength = this._navParam.get('alreadyCheckLength');
-        this.againOpenEditAddressPage = this._navParam.get('againOpenEditAddressPage');
-        this.saveAdd = this._navParam.get('saveAdd');
+        this.alreadyCheckLength = this._navParam.get('alreadyCheckLength'); // use to check(page redirect by checkOut) 
+        this.againOpenEditAddressPage = this._navParam.get('againOpenEditAddressPage'); // if page is redirect by myaccount it send false (use for navigation )
+        this.saveAdd = this._navParam.get('saveAdd'); //come from myeditaddress  
         this._events.subscribe('api:savedaddress', (savedaddress) => {
             if (savedaddress) {
                 this.getInitAdd(savedaddress);
@@ -80,6 +79,7 @@ export class MySavedAddressPage implements OnInit {
         });
     }
     ngOnDestroy() {
+        //unsubscribe event on view destroy
         this._events.unsubscribe('user:edit');
         this._events.unsubscribe('user:deleted');
         this._events.unsubscribe('api:savedaddress');
@@ -92,14 +92,14 @@ export class MySavedAddressPage implements OnInit {
         }
     }
     getInitAdd(eventData?) {
-        this._appConfigService.getUserData().then((userData: any) => {
+        this._appConfigService.getUserData().then((userData: any) => {    //get user detail from local
             if (userData.access_token != null) {
                 this.getuser_details(eventData);
             } else {
                 this._navCtrl.push(LoginPage);
             }
         })
-            .catch((err) => { })
+            .catch((err) => {})
     }
 
     getuser_details(eventData) {
@@ -146,7 +146,7 @@ export class MySavedAddressPage implements OnInit {
             this.reverseCartData = (this.myaccount.body);
         } else {
             this.showAddress = false;
-            if(this.againOpenEditAddressPage || this.againOpenEditAddressPage == undefined){
+            if (this.againOpenEditAddressPage || this.againOpenEditAddressPage == undefined) {
                 if (this.myaccount && this.myaccount.body.length != 0) {
                     this._navCtrl.push(MyEditAddressPage, {
                         "title": "Add New Address",
@@ -192,12 +192,12 @@ export class MySavedAddressPage implements OnInit {
         address['default_billing'] = '0';
         address['default_shipping'] = '0';
         if (address.add_billing) {
-            address['default_billing'] = '1';
+            address['default_billing'] = '1';//convert into string
         }
         if (address.add_shipping) {
-            address['default_shipping'] = '1';
+            address['default_shipping'] = '1';//convert into string
         }
-        this._editaccount.updateAddress(address).then((res) => {
+        this._editaccount.updateAddress(address).then((res) => { //call api to update default_billing and default_shipping
             this.getInitAdd(true);
             this.disable = false;
         })
@@ -209,7 +209,7 @@ export class MySavedAddressPage implements OnInit {
         });
     }
     AccountPopoverPage(myEvent: any, id, entity_id, addressData) {
-        let data = { id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing: addressData.default_billing }
+        let data = {id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing: addressData.default_billing}
         let popover = this._popoverCtrl.create(AccountPopoverPage, data);
         popover.present({
             ev: myEvent,

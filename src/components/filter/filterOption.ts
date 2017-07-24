@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { NavController, ViewController, Events } from 'ionic-angular';
-import { NavParams } from 'ionic-angular';
+import {Component, Input} from '@angular/core';
+import {NavController, ViewController, Events} from 'ionic-angular';
+import {NavParams} from 'ionic-angular';
 import forEach from 'lodash/forEach';
 import findIndex from 'lodash/findIndex';
-import { FilterBy } from './filterBy';
+import {FilterBy} from './filterBy';
 
 @Component({
     selector: 'filter-option',
@@ -32,6 +32,10 @@ export class FilterOption {
     }
     ngOnInit() {
     }
+    /*
+    *onChangeCheck()
+    *use to handle data for filter
+    */
     onChangeCheck(value, key, event) {
         var data = {};
         data[key] = value;
@@ -43,7 +47,7 @@ export class FilterOption {
         }
     }
     done() {
-        this._nav.setRoot(FilterBy, { "data": { "data": this.checkData, "title": this.data.filter_title, "return": true } });
+        this._nav.setRoot(FilterBy, {"data": {"data": this.checkData, "title": this.data.filter_title, "return": true}});
     }
     dismiss() {
         this._nav.pop();

@@ -4,13 +4,13 @@ import {
 import {
     Storage
 } from '@ionic/storage';
-import { Firebase } from '@ionic-native/firebase';
-import { ApiService } from './../../providers/api-service/api-service';
+import {Firebase} from '@ionic-native/firebase';
+import {ApiService} from './../../providers/api-service/api-service';
 @Injectable()
 
 export class fcmService {
     fcmToken: string;
-    constructor(private firebase: Firebase, private _local: Storage, private _apiService: ApiService) { }
+    constructor(private firebase: Firebase, private _local: Storage, private _apiService: ApiService) {}
     initFCM() {
         this.firebase.getToken().then((token) => {
             this.fcmToken = token;
@@ -22,7 +22,7 @@ export class fcmService {
     saveFCMTokenOnServer() {
         setTimeout(() => {
             if (this.fcmToken) {
-                this._apiService.api('push/saveToken', { "app_token": this.fcmToken });
+                this._apiService.api('push/saveToken', {"app_token": this.fcmToken});
             }
         }, 2000)
     }

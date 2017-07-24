@@ -29,9 +29,9 @@ export interface HomeProductsDataType {
                 options: Array<any>
             };
             group_associated_products?: Array<any>
-            associated_products?: { attributes: any }
-            links ?: any;
-            samples ?: any;
+            associated_products?: {attributes: any}
+            links?: any;
+            samples?: any;
         }
     ];
     status: number;

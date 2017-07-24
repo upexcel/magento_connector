@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import forEach from 'lodash/forEach';
 import merge from 'lodash/merge';
 
@@ -23,6 +23,10 @@ export class BundleProduct {
     radioChecked: any = {};
     constructor() {
     }
+    /** 
+    *
+    * ngOnInit workes to initilize bundle type product and validate pre-set value
+    **/
     ngOnInit() {
         this.validateArray = [];
         let m_Flag = 0;
@@ -32,9 +36,9 @@ export class BundleProduct {
             value.visable = true;
             value.vertualArray = [];
             if (value.is_require == "1") {
-                this.validateArray.push({ "id": value.id, "validate": true });
+                this.validateArray.push({"id": value.id, "validate": true});
             } else {
-                this.validateArray.push({ "id": value.id, "validate": false });
+                this.validateArray.push({"id": value.id, "validate": false});
             }
             forEach(value.selection, (selection: any, selectionKey) => {
                 selection.defaultSet = false;
@@ -68,6 +72,10 @@ export class BundleProduct {
             })
         })
     }
+    /** 
+    *    fistTimeCreateData
+    * function for set default value in fields
+    **/
     fistTimeCreateData(selection, value, m_Flag, cb) {
         if (selection.defaultSet == true) {
             m_Flag = 1;
@@ -100,6 +108,10 @@ export class BundleProduct {
         }
         cb(m_Flag)
     }
+    /* 
+    *    onChangeBundleSelct
+    * function call when any event perform by select list
+    **/
     onChangeBundleSelect(bundleSelect, formId, is_require) {
         this.bundleSelected = {};
         this.bundleSelectedQty = {};
@@ -111,6 +123,10 @@ export class BundleProduct {
         });
         this.formValidate(formId, false, is_require);
     }
+    /**
+    *    onChangeBundleMult
+    * function call when any event perform by multipul select list
+    **/
     onChangeBundleMulti(bundleMulti, formId, i, is_require) {
         this.bundleMultiSelected = {};
         this.bundleMultiQty = {};
@@ -133,6 +149,10 @@ export class BundleProduct {
             this.formValidate(formId, true, is_require);
         }
     }
+    /* 
+    *    onChangeBundleChek
+    * function call when any event perform by checkbox
+    **/
     onChangeBundleCheck(selection, formId, is_require) {
         this.checkObj = {};
         this.bundleCheckQty = {};
@@ -166,7 +186,10 @@ export class BundleProduct {
             this.formValidate(formId, true, is_require);
         }
     }
-
+    /* 
+    *    onChangeRado
+    * function call when any event perform by radio
+    **/
     onChangeRadio(selection, formId, is_require) {
         this.radioChecked = {};
         this.bundleRadioQty = {};
@@ -178,6 +201,10 @@ export class BundleProduct {
         });
         this.formValidate(formId, false, is_require);
     }
+    /* 
+    *    calculateTotl
+    * function call to calculate bundle item total price
+    **/
     calculateTotal(obj) {
         let total = 0;
         forEach(this.bundle.bundle_items, (value) => {
@@ -200,7 +227,10 @@ export class BundleProduct {
         obj["total"] = total;
         //        this.onChange.emit(total);
         this.bundleData(obj);
-    }
+    }     /**
+            * formValidate
+            * function call for check validation
+            **/
     formValidate(data, flag, is_require) {
         let validateCount = 0;
         let obj;
@@ -219,13 +249,17 @@ export class BundleProduct {
             }
         })
         if (validateCount == this.validateArray.length) {
-            obj = { "disable": false };
+            obj = {"disable": false};
         } else {
-            obj = { "disable": true };
+            obj = {"disable": true};
         }
         this.calculateTotal(obj);
 
     }
+    /**
+    * checkVisiblety
+    *  function call for check Visiblety
+    **/
     checkVisiblety(obj) {
         if (obj.visable == false) {
             obj.visable = true;
@@ -233,7 +267,10 @@ export class BundleProduct {
         else {
             obj.visable = false;
         }
-    }
+    }     /**    
+          *  bundleData   
+          * function use for emit bundle data   
+          **/
     bundleData(obj?) {
         let data = {};
         let bundleDataToBeEmit = {};
@@ -241,7 +278,7 @@ export class BundleProduct {
         bundle_option_qty = merge(bundle_option_qty, this.bundleCheckQty, this.bundleRadioQty, this.bundleSelectedQty);
         data = merge(data, this.radioChecked, this.checkObj, this.bundleSelected, this.bundleMultiSelected);
 
-        bundleDataToBeEmit = { "bundle_option_qty": bundle_option_qty, "bundle_option": data, "disable": obj.disable, "total": obj.total };
+        bundleDataToBeEmit = {"bundle_option_qty": bundle_option_qty, "bundle_option": data, "disable": obj.disable, "total": obj.total};
         setTimeout(() => {
             this.onChangeData.emit(bundleDataToBeEmit);
         }, 100);

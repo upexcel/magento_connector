@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import forEach from 'lodash/forEach';
 import pull from 'lodash/pull';
 
@@ -22,7 +22,11 @@ export class DownloadProduct {
     key: any;
     currencySign: string;
 
-    constructor() { }
+    constructor() {}
+    /** 
+*    ngOnInit
+* function use to set editable cart data into downloadable fileds
+**/
     ngOnInit() {
         this.currencySign = this.data.body.data.currency_sign;
         forEach(this.data.body.links, (value: any, key) => {
@@ -44,6 +48,10 @@ export class DownloadProduct {
         }, 100)
 
     }
+    /** 
+*    onChangeLink
+* function use for get data and calculate price on checkbox event
+**/
     onChangeLink() {
         this.linkData = [];
         forEach(this.links, (value: any, key) => {
@@ -53,6 +61,10 @@ export class DownloadProduct {
         })
         this.calculateTotal();
     }
+          /* 
+ *    onChangeSamle
+ * function use for select sample data by checkbox
+ **/
     onChangeSample(object, i, event) {
         if (event) {
             this.simpleObj.push(object)
@@ -61,6 +73,10 @@ export class DownloadProduct {
             this.simpleObj = pull(this.simpleObj, object);
         }
     }
+    /** 
+*    calculateTotal
+* function use  for sub total 
+**/
     calculateTotal() {
         var total = 0;
         let disable;
@@ -77,7 +93,7 @@ export class DownloadProduct {
         else {
             disable = true;
         }
-        this.linkData = { "links": this.linkData, "dynemicPrice": total, "disable": disable };
+        this.linkData = {"links": this.linkData, "dynemicPrice": total, "disable": disable};
         this.onChange.emit(this.linkData);
     }
 }
