@@ -106,7 +106,7 @@ export class ProductPage implements OnInit {
             } else {
                 this.cartButtonTitle = 'ADD TO CART'
             }
-            // calll products function when it lode first time
+            // call products function when it lode first time
             this.products();
             //calll when any review is added 
             this._events.subscribe('api:review', (review) => {
@@ -117,6 +117,9 @@ export class ProductPage implements OnInit {
                 });
             });
         })
+    }
+    ngOnDestroy() {
+        this._events.unsubscribe('api:review');
     }
     doRefresh(refresher) {
         this.productData = null;
@@ -250,7 +253,7 @@ export class ProductPage implements OnInit {
                     if (this.productData.body.associated_products) {
                         this.keys = keys(this.productData.body.associated_products.attributes);
                         if (this.keys.length == 0) {
-                            this.disable = false;    //button not disable
+                            this.disable = true;    //button  disable
                         }
                     }
                     //add a vertual key
@@ -330,9 +333,9 @@ export class ProductPage implements OnInit {
                 count++;
                 this.configPrice.push({price: allConfigData.vertualKey.price}); //hold  price of selected item
                 this.selectedList.push(allConfigData);
-                if (allConfigData.label == "callor") {
+                if (allConfigData.label == "color") {
                     setTimeout(() => {
-                        let myDiv = document.getElementById('callor');//change icon callor of configurable callor filed
+                        let myDiv = document.getElementById('color');//change icon color of configurable callor filed
                         myDiv.style.color = ((allConfigData.vertualKey.label).trim()).replace(" ", "") || ""; //remove space from lable
                     }, 100)
                 }
@@ -376,7 +379,7 @@ export class ProductPage implements OnInit {
         this.configurabilData();
     }
 
-    userUpdated(event) {
+    userUpdated(event: any) {
         this.reviewData = event;
     }
     public askEmail: boolean;
@@ -406,7 +409,7 @@ export class ProductPage implements OnInit {
     /*
      * function use for creating data for api use 
      */
-    configurabilData() {   
+    configurabilData() {
         let array: any = {};
         this.add_cart = {};
         let selectedItem: string;
@@ -424,7 +427,7 @@ export class ProductPage implements OnInit {
      * simple+vertual+downloadble 
      * customOpt have customOption if exist and diffProduct have other data
      */
-    ifCustomOption(customOpt, diffProduct) {    
+    ifCustomOption(customOpt, diffProduct) {
         this.add_cart = {};
         if (diffProduct != null) {
             this.diffProductData = diffProduct;
@@ -528,7 +531,7 @@ export class ProductPage implements OnInit {
     /*
      * function use for group product
      */
-    group(groupData) { 
+    group(groupData) {
         let total = parseFloat(this.refPrice) + (parseFloat(groupData.total));
         this.add_cart = {};
         this.final_price = total;
@@ -542,7 +545,7 @@ export class ProductPage implements OnInit {
     /*
      * function use for add to cart and edit cart data
      */
-    addToCartService() { 
+    addToCartService() {
         if (!this.cartSpin) {
             this.cartSpin = true;
             if (this.cartButtonTitle != 'UPDATE CART') {

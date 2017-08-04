@@ -5,39 +5,12 @@
     <ion-content class="sidemenu">
         <span *ngIf="data">
             <ion-list  no-lines *ngFor="let list of data.body.children">
-                <span *ngIf="platform()">
-                   <span *ngFor="let list1 of list.children;let i=index">
-                        <ion-item  ion-item class="cursorPointer" *ngIf='list1.include_in_menu=="true"' (tap)="toggle(list1)" >
-                            {{list1.name}}
-                            <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
-                            <ion-list *ngIf="list1.showDetails">
-                                <span *ngFor="let glist of list1.children">
-                                    <ion-item  *ngIf="glist.include_in_menu=='true'" id="sidemenuList" (tap)="gotoCategoryProduct(glist.id,glist.name)">
-                                        {{glist.name}}
-                                    </ion-item>
-                                </span>
-                            </ion-list>
-                        </ion-item>               
-                    </span>
-                </span>
-                <span *ngIf="!platform()">
-                   <span *ngFor="let list1 of list.children;let i=index">
-                        <ion-item  ion-item class="cursorPointer" *ngIf='list1.include_in_menu=="true"' (click)="toggle(list1)" >
-                            {{list1.name}}
-                            <ion-icon color="primary" id="iconShow" *ngIf="list1.children!=0" [name]="list1.icon || 'ios-add-circle-outline'"  ></ion-icon>
-                            <ion-list *ngIf="list1.showDetails">
-                                <span *ngFor="let glist of list1.children">
-                                    <ion-item  *ngIf="glist.include_in_menu=='true'" id="sidemenuList" (tap)="gotoCategoryProduct(glist.id,glist.name)">
-                                        {{glist.name}}
-                                    </ion-item>
-                                </span>
-                            </ion-list>
-                        </ion-item>               
-                    </span>
-                </span>
+                       <side-menu-data [data]="list.children">
+                    loading..
+                </side-menu-data>
             </ion-list>
         </span>
-    <user-menu></user-menu>
+        <user-menu></user-menu>
     </ion-content>
 </ion-menu>
 <ion-nav id="nav"  #content [root]="rootPage" >

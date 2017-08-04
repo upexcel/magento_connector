@@ -38,7 +38,7 @@ export class AppDataConfigService {
         let body = {"type": "full"}
         this._local.get("app_data_expire").then((expireTime) => {
             if (new Date().getTime() > expireTime) {
-                this._homeProductsService.getHomeProducts(body);
+//                this._homeProductsService.getHomeProducts(body);
                 this._categoryService.getCategoryList();
                 this._sliderService.getSlider();
                 this._local.remove("privacyInfo1");

@@ -43,6 +43,7 @@ export class FilterBy {
                     if (this.price) {
                         this.dualValue2.lower = this.price.price.Min;
                         this.dualValue2.upper = this.price.price.Max;
+                        this._filterService.defaultPrice(this.dualValue2);
                         this._filterService.setFilterPrice(this.dualValue2);
                     }
                 }
@@ -66,17 +67,20 @@ export class FilterBy {
             })
         })
     }
-/** 
-*    range
-* function use for call service  for price range.
-**/
+    /** 
+    *    range
+    * function use for call service  for price range.
+    **/
     range() {
+        if(this.dualValue2.lower==this.dualValue2.upper){
+            this.dualValue2.upper = this.dualValue2.lower+5;
+        }
         this._filterService.setFilterPrice(this.dualValue2);
     }
-/** 
-*    subOptionLength
-* function use  to check sub option length
-**/
+    /** 
+    *    subOptionLength
+    * function use  to check sub option length
+    **/
     subOptionLength(data) {
         let count = 0;
         forEach(data[data['filter_title']], (value: any, key) => {
@@ -84,10 +88,10 @@ export class FilterBy {
         })
         return count;
     }
-/* 
-*    openModal
-* function use  for crate model for filter sub data 
-**/
+    /* 
+    *    openModal
+    * function use  for crate model for filter sub data 
+    **/
     openModal(title) {
         var data = '';
         this.filter_title = title;

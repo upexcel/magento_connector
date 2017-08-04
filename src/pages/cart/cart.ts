@@ -158,12 +158,16 @@ export class CartPage implements OnInit {
             // call api via model send cartData as update quantity
             this._cartFunction.updateCart(cartData).then((res) => {
                 //update vertualQty value
-                data['vertualQty'] = data['product_qty'];
+                if (res.body.success) {
+                    data['product_qty'] = qty[data.product_id]['qty'];
+                } else {
+                    data['product_qty'] = data['vertualQty'];
+                }
                 //call service and get updated cart data
                 this.res = this._cartFunction.getCart();
                 //call function
                 this.createData(this.res);
-                data.product_qty = qty[data.product_id]['qty'];
+//                data.product_qty = qty[data.product_id]['qty'];
                 loading.dismiss();
             }, (err) => {
                 loading.dismiss();

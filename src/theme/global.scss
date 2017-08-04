@@ -1,3 +1,37 @@
+@mixin margin-left($margin) {
+    margin-left:$margin !important;
+}
+@mixin margin-right($margin) {
+    margin-right:$margin !important;
+}
+@mixin padding-right($margin) {
+    padding-right:$margin !important;
+}
+@mixin padding-left($margin) {
+    padding-left:$margin !important;
+}
+@mixin text-align($margin) {
+    text-align:$margin !important;
+}
+@mixin margin-top($margin) {
+    margin-top:$margin !important;
+}
+@mixin margin-bottom($margin) {
+    margin-bottom:$margin !important;
+}
+@mixin padding-top($margin) {
+    padding-top:$margin !important;
+}
+@mixin display($position) {
+    display:$position !important;
+}
+@mixin float($position) {
+    float:$position !important;
+}
+@mixin border($position){
+    border-top-right-radius: $position;
+    border-bottom-right-radius: $position;
+}
 .ios{
     ion-item.ng-dirty.ng-invalid{
         border-color: red!important;
@@ -6,101 +40,107 @@
         border-color: blue!important;
     }
     ion-spinner * {
-  width: 28px;
-  height: 28px;
-  stroke: #000000 !important;
-  fill: #000000 !important;
-}
+        width: 28px;
+        height: 28px;
+        stroke: #000000 !important;
+        fill: #000000 !important;
+    }
+    .sortIcon{
+        font-size: 3rem;
+    }
+    my-download ,edit-account ,my-reviews{
+        .item-ios{ 
+            @include padding-left(0px);
+        }
+    }
+    product-review{
+        span.item-ios{
+            margin:0px !important;
+            @include padding-left(0px);
+        }} 
+    edit-address{
+        .scroll-content {
+            @include margin-top(0px);
+        }    
+        .item-ios{
+            @include padding-left(20px);
+        }
+    }
 }
 
 iframe{
     height:100% !important;
 }
- .ios{
-    .sortIcon{
-        font-size: 3rem;
-    }
- my-download ,edit-account ,my-reviews{
- .item-ios{ 
-    padding-left: 0px !important;
-    }
-    }
-    product-review{
-    span.item-ios{
-    margin:0px !important;
-    padding-left:0px !important;
-    }} 
-    edit-address{
-.scroll-content {
-        margin-top: 0px !important;
-    }    
-    .item-ios{
-    padding-left: 0px !important;;
-    }
-    }  
-    } 
-    tour{
-        .scroll-content {
-        margin-top: 0px !important; 
+
+.backgroungW{
+    background: #fff;
+}
+tour{
+    .scroll-content {
+        @include margin-top(0px);
         overflow: auto !important;  
     } }
-    start-page{
-         .scroll-content {
+start-page{
+    .scroll-content {
         overflow: auto !important;  
     }  }
 .md{
-.width80{
-    width:75%;
-}
-user-menu ,sidemenu{
-.item .item-inner{
-    border-width: 1px !important;
-}}
+    .width80{
+        width:75%;
+    }
+    user-menu ,sidemenu{
+        .item .item-inner{
+            border-width: 1px !important;
+        }}
     .sortIcon{
         font-size: 2rem;
     }
     cart{
-    .button-inner {
-    -webkit-justify-content: center !important;;
-    -ms-flex-pack: center !important;;
-    justify-content: center !important;}}
-my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
-    .scroll-content {
-        margin-top: 56px !important;   
-    }  
-} 
+        .button-inner {
+            -webkit-justify-content: center !important;;
+            -ms-flex-pack: center !important;;
+            justify-content: center !important;}}
+    my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
+        .scroll-content {
+            @include margin-top(56px);   
+        }  
+    } 
 }
 orderid-detail{
-     .scroll-content {
-        margin-top: 30px !important;   
+    .scroll-content {
+        @include margin-top(30px);   
     }    
 }
-    .bar-button-md:first-child {
-    float: left;
+.bar-button-md:first-child {
+    @include float(left);
 }
 edit-address{
     padding: 0px !important;
 }
-    sidemenu ,home{
+side-menu-data, sidemenu ,home{
     .toolbar-title {
-     padding: 4px 12px 10px 10px !important;
+        padding: 4px 12px 4px 10px !important;
     }
+    span:last-child .item-inner{
+        border-bottom: none !important; 
     }
+}
 
 .alignright{
-    text-align: right;
+    @include text-align(right);
 }
-.landscapWishListIco{
-    right: 0px;
-    top: 0px;}
+
 .potrateWishListIco{
     right: 0px;
 }
+.landscapWishListIco{
+    @extend .potrateWishListIco;
+    top: 0px;}
 .aligncenter{
-    text-align: center;
+    @include text-align(center); 
 }
 .alignleft{
-    text-align: left;
+    @include text-align(left); 
 }
 .padd36{
     padding:36px;
@@ -109,7 +149,7 @@ edit-address{
     color:red;
 }
 .paddLeft10{
-    padding-left: 10px!important;
+    @include padding-left(10px);
 }
 .pad5{
     padding: 5px;
@@ -118,51 +158,53 @@ edit-address{
     padding: 44px;
 }
 .center{
-    text-align: center;
+    @include text-align(center);
 }
 .paddLft55{
-    padding-left: 55px;
+    @include padding-left(55px);
 }
 .padd20{
     padding:20px;
 }
 .paddLft25{
-    padding-left: 25px;
+    @include padding-left(25px);
 }
 .paddLft20{
-    padding-left: 20px!important;
+    @include padding-left(20px);
 }
 .padding10{
     padding: 10px;
 }
 .defaultaddress{
     line-height: 1;
-    padding-right: 5px;
+    @include margin-right(5px);
     padding-bottom: 3px;
 }
-.down-arrow{
-    padding-right: 5px;
-    font-size: 20px;
-    color:#a5a5a5;
-}
+
 .down-arrowDate{
     font-size: 20px;
     color:#a5a5a5;
 }
+.down-arrow{
+    @include margin-right(5px);
+    @extend .down-arrowDate;
+}
 .paddRight10 {
-    padding-right: 10px;
+    @include padding-right(10px);
 }
 .paddLef15{
-    padding-left: 15px !important;
+    @include padding-left(15px);
 }
 .minHeight{
     min-height: 10px !important;
 }   
 .marRight{
-    margin-right: 5px !important;
+    @include margin-right(5px); 
+
 }  
 .marRight10{
-    margin-right: 10px !important;
+    @include margin-right(10px); 
+
 }
 .cartPrice{
     margin: 0px auto;
@@ -172,13 +214,13 @@ edit-address{
     background-color:red;
 }
 .marRigth0{
-    margin-right: 0px !important;
+    @include margin-right(0px); 
 }
 .line{
     text-decoration: line-through;
     font-size: 13px;
     color: gray;
-    margin-left: 5px;
+    /*@include margin-left(5px);*/
 }
 .no-lineBot{
     border-bottom: 0px!important;
@@ -188,13 +230,13 @@ edit-address{
 }
 contact-us{
     .scroll-content {
-        background: #fff;
+        @extend .backgroungW;
     }
 }
 
 search-page{
     .serchInput{
-        float: left;
+        @extend .bar-button-md:first-child;
         width: auto;
     }
     .lineHeight2{
@@ -203,9 +245,9 @@ search-page{
     }
 
 }
-    .padding5{
+.padding5{
     padding:5px;
-    }
+}
 .green{
     color: green;
 }
@@ -231,12 +273,12 @@ td {
 }
 th {
     padding: 0px 15px 5px !important;
-    text-align: left;
+    @include text-align(left);
     border-bottom: 1px solid #ddd ;
 }
 bundle{
     ion-label ion-icon.none{
-        display: none;
+        @include display(none);
         font-size: 18px;
     }
 }
@@ -253,25 +295,25 @@ bundle{
     right: 10px;
 }
 .padTB{
-    padding-top: 0px;
+    @include padding-top(0px);
     padding-bottom: 0px;
 }
 .datetime-md {
     padding: 13px 20px 13px 16px !important;
 }
 /*.item-md {
-    padding-right: 16px !important;
+    @include margin-right(16px);
 }*/
 .offer{
     color:#f58138;
 }
 login{
     span ion-icon{
-        padding-right: 10px;
+        @include margin-right(10px);
         font-size: 25px;
     } 
     .scroll-content {
-        background: #fff !important;
+        @extend .backgroungW;
     }
 }
 
@@ -282,7 +324,7 @@ start-page{
 }
 tour,register,img-zoom, about-us, policy{ 
     .scroll-content {
-        background: #fff;
+        @extend .backgroungW;
     }  
 }
 change-pass,edit-account,edit-address, page-reset-password{
@@ -310,7 +352,7 @@ img-zoom{
 about-us, policy{
     h3, .h3 {
         margin: 0;
-        margin-bottom: 10px;
+        @include margin-bottom(10px);
         color: #636363;
         font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
         font-size: 18px;
@@ -332,7 +374,7 @@ about-us, policy{
     }
     ul {
         list-style: disc outside;
-        margin-bottom: 1.5em;
+        @include margin-bottom(1.5em);
     }
     li {
         color: #636363;
@@ -349,16 +391,16 @@ about-us, policy{
     padding-bottom:60px;
 }
 .padLeft20{
-    padding-left: 20px !important;
+    @include padding-left(20px);
 }
 .marTop20{
-    margin-top: 20px !important;
+    @include margin-top(20px);
 }
 /*.marginBottom50{
     margin-bottom:50px;
 }*/
 .rating-block .item-inner .input-wrapper{
-    display: inline-block !important;
+    @include display(inline-block);  
 }
 input .item-inner {
     border-bottom-color: #387ef5 !important;
@@ -387,14 +429,14 @@ filter{
             padding:0px;
             margin: 0px;
         }
-        .filterFooterBtnFirst{
-            background-color: #e85151;
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
         .filterFooterBtnFirst:hover{
             background-color: #e85151 !important;
+        }        
+        .filterFooterBtnFirst{
+            @extend .filterFooterBtnFirst:hover;
+            @include border(0px);
         }
+
         .filterFooterBtnSecond{
             border-top-left-radius: 0px;
             border-bottom-left-radius: 0px;
@@ -404,7 +446,7 @@ filter{
 
 placed-order{
     .scroll-content{
-        margin-top:0px !important;
+        @include margin-top(0px);
     }
 }
 .relative{
@@ -421,9 +463,12 @@ placed-order{
     border-radius: 50%;
     background: transparent;
 }
+.floatRight{
+    @include float(right);
+}
 .productWishList{
-    float: right;
-    padding-right: 10px;
+    @extend .floatRight;
+    @include margin-right(10px);
 }
 
 .lightRed{
@@ -461,13 +506,12 @@ placed-order{
         padding:0px;
         margin: 0px;
     }
-    .filterFooterBtnFirst{
-        background-color: #70b372;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-    }
     .filterFooterBtnFirst:hover{
         background-color: #70b372 !important;
+    }    
+    .filterFooterBtnFirst{
+        @extend .filterFooterBtnFirst:hover;
+        @include border(0px);
     }
     .filterFooterBtnSecond{
         border-top-left-radius: 0px;
@@ -512,52 +556,50 @@ ion-input.uppercase input{
     font-size: 10px ;
 }
 .padL10{
-    padding-left:10px;
+    @include padding-left(10px);
 }
 .widthA{
     width:auto;
 }
 .floatLeft{
-    float: left;
+    @extend .bar-button-md:first-child
 
 }
-.floatRight{
-    float: right;
-}
+
 .right{
     position: absolute !important;
     top: 10px;
     right: 0;
 }
 .marTop80{
-    margin-top: 60px;
+    @include margin-top(60px);
 }
 /*.alignright{
     text-align: center;
 }*/
 .marTop10{
-    margin-top: 10px;
+    @include margin-top(10px);
 }
 .margin-top15{
-    margin-top: 15px;
+    @include margin-top(15px);
 }
 .padTop10{
-    padding-top: 10px;
+    @include padding-top(10px);
 }
 .no-margin{
     margin: 0px !important;
 }
 .marBot60{
-    margin-bottom: 60px !important;
+    @include margin-bottom(60px);
 }
 .uppercase{
     text-transform: uppercase;
 }
 .margin-but{
-    margin-bottom: 0px !important;
+    @include margin-bottom(0px);
 }
 .padLeft10{
-    padding-left: 10px;
+    @include padding-left(10px);
 }
 .paddBut5{
     padding-bottom: 5px;
@@ -566,7 +608,7 @@ ion-input.uppercase input{
     padding: 0px !important;
 }
 .cartCheckOutQty{
-    text-align: right;
+    @include text-align(rigth);
     font-size: 10px;
     color: #7d7c7c;
     font-weight: 600;
@@ -579,7 +621,7 @@ ion-input.uppercase input{
     box-shadow: none !important;
 }*/
 .floatRight{
-    float: right !important;
+    @extend .floatRight;
 }
 .spin {
     circle{
@@ -596,11 +638,11 @@ ion-input.uppercase input{
     font-size: 17px !important;
 }
 .center{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+    @include display(-webkit-box);
+    @include display(-moz-box);
+    @include display(-ms-flexbox);
+    @include display(-webkit-flex);
+    @include display(flex);
     -webkit-box-direction: normal;
     -moz-box-direction: normal;
     -webkit-box-orient: horizontal;
@@ -626,7 +668,7 @@ ion-input.uppercase input{
     align-items: center;
 }
 #magLeft50{
-    margin-left: 50% !important;
+    @include margin-left(50%); 
 
 }
 
@@ -634,36 +676,35 @@ ion-input.uppercase input{
     font-size: 13px;
 }
 #marLeft20{
-    margin-left: 20px;
+    @include margin-left(20px);
 }
+
 #iconShow{
-    float: right;
+    @extend .floatRight;
 }
 #sidemenuList{
     border-left: 1px solid #387ef5;
-    padding-left: 5px;
+    @include padding-left(5px);
 }
 
 header .toolbar-ios{
-    padding-top:20px;
+    @include padding-top(20px);
     min-height: 65px;
 }
 .content-ios .scroll-content {
-    padding-top: 65px;
+    @include padding-top(65px);
 }
-.backgroungW{
-    background: #fff;
-}
+
 sort{
     .content-ios .scroll-content {
-        padding-top: 0px !important;
+        @include padding-top(0px);
     }
     .scroll-content {
-        padding-top: 0px !important;
-        background: #fff;
+        @include padding-top(0px);
+        @extend .backgroungW;
     }
     .label-md{
-        margin-bottom: 0px;
+        @include margin-bottom(0px);
     }
     .order-by{
         border:0px;
@@ -673,16 +714,16 @@ sort{
 }
 filter{
     .content-ios .scroll-content {
-        padding-top: 0px !important;
+        @include padding-top(0px);
     } 
     .padding{
         padding: 18px;
-        padding-top: 0px;
+        @include padding-top(0px);
         padding-bottom: 0px;
     }
     margin-top: 0px;
     filter .list-header-md, filter .list-md ion-item-divider{
-        margin-bottom: 0px;
+        @include margin-bottom(0px);
     }
 }
 .left-border{
@@ -690,22 +731,23 @@ filter{
 }
 filter-option{
     .content-ios .scroll-content {
-        padding-top: 0px !important;
+        @include padding-top(0px);
     } 
     .padding{
         padding: 18px;
     }
     .scroll-content {
-        padding-top: 0px;
+        @include padding-top(0px);
     }
-}
-.scroll-content {
-    //padding-top: 56px;
-    background: #f3f3f3;
 }
 .background1{
     background: #f3f3f3;
 }
+.scroll-content {
+    //padding-top: 56px;
+    @extend .background1;
+}
+
 .primary{
     color:#387ef5 !important;
 }
@@ -737,13 +779,13 @@ filter-option{
 cart, wishList, checkout{
     .scroll-content {
         /*background: #fff;*/
-        margin-bottom: 60px;
+        @include margin-bottom(60px);
     }  
     .card-md {
         margin: 10px 0px 12px 0px;
         font-size: 1.4rem;
         width: 100%;
-        background: #fff;
+        @extend .backgroungW;
         box-shadow: 0 2px 2px 0 rgba(51, 51, 51, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     }
     .cartRowborder{
@@ -762,19 +804,19 @@ cart, wishList, checkout{
 }
 edit-address ,filter {
     .scroll-content {
-        padding-top: 0px;
-        background: #fff;
+        @include padding-top(0px);
+        @extend .backgroungW;
     }
 }
 .header {
-   .toolbar-ios{
-   // padding: 4px !important;
-} 
- .toolbar-ios {
-    ion-title{
-        padding: 15px 90px 1px !important;
+    .toolbar-ios{
+        // padding: 4px !important;
+    } 
+    .toolbar-ios {
+        ion-title{
+            padding: 15px 90px 1px !important;
+        }
     }
-}
 }
 
 sidemenu{
@@ -784,15 +826,16 @@ sidemenu{
         }
     }
 }
-::-webkit-scrollbar { 
-    display: none; 
-}
 .none{
     display: none; 
 }
+::-webkit-scrollbar { 
+    @extend .none; 
+}
+
 .no-footer{
     .fixed-content, .scroll-content{
-        margin-bottom: 0px !important;
+        @include margin-bottom(0px);
     }
 }
 .icon-badge {
@@ -810,7 +853,7 @@ sidemenu{
     min-width: 7px;
     border-radius: 8px;
     vertical-align: baseline;
-    text-align: center;
+    @include text-align(center);
     white-space: nowrap;
     font-weight: bold;
 }
@@ -819,8 +862,8 @@ sidemenu{
     display: block;
 }
 .empty-wishlist{
-    margin-top: 10%;
-    text-align:center;
+    @include margin-top(10%);
+    @include text-align(center);
     img{
         max-width: 50%;
     }
@@ -848,7 +891,7 @@ header{
         color: #fff;
     }
     .text-input::-webkit-input-placeholder {
-      color: #fff;
+        color: #fff;
     }
     .title-md {
         left: 0;
@@ -892,7 +935,7 @@ checkout{
     }
 }
 .email-border-bottom{
-     border-bottom: 1.5px solid #c8c7cc!important;
+    border-bottom: 1.5px solid #c8c7cc!important;
 }
 .refresher-active{
     background: #ddd;

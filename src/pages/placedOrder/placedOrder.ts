@@ -14,9 +14,8 @@ export class PlacedOrder implements OnInit {
     ngOnInit() {
         this.shippingAddress = this._navParams.get('shippingAddress');
         this.orderId = this._navParams.get('orderId'); // get order id
-        this._local.remove('CartData'); // remoove CartData
+        this._local.remove('CartData'); // remove CartData
         this._events.publish('cartItems:length', 0); // throw event for cartItems
-
     }
     c_Shopping() {
         this._navCtrl.popToRoot();// move to the root page 

@@ -1,6 +1,6 @@
 <header [title]='title' [pagename]='pagename' [view]="true" [search]='true' [menu]='menu'></header>
 <sidemenu [token]="userToken"></sidemenu>
-<ion-content  class="home" header-scroller>
+<ion-content  class="home" [header-scroller]="PAGE">
     <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
     <get-slider></get-slider>
     <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>

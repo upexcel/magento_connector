@@ -37,13 +37,14 @@ export class RegisterPage implements OnInit {
     /*
      * function use for register
      */
-    signup(regvalue: any) { 
+    signup(regvalue: any) {
         this.spin = true;
         this._register.getRegister(regvalue).then((res) => { //call api
-            this.spin = false;
+
             if (res.status == 1) {
                 this.signin(regvalue);
             } else {
+                this.spin = false;
                 this._toast.toast(res.message, 3000, "top");
             }
         }).catch(err => {
@@ -58,6 +59,7 @@ export class RegisterPage implements OnInit {
      */
     signin(logvalue: any) {
         this._login.getLogin(logvalue).then((res) => {//call api for login
+            this.spin = false;
             this.data = res;
             if (this.data.status === 1) {
                 this.data = res;
@@ -79,7 +81,7 @@ export class RegisterPage implements OnInit {
      * open link in inapp browser
      */
     privacyPolicy() {
-        this._ngZone.run(() => {   
+        this._ngZone.run(() => {
             this.browser = this.iab.create('https://xmagestore.com/privacy_policy.html', '_blank', 'hardwareback=yes ,location=yes');
         });
 

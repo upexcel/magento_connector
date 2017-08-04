@@ -107,11 +107,21 @@ export class MySavedAddressPage implements OnInit {
         let entity_id = null;
         this._address.getAddress().then((address: any) => {
             if (address && address['body'].length > 0 && !eventData) {
+                if (address['body'].length == 1) {
+                    address['default_check'] = true;
+                } else {
+                    address['default_check'] = false;
+                }
                 this.myaccount = address;
                 this.spin = false;
                 this.reverseData(entity_id);
             } else {
                 this._myaccount.getMyAccount({}).then((res) => {
+                    if (res['body'].length == 1) {
+                        res['default_check'] = true;
+                    } else {
+                        res['default_check'] = false;
+                    }
                     this.spin = false;
                     this._address.resetAddress();
                     this._address.setAddress(res);

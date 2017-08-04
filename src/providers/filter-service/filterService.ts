@@ -8,11 +8,15 @@ export class FilterService {
     count: number = 0;
     index: number;
     price: any;
+    defaultPriceObject: any={};
     constructor() {}
     resetFilterData() {
         this.filterData = [];
         this.count = 0;
-        this.price = {};
+        this.price = this.defaultPriceObject;
+    }
+    defaultPrice(price) {
+//        this.defaultPriceObject = price;
     }
     //set filter price range
     setFilterPrice(price) {

@@ -107,20 +107,26 @@ export class Checkout implements OnInit {
                 submittedForm = true;
                 // You can access the token ID with `token.id`.
                 // Get the token ID to your server-side code for use.
+                this.spin = true;
                 this._checkoutService.updateStripePayment(data).then((res) => {
                     if (res['body'].success) {
+                        setTimeout(() => {
+                            this.spin = false;
+                        }, 500);
                         this._navCtrl.push(PlacedOrder, successData).then(() => {
-                            const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index);
+                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                         });
                     } else {
-                        this.spin = false;
+                        setTimeout(() => {
+                            this.spin = false;
+                        }, 500);
                         this._navCtrl.popToRoot();
                     }
 
                 }, (err) => {
-                    this.spin = false;
-                    console.log(err);
+                    setTimeout(() => {
+                        this.spin = false;
+                    }, 500);
                 })
             }
         });
@@ -139,7 +145,9 @@ export class Checkout implements OnInit {
                     })
                 }
                 this._keyboard.close();
-                this.spin = false;
+                setTimeout(() => {
+                    this.spin = false;
+                }, 500);
             }
         });
     }
@@ -280,8 +288,7 @@ export class Checkout implements OnInit {
                         this.spin = false;
                         //move to PlacedOrder page
                         this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
-                            const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index); //close current page 
+                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                         });
                     } else {
                         this.openCheckout(res['body'].success_data, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']});

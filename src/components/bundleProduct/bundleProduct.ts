@@ -275,7 +275,7 @@ export class BundleProduct {
         let data = {};
         let bundleDataToBeEmit = {};
         let bundle_option_qty = {};
-        bundle_option_qty = merge(bundle_option_qty, this.bundleCheckQty, this.bundleRadioQty, this.bundleSelectedQty);
+        bundle_option_qty = merge(bundle_option_qty, this.bundleCheckQty, this.bundleRadioQty, this.bundleSelectedQty, this.bundleMultiQty);
         data = merge(data, this.radioChecked, this.checkObj, this.bundleSelected, this.bundleMultiSelected);
 
         bundleDataToBeEmit = {"bundle_option_qty": bundle_option_qty, "bundle_option": data, "disable": obj.disable, "total": obj.total};

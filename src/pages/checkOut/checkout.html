@@ -83,7 +83,7 @@
         <span *ngIf="!shippingMethods" class="center">  <ion-spinner ></ion-spinner></span>
         <ion-item *ngFor="let shipping of shippingMethods">
             <ion-label>{{shipping.method_title}} {{currency_sign}}{{shipping.price | number}}</ion-label>
-            <ion-radio [value]="shipping"></ion-radio>
+            <ion-radio [disabled]="spin"  [value]="shipping"></ion-radio>
         </ion-item>
     </ion-list>
 
@@ -167,7 +167,7 @@
                       <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
                 <ion-item *ngFor="let payment of PaymentMethods">
                     <ion-label>{{payment.method_title}}</ion-label>
-                    <ion-radio [value]="payment"></ion-radio>
+                    <ion-radio [disabled]="spin" [value]="payment"></ion-radio>
                 </ion-item>
             </ion-list>
         </ion-card-content>

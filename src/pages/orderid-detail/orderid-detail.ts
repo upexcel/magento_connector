@@ -17,7 +17,10 @@ export class OrderModalPage implements OnInit {
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
-    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {}
+    Math:any;
+    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
+        this.Math=Math;
+    }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
         this._ngZone.run(() => { // update content 

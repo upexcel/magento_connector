@@ -87,6 +87,8 @@ import {WishListService} from '../providers/wishList/wishList-service';
 import {checkoutService} from '../model/checkout/checkout-service';
 import {fcmService} from '../providers/fcm-service/fcm-service';
 import {EventService} from '../providers/headerEvents/headerEvents';
+import {SideMenuService} from '../providers/sideMenu/sideMenu';
+
 //components
 import {LoadingModal} from '../components/loading-modal/loading-modal';
 import {PopoverPage} from '../components/popover/popover';
@@ -103,6 +105,7 @@ import {FilterOption} from '../components/filter/filterOption';
 import {SortBy} from '../components/sort/sort';
 import {Headers} from '../components/headers/headers';
 import {SideMenu} from '../components/sidemenu/sidemenu';
+import {SideMenuChild} from '../components/sidemenu/sideMenuChildren';
 import {Button} from '../components/button/buttonRound.directive';
 import {ButtonFull} from '../components/button/buttonFull.directive';
 import {ButtonTour} from '../components/button/takeTourButton.directive';
@@ -151,6 +154,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         Headers,
         SliderComponent,
         SideMenu,
+        SideMenuChild,
         ReviewDisplayPipe,
         CustomDatePipe,
         GoogleComponent,
@@ -278,6 +282,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         LocalNotifications,
         fcmService,
         EventService,
+        SideMenuService,
         InAppBrowser    ]
 })
 export class AppModule {}
