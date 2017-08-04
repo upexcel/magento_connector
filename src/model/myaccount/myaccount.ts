@@ -15,7 +15,7 @@ export class MyAccount {
     }
     deleteMyAddress(data) {
         return new Promise((resolve, reject) => {
-            this._apiService.api("address/deleteAddress", data).subscribe((res) => {
+            this._apiService.api("address/addressdelete", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);
