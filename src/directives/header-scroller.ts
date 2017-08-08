@@ -50,7 +50,6 @@ export class HeaderScroller {
     protected _bindScroller(el): void {
         this.renderer.listen(el, 'scroll', (event) => {
             // Do something with 'event'
-            //            console.log(this.value)
             $('.header').css(top);
             //find scroll possition 
             if (event.target.scrollTop < this.scrollToTop && ((this.scrollToTop - event.target.scrollTop) > 50 || $('.header').css('top') == '0px')) {

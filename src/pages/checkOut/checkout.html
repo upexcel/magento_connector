@@ -59,7 +59,7 @@
             </ion-grid>
         </ion-card-content>
     </ion-card>
-        <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
+    <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
         <ion-card-header class="fontWeight">
             Address
         </ion-card-header>
@@ -72,7 +72,7 @@
                         <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_name}} {{addres.region}} {{addres.postcode}}</p></span>
             </span>
             <span class="floatRight">
-            <a ion-item class="floatRight paddBut5" item-end class="primary" (tap)=changeAddress()>Change Address</a>
+                <a ion-item class="floatRight paddBut5" item-end class="primary" (tap)=changeAddress()>Change Address</a>
             </span>
         </ion-card-content>
     </ion-card>
@@ -164,7 +164,7 @@
                 Payment Information
             </ion-list-header>
             <ion-list  no-margin radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="paymentMethod(selectedPaymentMethod)">
-                      <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
+                       <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
                 <ion-item *ngFor="let payment of PaymentMethods">
                     <ion-label>{{payment.method_title}}</ion-label>
                     <ion-radio [disabled]="spin" [value]="payment"></ion-radio>
@@ -180,8 +180,18 @@
             <ion-col col-6 class="paddLft20">
                 <p>Price ({{cartData.cart_items.length}} items)</p>
             </ion-col>
-            <ion-col col-6 class="alignright paddRighttax10">
+            <ion-col col-6 class="alignright paddRight10">
                 <p class="paddRight10" *ngIf="totalPrice">${{totalPrice}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p>Shipping Amount</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="paddRight10">{{currency_sign}}{{shipping_amount |number}}
+                <ion-spinner name="dots" *ngIf="false"></ion-spinner></p>
+
             </ion-col>
         </ion-row>
         <ion-row center>
@@ -190,7 +200,7 @@
             </ion-col>
             <ion-col col-6 class="alignright paddRight10">
                 <p class="alignright paddRight10">
-                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p>
+                <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p>
                 <p class="paddRight10" *ngIf="!taxSpin">{{currency_sign}}{{discount}}</p>
             </ion-col>
         </ion-row>
@@ -200,7 +210,7 @@
             </ion-col>
             <ion-col col-6 class="alignright paddRight10">
                 <p class="alignright paddRight10">
-                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p> <p class="paddRight10" *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(!(tax)?0:tax) |number}}</span><span *ngIf="!tax">0</span></p>
+                <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p> <p class="paddRight10" *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(!(tax)?0:tax) |number}}</span><span *ngIf="!tax">0</span></p>
             </ion-col>
         </ion-row>
         <ion-row center *ngIf="selectedShippingMethod">

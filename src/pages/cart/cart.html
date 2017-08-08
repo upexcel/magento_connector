@@ -5,7 +5,7 @@
     <h3>Your Shopping Cart is empty</h3>
 </ion-content> 
 <ion-content class="cart" *ngIf="res && res.cart_items && res.cart_items.length > 0">
-    <span class="backgroundGray">
+             <span class="backgroundGray">
         <ion-card  *ngFor="let data of res.cart_items">
             <ion-grid no-padding>
                 <ion-row center align-items-center>
@@ -89,8 +89,8 @@
                 <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
         </button>
         <button ion-button item-right small  icon-only color="danger" [disabled]="!couponCode" (tap)="applyCoupon('delete')">
-                <ion-icon name="trash"></ion-icon>
-                <ion-spinner *ngIf="deleteCouponCodeSpin" class="spin"></ion-spinner>
+            <ion-icon name="trash"></ion-icon>
+            <ion-spinner *ngIf="deleteCouponCodeSpin" class="spin"></ion-spinner>
         </button>
     </ion-item>
     <ion-card>
@@ -104,6 +104,14 @@
                 </ion-col>
                 <ion-col col-4 class="alignright paddRighttax10">
                     <p>{{currency_sign}}{{totalPrice}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p>Shipping Amount</p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRighttax10">
+                    <p>{{currency_sign}}{{shipping_amount}}</p>
                 </ion-col>
             </ion-row>
             <ion-row center>
@@ -138,11 +146,11 @@
     <ion-grid class="filterFooterBtnDiv no-padding">
         <ion-row>
             <ion-col col-6>
-            <!-- col button directive -->
+                <!-- col button directive -->
                 <btn-large [titleForLarge]='" CONTINUE SHOPPING"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst font17'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
             </ion-col>
             <ion-col col-6>
-            <!-- col button directive -->
+                <!-- col button directive -->
                 <btn-large [titleForLarge]='"CHECKOUT"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="placeOrderSpin" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="placeOrder()"></btn-large>
             </ion-col>
         </ion-row>

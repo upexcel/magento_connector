@@ -5,8 +5,6 @@ import {
     Storage
 } from '@ionic/storage';
 import {config} from './../../providers/config/config';
-import {categoryService} from './../../providers/category-service/category-service';
-import {homeProductsService} from './../../providers/homeproducts-service/homeproducts.service';
 import {sliderService} from './../../providers/slider-service/slider.service';
 import forEach from 'lodash/forEach';
 import isEqual from 'lodash/isEqual';
@@ -14,7 +12,7 @@ import isEqual from 'lodash/isEqual';
 
 export class AppDataConfigService {
     appTemporaryData: any;
-    constructor(public _local: Storage, private _categoryService: categoryService, private _homeProductsService: homeProductsService, private _sliderService: sliderService) {
+    constructor(public _local: Storage, private _sliderService: sliderService) {
         this.appTemporaryData = [];
     }
     setUserData(userData) {
@@ -35,12 +33,14 @@ export class AppDataConfigService {
         this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);
     }
     cleanUp() {
-        let body = {"type": "full"}
+        //        let body = {"type": "full"}
         this._local.get("app_data_expire").then((expireTime) => {
             if (new Date().getTime() > expireTime) {
-//                this._homeProductsService.getHomeProducts(body);
-                this._categoryService.getCategoryList();
-                this._sliderService.getSlider();
+                //                this._homeProductsService.getHomeProducts(body);
+                //                this._categoryService.getCategoryList();
+                this._sliderService.resetSlider();
+                this._local.remove("categorylist");
+                this._local.remove("getStaticPageList");
                 this._local.remove("privacyInfo1");
                 this._local.remove("aboutUsInfo1");
                 this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);

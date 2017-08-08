@@ -15,7 +15,7 @@ import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
 import merge from 'lodash/merge';
-import {Transfer} from 'ionic-native';
+//import {Transfer} from 'ionic-native';
 import {WishListService} from '../../providers/wishList/wishList-service';
 import {config} from './../../providers/config/config';
 import {ModalController} from 'ionic-angular';

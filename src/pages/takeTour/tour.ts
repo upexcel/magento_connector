@@ -17,7 +17,6 @@ export class TourPage implements OnInit {
     ngOnInit() {
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
-            console.log("res",this.data.body.tour_slider);
         });
     }
     close() {

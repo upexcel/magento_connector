@@ -1,21 +1,33 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
 import {ApiService} from './../../providers/api-service/api-service';
 @Injectable()
 
 export class sliderService {
-    constructor(private _local: Storage, private _apiService: ApiService) {}
+    slider: any;
+    constructor(private _apiService: ApiService) {}
+    resetSlider() {
+        this.slider=[];
+    }
+    getLocalSlider() {
+        return new Promise((resolve, reject) => {
+            if (this.slider && this.slider.length > 0) {
+                resolve(this.slider);
+            } else {
+                this.slider;
+                this._apiService.api("home/slider", {}).subscribe((res) => {
+                    this.slider = res;
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            }
+
+        });
+    }
     /**
     *getSlider function call home/slider api
     **/
     getSlider() {
-        return new Promise((resolve, reject) => {
-            this._apiService.api("home/slider", {}).subscribe((res) => {
-                this._local.set('slider', res);
-                resolve(res);
-            }, (err) => {
-                reject(err);
-            });
-        });
+
     }
 }

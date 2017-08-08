@@ -78,7 +78,6 @@ export class OrderlistPage implements OnInit {
             }
         })
             .catch((err) => {
-                console.log("err", err)
                 this.error = true;
             })
     }

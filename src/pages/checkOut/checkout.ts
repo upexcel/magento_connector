@@ -35,6 +35,7 @@ export class Checkout implements OnInit {
     totalPrice: any = 0;
     grandTotal: any;
     discount: any;
+    shipping_amount:number=0;
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
@@ -160,6 +161,7 @@ export class Checkout implements OnInit {
         this.tax = this.cartData.tax; //get tax amount on cart
         this.discount = this.cartData.discount; // get discount price on cart
         this.grandTotal = this.cartData.grandtotal;  // get grandtotal price on cart
+        this.shipping_amount=this.cartData.shipping_amount;
         if (this.cartData.cart_items && this.cartData.cart_items.length > 0) {
             forEach(this.cartData.cart_items, (value, key) => {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
@@ -253,6 +255,7 @@ export class Checkout implements OnInit {
      * call when shippingMethod selected(manage shipping Method)
      */
     shippingMethod(selectedShippingMethod) {
+        this.shipping_amount=selectedShippingMethod.price;
         this.validate.shipping = false;
         this.data['shipping_method'] = selectedShippingMethod['code'];
         if (selectedShippingMethod && selectedShippingMethod['shipping_method']) {

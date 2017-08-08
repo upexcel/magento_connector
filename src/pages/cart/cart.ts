@@ -31,6 +31,8 @@ export class CartPage implements OnInit {
     discount: number = 0;
     //hold tax
     tax: number = 0;
+    //shipping_amount
+    shipping_amount:number=0;
     //hold grandtotal price
     grandtotalPrice: number = 0;
     //handle spinner on delete Coupon
@@ -55,6 +57,7 @@ export class CartPage implements OnInit {
             this.grandtotalPrice = cartData.grandtotal;
             //get tax amount on cart
             this.tax = cartData.tax;
+            this.shipping_amount=cartData.shipping_amount;
             //get cart coupon code if applicable 
             this.couponCode = cartData.coupon_code;
             let products: any = {};

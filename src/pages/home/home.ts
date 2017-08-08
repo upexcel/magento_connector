@@ -11,6 +11,9 @@ import {WishListService} from './../../providers/wishList/wishList-service';
 import {Storage} from '@ionic/storage';
 import {CartFunction} from './../../model/cart/cartHandling';
 import {ApiService} from './../../providers/api-service/api-service';
+import {categoryService} from './../../providers/category-service/category-service';
+import {sliderService} from './../../providers/slider-service/slider.service';
+import {NgZone} from '@angular/core';
 @Component({
     selector: 'home',
     templateUrl: 'home.html'
@@ -26,7 +29,8 @@ export class HomePage implements OnInit {
     userToken: string;//accesstocken
     menu: boolean = true; //show menu on header
     count = 0;
-    constructor(public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    updateSlider = false;
+    constructor(private _ngZone: NgZone, private _sliderService: sliderService, private _categoryService: categoryService, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -38,21 +42,27 @@ export class HomePage implements OnInit {
         }
     }
     ngOnInit() {
+        this._categoryService.getCategoryList();
         this._apiService.setNavControllerForService(this._navCtrl);//set refrence  of navCtrl
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
     }
-    homeProducts(recalll?) {
-        this.spin = true;
-        let body = {"type": "full"}
-        this._homeProductsConfig.getHomeProducts(body, recalll).then((res) => { //call "home/products" api
-            if (res) {
-                this.homeProduct = res;
-                //break product in page limit 
-                this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
-                this.spin = false;
-            }
+    homeProducts(recall?) {
+        this._ngZone.run(() => {
+            setTimeout(() => {
+                this.updateSlider = true;
+            })
+            this.spin = true;
+            let body = {"type": "full"}
+            this._homeProductsConfig.getHomeProducts(body, recall).then((res) => { //call "home/products" api
+                if (res) {
+                    this.homeProduct = res;
+                    //break product in page limit 
+                    this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
+                    this.spin = false;
+                }
+            })
         })
     }
     ionViewWillEnter() {
@@ -65,12 +75,15 @@ export class HomePage implements OnInit {
                 }, (err) => {})
             }
             if (userData && userData.access_token && this.count == 1) {
-                this.homeProducts(false);
+                this.homeProducts(true);
                 this._wishList.getWishListData({});
                 this._myaccount.getMyAccount({}).then((res) => {
                     this._address.setAddress(res);
                 }, (err) => {})
-            } else {
+            } else if(this.count == 1){
+                this.homeProducts(false);
+            }else {
+                this.updateSlider = true;
                 this._homeProductsConfig.getHomeProducts(body).then((res) => {    //call "home/products" api
                     if (res) {
                         this.spin = false;
@@ -120,6 +133,10 @@ export class HomePage implements OnInit {
 
     }
     doRefresh(refresher) {
+        this._ngZone.run(() => {
+            this._sliderService.resetSlider();
+            this.updateSlider = false;
+        });
         this._appDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
             this.homeProducts();
             setTimeout(() => {

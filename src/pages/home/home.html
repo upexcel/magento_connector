@@ -2,8 +2,8 @@
 <sidemenu [token]="userToken"></sidemenu>
 <ion-content  class="home" [header-scroller]="PAGE">
     <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
-    <get-slider></get-slider>
-    <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
+    <get-slider *ngIf="updateSlider"></get-slider>
+    <ion-spinner id="magLeft50" *ngIf="spin || !updateSlider"></ion-spinner>
     <div *ngIf="homeProduct" >
         <category-view [product]="feature_products" ></category-view>
     </div>
