@@ -7,7 +7,6 @@ import {ActionSheetController, AlertController} from 'ionic-angular';
 import {Checkout} from './../checkOut/checkout';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {ToastService} from './../../providers/toast-service/toastService';
-import {LoginPage} from './../login/login';
 import {Events} from 'ionic-angular';
 import forEach from 'lodash/forEach';
 @Component({
@@ -277,8 +276,6 @@ export class CartPage implements OnInit {
                     this.placeOrderSpin = false;
                 } else {
                     this.placeOrderSpin = false;
-                    //move to LoginPage
-                    this._navCtrl.push(LoginPage, {checkoutLogin: true, res: this.res});
                     this._toast.toast("Please Login First !!", 3000);
                 }
             })

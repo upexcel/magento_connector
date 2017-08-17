@@ -11,8 +11,9 @@ import {ToastService} from './../../providers/toast-service/toastService';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {SocialAccount} from './../../model/startPage/socialAccount';
 import {EmailValidator} from '../../validation/emailValidate';
-import {Checkout} from './../checkOut/checkout';
 import {CartFunction} from '../../model/cart/cartHandling';
+import {CartService} from './../../providers/cart-service/cart-service';
+import {CartPage} from '../cart/cart';
 
 @Component({
     selector: 'login',
@@ -26,12 +27,14 @@ export class LoginPage implements OnInit {
     data: LoginDataType;
     forgotPasswordEmail: object;
     title: string = 'LOGIN';
-    checkoutLogin: boolean = false;
-    cartData: Array<any>;
-    constructor(private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
+    ProductLogin: boolean = false;
+    productData: any;
+    ProductName: string;
+    constructor(private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
     ngOnInit() {
-        this.checkoutLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
-        //this.cartData = this._navParams.get('res');//hold cart data use when user is not login
+        this.ProductLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
+        this.productData = this._navParams.get('res');//hold cart data use when user is not login
+        this.ProductName = this._navParams.get('ProductName');
         this._local.get('website_id').then((website_id: any) => { //get website_id
             this.show_form = true;
             //form validation
@@ -49,13 +52,29 @@ export class LoginPage implements OnInit {
             });
         });
     }
+
+    addToCart() {
+        this._cartService.addCart(this.productData.add_cart, this.productData.editCartData).then((response: any) => {//call service fire api for cart add
+            if (response.body['success']) {
+                this._cartFunction.setCart(response.body['success_data']);//set data
+                this._toast.toast(this.ProductName + " added to your shopping cart", 3000, "top");
+                this._navCtrl.push(CartPage).then(() => {    //move to CartPage
+                    const index = this._viewCtrl.index;
+                    this._navCtrl.remove(index); //remove login page
+                });
+            }
+            else {
+            }
+        }, (err) => {
+        });
+    }
     gotoreg() {
         this._navCtrl.push(RegisterPage);//move to RegisterPage
     }
     /*
      * function call when login click
      */
-    signin(logvalue: any) { 
+    signin(logvalue: any) {
         this.login = true;
         this.forgotPasswordEmail = logvalue.email;
         this._login.getLogin(logvalue).then((res) => { //call login api
@@ -64,9 +83,11 @@ export class LoginPage implements OnInit {
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(this.data.body); //set UserData into storage
-                if (this.checkoutLogin) {
+                if (this.ProductLogin) {
                     this._cartFunction.resetCart();
-                    this._navCtrl.pop(Checkout);//move to Checkout
+                    setTimeout(() => {
+                        this.addToCart();//call cart service        
+                    }, 300)
                 } else {
                     this._navCtrl.setRoot(HomePage, {"access_token": this.data.body.access_token});//move to HomePage with access_token
                 }
@@ -87,8 +108,10 @@ export class LoginPage implements OnInit {
         let data = body.data;
         this._socialAccount.getSocialAccount(data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            if (this.checkoutLogin) {
-                this._navCtrl.pop(Checkout);//move to Checkout
+            if (this.ProductLogin) {
+                setTimeout(() => {
+                    this.addToCart();//call cart service        
+                }, 300)
             } else {
                 this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});//move to home page
             }
@@ -97,11 +120,13 @@ export class LoginPage implements OnInit {
     /*
      * function use for google login
      */
-    userGoogleLogin(body) { 
+    userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this._appConfigService.setUserData(res.body);
-            if (this.checkoutLogin) {
-                this._navCtrl.pop(Checkout);//move to Checkout page
+            if (this.ProductLogin) {
+                setTimeout(() => {
+                    this.addToCart();//call cart service        
+                }, 300)
             } else {
                 this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});//move to home page
             }

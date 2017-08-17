@@ -25,6 +25,7 @@ import {LoadingController} from 'ionic-angular';
 import {CartFunction} from '../../model/cart/cartHandling';
 import {DomSanitizer} from '@angular/platform-browser'
 import {NgZone} from '@angular/core';
+import {LoginPage} from './../login/login';
 
 @Component({
     selector: 'product',
@@ -131,7 +132,7 @@ export class ProductPage implements OnInit {
             this._appConfigService.resetDataInService();    //clear data service (clear local hold data)
             this.products().then((res) => {
                 if (res) {
-                    this.selectshow=true;
+                    this.selectshow = true;
                     refresher.complete();    //complete refresher
                 }
             })
@@ -557,22 +558,33 @@ export class ProductPage implements OnInit {
         if (!this.cartSpin) {
             this.cartSpin = true;
             if (this.cartButtonTitle != 'UPDATE CART') {
-                this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {//call service fire api for cart add
-                    this.cartData = response;
+                if (this.addToCartData && this.addToCartData.access_token) {
+                    this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {//call service fire api for cart add
+                        this.cartData = response;
+                        this.cartSpin = false;
+                        if (this.cartData.body['success']) {
+                            this._cartFunction.setCart(response.body['success_data']);//set data
+                            this._toast.toast(this.product + " added to your shopping cart", 3000, "top");
+                            this._navCtrl.push(CartPage).then(() => {    //move to CartPage
+                                const index = this.viewCtrl.index;
+                                this._navCtrl.remove(index); //remove product page
+                            });
+                        }
+                        else {
+                        }
+                    }, (err) => {
+                        this.cartSpin = false;
+                    });
+
+                } else {
                     this.cartSpin = false;
-                    if (this.cartData.body['success']) {
-                        this._cartFunction.setCart(response.body['success_data']);//set data
-                        this._toast.toast(this.product + " added to your shopping cart", 3000, "top");
-                        this._navCtrl.push(CartPage).then(() => {    //move to CartPage
-                            const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index); //remove product page
-                        });
-                    }
-                    else {
-                    }
-                }, (err) => {
-                    this.cartSpin = false;
-                });
+                    let res = {};
+                    res["add_cart"] = this.add_cart;
+                    res["editCartData"] = this.editCartData;
+                    res['ProductName'] = this.product;
+                    this._toast.toast("Please Login First !!", 3000);
+                    this._navCtrl.push(LoginPage, {checkoutLogin: true, res: res});
+                }
             } else {
                 this.add_cart['qty'] = this.editProductQuantity;
                 this.add_cart['quantity'] = this.editProductQuantity;

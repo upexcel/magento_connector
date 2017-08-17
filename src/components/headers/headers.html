@@ -40,7 +40,7 @@
                     <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                 <span class="badge badge-assertive icon-badge" *ngIf="wishlist > 0">{{wishlist}}</span>
             </button>
-            <button ion-button icon-only *ngIf="pagename=='product' || pagename=='home' " (tap)="gotoCart()">
+            <button ion-button icon-only *ngIf="(pagename=='product' || pagename=='home') && showPopOver " (tap)="gotoCart()">
                     <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                 <span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
             </button>
