@@ -20,6 +20,7 @@ export class FilterBy {
     categoryId: any;
     res: any = [];
     price: any;
+    priceData: any = {};
     constructor(public _events: Events, private _filterService: FilterService, private _navParam: NavParams, private _local: Storage, public _filter: FilterByModel, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
     }
     ngOnInit() {
@@ -39,10 +40,12 @@ export class FilterBy {
                 if (res && res.lower) {
                     this.dualValue2.lower = res.lower;
                     this.dualValue2.upper = res.upper;
+                    this.priceData.upper = res.upper;
                 } else {
                     if (this.price) {
                         this.dualValue2.lower = this.price.price.Min;
                         this.dualValue2.upper = this.price.price.Max;
+                        this.priceData.upper = this.price.price.Max;
                         this._filterService.defaultPrice(this.dualValue2);
                         this._filterService.setFilterPrice(this.dualValue2);
                     }
@@ -72,8 +75,9 @@ export class FilterBy {
     * function use for call service  for price range.
     **/
     range() {
-        if(this.dualValue2.lower==this.dualValue2.upper){
-            this.dualValue2.upper = this.dualValue2.lower+5;
+        console.log("this.priceData.upper", this.priceData.upper)
+        if (this.dualValue2.lower == this.dualValue2.upper && this.dualValue2.lower < this.priceData.upper) {
+            this.dualValue2.upper = this.dualValue2.lower + 5;
         }
         this._filterService.setFilterPrice(this.dualValue2);
     }
