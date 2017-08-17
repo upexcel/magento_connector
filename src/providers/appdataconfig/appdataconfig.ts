@@ -33,7 +33,6 @@ export class AppDataConfigService {
             if (new Date().getTime() > expireTime) {
                 this._sliderService.resetSlider();
                 this._local.remove("categorylist");
-                this._local.remove("getStaticPageList");
                 this._local.remove("privacyInfo1");
                 this._local.remove("aboutUsInfo1");
                 this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);

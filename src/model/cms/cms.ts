@@ -5,27 +5,30 @@ import {Storage} from '@ionic/storage';
 
 @Injectable()
 export class CMS implements OnInit {
+    getStaticPageListData: any;
     constructor(public local: Storage, private _apiService: ApiService) {}
     ngOnInit() {}
+    
+    resetStaticPageList() {
+        this.getStaticPageListData = null;
+    }
     /**
     *getStaticPageList
     *use to call web/getStaticPageList api if not in local
     **/
     getStaticPageList() {
         return new Promise((resolve, reject) => {
-            this.local.get('getStaticPageList').then((getStaticPageList) => {
-                if (getStaticPageList != null && getStaticPageList != undefined) {
-                    resolve(getStaticPageList);
-                }
-                else {
-                    this._apiService.api("web/getStaticPageList", {}).subscribe((res: any) => {
-                        this.local.set('getStaticPageList', res);
-                        resolve(res);
-                    }, (err) => {
-                        reject(err);
-                    });
-                }
-            });
+            if (this.getStaticPageListData && this.getStaticPageListData.body) {
+                resolve(this.getStaticPageListData);
+            }
+            else {
+                this._apiService.api("web/getStaticPageList", {}).subscribe((res: any) => {
+                    this.getStaticPageListData = res;
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            }
         });
     }
     /**

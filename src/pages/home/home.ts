@@ -12,6 +12,7 @@ import {CartFunction} from './../../model/cart/cartHandling';
 import {ApiService} from './../../providers/api-service/api-service';
 import {Slider} from './../../model/home/slider';
 import {CategoryList} from '../../model/home/categoryList';
+import {CMS} from '../../model/cms/cms';
 import {NgZone} from '@angular/core';
 
 @Component({
@@ -31,7 +32,7 @@ export class HomePage implements OnInit {
     count = 0;
     updateSlider = false;
     categoryList = true;
-    constructor(private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -127,6 +128,7 @@ export class HomePage implements OnInit {
         this._ngZone.run(() => {
             this._sliderService.resetSlider();
             this._homeProductsConfig.resetHomeProducts();
+            this._cms.resetStaticPageList();
             this._categoryList.resetCategoryList();
             this.updateSlider = false;
             this.categoryList = false;
