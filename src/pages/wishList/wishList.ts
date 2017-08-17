@@ -7,6 +7,7 @@ import {CartService} from './../../providers/cart-service/cart-service';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {CartPage} from '../cart/cart';
 import {CartFunction} from '../../model/cart/cartHandling';
+import {DomSanitizer} from '@angular/platform-browser'
 
 @Component({
     selector: 'wishList',
@@ -14,7 +15,7 @@ import {CartFunction} from '../../model/cart/cartHandling';
 })
 export class wishList {
     data: object;
-    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}
+    constructor(private sanitized: DomSanitizer, private _cartFunction: CartFunction, public loadingCtrl: LoadingController, private _toast: ToastService, private _cartService: CartService, public _wishListService: WishListService, public local: Storage, private _navParams: NavParams, public _nav: NavController) {}
     /** ionViewWillEnter    
     *    
     * function call for every view enter and get updated wishlist data    
@@ -23,6 +24,10 @@ export class wishList {
         this._wishListService.getWishList().then((data) => {
             this.data = data;
         })
+    }
+
+    transform(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value.data['short_description']);
     }
     /** deleteProductWishList    
     *    
