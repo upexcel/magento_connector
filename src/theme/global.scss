@@ -71,7 +71,13 @@
 iframe{
     height:100% !important;
 }
-
+.description{
+    color:#696969;
+}
+.padTB{
+    /*@include padding-top(0px);*/
+    padding: 0px 12px !important;
+}
 .backgroungW{
     background: #fff;
 }
@@ -192,6 +198,9 @@ side-menu-data, sidemenu ,home{
 .paddRight10 {
     @include padding-right(10px);
 }
+.paddRight12 {
+    @include padding-right(12px);
+}
 .paddLef15{
     @include padding-left(15px);
 }
@@ -294,10 +303,7 @@ bundle{
     position: absolute;
     right: 10px;
 }
-.padTB{
-    @include padding-top(0px);
-    padding-bottom: 0px;
-}
+
 .datetime-md {
     padding: 13px 20px 13px 16px !important;
 }
@@ -314,6 +320,14 @@ login{
     } 
     .scroll-content {
         @extend .backgroungW;
+    }
+}
+page-stripe{
+    .scroll-content {
+        @extend .backgroungW;
+    }
+    .date{
+            padding: 10px 0px !important;
     }
 }
 
@@ -455,7 +469,9 @@ placed-order{
 .absolute{
     position:absolute;
 }
-
+.backgroundTransparent{
+    background: transparent;
+}
 .wishlist{
     right: -15px;
     top: -12px;
@@ -898,7 +914,7 @@ header{
         top: 0;
         padding: 0 70px 1px;
         position: absolute;
-        width: 100%;
+        width: 95%;
         height: 100%;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);

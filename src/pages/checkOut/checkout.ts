@@ -4,16 +4,16 @@ import {MySavedAddressPage} from './../myaccount/savedAddress';
 import {MyEditAddressPage} from './../myaccount/myeditaddress';
 import {Address} from './../../providers/address-service/address';
 import {checkoutService} from './../../model/checkout/checkout-service';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {Storage} from '@ionic/storage';
 import forEach from 'lodash/forEach';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {PlacedOrder} from './../placedOrder/placedOrder';
+import {CartFunction} from './../../model/cart/cartHandling';
 import {Events} from 'ionic-angular';
-import {Platform} from 'ionic-angular';
 import {Keyboard} from '@ionic-native/keyboard';
 //declare let RazorpayCheckout: any;
 declare let StripeCheckout: any;
+
 @Component({
     selector: 'checkout',
     templateUrl: 'checkout.html'
@@ -35,12 +35,12 @@ export class Checkout implements OnInit {
     totalPrice: any = 0;
     grandTotal: any;
     discount: any;
-    shipping_amount:number=0;
+    shipping_amount: number = 0;
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
     validate = {"payment": false, "shipping": false, "shippingAddress": false}; //use for validation
-    constructor(private _keyboard: Keyboard, private platform: Platform, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _appConfigService: AppDataConfigService, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
+    constructor(private _cartFunction: CartFunction, private _keyboard: Keyboard, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');// cart data come from cart page
         this._address.getAddress().then((address) => { //call service providers/address-service/ to get address 
@@ -141,14 +141,16 @@ export class Checkout implements OnInit {
                     data['success'] = "false";
                     this._checkoutService.updateStripePayment(data).then((res) => {
                         this._toast.toast('Payment cancel by user', 3000);
+                        setTimeout(() => {
+                            this.spin = false;
+                        }, 500);
                         this._keyboard.close();
                         this._navCtrl.popToRoot();
                     })
                 }
+                this._cartFunction.setCartData().then((resp) => {
+                }, (err) => {})
                 this._keyboard.close();
-                setTimeout(() => {
-                    this.spin = false;
-                }, 500);
             }
         });
     }
@@ -161,7 +163,7 @@ export class Checkout implements OnInit {
         this.tax = this.cartData.tax; //get tax amount on cart
         this.discount = this.cartData.discount; // get discount price on cart
         this.grandTotal = this.cartData.grandtotal;  // get grandtotal price on cart
-        this.shipping_amount=this.cartData.shipping_amount;
+        this.shipping_amount = this.cartData.shipping_amount;
         if (this.cartData.cart_items && this.cartData.cart_items.length > 0) {
             forEach(this.cartData.cart_items, (value, key) => {
                 value['subTotal'] = ((parseFloat(value.total)) * (parseFloat(value.qty)));
@@ -229,6 +231,7 @@ export class Checkout implements OnInit {
         this._checkoutService.getTaxDetail(this.data).then((res: any) => {
             let resposnseTax = res['body'];
             this.tax = resposnseTax['tax'];
+            this.discount = resposnseTax['discount'];
             this.grandTotal = resposnseTax['quote']['grand_total'];
             this.disable = false;
             this.taxSpin = false;
@@ -255,7 +258,7 @@ export class Checkout implements OnInit {
      * call when shippingMethod selected(manage shipping Method)
      */
     shippingMethod(selectedShippingMethod) {
-        this.shipping_amount=selectedShippingMethod.price;
+        this.shipping_amount = selectedShippingMethod.price;
         this.validate.shipping = false;
         this.data['shipping_method'] = selectedShippingMethod['code'];
         if (selectedShippingMethod && selectedShippingMethod['shipping_method']) {
@@ -293,12 +296,17 @@ export class Checkout implements OnInit {
                         this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
                             this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                         });
+                        this._cartFunction.setCartData().then((resp) => {
+                        }, (err) => {})
                     } else {
+                        this.spin = true;
                         this.openCheckout(res['body'].success_data, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']});
                     }
 
                 } else {
                     this.spin = false;
+                    this._cartFunction.setCartData().then((resp) => {
+                    }, (err) => {})
                     if (res['body'] && res['body'].error_msg) {
                         this._toast.toast(res['body'].error_msg, 3000);
                     }

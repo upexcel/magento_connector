@@ -1,34 +1,30 @@
-import {Injectable, OnInit} from '@angular/core';
-import {ApiService} from './../../providers/api-service/api-service';
 import {CategoryListDataType} from './categorylistDataType';
-import {Storage} from '@ionic/storage';
-import keys from 'lodash/keys';
-import {categoryService} from './../../providers/category-service/category-service';
-declare let Promise: any;
+import {Injectable} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
 @Injectable()
-export class CategoryList implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService, private _categoryService: categoryService) {}
-    ngOnInit() {}
-    /**
-   *getCategoryList
-   *use to  get Category product data
-   **/
 
+export class CategoryList {
+    categoryList;
+    constructor(private _apiService: ApiService) {}
+    /**
+    *getCategoryList function call category/categorylist/ api
+    **/
     getCategoryList(): Promise<CategoryListDataType> {
-        let local = this.local;
         return new Promise((resolve, reject) => {
-            local.get('categorylist').then((categorylist: string) => {
-                if (keys(categorylist).length > 0 && categorylist !== null) {
-                    resolve(categorylist);
-                }
-                else {
-                    this._categoryService.getCategoryList().then((res) => {
-                        resolve(res);
-                    }, (err) => {
-                        reject(err);
-                    });
-                }
-            });
+            let data = {"parent_id": "1", "type": "full"};
+            if ((this.categoryList && !this.categoryList.body) || !this.categoryList) {
+                this._apiService.api("category/categorylist/", data).subscribe((res) => {
+                    this.categoryList = res;
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            } else {
+                resolve(this.categoryList);
+            }
         });
+    }
+    resetCategoryList() {
+        this.categoryList = null;
     }
 }

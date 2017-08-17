@@ -26,11 +26,11 @@
         <ion-list inset>
             <ion-item>
                 <ion-label floating>First Name <span class="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"lastName"' formControlName="firstname"></ion-input>
+                <ion-input  [onReturn]='"lastName"' text-capitalize formControlName="firstname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Last Name <span class="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"Company"' id="lastName"  formControlName="lastname"></ion-input>
+                <ion-input  [onReturn]='"Company"' id="lastName" text-capitalize formControlName="lastname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Company</ion-label>

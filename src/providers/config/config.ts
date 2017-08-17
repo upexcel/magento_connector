@@ -27,5 +27,5 @@ export const config = {
         "pager": true,
         "hide": true
     },
-    "stopApiTime": 100000
+    "stopApiTime": 10000000
 }

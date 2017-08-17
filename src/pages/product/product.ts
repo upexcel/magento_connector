@@ -23,6 +23,8 @@ import {WishListModel} from './../../model/wishList/wishList';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {LoadingController} from 'ionic-angular';
 import {CartFunction} from '../../model/cart/cartHandling';
+import {DomSanitizer} from '@angular/platform-browser'
+import {NgZone} from '@angular/core';
 
 @Component({
     selector: 'product',
@@ -85,7 +87,7 @@ export class ProductPage implements OnInit {
     item_id: string;
     editProductQuantity: number;
     reviewLoader: boolean = true;
-    constructor(private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
+    constructor(private _ngZone: NgZone, private sanitized: DomSanitizer, private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({email: ['', Validators.required]});
     }
     ngOnInit() {
@@ -122,15 +124,21 @@ export class ProductPage implements OnInit {
         this._events.unsubscribe('api:review');
     }
     doRefresh(refresher) {
-        this.productData = null;
-        this.spin = true;
-        this._appConfigService.resetDataInService();    //clear data service (clear local hold data)
-        this.products().then((res) => {
-            if (res) {
-                refresher.complete();    //complete refresher
-            }
+        this._ngZone.run(() => {
+            this.type = null;
+            this.productData = null;
+            this.spin = true;
+            this._appConfigService.resetDataInService();    //clear data service (clear local hold data)
+            this.products().then((res) => {
+                if (res) {
+                    this.selectshow=true;
+                    refresher.complete();    //complete refresher
+                }
+            })
         })
-
+    }
+    transform(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value.body.data['long_description']);
     }
     /*
      * function use for share options

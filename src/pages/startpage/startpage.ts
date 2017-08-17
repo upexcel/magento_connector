@@ -10,7 +10,9 @@ import {HomePage} from '../../pages/home/home';
 import {SocialAccountDataType} from '../../model/startPage/socialAccountDataType';
 import {SocialAccount} from './../../model/startPage/socialAccount';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {categoryService} from './../../providers/category-service/category-service';
+import {CategoryList} from './../../model/home/categoryList';
+import {HomeProducts} from '../../model/home/homeProducts';
+import {Slider} from './../../model/home/slider';
 
 @Component({
     selector: 'start-page',
@@ -23,7 +25,7 @@ export class StartPage implements OnInit {
     messsage_expired: string;
     check: boolean = false;
     options: {};
-    constructor(private _categoryService: categoryService, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
+    constructor(private _sliderService: Slider,private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
         private _modelCtrl: ModalController, private _appConfigService: AppDataConfigService) {
     }
@@ -40,7 +42,10 @@ export class StartPage implements OnInit {
             this._local.set('store_id', this.data.body.store_id);//set store_id on local storage
             this._local.set('require_login', this.data.body.store_id);//set require_login on local storage
             this._categoryService.getCategoryList();
+            this._sliderService.getSlider();
             this.check = true;
+            let body = {"type": "full"};
+            this._homeProductsConfig.getHomeProducts(body);
         })
             .catch((err) => {
                 this.showSocialLoginError(err);

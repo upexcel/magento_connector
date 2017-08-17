@@ -4,12 +4,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {IonicApp, IonicModule} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {SocialSharing} from '@ionic-native/social-sharing';
-import { Keyboard } from '@ionic-native/keyboard';
+import {Keyboard} from '@ionic-native/keyboard';
 import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
 
 //storage
 import {IonicStorageModule} from '@ionic/storage';
@@ -35,11 +35,11 @@ import {ReviewDetails} from '../pages/myaccount/reviewDetails';
 import {OfflinePage} from '../pages/offline/offline'
 import {wishList} from '../pages/wishList/wishList';
 import {Checkout} from '../pages/checkOut/checkout';
-import { cmsPages } from '../pages/cmsPages/cmsPages';
+import {cmsPages} from '../pages/cmsPages/cmsPages';
 import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
-import { SearchItemPage } from '../pages/search-item/search-item';
-import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import {SearchItemPage} from '../pages/search-item/search-item';
+import {ResetPasswordPage} from '../pages/reset-password/reset-password';
 
 //model
 import {AppConfig} from '../model/appConfig/appConfig';
@@ -68,7 +68,7 @@ import {SortByModel} from '../model/sortBy/sortBy';
 import {FilterByModel} from '../model/filterBy/filterBy';
 import {WishListModel} from '../model/wishList/wishList';
 import {CMS} from '../model/cms/cms';
-import { SearchModel } from '../model/search/search';
+import {SearchModel} from '../model/search/search';
 //service
 import {CartService} from '../providers/cart-service/cart-service';
 import {FinalPrice} from '../providers/cart-service/final-price';
@@ -77,9 +77,6 @@ import {SocialService} from '../providers/social-service/social-service';
 import {ToastService} from '../providers/toast-service/toastService';
 import {LogoutService} from '../providers/logout/logout-service';
 import {AppDataConfigService} from '../providers/appdataconfig/appdataconfig';
-import {sliderService} from '../providers/slider-service/slider.service';
-import {homeProductsService} from '../providers/homeproducts-service/homeproducts.service';
-import {categoryService} from '../providers/category-service/category-service';
 import {CountryService} from '../providers/myAccount-service/country';
 import {FilterService} from '../providers/filter-service/filterService';
 import {Address} from '../providers/address-service/address';
@@ -262,9 +259,6 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         ToastService,
         LogoutService,
         AppDataConfigService,
-        sliderService,
-        homeProductsService,
-        categoryService,
         CountryService,
         NotifyMe,
         CartFunction,
@@ -283,6 +277,6 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         fcmService,
         EventService,
         SideMenuService,
-        InAppBrowser    ]
+        InAppBrowser]
 })
 export class AppModule {}

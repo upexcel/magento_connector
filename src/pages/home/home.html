@@ -1,8 +1,8 @@
 <header [title]='title' [pagename]='pagename' [view]="true" [search]='true' [menu]='menu'></header>
-<sidemenu [token]="userToken"></sidemenu>
+<sidemenu *ngIf="categoryList" [token]="userToken"></sidemenu>
 <ion-content  class="home" [header-scroller]="PAGE">
     <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
-    <get-slider *ngIf="updateSlider"></get-slider>
+    <get-slider *ngIf="updateSlider"> Lodding....</get-slider>
     <ion-spinner id="magLeft50" *ngIf="spin || !updateSlider"></ion-spinner>
     <div *ngIf="homeProduct" >
         <category-view [product]="feature_products" ></category-view>

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {CMS} from './../../model/cms/cms';
 import { NavParams } from 'ionic-angular';
-
+declare let $: any;
 @Component({
 selector: 'cms-pages',
 templateUrl: 'cmsPages.html'
@@ -15,6 +15,11 @@ this.title = this._navParam.data.pageDetails.title; //get title name
 this._cms.getStaticPageData({"page_code": this._navParam.data.pageDetails.identifier}).then((res) => { //call "web/getStaticPageContent api
 this.theHtmlString = res.body;
 this.spinner = false;
+//setTimeout(()=>{
+//$('#blogPagination').find('a').each(function() {
+//    console.log($(this).attr('href'));
+//});
+//},500)
 })
 }
 }

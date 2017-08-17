@@ -82,7 +82,7 @@
         </ion-list-header>
         <span *ngIf="!shippingMethods" class="center">  <ion-spinner ></ion-spinner></span>
         <ion-item *ngFor="let shipping of shippingMethods">
-            <ion-label>{{shipping.method_title}} {{currency_sign}}{{shipping.price | number}}</ion-label>
+            <ion-label>{{shipping.carrier_title}} {{currency_sign}}{{shipping.price | number}}</ion-label>
             <ion-radio [disabled]="spin"  [value]="shipping"></ion-radio>
         </ion-item>
     </ion-list>
@@ -226,7 +226,7 @@
                 <p><b>Grand Total</b></p>
             </ion-col>
             <ion-col col-6 class="alignright paddRight10">
-                <p class="paddRight10"><b>{{currency_sign}}{{grandTotal}}</b></p>
+                <p class="paddRight10"><b>{{currency_sign}}{{(grandTotal)|number}}</b></p>
             </ion-col>
         </ion-row>
     </ion-card>

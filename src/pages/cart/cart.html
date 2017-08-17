@@ -1,4 +1,4 @@
-<!-- coll header directive -->
+<!-- call header directive -->
 <header [title]="'SHOPPING CART'" [pagename]="''" [wishList]=false></header>
 <ion-content class="empty-cart" *ngIf="!res || res.length == 0">
     <img src="assets/image/empty-cart.png">
@@ -82,7 +82,7 @@
             </ion-grid>
         </ion-card>
     </span>
-    <ion-item>
+    <ion-item *ngIf="couponCodeVisible">
         <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
         <button ion-button item-right small [disabled]="!couponCode" (tap)="applyCoupon(couponCode)">
                 Apply Coupon

@@ -5,12 +5,13 @@ import {Storage} from '@ionic/storage';
 import {ActionSheetController, Events} from 'ionic-angular';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {WishListModel} from './../../model/wishList/wishList';
-import {homeProductsService} from './../../providers/homeproducts-service/homeproducts.service';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
+import {HomeProducts} from '../../model/home/homeProducts';
+
 @Injectable()
 export class WishListService {
     seviceData: any;
-    constructor(private _events: Events, private _dataConfigService: AppDataConfigService, private _homeProductsService: homeProductsService, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
+    constructor(private _events: Events, private _dataConfigService: AppDataConfigService, private _homeProductsService: HomeProducts, public _wishList: WishListModel, private _toast: ToastService, public _actionSheetCtrl: ActionSheetController, public local: Storage) {}
     resetFilterData() {
     }
     getWishListData(data1) {

@@ -1,18 +1,29 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {SliderDataType} from './sliderDataType';
-import {sliderService} from './../../providers/slider-service/slider.service';
+import {ApiService} from './../../providers/api-service/api-service';
 declare let Promise: any;
 @Injectable()
-export class Slider implements OnInit {
-    constructor(private _sliderService: sliderService) {}
-    ngOnInit() {}
+export class Slider {
+    slider: any;
+    constructor(private _apiService: ApiService) {}
+    resetSlider() {
+        this.slider = null;
+    }
     getSlider(): Promise<SliderDataType> {
         return new Promise((resolve, reject) => {
-            this._sliderService.getLocalSlider().then((res) => {
-                resolve(res);
-            }, (err) => {
-                reject(err);
-            });
+            if ( this.slider && this.slider.body) {
+                resolve(this.slider);
+            } else {
+                this.slider;
+                this._apiService.api("home/slider", {}).subscribe((res) => {
+                    this.slider = res;
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            }
+
         });
     }
+
 }

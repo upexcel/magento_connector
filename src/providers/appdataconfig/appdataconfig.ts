@@ -1,18 +1,14 @@
-import {
-    Injectable
-} from '@angular/core';
-import {
-    Storage
-} from '@ionic/storage';
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import {config} from './../../providers/config/config';
-import {sliderService} from './../../providers/slider-service/slider.service';
+import {Slider} from './../../model/home/slider';
 import forEach from 'lodash/forEach';
 import isEqual from 'lodash/isEqual';
 @Injectable()
 
 export class AppDataConfigService {
     appTemporaryData: any;
-    constructor(public _local: Storage, private _sliderService: sliderService) {
+    constructor(public _local: Storage, private _sliderService: Slider ) {
         this.appTemporaryData = [];
     }
     setUserData(userData) {
@@ -33,11 +29,8 @@ export class AppDataConfigService {
         this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);
     }
     cleanUp() {
-        //        let body = {"type": "full"}
         this._local.get("app_data_expire").then((expireTime) => {
             if (new Date().getTime() > expireTime) {
-                //                this._homeProductsService.getHomeProducts(body);
-                //                this._categoryService.getCategoryList();
                 this._sliderService.resetSlider();
                 this._local.remove("categorylist");
                 this._local.remove("getStaticPageList");

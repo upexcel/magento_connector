@@ -5,11 +5,11 @@
         <ion-list inset>
             <ion-item>
                 <ion-label floating>First Name <span color="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"lastName"' formControlName="firstname"></ion-input>
+                <ion-input text-capitalize  [onReturn]='"lastName"' formControlName="firstname"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Last Name <span color="danger">*</span></ion-label>
-                <ion-input  [onReturn]='"email"' id="lastName"  formControlName="lastname"></ion-input>
+                <ion-input text-capitalize [onReturn]='"email"' id="lastName"  formControlName="lastname"></ion-input>
             </ion-item>
             <ion-item class="email-border-bottom">
                 <ion-label floating>Email<span  color="danger">*</span></ion-label>

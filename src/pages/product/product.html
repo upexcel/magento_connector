@@ -1,5 +1,5 @@
 <header [pagename]="'product'" [search]='true' [title]='product'></header>
-<ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}">
+<ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
     <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -40,10 +40,10 @@
                                     <ion-col col-10 class="padTB no-margin">
                                         <p class="stock">{{productData.body.data.in_stock}}</p>
                                     </ion-col>
-                                    <ion-col class="no-margin" col-2>
+                                    <ion-col class="no-margin paddRight12" col-2 >
                                         <span class="productWishList" >
                                             <span>
-                                                <button (tap)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon class="share"name="share"></ion-icon></button>
+                                                <button class='backgroundTransparent' (tap)="shareWithOptions(productData.body.data.name,productData.body.data.media_images)"><ion-icon class="share"name="share"></ion-icon></button>
                                             </span>
                                         </span>
                                     </ion-col> 
@@ -112,7 +112,7 @@
                 <!--product description-->
                 <ion-row>
                     <ion-col class="padTB">
-                        <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>
+                        <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true, 'description':true}" [innerHtml]="transform(productData) "></p>
                     </ion-col>
                 </ion-row>
                 <!--additionalInformation Data-->

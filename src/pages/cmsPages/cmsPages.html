@@ -1,5 +1,5 @@
 <header [pagename]="'title'" [title]='title' [wishList]=false></header>
 <ion-content>
     <ion-spinner class="apiSpinner" *ngIf="spinner"></ion-spinner>
-    <div class="padding10" [innerHTML]="theHtmlString"></div>
+    <div class="padding10" id="blogPagination" [innerHTML]="theHtmlString"></div>
 </ion-content>

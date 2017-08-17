@@ -8,12 +8,12 @@ import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfi
 import {MyAccount} from './../../model/myaccount/myaccount';
 import {Address} from './../../providers/address-service/address';
 import {WishListService} from './../../providers/wishList/wishList-service';
-import {Storage} from '@ionic/storage';
 import {CartFunction} from './../../model/cart/cartHandling';
 import {ApiService} from './../../providers/api-service/api-service';
-import {categoryService} from './../../providers/category-service/category-service';
-import {sliderService} from './../../providers/slider-service/slider.service';
+import {Slider} from './../../model/home/slider';
+import {CategoryList} from '../../model/home/categoryList';
 import {NgZone} from '@angular/core';
+
 @Component({
     selector: 'home',
     templateUrl: 'home.html'
@@ -30,7 +30,8 @@ export class HomePage implements OnInit {
     menu: boolean = true; //show menu on header
     count = 0;
     updateSlider = false;
-    constructor(private _ngZone: NgZone, private _sliderService: sliderService, private _categoryService: categoryService, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, public local: Storage, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    categoryList = true;
+    constructor(private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -42,20 +43,20 @@ export class HomePage implements OnInit {
         }
     }
     ngOnInit() {
-        this._categoryService.getCategoryList();
         this._apiService.setNavControllerForService(this._navCtrl);//set refrence  of navCtrl
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
     }
-    homeProducts(recall?) {
+    homeProducts() {
         this._ngZone.run(() => {
             setTimeout(() => {
                 this.updateSlider = true;
+                this.categoryList = true;
             })
             this.spin = true;
             let body = {"type": "full"}
-            this._homeProductsConfig.getHomeProducts(body, recall).then((res) => { //call "home/products" api
+            this._homeProductsConfig.getHomeProducts(body).then((res: any) => { //call "home/products" api
                 if (res) {
                     this.homeProduct = res;
                     //break product in page limit 
@@ -66,31 +67,22 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
+        this.homeProducts();
         this.count++;
         this.spin = true;
-        let body = {"type": "full"}
         this._appDataConfigService.getUserData().then((userData: any) => {
-            if (userData && userData.access_token) {
+            if (userData && userData.access_token && this.count == 1) {
                 this._cartFunction.setCartData().then((resp) => {
                 }, (err) => {})
-            }
-            if (userData && userData.access_token && this.count == 1) {
-                this.homeProducts(true);
                 this._wishList.getWishListData({});
                 this._myaccount.getMyAccount({}).then((res) => {
                     this._address.setAddress(res);
+                }, (err) => {
+                    console.log("err", err)
+                })
+            } else if (this.count == 1) {
+                this._cartFunction.setCartData().then((resp) => {
                 }, (err) => {})
-            } else if(this.count == 1){
-                this.homeProducts(false);
-            }else {
-                this.updateSlider = true;
-                this._homeProductsConfig.getHomeProducts(body).then((res) => {    //call "home/products" api
-                    if (res) {
-                        this.spin = false;
-                        this.homeProduct = res;
-                        this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
-                    }
-                });
             }
         })
     }
@@ -130,18 +122,18 @@ export class HomePage implements OnInit {
                 }
             }
         }
-
     }
     doRefresh(refresher) {
         this._ngZone.run(() => {
             this._sliderService.resetSlider();
+            this._homeProductsConfig.resetHomeProducts();
+            this._categoryList.resetCategoryList();
             this.updateSlider = false;
+            this.categoryList = false;
         });
-        this._appDataConfigService.removeFromLocalStorage('homeProducts').then((res) => {
-            this.homeProducts();
-            setTimeout(() => {
-                refresher.complete();
-            }, 2000);
-        });
+        this.homeProducts();
+        setTimeout(() => {
+            refresher.complete();
+        }, 2000);
     }
 }
