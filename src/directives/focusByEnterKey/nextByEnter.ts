@@ -1,5 +1,7 @@
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 declare var Zepto: any;
+import {Platform} from 'ionic-angular';
+
 @Directive({
     selector: '[onReturn]'
 })
@@ -9,7 +11,7 @@ declare var Zepto: any;
 export class FocusByEnterKey {
     private el: ElementRef;
     @Input('onReturn') id: string;
-    constructor(private _el: ElementRef) {
+    constructor(private _platform: Platform, private _el: ElementRef) {
         this.el = this._el;
     }
     @HostListener('keydown', ['$event']) onKeyDown(e) {
@@ -17,9 +19,13 @@ export class FocusByEnterKey {
             if (this.id != "btn") {
                 e.preventDefault();
                 var form = Zepto('#' + this.id);
-                form.find('input,textarea, select')[0].focus();
+                if (this._platform.is('android')) {
+                    form.find('input,textarea, select')[0].focus();
+                }
             }
-            else {}
+            else {
+                form.find('input,textarea, select').focus();
+            }
         }
 
     }
