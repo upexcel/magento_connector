@@ -10,9 +10,9 @@ export class OrderIdDetail {
     *getHomeProducts
     *use for call order/get/ api
     **/
-    getHomeProducts(data): Promise<OrderIdDetailDataType> {
+    getHomeProducts(body): Promise<OrderIdDetailDataType> {
         return new Promise((resolve, reject) => {
-            this._apiService.api("order/get/", data).subscribe((res) => {
+            this._apiService.api("order/get/", body).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

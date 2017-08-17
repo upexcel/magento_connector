@@ -16,6 +16,7 @@ export class AppConfig implements OnInit {
 
     getAppConfig(): Promise<ConfigDataType> {
         return new Promise((resolve, reject) => {
+            console.log("call")
             this.local.get('web_config').then((web_config: string) => {
                 if (keys(web_config).length > 0) {
                     resolve(web_config);

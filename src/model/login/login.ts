@@ -12,10 +12,8 @@ export class Login implements OnInit {
     * call customer/login/ api
     **/
     getLogin(data): Promise<LoginDataType> {
-        console.log("login service")
         return new Promise((resolve, reject) => {
             this._apiService.api('customer/login', data).subscribe((res) => {
-                console.log("login service response")
                 this._fcmService.saveFCMTokenOnServer();
                 resolve(res);
             }, (err) => {

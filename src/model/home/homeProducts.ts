@@ -14,7 +14,8 @@ export class HomeProducts {
     /**
     * getHomeProducts function is use for call home/products api 
     **/
-    getHomeProducts(data) {
+    getHomeProducts() {
+        let data = {"type": "full"}
         return new Promise((resolve, reject) => {
             if ((this.homeProduct && !this.homeProduct.body) || !this.homeProduct) {
                 this._apiService.api("home/products", data).subscribe((res) => {

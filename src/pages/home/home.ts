@@ -56,8 +56,7 @@ export class HomePage implements OnInit {
                 this.categoryList = true;
             })
             this.spin = true;
-            let body = {"type": "full"}
-            this._homeProductsConfig.getHomeProducts(body).then((res: any) => { //call "home/products" api
+            this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
                 if (res) {
                     this.homeProduct = res;
                     //break product in page limit 

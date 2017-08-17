@@ -26,8 +26,15 @@ export class ApiService {
                 var headers;
                 body.mobile_width = this._platform.width();
                 body['secret'] = userData ? userData['secret'] : "";
-                body['store_id'] = store_id ? store_id : "";
-                //            body.mobile_width=420;
+               if(store_id !="undefined"){
+                   body['store_id']=store_id;
+               }else if(userData.store_id !="undefined"){
+                   body['store_id']=userData.store_id;
+               }else{
+                   body['store_id']="";
+               }
+                
+                 //            body.mobile_width=420;
                 let api_url = config.api_Url + path;
                 if (userData !== null) {
                     headers = new Headers({'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token});
