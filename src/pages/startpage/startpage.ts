@@ -44,7 +44,8 @@ export class StartPage implements OnInit {
             this._categoryService.getCategoryList();
             this._sliderService.getSlider();
             this.check = true;
-            this._homeProductsConfig.getHomeProducts();
+            this._homeProductsConfig.resetHomeProducts();
+            setTimeout(()=>{this._homeProductsConfig.getHomeProducts();},300)
         })
             .catch((err) => {
                 this.showSocialLoginError(err);

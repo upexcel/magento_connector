@@ -32,9 +32,10 @@ export class AppDataConfigService {
         this._local.get("app_data_expire").then((expireTime) => {
             if (new Date().getTime() > expireTime) {
                 this._sliderService.resetSlider();
-                this._local.remove("categorylist");
-                this._local.remove("privacyInfo1");
-                this._local.remove("aboutUsInfo1");
+                this._local.remove("web_config");
+                this._local.remove("app_data_expire");
+                this._local.remove("require_login");
+                this._local.remove("website_id");
                 this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);
             }
         });

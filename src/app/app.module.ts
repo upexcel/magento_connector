@@ -11,7 +11,7 @@ import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
 import { Network } from '@ionic-native/network';
-
+import { StatusBar } from '@ionic-native/status-bar';
 //storage
 import {IonicStorageModule} from '@ionic/storage';
 //pages
@@ -279,6 +279,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         EventService,
         SideMenuService,
         InAppBrowser,
-        Network]
+        Network,
+        StatusBar]
 })
 export class AppModule {}

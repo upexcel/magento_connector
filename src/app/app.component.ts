@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Platform, NavController, Events, IonicApp, App} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
 import {Storage} from '@ionic/storage';
@@ -27,7 +27,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private statusBar: StatusBar,public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -92,7 +92,7 @@ export class MyApp implements OnInit {
     }
     ngOnInit() {
         this._platform.ready().then(() => {
-            StatusBar.styleDefault();
+            this.statusBar.styleDefault();
             this.appCheckConfig();
         });
     }

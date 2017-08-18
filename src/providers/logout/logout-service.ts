@@ -12,6 +12,6 @@ export class LogoutService {
     logout(msg, _navCtrl?) {
         this._cartFunction.resetCart();
         this._dataConfigService.resetDataInService();
-        this._local.clear();
+        this._local.remove("userData");
     }
 }
