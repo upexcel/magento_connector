@@ -428,6 +428,7 @@ export class ProductPage implements OnInit {
             });
             selectedItem = (array);
             let cartApiData = {"productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "total": this.final_price};
+            console.log(this.add_cart, this.addToCartData, cartApiData)
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }

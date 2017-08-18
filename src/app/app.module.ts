@@ -10,6 +10,7 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
+import { Network } from '@ionic-native/network';
 
 //storage
 import {IonicStorageModule} from '@ionic/storage';
@@ -277,6 +278,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         fcmService,
         EventService,
         SideMenuService,
-        InAppBrowser]
+        InAppBrowser,
+        Network]
 })
 export class AppModule {}
