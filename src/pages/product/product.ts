@@ -556,14 +556,20 @@ export class ProductPage implements OnInit {
      * function use for add to cart and edit cart data
      */
     addToCartService() {
+        var loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+        });
         if (!this.cartSpin) {
+            loading.present();
             this.cartSpin = true;
             if (this.cartButtonTitle != 'UPDATE CART') {
                 if (this.addToCartData && this.addToCartData.access_token) {
                     this._cartService.addCart(this.add_cart, this.editCartData).then((response: any) => {//call service fire api for cart add
                         this.cartData = response;
                         this.cartSpin = false;
+                        loading.dismiss();
                         if (this.cartData.body['success']) {
+                            loading.dismiss();
                             this._cartFunction.setCart(response.body['success_data']);//set data
                             this._toast.toast(this.product + " added to your shopping cart", 3000, "top");
                             this._navCtrl.push(CartPage).then(() => {    //move to CartPage
@@ -574,10 +580,12 @@ export class ProductPage implements OnInit {
                         else {
                         }
                     }, (err) => {
+                        loading.dismiss();
                         this.cartSpin = false;
                     });
 
                 } else {
+                    loading.dismiss();
                     this.cartSpin = false;
                     let res = {};
                     res["add_cart"] = this.add_cart;
@@ -592,6 +600,7 @@ export class ProductPage implements OnInit {
                 this._cartFunction.editCart(this.add_cart).then((res) => {//call service fire api for cart edit
                     this.cartData = res;
                     this.cartSpin = false;
+                    loading.dismiss();
                     if (this.cartData.body['success_data']) {
                         this._cartFunction.setCart(res.body['success_data']);//set data
                         this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
@@ -601,6 +610,7 @@ export class ProductPage implements OnInit {
                         });
                     }
                 }, (err) => {
+                    loading.dismiss();
                     this.cartSpin = false;
                 });
             }
