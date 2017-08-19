@@ -32,7 +32,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction,private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -113,16 +113,20 @@ export class MyApp implements OnInit {
             }
             else {
                 this._appConfigService.cleanUp();
-                setTimeout(() => {
-                    this._wishList.getWishListData({});
-                    this._cartFunction.setCartData().then((resp) => {
-                    }, (err) => {})
-                    this._myaccount.getMyAccount({}).then((res) => {
-                        this._address.setAddress(res);
-                    }, (err) => {
-                        console.log("err", err)
-                    })
-                }, 300)
+                this._appConfigService.getUserData().then((userData) => {
+                    if (userData !== null) {
+                        setTimeout(() => {
+                            this._wishList.getWishListData({});
+                            this._cartFunction.setCartData().then((resp) => {
+                            }, (err) => {})
+                            this._myaccount.getMyAccount({}).then((res) => {
+                                this._address.setAddress(res);
+                            }, (err) => {
+                                console.log("err", err)
+                            })
+                        }, 300)
+                    }
+                })
                 this._rootPage = HomePage;
                 this.rootPageName = 'HomePage';
             }

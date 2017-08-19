@@ -19,7 +19,7 @@
                         <span class="order_key">#{{data.orderId}}</span>
                         <span class="date_creation">{{data.created_at |customdate: 'HH:mm'}}</span>
                         <div class="cd-timeline-content">
-                             <h2>Oder No: {{data.order_no}}</h2>
+                             <h2>Order No: {{data.order_no}}</h2>
                             <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number }}</h2>
                             <h2 text-capitalize>Status: <span *ngIf="data.status !='canceled'">{{data.status}}</span><span *ngIf="data.status == 'canceled'">Cancelled</span></h2>
                             <hr>
