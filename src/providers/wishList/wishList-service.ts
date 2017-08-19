@@ -18,6 +18,7 @@ export class WishListService {
         let dataOfRes: any = [];
         let data = {};
         this._wishList.getWishList(data1).then((response) => {
+            console.log("response",response)
             forEach(response.body.wishlist, (value, key) => {
                 if (value) {
                     data = {};
@@ -36,16 +37,20 @@ export class WishListService {
                     dataOfRes.push(value);
                 }
             })
+            console.log("seviceData",this.seviceData)
             this.seviceData = dataOfRes;
             this._events.publish('wishList:length', this.seviceData ? this.seviceData.length : 0);
         })
     }
     //synchronize wishlist api data with local
     setWishListData(list, apiData) {
+        console.log("list",list)
+        console.log("apiData",apiData)
         var match = false;
         if (this.seviceData && this.seviceData.length > 0) {
             forEach(this.seviceData, (value, key) => {
-                let entity_id = value.data.entity_id || value.entity_id
+                let entity_id = value.data.entity_id || value.entity_id;
+                console.log("entity_id",entity_id);
                 if (entity_id == list.data.entity_id) {
                     match = true;
                 }
@@ -74,7 +79,7 @@ export class WishListService {
         }
     }
     getWishList() {
-        return new Promise((resolve, rejec) => {
+        return new Promise((resolve, reject) => {
             resolve(this.seviceData)
         })
     }

@@ -166,6 +166,7 @@ export class ProductPage implements OnInit {
      */
     wishList(feat_prod) {
         let data = {};
+        console.log("feat_prod on product page", feat_prod)
         data["productId"] = feat_prod.data.entity_id;
         if (Object.keys(this.add_cart).length > 0) {
             if (this.type != "grouped") {
@@ -192,12 +193,12 @@ export class ProductPage implements OnInit {
         feat_prod = merge(feat_prod, this.add_cart);
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.access_token != null) {
-                this._wishListService.setWishListData(feat_prod, data);
                 if (feat_prod.data.wishlist_item_id) {
                     feat_prod.data.wishlist_item_id = false;
                 } else {
                     feat_prod.data.wishlist_item_id = true;
                 }
+                this._wishListService.setWishListData(feat_prod, data);
             } else {
                 this._toast.toast("Please login first", 3000);
             }

@@ -37,6 +37,7 @@ export class ForgotPage implements OnInit {
             this.spin = false;
             if (res.body.message == "success") {
                 // this.btnShow = false;
+                this._navCtrl.pop();
                 this._toast.toast("Check your inbox to retrieve your password!", 3000, "top");
             }
             this._toast.toast(res.message, 3000, "top");

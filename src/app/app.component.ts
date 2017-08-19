@@ -19,6 +19,7 @@ import {MyAccount} from '../model/myaccount/myaccount';
 import {WishListService} from '../providers/wishList/wishList-service';
 import {Address} from '../providers/address-service/address';
 import {CartFunction} from '../model/cart/cartHandling';
+import {Slider} from '../model/home/slider';
 
 declare let navigator: any;
 
@@ -32,7 +33,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private _sliderService: Slider, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -114,6 +115,9 @@ export class MyApp implements OnInit {
             else {
                 this._appConfigService.cleanUp();
                 this._appConfigService.getUserData().then((userData) => {
+                    setTimeout(() => {
+                        this._sliderService.getSlider();
+                    }, 300)
                     if (userData !== null) {
                         setTimeout(() => {
                             this._wishList.getWishListData({});

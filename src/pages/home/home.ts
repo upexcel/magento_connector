@@ -9,6 +9,7 @@ import {Slider} from './../../model/home/slider';
 import {CategoryList} from '../../model/home/categoryList';
 import {CMS} from '../../model/cms/cms';
 import {NgZone} from '@angular/core';
+import {WishListService} from './../../providers/wishList/wishList-service';
 
 @Component({
     selector: 'home',
@@ -27,7 +28,7 @@ export class HomePage implements OnInit {
     count = 0;
     updateSlider = false;
     categoryList = true;
-    constructor(private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _wishList: WishListService,private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -72,7 +73,7 @@ export class HomePage implements OnInit {
     }
     ionViewWillEnter() {
         this.homeProducts();
-        this.count++;
+        this._wishList.getWishList();
     }
 
     doInfinite(infiniteScroll) {
