@@ -13,6 +13,11 @@ import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfi
 import {CategoryList} from './../../model/home/categoryList';
 import {HomeProducts} from '../../model/home/homeProducts';
 import {Slider} from './../../model/home/slider';
+import {MyAccount} from './../../model/myaccount/myaccount';
+import {WishListService} from './../../providers/wishList/wishList-service';
+import {Address} from './../../providers/address-service/address';
+import {CartFunction} from '../../model/cart/cartHandling';
+import {CartService} from './../../providers/cart-service/cart-service';
 
 @Component({
     selector: 'start-page',
@@ -25,7 +30,7 @@ export class StartPage implements OnInit {
     messsage_expired: string;
     check: boolean = false;
     options: {};
-    constructor(private _sliderService: Slider,private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
+    constructor( private _cartFunction: CartFunction,private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService,private _sliderService: Slider,private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
         private _modelCtrl: ModalController, private _appConfigService: AppDataConfigService) {
     }
@@ -58,6 +63,20 @@ export class StartPage implements OnInit {
         let profileModal = this._modelCtrl.create(TourPage);
         profileModal.present();
     }
+        commanApiCall() {
+        setTimeout(() => {
+            this._homeProductsConfig.resetHomeProducts();
+            this._homeProductsConfig.getHomeProducts();
+            this._wishList.getWishListData({});
+            this._cartFunction.setCartData().then((resp) => {
+            }, (err) => {})
+            this._myaccount.getMyAccount({}).then((res) => {
+                this._address.setAddress(res);
+            }, (err) => {
+                console.log("err", err)
+            })
+        }, 300)
+    }
     /**
     * userFbLogin
     *
@@ -67,6 +86,7 @@ export class StartPage implements OnInit {
         this._socialAccount.getSocialAccount(body.data).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
+            this.commanApiCall();
             this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
         });
     }
@@ -79,6 +99,7 @@ export class StartPage implements OnInit {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this.socialData = res;
             this._appConfigService.setUserData(res.body);
+            this.commanApiCall();
             this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});
         });
     }

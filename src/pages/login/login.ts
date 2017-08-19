@@ -16,6 +16,8 @@ import {CartService} from './../../providers/cart-service/cart-service';
 import {CartPage} from '../cart/cart';
 import {MyAccount} from './../../model/myaccount/myaccount';
 import {HomeProducts} from '../../model/home/homeProducts';
+import {WishListService} from './../../providers/wishList/wishList-service';
+import {Address} from './../../providers/address-service/address';
 
 @Component({
     selector: 'login',
@@ -32,7 +34,7 @@ export class LoginPage implements OnInit {
     ProductLogin: boolean = false;
     productData: any;
     ProductName: string;
-    constructor(private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
+    constructor(private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
     ngOnInit() {
         this.ProductLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
         this.productData = this._navParams.get('res');//hold cart data use when user is not login
@@ -56,7 +58,6 @@ export class LoginPage implements OnInit {
     }
 
     addToCart() {
-        this._myaccount.getMyAccount({});
         this._cartService.addCart(this.productData.add_cart, this.productData.editCartData).then((response: any) => {//call service fire api for cart add
             if (response.body['success']) {
                 this.login = false;
@@ -77,6 +78,20 @@ export class LoginPage implements OnInit {
     gotoreg() {
         this._navCtrl.push(RegisterPage);//move to RegisterPage
     }
+    commanApiCall() {
+        setTimeout(() => {
+            this._homeProductsConfig.resetHomeProducts();
+            this._homeProductsConfig.getHomeProducts();
+            this._wishList.getWishListData({});
+            this._cartFunction.setCartData().then((resp) => {
+            }, (err) => {})
+            this._myaccount.getMyAccount({}).then((res) => {
+                this._address.setAddress(res);
+            }, (err) => {
+                console.log("err", err)
+            })
+        }, 300)
+    }
     /*
      * function call when login click
      */
@@ -89,10 +104,7 @@ export class LoginPage implements OnInit {
             if (this.data.status === 1) {
                 this.data = res;
                 this._appConfigService.setUserData(this.data.body); //set UserData into storage
-                setTimeout(() => {
-                    this._homeProductsConfig.resetHomeProducts();
-                    this._homeProductsConfig.getHomeProducts();
-                },300)
+                this.commanApiCall();
                 if (this.ProductLogin) {
                     this.login = true;
                     this._cartFunction.resetCart();
@@ -119,6 +131,7 @@ export class LoginPage implements OnInit {
         let data = body.data;
         this._socialAccount.getSocialAccount(data).then((res: any) => {
             this._appConfigService.setUserData(res.body);
+            this.commanApiCall();
             if (this.ProductLogin) {
                 setTimeout(() => {
                     this.addToCart();//call cart service        
@@ -134,6 +147,7 @@ export class LoginPage implements OnInit {
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
             this._appConfigService.setUserData(res.body);
+            this.commanApiCall();
             if (this.ProductLogin) {
                 setTimeout(() => {
                     this.addToCart();//call cart service        

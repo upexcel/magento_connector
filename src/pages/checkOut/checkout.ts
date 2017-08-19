@@ -184,6 +184,7 @@ export class Checkout implements OnInit {
         this.validate.shippingAddress = false; //validation false
         this.validate.payment = false;//validation false
         this.validate.shipping = false; //validation false
+        this.shippingMethods=null;
         this._address.getAddress().then((address) => { //call service in providers/address-service/ to get address update on view
             this.address = address;
             if (this.address) {
@@ -241,7 +242,9 @@ export class Checkout implements OnInit {
     }
     changeAddress() {
         //move to MySavedAddressPage
+        if(this.disable){
         this._navCtrl.push(MySavedAddressPage);
+        }
     }
     /*
      * call when paymentMethod selected(manage payment Method)

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Platform, NavController, Events, IonicApp, App} from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import {StatusBar} from '@ionic-native/status-bar';
 import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
 import {Storage} from '@ionic/storage';
@@ -14,6 +14,11 @@ import {OrderModalPage} from '../pages/orderid-detail/orderid-detail';
 import {ToastService} from '../providers/toast-service/toastService';
 import {Keyboard} from '@ionic-native/keyboard';
 import {Network} from '@ionic-native/network';
+import {CartService} from '../providers/cart-service/cart-service';
+import {MyAccount} from '../model/myaccount/myaccount';
+import {WishListService} from '../providers/wishList/wishList-service';
+import {Address} from '../providers/address-service/address';
+import {CartFunction} from '../model/cart/cartHandling';
 
 declare let navigator: any;
 
@@ -27,7 +32,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(private statusBar: StatusBar,public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction,private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -108,6 +113,16 @@ export class MyApp implements OnInit {
             }
             else {
                 this._appConfigService.cleanUp();
+                setTimeout(() => {
+                    this._wishList.getWishListData({});
+                    this._cartFunction.setCartData().then((resp) => {
+                    }, (err) => {})
+                    this._myaccount.getMyAccount({}).then((res) => {
+                        this._address.setAddress(res);
+                    }, (err) => {
+                        console.log("err", err)
+                    })
+                }, 300)
                 this._rootPage = HomePage;
                 this.rootPageName = 'HomePage';
             }

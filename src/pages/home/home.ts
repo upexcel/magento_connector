@@ -4,11 +4,6 @@ import {Events, NavController, NavParams, ViewController, AlertController} from 
 import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
 import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {MyAccount} from './../../model/myaccount/myaccount';
-import {Address} from './../../providers/address-service/address';
-import {WishListService} from './../../providers/wishList/wishList-service';
-import {CartFunction} from './../../model/cart/cartHandling';
 import {ApiService} from './../../providers/api-service/api-service';
 import {Slider} from './../../model/home/slider';
 import {CategoryList} from '../../model/home/categoryList';
@@ -32,7 +27,7 @@ export class HomePage implements OnInit {
     count = 0;
     updateSlider = false;
     categoryList = true;
-    constructor(private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _cartFunction: CartFunction, private _wishList: WishListService, private _address: Address, private _appDataConfigService: AppDataConfigService, private _myaccount: MyAccount, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -48,6 +43,12 @@ export class HomePage implements OnInit {
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
+        this._events.subscribe('homeProducts:api', (res) => {
+            this.homeApiCall();
+        });
+    }
+    ngOnDestroy(){
+         this._events.unsubscribe('homeProducts:api');
     }
     homeProducts() {
         this._ngZone.run(() => {
@@ -56,35 +57,22 @@ export class HomePage implements OnInit {
                 this.categoryList = true;
             })
             this.spin = true;
-            this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
-                if (res) {
-                    this.homeProduct = res;
-                    //break product in page limit 
-                    this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
-                    this.spin = false;
-                }
-            })
+            this.homeApiCall();
+        })
+    }
+    homeApiCall() {
+        this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
+            if (res) {
+                this.homeProduct = res;
+                //break product in page limit 
+                this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
+                this.spin = false;
+            }
         })
     }
     ionViewWillEnter() {
         this.homeProducts();
         this.count++;
-        this.spin = true;
-        this._appDataConfigService.getUserData().then((userData: any) => {
-            if (userData && userData.access_token && this.count == 1) {
-                this._cartFunction.setCartData().then((resp) => {
-                }, (err) => {})
-                this._wishList.getWishListData({});
-                this._myaccount.getMyAccount({}).then((res) => {
-                    this._address.setAddress(res);
-                }, (err) => {
-                    console.log("err", err)
-                })
-            } else if (this.count == 1) {
-                this._cartFunction.setCartData().then((resp) => {
-                }, (err) => {})
-            }
-        })
     }
 
     doInfinite(infiniteScroll) {

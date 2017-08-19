@@ -3,11 +3,12 @@ import {
 } from '@angular/core';
 import {ApiService} from './../../providers/api-service/api-service';
 import forEach from 'lodash/forEach';
+import { Events } from 'ionic-angular';
 @Injectable()
 
 export class HomeProducts {
     homeProduct;
-    constructor( private _apiService: ApiService) {}
+    constructor(public events: Events, private _apiService: ApiService) {}
     resetHomeProducts() {
         this.homeProduct=null;
     }
@@ -20,6 +21,7 @@ export class HomeProducts {
             if ((this.homeProduct && !this.homeProduct.body) || !this.homeProduct) {
                 this._apiService.api("home/products", data).subscribe((res) => {
                     this.homeProduct = res;
+                     this.events.publish('homeProducts:api',"true");
                     resolve(res);
                 }, (err) => {
                     reject(err);
