@@ -34,7 +34,11 @@ export class LoginPage implements OnInit {
     ProductLogin: boolean = false;
     productData: any;
     ProductName: string;
-    constructor(private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {}
+    spin = {};
+    visible: boolean = true;
+    constructor(private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {
+        this.spin = {google: 1, facebook: 1};
+    }
     ngOnInit() {
         this.ProductLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
         this.productData = this._navParams.get('res');//hold cart data use when user is not login
@@ -103,6 +107,7 @@ export class LoginPage implements OnInit {
             this.data = res;
             if (this.data.status === 1) {
                 this.data = res;
+                this.data.body['login'] = "normal";
                 this._appConfigService.setUserData(this.data.body); //set UserData into storage
                 this.commanApiCall();
                 if (this.ProductLogin) {
@@ -130,9 +135,19 @@ export class LoginPage implements OnInit {
     userFbLogin(body) {
         let data = body.data;
         this._socialAccount.getSocialAccount(data).then((res: any) => {
+            this.spin['facebook'] = false;
+            this._toast.toast("Welcome " + body.data.firstname, 3000);
+            this.visible = false;
+            setTimeout(() => {
+                this.spin['facebook'] = false;
+                this.visible = true;
+            }, 100);
+            res.body['login'] = "social";
             this._appConfigService.setUserData(res.body);
             this.commanApiCall();
             if (this.ProductLogin) {
+                this.login = true;
+                this._cartFunction.resetCart();
                 setTimeout(() => {
                     this.addToCart();//call cart service        
                 }, 300)
@@ -146,13 +161,23 @@ export class LoginPage implements OnInit {
      */
     userGoogleLogin(body) {
         this._socialAccount.getSocialAccount(body).then((res: any) => {
+            this.visible = false;
+            setTimeout(() => {
+                this.spin['google'] = false;
+                this.visible = true;
+            }, 100);
+            res.body['login'] = "social";
             this._appConfigService.setUserData(res.body);
             this.commanApiCall();
             if (this.ProductLogin) {
+                this.login = true;
+                this._cartFunction.resetCart();
                 setTimeout(() => {
                     this.addToCart();//call cart service        
                 }, 300)
             } else {
+                this.spin['google'] = false;
+                this._toast.toast("Welcome " + body.firstname, 3000);
                 this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});//move to home page
             }
         });

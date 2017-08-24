@@ -10,8 +10,9 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
 import {IonicImageViewerModule} from 'ionic-img-viewer';
 import {HttpModule} from '@angular/http';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
-import { Network } from '@ionic-native/network';
-import { StatusBar } from '@ionic-native/status-bar';
+import {Network} from '@ionic-native/network';
+import {StatusBar} from '@ionic-native/status-bar';
+import {Stripe} from '@ionic-native/stripe';
 //storage
 import {IonicStorageModule} from '@ionic/storage';
 //pages
@@ -41,6 +42,7 @@ import {ContactUs} from '../pages/contactUs/contactUs';
 import {PlacedOrder} from '../pages/placedOrder/placedOrder';
 import {SearchItemPage} from '../pages/search-item/search-item';
 import {ResetPasswordPage} from '../pages/reset-password/reset-password';
+import {StripePage} from '../pages/stripe/stripe';
 
 //model
 import {AppConfig} from '../model/appConfig/appConfig';
@@ -86,6 +88,7 @@ import {checkoutService} from '../model/checkout/checkout-service';
 import {fcmService} from '../providers/fcm-service/fcm-service';
 import {EventService} from '../providers/headerEvents/headerEvents';
 import {SideMenuService} from '../providers/sideMenu/sideMenu';
+import {LoaderProvider} from '../providers/loader/loader';
 
 //components
 import {LoadingModal} from '../components/loading-modal/loading-modal';
@@ -182,7 +185,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         Downloadable,
         ReviewDetails,
         ResetPasswordPage,
-        SearchItemPage
+        SearchItemPage,
+        StripePage
     ],
     imports: [
         BrowserModule,
@@ -228,7 +232,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         MyReviews,
         ReviewDetails,
         ResetPasswordPage,
-        SearchItemPage
+        SearchItemPage,
+        StripePage
     ],
     providers: [
         AppConfig,
@@ -280,6 +285,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         SideMenuService,
         InAppBrowser,
         Network,
-        StatusBar]
+        StatusBar,
+        Stripe,
+        LoaderProvider]
 })
 export class AppModule {}

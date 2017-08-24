@@ -57,7 +57,7 @@ export class HeaderScroller {
                 $('.header').css('top', '0px');
                 if (event.target.scrollTop > this._topTriggeringDistance && $('.header').css('top') == '0px') {
 //                    $('.footer').css({'transition': 'top .5s', '-webkit-transition': 'bottom .5s', 'bottom': -56});
-                    $('.scroll-content').css('margin-bottom', '0px !important');
+//                    $('.scroll-content').css('margin-bottom', '0px !important');
                 }
 //                if (this.value != "PAGES") {
 //                    setTimeout(() => {

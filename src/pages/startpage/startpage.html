@@ -26,14 +26,14 @@
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
+                <facebook-login *ngIf="visible" [spinEvent]="spin.facebook" (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <google-login (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
+                <google-login *ngIf="visible" [spinEvent]="spin.google" (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
             </ion-col>
         </ion-row>
     </ion-grid>

@@ -178,6 +178,9 @@ side-menu-data, sidemenu ,home{
 .paddLft20{
     @include padding-left(20px);
 }
+.paddLft0{
+    @include padding-left(0px);
+}
 .padding10{
     padding: 10px;
 }

@@ -63,6 +63,7 @@ export class RegisterPage implements OnInit {
             this.data = res;
             if (this.data.status === 1) {
                 this.data = res;
+                res.body['login']="normal";
                 this._appConfigService.setUserData(res.body);// sset user data on local storage
                 this._toast.toast("Welcome " + logvalue.firstname, 3000);
                 //set home page as a root page .

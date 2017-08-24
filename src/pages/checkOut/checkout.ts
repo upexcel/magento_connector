@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {MySavedAddressPage} from './../myaccount/savedAddress';
 import {MyEditAddressPage} from './../myaccount/myeditaddress';
+import {StripePage} from './../stripe/stripe';
 import {Address} from './../../providers/address-service/address';
 import {checkoutService} from './../../model/checkout/checkout-service';
 import {Storage} from '@ionic/storage';
@@ -184,7 +185,7 @@ export class Checkout implements OnInit {
         this.validate.shippingAddress = false; //validation false
         this.validate.payment = false;//validation false
         this.validate.shipping = false; //validation false
-        this.shippingMethods=null;
+        this.shippingMethods = null;
         this._address.getAddress().then((address) => { //call service in providers/address-service/ to get address update on view
             this.address = address;
             if (this.address) {
@@ -242,8 +243,8 @@ export class Checkout implements OnInit {
     }
     changeAddress() {
         //move to MySavedAddressPage
-        if(this.disable){
-        this._navCtrl.push(MySavedAddressPage);
+        if (this.disable) {
+            this._navCtrl.push(MySavedAddressPage);
         }
     }
     /*
@@ -291,22 +292,30 @@ export class Checkout implements OnInit {
     orderPlace() {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
+
             this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
                 if (res && res['body'].success) {
+                    this.spin = false;
+                    this._cartFunction.setCartData().then((resp) => {
+                    }, (err) => {})
                     if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
-                        this.spin = false;
                         //move to PlacedOrder page
                         this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
                             this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                         });
-                        this._cartFunction.setCartData().then((resp) => {
-                        }, (err) => {})
                     } else {
-                        this.spin = true;
-                        this.openCheckout(res['body'].success_data, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']});
+                        this.spin = false;
+                        let data = {};
+                        data['address'] = this.address;
+                        data['orderDetails'] = this.data;
+                        data['productPrice'] = this.grandTotal;
+                        data['increment_id'] = res['body']['success_data']['increment_id'];
+                        this._navCtrl.push(StripePage, {data: data}).then(() => {
+                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
+                        });
                     }
-
-                } else {
+                }
+                else {
                     this.spin = false;
                     this._cartFunction.setCartData().then((resp) => {
                     }, (err) => {})
@@ -322,6 +331,7 @@ export class Checkout implements OnInit {
             })
         }
     }
+
     checkTypeOf(data) {
         if (typeof data['value'] == 'object') {
             return data['value'].default_title;

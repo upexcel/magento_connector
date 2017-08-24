@@ -23,6 +23,7 @@ import {CMS} from './../../model/cms/cms';
 export class PopoverPage {
     msg: string = "";
     usermenu: boolean;
+    loginWith: boolean = false;
     staticPagesList: any;
     constructor(public _cms: CMS, private _events: Events, private _appConfigService: AppDataConfigService, private _menuCtrl: MenuController, private _logout: LogoutService, private _viewCtrl: ViewController, private _navCtrl: NavController) {
         this.tokenCheck();
@@ -54,6 +55,11 @@ export class PopoverPage {
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData != null) {
                 this.usermenu = true;
+                if (userData['login'] == "normal") {
+                    this.loginWith = true;
+                } else {
+                    this.loginWith = false;
+                }
             } else {
                 this.usermenu = false;
             }
