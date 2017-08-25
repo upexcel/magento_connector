@@ -330,7 +330,7 @@ page-stripe{
         @extend .backgroungW;
     }
     .date{
-            padding: 10px 0px !important;
+        padding: 10px 0px !important;
     }
 }
 
@@ -962,6 +962,13 @@ checkout{
 .no-underline{
     text-decoration: none;
 }
+
+@media screen and (orientation:landscape) {
+    .alert-radio-group, .alert-checkbox-group {
+        max-height: 150px !important;
+    }}
+
+
 /*144 server css*/
 /*ion-app {
     width: 420px !important;
