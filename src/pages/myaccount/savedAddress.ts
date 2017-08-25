@@ -35,6 +35,7 @@ import {
 } from './../../components/myAccountPopOver/myAccountPopOver';
 import {Address} from './../../providers/address-service/address';
 import forEach from 'lodash/forEach';
+import {LoadingController} from 'ionic-angular';
 
 @Component({
     selector: 'saved-address',
@@ -52,7 +53,7 @@ export class MySavedAddressPage implements OnInit {
     alreadyCheckLength: boolean;
     saveAdd: boolean;
     againOpenEditAddressPage: boolean = true;
-    constructor(private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    constructor(public loadingCtrl: LoadingController, private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
         this.alreadyCheckLength = this._navParam.get('alreadyCheckLength'); // use to check(page redirect by checkOut) 
         this.againOpenEditAddressPage = this._navParam.get('againOpenEditAddressPage'); // if page is redirect by myaccount it send false (use for navigation )
         this.saveAdd = this._navParam.get('saveAdd'); //come from myeditaddress  
@@ -116,7 +117,13 @@ export class MySavedAddressPage implements OnInit {
                 this.spin = false;
                 this.reverseData(entity_id);
             } else {
+                var loading = this.loadingCtrl.create({
+                    content: 'Please wait...'
+                });
+                loading.present();
                 this._myaccount.getMyAccount({}).then((res) => {
+                    loading.dismiss();
+
                     if (res['body'].length == 1) {
                         res['default_check'] = true;
                     } else {
@@ -129,6 +136,7 @@ export class MySavedAddressPage implements OnInit {
                     this.reverseData(entity_id);
                 })
                     .catch(err => {
+                        loading.dismiss();
                         this.error = true;
                     })
             }
@@ -207,10 +215,14 @@ export class MySavedAddressPage implements OnInit {
         if (address.add_shipping) {
             address['default_shipping'] = '1';//convert into string
         }
+
         this._editaccount.updateAddress(address).then((res) => { //call api to update default_billing and default_shipping
             this.getInitAdd(true);
             this.disable = false;
         })
+            .catch(err => {
+                this.error = true;
+            })
     }
     presentPopover(myEvent: any) {
         let popover = this._popoverCtrl.create(PopoverPage);

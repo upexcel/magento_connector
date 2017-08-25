@@ -1,6 +1,6 @@
 <header [title]="'My Address'" [wishList]=false></header>
 <ion-content class="myaccount">
-    <ion-spinner *ngIf="spin && !error" id="magLeft50"></ion-spinner>
+    <!--<ion-spinner *ngIf="spin && !error" id="magLeft50"></ion-spinner>-->
     <!--<ion-spinner class="apiSpinner" *ngIf="spin1" ></ion-spinner>-->
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-refresher (ionRefresh)="doRefresh($event)">

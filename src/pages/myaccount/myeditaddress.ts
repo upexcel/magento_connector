@@ -89,7 +89,7 @@ export class MyEditAddressPage implements OnInit {
      *         return this._platform.is('ios');
      */
     platform() {
-        return this._platform.is('ios'); 
+        return this._platform.is('ios');
     }
     root() {
         this._navCtrl.push(MySavedAddressPage, {'againOpenEditAddressPage': false}).then(() => {
@@ -120,7 +120,7 @@ export class MyEditAddressPage implements OnInit {
     /*
      * use for get user details
      */
-    getuser_details(id, entity_id, firstname?, lastname?) { 
+    getuser_details(id, entity_id, firstname?, lastname?) {
         this.spin = true;
         var rName;
         if (entity_id != null) {    // form use as edit perpose
@@ -160,7 +160,8 @@ export class MyEditAddressPage implements OnInit {
                     })
                 }
             })
-                .catch(err => {})
+                .catch(err => {
+                })
         } else {    //form use for add address
             this.spin = false;
             if (this.firstTime) { // use when first address will going to add (default_billing,default_shipping will true) 
