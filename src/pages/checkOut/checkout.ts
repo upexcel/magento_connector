@@ -12,8 +12,6 @@ import {PlacedOrder} from './../placedOrder/placedOrder';
 import {CartFunction} from './../../model/cart/cartHandling';
 import {Events} from 'ionic-angular';
 import {Keyboard} from '@ionic-native/keyboard';
-//declare let RazorpayCheckout: any;
-declare let StripeCheckout: any;
 
 @Component({
     selector: 'checkout',
@@ -53,108 +51,7 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
-    openCheckout(orderData, successData) {
-        let data = {};
-        // .razorpay.cordova implimented
-        //        var options = {
-        //            description: 'Credits towards consultation',
-        //            image: 'https://i.imgur.com/3g7nmJC.png',
-        //            currency: 'INR',
-        //            key: 'rzp_test_1DP5mmOlF5G5ag',
-        //            amount: '5000',
-        //            name: 'foo',
-        //            prefill: {
-        //                email: 'pranav@razorpay.com',
-        //                contact: '8879524924',
-        //                name: 'Pranav Gupta'
-        //            },
-        //            theme: {
-        //                callor: '#F37254'
-        //            },
-        //            modal: {
-        //                ondismiss: function() {
-        //                    alert('dismissed')
-        //                }
-        //            }
-        //        };
-        //
-        //        var successCallback = function(payment_id) {
-        //            alert('payment_id: ' + payment_id);
-        //        };
-        //
-        //        var cancelCallback = function(error) {
-        //            alert(error.description + ' (Error ' + error.code + ')');
-        //        };
-        //
-        //        this.platform.ready().then(() => {
-        //            if (this.platform.is('cordova')) {
-        //                RazorpayCheckout.open(options, successCallback, cancelCallback);
-        //            }
-        //        })
 
-
-        data['increment_id'] = orderData.increment_id;
-        data['customer_id'] = orderData.customer_id;
-        var submittedForm = false;
-        //stripe code
-        var handler = StripeCheckout.configure({
-            key: 'pk_test_9xuVf6AIscOeY2q4aYJPlY4t',
-            locale: 'auto',
-            token: (token: any) => {
-                data['success'] = "true";
-                data['stripe'] = {};
-                data['stripe']['id'] = token['card'].id;
-                data['stripe']['object'] = token['card'].object;
-                data['stripe'] = token;
-                submittedForm = true;
-                // You can access the token ID with `token.id`.
-                // Get the token ID to your server-side code for use.
-                this.spin = true;
-                this._checkoutService.updateStripePayment(data).then((res) => {
-                    if (res['body'].success) {
-                        setTimeout(() => {
-                            this.spin = false;
-                        }, 500);
-                        this._navCtrl.push(PlacedOrder, successData).then(() => {
-                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
-                        });
-                    } else {
-                        setTimeout(() => {
-                            this.spin = false;
-                        }, 500);
-                        this._navCtrl.popToRoot();
-                    }
-
-                }, (err) => {
-                    setTimeout(() => {
-                        this.spin = false;
-                    }, 500);
-                })
-            }
-        });
-        handler.open({
-            name: 'Products',
-            amount: (parseFloat(this.grandTotal) * 100),
-            image: "",
-            currency: "USD",
-            closed: () => {
-                if (submittedForm == false) {//if payment cancle
-                    data['success'] = "false";
-                    this._checkoutService.updateStripePayment(data).then((res) => {
-                        this._toast.toast('Payment cancel by user', 3000);
-                        setTimeout(() => {
-                            this.spin = false;
-                        }, 500);
-                        this._keyboard.close();
-                        this._navCtrl.popToRoot();
-                    })
-                }
-                this._cartFunction.setCartData().then((resp) => {
-                }, (err) => {})
-                this._keyboard.close();
-            }
-        });
-    }
     /*
      * create data for place order
      */
@@ -292,43 +189,44 @@ export class Checkout implements OnInit {
     orderPlace() {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
-
-            this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
-                if (res && res['body'].success) {
-                    this.spin = false;
-                    this._cartFunction.setCartData().then((resp) => {
-                    }, (err) => {})
-                    if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
-                        //move to PlacedOrder page
-                        this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
-                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
-                        });
-                    } else {
+            this.data['method_title'] =this.selectedPaymentMethod['method_title'];
+            if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
+                this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
+                    if (res && res['body'].success) {
                         this.spin = false;
-                        let data = {};
-                        data['address'] = this.address;
-                        data['orderDetails'] = this.data;
-                        data['productPrice'] = this.grandTotal;
-                        data['increment_id'] = res['body']['success_data']['increment_id'];
-                        this._navCtrl.push(StripePage, {data: data}).then(() => {
-                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
-                        });
+                        this._cartFunction.setCartData().then((resp) => {
+                        }, (err) => {})
+                        
+                            //move to PlacedOrder page
+                            this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
+                                this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
+                            });
+//                        
                     }
-                }
-                else {
+                    else {
+                        this.spin = false;
+                        this._cartFunction.setCartData().then((resp) => {
+                        }, (err) => {})
+                        if (res['body'] && res['body'].error_msg) {
+                            this._toast.toast(res['body'].error_msg, 3000);
+                        }
+                        forEach(res['body'].product_error, (value) => {
+                            this._toast.toast(value, 3000);
+                        })
+                    }
+                }, (err) => {
                     this.spin = false;
-                    this._cartFunction.setCartData().then((resp) => {
-                    }, (err) => {})
-                    if (res['body'] && res['body'].error_msg) {
-                        this._toast.toast(res['body'].error_msg, 3000);
-                    }
-                    forEach(res['body'].product_error, (value) => {
-                        this._toast.toast(value, 3000);
-                    })
-                }
-            }, (err) => {
+                })
+            } else {
                 this.spin = false;
-            })
+                let data = {};
+                data['address'] = this.address;
+                data['orderDetails'] = this.data;
+                data['productPrice'] = this.grandTotal;
+                this._navCtrl.push(StripePage, {data: data}).then(() => {
+//                    this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
+                });
+            }
         }
     }
 

@@ -30,7 +30,7 @@
                     </ion-col>
                     <ion-col col-8 class="order_sum">
                         <p>TOTAL QUANTITY: <span id="order_sum_content" >{{orderid_detail.body.total_qty_ordered |number}}</span></p>
-                        <p>TOTAL: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{(orderid_detail.body.base_grand_total-orderid_detail.body.tax_amount) |number}}</span></p>
+                        <p>TOTAL: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.subtotal |number}}</span></p>
                         <p>TAX: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.tax_amount |number}}</span></p>
                         <p>DISCOUNT: <span id="order_sum_content">{{orderid_detail.body.discount_amount |number}}</span></p>
                         <p>DELIVERY: <span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.shipping_amount |number}}</span></p>
@@ -108,7 +108,7 @@
                     <span class="bold"> Payment Method </span>
                 </ion-col>
                 <ion-col col-8 class="order_sum">
-                    <p>{{orderid_detail.body.payment_method}}</p>
+                    <p [innerHtml]="transform(orderid_detail)"></p>
                 </ion-col>
             </ion-row>
         </ion-grid>

@@ -19,6 +19,7 @@ export class ContactUs implements OnInit {
         this._appDataConfigService.getUserData().then((userData: any) => {
             this.contactData = this._fb.group({ //set default name and email 
                 name: [(userData["firstname"]) ? userData["firstname"] : "", Validators.required],
+                last_name: [(userData["lastname"]) ? userData["lastname"] : "", Validators.required],
                 email: [(userData['email']) ? userData['email'] : "", Validators.compose([Validators.maxLength(50),
                 EmailValidator.isValidMailFormat, Validators.required])],
                 telephone: ['', Validators.compose([Validators.minLength(10)])],
@@ -29,6 +30,7 @@ export class ContactUs implements OnInit {
     validate() { // function use for validation
         this.contactData = this._fb.group({
             name: ['', Validators.required],
+            last_name: ['', Validators.required],
             email: ['', Validators.compose([Validators.maxLength(50),
             EmailValidator.isValidMailFormat, Validators.required])],
             telephone: ['', Validators.compose([Validators.minLength(10)])],

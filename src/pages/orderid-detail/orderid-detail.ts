@@ -3,6 +3,8 @@ import {NavParams, ViewController, PopoverController, Events, Content} from 'ion
 import {ApiService} from './../../providers/api-service/api-service';
 import forEach from 'lodash/forEach';
 import {OrderIdDetail} from './../../model/orderid-detail/orderid-detail';
+import {DomSanitizer} from '@angular/platform-browser'
+
 //import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 @Component({
     selector: 'orderid-detail',
@@ -18,7 +20,7 @@ export class OrderModalPage implements OnInit {
     showOrderError: boolean = false;
     spin: boolean = false;
     Math:any;
-    constructor(private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
+    constructor(private sanitized: DomSanitizer,private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
         this.Math=Math;
     }
     ngOnInit() {
@@ -33,7 +35,9 @@ export class OrderModalPage implements OnInit {
             });
         });
     }
-
+    transform(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value.body['payment_method']);
+    }
     close() {
         this._viewCtrl.dismiss();
     }

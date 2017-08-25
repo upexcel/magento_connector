@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams,ViewController} from 'ionic-angular';
+import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {Stripe} from '@ionic-native/stripe';
 import forEach from 'lodash/forEach';
 import {Storage} from '@ionic/storage';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 import {checkoutService} from './../../model/checkout/checkout-service';
 import {PlacedOrder} from './../placedOrder/placedOrder';
+import {CartFunction} from './../../model/cart/cartHandling';
 
 @Component({
     selector: 'page-stripe',
@@ -35,13 +36,12 @@ export class StripePage {
     data: any = {};
     spin = false;
     mess = {};
-    constructor( private viewCtrl: ViewController,private _checkoutService: checkoutService, private _appConfigService: AppDataConfigService, private _local: Storage, private _stripe: Stripe, public _navCtrl: NavController, public _navParams: NavParams) {
+    constructor(private _cartFunction: CartFunction,private viewCtrl: ViewController, private _checkoutService: checkoutService, private _appConfigService: AppDataConfigService, private _local: Storage, private _stripe: Stripe, public _navCtrl: NavController, public _navParams: NavParams) {
         var d = new Date();
         this.currentYear = d.getFullYear();
         this.orderData['address'] = this._navParams.get('data').address;
         this.orderData['placeOrder'] = this._navParams.get('data').orderDetails;
         this.orderData['productPrice'] = this._navParams.get('data').productPrice;
-        this.data['increment_id'] = this._navParams.get('data').increment_id;
         forEach(this.orderData['address'].body, (value) => {
             if (value.default_billing) {
                 this.address = value;
@@ -87,7 +87,6 @@ export class StripePage {
         if (this.card.number && this.card.number.length) {
             console.log("card_number", this.card.number);
             this._stripe.getCardType(this.card.number).then(type => {
-                console.log("type", type);
                 this.type = type;
             })
             this._stripe.validateCardNumber(this.card.number)
@@ -142,22 +141,26 @@ export class StripePage {
             delete this.card['date'];
             this.errorMess = "";
             this.data['amount'] = this.orderData['productPrice'];
-            this.data['description'] = `${this.data["increment_id"]},${this.data["email"]}}`;
+            this.data['description'] = this.data["email"];
             this.data['card'] = this.card;
             let data = {};
             data['data'] = this.data;
-            data['success'] = true;
-            data['increment_id'] = this.data["increment_id"];
+            //            data['success'] = true;
+            //            data['increment_id'] = this.data["increment_id"];
             data['email'] = this.data["email"];
-            delete this.data["increment_id"];
+            data['placeOrder'] = this.orderData['placeOrder'];
+            //            delete this.data["increment_id"];
             delete this.data["email"];
             this._checkoutService.updateStripePayment(data).then((res) => {
                 console.log("res", res);
                 this.spin = false;
-                if(res['body']['success']==true){
-                this._navCtrl.push(PlacedOrder, {"orderId": res['body']['increment_id']}).then(() => {
-                    this._navCtrl.remove(this.viewCtrl.index, 1); //close current page 
-                });
+                if (res['body']['success'] == true) {
+                    this._cartFunction.setCartData().then((resp) => {
+                    }, (err) => {})
+                    this._navCtrl.push(PlacedOrder, {"orderId": res['body']['increment_id']}).then(() => {
+                        this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(()=>{
+                        }); //close current page 
+                    });
                 }
             }, (err) => {
                 this.spin = false;

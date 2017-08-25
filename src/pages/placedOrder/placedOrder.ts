@@ -25,8 +25,8 @@ export class PlacedOrder implements OnInit {
     }
     viewOrderDetail() {
         this._navCtrl.push(OrderModalPage, {"order_id": this.orderId}).then(() => { //move to the OrderModalPage with order id
-            const index = this.viewCtrl.index;
-            this._navCtrl.remove(index) // remove current page
+            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(() => {
+            });
         });
     }
 }

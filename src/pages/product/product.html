@@ -10,8 +10,8 @@
     </ion-refresher> 
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
-    <ion-grid no-padding *ngIf="productData">
-              <ion-row  responsive-lg responsive-md responsive-sm>
+    <ion-grid no-padding *ngIf="productData" class="maxHeight">
+              <ion-row  responsive-lg responsive-md responsive-sm class="maxHeight">
             <ion-col no-padding col-12>
                 <ion-grid no-padding >
                     <ion-row no-padding class="slideOption" >
@@ -110,7 +110,7 @@
                 </div>
 
                 <!--product description-->
-                <ion-row>
+                <ion-row *ngIf="productData.body.data['long_description']">
                     <ion-col class="padTB">
                         <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true, 'description':true}" [innerHtml]="transform(productData) "></p>
                     </ion-col>

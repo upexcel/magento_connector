@@ -93,6 +93,7 @@ export class CartPage implements OnInit {
     * function use for quantity change (update quantity)    
     **/
     changeQuantity(data) {
+        console.log("changeQuantity call")
                 //check ,is user select pop up to write quantity
                 if(data.product_qty == "More") {        //if yes
                     let prompt = this.alertCtrl.create({             //create alert with title

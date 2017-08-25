@@ -579,6 +579,7 @@ export class ProductPage implements OnInit {
                             });
                         }
                         else {
+                            loading.dismiss();
                         }
                     }, (err) => {
                         loading.dismiss();

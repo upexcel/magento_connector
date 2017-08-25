@@ -64,6 +64,7 @@ export class MyEditAccount {
                 this._local.set('userData', userData); ///set updated user info local storage.
             })
         }, (err) => {
+            this._toast.toast(JSON.parse(err._body).message, 3000);
             this.editAccountspin = false; // stop spinner when error exist
         })
     }
