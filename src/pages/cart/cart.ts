@@ -154,7 +154,7 @@ export class CartPage implements OnInit {
                 ]
             });
             prompt.present();
-            console.log("prompt",prompt.didLeave);
+            console.log("prompt", prompt.willLeave);
         }
         else {  // use when user select direct choice from select box not write manual text queantity
             let cartData = {}
