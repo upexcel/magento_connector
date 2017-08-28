@@ -47,6 +47,7 @@ import {StripePage} from '../pages/stripe/stripe';
 //model
 import {AppConfig} from '../model/appConfig/appConfig';
 import {Login} from '../model/login/login';
+import {LOGOUT} from '../model/logout/logout';
 import {Register} from '../model/register/register';
 import {CategoryList} from '../model/home/categoryList';
 import {HomeProducts} from '../model/home/homeProducts';
@@ -246,6 +247,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         FinalPrice,
         SocialService,
         Login,
+        LOGOUT,
         Register,
         CategoryList,
         Forgot,

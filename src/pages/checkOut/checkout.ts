@@ -198,7 +198,7 @@ export class Checkout implements OnInit {
                         }, (err) => {})
                         
                             //move to PlacedOrder page
-                            this._navCtrl.push(PlacedOrder, {"shippingAddress": this.shippingAddressForOrderPlaced, "orderId": res['body']['success_data']['increment_id']}).then(() => {
+                            this._navCtrl.push(PlacedOrder, {"paymentMethod": this.selectedPaymentMethod['method_title'], "orderId": res['body']['success_data']['increment_id']}).then(() => {
                                 this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                             });
 //                        

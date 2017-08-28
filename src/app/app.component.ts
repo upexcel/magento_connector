@@ -5,7 +5,7 @@ import {StartPage} from '../pages/startpage/startpage';
 import {HomePage} from '../pages/home/home';
 import {Storage} from '@ionic/storage';
 import {AppDataConfigService} from '../providers/appdataconfig/appdataconfig';
-import {OfflinePage} from '../pages/offline/offline'
+import {OfflinePage} from '../pages/offline/offline';
 import {Splashscreen} from 'ionic-native';
 import {Firebase} from '@ionic-native/firebase';
 import {LocalNotifications} from '@ionic-native/local-notifications';
@@ -70,8 +70,10 @@ export class MyApp implements OnInit {
                     this.ionicApp._overlayPortal.getActive();
                 if (activePortal) {
                     ready = false;
+                    var refVar=activePortal;
                     activePortal.dismiss();
-                    activePortal.onDidDismiss(() => {ready = true;});
+                    activePortal=refVar;
+//                    activePortal.onDidDismiss(() => {ready = true;});
                 } else {
                     this.nav.pop();
                 }

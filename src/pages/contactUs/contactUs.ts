@@ -42,7 +42,10 @@ export class ContactUs implements OnInit {
         this.spinner = true;
         this._cms.setContactUsInfo(data).then((res) => { //col api "web/contactus"
             this.spinner = false;
-            this.validate();// col to blank form after submition 
+            this.contactData = this._fb.group({
+                telephone: ['', Validators.compose([Validators.minLength(10)])],
+                comment: ['', Validators.required]
+            })// col to blank form after submition 
             this._toast.toast("Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.", 3000, "top");
         }, (err) => {
             this.spinner = false;
