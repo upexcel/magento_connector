@@ -92,7 +92,6 @@ export class LoginPage implements OnInit {
             this._myaccount.getMyAccount({}).then((res) => {
                 this._address.setAddress(res);
             }, (err) => {
-                console.log("err", err)
             })
         }, 300)
     }

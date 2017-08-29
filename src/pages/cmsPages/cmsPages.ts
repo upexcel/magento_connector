@@ -17,7 +17,6 @@ this.theHtmlString = res.body;
 this.spinner = false;
 //setTimeout(()=>{
 //$('#blogPagination').find('a').each(function() {
-//    console.log($(this).attr('href'));
 //});
 //},500)
 })

@@ -20,12 +20,9 @@ export class GoogleComponent {
     @Output() usergoogleError: EventEmitter<any> = new EventEmitter();
     @Input() spinEvent: any;
     constructor(private _loading: LoaderProvider, public loadingCtrl: LoadingController, private _toast: ToastService, public _local: Storage, private _socialProvider: SocialService) {
-        console.log("service call google")
-            setTimeout(() => {
-                console.log("this.spinEvent",this.spinEvent)
+        setTimeout(() => {
             if (this.spinEvent != 1) {
                 this.spin = this.spinEvent;
-                console.log("loderRef",this._loading.getLoderReference())
                 this._loading.getLoderReference().dismiss();
                 this._loading.clearReference();
             }
@@ -41,8 +38,7 @@ export class GoogleComponent {
         });
         setTimeout(() => {
             this._loading.setLoderReference(loading);
-        },100)
-        console.log(this.spin);
+        }, 100)
         if (this.spin == false) {
             loading.present();
             this.spin = true;

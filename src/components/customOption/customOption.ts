@@ -345,7 +345,6 @@ export class CustomOption {
         //                this.bundleJson();
         //
         //            }, (err) => {
-        //                console.log(err)
         //            });
         this.bundleJson();
     }

@@ -22,7 +22,6 @@ export class wishList {
     **/
     ionViewWillEnter() {
         this._wishListService.getWishList().then((data) => {
-            console.log("wishlist",data)
             this.data = data;
         })
     }

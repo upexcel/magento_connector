@@ -40,7 +40,6 @@ export class PopoverPage {
         this._cms.getStaticPageList().then((res) => {
             this.staticPagesList = res['body'];
         }, (err) => {
-            console.log(err);
         })
     }
 

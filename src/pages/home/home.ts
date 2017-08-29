@@ -74,7 +74,6 @@ export class HomePage implements OnInit {
     ionViewWillEnter() {
         this.homeProducts();
         this._wishList.getWishList().then((res)=>{
-            console.log(res);
         });
     }
 

@@ -36,7 +36,7 @@ export class StripePage {
     data: any = {};
     spin = false;
     mess = {};
-    constructor(private _cartFunction: CartFunction,private viewCtrl: ViewController, private _checkoutService: checkoutService, private _appConfigService: AppDataConfigService, private _local: Storage, private _stripe: Stripe, public _navCtrl: NavController, public _navParams: NavParams) {
+    constructor(private _cartFunction: CartFunction, private viewCtrl: ViewController, private _checkoutService: checkoutService, private _appConfigService: AppDataConfigService, private _local: Storage, private _stripe: Stripe, public _navCtrl: NavController, public _navParams: NavParams) {
         var d = new Date();
         this.currentYear = d.getFullYear();
         this.orderData['address'] = this._navParams.get('data').address;
@@ -47,7 +47,6 @@ export class StripePage {
                 this.address = value;
             }
         })
-        console.log("address", this.address)
         this.card['address_line1'] = this.address.street[0];
         if (this.address.street && this.address.street.length > 1) {
             this.card['address_line2'] = this.address.street[1];
@@ -59,10 +58,8 @@ export class StripePage {
     }
     ionViewDidLoad() {
 
-        console.log('ionViewDidLoad StripePage');
         this._appConfigService.getUserData().then((userData: any) => {
             if (userData && userData.email) {
-                console.log("userData.email", userData.email, userData)
                 this.data['email'] = userData.email;
             }
         })
@@ -72,7 +69,6 @@ export class StripePage {
         });
     }
     card_holder() {
-        console.log("card_holder", this.card.name);
         if (this.card.name && this.card.name.length) {
             this.validate.name = true;
             this.error.name = false;
@@ -85,19 +81,16 @@ export class StripePage {
     }
     card_number() {
         if (this.card.number && this.card.number.length) {
-            console.log("card_number", this.card.number);
             this._stripe.getCardType(this.card.number).then(type => {
                 this.type = type;
             })
             this._stripe.validateCardNumber(this.card.number)
                 .then((number) => {
-                    console.log(number)
                     this.validate.cardNumber = true;
                     this.error.cardNumber = false;
                     this.validateCard();
                 })
                 .catch(error => {
-                    console.error(error)
                     this.validate.cardNumber = false;
                     this.error.cardNumber = true;
                     this.validateCard();
@@ -115,13 +108,11 @@ export class StripePage {
         if (this.card.cvc && this.card.cvc.length) {
             this._stripe.validateCVC(this.card.cvc)
                 .then((cvc) => {
-                    console.log(cvc)
                     this.validate.cardCVC = true;
                     this.error.cardCVC = false;
                     this.validateCard();
                 })
                 .catch(error => {
-                    console.error("errr", error)
                     this.validate.cardCVC = false;
                     this.error.cardCVC = true;
                     this.validateCard();
@@ -137,7 +128,6 @@ export class StripePage {
     genrateToken() {
         if (!this.spin) {
             this.spin = true;
-            console.log("create token", this.card)
             delete this.card['date'];
             this.errorMess = "";
             this.data['amount'] = this.orderData['productPrice'];
@@ -158,7 +148,7 @@ export class StripePage {
                     this._cartFunction.setCartData().then((resp) => {
                     }, (err) => {})
                     this._navCtrl.push(PlacedOrder, {"orderId": res['body']['increment_id']}).then(() => {
-                        this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(()=>{
+                        this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(() => {
                         }); //close current page 
                     });
                 }
@@ -171,22 +161,17 @@ export class StripePage {
     }
 
     dateChanged() {
-        console.log("dateChanged");
         let array = [];
-        console.log("this.myDate", this.card);
         array = this.card.date.split('-');
         this.card['exp_year'] = array[0];
         this.card['exp_month'] = array[1];
-        console.log("array", array)
         this._stripe.validateExpiryDate(this.card.exp_month, this.card.exp_year)
             .then((carddate) => {
-                console.log(carddate)
                 this.validate.cardDate = true;
                 this.error.cardDate = false;
                 this.validateCard();
             })
             .catch(error => {
-                console.error(error)
                 this.errorMess = error;
                 this.validate.cardDate = false;
                 this.error.cardDate = true;
@@ -194,15 +179,12 @@ export class StripePage {
             });
     }
     validateCard() {
-        console.log("this.validate", this.validate);
         let count = 0;
         forEach(this.validate, (value) => {
             if (value) {
                 count++;
             }
         })
-
-        console.log("count", count);
         if (count == 4) {
             this.disable = false;
         } else {

@@ -33,7 +33,6 @@ export class HomeProducts {
     }
     updateHomeProductWishlist(entity_id, wishlist_id) {
         let homeProductsData = this.homeProduct;
-        console.log("*************",this.homeProduct)
         forEach(homeProductsData['body'], (value, key) => {
             if (value['data']['entity_id'] == entity_id) {
                 value['data']['wishlist_item_id'] = wishlist_id;

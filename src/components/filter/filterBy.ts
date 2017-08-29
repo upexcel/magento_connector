@@ -75,7 +75,6 @@ export class FilterBy {
     * function use for call service  for price range.
     **/
     range() {
-        console.log("this.priceData.upper", this.priceData.upper)
         if (this.dualValue2.lower == this.dualValue2.upper && this.dualValue2.lower < this.priceData.upper) {
             this.dualValue2.upper = this.dualValue2.lower + 5;
         }

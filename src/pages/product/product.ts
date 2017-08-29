@@ -166,7 +166,6 @@ export class ProductPage implements OnInit {
      */
     wishList(feat_prod) {
         let data = {};
-        console.log("feat_prod on product page", feat_prod)
         data["productId"] = feat_prod.data.entity_id;
         if (Object.keys(this.add_cart).length > 0) {
             if (this.type != "grouped") {
@@ -429,7 +428,6 @@ export class ProductPage implements OnInit {
             });
             selectedItem = (array);
             let cartApiData = {"productid": this.productid, "qty": this.qty, "super_attribute": selectedItem, "total": this.final_price};
-            console.log(this.add_cart, this.addToCartData, cartApiData)
             this.add_cart = merge(this.add_cart, this.addToCartData, cartApiData);
             this.ifCustomOption("", this.add_cart)
         }

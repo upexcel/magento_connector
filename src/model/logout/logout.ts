@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
 import {ApiService} from './../../providers/api-service/api-service';
-import {fcmService} from './../../providers/fcm-service/fcm-service';
 declare let Promise: any;
 @Injectable()
 export class LOGOUT implements OnInit {

@@ -77,7 +77,6 @@ export class StartPage implements OnInit {
             this._myaccount.getMyAccount({}).then((res) => {
                 this._address.setAddress(res);
             }, (err) => {
-                console.log("err", err)
             })
         }, 300)
     }
@@ -94,7 +93,6 @@ export class StartPage implements OnInit {
                 this.spin['facebook'] = false;
                 this.visible = true;
             }, 100);
-            console.log("body", body);
             this._toast.toast("Welcome " + body.data.firstname, 3000);
             res.body['login'] = "social";
             this._appConfigService.setUserData(res.body);

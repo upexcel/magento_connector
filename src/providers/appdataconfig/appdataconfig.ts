@@ -52,7 +52,6 @@ export class AppDataConfigService {
                 "apiData": apiData,
                 "responseData": responseData
             });
-            console.log("this.appTemporaryData",this.appTemporaryData);
     }
     resetDataInService() {
         this.appTemporaryData = [];
@@ -72,7 +71,6 @@ export class AppDataConfigService {
                 flag = 1;
             }
         });
-                console.log("responseData",responseData)
 
         if (flag == 1) {
             return responseData;
@@ -81,7 +79,6 @@ export class AppDataConfigService {
         }
     };
     updateDataInServiceForWishlist(entity_id, wishlist_id) {
-        console.log("update",entity_id, "****",wishlist_id)
         forEach(this.appTemporaryData, (value) => {
             if (value['responseData']['body'].length) {
                 forEach(value['responseData']['body'], (categoryData) => {

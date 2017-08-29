@@ -128,7 +128,6 @@ export class MyApp implements OnInit {
                             this._myaccount.getMyAccount({}).then((res) => {
                                 this._address.setAddress(res);
                             }, (err) => {
-                                console.log("err", err)
                             })
                         }, 300)
                     }
@@ -150,11 +149,9 @@ export class MyApp implements OnInit {
 **/
     addConnectivityListeners() {
         this.network.onDisconnect().subscribe(() => {
-            console.log('network was disconnected :-(');
             this.nav.push(OfflinePage);
         });
         this.network.onConnect().subscribe(() => {
-            console.log('network connected!');
             this.nav.pop();
         });
 

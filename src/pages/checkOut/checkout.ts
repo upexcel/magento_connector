@@ -102,7 +102,6 @@ export class Checkout implements OnInit {
                 this.shippingMethods.push(value);
             });
         }, (err) => {
-            console.log(err)
         });
         this._checkoutService.getPaymentMethods().then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
             this.PaymentMethods = [];

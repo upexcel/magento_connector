@@ -9,7 +9,6 @@ export class LoaderProvider {
     }
     setLoderReference(data) {
         this.loader = data;
-        console.log("this.loader",this.loader)
     }
     getLoderReference() {
         return this.loader;

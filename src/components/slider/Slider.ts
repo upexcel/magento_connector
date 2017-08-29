@@ -24,7 +24,6 @@ export class SliderComponent implements OnInit {
                 this.img = res;
             }
         }, (err) => {
-            console.log(err);
         });
     }
 }

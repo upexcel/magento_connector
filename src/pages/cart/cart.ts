@@ -93,9 +93,9 @@ export class CartPage implements OnInit {
     * function use for quantity change (update quantity)    
     **/
     changeQuantity(data) {
-        console.log("changeQuantity call")
         //check ,is user select pop up to write quantity
         if (data.product_qty == "More") {        //if yes
+            setTimeout(()=>{ data.product_qty = data['vertualQty'];})
             let prompt = this.alertCtrl.create({             //create alert with title
                 title: 'Enter Product Quantity',
                 enableBackdropDismiss: false,
@@ -154,7 +154,6 @@ export class CartPage implements OnInit {
                 ]
             });
             prompt.present();
-            console.log("prompt", prompt.willLeave);
         }
         else {  // use when user select direct choice from select box not write manual text queantity
             let cartData = {}

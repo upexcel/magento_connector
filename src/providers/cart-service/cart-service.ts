@@ -14,8 +14,6 @@ export class CartService {
     constructor(private _events: Events, private _local: Storage, private _cart: Cart, private _toast: ToastService) {
     }
     addCart(data, editCartData, wishListAdd?) {
-                console.log("service",data,editCartData)
-
         return new Promise((resolve, reject) => {
             if (editCartData) {
                 //                this.removeEditCartDataFromLocal(editCartData);
@@ -26,7 +24,6 @@ export class CartService {
                 //                        // success
                 //                    }, (err)=> {
                 //                        // error
-                //                        console.log("err", err);
                 //                    })
                 if (res && res.body) {
                     resolve(res);
