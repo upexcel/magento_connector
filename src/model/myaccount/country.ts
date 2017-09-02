@@ -2,27 +2,29 @@ import {
     Injectable
 } from '@angular/core';
 import {ApiService} from './../../providers/api-service/api-service';
+import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
 
 @Injectable()
 export class Country {
-    countryName: object;
-    constructor(private _apiService: ApiService) {}
+    constructor(private _appConfigService: AppDataConfigService, private _apiService: ApiService) {}
     /**
 *getCountryName
 *use to call web/getAllowedCountries
 **/
     getCountryName() {
         return new Promise((resolve, reject) => {
-            if (!this.countryName) {
-                this._apiService.api("web/getAllowedCountries", {}).subscribe((res) => {
-                    this.countryName = res;
-                    resolve(res);
-                }, (err) => {
-                    reject(err);
-                });
-            } else {
-                resolve(this.countryName);
-            }
+            this._appConfigService.getCountry().then((countryName) => {
+                if (!countryName) {
+                    this._apiService.api("web/getAllowedCountries", {}).subscribe((res) => {
+                        this._appConfigService.setCountry(res);
+                        resolve(res);
+                    }, (err) => {
+                        reject(err);
+                    });
+                } else {
+                    resolve(countryName);
+                }
+            })
         });
     }
 }

@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
 import forEach from 'lodash/forEach';
-import {Storage} from '@ionic/storage';
 import {Events} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
 import {ToastService} from './../../providers/toast-service/toastService';
@@ -8,7 +7,7 @@ import {ToastService} from './../../providers/toast-service/toastService';
 declare let Promise: any;
 @Injectable()
 export class CartFunction implements OnInit {
-    constructor(private _toast: ToastService, private _events: Events, public local: Storage, private _apiService: ApiService) {}
+    constructor(private _toast: ToastService, private _events: Events, private _apiService: ApiService) {}
     cartData: any;
     ngOnInit() {}
     /*

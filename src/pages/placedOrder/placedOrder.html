@@ -28,7 +28,9 @@
                 <h2>THANK YOU FOR YOUR PURCHASE!</h2>
                 <p>Your order # is: <b>{{orderId}}</b>.</p>
                 <p>You will receive an order confirmation email with details of your order and a link to track its progress.</p>
-                <p class="primary" (tap)="viewOrderDetail()">View Details <i class="fa fa-lg fa-angle-right" aria-hidden="true"></i></p>
+                <p class="center" >
+                <button ion-button clear (click)="viewOrderDetail()">View Details</button>
+                </p>
             </div>
         </ion-card-content>
 

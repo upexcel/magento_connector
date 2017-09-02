@@ -1,50 +1,50 @@
 <ion-header>
     <ion-navbar  color="primary" >
-    <span *ngIf="searchBar"> 
-           <ion-buttons class="floatLeft widthA padding5">
-            <button  ion-button (click)="dismiss()">
-                    <span ion-text color="primary" showWhen="ios">Cancel</span>
-                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
-            </button>
-        </ion-buttons>
-        <ion-input class="floatLeft width80" [(ngModel)]="data" (keyup.enter)='goToSearchItemPage()' autofocus placeholder="Search" type="text" ></ion-input>
-       <ion-buttons class="floatRight" >
-            <button end ion-button icon-only  (tap)="goToSearchItemPage()">
-                    <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-            </button>
-        </ion-buttons></span>
-    <span  *ngIf="!searchBar">
-    <span >
-        <button class="floatLeft" ion-button menuToggle  (tap)="openMenu()" *ngIf="pagename=='home' || menu==true">
-                <!--<ion-icon name="menu"></ion-icon>-->
-                <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
-        </button>
-        
-        <ion-title  class="uppercase floatLeft">
-            {{title}} {{itemName}}
-        </ion-title>
-        
-        </span>
-        <ion-buttons class="floatRight" >
-            <button ion-button icon-only *ngIf="search"  (tap)="gotoSearch()">
-                <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-            </button>
-            <button ion-button icon-only *ngIf="view" (tap)="changeView(viewChang)">
-                    <i class="fa fa-th-large fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
-                <i class="fa fa-list-ul fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
-            </button>
-            <button ion-button icon-only (tap)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
-                    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
-            </button>
-            <button ion-button icon-only  (tap)="gotoWishList()" *ngIf="showPopOver && wishList">
-                    <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
-                <span class="badge badge-assertive icon-badge" *ngIf="wishlist > 0">{{wishlist}}</span>
-            </button>
-            <button ion-button icon-only *ngIf="(pagename=='product' || pagename=='home') && showPopOver " (tap)="gotoCart()">
-                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-                <span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
-            </button>
-        </ion-buttons>
+        <span *ngIf="searchBar"> 
+            <ion-buttons class="floatLeft widthA padding5">
+                <button  ion-button (click)="dismiss()">
+                         <span ion-text color="primary" showWhen="ios">Cancel</span>
+                    <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-input class="floatLeft width80" [(ngModel)]="data" (keyup.enter)='goToSearchItemPage()' autofocus placeholder="Search" type="text" ></ion-input>
+            <ion-buttons class="floatRight" >
+                <button end ion-button icon-only  (click)="goToSearchItemPage()">
+                        <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
+                </button>
+            </ion-buttons></span>
+        <span  *ngIf="!searchBar">
+            <span >
+                <button class="floatLeft" ion-button menuToggle  (click)="openMenu()" *ngIf="pagename=='home' || menu==true">
+                        <!--<ion-icon name="menu"></ion-icon>-->
+                        <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+                </button>
+
+                <ion-title  class="uppercase floatLeft">
+                    {{title}} {{itemName}}
+                </ion-title>
+
+            </span>
+            <ion-buttons class="floatRight" >
+                <button ion-button icon-only *ngIf="search"  (click)="gotoSearch()">
+                        <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
+                </button>
+                <button ion-button icon-only *ngIf="view" (click)="changeView(viewChang)">
+                        <i class="fa fa-th-large fa-lg" aria-hidden="true"  *ngIf='viewChang=="Landscape" && view'></i>
+                    <i class="fa fa-list-ul fa-lg" aria-hidden="true" *ngIf='viewChang=="portrait" && view'></i>
+                </button>
+                <button ion-button icon-only (click)="gotoLogin()" *ngIf="showPopOver==false && showLogin">
+                        <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                </button>
+                <button ion-button icon-only  (click)="gotoWishList()" *ngIf="showPopOver && wishList">
+                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                    <span class="badge badge-assertive icon-badge" *ngIf="wishlist > 0">{{wishlist}}</span>
+                </button>
+                <button ion-button icon-only *ngIf="(pagename=='product' || pagename=='home') && showPopOver " (click)="gotoCart()">
+                        <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                    <span class="badge badge-assertive icon-badge" *ngIf="cartItems > 0">{{cartItems}}</span>
+                </button>
+            </ion-buttons>
         </span>
     </ion-navbar>
 </ion-header>

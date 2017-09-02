@@ -13,7 +13,7 @@ declare let Promise: any;
 export class AppConfig implements OnInit {
     constructor(public local: Storage, private _apiService: ApiService, private _appConfigService: AppDataConfigService) {}
     ngOnInit() {}
-
+    config = 1;
     getAppConfig(): Promise<ConfigDataType> {
         return new Promise((resolve, reject) => {
             this.local.get('web_config').then((web_config: string) => {
@@ -21,12 +21,17 @@ export class AppConfig implements OnInit {
                     resolve(web_config);
                 }
                 else {
-                    this._apiService.api("web/config", {}).subscribe((res) => {
-                        this._appConfigService.setWebConfig(res);
-                        resolve(res);
-                    }, (err) => {
-                        reject(err);
-                    });
+                    if (this.config==1) {
+                        this.config=0;
+                        this._apiService.api("web/config", {}).retry(2).subscribe((res) => {
+                            this.config = 1;
+                            this._appConfigService.setWebConfig(res);
+                            resolve(res);
+                        }, (err) => {
+                            this.config = 1;
+                            reject(err);
+                        });
+                    }
                 }
             });
         });

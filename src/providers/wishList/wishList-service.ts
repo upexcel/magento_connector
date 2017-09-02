@@ -46,7 +46,7 @@ export class WishListService {
         if (this.seviceData && this.seviceData.length > 0) {
             forEach(this.seviceData, (value, key) => {
                 let entity_id = value.data.entity_id || value.entity_id;
-                if (entity_id == list.data.entity_id) {
+                if (entity_id == list.data['entity_id']) {
                     match = true;
                 }
             })

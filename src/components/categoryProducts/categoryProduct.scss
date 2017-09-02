@@ -59,6 +59,9 @@ category-view{
     }
     /*@media screen and (orientation: landscape) {*/
     .landscape{
+        .columnForGrid75{
+            width: 100%;
+        }
         .columnForGrid25{
             width:100%
         }

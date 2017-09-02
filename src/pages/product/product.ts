@@ -68,7 +68,7 @@ export class ProductPage implements OnInit {
     configPrice: Array<any> = [];
     addToCartData;
     customPrice: any;
-    customDisplayPrice: any;
+    customDisplayPrice: any=0;
     dynemicDisplayPrice: any;
     product_custom_option: any;
     config = true;
@@ -144,12 +144,12 @@ export class ProductPage implements OnInit {
     /*
      * function use for share options
      */
-    shareWithOptions(caption, img) {
+    shareWithOptions(caption, img, productUrl) {
         let opt = {
-            message: 'share this',
+            message: '',
             subject: caption,
             files: img,
-            url: 'https://www.website.com/foo/#bar?a=b',
+            url: productUrl,
             chooserTitle: 'Pick an app'
         }
         this._socialSharing.shareWithOptions(opt)        //call shareWithOptions service 
@@ -462,6 +462,7 @@ export class ProductPage implements OnInit {
         this.customFormValidate = data.disable;
         if (this.type != 'configurable' && this.type != 'bundle') {
             if (this.type == 'downloadable') {
+                console.log("data",data)
                 if (data.disable == false) {
                     this.ifCustomOption(null, data);
                 }
@@ -481,7 +482,10 @@ export class ProductPage implements OnInit {
                 this.disable = data.disable;
             }
             this.bundlePrice += (parseFloat(data.dynemicPrice));
+            console.log((parseFloat(data.dynemicPrice), "***", this.bundlePrice))
             this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
+            console.log((parseFloat(this.dynemicDisplayPrice)))
+
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
@@ -591,6 +595,7 @@ export class ProductPage implements OnInit {
                     res["add_cart"] = this.add_cart;
                     res["editCartData"] = this.editCartData;
                     res['ProductName'] = this.product;
+                    console.log("res****", res)
                     this._toast.toast("Please Login First !!", 3000);
                     this._navCtrl.push(LoginPage, {checkoutLogin: true, res: res});
                 }
@@ -605,8 +610,8 @@ export class ProductPage implements OnInit {
                         this._cartFunction.setCart(res.body['success_data']);//set data
                         this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
                         this._navCtrl.push(CartPage).then(() => {//move to CartPage
-                            const index = this.viewCtrl.index;
-                            this._navCtrl.remove(index);//remove product page
+                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(() => {
+                            });
                         });
                     }
                 }, (err) => {

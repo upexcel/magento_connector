@@ -55,6 +55,10 @@ export class StripePage {
         this.card['address_state'] = this.address['region'];
         this.card['address_zip'] = this.address['postcode'];
         this.card['address_city'] = this.address['city'];
+        this._local.get("web_config").then((web_config) => {
+            this.data['currency'] = web_config.body.default_currency;
+            this.pay = `Pay  ${this.orderData['productPrice']}  ${this.data['currency']}`
+        });
     }
     ionViewDidLoad() {
 
@@ -63,10 +67,6 @@ export class StripePage {
                 this.data['email'] = userData.email;
             }
         })
-        this._local.get("web_config").then((web_config) => {
-            this.data['currency'] = web_config.body.default_currency;
-            this.pay = `Pay  ${this.orderData['productPrice']}  ${this.data['currency']}`
-        });
     }
     card_holder() {
         if (this.card.name && this.card.name.length) {

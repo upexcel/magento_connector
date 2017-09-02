@@ -78,7 +78,7 @@
             </span>
         </ion-card-content>
     </ion-card>
-    <ion-list no-margin radio-group [(ngModel)]="selectedShippingMethod" (ngModelChange)="shippingMethod(selectedShippingMethod)">
+    <ion-list *ngIf="shippingVisible" no-margin radio-group [(ngModel)]="selectedShippingMethod" (ngModelChange)="shippingMethod(selectedShippingMethod)">
               <ion-list-header no-margin>
             Shipping Methods
         </ion-list-header>

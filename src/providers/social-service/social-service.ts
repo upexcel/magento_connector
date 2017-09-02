@@ -6,7 +6,7 @@ declare let Promise: any;
 @Injectable()
 export class SocialService {
     options: any;
-    constructor(public platform: Platform) {
+    constructor( public platform: Platform) {
         //comment because creating apply error on browserInit
         //        Facebook.browserInit(config.facebook_clientid, config.facebook_version);
         this.options = {

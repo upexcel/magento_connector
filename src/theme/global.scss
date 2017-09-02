@@ -67,7 +67,15 @@
         }
     }
 }
-
+sort{
+    .position{
+        left: 110px;
+        top: 20px;
+    }
+    .scroll-content {
+        min-height: 150px;
+    }
+}
 iframe{
     height:100% !important;
 }
@@ -93,6 +101,13 @@ start-page{
 .md{
     .width80{
         width:75%;
+    }
+    
+    header{
+        .title{
+        .toolbar-title {
+            width: 94% !important;
+        }  } 
     }
     user-menu ,sidemenu{
         .item .item-inner{
@@ -141,7 +156,9 @@ side-menu-data, sidemenu ,home{
 }
 .landscapWishListIco{
     @extend .potrateWishListIco;
-    top: 0px;}
+    top: 5px;
+    z-index: 9999;
+}
 .aligncenter{
     @include text-align(center); 
 }
@@ -898,7 +915,7 @@ wishList, cart{
 header{
     ion-buttons{
         button{
-            padding: 3px!important;
+            padding: 5px!important;
         }
     }
 }

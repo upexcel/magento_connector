@@ -10,7 +10,7 @@ import {LoaderProvider} from './../../providers/loader/loader'
 
 @Component({
     selector: 'facebook-login',
-    template: `  <button ion-button class="fb socialButton" (tap)="getFacebookData()" id="social">
+    template: `  <button ion-button class="fb socialButton" (click)="getFacebookData()" id="social">
                  <ion-icon name="logo-facebook"></ion-icon>Login with Facebook <ion-spinner *ngIf="spin" class="spin">
             </ion-spinner>          
                  </button>`
@@ -41,7 +41,7 @@ export class FacebookComponent {
         });
         setTimeout(() => {
             this._loading.setLoderReference(loading);
-        },100)
+        }, 100)
         if (this.spin == false) {
             this.spin = true;
             loading.present();
@@ -62,14 +62,12 @@ export class FacebookComponent {
                 });
             }, (err) => {
                 this.spin = false;
-                this._toast.toast(err, 3000);
                 error = err;
                 loading.dismiss();
                 this._loading.clearReference();
             });
 
             if (error) {
-                this._toast.toast(error, 3000);
                 loading.dismiss();
                 this._loading.clearReference();
                 this.spin = false;

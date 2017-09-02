@@ -5,31 +5,28 @@
                  <div class="cardForPortrait">
                     <div class="row margin10"> 
                         <div class="columnForGrid25">
-                            <div class="imgBox">
-                                <span *ngIf="displayMode == 'Landscape'" class=" absolute potrateWishListIco " (tap)="wishList(feat_prod)">
-                                    <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
-                                    <!--<div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
-                                    <ion-icon name="heart" class="heart " [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
-                                </span>
-                                <span (tap)="gotoProduct(feat_prod.data.sku)">
-                                    <!--                                    <img class="center" imageDirective src="{{feat_prod.data.small_image}}"/>-->
-                                    <img class="center" src="{{feat_prod.data.minify_image}}"/>
-                                </span>
+                            <span *ngIf="displayMode == 'Landscape'" class=" absolute potrateWishListIco " (tap)="wishList(feat_prod)">
+                                <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
+                                <!--<div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
+                                <ion-icon name="heart" class="heart " [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
+                            </span>
+                            <div class="imgBox" (tap)="gotoProduct(feat_prod.data.sku)">
+                                <img class="center" src="{{feat_prod.data.minify_image}}"/>
                             </div>
                         </div>
                         <div class="columnForGrid75">
+                            <div *ngIf="displayMode == 'Portrait'" class=" absolute landscapWishListIco  columnForGrid25" (tap)="wishList(feat_prod)">
+                                <!--                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
+                                <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
+                                <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
+
+                            </div>
                             <ion-card-content class="margin10 relative" >
-                                <div class="row rowForLandscape">
-                                    <div [ngClass]="{'columnForGrid100':displayMode == 'Landscape' ,'columnForGrid75':displayMode == 'Portrait' }" (tap)="gotoProduct(feat_prod.data.sku)">
+                                <div class="row rowForLandscape" (tap)="gotoProduct(feat_prod.data.sku)">
+                                    <div [ngClass]="{'columnForGrid100':displayMode == 'Landscape' ,'columnForGrid75':displayMode == 'Portrait' }" >
                                         <div class="font013 capitalize cartTitle" >
                                             {{feat_prod.data.name}}
                                         </div>    
-                                    </div>
-                                    <div *ngIf="displayMode == 'Portrait'" class=" absolute landscapWishListIco  columnForGrid25" (tap)="wishList(feat_prod)">
-<!--                                        <div class="heart floatRight" [ngClass]="{'is_animating':feat_prod.data.wishlist_item_id}"></div>-->
-                                        <!--<i class="fa fa-heart" aria-hidden="true" ></i>-->
-                                        <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':feat_prod.data.wishlist_item_id}"></ion-icon>
-
                                     </div>
                                 </div>
                                 <div class="row rowForLandscape" (tap)="gotoProduct(feat_prod.data.sku)">

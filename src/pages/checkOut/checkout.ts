@@ -38,10 +38,12 @@ export class Checkout implements OnInit {
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
+    shippingVisible: boolean = true;
     validate = {"payment": false, "shipping": false, "shippingAddress": false}; //use for validation
     constructor(private _cartFunction: CartFunction, private _keyboard: Keyboard, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');// cart data come from cart page
+        console.log("this.cartData", this.cartData)
         this._address.getAddress().then((address) => { //call service providers/address-service/ to get address 
             this.address = address;
             if (!this.address || this.address['body'].length == 0) { // if address not found 
@@ -51,7 +53,18 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
-
+    IfDownloadable() {
+        let count = 0;
+        forEach(this.cartData.cart_items, (val) => {
+            if (val.product_type == "downloadable") {
+                count++;
+            }
+        })
+        if (count == this.cartData.cart_items.length) {
+            this.validate.shipping = true;
+            this.shippingVisible == false;
+        }
+    }
     /*
      * create data for place order
      */
@@ -81,8 +94,10 @@ export class Checkout implements OnInit {
         this.selectedShippingMethod = false;
         this.validate.shippingAddress = false; //validation false
         this.validate.payment = false;//validation false
-        this.validate.shipping = false; //validation false
-        this.shippingMethods = null;
+        if (this.shippingVisible) {
+            this.validate.shipping = false; //validation false
+            this.shippingMethods = null;
+        }
         this._address.getAddress().then((address) => { //call service in providers/address-service/ to get address update on view
             this.address = address;
             if (this.address) {
@@ -188,19 +203,19 @@ export class Checkout implements OnInit {
     orderPlace() {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
-            this.data['method_title'] =this.selectedPaymentMethod['method_title'];
+            this.data['method_title'] = this.selectedPaymentMethod['method_title'];
             if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
                 this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
                     if (res && res['body'].success) {
                         this.spin = false;
                         this._cartFunction.setCartData().then((resp) => {
                         }, (err) => {})
-                        
-                            //move to PlacedOrder page
-                            this._navCtrl.push(PlacedOrder, {"paymentMethod": this.selectedPaymentMethod['method_title'], "orderId": res['body']['success_data']['increment_id']}).then(() => {
-                                this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
-                            });
-//                        
+
+                        //move to PlacedOrder page
+                        this._navCtrl.push(PlacedOrder, {"paymentMethod": this.selectedPaymentMethod['method_title'], "orderId": res['body']['success_data']['increment_id']}).then(() => {
+                            this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
+                        });
+                        //                        
                     }
                     else {
                         this.spin = false;
@@ -223,7 +238,7 @@ export class Checkout implements OnInit {
                 data['orderDetails'] = this.data;
                 data['productPrice'] = this.grandTotal;
                 this._navCtrl.push(StripePage, {data: data}).then(() => {
-//                    this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
+                    //                    this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2); //close current page 
                 });
             }
         }

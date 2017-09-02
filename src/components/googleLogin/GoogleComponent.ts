@@ -8,7 +8,7 @@ import {LoadingController} from 'ionic-angular';
 import {LoaderProvider} from './../../providers/loader/loader'
 @Component({
     selector: 'google-login',
-    template: `  <button ion-button color='danger' class="socialButton" (tap)="getGoogleData()" id="social">  
+    template: `  <button ion-button color='danger' class="socialButton" (click)="getGoogleData()" id="social">  
     <ion-icon  name="logo-google" > </ion-icon> Login with Google  <ion-spinner *ngIf="spin" class="spin">
             </ion-spinner>          
     </button>`
@@ -51,13 +51,11 @@ export class GoogleComponent {
                 });
             }, (err) => {
                 error = err;
-                this._toast.toast(err, 3000);
                 this.spin = false;
                 loading.dismiss();
                 this._loading.clearReference();
             })
             if (error) {
-                this._toast.toast(error, 3000);
                 this.usergoogleError.emit(error);
                 this.spin = false;
                 loading.dismiss();

@@ -1,4 +1,4 @@
-    <button ion-button color="{{colorTour}}" outline  class="uppercase" [ngClass]="classTour" type="submit" id="{{idTour}}"  round (tap)="onClick()"  [disabled]="validTour" >
+    <button ion-button color="{{colorTour}}" outline  class="uppercase" [ngClass]="classTour" type="submit" id="{{idTour}}"  round (click)="onClick()"  [disabled]="validTour" >
         <span *ngIf="spinTour==false" >
                 {{titleTour}}
         </span>

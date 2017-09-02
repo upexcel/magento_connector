@@ -36,7 +36,7 @@
         "@ionic/storage": "2.0.1",
         "cordova-android": "^6.2.2",
         "cordova-ios": "^4.4.0",
-        "cordova-plugin-app-event": "^1.2.0",
+        "cordova-plugin-app-event": "file:node_modules/cordova-plugin-app-event",
         "cordova-plugin-console": "^1.0.7",
         "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-facebook4": "^1.7.4",
@@ -51,7 +51,7 @@
         "cordova-plugin-whitelist": "^1.2.2",
         "cordova-plugin-x-socialsharing": "^5.1.8",
         "cordova-plugin-x-toast": "^2.6.0",
-        "de.appplant.cordova.plugin.local-notification": "git+https://github.com/EddyVerbruggen/cordova-plugin-local-notifications.git",
+        "de.appplant.cordova.plugin.local-notification": "^0.8.5",
         "es6-promise-plugin": "^4.1.0",
         "intl": "^1.2.5",
         "ionic-angular": "3.4.2",
@@ -100,11 +100,11 @@
                 "REVERSED_CLIENT_ID": "985302084212-vfbei5p9hummk7fiqlme58n7ci8426gr.apps.googleusercontent.com"
             },
             "cordova-plugin-firebase": {},
-            "de.appplant.cordova.plugin.local-notification": {},
             "cordova-plugin-stripe": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-network-information": {},
-            "cordova-plugin-statusbar": {}
+            "cordova-plugin-statusbar": {},
+            "de.appplant.cordova.plugin.local-notification": {}
         },
         "platforms": [
             "android",

@@ -22,4 +22,4 @@
 </ion-content>
 <!-- coll header component -->
 <!--*ngIf="display_mode!='PAGE'"-->
-<category-footer  [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>
+<category-footer *ngIf="(product_count > 0) && categoryProduct" [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>

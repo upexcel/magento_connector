@@ -23,11 +23,13 @@ export class CategoryProductPage implements OnInit {
     enableInfinite: boolean = true;
     doRefreshCheck = true;
     display_mode:string;
+    product_count:number;
     constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id'); //get product_id
         this.title = _navParams.get('name'); //get title
         this.display_mode = _navParams.get('display_mode');//get display_mode use to hide filter
-         _menuCtrl.enable(true);
+        this.product_count=_navParams.get('product_count');
+          _menuCtrl.enable(true);
     }
     ngOnInit() {
         //catch event for sorting

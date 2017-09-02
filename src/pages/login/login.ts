@@ -18,6 +18,7 @@ import {MyAccount} from './../../model/myaccount/myaccount';
 import {HomeProducts} from '../../model/home/homeProducts';
 import {WishListService} from './../../providers/wishList/wishList-service';
 import {Address} from './../../providers/address-service/address';
+import {fcmService} from './../../providers/fcm-service/fcm-service';
 
 @Component({
     selector: 'login',
@@ -32,17 +33,20 @@ export class LoginPage implements OnInit {
     forgotPasswordEmail: object;
     title: string = 'LOGIN';
     ProductLogin: boolean = false;
-    productData: any;
-    ProductName: string;
+    productData: any = {};
+    ProductName: string = "";
     spin = {};
     visible: boolean = true;
-    constructor(private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {
+
+    constructor(private _fcmService: fcmService, private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {
         this.spin = {google: 1, facebook: 1};
     }
     ngOnInit() {
         this.ProductLogin = this._navParams.get('checkoutLogin');// give true if page is redirect from checkout page to login page
         this.productData = this._navParams.get('res');//hold cart data use when user is not login
-        this.ProductName = this._navParams.get('ProductName');
+        if (this.productData && this.productData['ProductName'] != "undefined") {
+            this.ProductName = this.productData['ProductName'];
+        }
         this._local.get('website_id').then((website_id: any) => { //get website_id
             this.show_form = true;
             //form validation
@@ -62,14 +66,15 @@ export class LoginPage implements OnInit {
     }
 
     addToCart() {
+        this.commanApiCall();
         this._cartService.addCart(this.productData.add_cart, this.productData.editCartData).then((response: any) => {//call service fire api for cart add
             if (response.body['success']) {
                 this.login = false;
                 this._cartFunction.setCart(response.body['success_data']);//set data
                 this._toast.toast(this.ProductName + " added to your shopping cart", 3000, "top");
-                this._navCtrl.push(CartPage).then(() => {    //move to CartPage
-                    const index = this._viewCtrl.index;
-                    this._navCtrl.remove(index); //remove login page
+                this._navCtrl.push(CartPage).then(() => {//move to CartPage
+                    this._navCtrl.remove(this._navCtrl.getPrevious(this._viewCtrl).index, 2).then(() => {
+                    });
                 });
             }
             else {
@@ -83,17 +88,16 @@ export class LoginPage implements OnInit {
         this._navCtrl.push(RegisterPage);//move to RegisterPage
     }
     commanApiCall() {
-        setTimeout(() => {
-            this._homeProductsConfig.resetHomeProducts();
-            this._homeProductsConfig.getHomeProducts();
-            this._wishList.getWishListData({});
-            this._cartFunction.setCartData().then((resp) => {
-            }, (err) => {})
-            this._myaccount.getMyAccount({}).then((res) => {
-                this._address.setAddress(res);
-            }, (err) => {
-            })
-        }, 300)
+        this._homeProductsConfig.resetHomeProducts();
+        this._homeProductsConfig.getHomeProducts();
+        this._wishList.getWishListData({});
+        this._cartFunction.setCartData().then((resp) => {
+        }, (err) => {})
+        this._myaccount.getMyAccount({}).then((res) => {
+            this._address.setAddress(res);
+        }, (err) => {
+        })
+//        this._fcmService.saveFCMTokenOnServer();
     }
     /*
      * function call when login click
@@ -108,15 +112,17 @@ export class LoginPage implements OnInit {
                 this.data = res;
                 this.data.body['login'] = "normal";
                 this._appConfigService.setUserData(this.data.body); //set UserData into storage
-                this.commanApiCall();
                 if (this.ProductLogin) {
                     this.login = true;
                     this._cartFunction.resetCart();
                     setTimeout(() => {
-                        this.addToCart();//call cart service        
-                    }, 300)
+                        this.addToCart();//call cart service  
+                        this._events.publish('check:loginSideMenu', true);
+                    })
                 } else {
-                    this._navCtrl.setRoot(HomePage, {"access_token": this.data.body.access_token});//move to HomePage with access_token
+                    this._navCtrl.setRoot(HomePage, {"access_token": this.data.body.access_token}).then(() => {
+                        this.commanApiCall();
+                    });//move to HomePage with access_token
                 }
             }
             else {
@@ -143,7 +149,6 @@ export class LoginPage implements OnInit {
             }, 100);
             res.body['login'] = "social";
             this._appConfigService.setUserData(res.body);
-            this.commanApiCall();
             if (this.ProductLogin) {
                 this.login = true;
                 this._cartFunction.resetCart();
@@ -151,7 +156,9 @@ export class LoginPage implements OnInit {
                     this.addToCart();//call cart service        
                 }, 300)
             } else {
-                this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token});//move to home page
+                this._navCtrl.setRoot(HomePage, {"access_token": res.body.access_token}).then(() => {
+                    this.commanApiCall();
+                });//move to home page
             }
         });
     }
@@ -167,7 +174,6 @@ export class LoginPage implements OnInit {
             }, 100);
             res.body['login'] = "social";
             this._appConfigService.setUserData(res.body);
-            this.commanApiCall();
             if (this.ProductLogin) {
                 this.login = true;
                 this._cartFunction.resetCart();

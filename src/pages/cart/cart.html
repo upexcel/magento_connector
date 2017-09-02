@@ -84,11 +84,11 @@
     </span>
     <ion-item *ngIf="couponCodeVisible">
         <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
-        <button ion-button item-right small [disabled]="!couponCode" (tap)="applyCoupon(couponCode)">
+        <button ion-button item-right small [disabled]="!couponCode" (click)="applyCoupon(couponCode)">
                 Apply Coupon
                 <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
         </button>
-        <button ion-button item-right small  icon-only color="danger" [disabled]="!couponCode" (tap)="applyCoupon('delete')">
+        <button ion-button item-right small  icon-only color="danger" [disabled]="!couponCode" (click)="applyCoupon('delete')">
             <ion-icon name="trash"></ion-icon>
             <ion-spinner *ngIf="deleteCouponCodeSpin" class="spin"></ion-spinner>
         </button>

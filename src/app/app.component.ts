@@ -20,7 +20,7 @@ import {WishListService} from '../providers/wishList/wishList-service';
 import {Address} from '../providers/address-service/address';
 import {CartFunction} from '../model/cart/cartHandling';
 import {Slider} from '../model/home/slider';
-
+import {Country} from '../model/myaccount/country';
 declare let navigator: any;
 
 @Component({
@@ -33,7 +33,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(private _sliderService: Slider, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private _country: Country, private _sliderService: Slider, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -47,6 +47,7 @@ export class MyApp implements OnInit {
                 }, 100)
             })
         });
+        //event comes from tour page when skip button click
         this.events.subscribe('goHome:home', () => {
             if (this.rootPageName == 'HomePage') {
                 this.nav.setRoot(HomePage);
@@ -55,6 +56,9 @@ export class MyApp implements OnInit {
                 this.rootPageName = 'HomePage';
             }
         })
+    }
+    ngOnDestroy() {
+        this.events.unsubscribe('goHome:home');
     }
     /**
     *checkBackButton
@@ -70,10 +74,10 @@ export class MyApp implements OnInit {
                     this.ionicApp._overlayPortal.getActive();
                 if (activePortal) {
                     ready = false;
-                    var refVar=activePortal;
+                    var refVar = activePortal;
                     activePortal.dismiss();
-                    activePortal=refVar;
-//                    activePortal.onDidDismiss(() => {ready = true;});
+                    activePortal = refVar;
+                    //                    activePortal.onDidDismiss(() => {ready = true;});
                 } else {
                     this.nav.pop();
                 }
@@ -113,32 +117,29 @@ export class MyApp implements OnInit {
             if (web_config == null) {
                 this._rootPage = StartPage;
                 this.rootPageName = 'StartPage';
+                this._country.getCountryName();
             }
             else {
                 this._appConfigService.cleanUp();
                 this._appConfigService.getUserData().then((userData) => {
-                    setTimeout(() => {
-                        this._sliderService.getSlider();
-                    }, 300)
                     if (userData !== null) {
-                        setTimeout(() => {
-                            this._wishList.getWishListData({});
-                            this._cartFunction.setCartData().then((resp) => {
-                            }, (err) => {})
-                            this._myaccount.getMyAccount({}).then((res) => {
-                                this._address.setAddress(res);
-                            }, (err) => {
-                            })
-                        }, 300)
+                        this._wishList.getWishListData({});
+                        this._cartFunction.setCartData().then((resp) => {
+                        }, (err) => {})
+                        this._myaccount.getMyAccount({}).then((res) => {
+                            this._address.setAddress(res);
+                        }, (err) => {
+                        })
                     }
+                    this._rootPage = HomePage;
+                    this.rootPageName = 'HomePage'; 
                 })
-                this._rootPage = HomePage;
-                this.rootPageName = 'HomePage';
+
             }
         });
         this._appConfigService.getUserData().then((userData) => {
             if (userData !== null) {
-                this._fcmService.saveFCMTokenOnServer();
+                //                this._fcmService.saveFCMTokenOnServer();
             }
         });
 
@@ -175,6 +176,7 @@ export class MyApp implements OnInit {
                 this.localNotifications.schedule({
                     title: res.title,
                     text: res.body,
+                    icon: 'file:///android_asset/www/assets/image/etech.jpg',
                     data: res.increment_id
                 });
             }

@@ -3,40 +3,40 @@
         Account <ion-icon color="primary" id="iconShow"  [name]="(openMenu)?'ios-remove-circle-outline' : 'ios-add-circle-outline'"  ></ion-icon>
     </ion-item>
     <span *ngIf="openMenu">
-        <button ion-item icon-left (tap)="gotoMyAccount()">
+        <button ion-item icon-left (click)="gotoMyAccount()">
                 <i class="fa fa-address-book-o fa-lg" aria-hidden="true"></i>
             My Address
         </button>
-        <button ion-item icon-left (tap)="gotoEditAccount()">
+        <button ion-item icon-left (click)="gotoEditAccount()">
                 <i class="fa fa-info fa-lg pad5" aria-hidden="true"></i>
             Account Information
         </button>
-        <button ion-item icon-left (tap)="gotoPass()" *ngIf="usermenu && loginWith">
+        <button ion-item icon-left (click)="gotoPass()" *ngIf="usermenu && loginWith">
                 <i class="fa fa-key fa-lg" aria-hidden="true"></i>
             Change Password
         </button>
-        <button ion-item icon-left (tap)="gotoOrders()" *ngIf="usermenu">
+        <button ion-item icon-left (click)="gotoOrders()" *ngIf="usermenu">
                 <i class="fa fa-line-chart fa-lg" aria-hidden="true"></i>
             My Orders
         </button>
-        <button ion-item icon-left (tap)="gotoMyReview()" *ngIf="usermenu">
+        <button ion-item icon-left (click)="gotoMyReview()" *ngIf="usermenu">
                 <i class="fa fa-book pad5" aria-hidden="true"></i>
             My Product Reviews
         </button>
-        <button ion-item icon-left (tap)="gotoDownloadable()" *ngIf="usermenu">
+        <button ion-item icon-left (click)="gotoDownloadable()" *ngIf="usermenu">
                 <i class="fa fa-download pad5" aria-hidden="true"></i>
             My Downloadable Products
         </button>
     </span>
-    <button *ngFor="let page of staticPagesList;" ion-item icon-left (tap)="gotoPage(page)" >
+    <button *ngFor="let page of staticPagesList;" ion-item icon-left (click)="gotoPage(page)" >
              <i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
         {{page.title}}
     </button>
-    <button  ion-item icon-left (tap)="gotoContactUs()">
+    <button  ion-item icon-left (click)="gotoContactUs()">
              <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
         Contact Us
     </button>
-    <button  ion-item icon-left (tap)="logout()" *ngIf="usermenu">
+    <button  ion-item icon-left (click)="logout()" *ngIf="usermenu">
              <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
         Logout
     </button>

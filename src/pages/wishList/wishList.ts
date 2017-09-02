@@ -23,6 +23,7 @@ export class wishList {
     ionViewWillEnter() {
         this._wishListService.getWishList().then((data) => {
             this.data = data;
+            console.log("wishlist Data", this.data);
         })
     }
 
@@ -50,7 +51,7 @@ export class wishList {
     * function use to move item wishlist to cart    
     **/
     addToCart(data) {
-        data['productid'] = data['productId'] || data['productid'] || data['product'];
+        data['productid'] = data['productId'] || data['productid'] || data['product'] || data['data'].entity_id;
         let loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });

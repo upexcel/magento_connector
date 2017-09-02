@@ -20,10 +20,8 @@ export class fcmService {
         });
     }
     saveFCMTokenOnServer() {
-        setTimeout(() => {
             if (this.fcmToken) {
                 this._apiService.api('push/saveToken', {"app_token": this.fcmToken});
             }
-        }, 2000)
     }
 }

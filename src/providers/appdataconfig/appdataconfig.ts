@@ -8,12 +8,23 @@ import isEqual from 'lodash/isEqual';
 
 export class AppDataConfigService {
     appTemporaryData: any;
-    constructor(public _local: Storage, private _sliderService: Slider ) {
+    constructor(public _local: Storage, private _sliderService: Slider) {
         this.appTemporaryData = [];
     }
     setUserData(userData) {
         this.cleanUp();
         this._local.set('userData', userData); //set user data to local storage
+    }
+
+    setCountry(countryData) {
+        this._local.set('country', countryData);
+    }
+    getCountry() {
+        return new Promise((resolve, reject) => {
+            this._local.get('country').then((country) => {
+                resolve(country);
+            });
+        });
     }
     getUserData() {
         return new Promise((resolve, reject) => {
@@ -35,7 +46,6 @@ export class AppDataConfigService {
                 this._local.remove("web_config");
                 this._local.remove("app_data_expire");
                 this._local.remove("require_login");
-                this._local.remove("website_id");
                 this._local.set('app_data_expire', new Date().getTime() + config.appDataTime);
             }
         });

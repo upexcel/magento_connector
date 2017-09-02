@@ -47,10 +47,9 @@ export class SideMenuChild implements OnInit {
             })
         }
         this._sideMenuService.resetMenuData();
-
         this._menuCtrl.close();
         setTimeout(() => {
-            this._navCtrl.push(CategoryProductPage, {"id": value.id, "name": value.name, "display_mode": value.display_mode});
+            this._navCtrl.push(CategoryProductPage, {"id": value.id, "name": value.name, "display_mode": value.display_mode ,"product_count":value.product_count});
         })
 
     }
