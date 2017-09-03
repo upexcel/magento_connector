@@ -42,6 +42,8 @@ import {
 } from 'ionic-angular';
 import find from 'lodash/find';
 import {MySavedAddressPage} from './../myaccount/savedAddress';
+import {Address} from './../../providers/address-service/address';
+import {LoadingController} from 'ionic-angular';
 
 @Component({
     selector: 'edit-address',
@@ -65,12 +67,14 @@ export class MyEditAddressPage implements OnInit {
     checkBilling = 0;
     checkShipping = 0;
     countryObj: any;
-    constructor(private _platform: Platform, public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
+    detectPageComeFrom;
+    constructor(public loadingCtrl: LoadingController, private _address: Address, private _platform: Platform, public viewCtrl: ViewController, private _country: Country, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _edit: Edit, private _navParams: NavParams, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _fb: FormBuilder) {}
     ngOnInit() {
         this._events.unsubscribe('user:edit');    //unsubscribe user:edit event
         this._events.unsubscribe('user:deleted');//unsubscribe user:deleted event
         this._events.unsubscribe('api:savedaddress');//unsubscribe api:savedaddress event
         this.title = this._navParams.get("title");    //get page title (is it edit or Add page)
+        this.detectPageComeFrom = this._navParams.get("alreadyCheckLength");
         this.id = this._navParams.get("id");
         this.firstTime = this._navParams.get("firstTime");
         this.entity_id = this._navParams.get("entity_id");//get entity id
@@ -224,17 +228,39 @@ export class MyEditAddressPage implements OnInit {
         }
         this.upd_spin = true;
         this._edit.updateAddress(data).then((res) => { //fire api for address/edit
+            let loader = this.loadingCtrl.create({
+                content: "Please wait...",
+                duration: 4000
+            });
             this.upd_spin = false;
             this.editaccount = res;
             if (this.editaccount.status === 1) {
                 this._events.publish('api:savedaddress', true);
-                //                this.viewCtrl.dismiss();
-                this._toast.toast(data['entity_id'] ? "The address has been updated" : "The address has been saved", 3000, "top");
-                //move to MySavedAddressPage 
-                this._navCtrl.push(MySavedAddressPage, {'saveAdd': true}).then(() => {
-                    const index = this.viewCtrl.index;
-                    this._navCtrl.remove(index);
-                });
+                if (this.detectPageComeFrom) {
+                    loader.present();
+                    this._myaccount.getMyAccount({}).then((res) => {
+                        loader.dismiss();
+                        this._address.setAddress(res);
+                        this._toast.toast(data['entity_id'] ? "The address has been updated" : "The address has been saved", 3000, "top");
+                        this._navCtrl.pop();
+                    }, (err) => {
+                        loader.dismiss();
+                        this._toast.toast(data['entity_id'] ? "The address has been updated" : "The address has been saved", 3000, "top");
+                        //move to MySavedAddressPage 
+                        this._navCtrl.push(MySavedAddressPage, {'saveAdd': true}).then(() => {
+                            const index = this.viewCtrl.index;
+                            this._navCtrl.remove(index);
+                        });
+                    })
+                } else {
+                    this._toast.toast(data['entity_id'] ? "The address has been updated" : "The address has been saved", 3000, "top");
+                    //move to MySavedAddressPage 
+                    this._navCtrl.push(MySavedAddressPage, {'saveAdd': true}).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index);
+                    });
+                }
+
             } else {
                 this._toast.toast(JSON.parse(this.editaccount.message).error, 3000, "top");
             }

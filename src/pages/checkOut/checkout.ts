@@ -32,13 +32,15 @@ export class Checkout implements OnInit {
     tax: any;
     taxSpin: boolean = false;
     totalPrice: any = 0;
-    grandTotal: any;
+    grandTotal: any = 0;
     discount: any;
     shipping_amount: number = 0;
     shippingAddressForOrderPlaced: string;
     spin: boolean = false;
     currency_sign: string;
-    shippingVisible: boolean = true;
+    shippingVisible: boolean;
+    PaymentVisible: boolean;
+    count = 0;
     validate = {"payment": false, "shipping": false, "shippingAddress": false}; //use for validation
     constructor(private _cartFunction: CartFunction, private _keyboard: Keyboard, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
@@ -53,6 +55,36 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
+    IfPriceZero() {
+        console.log("this.grandTotal", this.grandTotal)
+        if ((this.grandTotal * 1) < 1) {
+            this.PaymentVisible = false;
+            this.validate.payment = true;
+        } else {
+            this.validate.payment = false;
+            if (this.count == 0) {
+                this.PaymentVisible = true;
+                this._checkoutService.getPaymentMethods().then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
+                    this.count++;
+                    this.PaymentMethods = [];
+                    forEach(res.body.payment_methods, (value, key) => {
+                        this.PaymentMethods.push(
+                            {
+                                "method_title": value,
+                                "payment_method": key
+                            });
+                    });
+                    this.PaymentMethods.push(
+                        {
+                            "method_title": "Stripe",
+                            "payment_method": "stripe"
+                        });
+                }, (err) => {
+                });
+            }
+            this.validateData();
+        }
+    }
     IfDownloadable() {
         let count = 0;
         forEach(this.cartData.cart_items, (val) => {
@@ -60,9 +92,23 @@ export class Checkout implements OnInit {
                 count++;
             }
         })
+        console.log("cart", count)
         if (count == this.cartData.cart_items.length) {
             this.validate.shipping = true;
             this.shippingVisible == false;
+            this.validateData();
+        } else {
+            this.shippingVisible = true;
+            this.shippingMethods = null;
+            this._checkoutService.getShippingMethods({}).then((res: any) => { //call cart/getShippingMethods/ api to get Shipping Methods 
+                this.shippingMethods = [];
+                forEach(res.body.shipping_methods, (value, key) => {
+                    value['shipping_method'] = key;
+                    value['selectedShippingMethod'] = false;
+                    this.shippingMethods.push(value);
+                });
+            }, (err) => {
+            });
         }
     }
     /*
@@ -89,15 +135,13 @@ export class Checkout implements OnInit {
      *  call when view will enter
      */
     ionViewWillEnter() {
-
+        this.IfDownloadable();
+        this.IfPriceZero();
         this.selectedPaymentMethod = false;
         this.selectedShippingMethod = false;
         this.validate.shippingAddress = false; //validation false
-        this.validate.payment = false;//validation false
-        if (this.shippingVisible) {
-            this.validate.shipping = false; //validation false
-            this.shippingMethods = null;
-        }
+        this.data['payment_method'] = "";
+        //        this.validate.payment = false;//validation false
         this._address.getAddress().then((address) => { //call service in providers/address-service/ to get address update on view
             this.address = address;
             if (this.address) {
@@ -109,31 +153,8 @@ export class Checkout implements OnInit {
                 })
             }
         });
-        this._checkoutService.getShippingMethods({}).then((res: any) => { //call cart/getShippingMethods/ api to get Shipping Methods 
-            this.shippingMethods = [];
-            forEach(res.body.shipping_methods, (value, key) => {
-                value['shipping_method'] = key;
-                value['selectedShippingMethod'] = false;
-                this.shippingMethods.push(value);
-            });
-        }, (err) => {
-        });
-        this._checkoutService.getPaymentMethods().then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
-            this.PaymentMethods = [];
-            forEach(res.body.payment_methods, (value, key) => {
-                this.PaymentMethods.push(
-                    {
-                        "method_title": value,
-                        "payment_method": key
-                    });
-            });
-            this.PaymentMethods.push(
-                {
-                    "method_title": "Stripe",
-                    "payment_method": "stripe"
-                });
-        }, (err) => {
-        });
+
+
         this.validateData(); // call function for check validation
     }
     /*
@@ -149,12 +170,13 @@ export class Checkout implements OnInit {
             this.disable = false;
             this.taxSpin = false;
         }, (err) => {
+            this.disable = false;
             this.taxSpin = false;
         });
     }
     changeAddress() {
         //move to MySavedAddressPage
-        if (this.disable) {
+        if (!this.spin) {
             this._navCtrl.push(MySavedAddressPage);
         }
     }
@@ -185,6 +207,7 @@ export class Checkout implements OnInit {
      * function use for validation
      */
     validateData() {
+        console.log(this.validate);
         let count = 0;
         forEach(this.validate, (value) => {
             if (value) {

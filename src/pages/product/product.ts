@@ -67,9 +67,9 @@ export class ProductPage implements OnInit {
     bundlePrice: any;
     configPrice: Array<any> = [];
     addToCartData;
-    customPrice: any;
+    customPrice: any=0;
     customDisplayPrice: any=0;
-    dynemicDisplayPrice: any;
+    dynemicDisplayPrice: any=0;
     product_custom_option: any;
     config = true;
     product = "product";

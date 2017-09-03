@@ -2,13 +2,17 @@ import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {config} from './../../providers/config/config';
 import {Slider} from './../../model/home/slider';
+import {CartFunction} from './../../model/cart/cartHandling';
+import {Address} from './../../providers/address-service/address';
 import forEach from 'lodash/forEach';
 import isEqual from 'lodash/isEqual';
+import {EventService} from './../../providers/headerEvents/headerEvents';
+
 @Injectable()
 
 export class AppDataConfigService {
     appTemporaryData: any;
-    constructor(public _local: Storage, private _sliderService: Slider) {
+    constructor(public _eventService: EventService,private _address: Address,private _cartFunction: CartFunction,public _local: Storage, private _sliderService: Slider) {
         this.appTemporaryData = [];
     }
     setUserData(userData) {
@@ -43,6 +47,12 @@ export class AppDataConfigService {
         this._local.get("app_data_expire").then((expireTime) => {
             if (new Date().getTime() > expireTime) {
                 this._sliderService.resetSlider();
+                this._address.resetAddress();
+                this._cartFunction.resetCart();
+                this.resetDataInService();
+                this._eventService.setWishList(0);
+                this._eventService.setCartCounter(0);
+                this._local.remove("userData");
                 this._local.remove("web_config");
                 this._local.remove("app_data_expire");
                 this._local.remove("require_login");
