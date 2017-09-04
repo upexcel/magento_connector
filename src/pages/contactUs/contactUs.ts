@@ -40,7 +40,7 @@ export class ContactUs implements OnInit {
     }
     signin(data) {
         this.spinner = true;
-        this._cms.setContactUsInfo(data).then((res) => { //col api "web/contactus"
+        this._cms.setContactUsInfo(data).then((res) => { //call api "web/contactus"
             this.spinner = false;
             this.contactData = this._fb.group({
                 telephone: ['', Validators.compose([Validators.minLength(10)])],

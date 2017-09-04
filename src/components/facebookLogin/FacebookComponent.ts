@@ -44,14 +44,17 @@ export class FacebookComponent {
         }, 100)
         if (this.spin == false) {
             this.spin = true;
-            loading.present();
             let error;
             this._socialProvider.fbLogin().then((res) => {
                 this.fb_authRes = res;
+                loading.present();
                 this._socialProvider.getFbCurrentUserProfile().then((profileData) => {
                     this._local.get('website_id').then((website_id: string) => {
                         this.fb_data = profileData;
                         let body = {data: {social_id: this.fb_data.id, firstname: this.fb_data.first_name, lastname: this.fb_data.last_name, email: this.fb_data.email, picture: this.fb_data.picture.data.url, social: "facebook", website_id: website_id}, token: {access_token: this.fb_authRes.authResponse.accessToken}};
+                        setTimeout(() => {
+                            loading.dismiss();
+                        },300);
                         this.userfbLogin.emit(body);
                     });
                 }, (err) => {

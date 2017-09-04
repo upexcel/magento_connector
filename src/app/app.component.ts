@@ -19,8 +19,9 @@ import {MyAccount} from '../model/myaccount/myaccount';
 import {WishListService} from '../providers/wishList/wishList-service';
 import {Address} from '../providers/address-service/address';
 import {CartFunction} from '../model/cart/cartHandling';
-import {Slider} from '../model/home/slider';
 import {Country} from '../model/myaccount/country';
+import {Deeplinks} from '@ionic-native/deeplinks';
+
 declare let navigator: any;
 
 @Component({
@@ -33,7 +34,7 @@ export class MyApp implements OnInit {
     public _rootPage: any;
     backPressed: boolean = false;
     rootPageName: string;
-    constructor(private _country: Country, private _sliderService: Slider, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
+    constructor(private deeplinks: Deeplinks, private _country: Country, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, private statusBar: StatusBar, public network: Network, public keyboard: Keyboard, private _toast: ToastService, private app: App, private ionicApp: IonicApp, public events: Events, private _fcmService: fcmService, private localNotifications: LocalNotifications, private firebase: Firebase, private _platform: Platform, private _local: Storage, private _appConfigService: AppDataConfigService) {
         this._platform.ready().then(() => {
             // this.keyboard.hideKeyboardAccessoryBar(false);
             this.hideSplashScreen();
@@ -46,6 +47,20 @@ export class MyApp implements OnInit {
                     this.nav.push(OrderModalPage, {order_id: data['data']});
                 }, 100)
             })
+            this.deeplinks.route({
+                '/about-us': 'HomePage',
+                '/universal-links-test': 'HomePage'
+            }).subscribe((match) => {
+                console.log("match", match)
+                // match.$route - the route we matched, which is the matched entry from the arguments to route()
+                // match.$args - the args passed in the link
+                // match.$link - the full link data
+                console.log('Successfully matched route', match);
+            }, (nomatch) => {
+                // nomatch.$link - the full link data
+                console.error('Got a deeplink that didn\'t match', nomatch);
+            });
+
         });
         //event comes from tour page when skip button click
         this.events.subscribe('goHome:home', () => {
@@ -132,14 +147,14 @@ export class MyApp implements OnInit {
                         })
                     }
                     this._rootPage = HomePage;
-                    this.rootPageName = 'HomePage'; 
+                    this.rootPageName = 'HomePage';
                 })
 
             }
         });
         this._appConfigService.getUserData().then((userData) => {
             if (userData !== null) {
-                //                this._fcmService.saveFCMTokenOnServer();
+                this._fcmService.saveFCMTokenOnServer();
             }
         });
 
@@ -150,12 +165,14 @@ export class MyApp implements OnInit {
 **/
     addConnectivityListeners() {
         this.network.onDisconnect().subscribe(() => {
+            console.log("this.nav.getActive()", this.nav.getActive());
+            if (true) {} else {}
             this.nav.push(OfflinePage);
         });
         this.network.onConnect().subscribe(() => {
+            console.log("this.nav.getActive()", this.nav.getActive());
             this.nav.pop();
         });
-
     }
     /**
 *fcm
@@ -176,7 +193,7 @@ export class MyApp implements OnInit {
                 this.localNotifications.schedule({
                     title: res.title,
                     text: res.body,
-                    icon: 'file:///android_asset/www/assets/image/etech.jpg',
+                    icon: "file://android_asset/www/assets/lib/etech.png",
                     data: res.increment_id
                 });
             }

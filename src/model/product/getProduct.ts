@@ -17,17 +17,17 @@ export class Product implements OnInit {
     getProduct(data): Promise<productDataType> {
         let apiservice = this._apiService;
         return new Promise((resolve, reject) => {
-            var serviceData = this._dataConfigService.checkDataInService(data);
-            if (serviceData) {
-                resolve(serviceData);
-            } else {
+//            var serviceData = this._dataConfigService.checkDataInService(data);
+//            if (serviceData) {
+//                resolve(serviceData);
+//            } else {
                 apiservice.api("product/get/", data).subscribe((res) => {
-                    this._dataConfigService.saveDataInService(data, res);
+//                    this._dataConfigService.saveDataInService(data, res);
                     resolve(res);
                 }, (err) => {
                     reject(err);
                 });
-            }
+//            }
         });
     }
     /**

@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     count = 0;
     updateSlider = false;
     categoryList = true;
-    constructor(private _wishList: WishListService,private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+    constructor(private _wishList: WishListService, private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
         if (this.userToken) { //check user login 
@@ -48,11 +48,12 @@ export class HomePage implements OnInit {
             this.homeApiCall();
         });
     }
-    ngOnDestroy(){
-         this._events.unsubscribe('homeProducts:api');
+    ngOnDestroy() {
+        this._events.unsubscribe('homeProducts:api');
     }
     homeProducts() {
         this._ngZone.run(() => {
+            this.categoryList = false;
             setTimeout(() => {
                 this.updateSlider = true;
                 this.categoryList = true;
@@ -73,7 +74,7 @@ export class HomePage implements OnInit {
     }
     ionViewWillEnter() {
         this.homeProducts();
-        this._wishList.getWishList().then((res)=>{
+        this._wishList.getWishList().then((res) => {
         });
     }
 
@@ -120,7 +121,6 @@ export class HomePage implements OnInit {
             this._cms.resetStaticPageList();
             this._categoryList.resetCategoryList();
             this.updateSlider = false;
-            this.categoryList = false;
         });
         this.homeProducts();
         setTimeout(() => {

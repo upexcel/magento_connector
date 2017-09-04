@@ -88,6 +88,7 @@ export class LoginPage implements OnInit {
         this._navCtrl.push(RegisterPage);//move to RegisterPage
     }
     commanApiCall() {
+        this._fcmService.saveFCMTokenOnServer();
         this._homeProductsConfig.resetHomeProducts();
         this._homeProductsConfig.getHomeProducts();
         this._wishList.getWishListData({});
@@ -97,7 +98,6 @@ export class LoginPage implements OnInit {
             this._address.setAddress(res);
         }, (err) => {
         })
-//        this._fcmService.saveFCMTokenOnServer();
     }
     /*
      * function call when login click

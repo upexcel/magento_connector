@@ -70,10 +70,10 @@ export class StartPage implements OnInit {
     }
     commanApiCall() {
         setTimeout(() => {
+            this._fcmService.saveFCMTokenOnServer();
             this._homeProductsConfig.resetHomeProducts();
             this._homeProductsConfig.getHomeProducts();
             this._wishList.getWishListData({});
-            this._fcmService.saveFCMTokenOnServer();
             this._cartFunction.setCartData().then((resp) => {
             }, (err) => {})
             this._myaccount.getMyAccount({}).then((res) => {

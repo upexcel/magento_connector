@@ -3,6 +3,7 @@
         <ion-title>Main Categories</ion-title>
     </ion-toolbar>
     <ion-content class="sidemenu">
+         <ion-spinner id="magLeft50" *ngIf="!data"></ion-spinner>
         <span *ngIf="data">
             <ion-list  no-lines *ngFor="let list of data.body.children">
                        <side-menu-data [data]="list.children">

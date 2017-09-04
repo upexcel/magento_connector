@@ -13,6 +13,8 @@ import {InAppBrowser} from '@ionic-native/in-app-browser';
 import {Network} from '@ionic-native/network';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Stripe} from '@ionic-native/stripe';
+import { Deeplinks } from '@ionic-native/deeplinks';
+
 //storage
 import {IonicStorageModule} from '@ionic/storage';
 //pages
@@ -289,6 +291,7 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         Network,
         StatusBar,
         Stripe,
-        LoaderProvider]
+        LoaderProvider,
+        Deeplinks]
 })
 export class AppModule {}
