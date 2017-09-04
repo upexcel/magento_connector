@@ -462,7 +462,6 @@ export class ProductPage implements OnInit {
         this.customFormValidate = data.disable;
         if (this.type != 'configurable' && this.type != 'bundle') {
             if (this.type == 'downloadable') {
-                console.log("data",data)
                 if (data.disable == false) {
                     this.ifCustomOption(null, data);
                 }
@@ -482,9 +481,7 @@ export class ProductPage implements OnInit {
                 this.disable = data.disable;
             }
             this.bundlePrice += (parseFloat(data.dynemicPrice));
-            console.log((parseFloat(data.dynemicPrice), "***", this.bundlePrice))
             this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
-            console.log((parseFloat(this.dynemicDisplayPrice)))
 
         }
         else if (this.type == 'bundle') {
@@ -595,7 +592,6 @@ export class ProductPage implements OnInit {
                     res["add_cart"] = this.add_cart;
                     res["editCartData"] = this.editCartData;
                     res['ProductName'] = this.product;
-                    console.log("res****", res)
                     this._toast.toast("Please Login First !!", 3000);
                     this._navCtrl.push(LoginPage, {checkoutLogin: true, res: res});
                 }

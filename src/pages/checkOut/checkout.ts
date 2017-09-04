@@ -45,7 +45,6 @@ export class Checkout implements OnInit {
     constructor(private _cartFunction: CartFunction, private _keyboard: Keyboard, public _events: Events, private viewCtrl: ViewController, private _toast: ToastService, public _local: Storage, private _checkoutService: checkoutService, private _address: Address, private _navCtrl: NavController, public _navParams: NavParams) {}
     ngOnInit() {
         this.cartData = this._navParams.get('res');// cart data come from cart page
-        console.log("this.cartData", this.cartData)
         this._address.getAddress().then((address) => { //call service providers/address-service/ to get address 
             this.address = address;
             if (!this.address || this.address['body'].length == 0) { // if address not found 
@@ -56,7 +55,6 @@ export class Checkout implements OnInit {
         this.createPlaceOrderData();
     }
     IfPriceZero() {
-        console.log("this.grandTotal", this.grandTotal)
         if ((this.grandTotal * 1) < 1) {
             this.PaymentVisible = false;
             this.validate.payment = true;
@@ -92,7 +90,6 @@ export class Checkout implements OnInit {
                 count++;
             }
         })
-        console.log("cart", count)
         if (count == this.cartData.cart_items.length) {
             this.validate.shipping = true;
             this.shippingVisible == false;
@@ -207,7 +204,6 @@ export class Checkout implements OnInit {
      * function use for validation
      */
     validateData() {
-        console.log(this.validate);
         let count = 0;
         forEach(this.validate, (value) => {
             if (value) {

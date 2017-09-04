@@ -104,7 +104,6 @@ export class StripePage {
 
     }
     card_cvc() {
-        console.log("card_cvc", this.card.cvc.length);
         if (this.card.cvc && this.card.cvc.length) {
             this._stripe.validateCVC(this.card.cvc)
                 .then((cvc) => {
@@ -142,7 +141,6 @@ export class StripePage {
             //            delete this.data["increment_id"];
             delete this.data["email"];
             this._checkoutService.updateStripePayment(data).then((res) => {
-                console.log("res", res);
                 this.spin = false;
                 if (res['body']['success'] == true) {
                     this._cartFunction.setCartData().then((resp) => {

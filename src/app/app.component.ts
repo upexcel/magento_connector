@@ -51,11 +51,9 @@ export class MyApp implements OnInit {
                 '/about-us': 'HomePage',
                 '/universal-links-test': 'HomePage'
             }).subscribe((match) => {
-                console.log("match", match)
                 // match.$route - the route we matched, which is the matched entry from the arguments to route()
                 // match.$args - the args passed in the link
                 // match.$link - the full link data
-                console.log('Successfully matched route', match);
             }, (nomatch) => {
                 // nomatch.$link - the full link data
                 console.error('Got a deeplink that didn\'t match', nomatch);
@@ -165,12 +163,10 @@ export class MyApp implements OnInit {
 **/
     addConnectivityListeners() {
         this.network.onDisconnect().subscribe(() => {
-            console.log("this.nav.getActive()", this.nav.getActive());
             if (true) {} else {}
             this.nav.push(OfflinePage);
         });
         this.network.onConnect().subscribe(() => {
-            console.log("this.nav.getActive()", this.nav.getActive());
             this.nav.pop();
         });
     }
@@ -193,7 +189,7 @@ export class MyApp implements OnInit {
                 this.localNotifications.schedule({
                     title: res.title,
                     text: res.body,
-                    icon: "file://android_asset/www/assets/lib/etech.png",
+                    icon: "file://img/etech.png",
                     data: res.increment_id
                 });
             }
