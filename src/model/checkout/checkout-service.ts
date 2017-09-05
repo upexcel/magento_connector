@@ -40,9 +40,9 @@ export class checkoutService {
     *getPaymentMethods
     * call cart/getPaymentMethods/ api 
     **/
-    getPaymentMethods(): Promise<paymentDataType> {
+    getPaymentMethods(data): Promise<paymentDataType> {
         return new Promise((resolve, reject) => {
-            this._apiService.api("cart/getPaymentMethods/", {}).subscribe((res) => {
+            this._apiService.api("cart/getPaymentMethods/", data).subscribe((res) => {
                 resolve(res);
             }, (err) => {
                 reject(err);

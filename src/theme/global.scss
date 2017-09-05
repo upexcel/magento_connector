@@ -32,6 +32,9 @@
     border-top-right-radius: $position;
     border-bottom-right-radius: $position;
 }
+.color{
+    color:red !important;
+}
 .ios{
     ion-item.ng-dirty.ng-invalid{
         border-color: red!important;
@@ -102,12 +105,12 @@ start-page{
     .width80{
         width:75%;
     }
-    
+
     header{
         .title{
-        .toolbar-title {
-            width: 93% !important;
-        }  } 
+            .toolbar-title {
+                width: 93% !important;
+            }  } 
     }
     user-menu ,sidemenu{
         .item .item-inner{

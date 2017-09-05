@@ -47,6 +47,7 @@ export class Checkout implements OnInit {
         this.cartData = this._navParams.get('res');// cart data come from cart page
         this._address.getAddress().then((address) => { //call service providers/address-service/ to get address 
             this.address = address;
+            console.log("address",address)
             if (!this.address || this.address['body'].length == 0) { // if address not found 
                 //redirect to MyEditAddressPage with alreadyCheckLength to check it move by checkout page
                 this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true, "firstTime": 1, title: "Add New Address"});
@@ -54,34 +55,38 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
+    getPaymentMethod() {
+        this._checkoutService.getPaymentMethods({"data":{grandTotal:this.grandTotal}}).then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
+            this.count++;
+            this.PaymentMethods = [];
+            forEach(res.body.payment_methods, (value, key) => {
+                this.PaymentMethods.push(
+                    {
+                        "method_title": value,
+                        "payment_method": key
+                    });
+            });
+            if (this.PaymentVisible) {
+                this.PaymentMethods.push(
+                    {
+                        "method_title": "Stripe",
+                        "payment_method": "stripe"
+                    });
+            }
+        }, (err) => {
+        });
+    }
     IfPriceZero() {
         if ((this.grandTotal * 1) < 1) {
             this.PaymentVisible = false;
-            this.validate.payment = true;
         } else {
-            this.validate.payment = false;
             if (this.count == 0) {
                 this.PaymentVisible = true;
-                this._checkoutService.getPaymentMethods().then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
-                    this.count++;
-                    this.PaymentMethods = [];
-                    forEach(res.body.payment_methods, (value, key) => {
-                        this.PaymentMethods.push(
-                            {
-                                "method_title": value,
-                                "payment_method": key
-                            });
-                    });
-                    this.PaymentMethods.push(
-                        {
-                            "method_title": "Stripe",
-                            "payment_method": "stripe"
-                        });
-                }, (err) => {
-                });
             }
-            this.validateData();
         }
+        this.validate.payment = false;
+        this.getPaymentMethod();
+        this.validateData();
     }
     IfDownloadable() {
         let count = 0;
@@ -223,7 +228,7 @@ export class Checkout implements OnInit {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
             this.data['method_title'] = this.selectedPaymentMethod['method_title'];
-            if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
+            if (this.selectedPaymentMethod['method_title'] != "Stripe") {
                 this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
                     if (res && res['body'].success) {
                         this.spin = false;
