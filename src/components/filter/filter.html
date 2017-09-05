@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Filter by
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                    <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-spinner class="apiSpinner" *ngIf="!res.length >0 && !price"></ion-spinner>
+    <div *ngIf="price">
+        <ion-list-header class='capitalize'>
+            {{price.filter_title}}
+        </ion-list-header>
+        <div class="padding">
+            <div><span >Min</span><span class="floatRight ">Max</span></div>
+            <div><span  *ngIf="dualValue2">{{dualValue2.lower}} </span> <span *ngIf="dualValue2" class="floatRight"> {{dualValue2.upper}}</span></div>
+        </div>
+        <ion-list>
+            <ion-item  *ngIf="price">
+                <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="{{price.price.Min}}" max="{{price.price.Max}}" (ngModelChange)="range()"></ion-range>
+            </ion-item>        
+        </ion-list>
+    </div>
+    <div *ngIf="res.length>0">
+        <span *ngFor="let response of res">
+            <ion-list class="no-margin" *ngIf="subOptionLength(response)">
+                <a ion-item class="capitalize" (tap)="openModal(response.filter_title)">
+                    {{response.title}}
+                    <span></span>
+                    <p> <span *ngFor="let sectedData of checkedData ; let i = index; "><span *ngIf='checkedData.length > 0 && sectedData.title == response.filter_title'> {{sectedData.value}}<span *ngIf="checkedData.length>1 && (i+1) !==checkedData.length">,</span></span> </span></p>    
+                </a>
+            </ion-list>
+        </span>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-grid class="filterFooterBtnDiv no-padding">
+        <ion-row>
+            <ion-col col-6>
+                <btn-large [titleForLarge]='"Clear All"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="clearAll()"></btn-large>
+            </ion-col>
+            <ion-col col-6>
+                <btn-large [titleForLarge]='"Apply"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond'" [spinForLarge]="false" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="applyFilter()"></btn-large>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
+</ion-footer>

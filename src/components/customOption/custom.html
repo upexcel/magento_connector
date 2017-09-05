@@ -1,0 +1,81 @@
+<div *ngIf="show">
+    <div *ngFor="let customOption of custom_option ; let i=index" class="custom-options">
+        <ion-list *ngIf="customOption.type=='field'">
+            <ion-item  *ngFor="let opt of customOption.option_type">
+                <ion-label class="capitalize fontColor" floating>{{opt.default_title}} <span class="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
+                <ion-input type="text" value="opt" [(ngModel)]="customOption.text" (keyup.enter)="text(opt,customOption.id,customOption.is_require)"  (blur)="text(opt,customOption.id)"></ion-input>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="customOption.type=='area'">
+            <ion-item   *ngFor="let opt of customOption.option_type">
+                <ion-label class="capitalize fontColor" floating >{{opt.default_title}} <span *ngIf="customOption.is_require=='1'" class="danger">*</span></ion-label>
+                <ion-textarea value="opt" [(ngModel)]="customOption.text" (blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
+            </ion-item>
+        </ion-list>
+        <ion-list *ngIf="customOption.type == 'file'">
+            <label class="fontColor">{{customOption.default_title}}
+                <span *ngIf="customOption.is_require=='1'" class="danger" >*</span>
+            </label><br>
+            <!--<input type="file" [(ngModel)]="customOption.vertualId" (change)="file($event ,customOption,customOption.id,customOption.is_require)" value="opt">-->
+        </ion-list>
+
+        <ion-list *ngIf="customOption.type=='multiple'">
+            <ion-item >
+                <ion-label class="capitalize fontColor">{{customOption.title}} <span *ngIf="customOption.is_require=='1'" class="danger" >*</span></ion-label>
+                <ion-select [(ngModel)]="customOption.vertualArray" (ngModelChange)="onChangeMulti(customOption.vertualArray,customOption.id,i,customOption.is_require)" multiple="true">
+                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} <span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="customOption.type=='drop_down'">
+            <ion-item >
+                <ion-label class="capitalize fontColor">{{customOption.title}} <span class="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
+                <ion-select [(ngModel)]="customOption.vertualId" (ngModelChange)="onChangeSelect(select,customOption.id,customOption.is_require)">
+                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}}<span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-list radio-group [(ngModel)]="customOption.vertualId" (ngModelChange)="onChangeRadio(customOption.id,customOption.is_require)" *ngIf="customOption.type=='radio'">
+                  <ion-list-header class="no-margin" (tap)="checkVisiblety(customOption)">
+                <span class="capitalize fontColor"> {{customOption.title}}</span> <span *ngIf="customOption.is_require=='1'" class="danger" >*</span><ion-icon class="floatRight ico paddRight5" name="arrow-dropdown"></ion-icon>
+            </ion-list-header>
+            <ion-item [hidden]="customOption.visable" *ngFor="let opt of customOption.option_type">
+                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></span></ion-label>
+                <ion-radio class="marRigth0" [value]="opt" ></ion-radio>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="customOption.type=='checkbox'">
+            <ion-list-header (tap)="checkVisiblety(customOption)" class=" no-margin paddLef15">
+                <span class="capitalize fontColor">  {{customOption.title}}</span> <span *ngIf="customOption.is_require=='1'" class="danger">*</span> <ion-icon class="floatRight ico paddRight5" name="arrow-dropdown"></ion-icon>
+            </ion-list-header>
+            <ion-item [hidden]="customOption.visable" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
+                <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="opt.defaultSet" (ngModelChange)="onChangeCheck(customOption.option_type,$event,customOption.id,customOption.is_require,title)" ></ion-checkbox>
+                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></span></ion-label>
+            </ion-item>          
+        </ion-list>
+
+        <ion-list  *ngIf="customOption.type=='date_time'">
+            <ion-item >
+                <ion-label class="capitalize fontColor">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" class="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
+                <ion-datetime  displayFormat="MMM DD, YYYY hh:mm A" pickerFormat="MMM DD, YYYY HH:mm A" min="{{curYear}}"  [(ngModel)]="customOption.vertualId" (ionChange)="calenderChanged(customOption.id,customOption.is_require)"></ion-datetime>
+            </ion-item>
+        </ion-list>
+        <ion-list *ngIf="customOption.type=='time'" >
+            <ion-item >
+                <ion-label class="capitalize fontColor">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" class="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon>
+                </ion-label>
+                <ion-datetime displayFormat=" h:mm A" [(ngModel)]="customOption.vertualId" (ionChange)="timeChanged(customOption.id,customOption.is_require)"> </ion-datetime>
+                <ion-icon class="floatRight down-arrow" name="arrow-dropdown"></ion-icon>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="customOption.type=='date'" >
+            <ion-item>
+                <ion-label class="capitalize fontColor">{{customOption.title}}<span *ngIf="customOption.is_require=='1'" class="danger">*</span><ion-icon class="floatRight dateIcon down-arrowDate" name="arrow-dropdown"></ion-icon></ion-label>
+                <ion-datetime  displayFormat="MMM DD YYYY" min="{{curYear}}" [(ngModel)]="customOption.vertualId" (ionChange)="dateChanged(customOption.id,customOption.is_require)"></ion-datetime>
+            </ion-item>
+        </ion-list>
+    </div></div>

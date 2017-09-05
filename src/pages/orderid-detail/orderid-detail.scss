@@ -1,24 +1,32 @@
 .orderid-detail{
-    ion-list {
-        margin: -1px 0 0 0;
-    }
+    /*    ion-list {
+            margin: -1px 0 0 0;
+        }*/
+
     ion-scroll {
         position: initial;
     }
     ion-label {
-        margin: 10px 0 0 0;
+        margin: 10px 0 10px 0;
     }
-    ion-thumbnail img {
-        max-width: 11.6rem;
-        max-height:110px;;
+    .item-md ion-thumbnail img{ 
+        height: 90px;
+        margin: 0 auto;
+        width: auto;
+        max-width: 110px;
+    }
+    .item-md ion-thumbnail{
+        max-width: 110px;
+        height: 90px; 
+        width:110px;
     }
     .order_sum{
-        margin-left: 142px;
-        margin-top: -18px;
-    }
-    .order_sum p{
-        font-size: 14px;
-        margin-top: 3px;
+        p{
+            font-size: 12px;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            color: #666;
+        }
     }
     ion-list-header {
         background: $list_heade_order_grey;
@@ -33,16 +41,20 @@
     }
     #order_sum_content{
         float: right;
-        margin-right: 50px
+        margin-right: 10px;
     }
     #item_price{
         float: right;
-        margin-right: 30px;
+        margin-right: 10px;
     }
     #pay_meth{
         min-height: 2rem;
     }
     .scroll-content {
         overflow: auto !important;
+    }
+    .bold{
+        font-weight: bold;
+        color:#757575;
     }
 }

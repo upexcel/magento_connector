@@ -1,14 +1,14 @@
 
 export const config = {
-    "APP_ID": "com.tethr",
-    "api_Url": "http://pricegenie.co:7000/",
+    "APP_ID": "com.xmage",//com.xmage for xmage store and com.tethr for invision
+    "api_Url": "http://144.76.34.244:7012/",
     "content_type": "application/json",
     "google_clientid": "1031859043774-igp8cfuhmbu0tfoc4fsoh7hsvhcesubc.apps.googleusercontent.com1031859043774-kqq13o4p0tu4etb7977ji042gf9sg071.apps.googleusercontent.com",
     "tourPageSliderOptions": {
-        initialSlide: 0,
-        autoplay: 2000,
-        loop: true,
-        pager: true
+        "initialSlide": 1,
+        "autoplay": 2000,
+        "loop": true,
+        "pager": true
     },
     "facebook_clientid": 1785639755024591,
     "facebook_version": "v2.8",
@@ -20,5 +20,12 @@ export const config = {
         "loop": true,
         "pager": true
     },
-    "stopApiTime":10000
+    "productSliderOptions": {
+        "autoplay": false,
+        "initialSlide": 1,
+        "loop": true,
+        "pager": true,
+        "hide": true
+    },
+    "stopApiTime": 10000000
 }

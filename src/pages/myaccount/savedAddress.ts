@@ -5,26 +5,16 @@ import {
 import {
     NavController,
     PopoverController,
-    Events
+    Events,
+    NavParams,
+    ViewController
 } from 'ionic-angular';
-import {
-    ToastService
-} from './../../providers/toast-service/toastService';
 import {
     PopoverPage
 } from './../../components/popover/popover';
 import {
-    StartPage
-} from './../../pages/startpage/startpage';
-import {
-    Storage
-} from '@ionic/storage';
-import {
-    GooglePlus
-} from 'ionic-native';
-import {
-    MyEditAccountPage
-} from './myeditaccount';
+    MyEditAddressPage
+} from './myeditaddress';
 import {
     MyAccount
 } from './../../model/myaccount/myaccount';
@@ -35,80 +25,203 @@ import {
     AppDataConfigService
 } from './../../providers/appdataconfig/appdataconfig';
 import {
-    LogoutService
-} from './../../providers/logout/logout-service';
-import {
     LoginPage
 } from './../../pages/login/login';
 import {
+    Edit
+} from './../../model/myaccount/editAccount';
+import {
     AccountPopoverPage
 } from './../../components/myAccountPopOver/myAccountPopOver';
-import reverse from 'lodash/reverse';
+import {Address} from './../../providers/address-service/address';
+import forEach from 'lodash/forEach';
+import {LoadingController} from 'ionic-angular';
 
 @Component({
-    selector:'saved-address',
+    selector: 'saved-address',
     templateUrl: 'savedAddress.html'
 })
 export class MySavedAddressPage implements OnInit {
     myaccount: MyAccountAddressDataType;
     spin: boolean;
     error: boolean = false;
-    addAddr:boolean=false;
+    addAddr: boolean = false;
     showAddress: boolean;
-    secret: string;
-    reverseCartData:any;
+    reverseCartData: any;
+    disable: boolean = false;
     message: string = "Token expired";
-    constructor( private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _toast: ToastService, private _events: Events, private _myaccount: MyAccount, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+    alreadyCheckLength: boolean;
+    saveAdd: boolean;
+    againOpenEditAddressPage: boolean = true;
+    constructor(public loadingCtrl: LoadingController, private viewCtrl: ViewController, private _address: Address, private _navParam: NavParams, private _appConfigService: AppDataConfigService, private _editaccount: Edit, private _events: Events, private _myaccount: MyAccount, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {
+        this.alreadyCheckLength = this._navParam.get('alreadyCheckLength'); // use to check(page redirect by checkOut) 
+        this.againOpenEditAddressPage = this._navParam.get('againOpenEditAddressPage'); // if page is redirect by myaccount it send false (use for navigation )
+        this.saveAdd = this._navParam.get('saveAdd'); //come from myeditaddress  
         this._events.subscribe('api:savedaddress', (savedaddress) => {
-            if(savedaddress){
-            this.getInitAdd();
-        }
+            if (savedaddress) {
+                this.getInitAdd(savedaddress);
+            }
         });
         this._events.subscribe('user:deleted', (deleted) => {
-            if(deleted){
-            this.getInitAdd();  
+            if (deleted) {
+                this.getInitAdd(deleted);
+            }
+
+        });
+        this._events.subscribe('user:edit', (edit) => {
+            if (edit) {
+                this._navCtrl.push(MyEditAddressPage, edit.data).then(() => {
+                    const index = this.viewCtrl.index;
+                    this._navCtrl.remove(index);
+                    this._events.unsubscribe('user:edit');
+                });
+
             }
         });
     }
-    ngOnInit() {
-        this.getInitAdd();
+    ngOnDestroy() {
+        //unsubscribe event on view destroy
+        this._events.unsubscribe('user:edit');
+        this._events.unsubscribe('user:deleted');
+        this._events.unsubscribe('api:savedaddress');
     }
-    getInitAdd() {
-        this._appConfigService.getUserData().then((userData: any) => {
-                if (userData.access_token != null) {
-                    this.getuser_details(userData.secret);
-                    this.secret = userData.secret;
-                } else {
-                    this._navCtrl.push(LoginPage);
-                }
-            })
+    ngOnInit() {
+        if (this.saveAdd) {
+            this.getInitAdd(true);
+        } else {
+            this.getInitAdd();
+        }
+    }
+    getInitAdd(eventData?) {
+        this._appConfigService.getUserData().then((userData: any) => {    //get user detail from local
+            if (userData.access_token != null) {
+                this.getuser_details(eventData);
+            } else {
+                this._navCtrl.push(LoginPage);
+            }
+        })
             .catch((err) => {})
     }
- 
-    getuser_details(secret) {
+
+    getuser_details(eventData) {
         this.spin = true;
         let entity_id = null;
-        let body = {
-            "secret": secret
-        };
-        this._myaccount.getMyAccount(body).then((res) => {
-                this.spin = false;
-                this.myaccount = res;
-                this.reverseCartData=reverse(this.myaccount.body);
-
-                if (this.myaccount.body.length != 0) {
-                    this.showAddress = true;
+        this._address.getAddress().then((address: any) => {
+            if (address && address['body'].length > 0 && !eventData) {
+                if (address['body'].length == 1) {
+                    address['default_check'] = true;
                 } else {
-                    this.showAddress = false;
-                    this._navCtrl.push(MyEditAccountPage, {
-                        "title": "Add New Address",
-                        "entity_id": entity_id
+                    address['default_check'] = false;
+                }
+                this.myaccount = address;
+                this.spin = false;
+                this.reverseData(entity_id);
+            } else {
+                var loading = this.loadingCtrl.create({
+                    content: 'Please wait...'
+                });
+                loading.present();
+                this._myaccount.getMyAccount({}).then((res) => {
+                    loading.dismiss();
+
+                    if (res['body'].length == 1) {
+                        res['default_check'] = true;
+                    } else {
+                        res['default_check'] = false;
+                    }
+                    this.spin = false;
+                    this._address.resetAddress();
+                    this._address.setAddress(res);
+                    this.myaccount = (res);
+                    this.reverseData(entity_id);
+                })
+                    .catch(err => {
+                        loading.dismiss();
+                        this.error = true;
                     })
+            }
+        }).catch(err => {
+            this.error = true;
+        })
+    }
+
+    reverseData(entity_id?) {
+        if (this.myaccount && this.myaccount.body.length != 0) {
+            this.showAddress = true;
+            forEach(this.myaccount.body, (value, key) => {
+                value['id'] = key;
+                if (!value.default_shipping) {
+                    value['add_shipping'] = false;
+                } else {
+                    value['add_shipping'] = true;
+                }
+                if (!value.default_billing) {
+                    value['add_billing'] = false;
+                } else {
+                    value['add_billing'] = true;
                 }
             })
+            this.reverseCartData = (this.myaccount.body);
+        } else {
+            this.showAddress = false;
+            if (this.againOpenEditAddressPage || this.againOpenEditAddressPage == undefined) {
+                if (this.myaccount && this.myaccount.body.length != 0) {
+                    this._navCtrl.push(MyEditAddressPage, {
+                        "title": "Add New Address",
+                        "entity_id": entity_id,
+                        "firstTime": 0
+                    }).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index);
+                    });
+                } else {
+                    this._navCtrl.push(MyEditAddressPage, {
+                        "title": "Add New Address",
+                        "entity_id": entity_id,
+                        "firstTime": 1
+                    }).then(() => {
+                        const index = this.viewCtrl.index;
+                        this._navCtrl.remove(index);
+                    });
+                }
+            }
+        }
+    }
+    updateAdd(addressChange, change) {
+        this.disable = true;
+        let address = addressChange;
+        forEach(this.reverseCartData, (value, key) => {
+            if (change == 'default_shipping') {
+                if (address.id != value.id) {
+                    value.add_shipping = false;
+                } else {
+                    value.add_shipping = true;
+                }
+            } else {
+                if (address.id != value.id) {
+                    value.add_billing = false;
+                } else {
+                    value.add_billing = true;
+                }
+            }
+        })
+        address['zip'] = address.postcode;
+        address['countryid'] = address.country_id;
+        address['default_billing'] = '0';
+        address['default_shipping'] = '0';
+        if (address.add_billing) {
+            address['default_billing'] = '1';//convert into string
+        }
+        if (address.add_shipping) {
+            address['default_shipping'] = '1';//convert into string
+        }
+
+        this._editaccount.updateAddress(address).then((res) => { //call api to update default_billing and default_shipping
+            this.getInitAdd(true);
+            this.disable = false;
+        })
             .catch(err => {
                 this.error = true;
-                this.logout();
             })
     }
     presentPopover(myEvent: any) {
@@ -117,30 +230,31 @@ export class MySavedAddressPage implements OnInit {
             ev: myEvent,
         });
     }
-    AccountPopoverPage(myEvent: any,id,entity_id){
-        let data={id:id,entity_id: entity_id }
-        let popover = this._popoverCtrl.create(AccountPopoverPage,data);
+    AccountPopoverPage(myEvent: any, id, entity_id, addressData) {
+        let data = {id: id, entity_id: entity_id, accountCartLen: this.myaccount.body, default_shipping: addressData.default_shipping, default_billing: addressData.default_billing}
+        let popover = this._popoverCtrl.create(AccountPopoverPage, data);
         popover.present({
             ev: myEvent,
-        });     
+        });
     }
     doRefresh(refresher) {
-        this.getInitAdd();
+        this.getInitAdd(true);
         setTimeout(() => {
             refresher.complete();
         }, 2000);
     }
     addNewAddress() {
-    this.addAddr=true;
-    setTimeout(() => {
-    this.addAddr=false; }, 1000); 
+        this.addAddr = true;
+        setTimeout(() => {
+            this.addAddr = false;
+        }, 1000);
         let entity_id = null;
-        this._navCtrl.push(MyEditAccountPage, {
+        this._navCtrl.push(MyEditAddressPage, {
             "title": "Add New Address",
             "entity_id": entity_id
-        })
-    }
-    logout() {
-        this._logout.logout(this.message, this._navCtrl);
+        }).then(() => {
+            const index = this.viewCtrl.index;
+            this._navCtrl.remove(index);
+        });
     }
 }

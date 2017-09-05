@@ -1,0 +1,57 @@
+<ion-item  class="group no-padding" no-lines>
+<!-- <ion-grid  *ngIf="grouped && grouped.group_associated_products.length > 0 ">
+        <ion-row class="capitalize">
+        <ion-col col-6>
+            name
+        </ion-col>
+        <ion-col col-3>
+             price
+        </ion-col>
+        <ion-col col-3>
+            quantity
+        </ion-col>
+    </ion-row>
+    <ion-row class="capitalize"  *ngFor = "let group of grouped.group_associated_products " >
+        <ion-col col-6 *ngIf="group">
+            {{group.name}}
+        </ion-col >
+        <ion-col col-3  *ngIf="group">
+          <span [ngClass]="{'line':(group.price*1) > (group.final_price*1), 'hide':(group.price*1) <= (group.final_price*1),groupedPro:true}" >
+                        <span *ngIf="group.price *1 >0"> {{grouped.data.currency_sign}}{{group.price | number}}</span></span>
+                    <span *ngIf="group.final_price *1 >0">{{grouped.data.currency_sign}}{{group.final_price | number}}</span>  
+        </ion-col>
+        <ion-col col-3>
+        <input ion-input type="number" min="1" pattern="[0-9]*" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
+        </ion-col>
+    </ion-row>
+</ion-grid> -->
+
+    <table cellspacing="10">
+        <thead *ngIf="grouped && grouped.group_associated_products.length>0">
+            <tr class="capitalize">
+                <th class="tableData">
+                    name
+                </th>
+                <th class="tableData">
+                    price
+                </th>
+                <th class="tableData">
+                    quantity
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="grouped && grouped.group_associated_products">
+            <tr class="capitalize" *ngFor = "let group of grouped.group_associated_products ; let i=index">
+                <td class="tableData"> {{group.name}}</td>
+                <td><span [ngClass]="{'line':(group.price*1) > (group.final_price*1), 'hide':(group.price*1) <= (group.final_price*1),groupedPro:true}">
+                        <span *ngIf="group.price *1 >0"> {{grouped.data.currency_sign}}{{group.price | number}}</span></span>
+                    <span *ngIf="group.final_price *1 >0">{{grouped.data.currency_sign}}{{group.final_price | number}}</span></td>
+                <td>
+                    <input ion-input type="number" min="1" pattern="[0-9]*" class="inputsize center" placeholder="0" [(ngModel)]="group.quantity" (ngModelChange)="groupedData()">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ion-item>
+
+

@@ -1,100 +1,158 @@
-<header [title]="'cart'" [pagename]="'product'"></header>
-<ion-content class="cart">
-    <ion-list *ngFor="let data of res ">
-        <ion-item-sliding>
-            <ion-item>
-                <ion-grid no-padding>
-                    <ion-row center>
-                        <ion-col class="aligncenter" width-33>
-                            <img src="{{data.img}}" alt="" class="maxht"/>
-                        </ion-col>
-                        <ion-col width-67>
-                            <ion-row>
-                                <ion-col width-50 class="size">
-                                    {{data.name}}
-                                </ion-col>
-                                <ion-col width-50 class="alignright">
-                                    <p class="font10">{{data.price}}</p>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row *ngIf="entery==true">
-                                <ion-col width-50 *ngFor="let list of lists | convertCodeToName : data" >
-                                         <p>{{list}}</p>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row class="qtyborder">
-                                <ion-col width-33 >
-                                    <ion-buttons>
-                                        <button class="iconTransparent" color="light" ion-button icon-only small (click)=remove(data) *ngIf="data.quantity>1" >
-                                                <ion-icon name="remove">
-                                            </ion-icon>
-                                        </button>
-                                    </ion-buttons>
-                                </ion-col>
-                                <ion-col class="aligncenter" width-33>
-                                    <p class="font20 lineHeight" id="marLeft20 marTop10">{{data.quantity}}</p>
-                                </ion-col>
-                                <ion-col width-33 class="alignright" (click)=add(data)>
-                                    <ion-buttons>
-                                        <button class="iconTransparent" color="light" small ion-button icon-only>
-                                            <ion-icon name="add">
-                                            </ion-icon>
-                                        </button>
-                                    </ion-buttons>
-                                </ion-col>
-                            </ion-row>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button color="primary" (click)=delete(data)>
-                    <ion-icon name="trash"></ion-icon>
-                    Delete
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+<!-- call header directive -->
+<header [title]="'SHOPPING CART'" [pagename]="''" [wishList]=false></header>
+<ion-content class="empty-cart" *ngIf="!res || res.length == 0">
+    <img src="assets/image/empty-cart.png">
+    <h3>Your Shopping Cart is empty</h3>
+</ion-content> 
+<ion-content class="cart" *ngIf="res && res.cart_items && res.cart_items.length > 0">
+             <span class="backgroundGray">
+        <ion-card  *ngFor="let data of res.cart_items">
+            <ion-grid no-padding>
+                <ion-row center align-items-center>
+                    <ion-col class="aligncenter" col-5>
+                        <ion-row center>
+                            <ion-col col-12>
+                                <img src="{{data.product_image}}" alt="" class="maxht"/>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row center>
+                            <ion-col class="font10" col-12>
+                                <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
+                            </ion-col> 
+                        </ion-row> 
+                    </ion-col>
+                    <ion-col col-7>
+                        <ion-row>
+                            <ion-col col-8 class="size capitalize no-padding">
+                                {{data.product_name}}
+                            </ion-col>
+                            <ion-col col-4 class="no-padding">
+                                <ion-select interface="action-sheet" [(ngModel)]="data.product_qty" (ngModelChange)="changeQuantity(data)" class="qtySelectlist">
+                                    <ion-option>1</ion-option>
+                                    <ion-option>2</ion-option>
+                                    <ion-option>3</ion-option>
+                                    <ion-option>4</ion-option>
+                                    <ion-option *ngIf="data.product_qty > 4">{{data.product_qty}}</ion-option>
+                                    <ion-option>More</ion-option>
+                                </ion-select>
+                                <!--<input type="number" placeholder="qty"  [(ngModel)]="data.product_qty"  (change)="changeQuantity(data)" min="1" class="inputSize">-->
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col *ngIf="data.info_buyRequest.attributes_info">
+                                <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
+                                    <p class="capitalize"><span class="gray">{{subdata.label}} </span> -{{subdata["value"]}}</p>
+                                </span>
+                                <span *ngIf="data.options">
+                                    <span *ngFor="let subdata of data.options">
+                                        <p *ngIf="subdata" class="capitalize"><span  class="gray">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
 
-    <ion-grid>
-        <ion-row class="border">
-            <ion-col width-50>SHIPPING &nbsp; 33$</ion-col>
-            <ion-col width-50 >
-                <ion-item class="selectlist" no-lines>
-                    <ion-label class="lable"></ion-label>
-<!--                    <ion-select [(ngModel)]="res2"  [placeholder]="0">
-                        <ion-option [value]="obj" >
-                            <ion-label class="lable">dsf</ion-label></ion-option>
-                    </ion-select>-->
-                    <ion-label class="lable">
-                        <ion-buttons class="alignright">
-                            <ion-icon name="arrow-forward"></ion-icon>
-                        </ion-buttons>
-                    </ion-label>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row class="border">
-            <ion-col width-50>PAYMENT METHOD</ion-col>
-            <ion-col width-50 >
-                <ion-item class="selectlist" no-lines>
-                    <ion-label class="lable">
-                        <ion-buttons class="alignright">
-                            <ion-icon name="arrow-forward"></ion-icon>
-                        </ion-buttons>
-                    </ion-label>
-<!--                    <ion-select [(ngModel)]="res1"  [placeholder]="0">
-                        <ion-option [value]="obj" >
-                            <ion-label class="lable"></ion-label></ion-option>
-                    </ion-select>-->
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col class="aligncenter">TOTAL</ion-col>
-        </ion-row>
-    </ion-grid>
+                            <ion-col >
+                                <span *ngIf="data.info_buyRequest.links">
+                                    <p>
+                                        {{data.info_buyRequest.links['title']}}:-
+                                    </p>
+                                    <span *ngFor="let subdata of data.info_buyRequest.links['label']">
+                                        <p *ngIf="subdata" class="capitalize"><span class="gray">{{subdata}}
+                                            </span></p></span></span>
+                                <span *ngIf="data.info_buyRequest.options">
+                                    <span *ngFor="let options of data.info_buyRequest.options">
+                                        <p *ngIf="options" class="capitalize"><span  class="gray">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="cartRowborder">
+                    <ion-col col-6 class="center" (tap)=edit(data) *ngIf="!data.info_buyRequest.super_product_config">
+                        Edit
+                    </ion-col>
+                    <ion-col col-6 class="center line" *ngIf="data.info_buyRequest.super_product_config && data.info_buyRequest.super_product_config.product_type == 'grouped'">
+                        Edit
+                    </ion-col>
+                    <ion-col col-6 class="center borderLeft" (tap)=deleteProduct(data)>
+                        Delete
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </span>
+    <ion-item *ngIf="couponCodeVisible">
+        <ion-input type="text" placeholder="Coupon Code" [(ngModel)]="couponCode"></ion-input>
+        <button ion-button item-right small [disabled]="!couponCode" (click)="applyCoupon(couponCode)">
+                Apply Coupon
+                <ion-spinner *ngIf="couponCodeSpin" class="spin"></ion-spinner>
+        </button>
+        <button ion-button item-right small  icon-only color="danger" [disabled]="!couponCode" (click)="applyCoupon('delete')">
+            <ion-icon name="trash"></ion-icon>
+            <ion-spinner *ngIf="deleteCouponCodeSpin" class="spin"></ion-spinner>
+        </button>
+    </ion-item>
+    <ion-card>
+        <ion-card-header>
+            Price Details
+        </ion-card-header>
+        <ion-grid>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p>Price</p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRighttax10">
+                    <p>{{currency_sign}}{{totalPrice}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p>Shipping Amount</p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRighttax10">
+                    <p>{{currency_sign}}{{shipping_amount}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p>Discount</p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRight10">
+                    <p>{{currency_sign}}{{discount}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p>Tax</p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRight10">
+                    <p>{{currency_sign}}{{tax}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row center>
+                <ion-col col-8 class="paddLef15">
+                    <p><b>Grand Total</b></p>
+                </ion-col>
+                <ion-col col-4 class="alignright paddRight10">
+                    <p><b>{{currency_sign}}{{grandtotalPrice}}</b></p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 </ion-content>
+
 <ion-footer>
-    <btn-full [titleFull]='"PLACE ORDER"' [classFull]="'botton'"></btn-full>
+    <ion-grid class="filterFooterBtnDiv no-padding">
+        <ion-row>
+            <ion-col col-6>
+                <!-- col button directive -->
+                <btn-large [titleForLarge]='" CONTINUE SHOPPING"' [classForLarge]="'filterFooterBtn filterFooterBtnFirst font17'" [spinForLarge]="false" [idForLarge]="'singup'" [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="c_Shopping()"></btn-large>
+            </ion-col>
+            <ion-col col-6>
+                <!-- col button directive -->
+                <btn-large [titleForLarge]='"CHECKOUT"' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="placeOrderSpin" [idForLarge]="''" [colorForLarge]="''" (onBtnClick)="placeOrder()"></btn-large>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
 </ion-footer>

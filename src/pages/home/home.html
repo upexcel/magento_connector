@@ -1,21 +1,14 @@
-<header [title]='title' [pagename]='pagename'></header>
-<sidemenu [token]="userToken"></sidemenu>
-<ion-content  class="home">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
-            pullingIcon="arrow-dropdown"
-            pullingText="Pull to refresh"
-            refreshingSpinner="circles"
-            refreshingText="Refreshing...">
-
-        </ion-refresher-content>
-    </ion-refresher>
-    <get-slider></get-slider>
+<header [title]='title' [pagename]='pagename' [view]="true" [search]='true' [menu]='menu'></header>
+<sidemenu *ngIf="categoryList" [token]="userToken"></sidemenu>
+<ion-content  class="home" [header-scroller]="PAGE">
+    <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
+    <get-slider *ngIf="updateSlider"> Lodding....</get-slider>
+    <ion-spinner id="magLeft50" *ngIf="spin || !updateSlider"></ion-spinner>
     <div *ngIf="homeProduct" >
-        <ion-spinner id="magLeft50" *ngIf="spin"></ion-spinner>
-        <category-view [product]="feature_products"></category-view>
+        <category-view [product]="feature_products" ></category-view>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
+

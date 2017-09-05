@@ -40,9 +40,10 @@ package.json.1083437870
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+nbproject/private/private.xml
+res/
+/varwwwhtmlinvision/modulepaths.json
+varwwwhtmlinvision/
 resources/
 resources/android/icon/*.png
 resources/android/splash/*.png
-nbproject/private/private.xml
-res/
-varwwwhtmlinvision/

@@ -1,66 +1,79 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams, ViewController, PopoverController, Events } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { PopoverPage } from './../../components/popover/popover';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit, ViewChild, NgZone} from '@angular/core';
+import {NavParams, ViewController, PopoverController, Events, Content} from 'ionic-angular';
+import {ApiService} from './../../providers/api-service/api-service';
 import forEach from 'lodash/forEach';
-import clone from 'lodash/clone';
-import { OrderIdDetail } from './../../model/orderid-detail/orderid-detail';
-import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
+import {OrderIdDetail} from './../../model/orderid-detail/orderid-detail';
+import {DomSanitizer} from '@angular/platform-browser'
 
+//import { OrderIdDetailDataType } from './../../model/orderid-detail/orderid-detailData';
 @Component({
+    selector: 'orderid-detail',
     templateUrl: 'orderid-detail.html'
 })
 
 export class OrderModalPage implements OnInit {
-    orderid_detail: OrderIdDetailDataType;
-    order_id: number;
-    item: any;
-    items: any;
+    @ViewChild(Content) content: Content;
+    orderid_detail: any;
+    order_id: any;
+    items: Array<any>;
     showOrder: boolean = false;
     showOrderError: boolean = false;
-    constructor(private _appConfigService: AppDataConfigService, private _events: Events, private _orderdetail: OrderIdDetail, private _local: Storage, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) { }
+    spin: boolean = false;
+    Math:any;
+    constructor(private sanitized: DomSanitizer,private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
+        this.Math=Math;
+    }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.getOrderDetails(this.order_id, userData.secret);
+        this._ngZone.run(() => { // update content 
+            this.getOrderDetails(this.order_id);
+        });
+        this.events.subscribe('user:fcm', (orderid) => {
+            this.showOrder = false;
+            this._ngZone.run(() => {
+                this.getOrderDetails(orderid);
+            });
         });
     }
-
+    transform(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value.body['payment_method']);
+    }
     close() {
         this._viewCtrl.dismiss();
     }
-    getOrderDetails(order_id, secret) {
+    getOrderDetails(order_id) {
         let body = {
-            order_id: order_id, secret: secret
+            order_id: order_id
         }
-        this._orderdetail.getHomeProducts(body).then((res) => {
+        this.spin = true;
+        this._orderdetail.getHomeProducts(body).then((res: any) => { // fire order/get/ api to get selected order details
+            this.orderid_detail = null;
             this.orderid_detail = res;
+            this.orderid_detail.body.status = res['body'].status;
+            this.spin = false;
+            this.content.resize();
+            // this._viewCtrl.fireWillEnter();
             if (this.orderid_detail.message == '') {
                 this.showOrderError = true;
             } else {
                 this.showOrder = true;
-                this.item = this.orderid_detail.data.items;
-                var res_data: any = [];
-                forEach(this.item, function(value, key) {
+                this.items = [];
+                // create formate to use in html
+                forEach(this.orderid_detail['body'].items, (value, key) => {
                     var datas = {
                         value: value,
                         key: key
                     };
-                    res_data.push(datas);
+                    this.items.push(datas);
                 })
-                this.items = clone(res_data);
             }
         }).catch((err) => {
+            this.spin = false;
+
         });
     }
 
-    presentPopover(myEvent: any) {
-        let popover = this._popoverCtrl.create(PopoverPage);
-        popover.present({
-            ev: myEvent,
-        });
-    }
+    track() {
 
+    }
 }

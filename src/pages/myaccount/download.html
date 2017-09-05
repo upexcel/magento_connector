@@ -1,0 +1,41 @@
+<header  [title]='"MY DOWNLOADABLE PRODUCTS"' [wishList]=false></header>
+<ion-content class="empty-cart" *ngIf="!myDownloadableData || myDownloadableData.length == 0">
+    <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
+    <h3 *ngIf="myDownloadableData && myDownloadableData.length == 0">No Products</h3>
+</ion-content>
+<ion-content *ngIf="myDownloadableData && myDownloadableData.length > 0">
+    <span *ngIf="myDownloadableData">
+        <ion-card *ngFor="let data of myDownloadableData">
+            <img src="{{data.product_image}}"/>
+            <ion-card-content>
+                <ion-card-title>
+                    {{data.link_title}}
+                </ion-card-title>
+                <p>{{data.product_description}}</p>
+                <ion-grid class="no-padding">
+                    <ion-row>
+                        <ion-col class="no-padding" col-6>Order: <b>#{{data.order_increment_id}}</b></ion-col>
+                        <ion-col class="no-padding" col-6>Date: {{data.date}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="no-padding" col-12>Status: {{data.status}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="no-padding" col-6>
+                            <button ion-button icon-left clear small class="no-padding" (click)="viewOrderDetail(data.order_increment_id)">
+                                <div><a class="no-underline">View Details&nbsp;</a></div>
+                                <ion-icon name="arrow-forward"></ion-icon>
+                            </button>
+                        </ion-col>
+                        <ion-col class="no-padding" col-6>
+        <!--                     <button ion-button icon-left clear small class="no-padding" [disabled]="data.status == 'pending'">
+                                <div><a class="no-underline" href="http://144.76.34.244:8080/magento/mobile/web/downloadable/download/link/id/{{data. link_hash}}/" target="_self">Download &nbsp;</a></div>
+                                <ion-icon name="download"></ion-icon>
+                            </button> -->
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>
+    </span>
+</ion-content>

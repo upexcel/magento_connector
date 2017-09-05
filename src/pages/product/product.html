@@ -1,72 +1,137 @@
-<header [pagename]="'product'" [title]="product"></header>
-<ion-content class="product">
+<header [pagename]="'product'" [search]='true' [title]='product'></header>
+<ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
+    <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher> 
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
-    <ion-grid  no-padding *ngIf="productData">
-               <ion-row  responsive-lg responsive-md responsive-sm>
-            <ion-col no-padding width-100 >
-                <div class="imgbox">
-                    <img src="{{images}}" class=" img cursorPointer"/>
-                </div>
-                <ion-slides pager #mySlider [options]="mySlideOptions" *ngIf="productData.body.data.media_images.length>1">
-                            <ion-slide>
-                        <ion-row class="center">
-                            <ion-col class="maxWT" *ngFor = "let img of productData.body.data.media_images" (click)="slideClick(img)" >
-                                     <img src="{{img}}" class="cursorPointer maxHt"/>
+    <ion-grid no-padding *ngIf="productData" class="maxHeight">
+              <ion-row  responsive-lg responsive-md responsive-sm class="maxHeight">
+            <ion-col no-padding col-12>
+                <ion-grid no-padding >
+                    <ion-row no-padding class="slideOption" >
+                        <ion-col no-padding class='backgroungW'>
+                            <ion-slides *ngIf="productData && productData.body.data.media_images.length" autoplay="{{mySlideOptions.autoplay}}"  pager="{{(productData.body.data.media_images.length == 1)? false:mySlideOptions.pager}}">
+                                <ion-slide *ngFor = "let images of productData.body.data.media_images">
+                                    <img *ngIf="images" src="{{images}}" class="cursorPointer" style="max-height: 250px;" imageViewer/>
+                                </ion-slide>
+                            </ion-slides>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-card class="productTitleCard">
+                    <ion-card-content>
+                        <ion-row class="padLeft10" >
+                            <ion-col  class='no-margin lineH0 no-padding'>
+                                <ion-row>
+                                    <ion-col col-10 class="padTB no-margin">
+                                        <h2 class="capitalize no-margin productName">{{productData.body.data.name}}</h2>
+                                    </ion-col> 
+                                    <ion-col class="no-margin no-padding" col-2 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
+                                             <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (tap)="notifySet()"></btn-full>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col col-10 class="padTB no-margin">
+                                        <p class="stock">{{productData.body.data.in_stock}}</p>
+                                    </ion-col>
+                                    <ion-col class="no-margin paddRight12" col-2 >
+                                        <span class="productWishList" >
+                                            <span>
+                                                <button class='backgroundTransparent' (tap)="shareWithOptions(productData.body.data.name,productData.body.data.media_images,productData.body.data.productUrl)"><ion-icon class="share"name="share"></ion-icon></button>
+                                            </span>
+                                        </span>
+                                    </ion-col> 
+                                </ion-row>
+                            </ion-col>            
+                        </ion-row>
+                        <ion-row> 
+                            <ion-col class="padTB no-margin paddTop5"> 
+                                <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
+                                <span [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
+                                <span class="floatRight">
+                                    <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (tap)="wishList(productData.body)"></ion-icon>
+                                </span>
                             </ion-col>
                         </ion-row>
-                    </ion-slide>
-                </ion-slides>
-                <ion-row class="padLeft10">
-                    <ion-col class='paddingZero'>
-                        <ion-col class='paddingZero'>
-                            <h4 class="capitalize">{{productData.body.data.name}}</h4>
-                        </ion-col> 
-                        <ion-col class="paddingZero">
-                            <p class="stock">{{productData.body.data.in_stock}}</p>
-                            <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (click)="notifySet()"></btn-full>
+                    </ion-card-content>
+                </ion-card>
+                <span *ngIf="type=='configurable'">
+                    <ion-row  *ngFor="let key of keys">
+                        <ion-col *ngIf="productData.body.associated_products">
+                            <ion-item class="selectlist">
+                                <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                                <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
+                                    <ion-buttons class="alignright">
+                                        <ion-icon name="radio-button-on" dark id="color"></ion-icon>
+                                    </ion-buttons>
+                                </ion-label>
+                                <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
+                                    <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
+                                        <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                            <ion-label no-margin class="font12" *ngIf="obj.label">
+                                                {{obj.label}}&nbsp;<span *ngIf="obj && obj.price*1 > 0 " >+{{productData.body.data.currency_sign}}{{obj.price}}</span>
+                                            </ion-label>
+                                        </ion-option>
+                                    </span>
+                                </ion-select>
+                            </ion-item>
                         </ion-col>
+                    </ion-row>
+                </span>
+                <!--for group product-->
+                <span *ngIf="type=='grouped' && (productData || editCartData)">
+                    <group [grouped]="productData.body" [editCartData]="editCartData" (sendData)="group($event)"></group>
+                </span>
 
+                <!--for bundle product-->
 
+                <span *ngIf="type=='bundle'">
+                    <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
+                </span>
+                <!--                for downloadable product-->
+                <span *ngIf="type == 'downloadable'">
+                    <download  [data]="productData" [editCartData]="editCartData" (onChange)="diffrentTypeProductData($event)"></download>
+                </span>
+                <!--for custom product-->
+                <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
+                <!--show TierPrice Data-->
+                <div *ngIf="show_add_to_cart && show_add_to_cart.length > 0">
+                    <ion-row *ngFor="let data of show_add_to_cart">
+                        <ion-col class="padTB">
+                            <p class="no-margin font20 padding10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice | number}} each.  </p>
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+                <!--product description-->
+                <ion-row *ngIf="productData.body.data['long_description']">
+                    <ion-col class="padTB">
+                        <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true, 'description':true}" [innerHtml]="transform(productData) "></p>
                     </ion-col>
                 </ion-row>
-                <ion-row class="padLeft10"> 
-                    <ion-col class="padLeft10"> 
-                        <span id="font13" [ngClass]="{'line': sp_priceShow==true}" class="price">{{price}}</span>
-                        <span class="sPrice" *ngIf="sp_priceShow == true" >{{final_price}}</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row wrap>
-                    <ion-col width-50 *ngFor="let key of keys">
-                             <ion-item class="selectlist">
-                            <ion-label no-margin class="font12">{{productData.body.associated_products.attributes[key].label}}</ion-label>
-                            <ion-label no-margin class="font12" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
-                                <ion-buttons class="alignright">
-                                    <ion-icon name="radio-button-on" dark id="color"></ion-icon>
-                                </ion-buttons>
-                            </ion-label>
-                            <ion-select [(ngModel)]="res[key]"  [placeholder]="0"  (ngModelChange)="onChange(res,key)">
-                                <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
-                                    <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                        <ion-label no-margin class="font12">
-                                            {{obj.label}}
-                                        </ion-label>
-                                    </ion-option>
-                                </span>
-                            </ion-select>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <p class="font13 padLeft10 capitalize"  [ngClass]="{'marginBottom50': true}">{{productData.body.data.short_description}}</p>
-                    </ion-col>
-                </ion-row>
-                <product-review [skuData]="data.sku"> loading..</product-review>               
+                <!--additionalInformation Data-->
+                <ion-list *ngIf="additionalInformationData  && additionalInformationData.length > 0 ">
+                    <h4 class="padLeft20 capitalize">Additional Information</h4>
+                    <ion-item *ngFor="let info of additionalInformationData">
+                        <ion-row>
+                            <ion-col class="no-margin no-padding" col-6> <span class="additionalInformation capitalize">{{info.key}} : </span> </ion-col>
+                            <ion-col class="no-margin" col-6><span class='additionalInfo'>{{info.value}} </span></ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-list>
+                <!--review directive-->
+                <span *ngIf="reviewLoader && (data && data.sku)">
+                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData"> loading..</product-review> </span>              
             </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer class="uppercase ">
-    <btn-full  [titleFull]='"ADD CART"'  [id]="'btn'" [validFull]="disable" [classFull]="'botton'" (onBtnClick)="addCart(productData.body)"></btn-full>
+<ion-footer [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock','uppercase':true}">
+    <btn-full  [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
 </ion-footer>

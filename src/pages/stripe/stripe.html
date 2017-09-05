@@ -1,0 +1,39 @@
+<ion-header>
+
+    <ion-navbar color="primary" >
+        <ion-title>Stripe Payment</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+
+        <ion-item [ngClass]="{'error': error.name}">
+            <ion-label floating>Card holder</ion-label>
+            <ion-input type="text" [(ngModel)]="card.name" (input)="card_holder()"></ion-input>
+        </ion-item>
+
+        <ion-item class="relative" [ngClass]="{'error': error.cardNumber}">
+                  <ion-label floating>Card number</ion-label>
+            <ion-input type="number" [(ngModel)]="card.number" (input)="card_number()"></ion-input>
+        </ion-item>
+        <i [ngClass]="{'absolute':true ,'cardIcon':true ,'fa':true,'fa-cc-diners-club':type=='Diners Club','fa-cc-visa':type=='Visa','fa-cc-jcb':type=='JCB','fa-cc-amex':type=='American Express','fa-cc-discover':type=='Discover','fa-cc-mastercard':type=='MasterCard','fa-credit-card':type=='Unknown'}"  aria-hidden="true"></i>
+
+        <span class="absolute cardType" *ngIf="type != 'Unknown'">{{type}}</span>
+
+        <ion-item [ngClass]="{'error': error.cardDate}">
+            <ion-label floating>Expiry month && year</ion-label>
+            <ion-datetime  displayFormat="MM/YYYY" pickerFormat="MM YYYY" min="{{currentYear}}" max="{{currentYear +15 }}" [(ngModel)]="card.date" (ionChange)="dateChanged()"></ion-datetime>
+        </ion-item>  
+
+        <ion-item padding-bottom [ngClass]="{'error': error.cardCVC}">
+                  <ion-label floating>CVC</ion-label>
+            <ion-input type="number" [(ngModel)]="card.cvc" (input)="card_cvc()"></ion-input>
+        </ion-item>
+        <btn-full *ngIf="pay" padding-top padding-bottom  [titleFull]="pay"  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="genrateToken()"></btn-full>
+
+        <p class="center" >{{errorMess}}</p>
+    </ion-list>
+</ion-content>

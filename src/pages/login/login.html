@@ -3,16 +3,16 @@
     <form  [formGroup]="logform" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item >
             <ion-label  floating>Email</ion-label>
-            <ion-input  id="email" [onReturn]='"Password"' type="text"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input  id="email" [readonly]="login" [onReturn]='"Password"' type="email"  formControlName="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-item >
             <ion-label  floating>Password</ion-label>
-            <ion-input type="password" id="Password" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" clearInput></ion-input>
+            <ion-input type="password" id="Password" [readonly]="login" [onReturn]='"btn"' formControlName="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
         </ion-item>
         <ion-grid class="magTop60">
             <ion-row class="center" >
                 <ion-col class="center">
-                <btn-round [title]='"Login"' [spin]="login" [id]="'btn'" [color]="'primary'" [valid]="!logform.valid" (onBtnClick)="signin(logform.value)" ></btn-round>
+                <btn-round [title]='"Login"' [spin]="login" [id]="'btn'" [category]="'click'" [color]="'primary'" [valid]="!logform.valid" (onBtnClick)="signin(logform.value)" ></btn-round>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -20,19 +20,22 @@
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
+                <facebook-login *ngIf="visible" [spinEvent]="spin.facebook" (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <google-login (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
+                <google-login *ngIf="visible" [spinEvent]="spin.google" (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <p align='center' class="forgot" color='primary' (click)="gotoforgotPage()">Forgot Password?</p>
-    <h5 align='center' class="marTop100">Don't have an account?</h5>
+    <span class="center">
+    <button ion-button clear (click)="gotoforgotPage()">Forgot Password?</button>
+    </span>
+    <!--<p align='center' class="forgot" color='primary' (click)=></p>-->
+    <h5 align='center' class="">Don't have an account?</h5>
     <ion-grid >
         <ion-row center>
             <ion-col class="center">

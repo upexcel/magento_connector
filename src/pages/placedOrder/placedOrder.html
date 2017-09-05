@@ -1,0 +1,48 @@
+<ion-header class="primaryBackground">
+    <ion-toolbar color="primary" showWhen="ios" style="padding-top: 20px;">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon> Back
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        ORDER PLACED
+    </ion-title>
+    </ion-toolbar>
+    <span showWhen="android">
+        <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+       ORDER PLACED
+    </ion-title>
+    </span>
+</ion-header>
+<ion-content>
+    <ion-card>
+        <ion-card-content>
+            <div class="aligncenter">
+                <h1>YOUR ORDER HAS BEEN RECEIVED.</h1>
+                <h2>THANK YOU FOR YOUR PURCHASE!</h2>
+                <p>Your order # is: <b>{{orderId}}</b>.</p>
+                <p>You will receive an order confirmation email with details of your order and a link to track its progress.</p>
+                <p class="center" >
+                <button ion-button clear (click)="viewOrderDetail()">View Details</button>
+                </p>
+            </div>
+        </ion-card-content>
+
+    </ion-card>
+<!--     <ion-list>
+        <ion-list-header no-margin>Delivered</ion-list-header>
+        <ion-item >
+            <h2 class="capitalize">{{shippingAddress.firstname}} {{shippingAddress.lastname}}</h2>
+            <p class="address capitalize"> <span *ngFor="let street of shippingAddress.street">{{street}} </span> {{shippingAddress.city}} {{shippingAddress.country_id}} {{shippingAddress.postcode}}</p>
+        </ion-item>
+    </ion-list> -->
+    <div class="center">
+        <btn-round [title]='"Continue Shopping"' [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
+    </div>
+</ion-content>

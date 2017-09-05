@@ -1,4 +1,4 @@
-export class HomeProductsDataType {
+export interface HomeProductsDataType {
     body: [
         {
             data: {
@@ -25,9 +25,13 @@ export class HomeProductsDataType {
                 in_stock: string,
                 show_on_home_page: string
             };
-            bundle_items ?: {
+            bundle_items?: {
                 options: Array<any>
-            }
+            };
+            group_associated_products?: Array<any>
+            associated_products?: {attributes: any}
+            links?: any;
+            samples?: any;
         }
     ];
     status: number;

@@ -1,96 +1,127 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
-import { HomeProductsDataType } from './../../model/home/homeProductsDataType';
-import { HomeProducts } from '../../model/home/homeProducts';
+import {Component, OnInit} from '@angular/core';
+import {ModalController, } from 'ionic-angular';
+import {Events, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
+import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
+import {HomeProducts} from '../../model/home/homeProducts';
 import slice from 'lodash/slice';
-import { ToastService } from './../../providers/toast-service/toastService';
+import {ApiService} from './../../providers/api-service/api-service';
+import {Slider} from './../../model/home/slider';
+import {CategoryList} from '../../model/home/categoryList';
+import {CMS} from '../../model/cms/cms';
+import {NgZone} from '@angular/core';
+import {WishListService} from './../../providers/wishList/wishList-service';
+
 @Component({
+    selector: 'home',
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
-    homeProduct: HomeProductsDataType;
-    spin: boolean = true;
+    homeProduct: HomeProductsDataType; //type checking
+    spin: boolean = false;
     feature_products: any;
-    start: number = 0;
-    end: number = 4;
-    backPressed: boolean = false;
-    public navigator: any;
-    title: string = 'Home';
-    pagename: string = 'home'
-    userToken:any;
-    constructor(private _navParams: NavParams, private _toast: ToastService, private _platform: Platform, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
-        this.userToken=this._navParams.data.access_token;
+    start: number = 0;//item start
+    end: number = 10; //item end
+    title: string = ''; //page title
+    pagename: string = 'home'; //page name
+    userToken: string;//accesstocken
+    menu: boolean = true; //show menu on header
+    count = 0;
+    updateSlider = false;
+    categoryList = true;
+    constructor(private _wishList: WishListService, private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
+
+        this.userToken = this._navParams.data.access_token;
+        if (this.userToken) { //check user login 
+            this.pagename = 'home';
+            this.title = 'Home';
+        }
+        else {
+            this.title = 'Home';
+        }
     }
     ngOnInit() {
-        this.homeProducts();
-        this.checkBackButton();
+        this._apiService.setNavControllerForService(this._navCtrl);//set refrence  of navCtrl
         this._events.subscribe('api:review', (review) => {
             this.homeProducts();
         });
-
+        this._events.subscribe('homeProducts:api', (res) => {
+            this.homeApiCall();
+        });
+    }
+    ngOnDestroy() {
+        this._events.unsubscribe('homeProducts:api');
     }
     homeProducts() {
-        this.spin = true;
-        let body = { "type": "full" }
-        this._homeProductsConfig.getHomeProducts(body).then((res) => {
+        this._ngZone.run(() => {
+            this.categoryList = false;
+            setTimeout(() => {
+                this.updateSlider = true;
+                this.categoryList = true;
+            })
+            this.spin = true;
+            this.homeApiCall();
+        })
+    }
+    homeApiCall() {
+        this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
             if (res) {
                 this.homeProduct = res;
-                this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                //break product in page limit 
+                this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
                 this.spin = false;
             }
         })
     }
-    checkBackButton() {
-        this._platform.registerBackButtonAction(() => {
-            if (this._viewController.isLast() && this._viewController.isFirst()) {
-                if (!this.backPressed) {
-                    this.backPressed = true;
-                    this._toast.toast('Press Again For Exit App', 3000);
-                    setTimeout(() => this.backPressed = false, 2000);
-                    return;
-                } else {
-                    navigator.app.exitApp()
-                }
-            } else {
-                this._navCtrl.pop();
-            }
-        }, 100);
+    ionViewWillEnter() {
+        this.homeProducts();
+        this._wishList.getWishList().then((res) => {
+        });
     }
-    doInfinite(infiniteScroll) {
-        if (this.homeProduct.body.length % 2 == 0) {
-            if (this.homeProduct.body.length > this.end) {
-                setTimeout(() => {
-                    this.end += 4;
-                    this.feature_products = slice(this.homeProduct.body, this.start, this.end);
-                    infiniteScroll.complete();
-                }, 2000);
-            } else {
-                infiniteScroll.complete();
-            }
-        }
-        else {
-            let check = this.homeProduct.body.length + 1;
-            if (check >= this.end) {
 
-                if (check == this.end) {
-                    infiniteScroll.complete();
-                }
-                else {
+    doInfinite(infiniteScroll) {
+        if (this.homeProduct) {
+            if (this.homeProduct.body.length % 2 == 0) {
+                if (this.homeProduct.body.length > this.end) {
                     setTimeout(() => {
                         this.end += 4;
-                        this.feature_products = slice(this.homeProduct.body, this.start, this.end);
+                        this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
                         infiniteScroll.complete();
-                    }, 2000);
+                    }, 100);
+                } else {
+                    infiniteScroll.complete();
+                    infiniteScroll.enable(false);
                 }
             }
             else {
-                infiniteScroll.complete();
+                let check = this.homeProduct.body.length + 1;
+                if (check >= this.end) {
+                    if (check <= this.end) {
+                        infiniteScroll.complete();
+                        infiniteScroll.enable(false);
+                    }
+                    else {
+                        setTimeout(() => {
+                            this.end += 4;
+                            this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
+                            infiniteScroll.complete();
+                        }, 30);
+                    }
+                }
+                else {
+                    infiniteScroll.complete();
+                    infiniteScroll.enable(false);
+                }
             }
         }
-
     }
     doRefresh(refresher) {
+        this._ngZone.run(() => {
+            this._sliderService.resetSlider();
+            this._homeProductsConfig.resetHomeProducts();
+            this._cms.resetStaticPageList();
+            this._categoryList.resetCategoryList();
+            this.updateSlider = false;
+        });
         this.homeProducts();
         setTimeout(() => {
             refresher.complete();

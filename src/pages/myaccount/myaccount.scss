@@ -6,20 +6,31 @@
         overflow: auto !important;
 
     }
+    .card-md {
+    margin: 10px 10px 10px 10px;
+    width: calc(100% - 20px);
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+}
     .add_address{
         bottom: 0;
         position: fixed;
         margin: 0;
     }
+    .back-button {
+        display: block;
+    }
     ion-card{
         padding-bottom: 20px;
     }
-.paddRt{
-    padding-right: 5px !important;
-}
-.saveAddress {
-  position:fixed;
-  bottom:0px;
-}
+    .paddRt{
+        padding-right: 5px !important;
+    }
+    .saveAddress {
+        position:fixed;
+        bottom:0px;
+    }
 }
 

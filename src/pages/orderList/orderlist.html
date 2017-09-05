@@ -1,24 +1,27 @@
-<header [title]="'My Orders'"></header>
+<header [title]="'My Orders'" [wishList]=false></header>
 <ion-content class="orderlist" scroll="true">
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
-    <ion-list no-lines *ngFor="let date of dates">
-              <ion-list-header>{{date| date: 'dd/MM/yyyy'}}</ion-list-header>
+    <ion-list no-lines *ngFor="let dataItem of values">
+              <ion-list-header no-margin >{{dataItem.key |customdate: 'DD/MM/YYYY'}}</ion-list-header>
         <ion-item class="orders">
-            <section id="cd-timeline" class="cd-container"  *ngFor="let data of values">
-                     <div class="cd-timeline-block" *ngIf="(date| date: 'dd/MM/yyyy')==(data.value.created_at| date: 'dd/MM/yyyy')">
+            <section id="cd-timeline" class="cd-container"  *ngFor="let data of dataItem.value">
+                     <div class="cd-timeline-block">
                  <div class="cd-timeline-icon">
-                   <ion-icon color="primary" name="clock" *ngIf="data.value.status=='processing'"></ion-icon>
-                        <ion-icon color="danger" name="close-circle" *ngIf="data.value.status=='holded'"></ion-icon>
-                        <ion-icon color="warning" name="alert" *ngIf="data.value.status=='pending'" ></ion-icon>
+                   <ion-icon color="primary" name="clock" *ngIf="data.status=='processing'"></ion-icon>
+                        <ion-icon color="danger" name="close-circle" *ngIf="data.status=='holded'"></ion-icon>
+                        <ion-icon color="alert_yellow" name="alert" *ngIf="data.status=='pending'" ></ion-icon>
+                         <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
+                         <ion-icon color="red" name="close" *ngIf="data.status=='canceled'" ></ion-icon>
                     </div>
-                    <div (click)="gotoOrderDetail(data.value.order_id)">
-                        <span class="order_key">#{{data.value.order_id}}</span>
-                        <span class="date_creation">{{data.value.created_at | date: 'hh:mm'}}</span>
+                    <div (tap)="gotoOrderDetail(data.orderId)">
+                        <span class="order_key">#{{data.orderId}}</span>
+                        <span class="date_creation">{{data.created_at |customdate: 'HH:mm'}}</span>
                         <div class="cd-timeline-content">
-                            <h2>Amount: &#8377;{{data.value.grand_total}}</h2>
-                            <h2 text-capitalize>Status: {{data.value.status}}</h2>
+                             <h2>Order No: {{data.order_no}}</h2>
+                            <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number }}</h2>
+                            <h2 text-capitalize>Status: <span *ngIf="data.status !='canceled'">{{data.status}}</span><span *ngIf="data.status == 'canceled'">Cancelled</span></h2>
                             <hr>
                         </div>
                     </div>

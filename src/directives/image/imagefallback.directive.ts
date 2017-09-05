@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 import {config} from './../../providers/config/config';
 @Directive({
 			 selector: 'img',

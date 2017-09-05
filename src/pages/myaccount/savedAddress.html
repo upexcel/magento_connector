@@ -1,87 +1,106 @@
-<header [title]="'My Address'"></header>
+<header [title]="'My Address'" [wishList]=false></header>
 <ion-content class="myaccount">
-    <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
+    <!--<ion-spinner *ngIf="spin && !error" id="magLeft50"></ion-spinner>-->
+    <!--<ion-spinner class="apiSpinner" *ngIf="spin1" ></ion-spinner>-->
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-list *ngIf="showAddress==false">
-        <h2 text-center>You have no saved address</h2>
+    <ion-list *ngIf="showAddress==false" text-center>
+        <h2 text-center>Your address book is blank.</h2>
     </ion-list>
     <ion-list *ngIf="showAddress">
-        <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
-        <ion-card *ngFor="let address of reverseCartData ; let id=index">
+        <ion-card  *ngFor="let address of reverseCartData ; let id=index">
             <ion-card-content class="paddTop">
-                <ion-buttons end>
-                    <button ion-button class="iconTransparent" color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id)">
-                     <ion-icon name="more"></ion-icon>
-            </button>
+                <!--<ion-radio class="padding10" value="{{address.firstname}}"></ion-radio>-->
+                <ion-buttons class="floatRight" end>
+                    <button ion-button class="iconTransparent" color="light" icon-only small (click)="AccountPopoverPage($event,id,address.entity_id, address)">
+                            <ion-icon name="more"></ion-icon>
+                    </button>
                 </ion-buttons>
                 <ion-grid>
                     <ion-row>
-                        <ion-col width-20 class="no-padding">
-                             <ion-buttons >
+                        <ion-col col-2 class="no-padding">
+                            <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
-                     <ion-icon name="person"></ion-icon>
-            </button>
+                                    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                                </button>
                             </ion-buttons>                       
                         </ion-col>
-                        <ion-col width-80 class="no-padding">
+                        <ion-col col-10 class="no-padding">
                             <h2 class="capitalize">{{address.firstname+" "+address.lastname}}</h2>
                         </ion-col>
                     </ion-row>
 
                     <ion-row>
-                        <ion-col width-20 class="no-padding">
+                        <ion-col col-2 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
-                     <ion-icon name="call"></ion-icon>
-            </button>
+                                    <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
+                                </button>
                             </ion-buttons>
                         </ion-col>
-                        <ion-col width-80 class="no-padding">
-                         <p class="lineHeight"> {{address.telephone}}</p>
+                        <ion-col col-10 class="no-padding">
+                            <p class="lineHeight"> {{address.telephone}}</p>
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col width-20 class="no-padding">
+                        <ion-col col-2 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
-                     <ion-icon name="pin"></ion-icon>
-               </button>
+                                    <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
+                                </button>
                             </ion-buttons>
                         </ion-col>
-                        <ion-col  width-80 class="no-padding">
-                        <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_id}}-{{address.postcode}}</p>                        
+                        <ion-col  col-10 class="no-padding">
+                            <p class="cartData lineHeight capitalize">{{address.street}} {{address.city}} {{address.country_name}} <span *ngIf="address.region">{{address.region}}</span>-{{address.postcode}}</p>                        
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col width-20 class="no-padding">
+                    <ion-row *ngIf="address.company">
+                        <ion-col col-2 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
-                     <ion-icon name="briefcase"></ion-icon>
-               </button>
+                                    <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                                </button>
                             </ion-buttons>
                         </ion-col>
-                        <ion-col  width-80 class="no-padding">
-                        <p class="capitalize lineHeight"> {{address.company}}</p>                        
+                        <ion-col  col-10 class="no-padding">
+                            <p class="capitalize lineHeight"> {{address.company}}</p>                        
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col width-20 class="no-padding">
+                    <ion-row *ngIf="address.fax">
+                        <ion-col col-2 class="no-padding">
                             <ion-buttons >
                                 <button class="iconTransparent" color="light" ion-button  icon-only small>
-                     <ion-icon name="print"></ion-icon>
-               </button>
+                                    <i class="fa fa-fax fa-lg" aria-hidden="true"></i>
+                                </button>
                             </ion-buttons>
                         </ion-col>
-                        <ion-col  width-80 class="no-padding">
-                        <p class="lineHeight">Fax: {{address.fax}}</p>              
+                        <ion-col  col-10 class="no-padding">
+                            <p class="lineHeight">Fax: {{address.fax}}</p>              
                         </ion-col>
-                    </ion-row>                    
+                    </ion-row>                   
                 </ion-grid>
+                    <ion-grid>
+                     <ion-row>
+                        <ion-col col-2 class="no-padding"></ion-col>
+                         <ion-col col-10 class="no-padding">
+                         <h2 class="widthA floatLeft"> Default Shipping</h2>
+                             <ion-checkbox color="dark" class=" floatRight idthA no-margin" [disabled]="myaccount.default_check || (disable || spin)" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
+                         </ion-col>
+                         </ion-row>
+                    <ion-row class="padTop10">
+                         <ion-col col-2 class="no-padding"></ion-col>
+                         <ion-col col-10 class="no-padding">
+                            <h2 class="floatLeft widthA">Default Billing</h2>
+                            <ion-checkbox class=" widthA no-margin floatRight" color="dark" [disabled]="myaccount.default_check || (disable || spin)" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox> 
+                             
+                         </ion-col>
+                     </ion-row>
+                    </ion-grid>
+
             </ion-card-content>
         </ion-card>
     </ion-list>

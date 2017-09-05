@@ -1,15 +1,21 @@
-import { Injectable, OnInit}    from '@angular/core';
-import {ApiService } from './../../providers/api-service/api-service';
-import { SocialAccountDataType  } from './../../pages/startpage/socialAccountDataType';
+import {Injectable, OnInit} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
+import {fcmService} from './../../providers/fcm-service/fcm-service';
 declare let Promise: any;
 @Injectable()
 export class SocialAccount implements OnInit {
-    constructor(private _apiService: ApiService) { }
-    ngOnInit() { }
-    getSocialAccount(data): Promise<SocialAccount> {
-        let apiservice = this._apiService;
-        return new Promise(function(resolve, reject) {
-            apiservice.api("customer/social_account", data).subscribe((res) => {
+    constructor(private _apiService: ApiService, private _fcmService: fcmService) {}
+    ngOnInit() {}
+    /**
+*getSocialAccount
+*use to call customer/social_account api
+**/
+    getSocialAccount(data) {
+        return new Promise((resolve, reject) => {
+            this._apiService.api("customer/social_account", data).subscribe((res) => {
+                setTimeout(() => {
+                    this._fcmService.saveFCMTokenOnServer();
+                },300);
                 resolve(res);
             }, (err) => {
                 reject(err);

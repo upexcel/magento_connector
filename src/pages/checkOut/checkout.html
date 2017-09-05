@@ -1,0 +1,248 @@
+<header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false></header>
+<ion-content>
+    <h2 *ngIf="!cartData">You have no item in cart</h2>
+    <ion-card  *ngFor="let data of cartData.cart_items">
+        <ion-card-content  class="no-padding">
+            <ion-grid no-padding>
+                <ion-row center align-items-center>
+                    <ion-col class="aligncenter" col-5>
+                        <ion-row center>
+                            <ion-col>
+                                <img src="{{data.product_image}}" alt="" class="maxht"/>
+                            </ion-col> 
+                        </ion-row>
+                        <ion-row center>
+                            <ion-col class="font10" col-12>
+                                <p><b>UnitPrice:</b>{{data.currency_sign}}{{(data.product_price|number) }} </p><p *ngIf="data.product_qty*1 >0"><b>SubTotal</b> :{{data.currency_sign}}{{(data.product_subtotal|number)}}</p>
+                            </ion-col> 
+                        </ion-row>
+                    </ion-col>
+                    <ion-col col-7>
+                        <ion-row align-items-center>
+                            <ion-col class="cartCheckOutQty capitalize">
+                                Quantity: {{data.product_qty}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col  class="size capitalize">
+                                {{data.product_name}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col *ngIf="data.info_buyRequest.attributes_info">
+                                <span *ngFor="let subdata of data.info_buyRequest.attributes_info">
+                                    <p class="capitalize"><span class="gray">{{subdata.label}} </span> -{{subdata["value"]}}</p>
+                                </span>
+                                <span *ngIf="data.options">
+                                    <span *ngFor="let subdata of data.options">
+                                        <p *ngIf="subdata" class="capitalize"><span  class="gray">{{subdata.label}} </span> - <span> {{ subdata.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
+                            <ion-col >
+                                <span *ngIf="data.info_buyRequest.links">
+                                    <p>
+                                        {{data.info_buyRequest.links['title']}}:-
+                                    </p>
+                                    <span *ngFor="let subdata of data.info_buyRequest.links['label']">
+                                        <p *ngIf="subdata" class="capitalize"><span class="gray">{{subdata}}
+                                            </span></p></span></span>
+                                <span *ngIf="data.info_buyRequest.options">
+                                    <span *ngFor="let options of data.info_buyRequest.options">
+                                        <p *ngIf="options" class="capitalize"><span  class="gray">{{options.label}} </span> - <span> {{ options.print_value}}</span></p>      
+                                    </span>
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="cartData && cartData.cart_items.length!=0">
+        <ion-card-header class="fontWeight">
+            Address
+        </ion-card-header>
+        <ion-card-content >
+            <span *ngIf="address">
+                <span *ngFor="let addres of address['body']">
+                    <p class="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
+                    <p class="primary" *ngIf="addres && addres.default_billing && !(addres.default_billing && addres.default_shipping)">Default Billing</p>
+                    <p class="primary" *ngIf="addres && addres.default_billing && addres.default_shipping">Default Billing/Default Shipping</p>
+                    <span *ngIf="addres && addres.default_shipping || addres.default_billing"> <p class="gray capitalize">{{addres.firstname}} {{addres.lastname}}</p><p class="gray capitalize">
+                            <span *ngFor="let street of addres.street">{{street}} </span> {{addres.city}} {{addres.country_name}} {{addres.region}} {{addres.postcode}}</p></span>
+                </span>
+            </span>
+            <span class="floatRight">
+                <a ion-item class="floatRight paddBut5" item-end class="primary" (tap)=changeAddress()>Change Address</a>
+            </span>
+        </ion-card-content>
+    </ion-card>
+    <ion-list *ngIf="shippingVisible" no-margin radio-group [(ngModel)]="selectedShippingMethod" (ngModelChange)="shippingMethod(selectedShippingMethod)">
+              <ion-list-header no-margin>
+            Shipping Methods
+        </ion-list-header>
+        <span *ngIf="!shippingMethods" class="center">  <ion-spinner ></ion-spinner></span>
+        <ion-item *ngFor="let shipping of shippingMethods">
+            <ion-label>{{shipping.carrier_title}} {{currency_sign}}{{shipping.price | number}}</ion-label>
+            <ion-radio [disabled]="spin"  [value]="shipping"></ion-radio>
+        </ion-item>
+    </ion-list>
+
+    <!--    <ion-card>
+            <ion-card-header>
+                Do you have any gift items in your order?
+                <ion-checkbox class='checkoutGiftItem' [(ngModel)]="checkGift" (ngModelChange)="enableGift()"> </ion-checkbox>
+            </ion-card-header>
+            <ion-card-content *ngIf="checkGift">
+                <ion-list-header no-lines no-margin>
+                    Gift Options for the Entire Order.
+                </ion-list-header>
+                <ion-item >
+                    <ion-label> Add gift options for the Entire Order</ion-label>
+                    <ion-checkbox class="marRight" [(ngModel)]="checkGiftEntireOrder" (ngModelChange)="checkGiftIndividualOrder = !checkGiftIndividualOrder"> </ion-checkbox>
+                </ion-item>
+                <ion-list class='background1 border-bottom' *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftEntireOrder">
+                          <p>You can leave this box blank if you do not wish to add a gift message for whole order.</p> 
+                    <ion-item>
+                        <ion-label class="capitalize" >From</ion-label>
+                        <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="capitalize" >To</ion-label>
+                        <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                    </ion-item>
+                    <ion-item class="no-lineBot">
+                        <ion-label class="capitalize"  >Message</ion-label>
+                        <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                    </ion-item>
+                </ion-list>
+    
+                <ion-list-header no-lines no-margin>
+                    Gift Options for Individual Items
+                </ion-list-header>
+                <ion-item>
+                    <ion-label>Add gift options for Individual Items</ion-label>
+                    <ion-checkbox class="marRight" [(ngModel)]="checkGiftIndividualOrder" (ngModelChange)="checkGiftEntireOrder = !checkGiftEntireOrder"> </ion-checkbox>
+                </ion-item>
+                <ion-grid no-padding *ngIf="!(checkGiftIndividualOrder && checkGiftEntireOrder) && checkGiftIndividualOrder">
+                          <ion-row center  *ngFor="let data of cartData ; let i=index;">
+                         <ion-col class="aligncenter" col-4>
+                            <ion-row center>
+                                <ion-col>
+                                    <img src="{{data.img}}" alt="" class="maxht"/>
+                                </ion-col> 
+                            </ion-row>
+                            <ion-row>
+                                <ion-col class="no-padding">
+                                    <p class="font12" ><b>{{i+1}} of {{cartData.length}}</b></p>
+                                </ion-col> 
+                            </ion-row>
+                        </ion-col>
+                        <ion-col col-8>
+                            <h3>    {{data.name}}</h3>
+                            <ion-list class='background1 border-bottom'>
+                                <ion-item>
+                                    <ion-label class="capitalize" >From</ion-label>
+                                    <ion-input type="text" value="" [(ngModel)]="text" ></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label class="capitalize" >To</ion-label>
+                                    <ion-input type="text" value="" [(ngModel)]="text1" ></ion-input>
+                                </ion-item>
+                                <ion-item class="no-lineBot">
+                                    <ion-label class="capitalize"  >Message</ion-label>
+                                    <ion-textarea value="" [(ngModel)]="text2" ></ion-textarea> 
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>-->
+    <ion-card no-padding>
+        <ion-card-content no-padding *ngIf="PaymentVisible">
+            <ion-list-header no-margin no-lines>
+                Payment Information
+            </ion-list-header>
+            <ion-list  no-margin radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="paymentMethod(selectedPaymentMethod)">
+                       <span class="center" *ngIf="!PaymentMethods"><ion-spinner></ion-spinner></span>
+                <ion-item *ngFor="let payment of PaymentMethods">
+                    <ion-label>{{payment.method_title}}</ion-label>
+                    <ion-radio [disabled]="spin" [value]="payment"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Price Details
+        </ion-card-header>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p>Price</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="paddRight10" *ngIf="totalPrice">${{totalPrice}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p>Shipping Amount</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="paddRight10">{{currency_sign}}{{shipping_amount |number}}
+                <ion-spinner name="dots" *ngIf="false"></ion-spinner></p>
+
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p>Discount</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="alignright paddRight10">
+                <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p>
+                <p class="paddRight10" *ngIf="!taxSpin">{{currency_sign}}{{discount}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p>Tax</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="alignright paddRight10">
+                <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></p> <p class="paddRight10" *ngIf="!taxSpin">{{currency_sign}}<span *ngIf="tax">{{(!(tax)?0:tax) |number}}</span><span *ngIf="!tax">0</span></p>
+            </ion-col>
+        </ion-row>
+        <ion-row center *ngIf="selectedShippingMethod">
+                 <ion-col col-6 class="paddLft20">
+                <p>{{selectedShippingMethod.method_title}}</p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="paddRight10">{{currency_sign}}{{(selectedShippingMethod.price)|number}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row center>
+            <ion-col col-6 class="paddLft20">
+                <p><b>Grand Total</b></p>
+            </ion-col>
+            <ion-col col-6 class="alignright paddRight10">
+                <p class="paddRight10"><b>{{currency_sign}}{{(grandTotal)|number}}</b></p>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+</ion-content>
+<ion-footer>
+    <ion-grid class="filterFooterBtnDiv no-padding">
+        <ion-row>
+            <ion-col col-6 class="center">
+                <span class="center">
+                    <ion-spinner name="dots" *ngIf="taxSpin==true"></ion-spinner></span> <h3 *ngIf="taxSpin==false"> {{currency_sign}}{{(total ? total :grandTotal) |number}} </h3> 
+            </ion-col>
+            <ion-col col-6>
+                <btn-full  [titleFull]='"PLACE ORDER"'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="spin" [validFull]="disable" (onBtnClick)="orderPlace()"></btn-full>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
+</ion-footer>

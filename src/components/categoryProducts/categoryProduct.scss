@@ -1,25 +1,35 @@
 category-view{
-    @media screen and (orientation: portrait) {  
+
+    .heart {
+        cursor: pointer;
+        padding-right: 20px;
+        color:#adadad;
+    }    /*@media screen and (orientation: portrait) {*/  
+    ion-grid{padding-top: 0px;} 
+    .portrait{
         img{
             max-height: 90px;
+            max-width: 99.5%;
         }
+
         .cardForPortrait{
             width: 100%; 
+            min-height: 106px;
             border-radius: 2px;
             background: #fff;
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 0px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
         }
         .columnForGrid25{
-            -webkit-flex: 0 0 25%;
-            -ms-flex: 0 0 25%;
-            flex: 0 0 25%;
-            max-width: 25%;
+            -webkit-flex: 0 0 33%;
+            -ms-flex: 0 0 33%;
+            flex: 0 0 33%;
+            max-width: 33%;
         }
         .columnForGrid75{
-            -webkit-flex: 0 0 75%;
-            -ms-flex: 0 0 75%;
-            flex: 0 0 75%;
-            max-width: 75%;
+            -webkit-flex: 0 0 67%;
+            -ms-flex: 0 0 67%;
+            flex: 0 0 67%;
+            max-width: 67%;
         }
         .columnForGrid100{
             -webkit-flex: 0 0 100%;
@@ -47,19 +57,24 @@ category-view{
             padding-top: 6px;
         }
     }
-    @media screen and (orientation: landscape) {
+    /*@media screen and (orientation: landscape) {*/
+    .landscape{
+        .columnForGrid75{
+            width: 100%;
+        }
+        .columnForGrid25{
+            width:100%
+        }
         img{
-            max-width: 80%;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
+            max-height: 145px;
+            max-width: 100%;
         }
         .iconShow{
             top: 0;
             position: absolute;
         }
         .card1 {
-            margin: 10px 0px 0px 0px ;
+            /*margin: 10px 0px 0px 0px ;*/
             width: 100%; 
             border-radius: 2px;
             font-size: 1.4rem;
@@ -70,10 +85,9 @@ category-view{
             height: 100% !important;
         }
         .imgBox{
+            /*            display: table-cell;*/
             height: 150px;
-            width: 90%;
-            margin: 0px auto;
-            overflow: hidden;
+
         }
         .column {
             -webkit-flex: 0 0 25%;
@@ -105,7 +119,7 @@ category-view{
             flex-wrap: wrap;
             display: flex;
             width: 100%;  
-            margin-bottom: 10px;
+            margin-bottom: 1px;
         }
         .margin10{
             margin: 10px;
@@ -140,4 +154,15 @@ category-view{
     .fontWidth{
         font-weight: bold;
     }
+    .card-content-md{
+        padding: 0px;
+
+    }
+}
+.footerCateg{
+    line-height: 2;
+    background: white;
+}
+img{
+    margin: 0 auto;
 }

@@ -1,0 +1,98 @@
+<ion-header class="primaryBackground">
+    <ion-toolbar color="primary" showWhen="ios" style="padding-top: 20px;">
+    <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon> Back
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        {{title}}
+    </ion-title>
+    </ion-toolbar>
+    <span showWhen="android ,core">
+        <ion-buttons start class="floatLeft placeOrderIconButt" (tap)="root()">
+        <button ion-button icon-only >
+                <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title class="uppercase text">
+        {{title}}
+    </ion-title>
+    </span>
+</ion-header>
+<ion-content class="myaccount">
+    <ion-spinner *ngIf="spin" id="magLeft50"></ion-spinner>
+    <form [formGroup]="updateform" *ngIf="spin==false">
+        <ion-list inset>
+            <ion-item>
+                <ion-label floating>First Name <span class="danger">*</span></ion-label>
+                <ion-input  [onReturn]='"lastName"' text-capitalize formControlName="firstname"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Last Name <span class="danger">*</span></ion-label>
+                <ion-input  [onReturn]='"Company"' id="lastName" text-capitalize formControlName="lastname"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Company</ion-label>
+                <ion-input id="Company" [onReturn]='"Fax"'  formControlName="company" ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Fax</ion-label>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="fax" id="Fax" [onReturn]='"Telephone"' autocorrect autocomplete></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Mobile Number <span class="danger">*</span></ion-label>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="telephone" id="Telephone" [onReturn]='"Address"' autocorrect autocomplete></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Address <span class="danger">*</span></ion-label>
+                <ion-textarea formControlName="street" id="Address" [onReturn]='"City"' autocorrect autocomplete></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>City <span class="danger">*</span></ion-label>
+                <ion-input formControlName="city" id="City" [onReturn]='"Pin"' autocorrect autocomplete></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Pin Code <span class="danger">*</span></ion-label>
+                <ion-input type="number" min="0" pattern="[0-9]*" formControlName="zip" id="Pin"  autocorrect autocomplete></ion-input>
+            </ion-item>
+            <ion-item class="no-padding paddRt" *ngIf="counrtyName">
+                <ion-label  >Country<span class="danger">*</span></ion-label>
+                <ion-select  formControlName="countryid" id="Country" (ionChange)="onChangeCountry(updateform.value.countryid,updateform.value)"  >
+                    <span *ngFor="let name of counrtyName.body.country">
+                        <ion-option [value]="name"> 
+                            {{name['country_name']}}
+                        </ion-option>
+                    </span>   
+                </ion-select>
+            </ion-item>
+            <ion-item class="no-padding paddRt" *ngIf="countryObj && countryObj.country_region">
+                <ion-label >State<span class="danger">*</span></ion-label>
+                <ion-select  formControlName="region" >
+                    <span *ngFor="let name of countryObj.country_region">
+                        <ion-option [value]="name"> 
+                            {{name['name']}}
+                        </ion-option>
+                    </span>   
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="countryObj && !countryObj.country_region" >
+                <ion-label floating>State <span class="danger">*</span></ion-label>
+                <ion-input formControlName="region"  autocorrect autocomplete></ion-input>
+            </ion-item>
+            <ion-item class="no-padding" no-lines>
+                <ion-label class="font13">Make it your default billing Address </ion-label>
+                <ion-checkbox color="dark" formControlName="default_billing" [checked]="firstTime " [disabled]="firstTime || checkBilling"></ion-checkbox>
+            </ion-item>
+            <ion-item class="no-padding" no-lines>
+                <ion-label class="font13">Make it your default shipping Address </ion-label>
+                <ion-checkbox color="dark" formControlName="default_shipping" [checked]="firstTime " [disabled]="firstTime || checkShipping"></ion-checkbox>
+            </ion-item>
+        </ion-list>
+        <div class="center">
+            <btn-round [title]='"Save"' [spin]="upd_spin" [id]="'btn'" [valid]="!updateform.valid" (onBtnClick)="update(updateform.value)" ></btn-round>
+        </div>
+    </form>
+</ion-content>
+<ion-footer>
+</ion-footer>

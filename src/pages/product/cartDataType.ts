@@ -3,7 +3,7 @@ export class cartDataType {
         Tota_Price?: string,
         Total_Discount?: string,
         Tax?: string,
-        shipping_method ? : {
+        shipping_method?: {
             flatrate?: string,
             freeshipping?: string,
             fedex?: string,

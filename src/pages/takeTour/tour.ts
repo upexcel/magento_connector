@@ -1,23 +1,19 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { Slides} from 'ionic-angular';
-import { ViewController, NavController } from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {ViewController, NavController, Events} from 'ionic-angular';
 import {AppConfig} from '../../model/appConfig/appConfig';
-import {ApiService } from './../../providers/api-service/api-service';
-import { Storage } from '@ionic/storage';
-import { ConfigDataType } from './configDataType';
-import { config } from './../../providers/config/config';
-import forEach from 'lodash/forEach';
-import clone from 'lodash/clone';
-import keys from 'lodash/keys';
-import {HomePage} from './../home/home';
+import {ApiService} from './../../providers/api-service/api-service';
+import {Storage} from '@ionic/storage';
+import {ConfigDataType} from '../../model/appConfig/configDataType';
+import {config} from './../../providers/config/config';
 @Component({
+    selector: 'tour',
     templateUrl: 'tour.html'
 })
 export class TourPage implements OnInit {
     data: ConfigDataType;
     descriptions: string;
     mySlideOptions = config.tourPageSliderOptions;
-    constructor(private _appConfig: AppConfig, public _local: Storage, public _navCtrl: NavController, public _viewCtrl: ViewController, private _apiService: ApiService) { }
+    constructor(private events: Events, private _appConfig: AppConfig, public _local: Storage, public _navCtrl: NavController, public _viewCtrl: ViewController, private _apiService: ApiService) {}
     ngOnInit() {
         this._appConfig.getAppConfig().then((res) => {
             this.data = res;
@@ -26,8 +22,16 @@ export class TourPage implements OnInit {
     close() {
         this._viewCtrl.dismiss();
     }
+    /**
+    * gotoHome
+    *
+    * Use of this source code is to throw event and dismiss view
+    **/
     gotoHome() {
-        this._navCtrl.setRoot(HomePage);
+        this.events.publish('goHome:home');
+        setTimeout(() => {
+            this._viewCtrl.dismiss();
+        }, 100);
     }
 
 }

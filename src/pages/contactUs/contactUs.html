@@ -1,0 +1,31 @@
+<header [title]='"Contact Us"' [wishList]=false></header>
+<ion-content>
+    <ion-spinner class="apiSpinner" *ngIf="spinner"></ion-spinner>
+    <form [formGroup]="contactData" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <ion-list>
+            <ion-item>
+                <ion-label class="capitalize" floating>First Name <span class="danger">*</span></ion-label>
+                <ion-input text-capitalize type="text"  id="name" [onReturn]='"last_name"' formControlName="name" ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label class="capitalize" floating>Last Name <span class="danger">*</span></ion-label>
+                <ion-input text-capitalize type="text"  id="last_name" [onReturn]='"email"' formControlName="last_name" ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label class="capitalize" floating>Email<span class="danger">*</span></ion-label>
+                <ion-input type="text"  id="email" [onReturn]='"telephone"' formControlName="email"></ion-input>
+            </ion-item>         
+            <ion-item>
+                <ion-label class="capitalize" floating>Telephone</ion-label>
+                <ion-input type="number"  id="telephone" [onReturn]='"comment"' formControlName="telephone" ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label class="capitalize" floating >Comment<span class="danger">*</span></ion-label>
+                <ion-textarea  id="comment"  formControlName="comment" ></ion-textarea> 
+            </ion-item>
+        </ion-list>
+        <span class="center">
+            <btn-round [title]='"Submit"' [spin]="spinner" [id]="'btn'" [category]="'click'" [color]="'primary'" [valid]="!contactData.valid" (onBtnClick)="signin(contactData.value)" ></btn-round>
+        </span>
+    </form>
+</ion-content>

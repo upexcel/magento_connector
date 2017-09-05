@@ -1,7 +1,8 @@
 {
-  "name": "invisionionic",
-  "app_id": "5f725af2",
-  "v2": true,
-  "typescript": true
+  "name": "cutePuppyPics",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
-

@@ -1,0 +1,22 @@
+<header  [title]='"My Product Reviews"' [wishList]=false></header>
+<ion-content >
+    <ion-spinner *ngIf="spin" class="apiSpinner"></ion-spinner>
+    <ion-list  *ngIf="!spin && myReviewRes && myReviewRes.success">
+        <ion-item *ngFor=" let data of myReviewRes.success_data ">
+            <ion-avatar item-left>
+                <img src="{{data.data.media_images[0]}}">
+            </ion-avatar>
+            <h2>{{data.data.name}}</h2>
+            <h3>{{data.review_title}}</h3>
+            <p text-wrap>{{data.review_detail}}</p>
+            <span item-right>
+             <p>{{data.review_date | customdate:'DD MMM YYYY'}}</p>
+            <a (tap)="viewDetails(data)"><span class="color capitalize" > view details</span></a>               
+            </span>
+           
+        </ion-item>
+        <h3 *ngIf="myReviewRes && !myReviewRes.success_data" class="center">
+            You have no reviews.
+        </h3>
+    </ion-list>
+</ion-content>                    

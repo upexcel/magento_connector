@@ -1,6 +1,7 @@
-<header [title]='title'></header>
+<!-- coll header component -->
+<header [title]='title' [pagename]="'home'" [search]='true' [view]="true" ></header>
 
-<ion-content>
+<ion-content class="home1"  [header-scroller]="display_mode">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -10,11 +11,15 @@
 
         </ion-refresher-content>
     </ion-refresher>
-    <ion-spinner class="apiSpinner" *ngIf="!categoryProduct && !error"></ion-spinner>
+    <ion-spinner class="apiSpinner" *ngIf="spinner(categoryProduct) && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
+    <span class="center" *ngIf="categoryProduct && categoryProduct.body.length==0">No Item Found</span>
     <category-view *ngIf="categoryProduct" [product]="categoryProduct.body"></category-view>
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll threshold="60%"  (ionInfinite)="doInfinite($event)" *ngIf="categoryProduct && categoryProduct.body.length > 9">
         <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>
+<!-- coll header component -->
+<!--*ngIf="display_mode!='PAGE'"-->
+<category-footer *ngIf="(product_count > 0) && categoryProduct" [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>

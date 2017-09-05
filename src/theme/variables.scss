@@ -14,7 +14,7 @@ $background-color:  #fff;
 scroll-content {
     overflow: hidden;
 }
-
+$red       :#f53d3d;
 $grean     :#00631D;
 $darkBlue  :#1c57ff;
 $hafeWite  :#f3f3f3;
@@ -50,7 +50,12 @@ danger:     #f53d3d,
 light:      #f4f4f4,
 dark:       #222,
 favorite:   #69BB7B,
-warning:    #8a6d3b
+warning:    #8a6d3b,
+red:        #e31e1e,
+gray:       #636363,
+lightRed:   #e66b6b,
+alert_yellow:#eea236,
+alert_success:#5cb85c,
 );
 
 

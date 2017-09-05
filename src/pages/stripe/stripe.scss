@@ -1,0 +1,28 @@
+page-stripe {
+    @mixin cardType {
+        right: 15px;
+        z-index: 999;
+        padding: 5px 10px;
+        color: gray;
+    }
+    .datetime {
+        padding: 13px 10px 13px 0px !important;
+    }
+    .cardType{
+        @include cardType;
+        top: 120px;
+        font-size: 1em;
+    }
+    .cardIcon{
+        @include cardType;
+        top: 90px;
+        font-size: 1.5em;
+    }
+    .error{
+        .item-inner{
+            border-bottom-color: $red !important;
+            box-shadow: inset 0 -1px 0 0 $red !important;           
+        }
+    }
+
+}

@@ -1,133 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController, Events } from 'ionic-angular';
-import { ApiService } from './../../providers/api-service/api-service';
-import { PopoverPage } from './../../components/popover/popover';
-import { OrderModalPage } from '../orderid-detail/orderid-detail';
-import { StartPage } from './../../pages/startpage/startpage';
-import { TotalOrder } from '../../model/orderList/totalOrder';
-import { Storage } from '@ionic/storage';
-import { GooglePlus } from 'ionic-native';
-import { OrderListDataType } from './../../model/orderList/orderlistDatatype';
-import { TotalOrderDataType } from './../../model/orderList/totalOrderDataType';
-import { LogoutService } from './../../providers/logout/logout-service';
+import {Component, OnInit, NgZone} from '@angular/core';
+import {NavController, PopoverController, Events} from 'ionic-angular';
+import {PopoverPage} from './../../components/popover/popover';
+import {OrderModalPage} from '../orderid-detail/orderid-detail';
+import {TotalOrder} from '../../model/orderList/totalOrder';
+import {OrderListDataType} from './../../model/orderList/orderlistDatatype';
+import {TotalOrderDataType} from './../../model/orderList/totalOrderDataType';
 import slice from 'lodash/slice';
-import { AppDataConfigService } from './../../providers/appdataconfig/appdataconfig';
-import uniq from 'lodash/uniq';
-import flattenDeep from 'lodash/flattenDeep';
-import clone from 'lodash/clone';
 import forEach from 'lodash/forEach';
-
+import groupBy from 'lodash/groupBy';
+import reverse from 'lodash/reverse';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 @Component({
+    selector: 'order-list',
     templateUrl: 'orderlist.html'
 })
 export class OrderlistPage implements OnInit {
     totalOrder: TotalOrderDataType;
     totalOrderList: OrderListDataType;
-    firstname: string;
-    lastname: string;
-    res: any;
-    values: any;
-    dates: any = [];
-    orders_error: any;
-    secret: any;
-    access_token: any;
+    values: Array<any>;
+    orders_error: string;
+    access_token: string;
     no_orders: boolean = false;
-    itemsValue: any = [];
-    itemsDate: any = [];
+    itemsValue: Array<any> = [];
     spin: boolean = false;
     error: boolean = false;
     startArray: number = 0;
     endArray: number = 4;
-    startDateArray: number = 0;
-    endDateArray: number = 2;
     message: string = "Token expired";
-    constructor(private _appConfigService: AppDataConfigService, private _logout: LogoutService, private _events: Events, private _order: TotalOrder, private _local: Storage, private _navCtrl: NavController, private _popoverCtrl: PopoverController, private _apiService: ApiService) { }
+    constructor(private _ngZone: NgZone, public events: Events, private _order: TotalOrder, private _navCtrl: NavController, private _popoverCtrl: PopoverController) {}
     ngOnInit() {
-        this._appConfigService.getUserData().then((userData: any) => {
-            this.secret = userData.secret;
-            this.firstname = userData.firstname;
-            this.lastname = userData.lastname;
-            this.total_orders();
-            this.selectedOrder_details();
+        this.total_orders();
+        this.selectedOrder_details();
+        this.events.subscribe('user:fcm', (orderid) => {  // catch event for update page when localNotifications come 
+            this._ngZone.run(() => {
+                this.total_orders();
+                this.selectedOrder_details();
+            });
         });
+    }
+    ngOnDestroy() {
+        this.events.unsubscribe('user:fcm'); //unsubscribe event
     }
 
     total_orders() {
-        var body = { "secret": this.secret }
-        this._order.getTotalOrder(body).then((res) => {
+        this._order.getTotalOrder({}).then((res) => { //col order/totalorder api
             this.totalOrder = res;
-        })
-            .catch(err => {
-                this.logout();
-            });
+        }).catch(err => {});
     }
 
     selectedOrder_details() {
         this.spin = true;
-        let res_data: any = [];
         let date: any = [];
-        let body = { "secret": this.secret }
-        let datas: any;
-        this._order.getOrderList(body).then((res) => {
-            this.spin = false;
+        this.itemsValue = [];
+        this._order.getOrderList({}).then((res) => {  //col order/alllist api to get list of order
+            this.spin = false; // stop spinner
             this.totalOrderList = res;
-            if (this.totalOrderList.body == 0) {
+            if (this.totalOrderList.body == 0) {  // check total no. of orders
                 this.no_orders = true;
                 this.orders_error = "You have no orders";
             } else {
-                forEach(this.totalOrderList.body, function(value, key) {
-                    date.unshift(value.created_at.split(" ", 1));
-                    datas = {
-                        value: value
-                    };
-                    res_data.unshift(datas);
+                forEach(this.totalOrderList.body, (value, key) => {
+                    date.unshift(value.created_at.split(" ", 1));    //split date and time
+                    value['date'] = (value.created_at.split(" "))[0];
+                    value['time'] = (value.created_at.split(" "))[1];
+                    value['orderId'] = key;
                 });
-                this.itemsValue = clone(res_data);
-                this.values = slice(this.itemsValue, this.startArray, this.endArray);
-                this.itemsDate = uniq(flattenDeep(date));
-                this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
+                //create group by date
+                this.totalOrderList.body = groupBy(this.totalOrderList.body, 'date');
+                forEach(this.totalOrderList.body, (value, key) => {
+                    this.itemsValue.unshift({
+                        value: reverse(value),
+                        key: key
+                    });
+                });
+                this.values = slice(this.itemsValue, this.startArray, this.endArray); //breck data into startArray to endArray
             }
         })
             .catch((err) => {
                 this.error = true;
-                this.logout();
             })
     }
     doInfinite(infiniteScroll) {
-        if (this.values.length % 2 == 0 || this.dates.length % 2 == 0) {
-            if (this.values.length >= this.endArray || this.dates.length >= this.endDateArray) {
-                setTimeout(() => {
-                    this.endArray += 4;
-                    this.endDateArray += 2;
-                    this.values = slice(this.itemsValue, this.startArray, this.endArray);
-                    this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
-                    infiniteScroll.complete();
-                }, 2000);
-            } else {
-                infiniteScroll.complete();
-            }
-        }
-        else {
-            let checkValue = this.values.length + 1;
-            let checkDate = this.dates.length + 1;
-            if (checkValue >= this.endArray || checkDate >= this.endDateArray) {
-
-                if (checkValue == this.endArray || checkDate == this.endDateArray) {
-                    infiniteScroll.complete();
-                }
-                else {
-                    setTimeout(() => {
-                        this.endArray += 4;
-                        this.endDateArray += 2;
-                        this.values = slice(this.itemsValue, this.startArray, this.endArray);
-                        this.dates = slice(this.itemsDate, this.startDateArray, this.endDateArray);
-                        infiniteScroll.complete();
-                    }, 2000);
-                }
-            }
-            else {
-                infiniteScroll.complete();
-            }
+        if (this.itemsValue.length > this.endArray) {
+            this.endArray += 4; //increment of 4
+            this.values = slice(this.itemsValue, this.startArray, this.endArray);//breck data into startArray to endArray
+            infiniteScroll.complete();
+        } else {
+            infiniteScroll.complete();
+            infiniteScroll.enable(false);
         }
     }
 
@@ -138,12 +99,11 @@ export class OrderlistPage implements OnInit {
         });
     }
     gotoOrderDetail(order_id) {
-        this._navCtrl.push(OrderModalPage, { "order_id": order_id });
+        //move to OrderModalPage with order id
+        this._navCtrl.push(OrderModalPage, {"order_id": order_id});
     }
     goback() {
+        //move back and close current page
         this._navCtrl.pop();
-    }
-    logout() {
-        this._logout.logout(this.message, this._navCtrl);
     }
 }

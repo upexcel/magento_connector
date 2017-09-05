@@ -1,29 +1,43 @@
-import { Injectable, OnInit}    from '@angular/core';
-import {ApiService } from './../../providers/api-service/api-service';
-import { HomeProductsDataType } from './homeProductsDataType';
-import { Storage } from '@ionic/storage';
-import { homeProductsService } from './../../providers/homeproducts-service/homeproducts.service';
-declare let Promise: any;
+import {
+    Injectable
+} from '@angular/core';
+import {ApiService} from './../../providers/api-service/api-service';
+import forEach from 'lodash/forEach';
+import { Events } from 'ionic-angular';
 @Injectable()
-export class HomeProducts implements OnInit {
-    constructor(public local: Storage, private _apiService: ApiService, private _homeProductsService: homeProductsService) { }
-    ngOnInit() { }
 
-    getHomeProducts(data): Promise<HomeProductsDataType> {
-        let local = this.local;
-        return new Promise((resolve, reject)=> {
-            local.get('homeProducts').then((homeProducts: string) => {
-                if (homeProducts != null && homeProducts != undefined){
-                    resolve(homeProducts);
-                }
-                else {
-                    this._homeProductsService.getHomeProducts(data).then((res)=> {
-                        resolve(res);
-                    }, (err)=>{
-                        reject(err);
-                    });
-                }
-            });
+export class HomeProducts {
+    homeProduct;
+    constructor(public events: Events, private _apiService: ApiService) {}
+    resetHomeProducts() {
+        this.homeProduct=null;
+    }
+    /**
+    * getHomeProducts function is use for call home/products api 
+    **/
+    getHomeProducts() {
+        let data = {"type": "full"}
+        return new Promise((resolve, reject) => {
+            if ((this.homeProduct && !this.homeProduct.body) || !this.homeProduct) {
+                this._apiService.api("home/products", data).subscribe((res) => {
+                    this.homeProduct = res;
+                     this.events.publish('homeProducts:api',"true");
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+            } else {
+                resolve(this.homeProduct)
+            }
         });
+    }
+    updateHomeProductWishlist(entity_id, wishlist_id) {
+        let homeProductsData = this.homeProduct;
+        forEach(homeProductsData['body'], (value, key) => {
+            if (value['data']['entity_id'] == entity_id) {
+                value['data']['wishlist_item_id'] = wishlist_id;
+            }
+        });
+        this.homeProduct=homeProductsData;
     }
 }

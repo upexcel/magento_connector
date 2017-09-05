@@ -1,5 +1,5 @@
-<ion-content [ngStyle]="{'background-image': 'url('+data.body.background_image+')'}" class="startpage" *ngIf="check==true">
-    <p align="center">{{messsage_expired}}</p>
+<ion-content [ngStyle]="{'background-image': 'url('+data.body.background_image+')' ,'background-size': 'cover'}" class="startpage" *ngIf="check==true">
+    <p class="aligncenter capitalize" style="color:white;">{{messsage_expired}}</p>
     <ion-grid>
         <ion-row center>
             <ion-col class="center">
@@ -19,21 +19,21 @@
     <ion-grid >
         <ion-row center>
             <ion-col class="center">
-                <btn-tour [titleTour]='"TAKE THE TOUR"' [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
+                <btn-tour [titleTour]='"TAKE THE TOUR"'  [colorTour]="'light'" [classTour]="'tourButt'" (onBtnClick)="presentProfileModal()"></btn-tour>  
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <facebook-login (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
+                <facebook-login *ngIf="visible" [spinEvent]="spin.facebook" (userfbLogin)="userFbLogin($event)" (userfbError)="showSocialLoginError($event)"></facebook-login>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid >
         <ion-row center >
             <ion-col class="center">
-                <google-login (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
+                <google-login *ngIf="visible" [spinEvent]="spin.google" (usergoogleLogin)="userGoogleLogin($event)" (usergoogleError)="showSocialLoginError($event)"></google-login>
             </ion-col>
         </ion-row>
     </ion-grid>

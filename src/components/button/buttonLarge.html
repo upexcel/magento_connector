@@ -1,0 +1,7 @@
+    <button ion-button color="{{colorForLarge}}"  class="uppercase" [ngClass]="classForLarge" type="submit" id="{{idForLarge}}"  large (click)="onClick()"  [disabled]="validForLarge" >
+        <span *ngIf="spinForLarge==false" >
+                {{titleForLarge}}
+        </span>
+            <ion-spinner name="circles" *ngIf="spinForLarge" class="spin">
+            </ion-spinner>
+    </button>
