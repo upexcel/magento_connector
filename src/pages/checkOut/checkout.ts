@@ -47,7 +47,6 @@ export class Checkout implements OnInit {
         this.cartData = this._navParams.get('res');// cart data come from cart page
         this._address.getAddress().then((address) => { //call service providers/address-service/ to get address 
             this.address = address;
-            console.log("address",address)
             if (!this.address || this.address['body'].length == 0) { // if address not found 
                 //redirect to MyEditAddressPage with alreadyCheckLength to check it move by checkout page
                 this._navCtrl.push(MyEditAddressPage, {"alreadyCheckLength": true, "firstTime": 1, title: "Add New Address"});

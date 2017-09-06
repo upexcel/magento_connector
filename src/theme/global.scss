@@ -106,11 +106,10 @@ start-page{
         width:75%;
     }
 
-    header{
-        .title{
-            .toolbar-title {
-                width: 93% !important;
-            }  } 
+    .titleSize{          
+        .toolbar-title {
+            width: 93% !important;
+        }   
     }
     user-menu ,sidemenu{
         .item .item-inner{

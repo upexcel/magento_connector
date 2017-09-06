@@ -1,4 +1,4 @@
-<ion-header [ngClass]="classHeader">
+<ion-header>
     <ion-navbar  color="primary" >
         <span *ngIf="searchBar"> 
             <ion-buttons class="floatLeft widthA padding5">
@@ -20,7 +20,7 @@
                         <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
                 </button>
 
-                <ion-title  class="uppercase floatLeft">
+                <ion-title  [ngClass]="{'uppercase': true,'floatLeft': true,'titleSize':classHeader}">
                     {{title}} {{itemName}}
                 </ion-title>
 

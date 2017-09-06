@@ -24,7 +24,7 @@ export class Headers implements AfterContentInit {
     @Input() menu: boolean = false;
     @Input() wishList: boolean = true;
     @Input() itemName: string = '';
-    @Input() classHeader: string = "";
+    @Input() classHeader: boolean = false;
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
@@ -39,7 +39,7 @@ export class Headers implements AfterContentInit {
     ngAfterContentInit() {
         setTimeout(()=>{
            console.log(this.classHeader );
-        })
+        },200)
         // call via cart component  
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
