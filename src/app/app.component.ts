@@ -190,7 +190,6 @@ export class MyApp implements OnInit {
                 // background mode
 
             } else if (!res.tap) {
-            console.log("res notification",res)
                 this.localNotifications.schedule({
                     title: res.title,
                     text: res.body,

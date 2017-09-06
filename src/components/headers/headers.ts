@@ -37,9 +37,6 @@ export class Headers implements AfterContentInit {
     
     constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) {}
     ngAfterContentInit() {
-        setTimeout(()=>{
-           console.log(this.classHeader );
-        },200)
         // call via cart component  
         this._events.subscribe('check:login', (data) => {
             this.checkAuthorization();
