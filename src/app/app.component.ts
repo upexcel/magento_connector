@@ -128,9 +128,11 @@ export class MyApp implements OnInit {
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
+                this._local.remove("userData");
                 this._rootPage = StartPage;
                 this.rootPageName = 'StartPage';
                 this._country.getCountryName();
+                
             }
             else {
                 this._appConfigService.cleanUp();

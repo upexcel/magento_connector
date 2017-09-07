@@ -20,6 +20,7 @@ import {CartFunction} from '../../model/cart/cartHandling';
 import {CartService} from './../../providers/cart-service/cart-service';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {fcmService} from './../../providers/fcm-service/fcm-service';
+import {EventService} from './../../providers/headerEvents/headerEvents';
 
 @Component({
     selector: 'start-page',
@@ -34,7 +35,7 @@ export class StartPage implements OnInit {
     options: {};
     spin = {};
     visible: boolean = true;
-    constructor(private _fcmService: fcmService, private _toast: ToastService, private _cartFunction: CartFunction, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _sliderService: Slider, private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
+    constructor(public _eventService: EventService,private _fcmService: fcmService, private _toast: ToastService, private _cartFunction: CartFunction, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _sliderService: Slider, private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
         private _modelCtrl: ModalController, private _appConfigService: AppDataConfigService) {
         this.spin = {google: "1", facebook: "1"};
@@ -44,6 +45,12 @@ export class StartPage implements OnInit {
         this.messsage_expired = this._navparam.get("message");// get expire message
         this.options = {    //  get value from config 
             clientid: config.google_clientid
+        }
+        if (this.messsage_expired){
+            this._address.resetAddress();
+            this._cartFunction.resetCart();
+            this._eventService.setWishList(0);
+            this._eventService.setCartCounter(0);
         }
         this._appConfigService.resetDataInService();//reset data from service
         this._appConfig.getAppConfig().then((res) => { // get data from local
