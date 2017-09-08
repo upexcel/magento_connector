@@ -23,7 +23,7 @@ import {WishListModel} from './../../model/wishList/wishList';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {LoadingController} from 'ionic-angular';
 import {CartFunction} from '../../model/cart/cartHandling';
-import {DomSanitizer} from '@angular/platform-browser'
+import {DomSanitizer} from '@angular/platform-browser';
 import {NgZone} from '@angular/core';
 import {LoginPage} from './../login/login';
 
@@ -40,11 +40,11 @@ export class ProductPage implements OnInit {
     selectedList: Array<any> = [];
     disable: boolean = true;
     images: string;
-    final_price: number;
-    refPrice: any;
-    refDisplayPrice: number;
-    display_price: any;
-    special_price: number;
+    final_price: number = 0;
+    refPrice: any = 0;
+    refDisplayPrice: number = 0;
+    display_price: any = 0;
+    special_price: number = 0;
     tier_price: Array<any>;
     keys: Array<string> = [];
     data: any;
@@ -64,12 +64,14 @@ export class ProductPage implements OnInit {
     img: string;
     name: string;
     type: string;
-    bundlePrice: any;
+    bundlePrice: any = 0;
     configPrice: Array<any> = [];
     addToCartData;
-    customPrice: any=0;
-    customDisplayPrice: any=0;
-    dynemicDisplayPrice: any=0;
+    customPrice: any = 0;
+    customDisplayPrice: any = 0;
+    dynemicDisplayPrice: any = 0;
+    display_special_price: number = 0;
+    display_special_priceRef:number=0;
     product_custom_option: any;
     config = true;
     product = "product";
@@ -234,6 +236,8 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;//special price
                     this.display_price = this.productData.body.data.display_price;//display price
                     this.final_price = this.productData.body.data.final_price;//final price
+                    this.display_special_price = this.productData.body.data.display_special_price;
+                    this.display_special_priceRef = this.productData.body.data.display_special_price;
                     this.refPrice = this.productData.body.data.final_price;//final price refirence variable
                     this.refDisplayPrice = this.productData.body.data.display_price;//display price refirence variable
                     this.bundlePrice = parseFloat(this.refPrice);//parse final price refirence variable
@@ -452,6 +456,7 @@ export class ProductPage implements OnInit {
     }
 
     diffrentTypeProductData(data?) {
+        this.display_special_price=this.display_special_priceRef;
         if (this.customPrice != undefined) {
             this.bundlePrice = parseFloat(this.customPrice);
         }
@@ -482,20 +487,23 @@ export class ProductPage implements OnInit {
             }
             this.bundlePrice += (parseFloat(data.dynemicPrice));
             this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
+            this.display_special_price+=(parseFloat(data.dynemicPrice));
 
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
             this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.total));
             this.dynemicDisplayPrice += (parseFloat(data.total));
+            this.display_special_price=0;
             if (data.disable == false) {
                 this.ifCustomOption(null, data);
             }
         }
         else {
-            if (data) {
-                this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data));
-                this.dynemicDisplayPrice += (parseFloat(data));
+            if (data >= 0) {
+                this.bundlePrice = (parseFloat(this.refPrice)) + (parseFloat(data));
+                this.dynemicDisplayPrice = parseFloat(this.dynemicDisplayPrice)+(parseFloat(data));
+                this.display_special_price=(this.display_special_price*1)+(parseFloat(data));
             }
         }
         this.final_price = (parseFloat(this.bundlePrice));

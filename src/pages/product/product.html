@@ -52,8 +52,8 @@
                         </ion-row>
                         <ion-row> 
                             <ion-col class="padTB no-margin paddTop5"> 
-                                <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
-                                <span [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
+                                <span id="font13" [ngClass]="{'line':(display_special_price*1) == (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
+                                <span [ngClass]="{'paddLeft10':(display_price*1) == (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
                                 <span class="floatRight">
                                     <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (tap)="wishList(productData.body)"></ion-icon>
                                 </span>
@@ -92,7 +92,7 @@
                 <!--for bundle product-->
 
                 <span *ngIf="type=='bundle'">
-                    <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
+                    <bundle [bundle]="productData.body" [special_price]="special_price" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
                 </span>
                 <!--                for downloadable product-->
                 <span *ngIf="type == 'downloadable'">

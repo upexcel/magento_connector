@@ -12,6 +12,7 @@ export class BundleProduct {
     @Output() onChangeData = new EventEmitter();
     @Input() valBundle: boolean;
     @Input() editCartData: any;
+    @Input() special_price: any = 0;
     bundleCheckQty: any = {};
     bundleRadioQty: any = {};
     bundleMultiQty: any = {};
@@ -42,6 +43,7 @@ export class BundleProduct {
             }
             forEach(value.selection, (selection: any, selectionKey) => {
                 selection.defaultSet = false;
+                selection.afterSpecialPrice = ((selection.selection_price * this.special_price) / 100)
                 if (!this.editCartData) {
                     if (selection.is_default == "1") {
                         selection.defaultSet = true;
@@ -209,17 +211,17 @@ export class BundleProduct {
         let total = 0;
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
-                total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.selection_price)));
+                total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.afterSpecialPrice)));
             }
             if (value.type == "multi") {
                 forEach(value.vertualArray, (multiValue1) => {
-                    total += ((multiValue1.selection_qty * 1) * (parseFloat(multiValue1.selection_price)));
+                    total += ((multiValue1.selection_qty * 1) * (parseFloat(multiValue1.afterSpecialPrice)));
                 })
             }
             if (value.type == "checkbox") {
                 forEach(value.selection, (checkboxValue1) => {
                     if (checkboxValue1.defaultSet == true) {
-                        total += ((checkboxValue1.selection_qty * 1) * (parseFloat(checkboxValue1.selection_price)));
+                        total += ((checkboxValue1.selection_qty * 1) * (parseFloat(checkboxValue1.afterSpecialPrice)));
                     }
                 })
             }
