@@ -43,7 +43,11 @@ export class BundleProduct {
             }
             forEach(value.selection, (selection: any, selectionKey) => {
                 selection.defaultSet = false;
-                selection.afterSpecialPrice = ((selection.selection_price * this.special_price) / 100)
+                if (selection.special_price && selection.special_price.length > 0) {
+                    selection.afterSpecialPrice = ((selection.selection_price * this.special_price) / 100)
+                } else {
+                    selection.afterSpecialPrice = selection.selection_price;
+                }
                 if (!this.editCartData) {
                     if (selection.is_default == "1") {
                         selection.defaultSet = true;
@@ -208,7 +212,9 @@ export class BundleProduct {
     * function call to calculate bundle item total price
     **/
     calculateTotal(obj) {
+        console.log(obj)
         let total = 0;
+        console.log("this.bundle.bundle_items", this.bundle.bundle_items)
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
                 total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.afterSpecialPrice)));

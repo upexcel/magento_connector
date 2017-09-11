@@ -31,8 +31,8 @@
                                 </div>
                                 <div class="row rowForLandscape" (tap)="gotoProduct(feat_prod.data.sku)">
                                     <div class="columnForGrid100">
-                                        <span style="color:red;" *ngIf="feat_prod.data.display_special_price >0" ><span *ngIf="feat_prod.data.display_special_price >0">Special Price</span> {{feat_prod.data.currency_sign}}{{feat_prod.data.display_special_price}}</span>
-                                        <span   [ngClass]="{'line': feat_prod.data.display_special_price >0}" >{{feat_prod.data.currency_sign}}{{feat_prod.data.final_price}}</span>
+                                        <span [ngClass]="{'redColor':((feat_prod.data.display_special_price*1) == (feat_prod.data.final_price*1) && (feat_prod.data.final_price*1) >0)}" ><span *ngIf="(feat_prod.data.display_special_price*1) == (feat_prod.data.final_price*1) && (feat_prod.data.final_price*1) >0">Special Price</span> {{feat_prod.data.currency_sign}}{{feat_prod.data.final_price}}</span>
+                                        <span   [ngClass]="{'line': (feat_prod.data.display_special_price*1) == (feat_prod.data.final_price*1)}" *ngIf="(feat_prod.data.display_special_price*1) == (feat_prod.data.final_price*1) && ((feat_prod.data.final_price*1) >0)">{{feat_prod.data.currency_sign}}{{feat_prod.data.display_price}}</span>
                                     </div>
                                 </div>
                                 <div class="row rowForLandscape" *ngIf="feat_prod.data.rating>0" (tap)="gotoProduct(feat_prod.data.sku)">
