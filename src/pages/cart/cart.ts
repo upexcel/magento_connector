@@ -45,9 +45,13 @@ export class CartPage implements OnInit {
         this.res = this._cartFunction.getCart();
         //call createData funtion for manipulation data and pass cart data as parameter 
         this.createData(this.res);
+    }
+    checkCoupon() {
         this._appConfigService.getUserData().then((userData: any) => {
-            if (userData && userData.access_token) {
+            if ((userData && userData.access_token) && this.grandtotalPrice * 1 > 0) {
                 this.couponCodeVisible = true;
+            }else{
+                this.couponCodeVisible = false;
             }
         });
     }
@@ -66,6 +70,7 @@ export class CartPage implements OnInit {
             //get cart coupon code if applicable 
             this.couponCode = cartData.coupon_code;
             let products: any = {};
+            this.checkCoupon();
             //check cart data should not empty undefined or blank array 
             if (cartData && cartData.cart_items && cartData.cart_items.length > 0) {
                 forEach(cartData.cart_items, (value, key) => {
@@ -95,7 +100,7 @@ export class CartPage implements OnInit {
     changeQuantity(data) {
         //check ,is user select pop up to write quantity
         if (data.product_qty == "More") {        //if yes
-            setTimeout(()=>{ data.product_qty = data['vertualQty'];})
+            setTimeout(() => {data.product_qty = data['vertualQty'];})
             let prompt = this.alertCtrl.create({             //create alert with title
                 title: 'Enter Product Quantity',
                 enableBackdropDismiss: false,
@@ -184,6 +189,7 @@ export class CartPage implements OnInit {
 
             })
         }
+        this.checkCoupon();
     }
     /**    
     * deleteProduct    
@@ -233,9 +239,10 @@ export class CartPage implements OnInit {
         data['type'] = data['product_type'];
         //navigate to ProductPage with needed data
         this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'], "item_id": data['item_id'], "quote_id": data['quote_id'], "editProductQuantity": data['product_qty']}).then(() => {
-//            const index = this._viewCtrl.index; // close this page 
-//            this._navCtrl.remove(index);
+            //            const index = this._viewCtrl.index; // close this page 
+            //            this._navCtrl.remove(index);
         });
+        this.checkCoupon();
     }
 
     /**
