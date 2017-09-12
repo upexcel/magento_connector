@@ -44,7 +44,7 @@ export class ProductPage implements OnInit {
     refPrice: any = 0;
     refDisplayPrice: number = 0;
     display_price: any = 0;
-    special_price: number = 0;
+    special_price: any = 0;
     tier_price: Array<any>;
     keys: Array<string> = [];
     data: any;
@@ -67,11 +67,11 @@ export class ProductPage implements OnInit {
     bundlePrice: any = 0;
     configPrice: Array<any> = [];
     addToCartData;
-    customPrice: any = 0;
+    customPrice: any;
     customDisplayPrice: any = 0;
     dynemicDisplayPrice: any = 0;
     display_special_price: number = 0;
-    display_special_priceRef:number=0;
+    display_special_priceRef: number = 0;
     product_custom_option: any;
     config = true;
     product = "product";
@@ -107,9 +107,9 @@ export class ProductPage implements OnInit {
             this.editProductQuantity = this._navParams.get('editProductQuantity');    //hold quantity of editable item
             this.item_id = this._navParams.get('item_id');    //hold item id
             if (this.editCartData && !this._navParams.get('wishlist')) {    //inset title name
-                this.cartButtonTitle = 'UPDATE CART'
+                this.cartButtonTitle = 'UPDATE CART';
             } else {
-                this.cartButtonTitle = 'ADD TO CART'
+                this.cartButtonTitle = 'ADD TO CART';
             }
             // call products function when it lode first time
             this.products();
@@ -142,6 +142,9 @@ export class ProductPage implements OnInit {
     }
     transform(value) {
         return this.sanitized.bypassSecurityTrustHtml(value.body.data['long_description']);
+    }
+    transformPrice(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value['displayBundlePrice']);
     }
     /*
      * function use for share options
@@ -252,6 +255,15 @@ export class ProductPage implements OnInit {
                     //create comman data use in cart/cart api
                     this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id};
                     //get additional_information if exit
+                    if (this.type == "bundle") {
+                        if (this.special_price && this.special_price.length > 0) {
+                            let maxRPrice = (this.productData.body.data.maxBPrice * this.special_price) / 100;
+                            let minRPrice = (this.productData.body.data.minBPrice * this.special_price) / 100;
+                            this.productData.body.data['displayBundlePrice'] = `From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
+                        } else {
+                            this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
+                        }
+                    }
                     if (additionalInformation != undefined) {
                         forEach(additionalInformation, (value, key) => {
                             if (value != false) {
@@ -456,7 +468,7 @@ export class ProductPage implements OnInit {
     }
 
     diffrentTypeProductData(data?) {
-        this.display_special_price=this.display_special_priceRef;
+        this.display_special_price = this.display_special_priceRef;
         if (this.customPrice != undefined) {
             this.bundlePrice = parseFloat(this.customPrice);
         }
@@ -485,16 +497,17 @@ export class ProductPage implements OnInit {
                 }
                 this.disable = data.disable;
             }
-            this.bundlePrice += (parseFloat(data.dynemicPrice));
+            this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.dynemicPrice));
+
             this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
-            this.display_special_price+=(parseFloat(data.dynemicPrice));
+            this.display_special_price += (parseFloat(data.dynemicPrice));
 
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
             this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.total));
             this.dynemicDisplayPrice += (parseFloat(data.total));
-            this.display_special_price=0;
+            this.display_special_price = 0;
             if (data.disable == false) {
                 this.ifCustomOption(null, data);
             }
@@ -502,8 +515,8 @@ export class ProductPage implements OnInit {
         else {
             if (data >= 0) {
                 this.bundlePrice = (parseFloat(this.refPrice)) + (parseFloat(data));
-                this.dynemicDisplayPrice = parseFloat(this.dynemicDisplayPrice)+(parseFloat(data));
-                this.display_special_price=(this.display_special_price*1)+(parseFloat(data));
+                this.dynemicDisplayPrice = parseFloat(this.dynemicDisplayPrice) + (parseFloat(data));
+                this.display_special_price = (this.display_special_price * 1) + (parseFloat(data));
             }
         }
         this.final_price = (parseFloat(this.bundlePrice));

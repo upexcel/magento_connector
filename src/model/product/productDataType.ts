@@ -1,6 +1,8 @@
 export class productDataType {
     body: {
         data: {
+            "minBPrice"?:number;
+            "maxBPrice"?:number;
             "entity_id": string,
             "rating": boolean,
             "qty": string,

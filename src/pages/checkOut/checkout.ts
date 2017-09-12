@@ -55,7 +55,7 @@ export class Checkout implements OnInit {
         this.createPlaceOrderData();
     }
     getPaymentMethod() {
-        this._checkoutService.getPaymentMethods({"data":{grandTotal:this.grandTotal}}).then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
+        this._checkoutService.getPaymentMethods({"data": {grandTotal: this.grandTotal}}).then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
             this.count++;
             this.PaymentMethods = [];
             forEach(res.body.payment_methods, (value, key) => {
@@ -136,6 +136,7 @@ export class Checkout implements OnInit {
      *  call when view will enter
      */
     ionViewWillEnter() {
+        this.validate.shipping = false;
         this.IfDownloadable();
         this.IfPriceZero();
         this.selectedPaymentMethod = false;
@@ -152,6 +153,7 @@ export class Checkout implements OnInit {
                         this.validate.shippingAddress = true; //shippingAddress validation true
                     }
                 })
+                this.validate['shippingAddress'] = true;
             }
         });
 
@@ -185,6 +187,7 @@ export class Checkout implements OnInit {
      * call when paymentMethod selected(manage payment Method)
      */
     paymentMethod(selectedPaymentMethod) {
+        console.log("payment coll")
         this.validate.payment = false;
         this.data['payment_method'] = selectedPaymentMethod['payment_method'];
         if (selectedPaymentMethod && selectedPaymentMethod['payment_method']) {
@@ -196,6 +199,7 @@ export class Checkout implements OnInit {
      * call when shippingMethod selected(manage shipping Method)
      */
     shippingMethod(selectedShippingMethod) {
+        console.log("shippingMethod coll")
         this.shipping_amount = selectedShippingMethod.price;
         this.validate.shipping = false;
         this.data['shipping_method'] = selectedShippingMethod['code'];
@@ -214,7 +218,9 @@ export class Checkout implements OnInit {
                 count++;
             }
         })
+        console.log("validate coll", count == Object.keys(this.validate).length, this.validate);
         if (count == Object.keys(this.validate).length) {
+            console.log("call")
             this.taxDetails();
         } else {
             this.disable = true;

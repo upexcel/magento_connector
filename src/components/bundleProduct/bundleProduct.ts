@@ -29,54 +29,54 @@ export class BundleProduct {
     * ngOnInit workes to initilize bundle type product and validate pre-set value
     **/
     ngOnInit() {
-        this.validateArray = [];
-        let m_Flag = 0;
-        forEach(this.bundle.bundle_items, (value, key) => {
-            value.id = key;
-            value.vertualId = false;
-            value.visable = true;
-            value.vertualArray = [];
-            if (value.is_require == "1") {
-                this.validateArray.push({"id": value.id, "validate": true});
-            } else {
-                this.validateArray.push({"id": value.id, "validate": false});
-            }
-            forEach(value.selection, (selection: any, selectionKey) => {
-                selection.defaultSet = false;
-                if (selection.special_price && selection.special_price.length > 0) {
-                    selection.afterSpecialPrice = ((selection.selection_price * this.special_price) / 100)
+            this.validateArray = [];
+            let m_Flag = 0;
+            forEach(this.bundle.bundle_items, (value, key) => {
+                value.id = key;
+                value.vertualId = false;
+                value.visable = true;
+                value.vertualArray = [];
+                if (value.is_require == "1") {
+                    this.validateArray.push({"id": value.id, "validate": true});
                 } else {
-                    selection.afterSpecialPrice = selection.selection_price;
+                    this.validateArray.push({"id": value.id, "validate": false});
                 }
-                if (!this.editCartData) {
-                    if (selection.is_default == "1") {
-                        selection.defaultSet = true;
+                forEach(value.selection, (selection: any, selectionKey) => {
+                    selection.defaultSet = false;
+                    if (this.bundle.data.special_price && this.bundle.data.special_price.length > 0) {
+                        selection.afterSpecialPrice = ((selection.selection_price * this.bundle.data.special_price) / 100)
                     } else {
-                        selection.defaultSet = false;
+                        selection.afterSpecialPrice = selection.selection_price;
                     }
-                } else {
-                    forEach(this.editCartData.bundle_option, (cartValue, cartKey) => {
-                        if (typeof (cartValue) == "object") {
-                            forEach(cartValue, (cartValueOpt, cartKeyOpt) => {
-                                if (selection.selection_product_id == cartValueOpt) {
+                    if (!this.editCartData) {
+                        if (selection.is_default == "1") {
+                            selection.defaultSet = true;
+                        } else {
+                            selection.defaultSet = false;
+                        }
+                    } else {
+                        forEach(this.editCartData.bundle_option, (cartValue, cartKey) => {
+                            if (typeof (cartValue) == "object") {
+                                forEach(cartValue, (cartValueOpt, cartKeyOpt) => {
+                                    if (selection.selection_product_id == cartValueOpt) {
+                                        selection.defaultSet = true;
+                                    }
+                                })
+                            } else {
+                                if (selection.selection_product_id == cartValue) {
                                     selection.defaultSet = true;
                                 }
-                            })
-                        } else {
-                            if (selection.selection_product_id == cartValue) {
-                                selection.defaultSet = true;
                             }
+                        })
+                    }
+                    this.fistTimeCreateData(selection, value, m_Flag, (m_Flag) => {
+                        if (m_Flag == 1) {
+                            this.formValidate(value.id, false, value.is_require);
+                            m_Flag = 0;
                         }
                     })
-                }
-                this.fistTimeCreateData(selection, value, m_Flag, (m_Flag) => {
-                    if (m_Flag == 1) {
-                        this.formValidate(value.id, false, value.is_require);
-                        m_Flag = 0;
-                    }
                 })
             })
-        })
     }
     /** 
     *    fistTimeCreateData
@@ -212,9 +212,7 @@ export class BundleProduct {
     * function call to calculate bundle item total price
     **/
     calculateTotal(obj) {
-        console.log(obj)
         let total = 0;
-        console.log("this.bundle.bundle_items", this.bundle.bundle_items)
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
                 total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.afterSpecialPrice)));
