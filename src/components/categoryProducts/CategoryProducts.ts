@@ -31,9 +31,9 @@ export class CategoryComponent {
                 if (value.data.special_price && value.data.special_price.length > 0) {
                     let maxRPrice = (value.data.maxBPrice * value.data.special_price) / 100;
                     let minRPrice = (value.data.minBPrice * value.data.special_price) / 100;
-                    value.data['displayBundlePrice'] = `From <b>${value.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${value.data.currency_sign}${value.data['minBPrice']} </span> To <b>${value.data.currency_sign}${maxRPrice}</b>  <span class="fontColor">Regular Price ${value.data.currency_sign}${value.data['maxBPrice']} </span>`
+                    value.data['displayBundlePrice'] = `From <b>${value.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${value.data.currency_sign}${value.data['minBPrice']} </span><br/> To <b>${value.data.currency_sign}${maxRPrice}</b>  <span class="fontColor">Regular Price ${value.data.currency_sign}${value.data['maxBPrice']} </span>`
                 } else {
-                    value.data['displayBundlePrice'] = `From ${value.data.currency_sign}${value.data['minBPrice']}  To  ${value.data.currency_sign}${value.data['maxBPrice']} `
+                    value.data['displayBundlePrice'] = `From ${value.data.currency_sign}${value.data['minBPrice']} <br/> To  ${value.data.currency_sign}${value.data['maxBPrice']} `
                 }
             }
         });

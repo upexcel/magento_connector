@@ -259,9 +259,9 @@ export class ProductPage implements OnInit {
                         if (this.special_price && this.special_price.length > 0) {
                             let maxRPrice = (this.productData.body.data.maxBPrice * this.special_price) / 100;
                             let minRPrice = (this.productData.body.data.minBPrice * this.special_price) / 100;
-                            this.productData.body.data['displayBundlePrice'] = `From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
+                            this.productData.body.data['displayBundlePrice'] = `<span style="padding-bottom:10px;"> From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> </span><br/> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
                         } else {
-                            this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
+                            this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  <br/> To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
                         }
                     }
                     if (additionalInformation != undefined) {
@@ -336,6 +336,7 @@ export class ProductPage implements OnInit {
             }, (err) => {
                 this._toast.toast("Please Refresh This Page !!", 3000, "bottom");
                 this.error = true;
+                this.spin = false;
             });
         });
     }

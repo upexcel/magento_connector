@@ -111,6 +111,7 @@ start-page{
             width: 93% !important;
         }   
     }
+
     user-menu ,sidemenu{
         .item .item-inner{
             border-width: 1px !important;
@@ -934,9 +935,9 @@ header{
     .title-md {
         left: 0;
         top: 0;
-        padding: 0 70px 1px;
+        padding: 0 0px 1px 70px;
         position: absolute;
-        width: 93%;
+        width: 100%;
         height: 100%;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
@@ -944,6 +945,11 @@ header{
     }
     .toolbar-title-md {
         padding: 0 12px 0 0;
+    }
+}
+product{
+    .title-md {
+        padding: 0 85px 1px 70px !important;
     }
 }
 .ios {
