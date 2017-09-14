@@ -30,11 +30,11 @@ export class CartService {
                     //                    this.saveCartInLocal(data, resolve, res);
                 }
             }).catch((err) => {
+                console.log("wishListAdd", wishListAdd);
                 if (wishListAdd) {
                     this._toast.toast("Please specify options", 3000, "top");
                 } else {
-
-//                    this._toast.toast(JSON.parse(err._body)["message"], 3000, "top");
+                    this._toast.toast(JSON.parse(err._body)["message"], 3000, "top");
                 }
 
                 reject(err);
