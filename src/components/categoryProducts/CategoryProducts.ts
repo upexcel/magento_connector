@@ -25,7 +25,6 @@ export class CategoryComponent {
         }, 100);
     }
     bundlePrice() {
-        console.log("this.product",this.product)
         forEach(this.product, (value) => {
             if (value.data.type == "bundle") {
                 if (value.data.special_price && value.data.special_price.length > 0) {

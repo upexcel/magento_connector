@@ -236,7 +236,6 @@ export class CartPage implements OnInit {
 
     edit(data) {
         //product_type
-        console.log("data",data);
         data['type'] = data['product_type'];
         //navigate to ProductPage with needed data
         this._navCtrl.push(ProductPage, {'id': data['product_sku'], "editCartData": data.info_buyRequest['info_buyRequest'], "item_id": data['item_id'], "quote_id": data['quote_id'], "editProductQuantity": data['product_qty']}).then(() => {

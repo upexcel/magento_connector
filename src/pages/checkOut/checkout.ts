@@ -187,7 +187,6 @@ export class Checkout implements OnInit {
      * call when paymentMethod selected(manage payment Method)
      */
     paymentMethod(selectedPaymentMethod) {
-        console.log("payment coll")
         this.validate.payment = false;
         this.data['payment_method'] = selectedPaymentMethod['payment_method'];
         if (selectedPaymentMethod && selectedPaymentMethod['payment_method']) {
@@ -199,7 +198,6 @@ export class Checkout implements OnInit {
      * call when shippingMethod selected(manage shipping Method)
      */
     shippingMethod(selectedShippingMethod) {
-        console.log("shippingMethod coll")
         this.shipping_amount = selectedShippingMethod.price;
         this.validate.shipping = false;
         this.data['shipping_method'] = selectedShippingMethod['code'];
@@ -218,9 +216,7 @@ export class Checkout implements OnInit {
                 count++;
             }
         })
-        console.log("validate coll", count == Object.keys(this.validate).length, this.validate);
         if (count == Object.keys(this.validate).length) {
-            console.log("call")
             this.taxDetails();
         } else {
             this.disable = true;
