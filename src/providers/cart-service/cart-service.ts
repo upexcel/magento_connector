@@ -33,7 +33,6 @@ export class CartService {
                 if (wishListAdd) {
                     this._toast.toast("Please specify options", 3000, "top");
                 } else {
-
                     this._toast.toast(JSON.parse(err._body)["message"], 3000, "top");
                 }
 

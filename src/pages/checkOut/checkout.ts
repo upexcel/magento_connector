@@ -54,34 +54,38 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
+    getPaymentMethod() {
+        this._checkoutService.getPaymentMethods({"data": {grandTotal: this.grandTotal}}).then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
+            this.count++;
+            this.PaymentMethods = [];
+            forEach(res.body.payment_methods, (value, key) => {
+                this.PaymentMethods.push(
+                    {
+                        "method_title": value,
+                        "payment_method": key
+                    });
+            });
+            if (this.PaymentVisible) {
+                this.PaymentMethods.push(
+                    {
+                        "method_title": "Stripe",
+                        "payment_method": "stripe"
+                    });
+            }
+        }, (err) => {
+        });
+    }
     IfPriceZero() {
         if ((this.grandTotal * 1) < 1) {
             this.PaymentVisible = false;
-            this.validate.payment = true;
         } else {
-            this.validate.payment = false;
             if (this.count == 0) {
                 this.PaymentVisible = true;
-                this._checkoutService.getPaymentMethods().then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
-                    this.count++;
-                    this.PaymentMethods = [];
-                    forEach(res.body.payment_methods, (value, key) => {
-                        this.PaymentMethods.push(
-                            {
-                                "method_title": value,
-                                "payment_method": key
-                            });
-                    });
-                    this.PaymentMethods.push(
-                        {
-                            "method_title": "Stripe",
-                            "payment_method": "stripe"
-                        });
-                }, (err) => {
-                });
             }
-            this.validateData();
         }
+        this.validate.payment = false;
+        this.getPaymentMethod();
+        this.validateData();
     }
     IfDownloadable() {
         let count = 0;
@@ -132,6 +136,7 @@ export class Checkout implements OnInit {
      *  call when view will enter
      */
     ionViewWillEnter() {
+        this.validate.shipping = false;
         this.IfDownloadable();
         this.IfPriceZero();
         this.selectedPaymentMethod = false;
@@ -148,6 +153,7 @@ export class Checkout implements OnInit {
                         this.validate.shippingAddress = true; //shippingAddress validation true
                     }
                 })
+                this.validate['shippingAddress'] = true;
             }
         });
 
@@ -223,7 +229,7 @@ export class Checkout implements OnInit {
         if (!this.spin) { // for handle multiple clicking
             this.spin = true;  //spinner on
             this.data['method_title'] = this.selectedPaymentMethod['method_title'];
-            if (this.selectedPaymentMethod['method_title'] == "Check / Money order") {
+            if (this.selectedPaymentMethod['method_title'] != "Stripe") {
                 this._checkoutService.orderPlace(this.data).then((res: any) => { //call "onepage/placeOrder" api for order place
                     if (res && res['body'].success) {
                         this.spin = false;

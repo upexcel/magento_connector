@@ -23,7 +23,7 @@ import {WishListModel} from './../../model/wishList/wishList';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {LoadingController} from 'ionic-angular';
 import {CartFunction} from '../../model/cart/cartHandling';
-import {DomSanitizer} from '@angular/platform-browser'
+import {DomSanitizer} from '@angular/platform-browser';
 import {NgZone} from '@angular/core';
 import {LoginPage} from './../login/login';
 
@@ -40,11 +40,11 @@ export class ProductPage implements OnInit {
     selectedList: Array<any> = [];
     disable: boolean = true;
     images: string;
-    final_price: number;
-    refPrice: any;
-    refDisplayPrice: number;
-    display_price: any;
-    special_price: number;
+    final_price: number = 0;
+    refPrice: any = 0;
+    refDisplayPrice: number = 0;
+    display_price: any = 0;
+    special_price: any = 0;
     tier_price: Array<any>;
     keys: Array<string> = [];
     data: any;
@@ -64,12 +64,14 @@ export class ProductPage implements OnInit {
     img: string;
     name: string;
     type: string;
-    bundlePrice: any;
+    bundlePrice: any = 0;
     configPrice: Array<any> = [];
     addToCartData;
-    customPrice: any=0;
-    customDisplayPrice: any=0;
-    dynemicDisplayPrice: any=0;
+    customPrice: any;
+    customDisplayPrice: any = 0;
+    dynemicDisplayPrice: any = 0;
+    display_special_price: number = 0;
+    display_special_priceRef: number = 0;
     product_custom_option: any;
     config = true;
     product = "product";
@@ -105,9 +107,9 @@ export class ProductPage implements OnInit {
             this.editProductQuantity = this._navParams.get('editProductQuantity');    //hold quantity of editable item
             this.item_id = this._navParams.get('item_id');    //hold item id
             if (this.editCartData && !this._navParams.get('wishlist')) {    //inset title name
-                this.cartButtonTitle = 'UPDATE CART'
+                this.cartButtonTitle = 'UPDATE CART';
             } else {
-                this.cartButtonTitle = 'ADD TO CART'
+                this.cartButtonTitle = 'ADD TO CART';
             }
             // call products function when it lode first time
             this.products();
@@ -140,6 +142,9 @@ export class ProductPage implements OnInit {
     }
     transform(value) {
         return this.sanitized.bypassSecurityTrustHtml(value.body.data['long_description']);
+    }
+    transformPrice(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value['displayBundlePrice']);
     }
     /*
      * function use for share options
@@ -234,6 +239,8 @@ export class ProductPage implements OnInit {
                     this.special_price = this.productData.body.data.special_price;//special price
                     this.display_price = this.productData.body.data.display_price;//display price
                     this.final_price = this.productData.body.data.final_price;//final price
+                    this.display_special_price = this.productData.body.data.display_special_price;
+                    this.display_special_priceRef = this.productData.body.data.display_special_price;
                     this.refPrice = this.productData.body.data.final_price;//final price refirence variable
                     this.refDisplayPrice = this.productData.body.data.display_price;//display price refirence variable
                     this.bundlePrice = parseFloat(this.refPrice);//parse final price refirence variable
@@ -248,6 +255,15 @@ export class ProductPage implements OnInit {
                     //create comman data use in cart/cart api
                     this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id};
                     //get additional_information if exit
+                    if (this.type == "bundle") {
+                        if (this.special_price && this.special_price.length > 0) {
+                            let maxRPrice = (this.productData.body.data.maxBPrice * this.special_price) / 100;
+                            let minRPrice = (this.productData.body.data.minBPrice * this.special_price) / 100;
+                            this.productData.body.data['displayBundlePrice'] = `<span style="padding-bottom:10px;"> From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> </span><br/> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
+                        } else {
+                            this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  <br/> To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
+                        }
+                    }
                     if (additionalInformation != undefined) {
                         forEach(additionalInformation, (value, key) => {
                             if (value != false) {
@@ -320,6 +336,7 @@ export class ProductPage implements OnInit {
             }, (err) => {
                 this._toast.toast("Please Refresh This Page !!", 3000, "bottom");
                 this.error = true;
+                this.spin = false;
             });
         });
     }
@@ -452,6 +469,7 @@ export class ProductPage implements OnInit {
     }
 
     diffrentTypeProductData(data?) {
+        this.display_special_price = this.display_special_priceRef;
         if (this.customPrice != undefined) {
             this.bundlePrice = parseFloat(this.customPrice);
         }
@@ -480,22 +498,26 @@ export class ProductPage implements OnInit {
                 }
                 this.disable = data.disable;
             }
-            this.bundlePrice += (parseFloat(data.dynemicPrice));
+            this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.dynemicPrice));
+
             this.dynemicDisplayPrice += (parseFloat(data.dynemicPrice));
+            this.display_special_price += (parseFloat(data.dynemicPrice));
 
         }
         else if (this.type == 'bundle') {
             this.disable = data.disable;
             this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data.total));
             this.dynemicDisplayPrice += (parseFloat(data.total));
+            this.display_special_price = 0;
             if (data.disable == false) {
                 this.ifCustomOption(null, data);
             }
         }
         else {
-            if (data) {
-                this.bundlePrice = (parseFloat(this.bundlePrice)) + (parseFloat(data));
-                this.dynemicDisplayPrice += (parseFloat(data));
+            if (data >= 0) {
+                this.bundlePrice = (parseFloat(this.refPrice)) + (parseFloat(data));
+                this.dynemicDisplayPrice = parseFloat(this.dynemicDisplayPrice) + (parseFloat(data));
+                this.display_special_price = (this.display_special_price * 1) + (parseFloat(data));
             }
         }
         this.final_price = (parseFloat(this.bundlePrice));

@@ -71,7 +71,7 @@ export class ApiService {
         this.nav = nav;
     }
     logout() {
-        this._local.clear();
+        this._local.remove('userData');
         this.nav.setRoot(StartPage, {"message": "please Login Again"});
     }
     private _extractData(res, subject) {

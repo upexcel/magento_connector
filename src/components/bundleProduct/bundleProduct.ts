@@ -12,6 +12,7 @@ export class BundleProduct {
     @Output() onChangeData = new EventEmitter();
     @Input() valBundle: boolean;
     @Input() editCartData: any;
+    @Input() special_price: any = 0;
     bundleCheckQty: any = {};
     bundleRadioQty: any = {};
     bundleMultiQty: any = {};
@@ -28,49 +29,54 @@ export class BundleProduct {
     * ngOnInit workes to initilize bundle type product and validate pre-set value
     **/
     ngOnInit() {
-        this.validateArray = [];
-        let m_Flag = 0;
-        forEach(this.bundle.bundle_items, (value, key) => {
-            value.id = key;
-            value.vertualId = false;
-            value.visable = true;
-            value.vertualArray = [];
-            if (value.is_require == "1") {
-                this.validateArray.push({"id": value.id, "validate": true});
-            } else {
-                this.validateArray.push({"id": value.id, "validate": false});
-            }
-            forEach(value.selection, (selection: any, selectionKey) => {
-                selection.defaultSet = false;
-                if (!this.editCartData) {
-                    if (selection.is_default == "1") {
-                        selection.defaultSet = true;
-                    } else {
-                        selection.defaultSet = false;
-                    }
+            this.validateArray = [];
+            let m_Flag = 0;
+            forEach(this.bundle.bundle_items, (value, key) => {
+                value.id = key;
+                value.vertualId = false;
+                value.visable = true;
+                value.vertualArray = [];
+                if (value.is_require == "1") {
+                    this.validateArray.push({"id": value.id, "validate": true});
                 } else {
-                    forEach(this.editCartData.bundle_option, (cartValue, cartKey) => {
-                        if (typeof (cartValue) == "object") {
-                            forEach(cartValue, (cartValueOpt, cartKeyOpt) => {
-                                if (selection.selection_product_id == cartValueOpt) {
+                    this.validateArray.push({"id": value.id, "validate": false});
+                }
+                forEach(value.selection, (selection: any, selectionKey) => {
+                    selection.defaultSet = false;
+                    if (this.bundle.data.special_price && this.bundle.data.special_price.length > 0) {
+                        selection.afterSpecialPrice = ((selection.selection_price * this.bundle.data.special_price) / 100)
+                    } else {
+                        selection.afterSpecialPrice = selection.selection_price;
+                    }
+                    if (!this.editCartData) {
+                        if (selection.is_default == "1") {
+                            selection.defaultSet = true;
+                        } else {
+                            selection.defaultSet = false;
+                        }
+                    } else {
+                        forEach(this.editCartData.bundle_option, (cartValue, cartKey) => {
+                            if (typeof (cartValue) == "object") {
+                                forEach(cartValue, (cartValueOpt, cartKeyOpt) => {
+                                    if (selection.selection_product_id == cartValueOpt) {
+                                        selection.defaultSet = true;
+                                    }
+                                })
+                            } else {
+                                if (selection.selection_product_id == cartValue) {
                                     selection.defaultSet = true;
                                 }
-                            })
-                        } else {
-                            if (selection.selection_product_id == cartValue) {
-                                selection.defaultSet = true;
                             }
+                        })
+                    }
+                    this.fistTimeCreateData(selection, value, m_Flag, (m_Flag) => {
+                        if (m_Flag == 1) {
+                            this.formValidate(value.id, false, value.is_require);
+                            m_Flag = 0;
                         }
                     })
-                }
-                this.fistTimeCreateData(selection, value, m_Flag, (m_Flag) => {
-                    if (m_Flag == 1) {
-                        this.formValidate(value.id, false, value.is_require);
-                        m_Flag = 0;
-                    }
                 })
             })
-        })
     }
     /** 
     *    fistTimeCreateData
@@ -209,17 +215,17 @@ export class BundleProduct {
         let total = 0;
         forEach(this.bundle.bundle_items, (value) => {
             if ((value.type == 'radio' || value.type == 'select') && value.vertualId) {
-                total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.selection_price)));
+                total += ((parseFloat(value.vertualId.selection_qty)) * (parseFloat(value.vertualId.afterSpecialPrice)));
             }
             if (value.type == "multi") {
                 forEach(value.vertualArray, (multiValue1) => {
-                    total += ((multiValue1.selection_qty * 1) * (parseFloat(multiValue1.selection_price)));
+                    total += ((multiValue1.selection_qty * 1) * (parseFloat(multiValue1.afterSpecialPrice)));
                 })
             }
             if (value.type == "checkbox") {
                 forEach(value.selection, (checkboxValue1) => {
                     if (checkboxValue1.defaultSet == true) {
-                        total += ((checkboxValue1.selection_qty * 1) * (parseFloat(checkboxValue1.selection_price)));
+                        total += ((checkboxValue1.selection_qty * 1) * (parseFloat(checkboxValue1.afterSpecialPrice)));
                     }
                 })
             }

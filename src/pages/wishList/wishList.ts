@@ -59,7 +59,9 @@ export class wishList {
             loading.dismiss();
             if (response.body['success']) {
                 this._cartFunction.setCart(response.body['success_data']);
-                this._toast.toast(data['name'] + "added to your shopping cart", 3000, "top");
+                setTimeout(()=>{
+                this._toast.toast(data['name'] ? data['name'] :data.data['name']  + " added to your shopping cart", 3000, "top");
+                },100)
                 this._nav.push(CartPage);
             }
             else {

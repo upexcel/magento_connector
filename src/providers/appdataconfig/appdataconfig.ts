@@ -17,6 +17,7 @@ export class AppDataConfigService {
     }
     setUserData(userData) {
         this.cleanUp();
+        this.appTemporaryData = [];
         this._local.set('userData', userData); //set user data to local storage
     }
 

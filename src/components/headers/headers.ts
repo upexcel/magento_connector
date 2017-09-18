@@ -24,6 +24,7 @@ export class Headers implements AfterContentInit {
     @Input() menu: boolean = false;
     @Input() wishList: boolean = true;
     @Input() itemName: string = '';
+    @Input() classHeader: string = "";
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;
@@ -33,6 +34,7 @@ export class Headers implements AfterContentInit {
     wishlist: number;
     searchBar: boolean = false;
     data: any;
+    
     constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) {}
     ngAfterContentInit() {
         // call via cart component  

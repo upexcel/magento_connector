@@ -1,4 +1,4 @@
-<header [pagename]="'product'" [search]='true' [title]='product'></header>
+<header [pagename]="'product'" [search]='true' [title]='product' [classHeader]="'product'"></header>
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
     <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -52,11 +52,16 @@
                         </ion-row>
                         <ion-row> 
                             <ion-col class="padTB no-margin paddTop5"> 
-                                <span id="font13" [ngClass]="{'line':(display_price*1) > (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
-                                <span [ngClass]="{'paddLeft10':(display_price*1) <= (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
+                                <span id="font13" [ngClass]="{'line':(display_special_price*1) == (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price}}</span>
+                                <span  [ngClass]="{'paddLeft10':(display_price*1) == (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price}}</span>
                                 <span class="floatRight">
                                     <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (tap)="wishList(productData.body)"></ion-icon>
                                 </span>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class=" no-margin padLeft20" *ngIf="type=='bundle'">
+                                <p [innerHtml]="transformPrice(productData.body.data)"></p>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

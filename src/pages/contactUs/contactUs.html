@@ -1,6 +1,5 @@
 <header [title]='"Contact Us"' [wishList]=false></header>
 <ion-content>
-    <ion-spinner class="apiSpinner" *ngIf="spinner"></ion-spinner>
     <form [formGroup]="contactData" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-list>
             <ion-item>
@@ -17,7 +16,7 @@
             </ion-item>         
             <ion-item>
                 <ion-label class="capitalize" floating>Telephone</ion-label>
-                <ion-input type="number"  id="telephone" [onReturn]='"comment"' formControlName="telephone" ></ion-input>
+                <ion-input type="tel" pattern="\d*" id="telephone" [onReturn]='"comment"' formControlName="telephone" ></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label class="capitalize" floating >Comment<span class="danger">*</span></ion-label>

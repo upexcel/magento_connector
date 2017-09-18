@@ -64,6 +64,7 @@
             Address
         </ion-card-header>
         <ion-card-content >
+            <p *ngIf="address && address.body.length < 1 " class="color"> *Please Fill Address Form</p>
             <span *ngIf="address">
                 <span *ngFor="let addres of address['body']">
                     <p class="primary" *ngIf="addres && addres.default_shipping && !(addres.default_billing && addres.default_shipping)">Default Shipping</p>
@@ -161,7 +162,7 @@
             </ion-card-content>
         </ion-card>-->
     <ion-card no-padding>
-        <ion-card-content no-padding *ngIf="PaymentVisible">
+        <ion-card-content no-padding >
             <ion-list-header no-margin no-lines>
                 Payment Information
             </ion-list-header>

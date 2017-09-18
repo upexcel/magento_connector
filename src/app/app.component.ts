@@ -128,9 +128,11 @@ export class MyApp implements OnInit {
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
+                this._local.remove("userData");
                 this._rootPage = StartPage;
                 this.rootPageName = 'StartPage';
                 this._country.getCountryName();
+                
             }
             else {
                 this._appConfigService.cleanUp();
@@ -162,11 +164,15 @@ export class MyApp implements OnInit {
 * moniter network connection 
 **/
     addConnectivityListeners() {
+        let network = true;
         this.network.onDisconnect().subscribe(() => {
-            if (true) {} else {}
-            this.nav.push(OfflinePage);
+            if (network) {
+                network = false;
+                this.nav.push(OfflinePage);
+            }
         });
         this.network.onConnect().subscribe(() => {
+            network = true;
             this.nav.pop();
         });
     }
@@ -189,7 +195,8 @@ export class MyApp implements OnInit {
                 this.localNotifications.schedule({
                     title: res.title,
                     text: res.body,
-                    icon: "file://img/etech.png",
+                    icon: 'file://assets/image/local_push.png',
+                    smallIcon: 'file://assets/image/local_push.png',
                     data: res.increment_id
                 });
             }

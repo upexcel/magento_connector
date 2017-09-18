@@ -1,7 +1,7 @@
-    <button class="uppercase" ion-button color="{{color}}"  [ngClass]="class" type="submit" id="{{id}}"  round (click)="onClick()"  [disabled]="valid" >
+<button class="uppercase" ion-button color="{{color}}"  [ngClass]="class" type="submit" id="{{id}}"  round (click)="onClick()"  [disabled]="valid" >
         <span  *ngIf="spin==false" >
-                {{title}}
-        </span>
-            <ion-spinner name="circles"  *ngIf="spin" class="spin">
-            </ion-spinner>
-    </button>
+        {{title}}
+    </span>
+    <ion-spinner name="circles"  *ngIf="spin" class="spin">
+    </ion-spinner>
+</button>

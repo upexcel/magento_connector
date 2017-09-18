@@ -121,8 +121,7 @@ export class CategoryProductPage implements OnInit {
             }, (err) => {
                 infiniteScroll.complete();
                 infiniteScroll.enable(false);
-                this._toast.toast("Please Try Again", 3000, "top");
-
+//                this._toast.toast("Please Try Again", 3000, "top");
             });
         } else {
             infiniteScroll.complete();

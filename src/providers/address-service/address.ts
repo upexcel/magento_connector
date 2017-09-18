@@ -6,7 +6,7 @@ export class Address {
     address: any;
     constructor() {}
     resetAddress() {
-        this.address;
+        this.address=null;
     }
     setAddress(data) {
         if (data) {
