@@ -1,12 +1,16 @@
 category-view{
+
     .redColor{
         color:red;
     }
     .heart {
         cursor: pointer;
-        padding-right: 20px;
+        padding: 15px !important;
         color:#adadad;
-    }    /*@media screen and (orientation: portrait) {*/  
+    }  
+
+
+    /*@media screen and (orientation: portrait) {*/  
     ion-grid{padding-top: 0px;} 
     .portrait{
         img{

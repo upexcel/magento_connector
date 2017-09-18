@@ -24,7 +24,7 @@ export class Headers implements AfterContentInit {
     @Input() menu: boolean = false;
     @Input() wishList: boolean = true;
     @Input() itemName: string = '';
-    @Input() classHeader: boolean = false;
+    @Input() classHeader: string = "";
     showPopOver: boolean = false;
     access_token: string;
     showLogin: boolean;

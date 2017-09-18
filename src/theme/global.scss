@@ -19,8 +19,8 @@
 @mixin margin-bottom($margin) {
     margin-bottom:$margin !important;
 }
-@mixin padding-top($margin) {
-    padding-top:$margin !important;
+@mixin padding-top($padding) {
+    padding-top:$padding !important;
 }
 @mixin display($position) {
     display:$position !important;
@@ -35,13 +35,61 @@
 .color{
     color:red !important;
 }
+
+header{ 
+    .hiddenBackButton{
+        .back-button {
+            display: none !important;
+        }
+    }
+    .inputHeader{
+        width: auto;
+        float: left;
+    }
+}
 .ios{
+    sidemenu{
+        .item:last-child {
+           border-bottom: 0px !important; 
+        }
+    } 
+    orderid-detail,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
+        .scroll-content {
+            @include padding-top(65px); 
+        }  
+    } 
+    download, my-download,edit-account ,my-reviews,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,register,search-page,wishList,saved-address, page-reset-password{
+        header{ 
+            .title {
+                padding: 0 5px 1px 80px !important;   
+            }
+            .hiddenBackButton{
+                .back-button {
+                    display: none !important;
+                }
+            }
+        }
+    }
+    sidemenu{
+        .item{
+            border-bottom: 1px solid rgb(226, 227, 222) !important;
+        }
+        .menu-inner{
+            .title{
+                padding: 0 5px 1px 80px !important; 
+            }
+        }
+    }
     ion-item.ng-dirty.ng-invalid{
         border-color: red!important;
     }
     ion-item.ng-dirty.ng-valid{
         border-color: blue!important;
     }
+    product{
+        .card-content{
+            padding: 0px !important;
+        }}
     ion-spinner * {
         width: 28px;
         height: 28px;
@@ -106,11 +154,6 @@ start-page{
         width:75%;
     }
 
-    .titleSize{          
-        .toolbar-title {
-            width: 93% !important;
-        }   
-    }
 
     user-menu ,sidemenu{
         .item .item-inner{
@@ -124,16 +167,22 @@ start-page{
             -webkit-justify-content: center !important;;
             -ms-flex-pack: center !important;;
             justify-content: center !important;}}
-    my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
+    download, my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
         .scroll-content {
             @include margin-top(56px);   
         }  
     } 
+    orderid-detail{
+        .scroll-content {
+            @include margin-top(30px);   
+        }    
+    }
 }
-orderid-detail{
-    .scroll-content {
-        @include margin-top(30px);   
-    }    
+my-download{
+    .content-ios{
+        .scroll-content {
+            @include padding-top(56px);   
+        }   }
 }
 .bar-button-md:first-child {
     @include float(left);
@@ -142,9 +191,9 @@ edit-address{
     padding: 0px !important;
 }
 side-menu-data, sidemenu ,home{
-    .toolbar-title {
-        padding: 4px 12px 4px 10px !important;
-    }
+    /*    .toolbar-title {
+            padding: 4px 12px 4px 10px !important;
+        }*/
     span:last-child .item-inner{
         border-bottom: none !important; 
     }
@@ -727,12 +776,14 @@ ion-input.uppercase input{
 }
 
 header .toolbar-ios{
-    @include padding-top(20px);
     min-height: 65px;
+    padding-top:20px;
 }
-.content-ios .scroll-content {
-    @include padding-top(65px);
+
+header .title-ios{
+    top: 7px !important;
 }
+
 
 sort{
     .content-ios .scroll-content {
@@ -851,6 +902,7 @@ edit-address ,filter {
 .none{
     display: none; 
 }
+
 ::-webkit-scrollbar { 
     @extend .none; 
 }
@@ -915,10 +967,6 @@ header{
     .text-input::-webkit-input-placeholder {
         color: #fff;
     }
-    .title-md {
-        /*padding: 0 0px 1px 70px;*/
-        position: static !important;
-    }
 }
 .ios {
     header {
@@ -933,7 +981,7 @@ header{
             color: #fff;
         } 
     }
-}
+} 
 
 checkout{
     .border-bottom .item-block .item-inner{
@@ -949,12 +997,41 @@ checkout{
 .no-underline{
     text-decoration: none;
 }
-
+@media screen and (device-aspect-ratio:40/71) {
+    .ios{
+        product-review{
+            .item{
+                font-size: 1.2rem !important;
+            }
+        }
+        bundle{
+            .label{
+                font-size:15px !important;
+            }
+        }
+        .titleSize{
+            padding: 0 110px 1px 80px !important;
+        }
+        .titleSizeCategory{
+            padding: 0 150px 1px 80px !important;
+        }
+    }
+}
 @media screen and (orientation:landscape) {
     .alert-radio-group, .alert-checkbox-group {
         max-height: 150px !important;
+    }
+    .popover-content{
+        top: 85.75px !important;
+        left: 233.5px !important;
+        transform-origin: left top;
     }}
-
+@media screen and (orientation:portrait) {
+    .popover-content{
+        top: 231.75px !important;
+        left: 87.5px !important;
+        transform-origin: left top;
+    }}
 
 /*144 server css*/
 /*ion-app {
@@ -987,3 +1064,9 @@ ion-slides{
     height: auto;
 }*/
 /*144 server*/
+
+
+
+
+
+
