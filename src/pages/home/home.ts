@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
     count = 0;
     updateSlider = false;
     categoryList = true;
+    refresher: any;
     constructor(private _wishList: WishListService, private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
@@ -67,10 +68,16 @@ export class HomePage implements OnInit {
         this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
             if (res) {
                 this.homeProduct = res;
+                if (this.refresher) {
+                    this.refresher.complete();
+                    this.refresher = null;
+                }
                 //break product in page limit 
                 this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
                 this.spin = false;
             }
+        }, (err) => {
+            this.refresher.complete();
         })
     }
     ionViewWillEnter() {
@@ -124,8 +131,5 @@ export class HomePage implements OnInit {
             this.updateSlider = false;
         });
         this.homeProducts();
-        setTimeout(() => {
-            refresher.complete();
-        }, 2000);
     }
 }

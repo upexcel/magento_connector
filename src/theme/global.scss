@@ -50,7 +50,7 @@ header{
 .ios{
     sidemenu{
         .item:last-child {
-           border-bottom: 0px !important; 
+            border-bottom: 0px !important; 
         }
     } 
     orderid-detail,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
@@ -716,7 +716,9 @@ ion-input.uppercase input{
         stroke: #fff !important;
     }
 }
-
+.paddingBottom40{
+    padding-bottom: 40px;
+}
 .botton{  
     /*    position: absolute !important;*/
     height: 50px !important;
@@ -1026,12 +1028,13 @@ checkout{
         left: 233.5px !important;
         transform-origin: left top;
     }}
-@media screen and (orientation:portrait) {
+/*@media screen and (orientation:portrait) {
+    .ios{
     .popover-content{
         top: 231.75px !important;
         left: 87.5px !important;
         transform-origin: left top;
-    }}
+    }}}*/
 
 /*144 server css*/
 /*ion-app {

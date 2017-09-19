@@ -626,7 +626,7 @@ export class ProductPage implements OnInit {
                     loading.dismiss();
                     if (this.cartData.body['success_data']) {
                         this._cartFunction.setCart(res.body['success_data']);//set data
-                        this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
+                        this._toast.toast(this.product + " updated to your shopping cart", 3000, "top");
                         this._navCtrl.push(CartPage).then(() => {//move to CartPage
                             this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(() => {
                             });
