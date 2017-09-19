@@ -12,6 +12,7 @@ import {Events} from 'ionic-angular';
 })
 export class ProductReview implements OnInit {
     @Input() skuData: string;
+    @Input() footer: string;
     @Input() additionalInformationData: Array<any>;
     productReview: ProductReviewDataType;
     productReviewSpin: boolean = true;

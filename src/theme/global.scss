@@ -47,6 +47,10 @@ header{
         float: left;
     }
 }
+.reviewFooter{
+    position: fixed !important;
+    bottom: 0;
+}
 .ios{
     sidemenu{
         .item:last-child {
