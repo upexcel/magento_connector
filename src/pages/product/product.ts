@@ -230,6 +230,7 @@ export class ProductPage implements OnInit {
         return new Promise((resolve, reject) => {
             this._getProduct.getProduct(this.data).then((res) => {
                 this.productData = res;
+                this.error = false;
                 resolve(this.productData);
                 if (res) {
                     this.spin = false;
