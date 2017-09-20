@@ -49,6 +49,6 @@
 <div *ngIf="!reviewShow" [ngClass]="{'empty-review': (additionalInformationData && additionalInformationData.length == 0) ,center:true}">
     <ion-spinner *ngIf="productReviewSpin"></ion-spinner>
 </div>
-<ion-footer [ngClass]="{'reviewFooter':footer}">
+<ion-footer [ngClass]="{'reviewFooter':(footer || (addToCartButton=='false')),'reviewButtom50':(addToCartButton=='true')}">
 <btn-full  *ngIf="!productReviewSpin" [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (onBtnClick)="addReview()"></btn-full>
 </ion-footer>

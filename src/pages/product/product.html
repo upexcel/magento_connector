@@ -132,7 +132,7 @@
                 </ion-list>
                 <!--review directive-->
                 <span *ngIf="reviewLoader && (data && data.sku)">
-                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData"> loading..</product-review> </span>              
+                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData" [addToCartButton]='(productData && productData.body.data.in_stock=="Out of Stock")? "false" : "true" '> loading..</product-review> </span>              
             </ion-col>
         </ion-row>
     </ion-grid>

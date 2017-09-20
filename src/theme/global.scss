@@ -47,6 +47,10 @@ header{
         float: left;
     }
 }
+.reviewButtom50{
+    position: fixed !important;
+    bottom: 50px;
+}
 .reviewFooter{
     position: fixed !important;
     bottom: 0;
@@ -558,10 +562,19 @@ placed-order{
 .floatRight{
     @include float(right);
 }
-.productWishList{
-    @extend .floatRight;
-    @include margin-right(10px);
+.md{
+    .productWishList{
+        @extend .floatRight;
+        @include margin-right(10px);
+    }    
 }
+.ios{
+    .productWishList{
+        @extend .floatRight;
+        @include margin-right(15px);
+    }
+}
+
 
 .lightRed{
     color:rgba(226, 4, 4, 0.71)!important;
