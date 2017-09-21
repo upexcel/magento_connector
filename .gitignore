@@ -18,6 +18,7 @@ coverage/
 dist/
 node_modules/
 tmp/
+.sourcemaps/
 temp/
 hooks/
 platforms/

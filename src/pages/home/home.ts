@@ -48,6 +48,7 @@ export class HomePage implements OnInit {
         this._events.subscribe('homeProducts:api', (res) => {
             this.homeApiCall();
         });
+
     }
     ngOnDestroy() {
         this._events.unsubscribe('homeProducts:api');

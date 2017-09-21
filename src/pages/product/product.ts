@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {CartPage} from '../cart/cart';
 import {NavController, NavParams, Events, ViewController} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
@@ -26,12 +26,13 @@ import {CartFunction} from '../../model/cart/cartHandling';
 import {DomSanitizer} from '@angular/platform-browser';
 import {NgZone} from '@angular/core';
 import {LoginPage} from './../login/login';
-
+import {ProductReview} from '../../components/reviewProduct/ReviewProduct'
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
 })
-export class ProductPage implements OnInit {
+export class ProductPage implements OnInit, AfterViewInit {
+    @ViewChild(ProductReview) review: ProductReview;
     productData: productDataType;
     logform: FormGroup;
     cartData: cartDataType;
@@ -122,6 +123,12 @@ export class ProductPage implements OnInit {
                 });
             });
         })
+    }
+    ngAfterViewInit() {
+
+    }
+    addReview() {
+        this.review.addReview();
     }
     ngOnDestroy() {
         this._events.unsubscribe('api:review');

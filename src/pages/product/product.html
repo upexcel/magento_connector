@@ -132,11 +132,13 @@
                 </ion-list>
                 <!--review directive-->
                 <span *ngIf="reviewLoader && (data && data.sku)">
-                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData" [addToCartButton]='(productData && productData.body.data.in_stock=="Out of Stock")? "false" : "true" '> loading..</product-review> </span>              
+                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData" [addToCartButton]='true'> loading..</product-review> </span>              
             </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock','uppercase':true}">
-    <btn-full  [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
+<ion-footer [ngClass]="{'uppercase':true}">
+   <btn-full   [titleFull]='"Review Product"' [spinFull]="false"  [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
+
+    <btn-full [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock'}" [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
 </ion-footer>
