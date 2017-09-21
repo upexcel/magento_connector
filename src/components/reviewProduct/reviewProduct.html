@@ -31,7 +31,7 @@
         </ion-card-content>
 
     </ion-card>
-    <ion-list>
+    <ion-list class="paddingBottom40" *ngIf="productReview">
         <ion-item *ngFor=" let data of productReview.body.data ">
             <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at |customdate: 'DD/MM/YYYY'}}</span></p>
             <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
@@ -49,4 +49,3 @@
 <div *ngIf="!reviewShow" [ngClass]="{'empty-review': (additionalInformationData && additionalInformationData.length == 0) ,center:true}">
     <ion-spinner *ngIf="productReviewSpin"></ion-spinner>
 </div>
-<btn-full *ngIf="!productReviewSpin" [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (onBtnClick)="addReview()"></btn-full>

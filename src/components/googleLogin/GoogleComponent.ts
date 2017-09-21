@@ -22,8 +22,8 @@ export class GoogleComponent {
     constructor(private _loading: LoaderProvider, public loadingCtrl: LoadingController, private _toast: ToastService, public _local: Storage, private _socialProvider: SocialService) {
         setTimeout(() => {
             if (this.spinEvent != 1) {
-                this.spin = this.spinEvent;
                 this._loading.getLoderReference().dismiss();
+                this.spin = this.spinEvent;
                 this._loading.clearReference();
             }
         }, 200)

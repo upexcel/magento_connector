@@ -113,6 +113,7 @@ export class MySavedAddressPage implements OnInit {
                 } else {
                     address['default_check'] = false;
                 }
+                this.error = false;
                 this.myaccount = address;
                 this.spin = false;
                 this.reverseData(entity_id);

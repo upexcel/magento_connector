@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {CartPage} from '../cart/cart';
 import {NavController, NavParams, Events, ViewController} from 'ionic-angular';
 import {ApiService} from './../../providers/api-service/api-service';
@@ -26,12 +26,13 @@ import {CartFunction} from '../../model/cart/cartHandling';
 import {DomSanitizer} from '@angular/platform-browser';
 import {NgZone} from '@angular/core';
 import {LoginPage} from './../login/login';
-
+import {ProductReview} from '../../components/reviewProduct/ReviewProduct'
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
 })
-export class ProductPage implements OnInit {
+export class ProductPage implements OnInit, AfterViewInit {
+    @ViewChild(ProductReview) review: ProductReview;
     productData: productDataType;
     logform: FormGroup;
     cartData: cartDataType;
@@ -122,6 +123,12 @@ export class ProductPage implements OnInit {
                 });
             });
         })
+    }
+    ngAfterViewInit() {
+
+    }
+    addReview() {
+        this.review.addReview();
     }
     ngOnDestroy() {
         this._events.unsubscribe('api:review');
@@ -230,6 +237,7 @@ export class ProductPage implements OnInit {
         return new Promise((resolve, reject) => {
             this._getProduct.getProduct(this.data).then((res) => {
                 this.productData = res;
+                this.error = false;
                 resolve(this.productData);
                 if (res) {
                     this.spin = false;
@@ -626,7 +634,7 @@ export class ProductPage implements OnInit {
                     loading.dismiss();
                     if (this.cartData.body['success_data']) {
                         this._cartFunction.setCart(res.body['success_data']);//set data
-                        this._toast.toast(this.product + "updated to your shopping cart", 3000, "top");
+                        this._toast.toast(this.product + " updated to your shopping cart", 3000, "top");
                         this._navCtrl.push(CartPage).then(() => {//move to CartPage
                             this._navCtrl.remove(this._navCtrl.getPrevious(this.viewCtrl).index, 2).then(() => {
                             });

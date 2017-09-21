@@ -17,6 +17,7 @@ export class MyReviews {
             this.myReviewRes = res['body']; //copy response to globle variable
         }, (err) => {this.spin = false;})
     }
+
     viewDetails(data) {
         this._nav.push(ReviewDetails, {data: data});    //move to ReviewDetails page with data
     }

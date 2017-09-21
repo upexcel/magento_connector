@@ -3,6 +3,9 @@
     <span class="center">
         <img *ngIf="data"  imageDirective src="{{data.data.small_image}}" class="cursorPointer" style="max-height: 400px;" imageViewer/>
     </span>
-    <product-review  *ngIf="data && data.data" [skuData]="data.data.sku" > loading..</product-review>    
+    <product-review  *ngIf="data && data.data" [skuData]="data.data.sku" [footer]="true"> loading..</product-review>    
 </ion-content>   
 
+<ion-footer>
+<btn-full  [titleFull]='"Review Product"' [spinFull]="false" [id]="'btn'" [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
+</ion-footer>

@@ -137,6 +137,7 @@ export class Checkout implements OnInit {
      */
     ionViewWillEnter() {
         this.validate.shipping = false;
+        this.validate.payment = false;
         this.IfDownloadable();
         this.IfPriceZero();
         this.selectedPaymentMethod = false;

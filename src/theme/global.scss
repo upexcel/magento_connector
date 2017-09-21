@@ -47,10 +47,18 @@ header{
         float: left;
     }
 }
+.reviewButtom50{
+    position: fixed !important;
+    bottom: 50px;
+}
+.reviewFooter{
+    position: fixed !important;
+    bottom: 0;
+}
 .ios{
     sidemenu{
         .item:last-child {
-           border-bottom: 0px !important; 
+            border-bottom: 0px !important; 
         }
     } 
     orderid-detail,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
@@ -554,10 +562,19 @@ placed-order{
 .floatRight{
     @include float(right);
 }
-.productWishList{
-    @extend .floatRight;
-    @include margin-right(10px);
+.md{
+    .productWishList{
+        @extend .floatRight;
+        @include margin-right(10px);
+    }    
 }
+.ios{
+    .productWishList{
+        @extend .floatRight;
+        @include margin-right(15px);
+    }
+}
+
 
 .lightRed{
     color:rgba(226, 4, 4, 0.71)!important;
@@ -716,7 +733,9 @@ ion-input.uppercase input{
         stroke: #fff !important;
     }
 }
-
+.paddingBottom40{
+    padding-bottom: 40px;
+}
 .botton{  
     /*    position: absolute !important;*/
     height: 50px !important;
@@ -1026,12 +1045,13 @@ checkout{
         left: 233.5px !important;
         transform-origin: left top;
     }}
-@media screen and (orientation:portrait) {
+/*@media screen and (orientation:portrait) {
+    .ios{
     .popover-content{
         top: 231.75px !important;
         left: 87.5px !important;
         transform-origin: left top;
-    }}
+    }}}*/
 
 /*144 server css*/
 /*ion-app {
