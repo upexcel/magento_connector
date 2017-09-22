@@ -1,5 +1,12 @@
 category-view{
-
+    ion-img{
+        min-height:100px !important;
+        min-width: 100% !important;
+        background-image:url('.././assets/image/default.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
     .redColor{
         color:red;
     }
@@ -14,8 +21,8 @@ category-view{
     ion-grid{padding-top: 0px;} 
     .portrait{
         img{
-            max-height: 90px;
-            max-width: 99.5%;
+            height: 100px;
+            width: auto;
         }
 
         .cardForPortrait{
@@ -72,7 +79,7 @@ category-view{
             width:100%
         }
         img{
-            max-height: 145px;
+            max-height: 100px;
             max-width: 100%;
         }
         .iconShow{
@@ -92,7 +99,7 @@ category-view{
         }
         .imgBox{
             /*            display: table-cell;*/
-            height: 150px;
+            height: 100px;
 
         }
         .column {
