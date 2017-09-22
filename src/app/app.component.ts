@@ -44,6 +44,7 @@ export class MyApp implements OnInit {
             this.checkBackButton();
             this.localNotifications.on("click", (data) => {
                 setTimeout(() => {
+                    Splashscreen.hide();
                     this.nav.push(OrderModalPage, {order_id: data['data']});
                 }, 100)
             })
@@ -62,6 +63,7 @@ export class MyApp implements OnInit {
         });
         //event comes from tour page when skip button click
         this.events.subscribe('goHome:home', () => {
+            Splashscreen.hide();
             if (this.rootPageName == 'HomePage') {
                 this.nav.setRoot(HomePage);
             } else {
@@ -111,9 +113,9 @@ export class MyApp implements OnInit {
     * use for Splashscreen hide
     **/
     hideSplashScreen() {
-        setTimeout(() => {
-            Splashscreen.hide();
-        }, 500);
+        //        setTimeout(() => {
+        //            Splashscreen.hide();
+        //        }, 500);
     }
     ngOnInit() {
         this._platform.ready().then(() => {
@@ -128,15 +130,16 @@ export class MyApp implements OnInit {
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
             if (web_config == null) {
+                Splashscreen.hide();
                 this._local.remove("userData");
                 this._rootPage = StartPage;
                 this.rootPageName = 'StartPage';
                 this._country.getCountryName();
-                
             }
             else {
                 this._appConfigService.cleanUp();
                 this._appConfigService.getUserData().then((userData) => {
+                    Splashscreen.hide();
                     if (userData !== null) {
                         this._wishList.getWishListData({});
                         this._cartFunction.setCartData().then((resp) => {
@@ -148,6 +151,8 @@ export class MyApp implements OnInit {
                     }
                     this._rootPage = HomePage;
                     this.rootPageName = 'HomePage';
+                }, (err) => {
+                    Splashscreen.hide();
                 })
 
             }
@@ -168,10 +173,12 @@ export class MyApp implements OnInit {
         this.network.onDisconnect().subscribe(() => {
             if (network) {
                 network = false;
+                Splashscreen.hide();
                 this.nav.push(OfflinePage);
             }
         });
         this.network.onConnect().subscribe(() => {
+            Splashscreen.hide();
             network = true;
             this.nav.pop();
         });

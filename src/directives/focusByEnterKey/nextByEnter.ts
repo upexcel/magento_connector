@@ -14,12 +14,12 @@ export class FocusByEnterKey {
     @HostListener('keydown', ['$event']) onInputChange(e) {
         var code = e.keyCode || e.which;
         if (code === 13) {
-             if (this.id != "btn") {
-            e.preventDefault();
-            this.inputRef.focusNext();
-             }else{
-                 
-             }
+            if (this.id != "btn") {
+                e.preventDefault();
+                this.inputRef.focusNext();
+            } else {
+
+            }
         }
     }
 }

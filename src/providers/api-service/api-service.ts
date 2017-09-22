@@ -11,7 +11,7 @@ import {Subject} from 'rxjs/Rx';
 import {Platform} from 'ionic-angular';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {StartPage} from './../../pages/startpage/startpage';
-
+import {Observable} from 'rxjs/Observable';
 @Injectable()
 /**
 *this service is ues to fire api 
@@ -26,15 +26,15 @@ export class ApiService {
                 var headers;
                 body.mobile_width = this._platform.width();
                 body['secret'] = userData ? userData['secret'] : "";
-               if(store_id !="undefined"){
-                   body['store_id']=store_id;
-               }else if(userData.store_id !="undefined"){
-                   body['store_id']=userData.store_id;
-               }else{
-                   body['store_id']="";
-               }
-                
-                 //            body.mobile_width=420;
+                if (store_id != "undefined") {
+                    body['store_id'] = store_id;
+                } else if (userData.store_id != "undefined") {
+                    body['store_id'] = userData.store_id;
+                } else {
+                    body['store_id'] = "";
+                }
+
+                //            body.mobile_width=420;
                 let api_url = config.api_Url + path;
                 if (userData !== null) {
                     headers = new Headers({'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token});
@@ -42,7 +42,22 @@ export class ApiService {
                     headers = new Headers({'Content-Type': config.content_type, 'APP_ID': config.APP_ID});
                 }
                 let options = new RequestOptions({headers: headers});
-                this._http.post(api_url, JSON.stringify(body), options)
+                this._http.post(api_url, JSON.stringify(body), options).retryWhen(attempts => {
+                    let count = 0;
+                    return attempts.flatMap(error => {
+                        if (error.status == 500) {
+                            if (error._body && typeof error._body !== 'object') {
+                                if (JSON.parse(error._body).message == 'Token Not Found') {
+                                    this.logout();
+                                }
+                            }
+                            return Observable.throw(error.message || error);
+                        } else {
+                            //                            alert("hello");
+                            return ++count >= 2 ? Observable.throw(error) : Observable.timer(count * 1000);
+                        }
+                    })
+                })
                     //                    .timeout(config.stopApiTime, new Error('Check Network Connection'))
                     .subscribe((res: Response) => {
                         this._extractData(res, subject)
