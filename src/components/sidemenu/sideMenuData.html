@@ -1,9 +1,9 @@
-<span *ngFor="let value of data">
-    <ion-item class="cursorPointer" *ngIf="value.show">
-        <span (tap)="manageData(value)"> {{value.name}} </span>
-        <ion-icon color="primary" class="pad5" *ngIf="value.toggle" [name]="value.icon" (tap)="toggle(value)"></ion-icon>
-        <ion-list *ngIf="!value.hide" no-margin >
-            <side-menu-data [data]="value.children"></side-menu-data>
-        </ion-list>
-    </ion-item> 
-</span>
+<div *ngFor="let value of data">
+    <ion-icon color="primary" class="pad5 ico" *ngIf="value.toggle" [name]="value.icon" (tap)="toggle(value)"></ion-icon>
+        <ion-item no-margin  class="cursorPointer bottem-border relative" *ngIf="value.show">
+            <div (tap)="manageData(value)" class="paTB"> {{value.name}} </div>
+            <ion-list *ngIf="!value.hide" no-margin >
+                        <side-menu-data [data]="value.children"></side-menu-data>
+            </ion-list>                    
+        </ion-item> 
+    </div>

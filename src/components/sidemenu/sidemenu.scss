@@ -5,5 +5,30 @@
     }
     .scroll-content {
         background: #fff;
-    }   
+    } 
+    .ico{
+        position: absolute;
+        right: 0px;
+        z-index: 999;
+        padding: 15px;
+    }
+        .bottem-border{
+            .item-inner:first-child{
+                border-bottom: 1px solid #ddd !important;
+                padding-right: 0px !important;
+            }
+        }
+        .bottem-border :last-child{
+            .item-inner{
+                border-bottom: 0px !important;
+            }
+        }
+    
+    .paTB{
+        width:100%;
+        padding-top: 10px;
+    }
+.label {
+    margin: 11px 0px 11px 0 !important;
+}
 }

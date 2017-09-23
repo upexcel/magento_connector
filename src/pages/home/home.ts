@@ -79,6 +79,7 @@ export class HomePage implements OnInit {
             }
         }, (err) => {
             this.refresher.complete();
+            this.refresher = null;
         })
     }
     ionViewWillEnter() {
@@ -124,6 +125,7 @@ export class HomePage implements OnInit {
         }
     }
     doRefresh(refresher) {
+        this.refresher = refresher;
         this._ngZone.run(() => {
             this._sliderService.resetSlider();
             this._homeProductsConfig.resetHomeProducts();
