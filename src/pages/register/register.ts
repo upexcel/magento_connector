@@ -8,8 +8,11 @@ import {Login} from '../../model/login/login';
 import {LoginDataType} from '../../model/login/loginDataType';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {AppDataConfigService} from './../../providers/appdataconfig/appdataconfig';
-import {EmailValidator} from '../../validation/emailValidate'
+import {EmailValidator} from '../../validation/emailValidate';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
+import {fcmService} from './../../providers/fcm-service/fcm-service';
+import {CategoryList} from './../../model/home/categoryList';
 @Component({
     selector: 'register',
     templateUrl: 'register.html'
@@ -20,7 +23,7 @@ export class RegisterPage implements OnInit {
     clear: boolean = false;
     browser: any;
     data: LoginDataType;
-    constructor(private _ngZone: NgZone, private iab: InAppBrowser, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) {}
+    constructor(private _categoryList: CategoryList, private _fcmService: fcmService, private _category: CategoryProduct, private _ngZone: NgZone, private iab: InAppBrowser, private _appConfigService: AppDataConfigService, private _toast: ToastService, private _login: Login, private _register: Register, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _events: Events) {}
     ngOnInit() {
         this._local.get('website_id').then((website_id: any) => {
             this.clear = true;
@@ -54,6 +57,17 @@ export class RegisterPage implements OnInit {
 
 
     }
+
+    commanApiCall() {
+        setTimeout(() => {
+            this._fcmService.saveFCMTokenOnServer();
+            this._categoryList.getId().then((id) => {
+                this._category.getCategoryProduct({"id": id, "page": 1, "limit": 2, "sort_by": "position", "sort_order": "asc", "filter": []});
+            })
+        }, 200)
+
+    }
+
     /*
      * function use for login 
      */
@@ -63,9 +77,10 @@ export class RegisterPage implements OnInit {
             this.data = res;
             if (this.data.status === 1) {
                 this.data = res;
-                res.body['login']="normal";
-                this._appConfigService.setUserData(res.body);// sset user data on local storage
+                res.body['login'] = "normal";
+                this._appConfigService.setUserData(res.body);// set user data on local storage
                 this._toast.toast("Welcome " + logvalue.firstname, 3000);
+                this.commanApiCall();
                 //set home page as a root page .
                 this._navCtrl.setRoot(HomePage, {"access_token": this.data.body.access_token});
             }

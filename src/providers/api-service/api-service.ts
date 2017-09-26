@@ -12,13 +12,14 @@ import {Platform} from 'ionic-angular';
 import {ToastService} from './../../providers/toast-service/toastService';
 import {StartPage} from './../../pages/startpage/startpage';
 import {Observable} from 'rxjs/Observable';
+import {AlertController} from 'ionic-angular';
 @Injectable()
 /**
 *this service is ues to fire api 
 **/
 export class ApiService {
     nav: any;
-    constructor(private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) {}
+    constructor(public alertCtrl: AlertController, private _toast: ToastService, private _local: Storage, private _http: Http, private _platform: Platform) {}
     api(path, body) {
         var subject = new Subject();
         this._local.get('userData').then((userData) => {
@@ -33,8 +34,6 @@ export class ApiService {
                 } else {
                     body['store_id'] = "";
                 }
-
-                //            body.mobile_width=420;
                 let api_url = config.api_Url + path;
                 if (userData !== null) {
                     headers = new Headers({'Content-Type': config.content_type, 'APP_ID': config.APP_ID, 'Authorization': userData.access_token});
@@ -53,8 +52,7 @@ export class ApiService {
                             }
                             return Observable.throw(error.message || error);
                         } else {
-                            //                            alert("hello");
-                            return ++count >= 2 ? Observable.throw(error) : Observable.timer(count * 1000);
+                            return ++count >= 2 ? Observable.throw('Check Network Connection') : Observable.timer(count * 1000);
                         }
                     })
                 })

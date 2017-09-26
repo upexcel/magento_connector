@@ -11,7 +11,7 @@
                       <ion-thumbnail item-left>
                     <img src="{{item.value.image}}" alt="No image">
                 </ion-thumbnail>
-                <h2>{{item.value.item_name}}<span id="item_price">{{orderid_detail.body.currency_symbol}}{{item.value.price |number}}</span></h2>
+                <h2>{{item.value.item_name}}<span id="item_price">{{orderid_detail.body.currency_symbol}}{{item.value.price |number:'.0-2'}}</span></h2>
                 <p>Quantity: {{item.value.qty_ordered}} </p>
                 <span *ngFor="let option of item.value.options">
                     <p>{{option.label}}: {{option.value}}</p>
@@ -30,12 +30,12 @@
                     </ion-col>
                     <ion-col col-8 class="order_sum">
                         <p>TOTAL QUANTITY: <span id="order_sum_content" >{{orderid_detail.body.total_qty_ordered |number}}</span></p>
-                        <p>TOTAL: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.subtotal |number}}</span></p>
-                        <p>TAX: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.tax_amount |number}}</span></p>
+                        <p>TOTAL: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.subtotal |number:'.0-2'}}</span></p>
+                        <p>TAX: <span id="order_sum_content" >{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.tax_amount |number:'.0-2'}}</span></p>
                         <p>DISCOUNT: <span id="order_sum_content">{{orderid_detail.body.discount_amount |number}}</span></p>
-                        <p>DELIVERY: <span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.shipping_amount |number}}</span></p>
+                        <p>DELIVERY: <span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.shipping_amount |number:'.0-2'}}</span></p>
                         <hr>
-                        <p>GRAND TOTAL: <span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.grand_total |number}}</span></p>
+                        <p>GRAND TOTAL: <span id="order_sum_content">{{orderid_detail.body.currency_symbol}}{{orderid_detail.body.grand_total |number:'.0-2'}}</span></p>
                     </ion-col>
                 </ion-row>
             </ion-grid>
