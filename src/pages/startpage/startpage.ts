@@ -22,7 +22,7 @@ import {ToastService} from './../../providers/toast-service/toastService';
 import {fcmService} from './../../providers/fcm-service/fcm-service';
 import {EventService} from './../../providers/headerEvents/headerEvents';
 import {LoaderProvider} from './../../providers/loader/loader'
-
+import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
 @Component({
     selector: 'start-page',
     templateUrl: 'startpage.html'
@@ -36,7 +36,7 @@ export class StartPage implements OnInit {
     options: {};
     spin = {};
     visible: boolean = true;
-    constructor(private _loading: LoaderProvider,public _eventService: EventService,private _fcmService: fcmService, private _toast: ToastService, private _cartFunction: CartFunction, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _sliderService: Slider, private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
+    constructor(private _category: CategoryProduct, private _loading: LoaderProvider, public _eventService: EventService, private _fcmService: fcmService, private _toast: ToastService, private _cartFunction: CartFunction, private _address: Address, private _wishList: WishListService, private _myaccount: MyAccount, private _cartService: CartService, private _sliderService: Slider, private _homeProductsConfig: HomeProducts, private _categoryService: CategoryList, private _socialAccount: SocialAccount, private _appConfig: AppConfig, public _local: Storage, public _socialProvider: SocialService, private _alertCtrl: AlertController,
         private _navCtrl: NavController, private _navparam: NavParams,
         private _modelCtrl: ModalController, private _appConfigService: AppDataConfigService) {
         this.spin = {google: "1", facebook: "1"};
@@ -47,7 +47,7 @@ export class StartPage implements OnInit {
         this.options = {    //  get value from config 
             clientid: config.google_clientid
         }
-        if (this.messsage_expired){
+        if (this.messsage_expired) {
             this._address.resetAddress();
             this._cartFunction.resetCart();
             this._eventService.setWishList(0);
@@ -63,7 +63,9 @@ export class StartPage implements OnInit {
             this._sliderService.getSlider();
             this.check = true;
             this._homeProductsConfig.resetHomeProducts();
-            setTimeout(() => {this._homeProductsConfig.getHomeProducts();}, 300)
+            setTimeout(() => {
+                this._homeProductsConfig.getHomeProducts();
+            }, 300)
         })
             .catch((err) => {
                 this.showSocialLoginError(err);
@@ -87,6 +89,9 @@ export class StartPage implements OnInit {
             this._myaccount.getMyAccount({}).then((res) => {
                 this._address.setAddress(res);
             }, (err) => {
+            })
+            this._categoryService.getId().then((id) => {
+                this._category.getCategoryProduct({"id": id, "page": 1, "limit": 2, "sort_by": "position", "sort_order": "asc", "filter": []});
             })
         })
     }

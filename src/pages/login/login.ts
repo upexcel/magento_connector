@@ -19,6 +19,8 @@ import {HomeProducts} from '../../model/home/homeProducts';
 import {WishListService} from './../../providers/wishList/wishList-service';
 import {Address} from './../../providers/address-service/address';
 import {fcmService} from './../../providers/fcm-service/fcm-service';
+import {CategoryList} from './../../model/home/categoryList';
+import {CategoryProduct} from './../../model/categoryProduct/categoryProduct';
 
 @Component({
     selector: 'login',
@@ -38,7 +40,7 @@ export class LoginPage implements OnInit {
     spin = {};
     visible: boolean = true;
 
-    constructor(private _fcmService: fcmService, private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {
+    constructor(private _category: CategoryProduct, private _categoryList: CategoryList, private _fcmService: fcmService, private _address: Address, private _wishList: WishListService, private _homeProductsConfig: HomeProducts, private _myaccount: MyAccount, private _cartService: CartService, private _cartFunction: CartFunction, public _viewCtrl: ViewController, public _navParams: NavParams, private _socialAccount: SocialAccount, private _toast: ToastService, private _events: Events, private _login: Login, private _local: Storage, private _navCtrl: NavController, private _fb: FormBuilder, private _alertCtrl: AlertController, private _appConfigService: AppDataConfigService) {
         this.spin = {google: 1, facebook: 1};
     }
     ngOnInit() {
@@ -67,6 +69,9 @@ export class LoginPage implements OnInit {
 
     addToCart() {
         this.commanApiCall();
+        this._categoryList.getId().then((id) => {
+            this._category.getCategoryProduct({"id": id, "page": 1, "limit": 2, "sort_by": "position", "sort_order": "asc", "filter": []});
+        })
         this._cartService.addCart(this.productData.add_cart, this.productData.editCartData).then((response: any) => {//call service fire api for cart add
             if (response.body['success']) {
                 this.login = false;
@@ -97,7 +102,7 @@ export class LoginPage implements OnInit {
         this._myaccount.getMyAccount({}).then((res) => {
             this._address.setAddress(res);
         }, (err) => {
-        })
+        });
     }
     /*
      * function call when login click

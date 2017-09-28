@@ -83,7 +83,7 @@ export class CategoryProductPage implements OnInit {
                 this.categoryProduct = res;
                 resolve(this.categoryProduct);
             }, (err) => {
-                this.error = true
+                this.error = true;
                 this._toast.toast("Please Try Again", 3000, "top");
             });
         })

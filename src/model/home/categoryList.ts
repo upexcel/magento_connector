@@ -27,4 +27,16 @@ export class CategoryList {
     resetCategoryList() {
         this.categoryList = null;
     }
+
+    getId() {
+        return new Promise((resolve, reject) => {
+            if (this.categoryList && this.categoryList.body.children[0]) {
+                resolve(this.categoryList.body.children[0].children[0].id);
+            } else {
+                this.getCategoryList().then((res) => {
+                    resolve(res.body.children[0].children[0].id);
+                })
+            }
+        })
+    }
 }

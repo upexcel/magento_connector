@@ -24,7 +24,7 @@
             <ion-item >
                 <ion-label class="capitalize fontColor">{{customOption.title}} <span *ngIf="customOption.is_require=='1'" class="danger" >*</span></ion-label>
                 <ion-select [(ngModel)]="customOption.vertualArray" (ngModelChange)="onChangeMulti(customOption.vertualArray,customOption.id,i,customOption.is_require)" multiple="true">
-                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} <span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></ion-option>
+                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}} <span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number:'.0-2'}}</span></ion-option>
                 </ion-select>
             </ion-item>
         </ion-list>
@@ -33,7 +33,7 @@
             <ion-item >
                 <ion-label class="capitalize fontColor">{{customOption.title}} <span class="danger" *ngIf="customOption.is_require=='1'" >*</span></ion-label>
                 <ion-select [(ngModel)]="customOption.vertualId" (ngModelChange)="onChangeSelect(select,customOption.id,customOption.is_require)">
-                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}}<span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></ion-option>
+                    <ion-option *ngFor="let opt of customOption.option_type" [value]="opt" >{{opt.default_title}}<span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number:'.0-2'}}</span></ion-option>
                 </ion-select>
             </ion-item>
         </ion-list>
@@ -42,7 +42,7 @@
                 <span class="capitalize fontColor"> {{customOption.title}}</span> <span *ngIf="customOption.is_require=='1'" class="danger" >*</span><ion-icon class="floatRight ico paddRight5" name="arrow-dropdown"></ion-icon>
             </ion-list-header>
             <ion-item [hidden]="customOption.visable" *ngFor="let opt of customOption.option_type">
-                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></span></ion-label>
+                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number:'.0-2'}}</span></span></ion-label>
                 <ion-radio class="marRigth0" [value]="opt" ></ion-radio>
             </ion-item>
         </ion-list>
@@ -53,7 +53,7 @@
             </ion-list-header>
             <ion-item [hidden]="customOption.visable" class="padLeft10"  *ngFor="let opt of customOption.option_type ; let j = index">
                 <ion-checkbox class="marRight" color="dark" value="opt" [(ngModel)]="opt.defaultSet" (ngModelChange)="onChangeCheck(customOption.option_type,$event,customOption.id,customOption.is_require,title)" ></ion-checkbox>
-                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number}}</span></span></ion-label>
+                <ion-label class="capitalize">{{opt.default_title}} <span *ngIf="opt.default_price *1 >0"><span *ngIf="opt.default_price *1 >0">+{{currencySign}}{{opt.default_price | number:'.0-2'}}</span></span></ion-label>
             </ion-item>          
         </ion-list>
 
