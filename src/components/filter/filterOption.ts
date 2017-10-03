@@ -47,7 +47,8 @@ export class FilterOption {
         }
     }
     done() {
-        this._nav.setRoot(FilterBy, {"data": {"data": this.checkData, "title": this.data.filter_title, "return": true}});
+        this._viewCtrl.dismiss({"data": {"data": this.checkData, "title": this.data.filter_title, "return": true}});
+//        this._nav.setRoot(FilterBy, {"data": {"data": this.checkData, "title": this.data.filter_title, "return": true}});
     }
     dismiss() {
         this._nav.pop();

@@ -24,9 +24,13 @@ export class FilterBy {
     constructor(public _events: Events, private _filterService: FilterService, private _navParam: NavParams, private _local: Storage, public _filter: FilterByModel, private _navCtrl: NavController, private _viewCtrl: ViewController, private _modalCtrl: ModalController) {
     }
     ngOnInit() {
-
         this.categoryId = this._navParam.get('catedoryId');
         this.data = this._navParam.get('data');
+        this.viewWillEnter();
+    }
+    viewWillEnter(data?) {
+        this.data = data;
+        this.res=[];
         this._filter.getFilterData({"id": this.categoryId, "coll": this.data ? 1 : 0}).then((res) => {
             forEach(res, (value, key) => {
                 value['title'] = value['filter_title'].replace(/_/g, " ");
@@ -116,6 +120,9 @@ export class FilterBy {
         })
         let modal = this._modalCtrl.create(FilterOption, {"data": {option: data, filter_title: title}});
         modal.present();
+        modal.onDidDismiss(data => {
+            this.viewWillEnter(data['data']);
+        })
     }
     dismiss() {
         this._viewCtrl.dismiss();//distroy view
