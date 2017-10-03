@@ -19,7 +19,6 @@ export class HomeProducts {
     * getHomeProducts function is use for call home/products api 
     **/
     getHomeProducts() {
-        console.log("call**")
         let data = {"type": "full"}
         return new Promise((resolve, reject) => {
             this.local.get('homeProduct').then((homeProduct) => {
