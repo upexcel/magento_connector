@@ -19,9 +19,9 @@ export class OrderModalPage implements OnInit {
     showOrder: boolean = false;
     showOrderError: boolean = false;
     spin: boolean = false;
-    Math:any;
-    constructor(private sanitized: DomSanitizer,private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
-        this.Math=Math;
+    Math: any;
+    constructor(private sanitized: DomSanitizer, private _ngZone: NgZone, public events: Events, private _orderdetail: OrderIdDetail, private _navparam: NavParams, private _popoverCtrl: PopoverController, private _viewCtrl: ViewController, private _apiService: ApiService) {
+        this.Math = Math;
     }
     ngOnInit() {
         this.order_id = this._navparam.get("order_id");
@@ -34,6 +34,9 @@ export class OrderModalPage implements OnInit {
                 this.getOrderDetails(orderid);
             });
         });
+    }
+    trackmy_itemsFn(index, data) {
+        return data.value.item_sku;
     }
     transform(value) {
         return this.sanitized.bypassSecurityTrustHtml(value.body['payment_method']);

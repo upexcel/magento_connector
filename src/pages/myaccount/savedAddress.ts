@@ -79,6 +79,9 @@ export class MySavedAddressPage implements OnInit {
             }
         });
     }
+    trackmyreverseCartDataFn(index,data){
+        return data.entity_id;
+    }
     ngOnDestroy() {
         //unsubscribe event on view destroy
         this._events.unsubscribe('user:edit');

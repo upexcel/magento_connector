@@ -12,7 +12,7 @@
         <h2 text-center>Your address book is blank.</h2>
     </ion-list>
     <ion-list *ngIf="showAddress">
-        <ion-card  *ngFor="let address of reverseCartData ; let id=index">
+        <ion-card  *ngFor="let address of reverseCartData ; let id=index ; trackBy: trackmyreverseCartDataFn">
             <ion-card-content class="paddTop">
                 <!--<ion-radio class="padding10" value="{{address.firstname}}"></ion-radio>-->
                 <ion-buttons class="floatRight" end>

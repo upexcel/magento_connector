@@ -46,11 +46,27 @@ export class CartPage implements OnInit {
         //call createData funtion for manipulation data and pass cart data as parameter 
         this.createData(this.res);
     }
+    trackCart_items_infoFn(index, data) {
+        return data.product_id ? data.product_id : index;
+
+    }
+    trackAttributes_infoFn(index, data) {
+        return index;
+    }
+    trackOptions_infoFn(index, data) {
+        return index;
+    }
+    trackLink_infoFn(index, data) {
+        return index;
+    }
+    trackLinkoptions_infoFn(index, data) {
+        return index;
+    }
     checkCoupon() {
         this._appConfigService.getUserData().then((userData: any) => {
             if ((userData && userData.access_token) && this.grandtotalPrice * 1 > 0) {
                 this.couponCodeVisible = true;
-            }else{
+            } else {
                 this.couponCodeVisible = false;
             }
         });

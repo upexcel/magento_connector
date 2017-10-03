@@ -54,6 +54,21 @@ export class Checkout implements OnInit {
         });
         this.createPlaceOrderData();
     }
+    trackCart_items_infoFn(index, data) {
+        return data.product_id ? data.product_id : index;
+    }
+    trackAttributes_infoFn(index, data) {
+        return index;
+    }
+    trackOptions_infoFn(index, data) {
+        return index;
+    }
+    trackLink_infoFn(index, data) {
+        return index;
+    }
+    trackLinkoptions_infoFn(index, data) {
+        return index;
+    }
     getPaymentMethod() {
         this._checkoutService.getPaymentMethods({"data": {grandTotal: this.grandTotal}}).then((res: any) => { // call cart/getPaymentMethods/ api to get payment method
             this.count++;

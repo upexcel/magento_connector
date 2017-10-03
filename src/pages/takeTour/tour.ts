@@ -22,6 +22,9 @@ export class TourPage implements OnInit {
     close() {
         this._viewCtrl.dismiss();
     }
+    trackTour_sliderFn(index, data) {
+        return index;
+    }
     /**
     * gotoHome
     *

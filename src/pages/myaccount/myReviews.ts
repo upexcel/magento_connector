@@ -21,4 +21,7 @@ export class MyReviews {
     viewDetails(data) {
         this._nav.push(ReviewDetails, {data: data});    //move to ReviewDetails page with data
     }
+    trackmyReviewResFn(index, data) {
+        return index;
+    }
 }

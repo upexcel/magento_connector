@@ -26,4 +26,7 @@ export class Downloadable {
     viewOrderDetail(orderId) {
         this._navCtrl.push(OrderModalPage, {"order_id": orderId}); //move to OrderModalPage with orderId
     }
+    trackmyDownloadableDataFn(index, data) {
+        return data.item_id;
+    }
 }

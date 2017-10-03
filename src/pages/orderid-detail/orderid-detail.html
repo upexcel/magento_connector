@@ -7,7 +7,7 @@
             <ion-list-header no-margin class="bold">
                 Status: <span class="capitalize"><span *ngIf="orderid_detail.body.status !='canceled'">{{orderid_detail.body.status}}</span><span *ngIf="orderid_detail.body.status == 'canceled'">Cancelled</span></span>
             </ion-list-header>
-            <ion-item no-lines *ngFor="let item of items">
+            <ion-item no-lines *ngFor="let item of items ; trackBy: trackmy_itemsFn">
                       <ion-thumbnail item-left>
                     <img src="{{item.value.image}}" alt="No image">
                 </ion-thumbnail>

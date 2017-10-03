@@ -42,6 +42,12 @@ export class OrderlistPage implements OnInit {
     ngOnDestroy() {
         this.events.unsubscribe('user:fcm'); //unsubscribe event
     }
+    trackmyOrderDataFn(index,data){
+        return data.orderId ? data.orderId : index;
+    }
+    trackmydataItemFn(index,data){
+        return index;
+    }
 
     total_orders() {
         this._order.getTotalOrder({}).then((res) => { //col order/totalorder api

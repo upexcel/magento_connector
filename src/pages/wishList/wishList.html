@@ -5,7 +5,7 @@
     <btn-round [title]='"Continue Shopping"' [id]="'btn'" [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
 </ion-content>
 <ion-content *ngIf="data && data.length > 0">
-    <ion-card *ngFor="let data of data">
+    <ion-card *ngFor="let data of data ; trackBy: trackDataFn">
         <ion-grid no-padding>
             <ion-row center  (tap)=editWishList(data)>
                      <ion-col class="aligncenter" col-4>

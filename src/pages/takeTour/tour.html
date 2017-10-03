@@ -17,7 +17,7 @@
         <ion-row>
             <ion-col >
                 <ion-slides  *ngIf="data.body && data.body.tour_slider" #mySlider autoplay="{{mySlideOptions.autoplay}}" loop="{{mySlideOptions.loop}}" pager="{{mySlideOptions.pager}}">
-                    <ion-slide *ngFor="let desc of data.body.tour_slider ">
+                    <ion-slide *ngFor="let desc of data.body.tour_slider ; trackBy: trackTour_sliderFn">
                         <ion-row>
                             <ion-col>
                                 <p class="heading">  {{desc.title}}</p>
