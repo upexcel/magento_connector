@@ -89,6 +89,9 @@ export class MyEditAddressPage implements OnInit {
         })
 
     }
+    trackmyCountryFn(index,data){
+        return data.country_code;
+    }
     /*
      *         return this._platform.is('ios');
      */

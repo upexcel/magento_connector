@@ -127,6 +127,21 @@ export class ProductPage implements OnInit, AfterViewInit {
     ngAfterViewInit() {
 
     }
+    trackmyImageFn(index, data) {
+        return index;
+    }
+    trackmykeyFn(index, keydata) {
+        return keydata;
+    }
+    trackmyAssociated_productsFn(index, associateddata) {
+        return associateddata.id;
+    }
+    trackmy_add_to_cart(index, data) {
+        return index;
+    }
+    trackmy_additionalInformationData(index, data) {
+        return index;
+    }
     addReview() {
         this.review.addReview();
     }

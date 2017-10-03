@@ -17,7 +17,7 @@
                     <ion-row no-padding class="slideOption" >
                         <ion-col no-padding class='backgroungW'>
                             <ion-slides *ngIf="productData && productData.body.data.media_images.length" autoplay="{{mySlideOptions.autoplay}}"  pager="{{(productData.body.data.media_images.length == 1)? false:mySlideOptions.pager}}">
-                                <ion-slide *ngFor = "let images of productData.body.data.media_images">
+                                <ion-slide *ngFor = "let images of productData.body.data.media_images;trackBy: trackmyImageFn">
                                     <img *ngIf="images" src="{{images}}" class="cursorPointer" style="max-height: 250px;" imageViewer/>
                                 </ion-slide>
                             </ion-slides>
@@ -67,7 +67,7 @@
                     </ion-card-content>
                 </ion-card>
                 <span *ngIf="type=='configurable'">
-                    <ion-row  *ngFor="let key of keys">
+                    <ion-row  *ngFor="let key of keys ;trackBy: trackmykeyFn">
                         <ion-col *ngIf="productData.body.associated_products">
                             <ion-item class="selectlist">
                                 <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
@@ -77,7 +77,7 @@
                                     </ion-buttons>
                                 </ion-label>
                                 <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
-                                    <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options">
+                                    <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options ;trackBy: trackmyAssociated_productsFn">
                                         <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
                                             <ion-label no-margin class="font12" *ngIf="obj.label">
                                                 {{obj.label}}&nbsp;<span *ngIf="obj && obj.price*1 > 0 " >+{{productData.body.data.currency_sign}}{{obj.price}}</span>
@@ -107,7 +107,7 @@
                 <custom  [data]="productData" [editCartData]="editCartData" (onChange)="customData($event)"></custom>
                 <!--show TierPrice Data-->
                 <div *ngIf="show_add_to_cart && show_add_to_cart.length > 0">
-                    <ion-row *ngFor="let data of show_add_to_cart">
+                    <ion-row *ngFor="let data of show_add_to_cart;trackBy: trackmy_add_to_cart">
                         <ion-col class="padTB">
                             <p class="no-margin font20 padding10 capitalize offer fontWidth600" >Buy {{data.price_qty }}  for {{productData.body.data.currency_sign}} {{data.tierPrice | number:'.0-2'}} each.  </p>
                         </ion-col>
@@ -123,7 +123,7 @@
                 <!--additionalInformation Data-->
                 <ion-list *ngIf="additionalInformationData  && additionalInformationData.length > 0 ">
                     <h4 class="padLeft20 capitalize">Additional Information</h4>
-                    <ion-item *ngFor="let info of additionalInformationData">
+                    <ion-item *ngFor="let info of additionalInformationData ;trackBy: trackmy_additionalInformationData">
                         <ion-row>
                             <ion-col class="no-margin no-padding" col-6> <span class="additionalInformation capitalize">{{info.key}} : </span> </ion-col>
                             <ion-col class="no-margin" col-6><span class='additionalInfo'>{{info.value}} </span></ion-col>

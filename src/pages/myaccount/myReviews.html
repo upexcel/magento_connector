@@ -2,7 +2,7 @@
 <ion-content >
     <ion-spinner *ngIf="spin" class="apiSpinner"></ion-spinner>
     <ion-list  *ngIf="!spin && myReviewRes && myReviewRes.success">
-        <ion-item *ngFor=" let data of myReviewRes.success_data ">
+        <ion-item *ngFor=" let data of myReviewRes.success_data ;trackBy: trackmyReviewResFn">
             <ion-avatar item-left>
                 <img src="{{data.data.media_images[0]}}">
             </ion-avatar>

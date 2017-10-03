@@ -59,7 +59,7 @@
             <ion-item class="no-padding paddRt" *ngIf="counrtyName">
                 <ion-label  >Country<span class="danger">*</span></ion-label>
                 <ion-select  formControlName="countryid" id="Country" (ionChange)="onChangeCountry(updateform.value.countryid,updateform.value)"  >
-                    <span *ngFor="let name of counrtyName.body.country">
+                    <span *ngFor="let name of counrtyName.body.country ;trackBy: trackmyCountryFn">
                         <ion-option [value]="name"> 
                             {{name['country_name']}}
                         </ion-option>

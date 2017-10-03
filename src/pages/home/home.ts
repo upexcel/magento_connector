@@ -46,9 +46,9 @@ export class HomePage implements OnInit {
             this.homeProducts();
         });
         this._events.subscribe('homeProducts:api', (res) => {
-            this.homeApiCall();
+            this.getData();
         });
-
+        this.homeProducts();
     }
     ngOnDestroy() {
         this._events.unsubscribe('homeProducts:api');
@@ -64,7 +64,21 @@ export class HomePage implements OnInit {
             this.homeApiCall();
         })
     }
+    getData() {
+        this._homeProductsConfig.getData().then((data: any) => {
+            this.homeProduct = data;
+            if (this.refresher) {
+                this.refresher.complete();
+                this.refresher = null;
+            }
+            //break product in page limit 
+            this.feature_products = this.homeProduct ? slice(this.homeProduct.body, this.start, this.end) : [];
+            this.spin = false;
+
+        })
+    }
     homeApiCall() {
+        console.log("home API***")
         this.homeProduct = null;
         this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
             if (res) {
@@ -83,8 +97,8 @@ export class HomePage implements OnInit {
         })
     }
     ionViewWillEnter() {
-        this.homeProducts();
         this._wishList.getWishList().then((res) => {
+            this.getData();
         });
     }
 

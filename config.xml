@@ -79,6 +79,7 @@
     <preference name="FadeSplashScreen" value="false" />
     <preference name="loadUrlTimeoutValue" value="40000" />
     <preference name="PopupBlocker" value="disable" />
+    <preference name="Orientation" value="portrait" />
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>

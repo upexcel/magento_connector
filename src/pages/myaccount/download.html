@@ -5,7 +5,7 @@
 </ion-content>
 <ion-content *ngIf="myDownloadableData && myDownloadableData.length > 0">
     <span *ngIf="myDownloadableData">
-        <ion-card *ngFor="let data of myDownloadableData">
+        <ion-card *ngFor="let data of myDownloadableData ;trackBy: trackmyDownloadableDataFn">
             <img src="{{data.product_image}}"/>
             <ion-card-content>
                 <ion-card-title>

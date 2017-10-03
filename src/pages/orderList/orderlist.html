@@ -3,10 +3,10 @@
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <h2 class="center" *ngIf="no_orders">{{orders_error}}</h2>
-    <ion-list no-lines *ngFor="let dataItem of values">
+    <ion-list no-lines *ngFor="let dataItem of values; trackBy: trackmydataItemFn">
               <ion-list-header no-margin >{{dataItem.key |customdate: 'DD/MM/YYYY'}}</ion-list-header>
         <ion-item class="orders">
-            <section id="cd-timeline" class="cd-container"  *ngFor="let data of dataItem.value">
+            <section id="cd-timeline" class="cd-container"  *ngFor="let data of dataItem.value; trackBy: trackmyOrderDataFn">
                      <div class="cd-timeline-block">
                  <div class="cd-timeline-icon">
                    <ion-icon color="primary" name="clock" *ngIf="data.status=='processing'"></ion-icon>

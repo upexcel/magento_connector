@@ -38,6 +38,9 @@ export class wishList {
             this.data = data;
         })
     }
+    trackDataFn(index, data) {
+        return data.wishlist_id ? data.wishlist_id : index;
+    }
     /** editWishList    
     *    
     * function call for edit wishList    
@@ -59,9 +62,9 @@ export class wishList {
             loading.dismiss();
             if (response.body['success']) {
                 this._cartFunction.setCart(response.body['success_data']);
-                setTimeout(()=>{
-                this._toast.toast(data['name'] ? data['name'] :data.data['name']  + " added to your shopping cart", 3000, "top");
-                },100)
+                setTimeout(() => {
+                    this._toast.toast(data['name'] ? data['name'] : data.data['name'] + " added to your shopping cart", 3000, "top");
+                }, 100)
                 this._nav.push(CartPage);
             }
             else {
