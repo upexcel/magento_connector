@@ -78,7 +78,6 @@ export class HomePage implements OnInit {
         })
     }
     homeApiCall() {
-        console.log("home API***")
         this.homeProduct = null;
         this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
             if (res) {
