@@ -76,6 +76,7 @@ export class Headers implements AfterContentInit {
         }
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
+
             if (this.access_token != null || userData != null) {
                 this.showPopOver = true;
             } else {
