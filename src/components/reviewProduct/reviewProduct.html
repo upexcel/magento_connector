@@ -33,7 +33,7 @@
     </ion-card>
     <ion-list class="paddingBottom40" *ngIf="productReview">
         <ion-item *ngFor=" let data of productReview.body.data ">
-            <p><span class="color capitalize">{{data.title}}</span><span class="gray floatRight">{{data.created_at |customdate: 'DD/MM/YYYY'}}</span></p>
+            <p><span class="capitalize fontWeight">{{data.title}}</span><span class="gray floatRight">{{data.created_at |customdate: 'DD/MM/YYYY'}}</span></p>
             <p color="dark" class="whiteSpace capitalize">{{data.detail}}</p>
             <p><span class="color uppercase" >by {{data.nickname}}</span></p>
         </ion-item>

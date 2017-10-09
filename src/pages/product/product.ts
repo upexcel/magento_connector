@@ -256,7 +256,7 @@ export class ProductPage implements OnInit, AfterViewInit {
                 resolve(this.productData);
                 if (res) {
                     this.spin = false;
-                    this.product = this.productData.body.data.name;//product name
+//                    this.product = this.productData.body.data.name;//product name
                     this.productid = this.productData.body.data.entity_id;//entity id
                     this.images = this.productData.body.data.media_images[0];//first image
                     this.special_price = this.productData.body.data.special_price;//special price

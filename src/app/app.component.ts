@@ -129,6 +129,7 @@ export class MyApp implements OnInit {
 **/
     appCheckConfig() {
         this._local.get("web_config").then((web_config) => {
+            console.log("web_config",web_config)
             if (web_config == null) {
                 Splashscreen.hide();
                 this._local.remove("userData");

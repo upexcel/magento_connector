@@ -34,8 +34,9 @@ $hrline_order_grey:#d1d1d1;
 $avt_h1_order_black:#333333;
 $list_heade_order_grey: #f3f3f3;
 $date_creat_order_dark_grey:#858585;
-$toolbar-ios-title-text-align:left!important;
+/*$toolbar-ios-title-text-align:left!important;*/
 $img-placeholder-background:#fff;
+/*$searchbar-ios-toolbar-input-background: #fff !important;*/
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -58,7 +59,7 @@ lightRed:   #e66b6b,
 alert_yellow:#eea236,
 alert_success:#5cb85c,
 );
-
+$primary:#387ef5;
 
 // App Theme
 // --------------------------------------------------

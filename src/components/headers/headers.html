@@ -2,24 +2,14 @@
   <ion-navbar color="primary" [ngClass]="{'hiddenBackButton':searchBar}">
     <ion-buttons *ngIf="searchBar">
       <button ion-button (click)="dismiss()" showWhen="android" [ngClass]="{'inputHeader':searchBar}">
-           <span padding-top ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon padding-top name="md-close" showWhen="android,windows,core"></ion-icon>
+        <ion-icon padding-top name="md-close"></ion-icon>
       </button>
       <button ion-button (tap)="dismiss()" showWhen="ios" [ngClass]="{'inputHeader':searchBar}">
-           <span padding-top ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon padding-top name="md-close" showWhen="android,windows,core"></ion-icon>
+        <ion-icon padding-top name="md-close" ></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end *ngIf="searchBar">
-           <button ion-button icon-only showWhen="android" (click)="goToSearchItemPage()">
-        <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-      </button>
-      <button ion-button icon-only showWhen="ios" (tap)="goToSearchItemPage()">
-        <i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-      </button>
-    </ion-buttons>
-    <ion-input *ngIf="searchBar" class="floatLeft widthA" [(ngModel)]="data" (keyup.enter)='goToSearchItemPage()' autofocus placeholder="Search" type="text" ></ion-input>
-    <button ion-button icon-only menuToggle *ngIf="!searchBar">
+      <ion-searchbar #searchbar style="width: 90%;" class="floatRight" *ngIf="searchBar" [(ngModel)]="data" (keyup.enter)='goToSearchItemPage()' ></ion-searchbar>
+    <button ion-button icon-only menuToggle  *ngIf="!searchBar">
         <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end *ngIf="!searchBar">

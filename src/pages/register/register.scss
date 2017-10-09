@@ -7,4 +7,7 @@
         color: $blacky;
         background-color: transparent;
     }
+    ion-input.uppercase input {
+        text-transform: capitalize !important;
+    }
 }
