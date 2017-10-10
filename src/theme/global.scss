@@ -101,11 +101,21 @@ header{
             }
         }
     }
-    ion-item.ng-dirty.ng-invalid{
-        border-color: red!important;
+
+    ion-item.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus).ng-dirty.ng-invalid{
+        .item-inner {
+            border-color: red!important;
+        }
     }
-    ion-item.ng-dirty.ng-valid{
-        border-color: blue!important;
+    ion-item.item-input.ng-dirty.ng-valid:not(.input-has-focus):not(.item-input-has-focus).ng-dirty.ng-valid{
+        .item-inner {
+            border-color: blue!important;
+        }
+    }
+    ion-item.item-input.item-input-has-focus,ion-item.item-input.input-has-focus{
+        .item-inner {
+            border-color: blue!important;
+        }
     }
     product{
         .card-content{
@@ -1050,7 +1060,15 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
     .ios{
         .productWishList{
-            @include margin-right(15px);
+            @include margin-right(5px);
+        }
+        img .maxht{
+            width:auto !important;
+            max-height: 150px !important;
+        }
+
+        .item-inner {
+            border-bottom: 1px solid #c8c7cc !important;
         }
     }}
 @media screen and (device-aspect-ratio:40/71) {
