@@ -152,9 +152,7 @@ sort{
         min-height: 150px;
     }
 }
-iframe{
-    height:100% !important;
-}
+
 .description{
     color:#696969;
 }
@@ -601,7 +599,7 @@ placed-order{
 .ios{
     .productWishList{
         @extend .floatRight;
-        @include margin-right(15px);
+        @include margin-right(5px);
     }
 }
 
@@ -1046,6 +1044,15 @@ checkout{
 .no-underline{
     text-decoration: none;
 }
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+    .ios{
+        .productWishList{
+            @include margin-right(15px);
+        }
+    }}
 @media screen and (device-aspect-ratio:40/71) {
     .ios{
         .menu-inner{
