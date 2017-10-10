@@ -1,9 +1,11 @@
 <header [title]='title' [pagename]='pagename' [view]="true" [search]='true' [menu]='menu'></header>
 <sidemenu *ngIf="categoryList" [token]="userToken"></sidemenu>
 <ion-content  class="home" [header-scroller]="PAGE">
+    <div class="center" padding-top *ngIf="error" ><ion-badge color="danger" >{{error}}</ion-badge></div> 
     <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
     <get-slider *ngIf="updateSlider"> Lodding....</get-slider>
     <ion-spinner id="magLeft50" *ngIf="spin || !updateSlider"></ion-spinner>
+      <div class="center" padding-top *ngIf="homeProduct && homeProduct.body.length==0" ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
     <div *ngIf="homeProduct" >
         <category-view [product]="feature_products" ></category-view>
     </div>

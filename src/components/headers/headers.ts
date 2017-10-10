@@ -1,4 +1,4 @@
-import {Component, AfterContentInit, Input} from '@angular/core';
+import {Component, AfterContentInit, Input, ViewChild} from '@angular/core';
 import {PopoverController, MenuController, NavController, NavParams, Events} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {LoginPage} from '../../pages/login/login';
@@ -10,11 +10,13 @@ import {SearchItemPage} from '../../pages/search-item/search-item'
 import {CartFunction} from '../../model/cart/cartHandling';
 import {EventService} from './../../providers/headerEvents/headerEvents';
 import {ModalController} from 'ionic-angular';
+import {Searchbar} from 'ionic-angular';
 @Component({
     selector: 'header',
     templateUrl: 'headers.html'
 })
 export class Headers implements AfterContentInit {
+    @ViewChild("searchbar") searchbar: Searchbar;
     @Input() type: boolean;
     @Input() title: string = '';
     @Input() loading: boolean;
@@ -34,7 +36,7 @@ export class Headers implements AfterContentInit {
     wishlist: number;
     searchBar: boolean = false;
     data: any;
-    
+
     constructor(public modalCtrl: ModalController, public _eventService: EventService, private _cartFunction: CartFunction, private _appConfigService: AppDataConfigService, private _events: Events, private _navParams: NavParams, private _menuCtrl: MenuController, private _local: Storage, private _popoverCtrl: PopoverController, private _navCtrl: NavController) {}
     ngAfterContentInit() {
         // call via cart component  
@@ -74,6 +76,7 @@ export class Headers implements AfterContentInit {
         }
         this.access_token = this._navParams.get("access_token");
         this._appConfigService.getUserData().then((userData: any) => {
+
             if (this.access_token != null || userData != null) {
                 this.showPopOver = true;
             } else {
@@ -104,7 +107,8 @@ export class Headers implements AfterContentInit {
         this._events.publish('view:created', this.viewChang);
     }
     openMenu() {
-        this._menuCtrl.toggle();
+        this._menuCtrl.enable(true, 'authenticated');
+        this._menuCtrl.enable(false, 'submenu');
         this._events.publish('check:loginSideMenu', true);
     }
     gotoLogin() {
@@ -124,6 +128,9 @@ export class Headers implements AfterContentInit {
         this._navCtrl.push(CartPage);
     }
     gotoSearch() {
+        setTimeout(() => {
+            this.searchbar.setFocus();
+        }, 200);
         this.searchBar = true;
         // let modal = this.modalCtrl.create(Search);
         // modal.present();

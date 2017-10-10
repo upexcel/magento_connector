@@ -1,5 +1,7 @@
 <header [pagename]="'product'" [search]='true' [title]='product' [classHeader]="'product'"></header>
 <ion-content [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
+    <!--<div class="center" padding-top *ngIf="error" ><ion-badge color="danger" >{{error}}</ion-badge></div>--> 
+
     <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
             pullingIcon="arrow-dropdown"
@@ -30,7 +32,7 @@
                             <ion-col  class='no-margin lineH0 no-padding'>
                                 <ion-row>
                                     <ion-col col-10 class="padTB no-margin">
-                                        <h2 class="capitalize no-margin productName">{{productData.body.data.name}}</h2>
+                                        <h2 class="capitalize no-margin roboto productName">{{productData.body.data.name}}</h2>
                                     </ion-col> 
                                     <ion-col class="no-margin no-padding" col-2 [ngClass]="{'fullCol':productData.body.data.in_stock!='Out of Stock'}">     
                                              <btn-full *ngIf="productData.body.data.in_stock=='Out of Stock'" class="notifyBt" [titleFull]="'Notify Me'" (tap)="notifySet()"></btn-full>
@@ -53,14 +55,14 @@
                         <ion-row> 
                             <ion-col class="padTB no-margin paddTop5"> 
                                 <span id="font13" [ngClass]="{'line':(display_special_price*1) == (final_price*1), 'hide':(display_price*1) <= (final_price*1) , 'price':true}" class="price">{{productData.body.data.currency_sign}}{{display_price | number:'.0-2'}}</span>
-                                <span  [ngClass]="{'paddLeft10':(display_price*1) == (final_price*1),'lineH2-4':true,'sPrice':true}" [style.color]="((display_price*1) > (final_price*1))? 'red': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price |number:'.0-2'}}</span>
-                                <span class="floatRight">
+                                <span  [ngClass]="{'paddLeft10':(display_price*1) == (final_price*1),'lineH2-4':true,'sPrice':true,'fontWeight':true,'sans':true}" [style.color]="((display_price*1) > (final_price*1))? '#387ef5': 'black'"><span *ngIf="(display_price*1) > (final_price*1)">Special Price</span> {{productData.body.data.currency_sign}}{{final_price |number:'.0-2'}}</span>
+                                <span class="floatRight padTop5">
                                     <ion-icon name="heart" class="heart" [ngClass]="{'lightRed':productData.body.data.wishlist_item_id}" (tap)="wishList(productData.body)"></ion-icon>
                                 </span>
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col class=" no-margin padLeft20" *ngIf="type=='bundle'">
+                            <ion-col class=" no-margin padLeft20 " *ngIf="type=='bundle'">
                                 <p [innerHtml]="transformPrice(productData.body.data)"></p>
                             </ion-col>
                         </ion-row>
@@ -116,7 +118,7 @@
 
                 <!--product description-->
                 <ion-row *ngIf="productData.body.data['long_description']">
-                    <ion-col class="padTB">
+                    <ion-col class="padTB roboto">
                         <p class=" font13 padLeft10 capitalize "  [ngClass]="{'marginBottom50': true, 'description':true}" [innerHtml]="transform(productData) "></p>
                     </ion-col>
                 </ion-row>
@@ -132,13 +134,13 @@
                 </ion-list>
                 <!--review directive-->
                 <span *ngIf="reviewLoader && (data && data.sku)">
-                <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData" [addToCartButton]='true'> loading..</product-review> </span>              
+                    <product-review  [skuData]="data.sku" [additionalInformationData]="additionalInformationData" [addToCartButton]='true'> loading..</product-review> </span>              
             </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>
 <ion-footer [ngClass]="{'uppercase':true}">
-   <btn-full   [titleFull]='"Review Product"' [spinFull]="false"  [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
+    <btn-full   [titleFull]='"Review Product"' [spinFull]="false"  [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
 
     <btn-full [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock'}" [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
 </ion-footer>

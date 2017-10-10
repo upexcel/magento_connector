@@ -29,7 +29,7 @@ export class CategoryProductPage implements OnInit {
         this.title = _navParams.get('name'); //get title
         this.display_mode = _navParams.get('display_mode');//get display_mode use to hide filter
         this.product_count=_navParams.get('product_count');
-          _menuCtrl.enable(true);
+//          _menuCtrl.enable(true);
     }
     ngOnInit() {
         //catch event for sorting

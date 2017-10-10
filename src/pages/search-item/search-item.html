@@ -1,9 +1,11 @@
-<header [title]="'SEARCH FOR'" [itemName]="itemName" [wishList]=false></header>
+<header [title]="'SEARCH FOR'" [itemName]="itemName" [wishList]=false [search]='true'></header>
 
 <ion-content class="home1">
 
     <ion-spinner class="apiSpinner" *ngIf="spinner"></ion-spinner>
    <!--  <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p> -->
-    <span class="center" *ngIf="searchProduct && searchProduct.body.length==0 "> No Item Found</span>
+    <span class="center" *ngIf="searchProduct && searchProduct.body.length==0 "> 
+        <div class="center" padding-top  ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
+    </span>
     <category-view *ngIf="searchProduct" [product]="searchProduct.body"></category-view>
 </ion-content>

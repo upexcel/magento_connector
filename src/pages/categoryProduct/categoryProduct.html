@@ -13,7 +13,9 @@
     </ion-refresher>
     <ion-spinner class="apiSpinner" *ngIf="spinner(categoryProduct) && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
-    <span class="center" *ngIf="categoryProduct && categoryProduct.body.length==0">No Item Found</span>
+    <span class="center" *ngIf="categoryProduct && categoryProduct.body.length==0">
+        <div class="center" padding-top  ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
+    </span>
     <category-view *ngIf="categoryProduct" [product]="categoryProduct.body"></category-view>
     <ion-infinite-scroll threshold="60%"  (ionInfinite)="doInfinite($event)" *ngIf="categoryProduct && categoryProduct.body.length > 9">
         <ion-infinite-scroll-content>

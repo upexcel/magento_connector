@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
     updateSlider = false;
     categoryList = true;
     refresher: any;
+    error;
     constructor(private _wishList: WishListService, private _cms: CMS, private _categoryList: CategoryList, private _ngZone: NgZone, private _sliderService: Slider, public alertCtrl: AlertController, public _modalCtrl: ModalController, private _apiService: ApiService, private _navParams: NavParams, private _events: Events, private _homeProductsConfig: HomeProducts, private _navCtrl: NavController, private _viewController: ViewController) {
 
         this.userToken = this._navParams.data.access_token;
@@ -52,6 +53,7 @@ export class HomePage implements OnInit {
     }
     ngOnDestroy() {
         this._events.unsubscribe('homeProducts:api');
+        this._events.unsubscribe('api:review');
     }
     homeProducts() {
         this._ngZone.run(() => {
@@ -82,6 +84,7 @@ export class HomePage implements OnInit {
         this._homeProductsConfig.getHomeProducts().then((res: any) => { //call "home/products" api
             if (res) {
                 this.homeProduct = res;
+                this.error = null;
                 if (this.refresher) {
                     this.refresher.complete();
                     this.refresher = null;
@@ -91,6 +94,7 @@ export class HomePage implements OnInit {
                 this.spin = false;
             }
         }, (err) => {
+            this.error = err;
             this.refresher.complete();
             this.refresher = null;
         })

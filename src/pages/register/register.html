@@ -2,7 +2,7 @@
 
 <ion-content class="register" *ngIf="clear">
 
-    <form [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <form text-capitalize [formGroup]="regForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <ion-item>
             <ion-label floating>First Name</ion-label>
             <ion-input type="text" id="First" [onReturn]='"Last"' class="uppercase" formControlName="firstname" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" ></ion-input>

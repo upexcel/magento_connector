@@ -1,4 +1,8 @@
 category-view{
+    font-family: Roboto Medium,Roboto-Medium,Droid Sans,HelveticaNeue-Medium,Helvetica Neue Medium,sans-serif-medium;
+    .card-content-ios{
+        padding: 5px 10px 5px 0px !important;
+    }
     ion-img{
         min-height:100px !important;
         min-width: 100% !important;
@@ -8,7 +12,8 @@ category-view{
         background-size: cover;
     }
     .redColor{
-        color:red;
+        color:$primary;
+        font-weight: bold;
     }
     .heart {
         cursor: pointer;
@@ -68,6 +73,32 @@ category-view{
         }
         .padTop6{
             padding-top: 6px;
+        }
+        .centerLandscape{
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;
+            display: -webkit-flex !important;
+            display: flex !important;
+            -webkit-box-direction: normal;
+            -webkit-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-align-content: stretch;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+
         }
     }
     /*@media screen and (orientation: landscape) {*/
@@ -179,3 +210,4 @@ category-view{
 img{
     margin: 0 auto;
 }
+
