@@ -955,7 +955,9 @@ edit-address ,filter {
         @extend .backgroungW;
     }
 }
-
+.block{
+    display: block;
+}
 .none{
     display: none; 
 }

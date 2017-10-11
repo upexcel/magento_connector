@@ -143,7 +143,17 @@
     </ion-grid>
 </ion-content>
 <ion-footer [ngClass]="{'uppercase':true}">
-    <btn-full   [titleFull]='"Review Product"' [spinFull]="false"  [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
-
-    <btn-full [ngClass]="{'none': productData && productData.body.data.in_stock=='Out of Stock'}" [titleFull]='cartButtonTitle'  [id]="'btn'"  [classFull]="'botton'" [spinFull]="cartSpin" [validFull]="disable" (onBtnClick)="addToCartService()"></btn-full>
+    <ion-grid class="filterFooterBtnDiv no-padding" *ngIf="(productData && productData.body.data.in_stock!='Out of Stock')">
+              <ion-row>
+            <ion-col col-6>
+                <!-- col button directive -->
+                <btn-large [titleForLarge]='cartButtonTitle' [classForLarge]="'filterFooterBtn filterFooterBtnSecond font17'" [spinForLarge]="cartSpin" [idForLarge]="'btn'" [colorForLarge]="''" (onBtnClick)="addToCartService()"></btn-large>
+            </ion-col>
+            <ion-col col-6>
+                <!-- col button directive -->
+                <btn-large [titleForLarge]='"Review Product"' [classForLarge]="'filterFooterBtn writeButt font17'" [spinForLarge]="false"  [colorForLarge]="''" [validForLarge]="false" (onBtnClick)="addReview()"></btn-large>
+            </ion-col>
+        </ion-row>
+    </ion-grid> 
+    <btn-full *ngIf="productData && productData.body.data.in_stock=='Out of Stock'"  [titleFull]='"Review Product"' [spinFull]="false"  [colorFull]="''" [validFull]="false" [classFull]="'writeButt botton reviewBtn'" (click)="addReview()"></btn-full>
 </ion-footer>
