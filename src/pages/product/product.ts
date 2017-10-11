@@ -91,6 +91,7 @@ export class ProductPage implements OnInit, AfterViewInit {
     item_id: string;
     editProductQuantity: number;
     reviewLoader: boolean = true;
+    message: boolean = false;
     constructor(private _ngZone: NgZone, private sanitized: DomSanitizer, private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({email: ['', Validators.required]});
     }
@@ -250,13 +251,14 @@ export class ProductPage implements OnInit, AfterViewInit {
         }
         //getProduct is use to fire product/get api to get product
         return new Promise((resolve, reject) => {
-            this._getProduct.getProduct(this.data).then((res) => {
-                this.productData = res;
-                this.error = false;
-                resolve(this.productData);
-                if (res) {
+            this._getProduct.getProduct(this.data).then((res: any) => {
+                resolve(res);
+                if (res && res.body.data) {
+                    this.message = false;
                     this.spin = false;
-//                    this.product = this.productData.body.data.name;//product name
+                    this.productData = res;
+                    this.error = false;
+                    //                    this.product = this.productData.body.data.name;//product name
                     this.productid = this.productData.body.data.entity_id;//entity id
                     this.images = this.productData.body.data.media_images[0];//first image
                     this.special_price = this.productData.body.data.special_price;//special price
@@ -354,6 +356,10 @@ export class ProductPage implements OnInit, AfterViewInit {
                         this.disable = true;
                     }
                     this.ifCustomOption(null, null);
+                }
+                else if (res.body.length == 0) {
+                    this.spin = false;
+                    this.message = true;
                 }
 
             }, (err) => {

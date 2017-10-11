@@ -10,6 +10,9 @@
             refreshingText="Refreshing...">
         </ion-refresher-content>
     </ion-refresher> 
+    <span class="center" *ngIf="message"> 
+        <div class="center" padding-top  ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
+    </span>
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
     <ion-grid no-padding *ngIf="productData" class="maxHeight">
@@ -40,7 +43,7 @@
                                 </ion-row>
                                 <ion-row>
                                     <ion-col col-10 class="padTB no-margin">
-                                        <p class="stock">{{productData.body.data.in_stock}}</p>
+                                        <p class="stock" *ngIf="productData.body.data.in_stock">{{productData.body.data.in_stock}}</p>
                                     </ion-col>
                                     <ion-col class="no-margin paddRight12" col-2 >
                                         <span class="productWishList" >
