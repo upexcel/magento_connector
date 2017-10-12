@@ -429,7 +429,7 @@ bundle{
     @include margin-right(16px);
 }*/
 .offer{
-    color:#222222;
+    color:#666666;
 }
 login{
     span ion-icon{
@@ -955,8 +955,8 @@ edit-address ,filter {
         @extend .backgroungW;
     }
 }
-.block{
-    display: block;
+.radius{
+    border-radius: 0px !important;
 }
 .none{
     display: none; 

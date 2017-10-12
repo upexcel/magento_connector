@@ -1,52 +1,54 @@
-<header [title]="'My Wishlist'" [pagename]="''" [wishList]=false></header>
-<ion-content class="empty-wishlist" *ngIf="!data || data.length == 0">
+<header [title]="'My Wishlist'" [pagename]="''" [wishList]=false [id]="'Wishlist'"></header>
+<ion-content  class="empty-wishlist" *ngIf="!data || data.length == 0">
     <img src="assets/image/empty-wishlist.jpg">
     <h3>YOUR WISHLIST IS EMPTY</h3>
     <btn-round [title]='"Continue Shopping"' [id]="'btn'" [color]="'primary'" (onBtnClick)="c_Shopping()" ></btn-round>
 </ion-content>
-<ion-content *ngIf="data && data.length > 0">
-    <ion-card *ngFor="let data of data ; trackBy: trackDataFn">
-        <ion-grid no-padding>
-            <ion-row center  (tap)=editWishList(data)>
-                     <ion-col class="aligncenter" col-4>
-                    <ion-row center>
-                        <ion-col>
-                            <img imageDirective src="{{data.data.media_images[0]}}" alt="" class="maxht"/>
-                            <img src="{{data.data.minify_image}}"/>
-                        </ion-col> 
-                    </ion-row>
-                    <!--                            <ion-row center>
-                                                    <ion-col>
-                                                        {{data.data.currency_sign}}{{data.data.final_price}}
-                                                    </ion-col> 
-                                                </ion-row>-->
-                </ion-col>
-                <ion-col col-8>
-                    <ion-row>
-                        <ion-col class="size capitalize font20" style="white-space: initial;">
-                            <h3>{{data.data.name}}</h3>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="white-space: initial;">
-                            <p [innerHtml]="transform(data)"> </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-            <!--                <ion-item>
-                                <ion-textarea value="" placeholder="Please enter your comment" [(ngModel)]="text" style="border: 1px solid #d6d5d5;"(blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
-                            </ion-item> -->
-            <ion-row class="cartRowborder">
-                <ion-col col-6 class="center" (tap)=addToCart(data)>
-                    Add To Cart
-                </ion-col>
-                <ion-col col-6 class="center borderLeft" (tap)=deleteProductWishList(data)>
-                    Delete
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-card>
+<ion-content shrink-header="Wishlist" >
+    <span *ngIf="data && data.length > 0">
+        <ion-card *ngFor="let data of data ; trackBy: trackDataFn">
+            <ion-grid no-padding>
+                <ion-row center  (tap)=editWishList(data)>
+                         <ion-col class="aligncenter" col-4>
+                        <ion-row center>
+                            <ion-col>
+                                <img imageDirective src="{{data.data.media_images[0]}}" alt="" class="maxht"/>
+                                <img src="{{data.data.minify_image}}"/>
+                            </ion-col> 
+                        </ion-row>
+                        <!--                            <ion-row center>
+                                                        <ion-col>
+                                                            {{data.data.currency_sign}}{{data.data.final_price}}
+                                                        </ion-col> 
+                                                    </ion-row>-->
+                    </ion-col>
+                    <ion-col col-8>
+                        <ion-row>
+                            <ion-col class="size capitalize font20" style="white-space: initial;">
+                                <h3>{{data.data.name}}</h3>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col style="white-space: initial;">
+                                <p [innerHtml]="transform(data)"> </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+                <!--                <ion-item>
+                                    <ion-textarea value="" placeholder="Please enter your comment" [(ngModel)]="text" style="border: 1px solid #d6d5d5;"(blur)="textArea(opt,customOption.id,customOption.is_require)"></ion-textarea> 
+                                </ion-item> -->
+                <ion-row class="cartRowborder">
+                    <ion-col col-6 class="center" (tap)=addToCart(data)>
+                        Add To Cart
+                    </ion-col>
+                    <ion-col col-6 class="center borderLeft" (tap)=deleteProductWishList(data)>
+                        Delete
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </span>
 </ion-content>
 <ion-footer [ngClass]="{'none': !data || data.length == 0,'uppercase':true}">
     <btn-full  [titleFull]='"CONTINUE SHOPPING"'  [id]="'btn'"  [classFull]="'botton'" (onBtnClick)="c_Shopping()"></btn-full>

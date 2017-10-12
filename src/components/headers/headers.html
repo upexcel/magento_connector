@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [id]=id>
   <ion-navbar color="primary" [ngClass]="{'hiddenBackButton':searchBar}">
     <ion-buttons *ngIf="searchBar">
       <button ion-button (click)="dismiss()" showWhen="android" [ngClass]="{'inputHeader':searchBar}">
