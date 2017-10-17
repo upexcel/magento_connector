@@ -1,3 +1,7 @@
+.redColor{
+    color:$primary;
+    font-weight: bold;
+}
 category-view{
     font-family: Roboto Medium,Roboto-Medium,Droid Sans,HelveticaNeue-Medium,Helvetica Neue Medium,sans-serif-medium;
     .card-content-ios{
@@ -10,10 +14,6 @@ category-view{
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-    }
-    .redColor{
-        color:$primary;
-        font-weight: bold;
     }
     .heart {
         cursor: pointer;
@@ -205,7 +205,7 @@ category-view{
 }
 .footerCateg{
     line-height: 2;
-    background: white;
+    /*background: white;*/
 }
 img{
     margin: 0 auto;

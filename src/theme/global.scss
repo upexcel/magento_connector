@@ -215,7 +215,8 @@ start-page{
             justify-content: center !important;}}
     download, my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
         .scroll-content {
-            @include margin-top(56px);   
+            @include margin-top(56px);
+                overflow-y: auto;
         }  
     } 
     orderid-detail{
@@ -270,7 +271,7 @@ side-menu-data, sidemenu ,home{
     color:red;
 }
 .paddLeft10{
-    @include padding-left(10px);
+    @include padding-left(11px);
 }
 .pad5{
     padding: 5px;
@@ -772,7 +773,7 @@ ion-input.uppercase input{
     }
 }
 .paddingBottom40{
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
 }
 .botton{  
     /*    position: absolute !important;*/

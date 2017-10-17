@@ -118,6 +118,8 @@ import {group} from '../components/groupedProduct/group';
 import {BundleProduct} from '../components/bundleProduct/bundleProduct';
 import {DownloadProduct} from '../components/downloadProduct/downloadProduct';
 import {CustomOption} from '../components/customOption/customOption';
+import {RelatedProduct} from '../components/relatedProduct/relatedProduct';
+
 //directives
 import {FocusByEnterKey} from '../directives/focusByEnterKey/nextByEnter';
 import {HeaderScroller} from '../directives/header-scroller';
@@ -191,7 +193,8 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         ResetPasswordPage,
         SearchItemPage,
         StripePage,
-        ShrinkHeader
+        ShrinkHeader,
+        RelatedProduct
     ],
     imports: [
         BrowserModule,

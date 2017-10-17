@@ -1,0 +1,39 @@
+<div padding-bottom>
+    <ion-card  class="productTitleCard" padding-bottom>
+        <ion-card-header>
+            <div class="viewAllButton">
+                Similar products
+            </div>
+            <div class="floatRight">
+                <button item-end ion-button small (click)="gotoCategoryProductPage(relatedData)">
+                        View All
+            </button>
+        </div>
+    </ion-card-header>
+    <ion-card-content class="no-padding">
+        <div class="scrollmenu">
+            <div  *ngFor="let rel of relatedData.body" (click)="showData(rel)">
+                <div class="center relatedProductImgDiv">
+                    <img *ngIf="rel && rel.data" src="{{rel.data.minify_image}}" class="relatedImg" />
+                </div>
+                <p text-wrap>{{rel.data.name}}</p>
+                <p text-wrap *ngIf="rel.data && rel.data.type !='bundle'"  (tap)="(rel.data.sku)">
+                   <span [ngClass]="{'redColor':((rel.data.display_special_price*1) == (rel.data.final_price*1) && (rel.data.final_price*1) >0)}" ><span *ngIf="rel.data && (rel.data.display_special_price*1) == (rel.data.final_price*1) && (rel.data.final_price*1) >0">Special Price</span> {{rel.data.currency_sign}}{{rel.data.final_price}}</span>
+                    <span   [ngClass]="{'line': (rel.data.display_special_price*1) == (rel.data.final_price*1)}" *ngIf=" rel.data && (rel.data.display_special_price*1) == (rel.data.final_price*1) && ((rel.data.final_price*1) >0)">{{rel.data.currency_sign}}{{rel.data.display_price}}</span>
+                </p>
+
+                <p text-wrap (tap)="gotoProduct(rel.data.sku)" *ngIf="rel.data['displayBundlePrice']">
+                   <span text-wrap [innerHtml]="transformPrice(rel.data)"></span>
+                </p>
+                <p  *ngIf="rel.data.rating>0" (tap)="gotoProduct(rel.data.sku)">
+                    <button ion-button icon-left class="btnStar">
+                        <ion-icon name="star"></ion-icon>
+                        {{rel.data.rating | singleDecimal}} / 5
+                    </button>
+                </p>
+
+            </div>
+        </div>
+    </ion-card-content>
+</ion-card>
+</div>

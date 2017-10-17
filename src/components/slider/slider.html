@@ -1,11 +1,7 @@
-<ion-grid no-padding >
-    <ion-row no-padding class="slideOption" >
-        <ion-col no-padding>
-            <ion-slides  *ngIf="img" autoplay="{{mySlideOptions.autoplay}}" loop="{{mySlideOptions.loop}}" pager="{{mySlideOptions.pager}}">
-                <ion-slide *ngFor="let images of img.body.url">
-                    <img src="{{images}}" class="sliderImg"/>
-                </ion-slide>
-            </ion-slides>
-        </ion-col>
-    </ion-row>
-</ion-grid>
+<ion-slides class="slideOption" *ngIf="img" autoplay="{{mySlideOptions.autoplay}}" loop="{{mySlideOptions.loop}}" pager="{{mySlideOptions.pager}}">
+    <ion-slide *ngFor="let images of img.body.url">
+        <img src="{{images}}" class="sliderImg"/>
+    </ion-slide>
+</ion-slides>
+
+

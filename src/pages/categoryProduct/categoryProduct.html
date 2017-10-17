@@ -12,7 +12,9 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-spinner class="apiSpinner" *ngIf="spinner(categoryProduct) && !error"></ion-spinner>
-    <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
+    <span class="center">
+        <ion-badge color="red" *ngIf="error">Check Network Connection</ion-badge>
+    </span>
     <span class="center" *ngIf="categoryProduct && categoryProduct.body.length==0">
         <div class="center" padding-top  ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
     </span>

@@ -3,6 +3,51 @@
         padding: 0px 1.3em 0px 0px;
     }
 }
+product{
+    .btnStar{
+        height: auto !important;
+        font-size: 11px;
+        padding: 4px !important;
+    }
+}
+div.scrollmenu {
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+div.scrollmenu div {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px;
+    min-height: 130px;
+    min-width: 150px;
+    max-width: 150px;
+    text-decoration: none;
+    vertical-align: top;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
+
+.viewAllButton{
+    float: left;
+    padding-top: 10px;
+    font-size: 20px;
+}
+.relatedImg{
+    max-height: 120px;
+    width: auto;
+}
+p.brack {
+    width: 120px; 
+    word-break: keep-all;
+}
+.relatedProductImgDiv{
+    height: 150px;
+    width: 100%;
+}
 /*.reviewBtn{
     position: absolute;
     width: 100%;

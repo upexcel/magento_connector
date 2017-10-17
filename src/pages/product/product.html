@@ -1,5 +1,5 @@
 <header [pagename]="'product'" [search]='true' [title]='product' [classHeader]="'product'" [id]="'product'"></header>
-<ion-content shrink-header="product" [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
+<ion-content  shrink-header="product" [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
              <!--<div class="center" padding-top *ngIf="error" ><ion-badge color="danger" >{{error}}</ion-badge></div>--> 
 
              <ion-refresher *ngIf="!editCartData" (ionRefresh)="doRefresh($event)">
@@ -52,27 +52,27 @@
                 </ion-card>
                 <ion-card class="productTitleCard" *ngIf="type=='configurable'">
                     <ion-card-content>
-                            <ion-row  *ngFor="let key of keys ;trackBy: trackmykeyFn">
-                                <ion-col *ngIf="productData.body.associated_products">
-                                    <ion-item class="selectlist">
-                                        <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
-                                        <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
-                                            <ion-buttons class="alignright">
-                                                <ion-icon name="radio-button-on" dark id="color"></ion-icon>
-                                            </ion-buttons>
-                                        </ion-label>
-                                        <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
-                                            <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options ;trackBy: trackmyAssociated_productsFn">
-                                                <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
-                                                    <ion-label no-margin class="font12" *ngIf="obj.label">
-                                                        {{obj.label}}&nbsp;<span *ngIf="obj && obj.price*1 > 0 " >+{{productData.body.data.currency_sign}}{{obj.price}}</span>
-                                                    </ion-label>
-                                                </ion-option>
-                                            </span>
-                                        </ion-select>
-                                    </ion-item>
-                                </ion-col>
-                            </ion-row>
+                        <ion-row  *ngFor="let key of keys ;trackBy: trackmykeyFn">
+                            <ion-col *ngIf="productData.body.associated_products">
+                                <ion-item class="selectlist">
+                                    <ion-label no-margin class="capitalize config">{{productData.body.associated_products.attributes[key].label}}</ion-label>
+                                    <ion-label class="font12 config no-margin" *ngIf="productData.body.associated_products.attributes[key].label=='Color'">
+                                        <ion-buttons class="alignright">
+                                            <ion-icon name="radio-button-on" dark id="color"></ion-icon>
+                                        </ion-buttons>
+                                    </ion-label>
+                                    <ion-select  [(ngModel)]="productData.body.associated_products.attributes[key].vertualKey"  [placeholder]="'select'"  (ngModelChange)="onChangeConfigurableAttribute(productData.body.associated_products.attributes[key].vertualKey, key)">
+                                        <span *ngFor= "let obj of productData.body.associated_products.attributes[key].options ;trackBy: trackmyAssociated_productsFn">
+                                            <ion-option *ngIf="selectshow || obj.shown"  [value]="obj" >
+                                                <ion-label no-margin class="font12" *ngIf="obj.label">
+                                                    {{obj.label}}&nbsp;<span *ngIf="obj && obj.price*1 > 0 " >+{{productData.body.data.currency_sign}}{{obj.price}}</span>
+                                                </ion-label>
+                                            </ion-option>
+                                        </span>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
                     </ion-card-content>
                 </ion-card>
                 <!--for group product-->
@@ -81,7 +81,7 @@
                 </span>
 
                 <!--for bundle product-->
-                <ion-card class="productTitleCard"*ngIf="type=='bundle'">
+                <ion-card class="productTitleCard" *ngIf="type=='bundle'">
                     <ion-card-content>
                         <bundle [bundle]="productData.body" [editCartData]="editCartData" (onChangeData)=diffrentTypeProductData($event) (onChange)=bundle($event)></bundle>
                     </ion-card-content>
@@ -130,6 +130,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    <related-product  *ngIf="productData" [content]='content' [relatedData]='relatedData' (onSelect)="relatedProductItemClick($event)"></related-product>
 </ion-content>
 <ion-footer [ngClass]="{'uppercase':true}">
     <ion-grid class="filterFooterBtnDiv no-padding" *ngIf="(productData && productData.body.data.in_stock!='Out of Stock')">

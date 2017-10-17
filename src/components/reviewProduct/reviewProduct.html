@@ -1,4 +1,4 @@
-<div *ngIf="reviewShow">    
+<div *ngIf="reviewShow && productReview.body.total_attribute_rating.length > 0">    
     <ion-card class="productTitleCard card">
         <ion-card-content class="no-padding">
             <ion-item style="padding-right: 0px;">
@@ -46,6 +46,6 @@
         </ion-item>
     </ion-list> 
 </div>
-<div *ngIf="!reviewShow" [ngClass]="{'empty-review': (additionalInformationData && additionalInformationData.length == 0) ,center:true}">
+<div *ngIf="productReviewSpin" [ngClass]="{'empty-review': (additionalInformationData && additionalInformationData.length == 0) ,center:true}">
     <ion-spinner *ngIf="productReviewSpin"></ion-spinner>
 </div>
