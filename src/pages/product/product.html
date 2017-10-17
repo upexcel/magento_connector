@@ -1,4 +1,6 @@
-<header [pagename]="'product'" [search]='true' [title]='product' [classHeader]="'product'" [id]="'product'"></header>
+<ion-header id="product">
+<header [pagename]="'product'" [search]='true' [title]='product' [classHeader]="'product'" ></header>
+</ion-header>
 <ion-content  shrink-header="product" [ngClass]="{'no-footer': productData && productData.body.data.in_stock=='Out of Stock','product':true}" >
              <!--<div class="center" padding-top *ngIf="error" ><ion-badge color="danger" >{{error}}</ion-badge></div>--> 
 

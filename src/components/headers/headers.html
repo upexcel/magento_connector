@@ -1,4 +1,4 @@
-<ion-header [id]=id>
+<!--<ion-header [id]=id>-->
   <ion-navbar color="primary" [ngClass]="{'hiddenBackButton':searchBar}">
     <ion-buttons *ngIf="searchBar">
       <button ion-button (click)="dismiss()" showWhen="android" [ngClass]="{'inputHeader':searchBar}">
@@ -52,4 +52,4 @@
     </ion-buttons>
     <ion-title *ngIf="!searchBar" text-capitalize [ngClass]="{'titleSize':(showPopOver && classHeader=='product') , 'titleSizeCategory':(showPopOver && classHeader=='category') }">{{title}} {{itemName}}</ion-title>
   </ion-navbar> 
-</ion-header>
+<!--</ion-header>-->

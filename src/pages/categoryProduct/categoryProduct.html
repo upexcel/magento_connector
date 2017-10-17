@@ -1,6 +1,7 @@
 <!-- coll header component -->
-<header [title]='title' [pagename]="'home'" [search]='true' [view]="true" ></header>
-
+<ion-header>
+    <header [title]='title' [pagename]="'home'" [search]='true' [view]="true" ></header>
+</ion-header>
 <ion-content class="home1"  [header-scroller]="display_mode">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -26,4 +27,8 @@
 </ion-content>
 <!-- coll header component -->
 <!--*ngIf="display_mode!='PAGE'"-->
-<category-footer *ngIf="(product_count > 0) && categoryProduct" [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>
+<ion-footer  [ngClass]="{'uppercase':true,'footerCateg':true,'none':(product_count == 0)}" style="min-height: 60px;">
+    <span *ngIf="(product_count > 0) && categoryProduct" >
+        <category-footer  [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>
+    </span>
+</ion-footer>

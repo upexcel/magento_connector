@@ -76,7 +76,7 @@ export class HeaderScroller {
 */
                     if (this._platform.is('ios')) {
                         // This will only print when on iOS
-                        $('.header').css({'transition': 'top .5s', '-webkit-transition': 'top .5s', 'top': -52});
+                        $('.header').css({'transition': 'top .5s', '-webkit-transition': 'top .5s', 'top': -60});
                     } else {
                         $('.footer').css('bottom', '0px');
                         $('.header').css({'transition': 'top .5s', '-webkit-transition': 'top .5s', 'top': -60});

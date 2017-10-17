@@ -1,4 +1,6 @@
-<header [title]="'My Wishlist'" [pagename]="''" [wishList]=false [id]="'Wishlist'"></header>
+<ion-header id="Wishlist">
+    <header [title]="'My Wishlist'" [pagename]="''" [wishList]=false ></header>
+</ion-header>
 <ion-content  class="empty-wishlist" *ngIf="!data || data.length == 0">
     <img src="assets/image/empty-wishlist.jpg">
     <h3>YOUR WISHLIST IS EMPTY</h3>

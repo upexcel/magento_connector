@@ -1,4 +1,6 @@
-<header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false [id]="'CHECKOUT'"></header>
+<ion-header id='CHECKOUT'>
+<header [pagename]="''" [title]='"CHECKOUT"' [wishList]=false ></header>
+</ion-header>
 <ion-content shrink-header="CHECKOUT">
     <h2 *ngIf="!cartData">You have no item in cart</h2>
     <ion-card  *ngFor="let data of cartData.cart_items ; trackBy: trackCart_items_infoFn">

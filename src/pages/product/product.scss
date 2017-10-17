@@ -289,6 +289,13 @@ p.brack {
     .card-content-md{
         padding: 20px 0px 10px 0px;
     }
+    @media screen and (device-aspect-ratio:40/71) {
+        .productTitleCard{
+            .productName {
+                font-size: 17px !important;
+            }
+        }
+    }
 }
 
 

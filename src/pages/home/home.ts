@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, } from 'ionic-angular';
+import {ModalController } from 'ionic-angular';
 import {Events, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
 import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
 import {HomeProducts} from '../../model/home/homeProducts';
@@ -143,13 +143,13 @@ export class HomePage implements OnInit {
     }
     doRefresh(refresher) {
         this.refresher = refresher;
-        this._ngZone.run(() => {
-            this._sliderService.resetSlider();
-            this._homeProductsConfig.resetHomeProducts();
-            this._cms.resetStaticPageList();
-            this._categoryList.resetCategoryList();
-            this.updateSlider = false;
-        });
-        this.homeProducts();
+//        this._ngZone.run(() => {
+//            this._sliderService.resetSlider();
+//            this._homeProductsConfig.resetHomeProducts();
+//            this._cms.resetStaticPageList();
+//            this._categoryList.resetCategoryList();
+//            this.updateSlider = false;
+//        });
+//        this.homeProducts();
     }
 }
