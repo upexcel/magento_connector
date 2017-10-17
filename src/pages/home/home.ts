@@ -143,13 +143,13 @@ export class HomePage implements OnInit {
     }
     doRefresh(refresher) {
         this.refresher = refresher;
-//        this._ngZone.run(() => {
-//            this._sliderService.resetSlider();
-//            this._homeProductsConfig.resetHomeProducts();
-//            this._cms.resetStaticPageList();
-//            this._categoryList.resetCategoryList();
-//            this.updateSlider = false;
-//        });
-//        this.homeProducts();
+        this._ngZone.run(() => {
+            this._sliderService.resetSlider();
+            this._homeProductsConfig.resetHomeProducts();
+            this._cms.resetStaticPageList();
+            this._categoryList.resetCategoryList();
+            this.updateSlider = false;
+        });
+        this.homeProducts();
     }
 }
