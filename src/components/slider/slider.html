@@ -1,6 +1,6 @@
 <ion-slides class="slideOption" *ngIf="img" autoplay="{{mySlideOptions.autoplay}}" loop="{{mySlideOptions.loop}}" pager="{{mySlideOptions.pager}}">
     <ion-slide *ngFor="let images of img.body.url">
-        <img src="{{images}}" class="sliderImg"/>
+        <img src="{{images}}" class="sliderImg" style="max-height: 220px"/>
     </ion-slide>
 </ion-slides>
 

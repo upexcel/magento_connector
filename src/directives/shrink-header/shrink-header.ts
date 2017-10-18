@@ -30,21 +30,17 @@ export class ShrinkHeader {
     }
 
     updateHeader(ev) {
-        let amount;
-        if (ev.scrollTop >= 0) {
-            this.translateAmt = -ev.scrollTop / 4;
-        } else {
-            this.translateAmt = ev.scrollTop / 4;
-        }
-//        if (this._platform.is('android')) {
+        if (this._platform.is('android')) {
+            if (ev.scrollTop >= 0) {
+                this.translateAmt = -ev.scrollTop / 4;
+            } else {
+                this.translateAmt = ev.scrollTop / 4;
+            }
             $('.scroll-content').css({'transition': 'margin-top .0s', '-webkit-transition': 'margin-top .0s', 'margin-top': 56 + this.translateAmt + 'px !important'});
-//        }
-        //            this.renderer.setElementStyle(this.element.nativeElement.children[1], 'margin-top', amount + 'px !important');
-        //            this.renderer.setElementStyle(this.element.nativeElement.children[1], 'webkitTransform', 'margin-top .5s');
-        this.renderer.setElementStyle(this.header, 'webkitTransform', 'translate3d(0,' + this.translateAmt + 'px,0)');
-        this.scrollToTop = ev.scrollTop;
+            this.renderer.setElementStyle(this.header, 'webkitTransform', 'translate3d(0,' + this.translateAmt + 'px,0)');
+            this.scrollToTop = ev.scrollTop;
+
+        }
 
     }
-
-
 }
