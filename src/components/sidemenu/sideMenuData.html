@@ -3,7 +3,7 @@
     <i class="fa fa-angle-right pad5 ico" *ngIf="value.show" (tap)="manageData(value)" aria-hidden="true"></i>
     <ion-item no-margin  class="cursorPointer bottem-border relative" *ngIf="value.show">
         <div (tap)="toggle(value)" *ngIf="value.toggle" class="paTB"> {{value.name}} </div>
-        <div (tap)="manageData(value)" *ngIf="!value.toggle" class="paTB"> {{value.name}} </div>
+        <div (tap)="manageData(value)" *ngIf="!value.toggle" class="paTB capitalize"> {{value.name}} </div>
         <ion-list *ngIf="!value.hide" no-margin >
             <side-menu-data [data]="value.children"></side-menu-data>
         </ion-list>                    

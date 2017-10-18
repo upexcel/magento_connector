@@ -26,13 +26,15 @@ import {CartFunction} from '../../model/cart/cartHandling';
 import {DomSanitizer} from '@angular/platform-browser';
 import {NgZone} from '@angular/core';
 import {LoginPage} from './../login/login';
-import {ProductReview} from '../../components/reviewProduct/ReviewProduct'
+import {ProductReview} from '../../components/reviewProduct/ReviewProduct';
+import {Content} from 'ionic-angular';
 @Component({
     selector: 'product',
     templateUrl: 'product.html'
 })
 export class ProductPage implements OnInit, AfterViewInit {
     @ViewChild(ProductReview) review: ProductReview;
+    @ViewChild(Content) content: Content;
     productData: productDataType;
     logform: FormGroup;
     cartData: cartDataType;
@@ -91,6 +93,8 @@ export class ProductPage implements OnInit, AfterViewInit {
     item_id: string;
     editProductQuantity: number;
     reviewLoader: boolean = true;
+    message: boolean = false;
+    relatedData = {"status": 1, "body": [{"data": {"wishlist_item_id": false, "entity_id": "1", "rating": "2.80", "qty": 84, "name": "Skybags Neon-02 Backpack", "type": "simple", "sku": "24-MB01", "weight": null, "productUrl": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/joust-duffle-bag.html", "price": "34.0000", "display_price": "34.00", "small_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/e/neon02blk-skybags-backpack-neon-02-original-imadu8yjepy5ysxv.jpeg", "minify_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/e/neon02blk-skybags-backpack-neon-02-original-imadu8yjepy5ysxv.jpeg", "special_from_date": "2017-09-13 00:00:00", "special_to_date": null, "currency_sign": "$", "special_price": "12.00", "display_special_price": "12.00", "tier_price": [{"price_id": "5", "website_id": "0", "all_groups": "1", "cust_group": 32000, "price": "5.0000", "price_qty": "5.0000", "website_price": "5.0000"}], "final_price": "12.00", "short_description": null, "long_description": "<p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it's ideal for athletes with places to go.</p>\r\n<ul>\r\n<li>Dual top handles.</li>\r\n<li>Adjustable shoulder strap.</li>\r\n<li>Full-length zipper.</li>\r\n<li>L 29\" x W 13\" x H 11\".</li>\r\n</ul>", "media_images": ["http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/e/neon02blk-skybags-backpack-neon-02-original-imadu8yjepy5ysxv.jpeg"], "additional_information": [], "in_stock": "In Stock"}}, {"data": {"wishlist_item_id": false, "entity_id": "50", "rating": "2.80", "qty": null, "name": "Luma Yoga For Life", "type": "downloadable", "sku": "240-LV09", "weight": null, "productUrl": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/luma-yoga-for-life.html", "price": "0.0000", "display_price": "0.00", "small_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/t/lt06.jpg", "minify_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/t/lt06.jpg", "special_from_date": "2017-09-07 00:00:00", "special_to_date": null, "currency_sign": "$", "special_price": "0.00", "display_special_price": "0.00", "tier_price": [], "final_price": "0.00", "short_description": "<p>Luma founder Erin Renny on yoga and longevity: \"I won't promise you'll live longer with yoga. No one can promise that. But your life will be healthier, less stressful, and more physically in tune when you focus on connecting your mind and body or a regular basis. Yoga is my favorite way to express this connection. I want to share the secrets of lifelong yoga with anyone willing to breathe and learn with me.\"</p>", "long_description": "<ul>\r\n<li>Increase strength + flexibility + metabolism</li>\r\n<li>Burn calories + feel great</li>\r\n<li>Gain energy + youthfulness + mental wellness</li>\r\n</ul>\r\n<h3 style=\"margin-top: 30px;\">Download description</h3>\r\n<p><strong style=\"display: block; margin: 20px 0 5px;\">Tone up mind and body</strong>Pro Yoga Instructor and Master Practitioner Marie Peale helps tone and sculpt your physique with her invigorating yet gentle approach.</p>\r\n<p>You'll learn to use yoga to relax, control stress and increase your calorie-burning capacity, all while exploring traditional and new yoga poses that lengthen and strengthen your full muscular structure.</p>\r\n<ul>\r\n<li>Easy download</li>\r\n<li>Audio options: Music and instruction or instruction only</li>\r\n<li>Heart rate techniques explained</li>\r\n<li>Breathing techniques explained</li>\r\n<li>Move through exercises at your own pace</li>\r\n</ul>\r\n<p>Two 25-minute workout episodes and one 40-minute workout episode with warm-up and cool down:</p>\r\n<p><strong style=\"display: block; margin: 20px 0 5px;\">Episode 1</strong>Creative, fun session geared toward opening your lungs. Combines stretching and breathing with a focus on hips and shoulders.</p>\r\n<p><strong style=\"display: block; margin: 20px 0 5px;\">Episode 2</strong>Ramp up the tempo and energy with calorie-burning flows. A stimulating workout introducing the body-sculpting power of yoga.</p>\r\n<p><strong style=\"display: block; margin: 20px 0 5px;\">Episode 3</strong>Push your fitness reach and stamina with an intense series of standing and floor exercises and poses. End this extra-length session with a meditative cool down.</p>\r\n<h3 style=\"margin-top: 30px;\">instructor bio</h3>\r\n<p><strong style=\"display: block; margin: 20px 0 5px;\">About Marie</strong>Marie is a trained martial artist and dancer with a BS in Biological Engineering and over 10 years as a certified yoga teacher. Marie has studied yoga in England, India and, in 2009, at the Ashraqat Ashram Yoga Farm in the United States. She has been teaching full time since then. Her focus on strength and wellness combines a deep knowledge of human biology and motivation guided by unconditional love for her audience.</p>", "media_images": ["http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/t/lt06.jpg"], "additional_information": [], "in_stock": "In Stock"}, "samples": {}, "links": {"1": {"link_id": "7", "number_of_downloads": "0", "is_shareable": "2", "link_url": null, "link_file": "/l/u/luma_background_-_model_against_fence_4_sec_.mp4", "link_type": null, "sample_url": null, "sample_file": null, "sample_type": null, "title": "Episode 2", "price": "9.0000", "sample_file_downaload": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/downloadable/download/linkSample/link_id/7"}, "2": {"link_id": "8", "number_of_downloads": "0", "is_shareable": "2", "link_url": null, "link_file": "/l/u/luma_background_-_model_against_fence_4_sec_.mp4", "link_type": null, "sample_url": null, "sample_file": null, "sample_type": null, "title": "Episode 3", "price": "9.0000", "sample_file_downaload": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/downloadable/download/linkSample/link_id/8"}, "3": {"link_id": "6", "number_of_downloads": "0", "is_shareable": "2", "link_url": null, "link_file": "/l/u/luma_background_-_model_against_fence_4_sec_.mp4", "link_type": null, "sample_url": null, "sample_file": null, "sample_type": null, "title": "Episode 1", "price": "9.0000", "sample_file_downaload": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/downloadable/download/linkSample/link_id/6"}}}, {"data": {"wishlist_item_id": false, "entity_id": "51", "rating": "2.80", "qty": 0, "name": "Sprite Yoga Companion Kit", "type": "bundle", "sku": "24-WG080", "weight": null, "productUrl": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/sprite-yoga-companion-kit.html", "price": 0, "display_price": "0.00", "small_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/u/luma-yoga-kit-2.jpg", "minify_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/u/luma-yoga-kit-2.jpg", "special_from_date": "2017-09-27 00:00:00", "special_to_date": null, "currency_sign": "$", "special_price": "5.00", "minBPrice": 287, "maxBPrice": 344, "display_special_price": "5.00", "tier_price": [], "final_price": "0.00", "short_description": null, "long_description": "<p>A well-rounded yoga workout takes more than a mat. The Sprite Yoga Companion Kit helps stock your studio with the basics you need for a full-range workout. The kit is composed of four best-selling Luma Sprite accessories in one easy bundle: statis ball, foam block, yoga strap, and foam roller. Choose sizes and colors and leave the rest to us. The kit includes:</p>\r\n<ul>\r\n<li>Sprite Statis Ball</li>\r\n<li>Sprite Foam Yoga Brick</li>\r\n<li>Sprite Yoga Strap</li>\r\n<li>Sprite Foam Roller</li>\r\n</ul>", "media_images": ["http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/u/luma-yoga-kit-2.jpg"], "additional_information": [], "in_stock": "In Stock"}, "bundle_items": [{"type": "radio", "title": "Sprite Stasis Ball", "is_require": "1", "selection": [{"selection_id": "179", "selection_name": "Sprite Stasis Ball 65 cm", "selection_product_id": "352", "selection_qty": "1.0000", "selection_price": "27.0000", "is_default": "1"}, {"selection_id": "179", "selection_name": "Sprite Stasis Ball 75 cm", "selection_product_id": "353", "selection_qty": "1.0000", "selection_price": "32.0000", "is_default": "0"}]}, {"type": "radio", "title": "Sprite Foam Yoga Brick", "is_require": "1", "selection": [{"selection_id": "180", "selection_name": "Sprite Foam Yoga Brick", "selection_product_id": "354", "selection_qty": "1.0000", "selection_price": "5.0000", "is_default": "1"}]}, {"type": "radio", "title": "Sprite Yoga Strap", "is_require": "1", "selection": [{"selection_id": "181", "selection_name": "Sprite Yoga Strap 6 foot", "selection_product_id": "355", "selection_qty": "6.0000", "selection_price": "14.0000", "is_default": "0"}, {"selection_id": "181", "selection_name": "Sprite Yoga Strap 8 foot", "selection_product_id": "356", "selection_qty": "8.0000", "selection_price": "17.0000", "is_default": "1"}, {"selection_id": "181", "selection_name": "Sprite Yoga Strap 10 foot", "selection_product_id": "357", "selection_qty": "6.0000", "selection_price": "21.0000", "is_default": "0"}]}, {"type": "radio", "title": "Sprite Foam Roller", "is_require": "1", "selection": [{"selection_id": "182", "selection_name": "Sprite Foam Roller", "selection_product_id": "358", "selection_qty": "9.0000", "selection_price": "19.0000", "is_default": "1"}]}]}, {"data": {"wishlist_item_id": false, "entity_id": "2053", "rating": "2.80", "qty": 0, "name": " Yoga Companion kit", "type": "bundle", "sku": " Yoga Companion kit", "weight": null, "productUrl": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/test-yoga-companion-kit.html", "price": 0, "display_price": "0.00", "small_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/a/na-credence-c-ym-ar-original-imaen796zgtgvf9h_1.jpeg", "minify_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/a/na-credence-c-ym-ar-original-imaen796zgtgvf9h_1.jpeg", "special_from_date": "2017-09-27 00:00:00", "special_to_date": null, "currency_sign": "$", "special_price": "0.00", "minBPrice": 14.35, "maxBPrice": 17.2, "display_special_price": "0.00", "tier_price": [], "final_price": "0.00", "short_description": null, "long_description": "<p><br /><span>Perform your workouts with ease with the help of this perfect gym kit brought to you by Credence Creation. The brand has designed these excellent exercise accessories with immense precision and technique. The fitness kit includes a number of accessories such as one pair of push up bars, skipping rope, and Power Hand Grip in the pack. Made of premium quality material, these accessories are very convenient in use and quite long lasting in nature as well. So, bring this excellent item home today.</span></p>", "media_images": ["http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//n/a/na-credence-c-ym-ar-original-imaen796zgtgvf9h_1.jpeg"], "additional_information": [], "in_stock": "In Stock"}, "bundle_items": [{"type": "radio", "title": "Sprite Stasis Ball", "is_require": "1", "selection": [{"selection_id": "193", "selection_name": "Pursuit Lumaflex&trade; Tone Band", "selection_product_id": "371", "selection_qty": "1.0000", "selection_price": "16.0000", "is_default": "1"}]}, {"type": "radio", "title": "Sprite Foam Yoga Brick", "is_require": "1", "selection": [{"selection_id": "194", "selection_name": "Sprite Foam Yoga Brick", "selection_product_id": "372", "selection_qty": "1.0000", "selection_price": "5.0000", "is_default": "1"}]}]}, {"data": {"wishlist_item_id": false, "entity_id": "2055", "rating": "2.80", "qty": 999, "name": " Vibe K5 Note", "type": "simple", "sku": " Vibe K5 Note", "weight": null, "productUrl": "http://5.9.144.226:9000/magento2/2.1.2/web/index.php/vibe-k5-note.html", "price": "200.0000", "display_price": "200.00", "small_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/e/lenovo-vibe-k5-note-pa330116in-pa330114in-original-imaepc2fus3cxhgu.jpeg", "minify_image": "http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/e/lenovo-vibe-k5-note-pa330116in-pa330114in-original-imaepc2fus3cxhgu.jpeg", "special_from_date": "2017-09-27 00:00:00", "special_to_date": null, "currency_sign": "$", "special_price": "0.00", "display_special_price": "0.00", "tier_price": [], "final_price": "200.00", "short_description": "<p><span>Metal rules and Lenovo definitely knows that. The Vibe K5 Note comes with a gorgeous metal body that looks and feels great. You also get two equally beautiful colour variants to choose from.</span></p>", "long_description": "<ul class=\"_3eXgaQ\">\r\n<li class=\"_2D2_E1 TCz0TK\">4G Connectivity and Phone Features Depend on the Carrier and the Location of the User</li>\r\n<li class=\"_2D2_E1 TCz0TK\">The second SIM slot of this dual SIM phone accepts either a nano SIM card or a microSD Memory Card. If you are using 2 SIM cards, you will not be able to expand the phone's memory using a microSD Memory Card</li>\r\n</ul>", "media_images": ["http://5.9.144.226:9000/magento2/2.1.2/web/pub/media/catalog/product//l/e/lenovo-vibe-k5-note-pa330116in-pa330114in-original-imaepc2fus3cxhgu.jpeg"], "additional_information": [], "in_stock": "In Stock", "product_custom_option": [{"title": "size", "type": "radio", "is_require": "1", "option_type": [{"default_title": "35", "default_price": "20.0000", "price": "20.0000", "sku": " Vibe K5 Note", "option_type_id": "1", "option_id": "1", "price_type": "fixed"}, {"default_title": "36", "default_price": "20.0000", "price": "20.0000", "sku": " Vibe K5 Note", "option_type_id": "2", "option_id": "1", "price_type": "fixed"}]}]}}]};
     constructor(private _ngZone: NgZone, private sanitized: DomSanitizer, private _cartFunction: CartFunction, public loadingCtrl: LoadingController, public _socialSharing: SocialSharing, public _wishList: WishListModel, public _modalCtrl: ModalController, public _wishListService: WishListService, private viewCtrl: ViewController, private _tierPrice: TierPrice, private _notifyService: NotifyMe, private emailTest: FormBuilder, private _appConfigService: AppDataConfigService, private _toast: ToastService, public _events: Events, public _getProduct: Product, private _local: Storage, private _cartService: CartService, private _navCtrl: NavController, private _navParams: NavParams, private _apiService: ApiService) {
         this.logform = this.emailTest.group({email: ['', Validators.required]});
     }
@@ -167,6 +171,16 @@ export class ProductPage implements OnInit, AfterViewInit {
     }
     transformPrice(value) {
         return this.sanitized.bypassSecurityTrustHtml(value['displayBundlePrice']);
+    }
+    relatedProductItemClick(data) {
+        this.data = {
+            "sku": data.body.data.sku
+        };
+        this.reviewLoader = false;
+        setTimeout(() => {
+            this.reviewLoader = true;
+        });
+        this.setValue(data);
     }
     /*
      * function use for share options
@@ -250,111 +264,9 @@ export class ProductPage implements OnInit, AfterViewInit {
         }
         //getProduct is use to fire product/get api to get product
         return new Promise((resolve, reject) => {
-            this._getProduct.getProduct(this.data).then((res) => {
-                this.productData = res;
-                this.error = false;
-                resolve(this.productData);
-                if (res) {
-                    this.spin = false;
-//                    this.product = this.productData.body.data.name;//product name
-                    this.productid = this.productData.body.data.entity_id;//entity id
-                    this.images = this.productData.body.data.media_images[0];//first image
-                    this.special_price = this.productData.body.data.special_price;//special price
-                    this.display_price = this.productData.body.data.display_price;//display price
-                    this.final_price = this.productData.body.data.final_price;//final price
-                    this.display_special_price = this.productData.body.data.display_special_price;
-                    this.display_special_priceRef = this.productData.body.data.display_special_price;
-                    this.refPrice = this.productData.body.data.final_price;//final price refirence variable
-                    this.refDisplayPrice = this.productData.body.data.display_price;//display price refirence variable
-                    this.bundlePrice = parseFloat(this.refPrice);//parse final price refirence variable
-                    this.dynemicDisplayPrice = this.refDisplayPrice;//display price refirence variable
-                    //gather data for send in add cart servive
-                    this.sku = this.productData.body.data.sku;//sku id
-                    this.img = this.productData.body.data.media_images[0];//first image
-                    this.name = this.productData.body.data.name;//product name
-                    this.type = this.productData.body.data.type;//product type
-                    let additionalInformation = this.productData.body.data.additional_information;//additional_information if exist
-                    this.product_custom_option = this.productData.body.data.product_custom_option;//product_custom_option if exist
-                    //create comman data use in cart/cart api
-                    this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id};
-                    //get additional_information if exit
-                    if (this.type == "bundle") {
-                        if (this.special_price && this.special_price.length > 0) {
-                            let maxRPrice = (this.productData.body.data.maxBPrice * this.special_price) / 100;
-                            let minRPrice = (this.productData.body.data.minBPrice * this.special_price) / 100;
-                            this.productData.body.data['displayBundlePrice'] = `<span style="padding-bottom:10px;"> From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> </span><br/> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
-                        } else {
-                            this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  <br/> To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
-                        }
-                    }
-                    if (additionalInformation != undefined) {
-                        forEach(additionalInformation, (value, key) => {
-                            if (value != false) {
-                                this.additionalInformationData.push({ //create data to itterable formate in html
-                                    "key": key,
-                                    "value": value
-                                });
-                            }
-                        })
-
-                    }
-                    if (this.productData.body.associated_products) {
-                        this.keys = keys(this.productData.body.associated_products.attributes);
-                        if (this.keys.length == 0) {
-                            this.disable = true;    //button  disable
-                        }
-                    }
-                    //add a vertual key
-                    if (this.editCartData) { //if data come for edit
-                        //check type of product
-                        if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
-                            //button not disable
-                            this.disable = false;
-                            //comman data merge with add_cart
-                            this.add_cart = merge(this.add_cart, this.addToCartData);
-                        }
-                        if (this.productData.body.associated_products) { //if associated_products exist
-                            if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                                //set data  in product page for edit 
-                                forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
-                                    forEach(this.editCartData.super_attribute, (opt, opt_key) => {
-                                        if (opt_key == attributesDataKey) {
-                                            forEach(attributesData.options, (optionData) => {
-                                                if (optionData.id == opt) {
-                                                    attributesData.vertualKey = optionData;
-                                                    optionData.shown = true;
-                                                    this.onChangeConfigurableAttribute(optionData, attributesData.id);
-                                                    this.disable = false;
-                                                }
-                                            })
-                                        }
-                                    })
-                                });
-                            }
-                        }
-                    } else {
-                        if (this.productData.body.associated_products) {
-                            if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
-                                forEach(this.productData.body.associated_products.attributes, (attributesData) => {
-                                    attributesData.vertualKey = false;//set vertualKey as false in associated_products attributes
-                                });
-                            }
-                        }
-                    }
-
-                    // here we are using tierPrice servive to get offer of tire price .
-                    this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
-                    if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
-                        this.disable = false;
-                    }
-                    if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
-                        this.customFormValidate = true;
-                        this.customDisable = true;
-                        this.virtual = false;
-                        this.disable = true;
-                    }
-                    this.ifCustomOption(null, null);
-                }
+            this._getProduct.getProduct(this.data).then((res: any) => {
+                resolve(res);
+                this.setValue(res);
 
             }, (err) => {
                 this._toast.toast("Please Refresh This Page !!", 3000, "bottom");
@@ -362,6 +274,118 @@ export class ProductPage implements OnInit, AfterViewInit {
                 this.spin = false;
             });
         });
+    }
+
+
+    setValue(res) {
+        if (res && res.body.data) {
+            this.message = false;
+            this.spin = false;
+            this.productData = res;
+            this.error = false;
+            //                    this.product = this.productData.body.data.name;//product name
+            this.productid = this.productData.body.data.entity_id;//entity id
+            this.images = this.productData.body.data.media_images[0];//first image
+            this.special_price = this.productData.body.data.special_price;//special price
+            this.display_price = this.productData.body.data.display_price;//display price
+            this.final_price = this.productData.body.data.final_price;//final price
+            this.display_special_price = this.productData.body.data.display_special_price;
+            this.display_special_priceRef = this.productData.body.data.display_special_price;
+            this.refPrice = this.productData.body.data.final_price;//final price refirence variable
+            this.refDisplayPrice = this.productData.body.data.display_price;//display price refirence variable
+            this.bundlePrice = parseFloat(this.refPrice);//parse final price refirence variable
+            this.dynemicDisplayPrice = this.refDisplayPrice;//display price refirence variable
+            //gather data for send in add cart servive
+            this.sku = this.productData.body.data.sku;//sku id
+            this.img = this.productData.body.data.media_images[0];//first image
+            this.name = this.productData.body.data.name;//product name
+            this.type = this.productData.body.data.type;//product type
+            let additionalInformation = this.productData.body.data.additional_information;//additional_information if exist
+            this.product_custom_option = this.productData.body.data.product_custom_option;//product_custom_option if exist
+            //create comman data use in cart/cart api
+            this.addToCartData = {productid: this.productData.body.data.entity_id, sku: this.sku, "currency_sign": this.productData.body.data.currency_sign, img: this.img, name: this.name, total: this.final_price, tier_price: this.tier_price, type: this.type, quantity: 1, qty: 1, "access_token": this.userData ? this.userData.access_token : "", "quote_id": this.quote_id, "item_id": this.item_id};
+            //get additional_information if exit
+            if (this.type == "bundle") {
+                if (this.special_price && this.special_price.length > 0) {
+                    let maxRPrice = (this.productData.body.data.maxBPrice * this.special_price) / 100;
+                    let minRPrice = (this.productData.body.data.minBPrice * this.special_price) / 100;
+                    this.productData.body.data['displayBundlePrice'] = `<span style="padding-bottom:10px;"> From <b>${this.productData.body.data.currency_sign}${minRPrice}</b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']} </span> </span><br/> To <b>${this.productData.body.data.currency_sign}${maxRPrice} </b> <span class="fontColor">Regular Price ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} </span>`
+                } else {
+                    this.productData.body.data['displayBundlePrice'] = `From ${this.productData.body.data.currency_sign}${this.productData.body.data['minBPrice']}  <br/> To  ${this.productData.body.data.currency_sign}${this.productData.body.data['maxBPrice']} `
+                }
+            }
+            if (additionalInformation != undefined) {
+                forEach(additionalInformation, (value, key) => {
+                    if (value != false) {
+                        this.additionalInformationData.push({ //create data to itterable formate in html
+                            "key": key,
+                            "value": value
+                        });
+                    }
+                })
+
+            }
+            if (this.productData.body.associated_products) {
+                this.keys = keys(this.productData.body.associated_products.attributes);
+                if (this.keys.length == 0) {
+                    this.disable = true;    //button  disable
+                }
+            }
+            //add a vertual key
+            if (this.editCartData) { //if data come for edit
+                //check type of product
+                if (this.editCartData.type != "configurable" && this.editCartData.type != "bundle" && this.editCartData.type != "downloadable") {
+                    //button not disable
+                    this.disable = false;
+                    //comman data merge with add_cart
+                    this.add_cart = merge(this.add_cart, this.addToCartData);
+                }
+                if (this.productData.body.associated_products) { //if associated_products exist
+                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                        //set data  in product page for edit 
+                        forEach(this.productData.body.associated_products.attributes, (attributesData, attributesDataKey) => {
+                            forEach(this.editCartData.super_attribute, (opt, opt_key) => {
+                                if (opt_key == attributesDataKey) {
+                                    forEach(attributesData.options, (optionData) => {
+                                        if (optionData.id == opt) {
+                                            attributesData.vertualKey = optionData;
+                                            optionData.shown = true;
+                                            this.onChangeConfigurableAttribute(optionData, attributesData.id);
+                                            this.disable = false;
+                                        }
+                                    })
+                                }
+                            })
+                        });
+                    }
+                }
+            } else {
+                if (this.productData.body.associated_products) {
+                    if (Object.keys(this.productData.body.associated_products.attributes).length > 0) {
+                        forEach(this.productData.body.associated_products.attributes, (attributesData) => {
+                            attributesData.vertualKey = false;//set vertualKey as false in associated_products attributes
+                        });
+                    }
+                }
+            }
+
+            // here we are using tierPrice servive to get offer of tire price .
+            this.show_add_to_cart = this._tierPrice.getTierPriceData(this.productData.body.data.tier_price);
+            if (this.type != "configurable" && this.type != "bundle" && this.type != "downloadable") {
+                this.disable = false;
+            }
+            if (this.product_custom_option != undefined && this.product_custom_option.length > 0) {
+                this.customFormValidate = true;
+                this.customDisable = true;
+                this.virtual = false;
+                this.disable = true;
+            }
+            this.ifCustomOption(null, null);
+        }
+        else if (res.body.length == 0) {
+            this.spin = false;
+            this.message = true;
+        }
     }
     /*
      *function call when any change occurs in select list.it has configurableSelectedObject hold item object and key

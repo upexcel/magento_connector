@@ -22,18 +22,19 @@ export class CategoryProductPage implements OnInit {
     infinite: any;
     enableInfinite: boolean = true;
     doRefreshCheck = true;
-    display_mode:string;
-    product_count:number;
+    display_mode: string="";
+    product_count: number=0;
     constructor(private _toast: ToastService, private _appConfigService: AppDataConfigService, private _events: Events, private _local: Storage, private _category: CategoryProduct, private _loadingCtrl: LoadingController, private _navCtrl: NavController, private _navParams: NavParams, private _menuCtrl: MenuController, private _popoverCtrl: PopoverController) {
         this.product_id = _navParams.get('id'); //get product_id
         this.title = _navParams.get('name'); //get title
         this.display_mode = _navParams.get('display_mode');//get display_mode use to hide filter
-        this.product_count=_navParams.get('product_count');
-//          _menuCtrl.enable(true);
+        this.product_count = _navParams.get('product_count');
+        this.categoryProduct = _navParams.get('relatedData');
+        //          _menuCtrl.enable(true);
     }
     ngOnInit() {
         //catch event for sorting
-        this._events.subscribe('sort:data', (data) => {      
+        this._events.subscribe('sort:data', (data) => {
             this.enableInfinite = false;
             this.sortByData = data.data;
             this.page = 1;
@@ -55,8 +56,10 @@ export class CategoryProductPage implements OnInit {
                 this.doInfinite(this.infinite, true);
             }
         });
-
-        this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
+        console.log("this._navParams.get('relatedData')",this._navParams.get('relatedData'))
+        if (!this._navParams.get('relatedData')) {
+            this.show_products(this.page, this.limit, this.product_id, this.sortByData, this.filterData);
+        }
     }
     ngOnDestroy() {
         // unsubscribe events
@@ -121,7 +124,7 @@ export class CategoryProductPage implements OnInit {
             }, (err) => {
                 infiniteScroll.complete();
                 infiniteScroll.enable(false);
-//                this._toast.toast("Please Try Again", 3000, "top");
+                //                this._toast.toast("Please Try Again", 3000, "top");
             });
         } else {
             infiniteScroll.complete();

@@ -32,10 +32,15 @@
     border-top-right-radius: $position;
     border-bottom-right-radius: $position;
 }
+.refresher-active{
+    background: #fff !important;
+}
 .color{
     color:red !important;
 }
-
+ion-header{
+    min-height: 56px;
+}
 header{ 
     .hiddenBackButton{
         .back-button {
@@ -75,9 +80,9 @@ header{
         padding-top: 4px;
     }
     orderid-detail,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
-        .scroll-content {
-            @include padding-top(65px); 
-        }  
+        /*        .scroll-content {
+                    @include padding-top(65px); 
+                }  */
     } 
     download, my-download,edit-account ,my-reviews,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,register,search-page,wishList,saved-address, page-reset-password{
         header{ 
@@ -145,9 +150,9 @@ header{
             @include padding-left(0px);
         }} 
     edit-address{
-        .scroll-content {
-            @include margin-top(0px);
-        }    
+        /*        .scroll-content {
+                    @include margin-top(0px);
+                }    */
         .item-ios{
             @include padding-left(20px);
         }
@@ -188,7 +193,7 @@ product{
 }
 tour{
     .scroll-content {
-        @include margin-top(0px);
+        /*@include margin-top(0px);*/
         overflow: auto !important;  
     } }
 start-page{
@@ -215,19 +220,20 @@ start-page{
             justify-content: center !important;}}
     download, my-download ,edit-account ,my-reviews,home,about-us, cms-pages, cart,change-pass,checkout,contact-us,forgot,login,edit-address,review-details,saved-addres,order-list,placed-order,policy,product,register,search-page,wishList,categoryProduct,saved-address, page-reset-password{
         .scroll-content {
-            @include margin-top(56px);   
+            /*@include margin-top(56px);*/
+            overflow-y: auto;
         }  
     } 
     orderid-detail{
         .scroll-content {
-            @include margin-top(30px);   
+            /*@include margin-top(30px);*/   
         }    
     }
 }
 my-download{
     .content-ios{
         .scroll-content {
-            @include padding-top(56px);   
+            /*@include padding-top(56px);*/   
         }   }
 }
 .bar-button-md:first-child {
@@ -270,7 +276,7 @@ side-menu-data, sidemenu ,home{
     color:red;
 }
 .paddLeft10{
-    @include padding-left(10px);
+    @include padding-left(11px);
 }
 .pad5{
     padding: 5px;
@@ -429,7 +435,7 @@ bundle{
     @include margin-right(16px);
 }*/
 .offer{
-    color:#222222;
+    color:#666666;
 }
 login{
     span ion-icon{
@@ -578,7 +584,7 @@ filter{
 
 placed-order{
     .scroll-content{
-        @include margin-top(0px);
+        /*@include margin-top(0px);*/
     }
 }
 .relative{
@@ -772,7 +778,7 @@ ion-input.uppercase input{
     }
 }
 .paddingBottom40{
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
 }
 .botton{  
     /*    position: absolute !important;*/
@@ -923,10 +929,10 @@ filter-option{
         transition: box-shadow 300ms cubic-bezier(0, 0, 0, 0), background-color 300ms cubic-bezier(0, 0, 0, 0), color 300ms cubic-bezier(0, 0, 0, 0);
     }
 }
-cart, wishList, checkout{
+cart, wishList, checkout,cms-pages{
     .scroll-content {
-        /*background: #fff;*/
-        @include margin-bottom(60px);
+        background: #fff;
+        /*@include margin-bottom(60px);*/
     }  
     .card-md {
         margin: 10px 0px 12px 0px;
@@ -955,7 +961,9 @@ edit-address ,filter {
         @extend .backgroungW;
     }
 }
-
+.radius{
+    border-radius: 0px !important;
+}
 .none{
     display: none; 
 }
@@ -1054,15 +1062,33 @@ checkout{
 .no-underline{
     text-decoration: none;
 }
+
+img.maxht{
+    width:auto !important;
+    max-height: 150px !important;
+}
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
     .ios{
+        bundle{
+            .list-header-ios{
+                border-bottom:none !important;
+            }
+        }
+        sidemenu{
+            .item{
+                border-bottom: none !important;
+            }
+        }
+        .custom-options ion-list{
+            border-bottom: none #dedede;
+        }
         .productWishList{
             @include margin-right(5px);
         }
-        img .maxht{
+        img.maxht{
             width:auto !important;
             max-height: 150px !important;
         }

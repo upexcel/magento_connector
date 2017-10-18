@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, } from 'ionic-angular';
+import {ModalController } from 'ionic-angular';
 import {Events, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
 import {HomeProductsDataType} from './../../model/home/homeProductsDataType';
 import {HomeProducts} from '../../model/home/homeProducts';

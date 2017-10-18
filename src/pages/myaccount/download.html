@@ -1,10 +1,12 @@
-<header  [title]='"DOWNLOADABLE PRODUCTS"' [wishList]=false></header>
-<ion-content class="empty-cart" *ngIf="!myDownloadableData || myDownloadableData.length == 0">
-    <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
-    <h3 *ngIf="myDownloadableData && myDownloadableData.length == 0">No Products</h3>
-</ion-content>
-<ion-content *ngIf="myDownloadableData && myDownloadableData.length > 0">
-    <span *ngIf="myDownloadableData">
+<ion-header>
+    <header  [title]='"DOWNLOADABLE PRODUCTS"' [wishList]=false></header>
+</ion-header>
+<ion-content>
+    <span class="empty-cart" *ngIf="!myDownloadableData || myDownloadableData.length == 0">
+        <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
+        <h3 *ngIf="myDownloadableData && myDownloadableData.length == 0">No Products</h3>
+    </span>
+    <span *ngIf="myDownloadableData && myDownloadableData.length > 0">
         <ion-card *ngFor="let data of myDownloadableData ;trackBy: trackmyDownloadableDataFn">
             <img src="{{data.product_image}}"/>
             <ion-card-content>
@@ -28,10 +30,10 @@
                             </button>
                         </ion-col>
                         <ion-col class="no-padding" col-6>
-        <!--                     <button ion-button icon-left clear small class="no-padding" [disabled]="data.status == 'pending'">
-                                <div><a class="no-underline" href="http://144.76.34.244:8080/magento/mobile/web/downloadable/download/link/id/{{data. link_hash}}/" target="_self">Download &nbsp;</a></div>
-                                <ion-icon name="download"></ion-icon>
-                            </button> -->
+                            <!--                     <button ion-button icon-left clear small class="no-padding" [disabled]="data.status == 'pending'">
+                                                    <div><a class="no-underline" href="http://144.76.34.244:8080/magento/mobile/web/downloadable/download/link/id/{{data. link_hash}}/" target="_self">Download &nbsp;</a></div>
+                                                    <ion-icon name="download"></ion-icon>
+                                                </button> -->
                         </ion-col>
                     </ion-row>
                 </ion-grid>

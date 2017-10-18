@@ -1,6 +1,7 @@
 <!-- coll header component -->
-<header [title]='title' [pagename]="'home'" [search]='true' [view]="true" [classHeader]="'category'"></header>
-
+<ion-header>
+    <header [title]='title' [pagename]="'home'" [search]='true' [view]="true" ></header>
+</ion-header>
 <ion-content class="home1"  [header-scroller]="display_mode">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -12,7 +13,9 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-spinner class="apiSpinner" *ngIf="spinner(categoryProduct) && !error"></ion-spinner>
-    <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
+    <span class="center">
+        <ion-badge color="red" *ngIf="error">Check Network Connection</ion-badge>
+    </span>
     <span class="center" *ngIf="categoryProduct && categoryProduct.body.length==0">
         <div class="center" padding-top  ><ion-badge color="alert_yellow" >No Item Found</ion-badge></div> 
     </span>
@@ -24,4 +27,8 @@
 </ion-content>
 <!-- coll header component -->
 <!--*ngIf="display_mode!='PAGE'"-->
-<category-footer *ngIf="(product_count > 0) && categoryProduct" [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>
+<ion-footer  [ngClass]="{'uppercase':true,'footerCateg':true,'none':(product_count == 0)}" style="min-height: 60px;">
+    <span *ngIf="(product_count > 0) && categoryProduct" >
+        <category-footer  [previouseSortSection]='previouseSortSection' [previouseSortOrder]='previouseSortOrder' [catedoryId]='product_id? product_id : sortByData.product_id'></category-footer>
+    </span>
+</ion-footer>

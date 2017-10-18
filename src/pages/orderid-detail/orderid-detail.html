@@ -1,4 +1,6 @@
-<header [title]="'My Order Details'" [wishList]=false></header>
+<ion-header>
+    <header [title]="'My Order Details'" [wishList]=false></header>
+</ion-header>
 <ion-content class="orderid-detail">
     <ion-spinner class="apiSpinner" *ngIf="spin"></ion-spinner>
     <h2 class="center" *ngIf="showOrderError">Your Order is under process</h2>

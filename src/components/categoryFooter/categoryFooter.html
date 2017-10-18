@@ -1,14 +1,12 @@
-<ion-footer  class="uppercase footerCateg">
     <ion-grid>
         <ion-row>
-            <ion-col  class="center" (tap)="sortModel()">
+            <ion-col no-padding class="center" (tap)="sortModel()">
                 <ion-icon name="arrow-round-up" class="sortIcon"></ion-icon>
                 <ion-icon name="arrow-round-down" class="sortIcon marRight10"></ion-icon> Sort BY
             </ion-col>
-            <ion-col width-50 class="center left-border" (tap)="filterModal()" >
+            <ion-col no-padding width-50 class="center left-border" (tap)="filterModal()" >
                 <i class="fa fa-filter fa-lg" aria-hidden="true"></i>
                 Filters
             </ion-col>
         </ion-row>
     </ion-grid>
-</ion-footer>

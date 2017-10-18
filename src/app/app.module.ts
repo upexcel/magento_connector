@@ -118,9 +118,12 @@ import {group} from '../components/groupedProduct/group';
 import {BundleProduct} from '../components/bundleProduct/bundleProduct';
 import {DownloadProduct} from '../components/downloadProduct/downloadProduct';
 import {CustomOption} from '../components/customOption/customOption';
+import {RelatedProduct} from '../components/relatedProduct/relatedProduct';
+
 //directives
 import {FocusByEnterKey} from '../directives/focusByEnterKey/nextByEnter';
 import {HeaderScroller} from '../directives/header-scroller';
+import {ShrinkHeader} from '../directives/shrink-header/shrink-header';
 import {EqualValidator} from '../directives/password/equalValidator';
 import {ImageDirective} from '../directives/image/image.directive';
 import {ImageFallBackDirective} from '../directives/image/imagefallback.directive';
@@ -189,7 +192,9 @@ import {CustomDatePipe} from '../pipe/date/dateFormate';
         ReviewDetails,
         ResetPasswordPage,
         SearchItemPage,
-        StripePage
+        StripePage,
+        ShrinkHeader,
+        RelatedProduct
     ],
     imports: [
         BrowserModule,

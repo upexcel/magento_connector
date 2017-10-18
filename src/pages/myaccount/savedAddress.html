@@ -1,4 +1,6 @@
-<header [title]="'My Address'" [wishList]=false></header>
+<ion-header>
+    <header [title]="'My Address'" [wishList]=false></header>
+</ion-header>
 <ion-content class="myaccount">
     <!--<ion-spinner *ngIf="spin && !error" id="magLeft50"></ion-spinner>-->
     <!--<ion-spinner class="apiSpinner" *ngIf="spin1" ></ion-spinner>-->
@@ -83,23 +85,23 @@
                         </ion-col>
                     </ion-row>                   
                 </ion-grid>
-                    <ion-grid>
-                     <ion-row>
+                <ion-grid>
+                    <ion-row>
                         <ion-col col-2 class="no-padding"></ion-col>
-                         <ion-col col-10 class="no-padding">
-                         <h2 class="widthA floatLeft"> Default Shipping</h2>
-                             <ion-checkbox color="dark" class=" floatRight idthA no-margin" [disabled]="myaccount.default_check || (disable || spin || address.add_shipping)" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
-                         </ion-col>
-                         </ion-row>
+                        <ion-col col-10 class="no-padding">
+                            <h2 class="widthA floatLeft"> Default Shipping</h2>
+                            <ion-checkbox color="dark" class=" floatRight idthA no-margin" [disabled]="myaccount.default_check || (disable || spin || address.add_shipping)" [(ngModel)]='address.add_shipping'  (ngModelChange)="updateAdd(address,'default_shipping')"></ion-checkbox>
+                        </ion-col>
+                    </ion-row>
                     <ion-row class="padTop10">
-                         <ion-col col-2 class="no-padding"></ion-col>
-                         <ion-col col-10 class="no-padding">
+                        <ion-col col-2 class="no-padding"></ion-col>
+                        <ion-col col-10 class="no-padding">
                             <h2 class="floatLeft widthA">Default Billing</h2>
                             <ion-checkbox class=" widthA no-margin floatRight" color="dark" [disabled]="myaccount.default_check || (disable || spin || address.add_billing)" [(ngModel)]="address.add_billing" (ngModelChange)="updateAdd(address,'default_billing')"></ion-checkbox> 
-                             
-                         </ion-col>
-                     </ion-row>
-                    </ion-grid>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
 
             </ion-card-content>
         </ion-card>

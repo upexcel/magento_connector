@@ -1,4 +1,6 @@
-<header [title]="'My Orders'" [wishList]=false></header>
+<ion-header>
+    <header [title]="'My Orders'" [wishList]=false></header>
+</ion-header>
 <ion-content class="orderlist" scroll="true">
     <ion-spinner class="apiSpinner" *ngIf="spin && !error"></ion-spinner>
     <p class="error" *ngIf="error" style="color:#f00; text-align: center;">Check Network Connection</p>
@@ -8,18 +10,18 @@
         <ion-item class="orders">
             <section id="cd-timeline" class="cd-container"  *ngFor="let data of dataItem.value; trackBy: trackmyOrderDataFn">
                      <div class="cd-timeline-block">
-                 <div class="cd-timeline-icon">
-                   <ion-icon color="primary" name="clock" *ngIf="data.status=='processing'"></ion-icon>
+                    <div class="cd-timeline-icon">
+                        <ion-icon color="primary" name="clock" *ngIf="data.status=='processing'"></ion-icon>
                         <ion-icon color="danger" name="close-circle" *ngIf="data.status=='holded'"></ion-icon>
                         <ion-icon color="alert_yellow" name="alert" *ngIf="data.status=='pending'" ></ion-icon>
-                         <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
-                         <ion-icon color="red" name="close" *ngIf="data.status=='canceled'" ></ion-icon>
+                        <ion-icon color="alert_success" name="done-all" *ngIf="data.status=='complete'" ></ion-icon>
+                        <ion-icon color="red" name="close" *ngIf="data.status=='canceled'" ></ion-icon>
                     </div>
                     <div (tap)="gotoOrderDetail(data.orderId)">
                         <span class="order_key">#{{data.orderId}}</span>
                         <span class="date_creation">{{data.created_at |customdate: 'HH:mm'}}</span>
                         <div class="cd-timeline-content">
-                             <h2>Order No: {{data.order_no}}</h2>
+                            <h2>Order No: {{data.order_no}}</h2>
                             <h2>Amount: {{data.currency_symbol}}{{data.grand_total |number:'.0-2' }}</h2>
                             <h2 text-capitalize>Status: <span *ngIf="data.status !='canceled'">{{data.status}}</span><span *ngIf="data.status == 'canceled'">Cancelled</span></h2>
                             <hr>

@@ -3,6 +3,50 @@
         padding: 0px 1.3em 0px 0px;
     }
 }
+product{
+    .btnStar{
+        height: auto !important;
+        font-size: 11px;
+        padding: 4px !important;
+    }
+}
+div.scrollmenu {
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+div.scrollmenu div {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    /*padding: 14px;*/
+    min-width: 150px;
+    max-width: 150px;
+    text-decoration: none;
+    vertical-align: top;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
+
+.viewAllButton{
+    float: left;
+    padding-top: 10px;
+    font-size: 20px;
+}
+.relatedImg{
+    max-height: 120px;
+    width: auto;
+}
+p.brack {
+    width: 120px; 
+    word-break: keep-all;
+}
+.relatedProductImgDiv{
+    height: 150px;
+    width: 100%;
+}
 /*.reviewBtn{
     position: absolute;
     width: 100%;
@@ -13,6 +57,10 @@
     height: 100%;
 }*/
 .product {
+    background: #f3f3f3!important;
+    .scroll-content{
+        border-top: none!important;
+    }
     .share{
         font-size: 1.8em;
     }   
@@ -55,6 +103,7 @@
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
+        border-color: #9e9e9e;
     }
     .additionalInfo{
         font-weight: normal;
@@ -125,10 +174,10 @@
     }
     .line{
         text-decoration: line-through;
-        font-size: 11px;
+        font-size: 16px !important;
         color: gray;
         margin-left: 5px;
-        line-height: 2.6;
+        line-height: 2.3;
     }
     /*    .hide{
             display: none;
@@ -139,13 +188,10 @@
     .maxWT{
         max-width: 85px;
     }
-    p.stock {
+    .stock {
         color: green;
-        font-weight: 600;
-        float:left;
-        margin: 0px;
-        padding-top: 7px;
-        padding-bottom: 2px;
+        font-size: 16px !important;
+        padding-top: 5px !important;
     }
     .notifyBt{
         float: right;
@@ -222,7 +268,11 @@
     .overflow{
         overflow: hidden;
     }
-
+    .ico{
+        .label{
+            margin: 0px !important;
+        }
+    }
 
     .paddingZero{
         padding:0px;
@@ -232,11 +282,18 @@
         width: 100%;
         box-shadow: none;
         .productName{
-            font-weight: bold;
+            font-size: 18px !important;
         }
     }
     .card-content-md{
         padding: 20px 0px 10px 0px;
+    }
+    @media screen and (device-aspect-ratio:40/71) {
+        .productTitleCard{
+            .productName {
+                font-size: 17px !important;
+            }
+        }
     }
 }
 
